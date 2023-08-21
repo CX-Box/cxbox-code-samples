@@ -28,3 +28,5 @@ jobs:
           cache: "npm"
       - name: Build with Maven
         run: mvn clean install -U -PUI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
