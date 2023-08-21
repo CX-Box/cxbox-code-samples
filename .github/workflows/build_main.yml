@@ -81,5 +81,5 @@ jobs:
           script: |
             sudo chmod -R 777 /home/cxbox/code-samples || true
             cd /home/cxbox/code-samples
-            sudo docker compose -f docker-compose-prod.yml up -d --wait -t 240
+            sudo docker compose -f docker-compose-prod.yml up -d --wait -t 60
             docker ps
