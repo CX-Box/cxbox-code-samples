@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
 
-  cxbox_postgres:
+  cxbox-code-samples-postgres:
     image: postgres:12.0
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -10,7 +10,7 @@ services:
       - 5432
     ports:
       - "5432:5432"
-  keycloak:
+  cxbox-code-samples-keycloak:
     image: jboss/keycloak:12.0.4
     command:
       [
@@ -34,7 +34,7 @@ services:
       - "9080:9080"
       - "9443:9443"
       - "10990:10990"
-  cxbox_minio:
+  cxbox-code-samples-minio:
     image: bitnami/minio:2022.2.12
     expose:
       - 9000
