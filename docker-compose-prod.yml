@@ -9,7 +9,7 @@ services:
       - ./docker/nginx/templates/:/etc/nginx/templates/
     environment:
       CXBOX_APP_1: 'cxbox-code-samples-node-1:8080'
-      CXBOX_APP_2: 'cxbox-code-samples-node-2:8080'
+      CXBOX_APP_2: 'cxbox-code-samples-node-1:8080'
       KEYCLOAK_1: 'cxbox-code-samples-keycloak:9080'
     ports:
       - "81:80"
@@ -20,29 +20,6 @@ services:
       - cxbox-code-samples-node-2
 
   cxbox-code-samples-node-1:
-    image: 'cxbox/cxbox-code-samples:latest'
-    environment:
-      FRONTEND_AUTH_SERVER_URL: 'http://code-samples.cxbox.org/auth/'
-      BACKEND_AUTH_SERVER_URL: 'http://code-samples.cxbox.org/auth/'
-      HIBERNATE_DDL_AUTO: 'update'
-      DEV_PANEL_ENABLED: 'true'
-      META_DIRECTORY: 'classpath:meta'
-      DATABASE_DRIVER: 'org.postgresql.Driver'
-      DATABASE_URL: 'jdbc:postgresql://cxbox-code-samples-postgres:5432/postgres'
-      DATABASE_USER: 'postgres'
-      DATABASE_PASSWORD: 'postgres'
-      MINIO_ACCESS_KEY: '4eb6a7db8b58994ea61b'
-      MINIO_SECRET_KEY: 'prCv8t9LGRH18FB5pLr5jqDZ/dixZkb9cFajueGW'
-      MINIO_URL: 'http://cxbox-code-samples-minio:9000'
-      MINIO_DEFAULT_BUCKETS: 'edcs3gnsadevb'
-      JAVA_TOOL_OPTIONS: '-agentlib:jdwp=transport=dt_socket,server=y,address=8989,suspend=n'
-    expose:
-      - 8080
-    restart: always
-    depends_on:
-      - cxbox-code-samples-postgres
-
-  cxbox-code-samples-node-2:
     image: 'cxbox/cxbox-code-samples:latest'
     environment:
       FRONTEND_AUTH_SERVER_URL: 'http://code-samples.cxbox.org/auth/'
