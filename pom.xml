@@ -169,6 +169,25 @@
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
+            <id>process-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}/meta</outputDirectory>
+              <resources>
+                <resource>
+                  <filtering>false</filtering>
+                  <directory>${basedir}/src/main/java</directory>
+                  <includes>
+                    <include>**/*.json</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
             <id>ui-resources</id>
             <phase>prepare-package</phase>
             <goals>
