@@ -1,0 +1,78 @@
+{
+  "name": "MyExample160Info",
+  "title": "Info title",
+  "type": "Info",
+  "bc": "myExampleBc160",
+  "fields": [
+    {
+      "label": "Custom multifield",
+      "key": "customFieldMultiField",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "label": "New Custom Field Multi",
+          "key": "customFieldAdditionalMulti",
+          "type": "input"
+        },
+        {
+          "label": "Custom Field Multi",
+          "key": "customFieldMulti",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "label": "Custom multifield hint",
+      "key": "customFieldMultifieldHint",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "key": "customField",
+          "type": "input"
+        },
+        {
+          "key": "informationField",
+          "type": "hint",
+          "showLength": 100
+        }
+      ]
+    },
+    {
+      "label": "Custom Field Additional",
+      "key": "customFieldAdditional",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultiField",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultifieldHint",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldAdditional",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

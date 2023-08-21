@@ -1,0 +1,42 @@
+package org.demo.documentation.percent.required;
+
+import org.cxbox.core.crudma.bc.BusinessComponent;
+import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.Actions;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class MyExample8Service extends VersionAwareResponseService<MyExample8DTO, MyEntity8> {
+
+	private final MyEntity8Repository repository;
+
+	public MyExample8Service(MyEntity8Repository repository) {
+		super(MyExample8DTO.class, MyEntity8.class, null, MyExample8Meta.class);
+		this.repository = repository;
+	}
+
+	@Override
+	protected CreateResult<MyExample8DTO> doCreateEntity(MyEntity8 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
+
+	@Override
+	protected ActionResultDTO<MyExample8DTO> doUpdateEntity(MyEntity8 entity, MyExample8DTO data, BusinessComponent bc) {
+
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+
+	@Override
+	public Actions<MyExample8DTO> getActions() {
+		return Actions.<MyExample8DTO>builder()
+				.newAction()
+				.action("save", "save")
+				.add()
+				.build();
+	}
+
+}

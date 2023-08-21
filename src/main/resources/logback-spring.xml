@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+
+  <logger level="OFF" name="org.zalando.logbook"/>
+  <logger level="OFF" name="org.cxbox.api.util.i18n"/>
+  <logger level="OFF" name="org.springframework.context.support"/>
+  <logger level="DEBUG" name="net.ttddyy.dsproxy.listener"/>
+  
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+</configuration>

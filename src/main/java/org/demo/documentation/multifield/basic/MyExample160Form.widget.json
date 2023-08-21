@@ -1,0 +1,78 @@
+{
+  "name": "MyExample160Form",
+  "title": "Form title",
+  "type": "Form",
+  "bc": "myExampleBc160",
+  "fields": [
+    {
+      "label": "Custom multifield",
+      "key": "customFieldMulti",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "label": "New Custom Field Multi",
+          "key": "customFieldAdditionalMulti",
+          "type": "input"
+        },
+        {
+          "label": "Custom Field Multi",
+          "key": "customFieldMulti",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "label": "Custom multifield hint",
+      "key": "customFieldMultiHint",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "key": "customField",
+          "type": "input"
+        },
+        {
+          "key": "informationField",
+          "type": "hint",
+          "showLength": 100
+        }
+      ]
+    },
+    {
+      "label": "Custom Field Additional",
+      "key": "customFieldAdditional",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMulti",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultiHint",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldAdditional",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

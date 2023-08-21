@@ -1,0 +1,26 @@
+package org.demo.documentation.text.validationdynamic;
+
+import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
+import org.cxbox.core.dto.rowmeta.FieldsMeta;
+import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
+import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyExample332Meta extends FieldMetaBuilder<MyExample332DTO> {
+
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample332DTO> fields, InnerBcDescription bcDescription,
+			Long id, Long parentId) {
+		fields.setEnabled(MyExample332DTO_.customFieldAdditional);
+		fields.setEnabled(MyExample332DTO_.customField);
+	}
+
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample332DTO> fields, InnerBcDescription bcDescription,
+			Long parentId) {
+		fields.enableFilter(MyExample332DTO_.customFieldAdditional);
+		fields.enableFilter(MyExample332DTO_.customField);
+	}
+
+}

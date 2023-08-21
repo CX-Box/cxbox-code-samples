@@ -1,0 +1,66 @@
+package org.demo.documentation.multivalue.validationbusinessex;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import org.cxbox.core.crudma.bc.BusinessComponent;
+import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
+import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.exception.BusinessException;
+import org.cxbox.core.service.action.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class MyExample192Service extends VersionAwareResponseService<MyExample192DTO, MyEntity192> {
+
+	private final MyEntity192Repository repository;
+
+	@Autowired
+	private EntityManager entityManager;
+
+	public MyExample192Service(MyEntity192Repository repository) {
+		super(MyExample192DTO.class, MyEntity192.class, null, MyExample192Meta.class);
+		this.repository = repository;
+	}
+
+	@Override
+	protected CreateResult<MyExample192DTO> doCreateEntity(MyEntity192 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
+
+	@Override
+	protected ActionResultDTO<MyExample192DTO> doUpdateEntity(MyEntity192 entity, MyExample192DTO data,
+			BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample192DTO_.customField)) {
+			entity.getCustomFieldList().clear();
+			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
+					.map(MultivalueFieldSingleValue::getId)
+					.filter(Objects::nonNull)
+					.map(Long::parseLong)
+					.map(e -> entityManager.getReference(MyEntity193.class, e))
+					.collect(Collectors.toList()));
+			data.getCustomField().getValues()
+					.stream()
+					.filter(val -> val.getValue().matches("[A-Za-z]+") == false)
+					.findFirst()
+					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain only letters."));
+		}
+
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+
+	@Override
+	public Actions<MyExample192DTO> getActions() {
+		return Actions.<MyExample192DTO>builder()
+				.newAction()
+				.action("save", "save")
+				.add()
+				.build();
+	}
+
+}

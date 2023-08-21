@@ -1,0 +1,21 @@
+package org.demo.documentation.date.sorting;
+
+import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.model.core.entity.BaseEntity;
+
+//dateSorting
+@Entity
+@Table(name = "DateSortingEntity")
+@Getter
+@Setter
+@NoArgsConstructor
+public class DateSortingEntity extends BaseEntity {
+
+	private LocalDate customField;
+
+}

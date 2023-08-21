@@ -1,0 +1,45 @@
+{
+  "name": "MyExample113Info",
+  "title": "Info title",
+  "type": "Info",
+  "bc": "myExampleBc113",
+  "fields": [
+    {
+      "label": "Custom Field Id",
+      "key": "customFieldId",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "pickList",
+      "popupBcName": "myEntity128PickListPopup",
+      "pickMap": {
+        "customField": "customField",
+        "customFieldId": "id"
+      }
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldId",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

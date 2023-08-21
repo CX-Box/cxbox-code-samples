@@ -1,0 +1,20 @@
+package org.demo.documentation.picklist.validationbusinessex;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyEntity129PickDTO extends DataResponseDTO {
+
+	private String customField;
+
+	public MyEntity129PickDTO(MyEntity129 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
+
+}

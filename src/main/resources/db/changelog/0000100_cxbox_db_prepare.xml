@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  logicalFilePath="db/changelog/0000100_cxbox_db_prepare.xml"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+  <changeSet author="initial" dbms="oracle" id="ORACLE CHAR SEMMANTICS" runAlways="true">
+    <sql>
+      alter session set NLS_LENGTH_SEMANTICS ='CHAR';
+    </sql>
+  </changeSet>
+  <changeSet author="initial" dbms="postgresql" id="POSTGRESQL CLOB DOMAIN" runAlways="true">
+    <sql>
+      DO 'BEGIN
+            create domain clob as text;
+            EXCEPTION
+            WHEN duplicate_object THEN null;
+            END';
+    </sql>
+  </changeSet>
+  <changeSet author="initial" dbms="postgresql" id="POSTGRESQL TO_CLOB FUNCTION" runAlways="true">
+    <sql>
+      create or replace function to_clob(str text) returns text as
+      'begin
+      return str;
+      end'
+        LANGUAGE plpgsql;
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

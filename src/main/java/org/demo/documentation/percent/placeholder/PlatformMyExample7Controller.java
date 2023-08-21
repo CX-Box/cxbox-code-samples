@@ -1,0 +1,63 @@
+package org.demo.documentation.percent.placeholder;
+
+import lombok.Getter;
+import org.cxbox.core.crudma.bc.BcIdentifier;
+import org.cxbox.core.crudma.bc.EnumBcIdentifier;
+import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
+import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.springframework.stereotype.Component;
+
+/**
+ * This is actually an analog of a usual @RestController.
+ * When you add enum, you just add rest endpoints, that cxbox UI can call.
+ * We could actually make a usual @RestController and make it Generic,
+ * but current enum approach shows, that it is less error-prone in huge enterprise projects
+ * (because single line in this enum creates >5 rest endpoints)
+ */
+@Getter
+public enum PlatformMyExample7Controller implements EnumBcIdentifier {
+
+	// @formatter:on
+	myExampleBc7(MyExample7Service.class);
+
+	// @formatter:on
+
+	public static final EnumBcIdentifier.Holder<PlatformMyExample7Controller> Holder = new Holder<>(
+			PlatformMyExample7Controller.class);
+
+	private final BcDescription bcDescription;
+
+	PlatformMyExample7Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
+
+	PlatformMyExample7Controller(String parentName, Class<?> serviceClass) {
+		this(parentName, serviceClass, false);
+	}
+
+	PlatformMyExample7Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
+
+	PlatformMyExample7Controller(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
+
+	PlatformMyExample7Controller(Class<?> serviceClass, boolean refresh) {
+		this((String) null, serviceClass, refresh);
+	}
+
+	PlatformMyExample7Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
+
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample7Controller> {
+
+		public BcSupplier() {
+			super(PlatformMyExample7Controller.Holder);
+		}
+
+	}
+
+}

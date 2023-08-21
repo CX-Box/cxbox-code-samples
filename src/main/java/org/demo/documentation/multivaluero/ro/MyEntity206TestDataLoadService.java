@@ -1,0 +1,30 @@
+package org.demo.documentation.multivaluero.ro;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyEntity206TestDataLoadService {
+
+	@Autowired
+	MyEntity206Repository repository;
+
+	@Autowired
+	MyEntity207Repository repository207;
+
+	@Autowired
+	InternalAuthorizationService authzService;
+
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository207.save(new MyEntity207().setCustomField("Test data"));
+		repository.save(new MyEntity206());
+	}
+
+}

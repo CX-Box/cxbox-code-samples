@@ -1,0 +1,25 @@
+package org.demo.documentation.input.validationannotation;
+
+import javax.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.util.filter.SearchParameter;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyExample163DTO extends DataResponseDTO {
+
+	@SearchParameter(name = "customField")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	private String customField;
+
+	public MyExample163DTO(MyEntity163 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
+
+}
