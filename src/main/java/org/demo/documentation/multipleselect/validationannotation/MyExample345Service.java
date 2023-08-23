@@ -49,12 +49,6 @@ public class MyExample345Service extends VersionAwareResponseService<MyExample34
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					dynamicError.sumError(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 

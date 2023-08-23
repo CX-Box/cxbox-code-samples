@@ -1,8 +1,6 @@
 package org.demo.documentation.number.validationdynamic;
 
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -31,7 +29,7 @@ public class MyExample2337Service extends VersionAwareResponseService<MyExample2
 	@Override
 	protected ActionResultDTO<MyExample2337DTO> doUpdateEntity(MyEntity2337 entity, MyExample2337DTO data,
 			BusinessComponent bc) {
-
+		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -41,27 +39,18 @@ public class MyExample2337Service extends VersionAwareResponseService<MyExample2
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample2337DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample2337DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (dto.getCustomField() < 100000) {
-			entity.addField(
-					MyExample2337DTO_.customField.getName(),
-					errorMessage("The field 'customField' cannot be less than 100 000.")
-			);
+			entity.addField(MyExample2337DTO_.customField.getName(), "The field 'customField' cannot be less than 100 000.");
 		}
 		if (dto.getCustomField() < 100000) {
 			entity.addField(
 					MyExample2337DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' cannot be less than 100 000.")
+					"The field 'customFieldAdditional' cannot be less than 100 000."
 			);
 		}
 		if (entity.getFields().size() > 0) {

@@ -1,7 +1,5 @@
 package org.demo.documentation.multipleselect.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -32,7 +30,7 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 	@Override
 	protected ActionResultDTO<MyExample334DTO> doUpdateEntity(MyEntity334 entity, MyExample334DTO data,
 			BusinessComponent bc) {
-
+		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -42,16 +40,10 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample334DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample334DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		Boolean castomFieldFlg = dto.getCustomField().getValues()
 				.stream()
@@ -64,13 +56,13 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 		if (castomFieldFlg) {
 			entity.addField(
 					MyExample334DTO_.customField.getName(),
-					errorMessage("The field 'customField' cannot contain 'High'")
+					"Custom message about error"
 			);
 		}
 		if (castomFieldAdditionalFlg) {
 			entity.addField(
 					MyExample334DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customField' cannot contain 'High'")
+					"Custom message about error"
 			);
 		}
 		if (entity.getFields().size() > 0) {

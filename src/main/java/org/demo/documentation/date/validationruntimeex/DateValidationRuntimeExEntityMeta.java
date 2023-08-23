@@ -21,9 +21,6 @@ public class DateValidationRuntimeExEntityMeta extends FieldMetaBuilder<DateVali
 		fields.setEnabled(
 				DateValidationRuntimeExEntityDTO_.customField
 		);
-		fields.setRequired(
-				DateValidationRuntimeExEntityDTO_.customField
-		);
 	}
 
 	@Override

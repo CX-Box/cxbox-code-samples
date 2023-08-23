@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 // 322
 // 322
-//  DataTimeWithSeconds field level validation dynamic",
+//  DataTimeWithSeconds validation field level dynamic",
 
 @Entity
 @Getter

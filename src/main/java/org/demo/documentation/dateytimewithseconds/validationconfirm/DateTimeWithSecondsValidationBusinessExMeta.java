@@ -22,9 +22,6 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 		fields.setEnabled(
 				DateTimeWithSecondsValidationBusinessExDTO_.customField
 		);
-		fields.setRequired(
-				DateTimeWithSecondsValidationBusinessExDTO_.customField
-		);
 	}
 
 	@Override

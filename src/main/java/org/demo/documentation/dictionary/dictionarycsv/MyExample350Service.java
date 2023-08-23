@@ -1,5 +1,8 @@
 package org.demo.documentation.dictionary.dictionarycsv;
 
+import static org.demo.documentation.dictionary.dictionarycsv.AdministeredDictionaryType.REGIONS;
+
+import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -30,7 +33,13 @@ public class MyExample350Service extends VersionAwareResponseService<MyExample35
 	@Override
 	protected ActionResultDTO<MyExample350DTO> doUpdateEntity(MyEntity350 entity, MyExample350DTO data,
 			BusinessComponent bc) {
-
+		setMappedIfChanged(data, MyExample350DTO_.customField, entity::setCustomField, val -> {
+			if (StringUtils.isNotBlank(val)) {
+				return REGIONS.lookupName(val);
+			} else {
+				return null;
+			}
+		});
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -39,12 +48,6 @@ public class MyExample350Service extends VersionAwareResponseService<MyExample35
 		return Actions.<MyExample350DTO>builder()
 				.newAction()
 				.action("save", "save")
-				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					dynamicError.sumError(bc, dto);
-					return new ActionResultDTO<>();
-				})
 				.add()
 				.build();
 	}

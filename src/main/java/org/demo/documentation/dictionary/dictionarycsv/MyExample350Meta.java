@@ -1,5 +1,7 @@
 package org.demo.documentation.dictionary.dictionarycsv;
 
+import static org.demo.documentation.dictionary.dictionarycsv.AdministeredDictionaryType.REGIONS;
+
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
@@ -12,11 +14,17 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
+		fields.setEnabled(MyExample350DTO_.customField);
+		fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
+
 	}
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
+		fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
+		fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
+		fields.enableFilter(MyExample350DTO_.customField);
 	}
 
 }

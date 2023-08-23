@@ -31,26 +31,21 @@ public class MyExample114Service extends VersionAwareResponseService<MyExample11
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
-	//--8<-- [start:documentation]
 	@Override
 	protected ActionResultDTO<MyExample114DTO> doUpdateEntity(MyEntity114 entity, MyExample114DTO data,
 			BusinessComponent bc) {
-
+		if (StringUtils.isNotEmpty(data.getCustomField())
+				&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
+		) {
+			throw new BusinessException().addPopup("The field 'customField' can contain only letters.");
+		}
 		if (data.isFieldChanged(MyExample114DTO_.customFieldId)) {
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
 					? entityManager.getReference(MyEntity129.class, data.getCustomFieldId())
 					: null);
-
-			if (StringUtils.isNotEmpty(data.getCustomField())
-					&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
-			) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only letters.");
-			}
 		}
-
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
-	//--8<-- [end:documentation]
 
 	@Override
 	public Actions<MyExample114DTO> getActions() {

@@ -1,7 +1,5 @@
 package org.demo.documentation.dictionary.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -33,7 +31,7 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 	@Override
 	protected ActionResultDTO<MyExample323DTO> doUpdateEntity(MyEntity323 entity, MyExample323DTO data,
 			BusinessComponent bc) {
-
+		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -43,28 +41,16 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample323DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample323DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (!dto.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
-			entity.addField(
-					MyExample323DTO_.customField.getName(),
-					errorMessage("The field 'customField' can contain only 'High'")
-			);
+			entity.addField(MyExample323DTO_.customField.getName(), "Custom message about error");
 		}
 		if (!dto.getCustomFieldAdditional().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
-			entity.addField(
-					MyExample323DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' can contain only 'High'")
-			);
+			entity.addField(MyExample323DTO_.customFieldAdditional.getName(), "Custom message about error");
 		}
 		if (entity.getFields().size() > 0) {
 			throw new BusinessException().setEntity(entity);

@@ -21,9 +21,6 @@ public class DateTimeValidationMeta extends FieldMetaBuilder<DateTimeValidationD
 		fields.setEnabled(
 				DateTimeValidationDTO_.customField
 		);
-		fields.setRequired(
-				DateTimeValidationDTO_.customField
-		);
 	}
 
 	@Override

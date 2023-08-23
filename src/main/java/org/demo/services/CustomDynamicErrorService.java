@@ -1,7 +1,5 @@
 package org.demo.services;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import java.util.HashSet;
 import java.util.Set;
 import org.cxbox.api.data.dto.DataResponseDTO;
@@ -18,7 +16,7 @@ public class CustomDynamicErrorService {
 		Set<String> badFields = new HashSet<>();
 		badFields.addAll(dto.getSerializableFields());
 		for (String fieldName : badFields) {
-			entity.addField(fieldName, errorMessage("Custom error message"));
+			entity.addField(fieldName, "Custom error message");
 		}
 		throw new BusinessException().setEntity(entity);
 	}

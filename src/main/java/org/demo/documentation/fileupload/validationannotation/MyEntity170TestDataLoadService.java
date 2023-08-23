@@ -20,7 +20,8 @@ public class MyEntity170TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity170());
+		repository.save(new MyEntity170().setCustomField("IMG_5867.jpg")
+				.setCustomFieldId("a43d9b32-98c6-44fa-a198-e98de138c833"));
 	}
 
 }

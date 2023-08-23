@@ -1,7 +1,5 @@
 package org.demo.documentation.dateytimewithseconds.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import java.time.LocalDateTime;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -34,6 +32,7 @@ public class MyExample322Service extends VersionAwareResponseService<MyExample32
 	@Override
 	protected ActionResultDTO<MyExample322DTO> doUpdateEntity(MyEntity322 entity, MyExample322DTO data,
 			BusinessComponent bc) {
+		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample322DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
 		}
@@ -50,28 +49,20 @@ public class MyExample322Service extends VersionAwareResponseService<MyExample32
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample322DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample322DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		LocalDateTime sysdate = LocalDateTime.now();
-		if (sysdate.compareTo(dto.getCustomField()) > 0) {
-			entity.addField(
-					MyExample322DTO_.customField.getName(),
-					errorMessage("The field 'customField' cannot be less than the current date")
-			);
+		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomField()) > 0) {
+			entity.addField(MyExample322DTO_.customField.getName(),
+					"The field 'customField' cannot be less than the current date");
 		}
-		if (sysdate.compareTo(dto.getCustomFieldAdditional()) > 0) {
+		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomFieldAdditional()) > 0) {
 			entity.addField(
 					MyExample322DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' cannot be less than the current date")
+					"The field 'customFieldAdditional' cannot be less than the current date"
 			);
 		}
 		if (entity.getFields().size() > 0) {

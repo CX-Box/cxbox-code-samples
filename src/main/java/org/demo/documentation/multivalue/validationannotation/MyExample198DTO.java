@@ -16,7 +16,7 @@ import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 @NoArgsConstructor
 public class MyExample198DTO extends DataResponseDTO {
 
-	@NotNull(message = "Custom message about required field")
+	@NotNull(message = "Custom message about error")
 	@SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
 	private MultivalueField customField;
 

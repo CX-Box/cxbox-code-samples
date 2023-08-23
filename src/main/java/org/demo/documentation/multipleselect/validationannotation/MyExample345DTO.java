@@ -15,7 +15,7 @@ import org.demo.documentation.multipleselect.validationannotation.enums.CustomFi
 @NoArgsConstructor
 public class MyExample345DTO extends DataResponseDTO {
 
-	@NotNull(message = "Custom message about required field")
+	@NotNull(message = "Custom message about error")
 	@SearchParameter(name = "customField.value", multiFieldKey = StringValueProvider.class)
 	private MultivalueField customField;
 

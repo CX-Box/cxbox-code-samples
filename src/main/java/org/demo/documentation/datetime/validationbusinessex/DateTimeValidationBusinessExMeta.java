@@ -21,9 +21,6 @@ public class DateTimeValidationBusinessExMeta extends FieldMetaBuilder<DateTimeV
 		fields.setEnabled(
 				DateTimeValidationBusinessExDTO_.customField
 		);
-		fields.setRequired(
-				DateTimeValidationBusinessExDTO_.customField
-		);
 	}
 
 	@Override
