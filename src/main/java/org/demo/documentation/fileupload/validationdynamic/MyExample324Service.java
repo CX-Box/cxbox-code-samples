@@ -1,7 +1,5 @@
 package org.demo.documentation.fileupload.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -32,6 +30,7 @@ public class MyExample324Service extends VersionAwareResponseService<MyExample32
 	@Override
 	protected ActionResultDTO<MyExample324DTO> doUpdateEntity(MyEntity324 entity, MyExample324DTO data,
 			BusinessComponent bc) {
+		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample324DTO_.customFieldAdditionalId)) {
 			entity.setCustomFieldAdditionalId(data.getCustomFieldAdditionalId());
 		}
@@ -54,27 +53,18 @@ public class MyExample324Service extends VersionAwareResponseService<MyExample32
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample324DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample324DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (!String.valueOf(dto.getCustomField()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample324DTO_.customField.getName(),
-					errorMessage("The field 'customField' can contain only letters.")
-			);
+			entity.addField(MyExample324DTO_.customField.getName(), "The field 'customField' can contain only letters.");
 		}
 		if (!String.valueOf(dto.getCustomFieldAdditional()).matches("[A-Za-z]+")) {
 			entity.addField(
 					MyExample324DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' can contain only letters.")
+					"The field 'customFieldAdditional' can contain only letters."
 			);
 		}
 		if (entity.getFields().size() > 0) {

@@ -31,16 +31,16 @@ public class MyExample248Service extends VersionAwareResponseService<MyExample24
 	protected ActionResultDTO<MyExample248DTO> doUpdateEntity(MyEntity248 entity, MyExample248DTO data,
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample248DTO_.customField)) {
-			entity.setCustomField(
-					data.getCustomField().getValues()
-							.stream()
-							.map(v -> CustomFieldEnum.getByValue(v.getValue()))
-							.collect(Collectors.toSet()));
 			data.getCustomField().getValues()
 					.stream()
 					.filter(val -> val.getValue().equals(CustomFieldEnum.HIGH.getValue()))
 					.findFirst()
 					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain 'High'"));
+			entity.setCustomField(
+					data.getCustomField().getValues()
+							.stream()
+							.map(v -> CustomFieldEnum.getByValue(v.getValue()))
+							.collect(Collectors.toSet()));
 
 		}
 

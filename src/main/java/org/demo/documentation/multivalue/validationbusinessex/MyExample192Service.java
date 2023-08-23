@@ -37,6 +37,11 @@ public class MyExample192Service extends VersionAwareResponseService<MyExample19
 	protected ActionResultDTO<MyExample192DTO> doUpdateEntity(MyEntity192 entity, MyExample192DTO data,
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample192DTO_.customField)) {
+			data.getCustomField().getValues()
+					.stream()
+					.filter(val -> val.getValue().matches("[A-Za-z]+") == false)
+					.findFirst()
+					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain only letters."));
 			entity.getCustomFieldList().clear();
 			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
 					.map(MultivalueFieldSingleValue::getId)
@@ -44,11 +49,6 @@ public class MyExample192Service extends VersionAwareResponseService<MyExample19
 					.map(Long::parseLong)
 					.map(e -> entityManager.getReference(MyEntity193.class, e))
 					.collect(Collectors.toList()));
-			data.getCustomField().getValues()
-					.stream()
-					.filter(val -> val.getValue().matches("[A-Za-z]+") == false)
-					.findFirst()
-					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain only letters."));
 		}
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));

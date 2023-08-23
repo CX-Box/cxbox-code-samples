@@ -26,8 +26,8 @@ public class MyEntity198TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		MyEntity199 myEntity1 = new MyEntity199().setCustomField("Test data");
-		MyEntity199 myEntity2 = new MyEntity199().setCustomField("Abs data");
+		MyEntity199 myEntity1 = new MyEntity199().setCustomField("Test123 data");
+		MyEntity199 myEntity2 = new MyEntity199().setCustomField("Abs123 data");
 		List<MyEntity199> list = new ArrayList<>();
 		list.add(myEntity1);
 		list.add(myEntity2);

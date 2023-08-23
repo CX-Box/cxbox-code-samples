@@ -24,6 +24,9 @@ public class MyEntity125PickPickListService extends VersionAwareResponseService<
 	@Override
 	protected ActionResultDTO<MyEntity125PickDTO> doUpdateEntity(MyEntity125 entity, MyEntity125PickDTO data,
 			BusinessComponent bc) {
+		if (data.isFieldChanged(MyEntity125PickDTO_.customFieldAdditional)) {
+			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
+		}
 		return null;
 	}
 

@@ -1,6 +1,6 @@
 package org.demo.documentation.fileupload.validationannotation;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 public class MyExample170DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
-	@NotNull(message = "Custom message about required field")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
 	private String customField;
 
 	@SearchParameter(name = "customFieldId")

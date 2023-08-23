@@ -37,7 +37,7 @@ public class DateTimeValidationBusinessExService extends
 			DateTimeValidationBusinessExDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeValidationBusinessExDTO_.customField)) {
 			LocalDate sysdate = LocalDate.now();
-			if (sysdate.compareTo(data.getCustomField().toLocalDate()) > 0) {
+			if (data.getCustomField() != null && sysdate.compareTo(data.getCustomField().toLocalDate()) > 0) {
 				throw new BusinessException().addPopup("The field 'customField' cannot be less than the current date");
 			}
 			entity.setCustomField(data.getCustomField());

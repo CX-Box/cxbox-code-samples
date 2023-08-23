@@ -1,7 +1,5 @@
 package org.demo.documentation.checkbox.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -33,6 +31,7 @@ public class MyExample289Service extends VersionAwareResponseService<MyExample28
 	@Override
 	protected ActionResultDTO<MyExample289DTO> doUpdateEntity(MyEntity289 entity, MyExample289DTO data,
 			BusinessComponent bc) {
+		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample289DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
 		}
@@ -49,27 +48,18 @@ public class MyExample289Service extends VersionAwareResponseService<MyExample28
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample289DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample289DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (Boolean.FALSE.equals(dto.getCustomField())) {
-			entity.addField(
-					MyExample289DTO_.customField.getName(),
-					errorMessage("The field 'customField' can contain only 'True")
-			);
+			entity.addField(MyExample289DTO_.customField.getName(), "The field 'customField' can contain only 'True");
 		}
 		if (Boolean.FALSE.equals(dto.getCustomFieldAdditional())) {
 			entity.addField(
 					MyExample289DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' can contain only 'True")
+					"The field 'customFieldAdditional' can contain only 'True"
 			);
 		}
 		if (entity.getFields().size() > 0) {

@@ -21,9 +21,6 @@ public class DateTimeValidationRuntimeExMeta extends FieldMetaBuilder<DateTimeVa
 		fields.setEnabled(
 				DateTimeValidationRuntimeExDTO_.customField
 		);
-		fields.setRequired(
-				DateTimeValidationRuntimeExDTO_.customField
-		);
 	}
 
 	@Override

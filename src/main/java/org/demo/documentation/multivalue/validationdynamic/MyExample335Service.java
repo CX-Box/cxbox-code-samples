@@ -1,8 +1,6 @@
 package org.demo.documentation.multivalue.validationdynamic;
 
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -32,7 +30,7 @@ public class MyExample335Service extends VersionAwareResponseService<MyExample33
 	@Override
 	protected ActionResultDTO<MyExample335DTO> doUpdateEntity(MyEntity335 entity, MyExample335DTO data,
 			BusinessComponent bc) {
-
+		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -42,28 +40,16 @@ public class MyExample335Service extends VersionAwareResponseService<MyExample33
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample335DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample335DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (!String.valueOf(dto.getCustomField()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample335DTO_.customField.getName(),
-					errorMessage("The field 'customField' can contain only letters.")
-			);
+			entity.addField(MyExample335DTO_.customField.getName(), "Custom message about required field");
 		}
 		if (!String.valueOf(dto.getCustomFieldAdditional()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample335DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customFieldAdditional' can contain only letters.")
-			);
+			entity.addField(MyExample335DTO_.customFieldAdditional.getName(), "Custom message about required field");
 		}
 		if (entity.getFields().size() > 0) {
 			throw new BusinessException().setEntity(entity);

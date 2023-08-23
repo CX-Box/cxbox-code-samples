@@ -1,7 +1,5 @@
 package org.demo.documentation.percent.validationdynamic;
 
-import static org.cxbox.api.util.i18n.ErrorMessageSource.errorMessage;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -34,6 +32,7 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 	@Override
 	protected ActionResultDTO<MyExample328DTO> doUpdateEntity(MyEntity328 entity, MyExample328DTO data,
 			BusinessComponent bc) {
+		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample328DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
 		}
@@ -50,27 +49,18 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 				.newAction()
 				.action("save", "save")
 				.add()
-				.action("check", "Check")
-				.invoker((bc, dto) -> {
-					validate(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
 				.build();
 	}
 
-	private void validate(BusinessComponent bc, MyExample328DTO dto) {
+	private void validateFields(BusinessComponent bc, MyExample328DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (dto.getCustomField() < 5) {
-			entity.addField(
-					MyExample328DTO_.customField.getName(),
-					errorMessage("The field 'customField' cannot be less than 5%")
-			);
+			entity.addField(MyExample328DTO_.customField.getName(), "The field 'customField' cannot be less than 5%");
 		}
 		if (dto.getCustomField() < 5) {
 			entity.addField(
 					MyExample328DTO_.customFieldAdditional.getName(),
-					errorMessage("The field 'customField' cannot be less than 5%")
+					"The field 'customField' cannot be less than 5%"
 			);
 		}
 		if (entity.getFields().size() > 0) {

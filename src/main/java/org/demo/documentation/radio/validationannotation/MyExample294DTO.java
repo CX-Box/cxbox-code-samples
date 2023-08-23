@@ -15,7 +15,7 @@ import org.demo.documentation.radio.validationannotation.enums.CustomFieldEnum;
 public class MyExample294DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
-	@NotNull(message = "Custom message about required field")
+	@NotNull(message = "Custom message about error")
 	private CustomFieldEnum customField;
 
 	public MyExample294DTO(MyEntity294 entity) {

@@ -20,9 +20,6 @@ public class DateConfirmMeta extends FieldMetaBuilder<DateConfirmDTO> {
 		fields.setEnabled(
 				DateConfirmDTO_.customField
 		);
-		fields.setRequired(
-				DateConfirmDTO_.customField
-		);
 	}
 
 	@Override
