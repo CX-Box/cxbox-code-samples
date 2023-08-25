@@ -100,6 +100,15 @@ document:
   force-active-enabled: ${FORCE_ACTIVE_ENABLED:true}
 
 logbook:
+  include:
+    - /**
+  exclude:
+    - /ui/**
+    - /swagger-ui/**
+    - /v3/api-docs/**
+    - /api/v1/data/**
+    - /api/v1/row-meta/**
+    - /api/v1/count/**
   write:
     max-body-size: 5000
   format:

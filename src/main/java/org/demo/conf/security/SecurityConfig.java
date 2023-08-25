@@ -1,6 +1,8 @@
 package org.demo.conf.security;
 
 
+import static org.demo.controller.SourcesController.SOURCES_ORIGINAL_PATH_PREFIX;
+
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
 import org.cxbox.core.config.properties.UIProperties;
@@ -67,6 +69,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 						.antMatchers(uiProperties.getPath() + "/**").permitAll()
 						.antMatchers("/api/v1/file/**").permitAll()
 						.antMatchers("/api/v1/auth/**").permitAll()
+						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
+						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
 						.antMatchers("/**").fullyAuthenticated());
 	}
 
