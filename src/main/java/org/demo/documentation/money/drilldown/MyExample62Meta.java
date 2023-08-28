@@ -15,6 +15,7 @@ public class MyExample62Meta extends FieldMetaBuilder<MyExample62DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:drilldown]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample62DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -25,6 +26,7 @@ public class MyExample62Meta extends FieldMetaBuilder<MyExample62DTO> {
 				"/screen/myexample62/view/myexample62info/" + PlatformMyExample62Controller.myExampleBc62 + "/" + id
 		);
 	}
+	// --8<-- [end:drilldown]
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample62DTO> fields, InnerBcDescription bcDescription, Long parentId) {

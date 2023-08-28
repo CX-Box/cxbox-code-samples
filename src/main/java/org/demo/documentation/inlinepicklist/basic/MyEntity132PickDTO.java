@@ -8,7 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Getter
 @Setter
 @NoArgsConstructor
-//--8<-- [start:Basics]
+// --8<-- [start:Basics]
 public class MyEntity132PickDTO extends DataResponseDTO {
 
 	private String customField;
@@ -19,4 +19,4 @@ public class MyEntity132PickDTO extends DataResponseDTO {
 	}
 
 }
-//--8<-- [end:Basics]
+// --8<-- [end:Basics]
