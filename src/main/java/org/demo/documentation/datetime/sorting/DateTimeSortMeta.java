@@ -1,4 +1,4 @@
-package org.demo.documentation.datetime.sort;
+package org.demo.documentation.datetime.sorting;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;

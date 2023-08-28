@@ -1,4 +1,4 @@
-package org.demo.documentation.datetime.sort;
+package org.demo.documentation.datetime.sorting;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

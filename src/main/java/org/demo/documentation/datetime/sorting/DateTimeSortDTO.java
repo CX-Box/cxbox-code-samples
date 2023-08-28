@@ -1,4 +1,4 @@
-package org.demo.documentation.datetime.sort;
+package org.demo.documentation.datetime.sorting;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
