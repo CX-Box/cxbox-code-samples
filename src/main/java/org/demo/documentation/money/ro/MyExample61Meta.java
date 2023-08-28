@@ -14,11 +14,13 @@ public class MyExample61Meta extends FieldMetaBuilder<MyExample61DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:ro]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample61DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 
 	}
+	// --8<-- [end:ro]
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample61DTO> fields, InnerBcDescription bcDescription, Long parentId) {
