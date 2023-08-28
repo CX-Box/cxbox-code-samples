@@ -21,7 +21,7 @@ public class DateTimePlaceholderEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateTimePlaceholderEntity().setCustomField(LocalDateTime.now()));
+		repository.save(new DateTimePlaceholderEntity());
 	}
 
 }

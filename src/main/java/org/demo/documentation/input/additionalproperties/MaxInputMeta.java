@@ -20,9 +20,6 @@ public class MaxInputMeta extends FieldMetaBuilder<MaxInputDTO> {
 		fields.setEnabled(
 				MaxInputDTO_.customField
 		);
-		fields.setRequired(
-				MaxInputDTO_.customField
-		);
 	}
 
 	@Override
