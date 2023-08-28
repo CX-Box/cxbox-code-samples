@@ -1,4 +1,4 @@
-package org.demo.documentation.datetime.validation;
+package org.demo.documentation.datetime.validationconfirm;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
