@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.util.filter.SearchParameter;
 import org.demo.documentation.inlinepicklist.placeholder.picklist.MyEntity145;
 
 @Getter
@@ -11,6 +12,7 @@ import org.demo.documentation.inlinepicklist.placeholder.picklist.MyEntity145;
 @NoArgsConstructor
 public class MyEntity145PickDTO extends DataResponseDTO {
 
+	@SearchParameter
 	private String customField;
 
 	public MyEntity145PickDTO(MyEntity145 entity) {

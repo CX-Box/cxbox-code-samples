@@ -20,7 +20,7 @@ public class MyEntity145PickMeta extends FieldMetaBuilder<MyEntity145PickDTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity145PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
-
+		fields.enableFilter(MyEntity145PickDTO_.customField);
 	}
 
 }
