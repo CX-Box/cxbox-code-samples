@@ -23,7 +23,7 @@ public class MyEntity257TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity257().setCustomField(Collections.singleton(CustomFieldEnum.HIGH)));
+		repository.save(new MyEntity257());
 	}
 
 }
