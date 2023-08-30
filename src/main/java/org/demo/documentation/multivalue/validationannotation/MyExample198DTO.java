@@ -2,6 +2,7 @@ package org.demo.documentation.multivalue.validationannotation;
 
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 @NoArgsConstructor
 public class MyExample198DTO extends DataResponseDTO {
 
-	@NotBlank(message = "Custom message about error")
+	@NotNull(message = "Custom message about error")
 	@SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
 	private MultivalueField customField;
 

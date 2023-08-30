@@ -30,7 +30,7 @@ public class MyEntity186TestDataLoadService {
 		List<MyEntity187> list = new ArrayList<>();
 		list.add(myEntity1);
 		list.add(myEntity2);
-		repository.save(new MyEntity186().setCustomFieldList(list));
+		repository.save(new MyEntity186());
 	}
 
 }

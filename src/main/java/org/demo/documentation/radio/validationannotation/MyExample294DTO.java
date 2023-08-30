@@ -1,6 +1,7 @@
 package org.demo.documentation.radio.validationannotation;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import org.demo.documentation.radio.validationannotation.enums.CustomFieldEnum;
 public class MyExample294DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
-	@NotBlank(message = "Custom message about error")
+	@NotNull(message = "Custom message about error")
 	private CustomFieldEnum customField;
 
 	public MyExample294DTO(MyEntity294 entity) {

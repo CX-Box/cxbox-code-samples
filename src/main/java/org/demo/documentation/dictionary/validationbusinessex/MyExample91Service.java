@@ -13,38 +13,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample91Service extends VersionAwareResponseService<MyExample91DTO, MyEntity91> {
 
-	private final MyEntity91Repository repository;
+    private final MyEntity91Repository repository;
 
-	public MyExample91Service(MyEntity91Repository repository) {
-		super(MyExample91DTO.class, MyEntity91.class, null, MyExample91Meta.class);
-		this.repository = repository;
-	}
+    public MyExample91Service(MyEntity91Repository repository) {
+        super(MyExample91DTO.class, MyEntity91.class, null, MyExample91Meta.class);
+        this.repository = repository;
+    }
 
-	@Override
-	protected CreateResult<MyExample91DTO> doCreateEntity(MyEntity91 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    @Override
+    protected CreateResult<MyExample91DTO> doCreateEntity(MyEntity91 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected ActionResultDTO<MyExample91DTO> doUpdateEntity(MyEntity91 entity, MyExample91DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample91DTO_.customField)) {
-			if (!CustomFieldEnum.HIGH.getValue().equals(data.getCustomField().getValue())) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only 'High'");
-			}
-			entity.setCustomField(data.getCustomField());
-		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
+    @Override
+    protected ActionResultDTO<MyExample91DTO> doUpdateEntity(MyEntity91 entity, MyExample91DTO data,
+                                                             BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample91DTO_.customField)) {
+            if (data.getCustomField() != null && !CustomFieldEnum.HIGH.getValue().equals(data.getCustomField().getValue())) {
+                throw new BusinessException().addPopup("The field 'customField' can contain only 'High'");
+            }
+            entity.setCustomField(data.getCustomField());
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	public Actions<MyExample91DTO> getActions() {
-		return Actions.<MyExample91DTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
-				.build();
-	}
+    @Override
+    public Actions<MyExample91DTO> getActions() {
+        return Actions.<MyExample91DTO>builder()
+                .newAction()
+                .action("save", "save")
+                .add()
+                .build();
+    }
 
 }
