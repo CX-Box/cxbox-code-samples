@@ -20,7 +20,7 @@ public class NumberPlaceholderEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new NumberPlaceholderEntity().setCustomField(Long.valueOf(123456)));
+		repository.save(new NumberPlaceholderEntity());
 	}
 
 }

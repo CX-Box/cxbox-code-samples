@@ -36,7 +36,12 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 			DateTimeWithSecondsValidationRuntimeExEntity entity, DateTimeWithSecondsValidationRuntimeExEntityDTO data,
 			BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeWithSecondsValidationRuntimeExEntityDTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
+			try {
+				//call custom function
+				throw new Exception("Error");
+			} catch (Exception e) {
+				throw new RuntimeException("An unexpected error has occurred.");
+			}
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}

@@ -35,7 +35,6 @@ public class DateTimeValidationRuntimeExService extends
 	protected ActionResultDTO<DateTimeValidationRuntimeExDTO> doUpdateEntity(DateTimeValidationRuntimeEx entity,
 			DateTimeValidationRuntimeExDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeValidationRuntimeExDTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
 			try {
 				//call custom function
 				throw new Exception("Error");

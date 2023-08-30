@@ -22,13 +22,11 @@ public class DateTimeWithSecondsDrillDownMeta extends FieldMetaBuilder<DateTimeW
 		fields.setEnabled(
 				DateTimeWithSecondsDrillDownDTO_.customField
 		);
-		fields.setRequired(
-				DateTimeWithSecondsDrillDownDTO_.customField
-		);
+
 		fields.setDrilldown(
 				DateTimeWithSecondsDrillDownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/DateTimeWithSeconds/view/dateTimeWithSecondsiDrillDowninfo/"
+				"/screen/DateTimeWithSecondsDrillDown/view/dateTimeWithSecondsiDrillDowninfo/"
 						+ CxboxDateTimeWithSecondsDrillDownController.dateTimeWithSecondsDrillDown + "/" + id
 		);
 	}
