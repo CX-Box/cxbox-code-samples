@@ -1,4 +1,4 @@
-package org.demo.documentation.percent.colorConst;
+package org.demo.documentation.percent.colorconst;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.BcIdentifier;

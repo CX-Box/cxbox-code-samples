@@ -1,4 +1,4 @@
-package org.demo.documentation.percent.colorConst;
+package org.demo.documentation.percent.colorconst;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

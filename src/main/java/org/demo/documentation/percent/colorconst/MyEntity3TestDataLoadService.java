@@ -1,4 +1,4 @@
-package org.demo.documentation.percent.colorConst;
+package org.demo.documentation.percent.colorconst;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;

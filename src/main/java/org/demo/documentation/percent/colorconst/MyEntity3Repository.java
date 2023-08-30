@@ -1,4 +1,4 @@
-package org.demo.documentation.percent.colorConst;
+package org.demo.documentation.percent.colorconst;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -20,7 +20,7 @@ public class MyEntity7TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity7().setCustomField(Long.valueOf(27)));
+		repository.save(new MyEntity7());
 	}
 
 }
