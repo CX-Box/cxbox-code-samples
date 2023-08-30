@@ -22,7 +22,7 @@ public class DateTimeWithSecondsPlaceholderEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateTimeWithSecondsPlaceholderEntity().setCustomField(LocalDateTime.now()));
+		repository.save(new DateTimeWithSecondsPlaceholderEntity());
 	}
 
 }
