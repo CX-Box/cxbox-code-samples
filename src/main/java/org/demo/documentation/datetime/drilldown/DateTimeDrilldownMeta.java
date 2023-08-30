@@ -29,7 +29,7 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 		fields.setDrilldown(
 				DateTimeDrilldownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/DateTimeDrilldown/view/DateTimeDrilldowninfo/" + CxboxDateTimeDrilldownController.dateTimeDrilldown
+				"/screen/DateTimeDrilldown/view/DateTimeDrilldownform/" + CxboxDateTimeDrilldownController.dateTimeDrilldown
 						+ "/" + id
 		);
 	}

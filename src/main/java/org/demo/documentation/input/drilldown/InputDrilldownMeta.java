@@ -28,7 +28,7 @@ public class InputDrilldownMeta extends FieldMetaBuilder<InputDrilldownDTO> {
 		fields.setDrilldown(
 				InputDrilldownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/InputDrilldown/view/InputDrilldowninfo/" + CxboxInputDrilldownController.InputDrilldown + "/" + id
+				"/screen/InputDrilldown/view/InputDrilldownform/" + CxboxInputDrilldownController.InputDrilldown + "/" + id
 		);
 	}
 

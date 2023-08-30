@@ -26,7 +26,7 @@ public class DateTimeWithSecondsDrillDownMeta extends FieldMetaBuilder<DateTimeW
 		fields.setDrilldown(
 				DateTimeWithSecondsDrillDownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/DateTimeWithSecondsDrillDown/view/dateTimeWithSecondsiDrillDowninfo/"
+				"/screen/DateTimeWithSecondsDrillDown/view/DateTimeWithSecondsDrillDownform/"
 						+ CxboxDateTimeWithSecondsDrillDownController.dateTimeWithSecondsDrillDown + "/" + id
 		);
 	}

@@ -22,7 +22,7 @@ public class MyExample62Meta extends FieldMetaBuilder<MyExample62DTO> {
 		fields.setDrilldown(
 				MyExample62DTO_.customField,
 				DrillDownType.INNER,
-				"/screen/myexample62/view/myexample62info/" + PlatformMyExample62Controller.myExampleBc62 + "/" + id
+				"/screen/myexample62/view/myexample62form/" + PlatformMyExample62Controller.myExampleBc62 + "/" + id
 		);
 	}
 

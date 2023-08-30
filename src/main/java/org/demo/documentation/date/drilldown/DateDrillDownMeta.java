@@ -27,7 +27,7 @@ public class DateDrillDownMeta extends FieldMetaBuilder<DateDrillDownDTO> {
 		fields.setDrilldown(
 				DateDrillDownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/DateDrillDown/view/DateDrillDowninfo/" + CxboxDateDrillDownController.dateDrillDown + "/" + id
+				"/screen/DateDrillDown/view/DateDrillDownform/" + CxboxDateDrillDownController.dateDrillDown + "/" + id
 		);
 	}
 

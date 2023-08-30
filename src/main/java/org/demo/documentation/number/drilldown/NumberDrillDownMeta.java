@@ -27,7 +27,7 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 		fields.setDrilldown(
 				NumberDrillDownDTO_.customField,
 				DrillDownType.INNER,
-				"/screen/NumberDrillDown/view/NumberDrillDowninfo/" + CxboxNumberDrillDownController.numberDrillDown + "/" + id
+				"/screen/NumberDrillDown/view/NumberDrillDownform/" + CxboxNumberDrillDownController.numberDrillDown + "/" + id
 		);
 	}
 

@@ -20,7 +20,7 @@ public class MyEntity64TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity64().setCustomField(Double.valueOf(27000.78)));
+		repository.save(new MyEntity64());
 	}
 
 }
