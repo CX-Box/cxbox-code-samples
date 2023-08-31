@@ -6,7 +6,8 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
+import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
 import org.demo.documentation.multipleselect.validationbusinessex.enums.CustomFieldEnum;
 
 @Getter
@@ -14,7 +15,8 @@ import org.demo.documentation.multipleselect.validationbusinessex.enums.CustomFi
 @NoArgsConstructor
 public class MyExample248DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField.value", multiFieldKey = StringValueProvider.class)
+	@EnumValueProvider.BaseEnum(value = CustomFieldEnum.class)
+	@SearchParameter(name = "customField", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customField;
 
 	public MyExample248DTO(MyEntity248 entity) {

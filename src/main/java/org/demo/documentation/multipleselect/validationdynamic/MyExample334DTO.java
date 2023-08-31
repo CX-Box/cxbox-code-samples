@@ -8,13 +8,16 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.multipleselect.validationconfirm.enums.CustomFieldEnum;
+import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
+import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyExample334DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField.value", multiFieldKey = StringValueProvider.class)
+	@EnumValueProvider.BaseEnum(value = CustomFieldEnum.class)
+	@SearchParameter(name = "customField", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customField;
 
 	@SearchParameter(name = "customFieldAdditional.value", multiFieldKey = StringValueProvider.class)
