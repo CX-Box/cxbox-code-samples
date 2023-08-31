@@ -9,7 +9,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 @Getter
 @Setter
 @NoArgsConstructor
-//--8<-- [start:Basics]
+// --8<-- [start:Basics]
 public class MyEntity132PickDTO extends DataResponseDTO {
 
 	@SearchParameter
@@ -21,4 +21,4 @@ public class MyEntity132PickDTO extends DataResponseDTO {
 	}
 
 }
-//--8<-- [end:Basics]
+// --8<-- [end:Basics]
