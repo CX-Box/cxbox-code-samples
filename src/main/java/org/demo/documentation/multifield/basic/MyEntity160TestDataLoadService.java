@@ -21,13 +21,19 @@ public class MyEntity160TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 		repository.save(new MyEntity160()
-				.setCustomField("Test data multi hint")
+				.setCustomField("Test data")
 				.setInformationField("Information data")
-				.setCustomFieldMulti("Test data multi")
-				.setCustomFieldAdditionalMulti("Test data multi")
-				.setCustomFieldAdditional("Test data multi hint")
+				.setCustomFieldMulti("Data multi")
+				.setCustomFieldAdditionalMulti("Additional data multi")
+				.setCustomFieldAdditional("Data hint")
 		);
-
+		repository.save(new MyEntity160()
+				.setCustomField("Test data 2")
+				.setInformationField("Information data 2")
+				.setCustomFieldMulti("Data multi 2")
+				.setCustomFieldAdditionalMulti("Additional data multi 2")
+				.setCustomFieldAdditional("Data hint 2")
+		);
 	}
 
 }
