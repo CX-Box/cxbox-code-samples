@@ -6,14 +6,13 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
-
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyExample241DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField.customField", multiFieldKey = MultiFieldValueProvider.class)
+	@SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
 	private MultivalueField customField;
 
 	public MyExample241DTO(MyEntity241 entity) {
