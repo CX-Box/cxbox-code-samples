@@ -18,7 +18,7 @@ import static org.cxbox.core.util.filter.provider.impl.EnumValueProvider.*;
 public class MyExample256DTO extends DataResponseDTO {
 
 
-	@BaseEnum(value = CustomFieldEnum.class)
+	@EnumValueProvider.BaseEnum(value = CustomFieldEnum.class)
 	@SearchParameter(name = "customField", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customField;
 
