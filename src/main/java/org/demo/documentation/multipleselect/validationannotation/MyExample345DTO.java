@@ -1,6 +1,6 @@
 package org.demo.documentation.multipleselect.validationannotation;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import org.demo.documentation.multipleselect.validationannotation.enums.CustomFi
 @NoArgsConstructor
 public class MyExample345DTO extends DataResponseDTO {
 
-	@NotEmpty(message = "Custom message about error")
+	@NotNull(message = "Custom message about error")
 	@EnumValueProvider.BaseEnum(value = CustomFieldEnum.class)
 	@SearchParameter(name = "customField", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customField;

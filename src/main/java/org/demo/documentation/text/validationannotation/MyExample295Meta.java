@@ -18,6 +18,7 @@ public class MyExample295Meta extends FieldMetaBuilder<MyExample295DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample295DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample295DTO_.customField);
+		fields.setPlaceholder(MyExample295DTO_.customField,"Only letters");
 	}
 
 	@Override

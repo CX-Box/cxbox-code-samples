@@ -19,6 +19,7 @@ public class MyExample296Meta extends FieldMetaBuilder<MyExample296DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample296DTO_.customFieldId);
 		fields.setEnabled(MyExample296DTO_.customField);
+		fields.setPlaceholder(MyExample296DTO_.customField,"Only letters");
 	}
 
 	@Override

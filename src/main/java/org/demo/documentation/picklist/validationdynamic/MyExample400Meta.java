@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,8 @@ public class MyExample400Meta extends FieldMetaBuilder<MyExample400DTO> {
 		fields.setEnabled(MyExample400DTO_.customFieldId);
 		fields.setEnabled(MyExample400DTO_.customField);
 		fields.setEnabled(MyExample400DTO_.customFieldAdditional);
+		fields.setPlaceholder(MyExample400DTO_.customField,"Only letters");
+		fields.setPlaceholder(MyExample400DTO_.customFieldAdditional,"Only letters");
 	}
 
 	@Override

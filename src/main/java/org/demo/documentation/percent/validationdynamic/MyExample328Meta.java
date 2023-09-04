@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,8 @@ public class MyExample328Meta extends FieldMetaBuilder<MyExample328DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample328DTO_.customFieldAdditional);
 		fields.setEnabled(MyExample328DTO_.customField);
+		fields.setPlaceholder(MyExample328DTO_.customField,"More than 5%");
+		fields.setPlaceholder(MyExample328DTO_.customFieldAdditional,"More than 5%");
 	}
 
 	@Override

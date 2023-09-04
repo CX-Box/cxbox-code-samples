@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,8 @@ public class MyExample167Meta extends FieldMetaBuilder<MyExample167DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample167DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample167DTO_.customField);
+		fields.setPlaceholder(MyExample167DTO_.customField, "More than the current date");
+
 	}
 
 	@Override

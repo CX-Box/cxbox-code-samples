@@ -21,9 +21,7 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 		fields.setEnabled(
 				InputValidationBusinessExceptionDTO_.customField
 		);
-		fields.setRequired(
-				InputValidationBusinessExceptionDTO_.customField
-		);
+		fields.setPlaceholder(InputValidationBusinessExceptionDTO_.customField, "Only letters");
 	}
 
 	@Override

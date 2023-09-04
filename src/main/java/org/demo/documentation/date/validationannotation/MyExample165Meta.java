@@ -18,6 +18,7 @@ public class MyExample165Meta extends FieldMetaBuilder<MyExample165DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample165DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample165DTO_.customField);
+		fields.setPlaceholder(MyExample165DTO_.customField, "More than the current date");
 	}
 
 	@Override

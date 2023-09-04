@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.demo.documentation.dictionary.validationbusinessex.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class MyExample91Meta extends FieldMetaBuilder<MyExample91DTO> {
 			Long id, Long parentId) {
 		fields.setEnumValues(MyExample91DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample91DTO_.customField);
+		fields.setPlaceholder(MyExample91DTO_.customField,"Not null");
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class DateTimeValidationBusinessExMeta extends FieldMetaBuilder<DateTimeV
 		fields.setEnabled(
 				DateTimeValidationBusinessExDTO_.customField
 		);
+		fields.setPlaceholder(DateTimeValidationBusinessExDTO_.customField, "More than the current date");
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class MyExample163Meta extends FieldMetaBuilder<MyExample163DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample163DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample163DTO_.customField);
+		fields.setPlaceholder(MyExample163DTO_.customField, "Not null");
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,7 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample103DTO_.customFieldId);
 		fields.setEnabled(MyExample103DTO_.customField);
+		fields.setPlaceholder(MyExample103DTO_.customField, "Only letters");
 	}
 
 	@Override

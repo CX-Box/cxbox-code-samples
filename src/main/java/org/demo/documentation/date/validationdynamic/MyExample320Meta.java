@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,9 @@ public class MyExample320Meta extends FieldMetaBuilder<MyExample320DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample320DTO_.customFieldAdditional);
 		fields.setEnabled(MyExample320DTO_.customField);
+		fields.setPlaceholder(MyExample320DTO_.customField, "More than the current date");
+		fields.setPlaceholder(MyExample320DTO_.customFieldAdditional, "More than the current date");
+
 	}
 
 	@Override

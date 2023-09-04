@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+
 import org.demo.documentation.dictionary.validationannotationcustom.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class MyExample169Meta extends FieldMetaBuilder<MyExample169DTO> {
 			Long id, Long parentId) {
 		fields.setEnumValues(MyExample169DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample169DTO_.customField);
+		fields.setPlaceholder(MyExample169DTO_.customField,"any of 'High,Middle'");
 	}
 
 	@Override

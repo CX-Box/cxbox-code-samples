@@ -9,6 +9,8 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.dictionary.validationannotation.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample293Meta extends FieldMetaBuilder<MyExample293DTO> {
@@ -20,6 +22,7 @@ public class MyExample293Meta extends FieldMetaBuilder<MyExample293DTO> {
 			Long id, Long parentId) {
 		fields.setEnumValues(MyExample293DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample293DTO_.customField);
+		fields.setPlaceholder(MyExample293DTO_.customField,"Not null");
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class MyExample271Meta extends FieldMetaBuilder<MyExample271DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample271DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample271DTO_.customField);
+		fields.setPlaceholder(MyExample271DTO_.customField,"More than 100 000.00");
 	}
 
 	@Override

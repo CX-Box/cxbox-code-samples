@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.demo.documentation.radio.validationdynamic.enums.CustomFieldAdditionalEnum;
 import org.demo.documentation.radio.validationdynamic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class MyExample340Meta extends FieldMetaBuilder<MyExample340DTO> {
 		fields.setEnabled(MyExample340DTO_.customFieldAdditional);
 		fields.setEnumValues(MyExample340DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample340DTO_.customField);
+		fields.setPlaceholder(MyExample340DTO_.customField,"Only 'High'");
+		fields.setPlaceholder(MyExample340DTO_.customFieldAdditional,"Only 'High'");
 	}
 
 	@Override

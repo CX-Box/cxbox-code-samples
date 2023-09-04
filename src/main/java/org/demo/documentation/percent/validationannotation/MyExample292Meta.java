@@ -18,6 +18,7 @@ public class MyExample292Meta extends FieldMetaBuilder<MyExample292DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample292DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample292DTO_.customField);
+		fields.setPlaceholder(MyExample292DTO_.customField,"More than 5%");
 	}
 
 	@Override

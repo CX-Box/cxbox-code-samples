@@ -20,6 +20,7 @@ public class MyExample294Meta extends FieldMetaBuilder<MyExample294DTO> {
 			Long id, Long parentId) {
 		fields.setEnumValues(MyExample294DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample294DTO_.customField);
+		fields.setPlaceholder(MyExample294DTO_.customField,"Not null");
 	}
 
 	@Override
