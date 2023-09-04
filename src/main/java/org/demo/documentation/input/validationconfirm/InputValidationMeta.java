@@ -1,4 +1,4 @@
-package org.demo.documentation.input.validation;
+package org.demo.documentation.input.validationconfirm;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;

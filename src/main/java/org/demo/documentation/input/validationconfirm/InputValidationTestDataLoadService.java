@@ -1,4 +1,4 @@
-package org.demo.documentation.input.validation;
+package org.demo.documentation.input.validationconfirm;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;

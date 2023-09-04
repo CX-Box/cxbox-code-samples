@@ -1,4 +1,4 @@
-package org.demo.documentation.input.validation;
+package org.demo.documentation.input.validationconfirm;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
