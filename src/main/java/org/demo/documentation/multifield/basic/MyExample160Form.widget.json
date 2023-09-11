@@ -23,6 +23,29 @@
       ]
     },
     {
+      "label": "Custom multifield style 'Inline'",
+      "key": "customFieldAdditionalMulti",
+      "type": "multifield",
+      "style": "inline",
+      "fields": [
+        {
+          "label": "New Custom Field Multi",
+          "key": "customFieldAdditionalMulti",
+          "type": "input"
+        },
+        {
+          "label": "Custom Field Multi",
+          "key": "customFieldMulti",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "label": "Custom Field Additional",
+      "key": "customFieldAdditional",
+      "type": "input"
+    },
+    {
       "label": "Custom multifield hint",
       "key": "customFieldMultiHint",
       "type": "multifield",
@@ -38,16 +61,19 @@
           "showLength": 100
         }
       ]
-    },
-    {
-      "label": "Custom Field Additional",
-      "key": "customFieldAdditional",
-      "type": "input"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldAdditionalMulti",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
@@ -59,7 +85,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldMultiHint",
+              "fieldKey": "customFieldAdditional",
               "span": 12
             }
           ]
@@ -67,7 +93,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldAdditional",
+              "fieldKey": "customFieldMultiHint",
               "span": 12
             }
           ]

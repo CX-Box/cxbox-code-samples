@@ -1,4 +1,4 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

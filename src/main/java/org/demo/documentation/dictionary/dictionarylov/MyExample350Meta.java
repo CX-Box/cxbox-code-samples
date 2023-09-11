@@ -1,6 +1,6 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
-import static org.demo.documentation.dictionary.dictionarycsv.AdministeredDictionaryType.REGIONS;
+import static org.demo.documentation.dictionary.dictionarylov.AdministeredDictionaryType.REGIONS;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

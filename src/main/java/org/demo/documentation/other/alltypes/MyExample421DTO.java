@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
-import org.demo.documentation.dictionary.dictionarycsv.AdministeredDictionary;
 import org.demo.documentation.other.alltypes.enums.DictionaryTypeEnum;
 import org.demo.documentation.other.alltypes.enums.MultipleTypeEnum;
 import org.demo.documentation.other.alltypes.enums.RadioTypeEnum;

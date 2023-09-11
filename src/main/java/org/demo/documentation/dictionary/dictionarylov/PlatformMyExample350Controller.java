@@ -1,4 +1,4 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.BcIdentifier;

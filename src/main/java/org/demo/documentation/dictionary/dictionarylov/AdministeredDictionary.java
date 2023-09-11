@@ -1,4 +1,4 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

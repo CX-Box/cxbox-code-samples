@@ -1,4 +1,4 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

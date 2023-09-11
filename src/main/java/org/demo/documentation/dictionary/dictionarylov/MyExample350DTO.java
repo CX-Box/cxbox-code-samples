@@ -1,7 +1,7 @@
-package org.demo.documentation.dictionary.dictionarycsv;
+package org.demo.documentation.dictionary.dictionarylov;
 
 
-import static org.demo.documentation.dictionary.dictionarycsv.AdministeredDictionaryType.REGIONS;
+import static org.demo.documentation.dictionary.dictionarylov.AdministeredDictionaryType.REGIONS;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
