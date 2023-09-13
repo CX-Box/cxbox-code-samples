@@ -15,12 +15,10 @@ public class MyExample345Service extends VersionAwareResponseService<MyExample34
 
 	private final MyEntity345Repository repository;
 
-	private final CustomDynamicErrorService dynamicError;
-
-	public MyExample345Service(MyEntity345Repository repository, CustomDynamicErrorService dynamicError) {
+	public MyExample345Service(MyEntity345Repository repository) {
 		super(MyExample345DTO.class, MyEntity345.class, null, MyExample345Meta.class);
 		this.repository = repository;
-		this.dynamicError = dynamicError;
+
 	}
 
 	@Override

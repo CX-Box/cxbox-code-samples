@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
 import org.cxbox.core.config.properties.UIProperties;
 import org.cxbox.core.metahotreload.conf.properties.MetaConfigurationProperties;
-import org.demo.conf.security.cxboxkeycloak.CxboxKeycloakAuthenticationProvider;
+import org.demo.conf.security.keycloak.CxboxKeycloakAuthenticationProvider;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;

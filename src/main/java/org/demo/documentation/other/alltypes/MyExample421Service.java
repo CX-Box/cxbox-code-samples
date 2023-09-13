@@ -42,7 +42,7 @@ public class MyExample421Service extends VersionAwareResponseService<MyExample42
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity424.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample421DTO_.hintType)) {
             entity.setHintType(data.getHintType());
@@ -54,7 +54,7 @@ public class MyExample421Service extends VersionAwareResponseService<MyExample42
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity422.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample421DTO_.multipleType)) {
             entity.setMultipleType(

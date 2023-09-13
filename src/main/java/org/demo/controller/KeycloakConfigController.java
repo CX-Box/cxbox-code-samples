@@ -2,7 +2,7 @@ package org.demo.controller;
 
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.demo.conf.security.cxboxkeycloak.KeycloakConfigProperties;
+import org.demo.conf.security.keycloak.KeycloakConfigProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

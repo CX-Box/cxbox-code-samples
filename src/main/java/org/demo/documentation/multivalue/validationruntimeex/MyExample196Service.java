@@ -42,7 +42,7 @@ public class MyExample196Service extends VersionAwareResponseService<MyExample19
 					.filter(Objects::nonNull)
 					.map(Long::parseLong)
 					.map(e -> entityManager.getReference(MyEntity197.class, e))
-					.collect(Collectors.toList()));
+					.toList());
 			try {
 				//call custom function
 				throw new Exception("Error");

@@ -12,16 +12,16 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @NoArgsConstructor
 public class MyExample324DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
-	@SearchParameter(name = "customFieldId", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldId")
 	private String customFieldId;
 
-	@SearchParameter(name = "customFieldAdditional", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldAdditional")
 	private String customFieldAdditional;
 
-	@SearchParameter(name = "customFieldAdditionalId", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldAdditionalId")
 	private String customFieldAdditionalId;
 
 	public MyExample324DTO(MyEntity324 entity) {
