@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-;
-
-//dateTimeSort
 @Entity
 @Table(name = "DateTimeSort")
 @Getter

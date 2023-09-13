@@ -54,11 +54,11 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 	private void validateFields(BusinessComponent bc, MyExample320DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		LocalDate sysdate = LocalDate.now();
-		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomField()) > 0) {
+		if (dto.getCustomField() != null && sysdate.isAfter(dto.getCustomField())) {
 			entity.addField(MyExample320DTO_.customField.getName(),
 					"The field 'customField' cannot be less than the current date");
 		}
-		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomFieldAdditional()) > 0) {
+		if (dto.getCustomField() != null && sysdate.isAfter(dto.getCustomFieldAdditional())) {
 			entity.addField(
 					MyExample320DTO_.customFieldAdditional.getName(),
 					"The field 'customFieldAdditional' cannot be less than the current date"

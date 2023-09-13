@@ -42,7 +42,7 @@ public class MyExample241Service extends VersionAwareResponseService<MyExample24
 					.filter(Objects::nonNull)
 					.map(Long::parseLong)
 					.map(e -> entityManager.getReference(MyEntity242.class, e))
-					.collect(Collectors.toList()));
+					.toList());
 		}
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));

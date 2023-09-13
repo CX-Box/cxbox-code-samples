@@ -59,7 +59,7 @@ public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {
         fields.enableFilter(MyExample421DTO_.multivalueType);
         fields.setConcreteFilterValues(MyExample421DTO_.multipleType, Arrays.stream(MultipleTypeEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample421DTO_.multipleType);
         fields.enableFilter(MyExample421DTO_.inlinepicklistType);
         fields.enableFilter(MyExample421DTO_.picklistType);

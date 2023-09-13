@@ -25,7 +25,7 @@ public class MyExample421DTO extends DataResponseDTO {
     @SearchParameter(name = "inputField")
     private String inputField;
     private String hiddenType;
-    @SearchParameter(name = "textType", provider = StringValueProvider.class)
+    @SearchParameter(name = "textType")
     private String textType;
     @SearchParameter(name = "dateTimeType", provider = DateTimeValueProvider.class)
     private LocalDateTime dateTimeType;
@@ -37,7 +37,7 @@ public class MyExample421DTO extends DataResponseDTO {
     private LocalDateTime dateTimeWithSecondsType;
     @SearchParameter(name = "dictionaryType", provider = EnumValueProvider.class)
     private DictionaryTypeEnum dictionaryType;
-    @SearchParameter(name = "fileUploadType", provider = StringValueProvider.class)
+    @SearchParameter(name = "fileUploadType")
     private String fileUploadType;
     private String fileUploadTypeId;
     @SearchParameter(name = "numberType", provider = BigDecimalValueProvider.class)
@@ -52,11 +52,11 @@ public class MyExample421DTO extends DataResponseDTO {
     private Double moneyType;
     @SearchParameter(name = "radioType", provider = EnumValueProvider.class)
     private RadioTypeEnum radioType;
-    @SearchParameter(name = "picklistTypeEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "picklistTypeEntity.customField")
     private String picklistType;
     @SearchParameter(name = "picklistTypeEntity.id", provider = LongValueProvider.class)
     private Long picklistTypeId;
-    @SearchParameter(name = "inlinepicklistTypeEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "inlinepicklistTypeEntity.customField")
     private String inlinepicklistType;
     @SearchParameter(name = "inlinepicklistTypeEntity.id", provider = LongValueProvider.class)
     private Long inlinepicklistTypeId;
