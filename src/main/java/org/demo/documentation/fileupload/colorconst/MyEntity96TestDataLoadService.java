@@ -2,11 +2,17 @@ package org.demo.documentation.fileupload.colorconst;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+
+import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.cxbox.core.file.dto.CxboxResponseDTO;
+import org.cxbox.core.file.dto.FileUploadDto;
+import org.demo.services.CustomFileServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class MyEntity96TestDataLoadService {
 
 	@Autowired
@@ -15,13 +21,15 @@ public class MyEntity96TestDataLoadService {
 	@Autowired
 	InternalAuthorizationService authzService;
 
+	private final CustomFileServices customFileServices;
 	@Transactional
 	@PostConstruct
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity96().setCustomField("IMG_5865.jpg")
-				.setCustomFieldId("a43d9b32-98c6-44fa-a198-e98de138c833"));
+		CxboxResponseDTO<FileUploadDto> file = customFileServices.uploadTxt();
+		repository.save(new MyEntity96().setCustomField(file.getData().getName())
+				.setCustomFieldId(file.getData().getId()));
 	}
 
 }

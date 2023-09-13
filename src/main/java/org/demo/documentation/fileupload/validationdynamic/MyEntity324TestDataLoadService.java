@@ -2,11 +2,17 @@ package org.demo.documentation.fileupload.validationdynamic;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+
+import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.cxbox.core.file.dto.CxboxResponseDTO;
+import org.cxbox.core.file.dto.FileUploadDto;
+import org.demo.services.CustomFileServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class MyEntity324TestDataLoadService {
 
 	@Autowired
@@ -15,14 +21,17 @@ public class MyEntity324TestDataLoadService {
 	@Autowired
 	InternalAuthorizationService authzService;
 
+	private final CustomFileServices customFileServices;
 	@Transactional
 	@PostConstruct
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity324().setCustomField("IMG_5867.jpg")
-				.setCustomFieldId("a43d9b32-98c6-44fa-a198-e98de138c833")
-				.setCustomFieldAdditional("IMG_5866.jpg").setCustomFieldAdditionalId("b3728d86-14cb-11ee-be56-0242ac120002"));
+		CxboxResponseDTO<FileUploadDto> file = customFileServices.uploadTxt();
+		CxboxResponseDTO<FileUploadDto> file1 = customFileServices.uploadTxt();
+		repository.save(new MyEntity324().setCustomField(file.getData().getName())
+				.setCustomFieldId(file.getData().getId())
+				.setCustomFieldAdditional(file1.getData().getName()).setCustomFieldAdditionalId(file1.getData().getId()));
 	}
 
 }
