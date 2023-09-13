@@ -63,11 +63,11 @@ public class MyExample421DTO extends DataResponseDTO {
     @SearchParameter(name = "multipleType", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
     @EnumValueProvider.BaseEnum(value = MultipleTypeEnum.class)
     private MultivalueField multipleType;
-    @SearchParameter(name = "multivalueType.id", provider = LongValueProvider.class)
+    @SearchParameter(name = "multivalueTypeList.id", provider = LongValueProvider.class)
     private MultivalueField multivalueType;
     private String multivalueTypeDisplayedKey;
     private String hintType;
-    @SearchParameter(name = "multihoverType.id", provider = LongValueProvider.class)
+    @SearchParameter(name = "multihoverTypeList.id", provider = LongValueProvider.class)
     private MultivalueField multihoverType;
     private String multihoverTypeDisplayedKey;
 
