@@ -38,7 +38,7 @@ const PickInput: React.FunctionComponent<PickInputProps> = ({ disabled, value, p
                 ) : (
                     <Icon
                         className={disabled ? styles.disabledButton : undefined}
-                        type="paper-clip"
+                        type="folder"
                         onClick={!disabled ? handleClick : undefined}
                     />
                 )
