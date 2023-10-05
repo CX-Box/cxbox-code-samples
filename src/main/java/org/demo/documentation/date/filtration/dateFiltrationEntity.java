@@ -1,6 +1,6 @@
 package org.demo.documentation.date.filtration;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class dateFiltrationEntity extends BaseEntity {
 
-	private LocalDate customField;
+	private LocalDateTime customField;
 
 	@Column
 	private LocalDateTime customField2;

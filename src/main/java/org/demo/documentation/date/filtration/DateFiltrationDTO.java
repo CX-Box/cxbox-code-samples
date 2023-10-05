@@ -1,6 +1,7 @@
 package org.demo.documentation.date.filtration;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
 public class DateFiltrationDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
-	private LocalDate customField;
+	private LocalDateTime customField;
 
 	public DateFiltrationDTO(dateFiltrationEntity entity) {
 		this.id = entity.getId().toString();

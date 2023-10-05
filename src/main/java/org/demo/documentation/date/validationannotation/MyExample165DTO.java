@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationannotation;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.validation.constraints.Future;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class MyExample165DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateValueProvider.class)
 	@Future(message = "The field 'customField' cannot be less than the current date")
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 	public MyExample165DTO(MyEntity165 entity) {
 		this.id = entity.getId().toString();

@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationdynamic;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -22,8 +22,8 @@ public class MyEntity320TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity320().setCustomField(LocalDate.now().minusDays(30))
-				.setCustomFieldAdditional(LocalDate.now().minusDays(30)));
+		repository.save(new MyEntity320().setCustomField(LocalDateTime.now().minusDays(30))
+				.setCustomFieldAdditional(LocalDateTime.now().minusDays(30)));
 
 	}
 

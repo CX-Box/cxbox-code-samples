@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationbusinessex;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -36,8 +36,8 @@ public class DateValidationBusinessExService extends
 	protected ActionResultDTO<DateValidationBusinessExDTO> doUpdateEntity(DateValidationBusinessExEntity entity,
 			DateValidationBusinessExDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateValidationBusinessExDTO_.customField)) {
-			LocalDate sysdate = LocalDate.now();
-			if (data.getCustomField() != null && sysdate.isAfter(data.getCustomField())) {
+			LocalDateTime sysdate = LocalDateTime.now();
+			if (data.getCustomField() != null && sysdate.compareTo(data.getCustomField()) > 0) {
 				throw new BusinessException().addPopup("The field 'customField' cannot be less than the current date");
 			}
 			entity.setCustomField(data.getCustomField());

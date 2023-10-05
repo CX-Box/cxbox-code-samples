@@ -1,6 +1,6 @@
 package org.demo.documentation.date.placeholder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,6 +20,6 @@ public class DatePlaceholderEntity extends BaseEntity {
 
 
 	@Column
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 }

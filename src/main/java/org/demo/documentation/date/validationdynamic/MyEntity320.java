@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationdynamic;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.Getter;
@@ -16,9 +16,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity320 extends BaseEntity {
 
 	@Column
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 	@Column
-	private LocalDate customFieldAdditional;
+	private LocalDateTime  customFieldAdditional;
 
 }

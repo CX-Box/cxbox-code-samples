@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationdynamic;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -53,12 +53,12 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 
 	private void validateFields(BusinessComponent bc, MyExample320DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
-		LocalDate sysdate = LocalDate.now();
-		if (dto.getCustomField() != null && sysdate.isAfter(dto.getCustomField())) {
+		LocalDateTime sysdate = LocalDateTime.now();
+		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomField()) > 0) {
 			entity.addField(MyExample320DTO_.customField.getName(),
 					"The field 'customField' cannot be less than the current date");
 		}
-		if (dto.getCustomField() != null && sysdate.isAfter(dto.getCustomFieldAdditional())) {
+		if (dto.getCustomField() != null && sysdate.compareTo(dto.getCustomFieldAdditional()) > 0) {
 			entity.addField(
 					MyExample320DTO_.customFieldAdditional.getName(),
 					"The field 'customFieldAdditional' cannot be less than the current date"
