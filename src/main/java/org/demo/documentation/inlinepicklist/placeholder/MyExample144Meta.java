@@ -19,7 +19,7 @@ public class MyExample144Meta extends FieldMetaBuilder<MyExample144DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample144DTO_.customFieldId);
 		fields.setEnabled(MyExample144DTO_.customField);
-		fields.setPlaceholder(MyExample144DTO_.customField, "placeholder text");
+		fields.setPlaceholder(MyExample144DTO_.customField, "Placeholder text");
 	}
 
 	@Override

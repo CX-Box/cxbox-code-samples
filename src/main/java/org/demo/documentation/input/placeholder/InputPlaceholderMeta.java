@@ -22,7 +22,7 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 		fields.setEnabled(
 				InputPlaceholderDTO_.customField
 		);
-		fields.setPlaceholder(InputPlaceholderDTO_.customField, "placeholder text");
+		fields.setPlaceholder(InputPlaceholderDTO_.customField, "Placeholder text");
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class MyExample100Meta extends FieldMetaBuilder<MyExample100DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample100DTO_.customFieldId);
 		fields.setEnabled(MyExample100DTO_.customField);
-		fields.setPlaceholder(MyExample100DTO_.customField, "Name File");
+		fields.setPlaceholder(MyExample100DTO_.customField, "Placeholder text");
 	}
 
 	@Override
