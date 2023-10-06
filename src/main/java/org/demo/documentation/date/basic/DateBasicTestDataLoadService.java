@@ -1,6 +1,6 @@
 package org.demo.documentation.date.basic;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -21,7 +21,7 @@ public class DateBasicTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateBasic().setCustomField(LocalDate.now()));
+		repository.save(new DateBasic().setCustomField(LocalDateTime.now()));
 	}
 
 }

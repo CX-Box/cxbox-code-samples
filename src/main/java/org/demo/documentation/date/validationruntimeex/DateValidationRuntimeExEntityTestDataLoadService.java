@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationruntimeex;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -21,7 +21,7 @@ public class DateValidationRuntimeExEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateValidationRuntimeExEntity().setCustomField(LocalDate.now()));
+		repository.save(new DateValidationRuntimeExEntity().setCustomField(LocalDateTime.now()));
 	}
 
 }

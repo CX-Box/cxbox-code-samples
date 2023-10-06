@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationruntimeex;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -16,6 +16,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class DateValidationRuntimeExEntity extends BaseEntity {
 
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 }

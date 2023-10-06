@@ -1,6 +1,6 @@
 package org.demo.documentation.date.required;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -21,7 +21,7 @@ public class DateRequiredEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateRequiredEntity().setCustomField(LocalDate.now()));
+		repository.save(new DateRequiredEntity().setCustomField(LocalDateTime.now()));
 	}
 
 }

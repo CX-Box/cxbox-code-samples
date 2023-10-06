@@ -1,6 +1,6 @@
 package org.demo.documentation.date.validationdynamic;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +14,10 @@ import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 public class MyExample320DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateValueProvider.class)
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 	@SearchParameter(name = "customFieldAdditional", provider = DateValueProvider.class)
-	private LocalDate customFieldAdditional;
+	private LocalDateTime  customFieldAdditional;
 
 	public MyExample320DTO(MyEntity320 entity) {
 		this.id = entity.getId().toString();

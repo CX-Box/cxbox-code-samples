@@ -1,6 +1,6 @@
 package org.demo.documentation.date.sorting;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -21,15 +21,15 @@ public class DateSortingEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now()));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusDays(30)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusYears(3).minusDays(2)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusYears(2).minusDays(1)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusDays(2)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusYears(1)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().minusYears(2)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().plusMonths(1)));
-		repository.save(new DateSortingEntity().setCustomField(LocalDate.now().plusMonths(2)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now()));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusDays(30)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusYears(3).minusDays(2)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusYears(2).minusDays(1)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusDays(2)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusYears(1)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().minusYears(2)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().plusMonths(1)));
+		repository.save(new DateSortingEntity().setCustomField(LocalDateTime.now().plusMonths(2)));
 	}
 
 }

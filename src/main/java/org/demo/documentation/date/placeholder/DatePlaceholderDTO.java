@@ -1,6 +1,6 @@
 package org.demo.documentation.date.placeholder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 public class DatePlaceholderDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateValueProvider.class)
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 	public DatePlaceholderDTO(DatePlaceholderEntity entity) {
 		this.id = entity.getId().toString();

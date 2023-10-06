@@ -1,6 +1,8 @@
 package org.demo.documentation.date.colorconst;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 public class DateColorConstDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateValueProvider.class)
-	private LocalDate customField;
+	private LocalDateTime customField;
 
 	public DateColorConstDTO(dateColorConstEntity entity) {
 		this.id = entity.getId().toString();

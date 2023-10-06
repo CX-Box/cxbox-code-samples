@@ -1,6 +1,6 @@
 package org.demo.documentation.date.required;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class DateRequiredDTO extends DataResponseDTO {
 
-	private LocalDate customField;
+	private LocalDateTime  customField;
 
 	public DateRequiredDTO(DateRequiredEntity entity) {
 		this.id = entity.getId().toString();
