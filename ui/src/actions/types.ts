@@ -62,7 +62,10 @@ export class CustomActionTypes extends CxboxActionPayloadTypes {
     resetRecordForm: null = z
 
     showViewPopup: CxboxActionPayloadTypes['showViewPopup'] & {
-        options?: { operation?: CxboxActionPayloadTypes['processPreInvoke'] }
+        options?: {
+            operation?: CxboxActionPayloadTypes['processPreInvoke']
+            calleeFieldKey?: string
+        }
     } = z
 
     sendOperationSuccess: CxboxActionPayloadTypes['sendOperationSuccess'] & { dataItem?: DataItem } = z
