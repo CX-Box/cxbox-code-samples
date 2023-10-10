@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Allows to ignore frequently changing values by returning only the last one received until specified delay.
@@ -8,14 +8,17 @@ import React from 'react'
  * @category Hooks
  */
 export function useDebounce<T>(value: T, delay: number) {
-    const [debouncedValue, setDebouncedValue] = React.useState(value)
-    React.useEffect(() => {
+    const [debouncedValue, setDebouncedValue] = useState(value)
+
+    useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedValue(value)
         }, delay)
+
         return () => {
             clearTimeout(handler)
         }
     }, [value, delay])
+
     return debouncedValue
 }

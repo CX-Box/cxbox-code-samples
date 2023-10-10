@@ -66,6 +66,11 @@ export class CustomActionTypes extends CxboxActionPayloadTypes {
     } = z
 
     sendOperationSuccess: CxboxActionPayloadTypes['sendOperationSuccess'] & { dataItem?: DataItem } = z
+
+    changeBcFullTextFilter: {
+        bcName: string
+        fullTextFilterValue: string
+    } = z
 }
 
 /**

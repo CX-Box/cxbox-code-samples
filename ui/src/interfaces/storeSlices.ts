@@ -18,4 +18,5 @@ export type AppState = Store & AppReducers
 
 export interface ScreenState extends CxboxScreenState {
     menuCollapsed: boolean
+    fullTextFilter: Record<string, string>
 }
