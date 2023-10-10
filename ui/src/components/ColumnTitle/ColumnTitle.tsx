@@ -32,7 +32,15 @@ const ColumnTitle = ({ widgetName, widgetMeta, rowMeta }: ColumnTitleProps) => {
     const title = <TemplatedTitle widgetName={widgetName} title={widgetMeta.title} />
 
     if (!rowMeta) {
-        return <div>{title}</div>
+        return (
+            <div
+                className={cn({
+                    [styles.numberInputContainer]: widgetMeta.type === FieldType.number
+                })}
+            >
+                {title}
+            </div>
+        )
     }
 
     const sort = !notSortableFields.includes(widgetMeta.type) && (
@@ -42,7 +50,7 @@ const ColumnTitle = ({ widgetName, widgetMeta, rowMeta }: ColumnTitleProps) => {
     const filter = rowMeta.filterable && <ColumnFilter widgetName={widgetName} widgetMeta={widgetMeta} rowMeta={rowMeta} />
 
     return (
-        <div className={cn(styles.container)}>
+        <div className={cn(styles.container, { [styles.numberInputContainer]: widgetMeta.type === FieldType.number })}>
             {title}
             {filter}
             {sort}
