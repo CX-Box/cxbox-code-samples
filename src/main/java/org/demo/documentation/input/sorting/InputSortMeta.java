@@ -33,7 +33,6 @@ public class InputSortMeta extends FieldMetaBuilder<InputSortDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputSortDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

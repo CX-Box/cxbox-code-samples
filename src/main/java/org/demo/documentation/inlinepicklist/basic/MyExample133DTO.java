@@ -8,7 +8,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132;
 
 @Getter
 @Setter
@@ -27,7 +26,7 @@ public class MyExample133DTO extends DataResponseDTO {
 				.map(BaseEntity::getId)
 				.orElse(null);
 		this.customField = Optional.ofNullable(entity.getCustomFieldEntity())
-				.map(MyEntity132::getCustomField)
+				.map(MyEntity132Pick::getCustomField)
 				.orElse(null);
 	}
 

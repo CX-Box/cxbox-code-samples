@@ -9,16 +9,15 @@ import org.cxbox.core.util.filter.SearchParameter;
 @Getter
 @Setter
 @NoArgsConstructor
-// --8<-- [start:Basics]
+
 public class MyEntity132PickDTO extends DataResponseDTO {
 
 	@SearchParameter
 	private String customField;
 
-	public MyEntity132PickDTO(org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132 entity) {
+	public MyEntity132PickDTO(MyEntity132Pick entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 	}
 
 }
-// --8<-- [end:Basics]

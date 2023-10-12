@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 @Getter
 @Service
 public class MyEntity132PickPickListService extends
-		VersionAwareResponseService<MyEntity132PickDTO, org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132> {
+		VersionAwareResponseService<MyEntity132PickDTO, MyEntity132Pick> {
 
 	public MyEntity132PickPickListService() {
 		super(
 				MyEntity132PickDTO.class,
-				org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132.class,
+				MyEntity132Pick.class,
 				null,
 				MyEntity132PickPickListMeta.class
 		);
@@ -24,14 +24,14 @@ public class MyEntity132PickPickListService extends
 
 	@Override
 	protected CreateResult<MyEntity132PickDTO> doCreateEntity(
-			org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132 entity, BusinessComponent bc) {
+            MyEntity132Pick entity, BusinessComponent bc) {
 		return null;
 	}
 
 	@Override
 	protected ActionResultDTO<MyEntity132PickDTO> doUpdateEntity(
-			org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132 entity, MyEntity132PickDTO data,
-			BusinessComponent bc) {
+            MyEntity132Pick entity, MyEntity132PickDTO data,
+            BusinessComponent bc) {
 		return null;
 	}
 

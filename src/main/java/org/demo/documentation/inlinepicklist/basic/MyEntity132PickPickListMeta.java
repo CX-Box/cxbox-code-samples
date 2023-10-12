@@ -32,7 +32,6 @@ public class MyEntity132PickPickListMeta extends FieldMetaBuilder<MyEntity132Pic
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyEntity132PickDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

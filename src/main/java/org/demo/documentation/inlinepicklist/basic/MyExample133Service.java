@@ -6,7 +6,6 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,7 @@ public class MyExample133Service extends VersionAwareResponseService<MyExample13
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample133DTO_.customFieldId)) {
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
-					? entityManager.getReference(MyEntity132.class, data.getCustomFieldId())
+					? entityManager.getReference(MyEntity132Pick.class, data.getCustomFieldId())
 					: null);
 		}
 

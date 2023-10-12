@@ -20,8 +20,9 @@ public enum CxboxNumberSortingController implements EnumBcIdentifier {
 	// @formatter:on
 
 	numberSorting(NumberSortingService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberSortingController> Holder = new Holder<>(
 			CxboxNumberSortingController.class);

@@ -34,7 +34,6 @@ public class InputValidationMeta extends FieldMetaBuilder<InputValidationDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputValidationDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

@@ -34,7 +34,6 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputPlaceholderDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

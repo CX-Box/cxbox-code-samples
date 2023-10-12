@@ -20,8 +20,9 @@ public enum CxboxDateTimeWithSecondsValidationRuntimeExEntityController implemen
 	// @formatter:on
 
 	dateTimeWithSecondsValidationRuntimeExEntity(DateTimeWithSecondsValidationRuntimeExEntityService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsValidationRuntimeExEntityController> Holder = new Holder<>(
 			CxboxDateTimeWithSecondsValidationRuntimeExEntityController.class);

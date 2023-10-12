@@ -20,8 +20,9 @@ public enum CxboxDateRequiredController implements EnumBcIdentifier {
 	// @formatter:on
 
 	dateRequired(DateRequiredService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxDateRequiredController> Holder = new Holder<>(
 			CxboxDateRequiredController.class);

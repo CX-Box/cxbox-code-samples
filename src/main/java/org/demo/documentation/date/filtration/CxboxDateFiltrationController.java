@@ -20,8 +20,9 @@ public enum CxboxDateFiltrationController implements EnumBcIdentifier {
 	// @formatter:on
 
 	dateFiltration(DateFiltrationService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxDateFiltrationController> Holder = new Holder<>(
 			CxboxDateFiltrationController.class);

@@ -28,7 +28,6 @@ public class MyEntity122PickPickListMeta extends FieldMetaBuilder<MyEntity122Pic
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity122PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

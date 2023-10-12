@@ -20,8 +20,9 @@ public enum CxboxDigitsNumberController implements EnumBcIdentifier {
 	// @formatter:on
 
 	digitsNumber(DigitsNumberService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxDigitsNumberController> Holder = new Holder<>(
 			CxboxDigitsNumberController.class);

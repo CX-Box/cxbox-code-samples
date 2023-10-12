@@ -20,8 +20,9 @@ public enum CxboxNumberBusinessExController implements EnumBcIdentifier {
 	// @formatter:on
 
 	numberBusinessEx(NumberBusinessExService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberBusinessExController> Holder = new Holder<>(
 			CxboxNumberBusinessExController.class);
