@@ -27,10 +27,10 @@ public class MyExample176DTO extends DataResponseDTO {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomFieldList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
-				MyEntity177::getCustomField
+				MyEntityMultivalue177::getCustomField
 		));
 
-		this.customFieldCalc = StringUtils.abbreviate(entity.getCustomFieldList().stream().map(MyEntity177::getCustomField
+		this.customFieldCalc = StringUtils.abbreviate(entity.getCustomFieldList().stream().map(MyEntityMultivalue177::getCustomField
 		).collect(Collectors.joining(",")), 12);
 		this.customFieldAdditional = entity.getCustomFieldAdditional();
 	}

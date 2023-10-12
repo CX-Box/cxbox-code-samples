@@ -12,7 +12,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity177 extends BaseEntity {
+public class MyEntityMultivalue177 extends BaseEntity {
 
 	@Column
 	private String customField;

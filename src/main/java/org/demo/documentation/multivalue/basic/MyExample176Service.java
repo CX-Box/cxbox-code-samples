@@ -1,7 +1,6 @@
 package org.demo.documentation.multivalue.basic;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -44,7 +43,7 @@ public class MyExample176Service extends VersionAwareResponseService<MyExample17
 					.map(MultivalueFieldSingleValue::getId)
 					.filter(Objects::nonNull)
 					.map(Long::parseLong)
-					.map(e -> entityManager.getReference(MyEntity177.class, e))
+					.map(e -> entityManager.getReference(MyEntityMultivalue177.class, e))
 					.toList());
 		}
 
