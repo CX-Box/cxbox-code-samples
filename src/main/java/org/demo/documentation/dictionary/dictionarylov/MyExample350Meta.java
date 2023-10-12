@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -18,7 +19,9 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 		fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -26,5 +29,5 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 		fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
 		fields.enableFilter(MyExample350DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

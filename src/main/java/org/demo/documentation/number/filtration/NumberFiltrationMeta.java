@@ -14,6 +14,7 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberFiltrationDTO> fields,
 			InnerBcDescription bcDescription,
@@ -26,7 +27,9 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 		);
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberFiltrationDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -35,5 +38,5 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 		}
 		fields.enableFilter(NumberFiltrationDTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

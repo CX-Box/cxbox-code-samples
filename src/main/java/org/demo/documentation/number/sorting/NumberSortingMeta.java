@@ -14,6 +14,7 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberSortingDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 				NumberSortingDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberSortingDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

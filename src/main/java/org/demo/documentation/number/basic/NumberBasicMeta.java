@@ -14,6 +14,7 @@ public class NumberBasicMeta extends FieldMetaBuilder<NumberBasicDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberBasicDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -21,7 +22,9 @@ public class NumberBasicMeta extends FieldMetaBuilder<NumberBasicDTO> {
 				NumberBasicDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberBasicDTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		//

@@ -14,6 +14,7 @@ public class DateTimeWithSecondsColorMeta extends FieldMetaBuilder<DateTimeWithS
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsColorDTO> fields,
 			InnerBcDescription bcDescription,
@@ -25,7 +26,9 @@ public class DateTimeWithSecondsColorMeta extends FieldMetaBuilder<DateTimeWithS
 				DateTimeWithSecondsColorDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsColorDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

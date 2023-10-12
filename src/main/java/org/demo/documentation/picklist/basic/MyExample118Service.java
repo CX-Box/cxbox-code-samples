@@ -34,7 +34,7 @@ public class MyExample118Service extends VersionAwareResponseService<MyExample11
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample118DTO_.customFieldId)) {
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
-					? entityManager.getReference(MyEntity120.class, data.getCustomFieldId())
+					? entityManager.getReference(MyEntityPick120.class, data.getCustomFieldId())
 					: null);
 		}
 

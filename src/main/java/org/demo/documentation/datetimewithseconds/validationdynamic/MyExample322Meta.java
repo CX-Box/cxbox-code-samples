@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample322Meta extends FieldMetaBuilder<MyExample322DTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample322DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -18,12 +19,14 @@ public class MyExample322Meta extends FieldMetaBuilder<MyExample322DTO> {
 		fields.setPlaceholder(MyExample322DTO_.customField, "More than the current date");
 		fields.setPlaceholder(MyExample322DTO_.customFieldAdditional, "More than the current date");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample322DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		fields.enableFilter(MyExample322DTO_.customFieldAdditional);
 		fields.enableFilter(MyExample322DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//dateCreateEdit
+
 @Entity
 @Table(name = "DateCreateEditEntity")
 @Getter

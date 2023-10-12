@@ -15,6 +15,7 @@ public class MyExample5Meta extends FieldMetaBuilder<MyExample5DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -30,7 +31,9 @@ public class MyExample5Meta extends FieldMetaBuilder<MyExample5DTO> {
 				"/screen/myexample5/view/myexample5form/" + PlatformMyExample5Controller.myExampleBc5 + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample5DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

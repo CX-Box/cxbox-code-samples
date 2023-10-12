@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//dateColorConst
+
 @Entity
 @Table(name = "dateColorConstEntity")
 @Getter

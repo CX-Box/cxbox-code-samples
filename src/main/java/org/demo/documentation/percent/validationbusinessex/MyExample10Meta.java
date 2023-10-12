@@ -15,6 +15,7 @@ public class MyExample10Meta extends FieldMetaBuilder<MyExample10DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample10DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -23,7 +24,9 @@ public class MyExample10Meta extends FieldMetaBuilder<MyExample10DTO> {
 		);
 		fields.setPlaceholder(MyExample10DTO_.customField,"More than 10%");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample10DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		//

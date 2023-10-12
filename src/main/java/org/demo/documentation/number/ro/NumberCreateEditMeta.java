@@ -14,13 +14,16 @@ public class NumberCreateEditMeta extends FieldMetaBuilder<NumberCreateEditDTO> 
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberCreateEditDTO> fields,
 			InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberCreateEditDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//dateTimeBasic
+
 @Entity
 @Table(name = "DateTimeBasic")
 @Getter

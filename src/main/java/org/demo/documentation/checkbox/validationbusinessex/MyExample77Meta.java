@@ -14,13 +14,16 @@ public class MyExample77Meta extends FieldMetaBuilder<MyExample77DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample77DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample77DTO_.customField);
 		fields.setPlaceholder(MyExample77DTO_.customField,"Can contain only 'True'");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample77DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
@@ -28,5 +31,5 @@ public class MyExample77Meta extends FieldMetaBuilder<MyExample77DTO> {
 		}
 		fields.enableFilter(MyExample77DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

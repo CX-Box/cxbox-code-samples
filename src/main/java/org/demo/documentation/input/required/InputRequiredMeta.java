@@ -14,6 +14,7 @@ public class InputRequiredMeta extends FieldMetaBuilder<InputRequiredDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class InputRequiredMeta extends FieldMetaBuilder<InputRequiredDTO> {
 				InputRequiredDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

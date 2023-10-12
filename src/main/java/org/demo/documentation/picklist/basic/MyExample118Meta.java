@@ -14,13 +14,16 @@ public class MyExample118Meta extends FieldMetaBuilder<MyExample118DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample118DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample118DTO_.customFieldId);
 		fields.setEnabled(MyExample118DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample118DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -29,5 +32,5 @@ public class MyExample118Meta extends FieldMetaBuilder<MyExample118DTO> {
 		}
 		fields.enableFilter(MyExample118DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

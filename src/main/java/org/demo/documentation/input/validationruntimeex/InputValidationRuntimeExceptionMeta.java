@@ -14,6 +14,7 @@ public class InputValidationRuntimeExceptionMeta extends FieldMetaBuilder<InputV
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputValidationRuntimeExceptionDTO> fields,
 			InnerBcDescription bcDescription,
@@ -25,7 +26,9 @@ public class InputValidationRuntimeExceptionMeta extends FieldMetaBuilder<InputV
 				InputValidationRuntimeExceptionDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputValidationRuntimeExceptionDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

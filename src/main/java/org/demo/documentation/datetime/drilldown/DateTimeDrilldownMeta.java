@@ -15,6 +15,7 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeDrilldownDTO> fields,
 			InnerBcDescription bcDescription,
@@ -33,7 +34,9 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 						+ "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeDrilldownDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

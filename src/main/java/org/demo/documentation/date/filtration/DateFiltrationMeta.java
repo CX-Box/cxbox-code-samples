@@ -14,6 +14,7 @@ public class DateFiltrationMeta extends FieldMetaBuilder<DateFiltrationDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateFiltrationDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class DateFiltrationMeta extends FieldMetaBuilder<DateFiltrationDTO> {
 				DateFiltrationDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateFiltrationDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -33,5 +36,5 @@ public class DateFiltrationMeta extends FieldMetaBuilder<DateFiltrationDTO> {
 		}
 		fields.enableFilter(DateFiltrationDTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

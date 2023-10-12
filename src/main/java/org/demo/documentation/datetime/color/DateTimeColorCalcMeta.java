@@ -14,6 +14,7 @@ public class DateTimeColorCalcMeta extends FieldMetaBuilder<DateTimeColorCalcDTO
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeColorCalcDTO> fields,
 			InnerBcDescription bcDescription,
@@ -25,7 +26,9 @@ public class DateTimeColorCalcMeta extends FieldMetaBuilder<DateTimeColorCalcDTO
 				DateTimeColorCalcDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeColorCalcDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

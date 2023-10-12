@@ -15,6 +15,7 @@ public class MyExample110Meta extends FieldMetaBuilder<MyExample110DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample110DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -26,7 +27,9 @@ public class MyExample110Meta extends FieldMetaBuilder<MyExample110DTO> {
 				"/screen/myexample110/view/myexample110form/" + PlatformMyExample110Controller.myExampleBc110 + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample110DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -35,5 +38,5 @@ public class MyExample110Meta extends FieldMetaBuilder<MyExample110DTO> {
 		}
 		fields.enableFilter(MyExample110DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

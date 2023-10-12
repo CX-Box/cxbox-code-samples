@@ -15,6 +15,7 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 	private final DocumentConfig configuration;
 
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputPlaceholderDTO> fields,
 			InnerBcDescription bcDescription,
@@ -24,7 +25,9 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 		);
 		fields.setPlaceholder(InputPlaceholderDTO_.customField, "Placeholder text");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputPlaceholderDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

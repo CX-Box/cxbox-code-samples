@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//dateFiltration
+
 @Entity
 @Table(name = "dateFiltrationEntity")
 @Getter

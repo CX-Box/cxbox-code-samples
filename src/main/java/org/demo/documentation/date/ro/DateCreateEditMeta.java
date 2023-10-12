@@ -14,12 +14,15 @@ public class DateCreateEditMeta extends FieldMetaBuilder<DateCreateEditDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateCreateEditDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateCreateEditDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

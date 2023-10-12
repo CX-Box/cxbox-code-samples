@@ -15,6 +15,7 @@ public class MyExample64Meta extends FieldMetaBuilder<MyExample64DTO> {
 	private final DocumentConfig configuration;
 
 	// --8<-- [start:documentation]
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample64DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -30,5 +31,5 @@ public class MyExample64Meta extends FieldMetaBuilder<MyExample64DTO> {
 		}
 		fields.enableFilter(MyExample64DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

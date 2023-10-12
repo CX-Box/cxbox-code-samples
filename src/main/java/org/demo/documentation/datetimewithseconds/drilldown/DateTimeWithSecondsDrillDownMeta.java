@@ -15,6 +15,7 @@ public class DateTimeWithSecondsDrillDownMeta extends FieldMetaBuilder<DateTimeW
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsDrillDownDTO> fields,
 			InnerBcDescription bcDescription,
@@ -30,7 +31,9 @@ public class DateTimeWithSecondsDrillDownMeta extends FieldMetaBuilder<DateTimeW
 						+ CxboxDateTimeWithSecondsDrillDownController.dateTimeWithSecondsDrillDown + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsDrillDownDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

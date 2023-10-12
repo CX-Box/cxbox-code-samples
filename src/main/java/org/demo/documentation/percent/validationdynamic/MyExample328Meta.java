@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample328Meta extends FieldMetaBuilder<MyExample328DTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample328DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -18,12 +19,14 @@ public class MyExample328Meta extends FieldMetaBuilder<MyExample328DTO> {
 		fields.setPlaceholder(MyExample328DTO_.customField,"More than 5%");
 		fields.setPlaceholder(MyExample328DTO_.customFieldAdditional,"More than 5%");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample328DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		fields.enableFilter(MyExample328DTO_.customFieldAdditional);
 		fields.enableFilter(MyExample328DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

@@ -15,6 +15,7 @@ public class DateValidationBusinessExMeta extends FieldMetaBuilder<DateValidatio
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateValidationBusinessExDTO> fields,
 			InnerBcDescription bcDescription,
@@ -24,7 +25,9 @@ public class DateValidationBusinessExMeta extends FieldMetaBuilder<DateValidatio
 		);
 		fields.setPlaceholder(DateValidationBusinessExDTO_.customField, "More than the current date");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateValidationBusinessExDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

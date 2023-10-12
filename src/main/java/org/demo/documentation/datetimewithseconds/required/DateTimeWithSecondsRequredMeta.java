@@ -14,6 +14,7 @@ public class DateTimeWithSecondsRequredMeta extends FieldMetaBuilder<DateTimeWit
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsRequredDTO> fields,
 			InnerBcDescription bcDescription,
@@ -25,7 +26,9 @@ public class DateTimeWithSecondsRequredMeta extends FieldMetaBuilder<DateTimeWit
 				DateTimeWithSecondsRequredDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsRequredDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

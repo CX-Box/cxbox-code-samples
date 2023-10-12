@@ -14,6 +14,7 @@ public class MyExample63Meta extends FieldMetaBuilder<MyExample63DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample63DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {

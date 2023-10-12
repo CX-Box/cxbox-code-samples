@@ -14,6 +14,7 @@ public class DateRequiredMeta extends FieldMetaBuilder<DateRequiredDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class DateRequiredMeta extends FieldMetaBuilder<DateRequiredDTO> {
 				DateRequiredDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

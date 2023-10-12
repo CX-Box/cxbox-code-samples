@@ -16,6 +16,7 @@ public class MyExample169Meta extends FieldMetaBuilder<MyExample169DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample169DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -23,7 +24,9 @@ public class MyExample169Meta extends FieldMetaBuilder<MyExample169DTO> {
 		fields.setEnabled(MyExample169DTO_.customField);
 		fields.setPlaceholder(MyExample169DTO_.customField,"any of 'High,Middle'");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample169DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -33,5 +36,5 @@ public class MyExample169Meta extends FieldMetaBuilder<MyExample169DTO> {
 		fields.setEnumFilterValues(fields, MyExample169DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample169DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

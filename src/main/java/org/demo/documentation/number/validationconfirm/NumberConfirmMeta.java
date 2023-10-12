@@ -14,6 +14,7 @@ public class NumberConfirmMeta extends FieldMetaBuilder<NumberConfirmDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberConfirmDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class NumberConfirmMeta extends FieldMetaBuilder<NumberConfirmDTO> {
 				NumberConfirmDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberConfirmDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

@@ -14,6 +14,7 @@ public class DateTimeValidationMeta extends FieldMetaBuilder<DateTimeValidationD
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeValidationDTO> fields,
 			InnerBcDescription bcDescription,
@@ -22,7 +23,9 @@ public class DateTimeValidationMeta extends FieldMetaBuilder<DateTimeValidationD
 				DateTimeValidationDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeValidationDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

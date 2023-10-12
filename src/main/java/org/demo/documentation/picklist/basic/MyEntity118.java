@@ -16,6 +16,6 @@ public class MyEntity118 extends BaseEntity {
 
 	@JoinColumn(name = "CUSTOM_FIELD_ID")
 	@ManyToOne
-	private MyEntity120 customFieldEntity;
+	private MyEntityPick120 customFieldEntity;
 
 }

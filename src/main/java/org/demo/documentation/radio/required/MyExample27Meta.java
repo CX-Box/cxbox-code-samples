@@ -15,6 +15,7 @@ public class MyExample27Meta extends FieldMetaBuilder<MyExample27DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample27DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -23,7 +24,9 @@ public class MyExample27Meta extends FieldMetaBuilder<MyExample27DTO> {
 		fields.setRequired(MyExample27DTO_.customField);
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample27DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
@@ -32,5 +35,5 @@ public class MyExample27Meta extends FieldMetaBuilder<MyExample27DTO> {
 		fields.setEnumFilterValues(fields, MyExample27DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample27DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

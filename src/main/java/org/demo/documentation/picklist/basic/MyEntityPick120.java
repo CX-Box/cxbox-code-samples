@@ -11,7 +11,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity120 extends BaseEntity {
+public class MyEntityPick120 extends BaseEntity {
 
 	@Column
 	private String customField;

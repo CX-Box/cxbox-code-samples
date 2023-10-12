@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity242MultivalueMeta extends FieldMetaBuilder<MyEntity242MultivalueDTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity242MultivalueDTO> fields,
 			InnerBcDescription bcDescription,
@@ -19,7 +20,9 @@ public class MyEntity242MultivalueMeta extends FieldMetaBuilder<MyEntity242Multi
 		fields.setEnabled(org.demo.documentation.multivaluehover.validationbusinessex.MyEntity242MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.multivaluehover.validationbusinessex.MyEntity242MultivalueDTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity242MultivalueDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

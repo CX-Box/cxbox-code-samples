@@ -14,6 +14,7 @@ public class DateTimePlaceholderMeta extends FieldMetaBuilder<DateTimePlaceholde
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimePlaceholderDTO> fields,
 			InnerBcDescription bcDescription,
@@ -23,7 +24,9 @@ public class DateTimePlaceholderMeta extends FieldMetaBuilder<DateTimePlaceholde
 		);
 		fields.setPlaceholder(DateTimePlaceholderDTO_.customField, "29.05.2023 11:25");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimePlaceholderDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
