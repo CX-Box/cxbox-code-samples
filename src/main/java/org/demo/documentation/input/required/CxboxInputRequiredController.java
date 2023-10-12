@@ -20,8 +20,9 @@ public enum CxboxInputRequiredController implements EnumBcIdentifier {
 	// @formatter:on
 
 	InputRequired(InputRequiredService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxInputRequiredController> Holder = new Holder<>(
 			CxboxInputRequiredController.class);

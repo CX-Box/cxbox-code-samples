@@ -14,6 +14,7 @@ public class InputColorConstMeta extends FieldMetaBuilder<InputColorConstDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputColorConstDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class InputColorConstMeta extends FieldMetaBuilder<InputColorConstDTO> {
 				InputColorConstDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputColorConstDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

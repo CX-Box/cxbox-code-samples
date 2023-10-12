@@ -20,8 +20,9 @@ public enum CxboxDateTimeWithSecondsValidationBusinessExController implements En
 	// @formatter:on
 
 	dateTimeWithSecondsValidationBusinessEx(DateTimeWithSecondsValidationBusinessExService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsValidationBusinessExController> Holder = new Holder<>(
 			CxboxDateTimeWithSecondsValidationBusinessExController.class);

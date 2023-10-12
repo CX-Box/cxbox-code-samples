@@ -15,6 +15,7 @@ public class MyExample167Meta extends FieldMetaBuilder<MyExample167DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample167DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -22,7 +23,9 @@ public class MyExample167Meta extends FieldMetaBuilder<MyExample167DTO> {
 		fields.setPlaceholder(MyExample167DTO_.customField, "More than the current date");
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample167DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -31,5 +34,5 @@ public class MyExample167Meta extends FieldMetaBuilder<MyExample167DTO> {
 		}
 		fields.enableFilter(MyExample167DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

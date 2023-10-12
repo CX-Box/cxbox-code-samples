@@ -21,8 +21,9 @@ public enum CxboxInputPlaceholderController implements EnumBcIdentifier {
 	// @formatter:on
 
 	InputPlaceholder(InputPlaceholderService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxInputPlaceholderController> Holder = new Holder<>(
 			CxboxInputPlaceholderController.class);

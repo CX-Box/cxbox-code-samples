@@ -15,6 +15,7 @@ public class DateDrillDownMeta extends FieldMetaBuilder<DateDrillDownDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateDrillDownDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -30,7 +31,9 @@ public class DateDrillDownMeta extends FieldMetaBuilder<DateDrillDownDTO> {
 				"/screen/DateDrillDown/view/DateDrillDownform/" + CxboxDateDrillDownController.dateDrillDown + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateDrillDownDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

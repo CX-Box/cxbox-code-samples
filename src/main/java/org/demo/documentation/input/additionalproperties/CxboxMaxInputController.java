@@ -20,8 +20,9 @@ public enum CxboxMaxInputController implements EnumBcIdentifier {
 	// @formatter:on
 
 	maxInput(MaxInputService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxMaxInputController> Holder = new Holder<>(
 			CxboxMaxInputController.class);

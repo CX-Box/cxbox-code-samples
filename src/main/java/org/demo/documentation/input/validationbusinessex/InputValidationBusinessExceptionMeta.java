@@ -14,6 +14,7 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputValidationBusinessExceptionDTO> fields,
 			InnerBcDescription bcDescription,
@@ -23,7 +24,9 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 		);
 		fields.setPlaceholder(InputValidationBusinessExceptionDTO_.customField, "Only letters");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputValidationBusinessExceptionDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

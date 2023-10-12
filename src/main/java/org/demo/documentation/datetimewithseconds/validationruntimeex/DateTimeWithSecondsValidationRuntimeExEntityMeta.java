@@ -15,6 +15,7 @@ public class DateTimeWithSecondsValidationRuntimeExEntityMeta extends
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsValidationRuntimeExEntityDTO> fields,
 			InnerBcDescription bcDescription,
@@ -26,7 +27,9 @@ public class DateTimeWithSecondsValidationRuntimeExEntityMeta extends
 				DateTimeWithSecondsValidationRuntimeExEntityDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsValidationRuntimeExEntityDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

@@ -14,6 +14,7 @@ public class DateTimeWithSecondsMeta extends FieldMetaBuilder<DateTimeWithSecond
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsDTO> fields,
 			InnerBcDescription bcDescription,
@@ -23,7 +24,9 @@ public class DateTimeWithSecondsMeta extends FieldMetaBuilder<DateTimeWithSecond
 		);
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

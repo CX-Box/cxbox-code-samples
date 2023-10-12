@@ -14,13 +14,16 @@ public class DateTimeWithSecondsCreateEditMeta extends FieldMetaBuilder<DateTime
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsCreateEditDTO> fields,
 			InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		//
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsCreateEditDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

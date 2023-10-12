@@ -18,9 +18,11 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample57Controller implements EnumBcIdentifier {
 
 	// @formatter:on
+	// --8<-- [start:bc]
 	myExampleBc57(MyExample57Service.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample57Controller> Holder = new Holder<>(
 			PlatformMyExample57Controller.class);

@@ -20,8 +20,9 @@ public enum CxboxDateColorConstController implements EnumBcIdentifier {
 	// @formatter:on
 
 	dateColorConst(DateColorConstService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxDateColorConstController> Holder = new Holder<>(
 			CxboxDateColorConstController.class);

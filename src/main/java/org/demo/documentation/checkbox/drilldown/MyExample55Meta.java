@@ -15,6 +15,7 @@ public class MyExample55Meta extends FieldMetaBuilder<MyExample55DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample55DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -25,7 +26,9 @@ public class MyExample55Meta extends FieldMetaBuilder<MyExample55DTO> {
 				"/screen/myexample55/view/myexampleinfo55/" + PlatformMyExample55Controller.myExampleBc55 + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample55DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
@@ -33,5 +36,5 @@ public class MyExample55Meta extends FieldMetaBuilder<MyExample55DTO> {
 		}
 		fields.enableFilter(MyExample55DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

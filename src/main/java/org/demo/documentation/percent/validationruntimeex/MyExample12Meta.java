@@ -14,6 +14,7 @@ public class MyExample12Meta extends FieldMetaBuilder<MyExample12DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample12DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class MyExample12Meta extends FieldMetaBuilder<MyExample12DTO> {
 				MyExample12DTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample12DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		//

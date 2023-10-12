@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample289Meta extends FieldMetaBuilder<MyExample289DTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample289DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -18,12 +19,14 @@ public class MyExample289Meta extends FieldMetaBuilder<MyExample289DTO> {
 		fields.setPlaceholder(MyExample289DTO_.customField,"Can contain only 'True'");
 		fields.setPlaceholder(MyExample289DTO_.customFieldAdditional,"Can contain only 'True'");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample289DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		fields.enableFilter(MyExample289DTO_.customFieldAdditional);
 		fields.enableFilter(MyExample289DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

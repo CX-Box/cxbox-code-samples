@@ -14,6 +14,7 @@ public class DateTimeWithSecondsPlaceholderMeta extends FieldMetaBuilder<DateTim
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsPlaceholderDTO> fields,
 			InnerBcDescription bcDescription,
@@ -23,7 +24,9 @@ public class DateTimeWithSecondsPlaceholderMeta extends FieldMetaBuilder<DateTim
 		);
 		fields.setPlaceholder(DateTimeWithSecondsPlaceholderDTO_.customField, "29.05.2023 11:25:58");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsPlaceholderDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

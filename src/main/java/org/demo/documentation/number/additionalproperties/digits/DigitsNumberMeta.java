@@ -14,6 +14,7 @@ public class DigitsNumberMeta extends FieldMetaBuilder<DigitsNumberDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DigitsNumberDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class DigitsNumberMeta extends FieldMetaBuilder<DigitsNumberDTO> {
 				DigitsNumberDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DigitsNumberDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

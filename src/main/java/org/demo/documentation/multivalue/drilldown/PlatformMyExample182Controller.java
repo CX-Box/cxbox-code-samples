@@ -18,10 +18,12 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample182Controller implements EnumBcIdentifier {
 
 	// @formatter:on
+	// --8<-- [start:bc]
 	myExampleBc182(MyExample182Service.class),
 	myEntity183AssocListPopup(myExampleBc182, MyEntity183MultivalueService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample182Controller> Holder = new Holder<>(
 			PlatformMyExample182Controller.class);

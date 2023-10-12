@@ -14,6 +14,7 @@ public class DateColorConstMeta extends FieldMetaBuilder<DateColorConstDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateColorConstDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,14 +25,15 @@ public class DateColorConstMeta extends FieldMetaBuilder<DateColorConstDTO> {
 				DateColorConstDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateColorConstDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateColorConstDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

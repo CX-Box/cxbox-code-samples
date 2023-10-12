@@ -21,8 +21,9 @@ public enum CxboxNumberConfirmController implements EnumBcIdentifier {
 	// @formatter:on
 
 	numberConfirm(NumberConfirmService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberConfirmController> Holder = new Holder<>(
 			CxboxNumberConfirmController.class);

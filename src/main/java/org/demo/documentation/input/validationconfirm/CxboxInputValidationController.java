@@ -21,8 +21,9 @@ public enum CxboxInputValidationController implements EnumBcIdentifier {
 	// @formatter:on
 
 	InputValidation(InputValidationService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxInputValidationController> Holder = new Holder<>(
 			CxboxInputValidationController.class);

@@ -4,8 +4,6 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132;
-import org.demo.documentation.inlinepicklist.basic.picklist.MyEntity132Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +25,13 @@ public class MyEntity133TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository132.deleteAll();
-		MyEntity132 myEntity2 = new MyEntity132().setCustomField("Abs data");
+		MyEntity132Pick myEntity2 = new MyEntity132Pick().setCustomField("Abs data");
 		repository132.save(myEntity2);
 		repository.save(new MyEntity133().setCustomFieldEntity(myEntity2));
 
 		int i = 0;
         while (i < 50) {
-            MyEntity132 myEntity1 = new MyEntity132().setCustomField(i+ " Test data new information");
+            MyEntity132Pick myEntity1 = new MyEntity132Pick().setCustomField(i+ " Test data new information");
             repository132.save(myEntity1);
             i++;
         }

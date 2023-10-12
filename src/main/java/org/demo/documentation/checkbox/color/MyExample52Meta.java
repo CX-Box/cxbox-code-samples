@@ -14,6 +14,7 @@ public class MyExample52Meta extends FieldMetaBuilder<MyExample52DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample52DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -21,7 +22,9 @@ public class MyExample52Meta extends FieldMetaBuilder<MyExample52DTO> {
 		fields.setEnabled(MyExample52DTO_.customField);
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample52DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

@@ -14,6 +14,7 @@ public class InputBasicMeta extends FieldMetaBuilder<InputBasicDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputBasicDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -21,7 +22,9 @@ public class InputBasicMeta extends FieldMetaBuilder<InputBasicDTO> {
 				InputBasicDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputBasicDTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

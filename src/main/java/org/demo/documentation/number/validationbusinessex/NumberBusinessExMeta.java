@@ -14,6 +14,7 @@ public class NumberBusinessExMeta extends FieldMetaBuilder<NumberBusinessExDTO> 
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberBusinessExDTO> fields,
 			InnerBcDescription bcDescription,
@@ -25,7 +26,9 @@ public class NumberBusinessExMeta extends FieldMetaBuilder<NumberBusinessExDTO> 
 				NumberBusinessExDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberBusinessExDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

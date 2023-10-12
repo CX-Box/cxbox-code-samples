@@ -15,6 +15,7 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsValidationBusinessExDTO> fields,
 			InnerBcDescription bcDescription,
@@ -23,7 +24,9 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 				DateTimeWithSecondsValidationBusinessExDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsValidationBusinessExDTO> fields,
 			InnerBcDescription bcDescription, Long parentId) {

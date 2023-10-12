@@ -1,4 +1,4 @@
-package org.demo.documentation.inlinepicklist.basic.picklist;
+package org.demo.documentation.picklist.basic;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity132 extends BaseEntity {
+public class MyEntityPick120 extends BaseEntity {
 
 	@Column
 	private String customField;

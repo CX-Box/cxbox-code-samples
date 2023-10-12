@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity401PickPickMeta extends FieldMetaBuilder<MyEntity401PickPickDTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity401PickPickDTO> fields,
 			InnerBcDescription bcDescription,
@@ -17,7 +18,9 @@ public class MyEntity401PickPickMeta extends FieldMetaBuilder<MyEntity401PickPic
 		fields.setEnabled(org.demo.documentation.picklist.validationdynamic.MyEntity401PickPickDTO_.id);
 		fields.setEnabled(org.demo.documentation.picklist.validationdynamic.MyEntity401PickPickDTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity401PickPickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

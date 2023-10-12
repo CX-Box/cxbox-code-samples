@@ -14,6 +14,7 @@ public class NumberRuntimeExMeta extends FieldMetaBuilder<NumberRuntimeExDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberRuntimeExDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class NumberRuntimeExMeta extends FieldMetaBuilder<NumberRuntimeExDTO> {
 				NumberRuntimeExDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberRuntimeExDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

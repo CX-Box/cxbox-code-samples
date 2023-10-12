@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample400Meta extends FieldMetaBuilder<MyExample400DTO> {
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample400DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -19,11 +20,13 @@ public class MyExample400Meta extends FieldMetaBuilder<MyExample400DTO> {
 		fields.setPlaceholder(MyExample400DTO_.customField,"Only letters");
 		fields.setPlaceholder(MyExample400DTO_.customFieldAdditional,"Only letters");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample400DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		fields.enableFilter(MyExample400DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

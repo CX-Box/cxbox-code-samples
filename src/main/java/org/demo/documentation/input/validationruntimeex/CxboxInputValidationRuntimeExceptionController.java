@@ -20,8 +20,9 @@ public enum CxboxInputValidationRuntimeExceptionController implements EnumBcIden
 	// @formatter:on
 
 	InputValidationRuntimeException(InputValidationRuntimeExceptionService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxInputValidationRuntimeExceptionController> Holder = new Holder<>(
 			CxboxInputValidationRuntimeExceptionController.class);

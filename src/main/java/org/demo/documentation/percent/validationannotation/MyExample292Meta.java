@@ -14,13 +14,16 @@ public class MyExample292Meta extends FieldMetaBuilder<MyExample292DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample292DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample292DTO_.customField);
 		fields.setPlaceholder(MyExample292DTO_.customField,"More than 5%");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample292DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -29,5 +32,5 @@ public class MyExample292Meta extends FieldMetaBuilder<MyExample292DTO> {
 		}
 		fields.enableFilter(MyExample292DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

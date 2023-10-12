@@ -15,6 +15,7 @@ public class MyEntity259MultivalueMeta extends FieldMetaBuilder<MyEntity259Multi
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity259MultivalueDTO> fields,
 			InnerBcDescription bcDescription,
@@ -22,7 +23,9 @@ public class MyEntity259MultivalueMeta extends FieldMetaBuilder<MyEntity259Multi
 		fields.setEnabled(org.demo.documentation.multivaluehover.basic.MyEntity259MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.multivaluehover.basic.MyEntity259MultivalueDTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity259MultivalueDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

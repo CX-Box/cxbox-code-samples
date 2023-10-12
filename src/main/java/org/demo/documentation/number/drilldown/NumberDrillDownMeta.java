@@ -15,6 +15,7 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberDrillDownDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -30,7 +31,9 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 				"/screen/NumberDrillDown/view/NumberDrillDownform/" + CxboxNumberDrillDownController.numberDrillDown + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberDrillDownDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

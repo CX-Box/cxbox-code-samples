@@ -14,6 +14,7 @@ public class InputValidationMeta extends FieldMetaBuilder<InputValidationDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputValidationDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,14 +25,15 @@ public class InputValidationMeta extends FieldMetaBuilder<InputValidationDTO> {
 				InputValidationDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputValidationDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputValidationDTO_.customField);
 		}
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

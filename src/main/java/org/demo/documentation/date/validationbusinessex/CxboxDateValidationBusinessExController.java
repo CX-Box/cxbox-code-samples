@@ -20,8 +20,9 @@ public enum CxboxDateValidationBusinessExController implements EnumBcIdentifier 
 	// @formatter:on
 
 	dateValidationBusinessEx(DateValidationBusinessExService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxDateValidationBusinessExController> Holder = new Holder<>(
 			CxboxDateValidationBusinessExController.class);

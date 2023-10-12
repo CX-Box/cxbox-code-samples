@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//dateTimeWithSeconds
 @Entity
 @Table(name = "DateTimeWithSecondsEntity")
 @Getter

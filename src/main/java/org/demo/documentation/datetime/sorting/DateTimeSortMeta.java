@@ -14,6 +14,7 @@ public class DateTimeSortMeta extends FieldMetaBuilder<DateTimeSortDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeSortDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class DateTimeSortMeta extends FieldMetaBuilder<DateTimeSortDTO> {
 				DateTimeSortDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeSortDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

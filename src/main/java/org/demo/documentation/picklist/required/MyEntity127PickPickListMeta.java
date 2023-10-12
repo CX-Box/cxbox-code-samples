@@ -15,17 +15,19 @@ public class MyEntity127PickPickListMeta extends FieldMetaBuilder<MyEntity127Pic
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity127PickDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(org.demo.documentation.picklist.required.MyEntity127PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.picklist.required.MyEntity127PickDTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity127PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
-		//
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

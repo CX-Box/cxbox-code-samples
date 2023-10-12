@@ -24,12 +24,12 @@ public class MyEntity118TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 		repository120.deleteAll();
-		MyEntity120 myEntity1 = new MyEntity120().setCustomField("Test data");
-		MyEntity120 myEntity3 = new MyEntity120().setCustomField("Data");
+		MyEntityPick120 myEntity1 = new MyEntityPick120().setCustomField("Test data");
+		MyEntityPick120 myEntity3 = new MyEntityPick120().setCustomField("Data");
 		repository120.save(myEntity1);
 		repository120.save(myEntity3);
 		repository.save(new MyEntity118().setCustomFieldEntity(myEntity1));
-		MyEntity120 myEntity2 = new MyEntity120().setCustomField("New data");
+		MyEntityPick120 myEntity2 = new MyEntityPick120().setCustomField("New data");
 		repository120.save(myEntity2);
 		repository.save(new MyEntity118().setCustomFieldEntity(myEntity2));
 	}

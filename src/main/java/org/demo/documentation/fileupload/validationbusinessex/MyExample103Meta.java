@@ -15,6 +15,7 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample103DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -22,7 +23,9 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 		fields.setEnabled(MyExample103DTO_.customField);
 		fields.setPlaceholder(MyExample103DTO_.customField, "Only letters");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample103DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -31,5 +34,5 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 		}
 		fields.enableFilter(MyExample103DTO_.customField);
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }

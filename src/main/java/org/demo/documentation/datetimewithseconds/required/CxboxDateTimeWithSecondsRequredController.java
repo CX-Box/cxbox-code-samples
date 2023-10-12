@@ -20,8 +20,9 @@ public enum CxboxDateTimeWithSecondsRequredController implements EnumBcIdentifie
 	// @formatter:on
 
 	dateTimeWithSecondsRequred(DateTimeWithSecondsRequredService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsRequredController> Holder = new Holder<>(
 			CxboxDateTimeWithSecondsRequredController.class);

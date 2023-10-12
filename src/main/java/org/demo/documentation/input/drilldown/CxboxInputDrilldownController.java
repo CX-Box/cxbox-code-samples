@@ -21,8 +21,9 @@ public enum CxboxInputDrilldownController implements EnumBcIdentifier {
 	// @formatter:on
 
 	InputDrilldown(InputDrilldownService.class);
-
+	// --8<-- [end:bc]
 	// @formatter:on
+
 
 	public static final EnumBcIdentifier.Holder<CxboxInputDrilldownController> Holder = new Holder<>(
 			CxboxInputDrilldownController.class);

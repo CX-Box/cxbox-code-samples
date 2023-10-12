@@ -16,6 +16,7 @@ public class InputDrilldownMeta extends FieldMetaBuilder<InputDrilldownDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputDrilldownDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -31,7 +32,9 @@ public class InputDrilldownMeta extends FieldMetaBuilder<InputDrilldownDTO> {
 				"/screen/InputDrilldown/view/InputDrilldownform/" + CxboxInputDrilldownController.InputDrilldown + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputDrilldownDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

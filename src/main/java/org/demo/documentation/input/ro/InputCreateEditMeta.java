@@ -14,12 +14,15 @@ public class InputCreateEditMeta extends FieldMetaBuilder<InputCreateEditDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputCreateEditDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputCreateEditDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {

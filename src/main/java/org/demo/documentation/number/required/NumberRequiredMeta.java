@@ -14,6 +14,7 @@ public class NumberRequiredMeta extends FieldMetaBuilder<NumberRequiredDTO> {
 
 	private final DocumentConfig configuration;
 
+	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
@@ -24,7 +25,9 @@ public class NumberRequiredMeta extends FieldMetaBuilder<NumberRequiredDTO> {
 				NumberRequiredDTO_.customField
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberRequiredDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
