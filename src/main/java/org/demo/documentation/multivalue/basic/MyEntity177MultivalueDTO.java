@@ -12,7 +12,7 @@ public class MyEntity177MultivalueDTO extends DataResponseDTO {
 
 	private String customField;
 
-	public MyEntity177MultivalueDTO(MyEntity177 entity) {
+	public MyEntity177MultivalueDTO(MyEntityMultivalue177 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 	}

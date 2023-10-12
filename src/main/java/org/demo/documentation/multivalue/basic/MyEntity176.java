@@ -25,7 +25,7 @@ public class MyEntity176 extends BaseEntity {
 			inverseJoinColumns = @JoinColumn(name = "MyEntity177_id")
 	)
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<MyEntity177> customFieldList = new ArrayList<>();
+	private List<MyEntityMultivalue177> customFieldList = new ArrayList<>();
 
 	@Column
 	private String customFieldAdditional;
