@@ -64,7 +64,7 @@ const replaceTemporaryIdOnSavingEpic: Epic<AnyAction, AppState> = (action$, stor
         const state = store.getState()
         const newCursor = action.payload.dataItem?.id
 
-        if (newCursor != null) {
+        if (state.bo?.bc && newCursor != null) {
             window.location.href = `${window.location.href}`.replace(
                 `/${action.payload.bcName}/${state.screen.bo.bc[action.payload.bcName].cursor}`,
                 `/${action.payload.bcName}/${newCursor}`

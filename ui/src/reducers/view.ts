@@ -19,6 +19,7 @@ export type CustomView = ViewState & {
     popupData?: PopupData & {
         options?: {
             operation?: CustomActionTypes['processPreInvoke']
+            calleeFieldKey?: string
         }
     }
 }

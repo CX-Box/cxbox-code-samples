@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { FieldType } from '@cxbox-ui/schema'
 import { DataValue } from '@cxbox-ui/core/interfaces/data'
 import { AppState } from '../../interfaces/storeSlices'
-import { WidgetField } from '@cxbox-ui/core/interfaces/widget'
+import { PickListFieldMeta, WidgetField, WidgetTypes } from '@cxbox-ui/core/interfaces/widget'
 import { BcFilter, FilterType } from '@cxbox-ui/core/interfaces/filters'
 import { $do } from '../../actions/types'
 import { CustomFieldTypes } from '../../interfaces/widget'
+import { useAssociateFieldKeyForPickList } from '../ColumnTitle/ColumnFilter'
 
 interface FilterPopupProps {
     widgetName: string
@@ -35,9 +36,25 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
     const filter = useSelector((store: AppState) => {
         return store.screen.filters[widget?.bcName as string]?.find(item => item.fieldName === props.fieldKey)
     })
+    const allFilters = useSelector((store: AppState) => {
+        return store.screen.filters[widget?.bcName as string]
+    })
     const widgetMeta = (widget?.fields as WidgetField[])?.find(item => item.key === props.fieldKey)
+    const fieldMetaPickListField = widgetMeta as PickListFieldMeta
+
+    const { associateFieldKeyForPickList } = useAssociateFieldKeyForPickList(fieldMetaPickListField)
+
+    const pickListPopupBcName = fieldMetaPickListField?.popupBcName
+
+    const picklistPopupWidget = useSelector((store: AppState) => {
+        return store.view.widgets.find(item => {
+            return item.type === WidgetTypes.PickListPopup && item.bcName === pickListPopupBcName
+        })
+    })
+
     const dispatch = useDispatch()
     const { t } = useTranslation()
+
     if (!widgetMeta) {
         return null
     }
@@ -52,6 +69,15 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
             fieldName: props.fieldKey,
             viewName,
             widgetName: widget?.name as string
+        }
+        if (FieldType.pickList) {
+            const foundPickListFilter = allFilters?.find(filter => {
+                return filter.fieldName === associateFieldKeyForPickList
+            })
+            if (foundPickListFilter) {
+                dispatch($do.bcRemoveFilter({ bcName: widget?.bcName as string, filter: foundPickListFilter as BcFilter }))
+                picklistPopupWidget?.bcName && dispatch($do.bcCancelPendingChanges({ bcNames: [picklistPopupWidget?.bcName] }))
+            }
         }
         if ((props.value === null || props.value === undefined) && FieldType.checkbox === props.fieldType) {
             dispatch(
@@ -126,6 +152,7 @@ export function getFilterType(fieldType: FieldType | CustomFieldTypes) {
             return FilterType.specified
         }
         case FieldType.inlinePickList:
+        case FieldType.pickList:
         case FieldType.input:
         case FieldType.fileUpload:
         case FieldType.text: {

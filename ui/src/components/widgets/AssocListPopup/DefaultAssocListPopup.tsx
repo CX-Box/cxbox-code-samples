@@ -23,12 +23,13 @@ interface DefaultAssocListPopupProps {
 function DefaultAssocListPopup({ meta }: DefaultAssocListPopupProps) {
     const { bcName } = meta
     const isFullHierarchy = !!meta.options?.hierarchyFull
-    const { associateFieldKey, pendingDataChanges, data, bcFilters, isFilter, calleeBCName, calleeWidgetName, viewName } = useSelector(
-        (store: AppState) => {
+    const { associateFieldKey, pendingDataChanges, data, bcFilters, isFilter, calleeBCName, calleeWidgetName, viewName, calleeFieldKey } =
+        useSelector((store: AppState) => {
             const isFilter = store.view.popupData?.isFilter
             const calleeBCName = store.view.popupData?.calleeBCName
             const calleeWidgetName = store.view.popupData?.calleeWidgetName
             const associateFieldKey = store.view.popupData?.associateFieldKey
+            const calleeFieldKey = store.view.popupData?.options?.calleeFieldKey
             const data = store.data[bcName] || emptyData
             const bcFilters = store.screen.filters?.[calleeBCName!] ?? EMPTY_ARRAY
             const filterDataItems = bcFilters.find(filterItem => filterItem.fieldName === associateFieldKey)?.value as DataItem[]
@@ -47,10 +48,10 @@ function DefaultAssocListPopup({ meta }: DefaultAssocListPopupProps) {
                 isFilter,
                 calleeBCName,
                 calleeWidgetName,
-                viewName: store.view.name
+                viewName: store.view.name,
+                calleeFieldKey
             }
-        }
-    )
+        })
     const selectedRecords = useAssocRecords(data, pendingDataChanges)
     const dispatch = useDispatch()
     const onClose = React.useCallback(() => {
@@ -98,6 +99,14 @@ function DefaultAssocListPopup({ meta }: DefaultAssocListPopupProps) {
     const filterData = React.useCallback(() => {
         const filterValue = selectedRecords.map(item => item.id)
         if (associateFieldKey && calleeBCName && filterValue.length > 0) {
+            const existingFilter = bcFilters.find(filter => {
+                return filter.fieldName === calleeFieldKey
+            })
+
+            if (existingFilter) {
+                dispatch($do.bcRemoveFilter({ bcName: calleeBCName, filter: existingFilter as BcFilter }))
+            }
+
             onFilter(calleeBCName, {
                 type: FilterType.equalsOneOf,
                 fieldName: associateFieldKey,
@@ -116,7 +125,19 @@ function DefaultAssocListPopup({ meta }: DefaultAssocListPopupProps) {
             }
         }
         onClose()
-    }, [onFilter, onRemoveFilter, bcFilters, onClose, calleeBCName, associateFieldKey, selectedRecords, calleeWidgetName, viewName])
+    }, [
+        selectedRecords,
+        associateFieldKey,
+        calleeBCName,
+        onClose,
+        bcFilters,
+        onFilter,
+        viewName,
+        calleeWidgetName,
+        calleeFieldKey,
+        dispatch,
+        onRemoveFilter
+    ])
 
     const { t } = useTranslation()
     return (
