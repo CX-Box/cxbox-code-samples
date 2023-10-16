@@ -55,6 +55,7 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 	}
 	// --8<-- [end:getActions]
 
+	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample320DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		LocalDateTime sysdate = LocalDateTime.now();
@@ -69,8 +70,9 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 			);
 		}
 		if (entity.getFields().size() > 0) {
-			throw new BusinessException().setEntity(entity);
+				throw new BusinessException().setEntity(entity);
 		}
 	}
+	// --8<-- [end:validateFields]
 
 }

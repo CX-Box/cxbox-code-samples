@@ -55,6 +55,7 @@ public class MyExample289Service extends VersionAwareResponseService<MyExample28
 	}
 	// --8<-- [end:getActions]
 
+	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample289DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (Boolean.FALSE.equals(dto.getCustomField())) {
@@ -67,8 +68,9 @@ public class MyExample289Service extends VersionAwareResponseService<MyExample28
 			);
 		}
 		if (entity.getFields().size() > 0) {
-			throw new BusinessException().setEntity(entity);
+				throw new BusinessException().setEntity(entity);
 		}
 	}
+	// --8<-- [end:validateFields]
 
 }
