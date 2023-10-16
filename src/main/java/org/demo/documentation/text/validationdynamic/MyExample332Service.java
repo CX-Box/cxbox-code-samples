@@ -55,6 +55,7 @@ public class MyExample332Service extends VersionAwareResponseService<MyExample33
 	}
 	// --8<-- [end:getActions]
 
+	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample332DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (!String.valueOf(dto.getCustomField()).matches("[A-Za-z]+")) {
@@ -67,8 +68,9 @@ public class MyExample332Service extends VersionAwareResponseService<MyExample33
 			);
 		}
 		if (entity.getFields().size() > 0) {
-			throw new BusinessException().setEntity(entity);
+				throw new BusinessException().setEntity(entity);
 		}
 	}
+	// --8<-- [end:validateFields]
 
 }

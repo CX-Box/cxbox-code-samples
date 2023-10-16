@@ -54,6 +54,7 @@ public class MyExample340Service extends VersionAwareResponseService<MyExample34
 	}
 	// --8<-- [end:getActions]
 
+	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample340DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (!CustomFieldEnum.HIGH.getValue().equals(dto.getCustomField().getValue())) {
@@ -63,8 +64,9 @@ public class MyExample340Service extends VersionAwareResponseService<MyExample34
 			entity.addField(MyExample340DTO_.customFieldAdditional.getName(), "Custom message about error");
 		}
 		if (entity.getFields().size() > 0) {
-			throw new BusinessException().setEntity(entity);
+				throw new BusinessException().setEntity(entity);
 		}
 	}
+	// --8<-- [end:validateFields]
 
 }
