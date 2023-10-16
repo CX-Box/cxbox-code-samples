@@ -35,8 +35,8 @@ public class InputValidationRuntimeExceptionMeta extends FieldMetaBuilder<InputV
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputValidationRuntimeExceptionDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

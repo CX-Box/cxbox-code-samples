@@ -24,13 +24,16 @@ public class NumberRequiredService extends VersionAwareResponseService<NumberReq
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberRequiredDTO> doUpdateEntity(NumberRequiredEntity entity, NumberRequiredDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberRequiredDTO> getActions() {
 		return Actions.<NumberRequiredDTO>builder()
@@ -39,6 +42,7 @@ public class NumberRequiredService extends VersionAwareResponseService<NumberReq
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

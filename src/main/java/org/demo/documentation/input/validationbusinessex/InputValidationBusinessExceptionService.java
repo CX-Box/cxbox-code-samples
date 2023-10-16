@@ -33,6 +33,7 @@ public class InputValidationBusinessExceptionService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputValidationBusinessExceptionDTO> doUpdateEntity(InputValidationBusinessExc entity,
 			InputValidationBusinessExceptionDTO data, BusinessComponent bc) {
@@ -46,7 +47,9 @@ public class InputValidationBusinessExceptionService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputValidationBusinessExceptionDTO> getActions() {
 		return Actions.<InputValidationBusinessExceptionDTO>builder()
@@ -55,6 +58,7 @@ public class InputValidationBusinessExceptionService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

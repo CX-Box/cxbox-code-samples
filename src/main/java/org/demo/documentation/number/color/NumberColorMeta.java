@@ -33,8 +33,8 @@ public class NumberColorMeta extends FieldMetaBuilder<NumberColorDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberColorDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

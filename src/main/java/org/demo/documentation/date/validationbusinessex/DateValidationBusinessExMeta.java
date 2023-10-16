@@ -34,8 +34,8 @@ public class DateValidationBusinessExMeta extends FieldMetaBuilder<DateValidatio
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateValidationBusinessExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

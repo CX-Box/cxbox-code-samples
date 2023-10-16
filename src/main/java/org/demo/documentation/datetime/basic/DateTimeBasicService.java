@@ -24,6 +24,7 @@ public class DateTimeBasicService extends VersionAwareResponseService<DateTimeBa
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeBasicDTO> doUpdateEntity(DateTimeBasic entity, DateTimeBasicDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class DateTimeBasicService extends VersionAwareResponseService<DateTimeBa
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeBasicDTO> getActions() {
 		return Actions.<DateTimeBasicDTO>builder()
@@ -41,6 +44,7 @@ public class DateTimeBasicService extends VersionAwareResponseService<DateTimeBa
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

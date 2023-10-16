@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-//InputPlaceholder
+
 @Entity
 @Table(name = "InputPlaceholder")
 @Getter

@@ -24,12 +24,15 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MaxInputDTO> doUpdateEntity(MaxInputEntity entity, MaxInputDTO data, BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<MaxInputDTO> getActions() {
 		return Actions.<MaxInputDTO>builder()
@@ -38,6 +41,7 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

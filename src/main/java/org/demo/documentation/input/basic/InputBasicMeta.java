@@ -30,8 +30,8 @@ public class InputBasicMeta extends FieldMetaBuilder<InputBasicDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputBasicDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -24,6 +24,7 @@ public class DateTimeSortService extends VersionAwareResponseService<DateTimeSor
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeSortDTO> doUpdateEntity(DateTimeSort entity, DateTimeSortDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class DateTimeSortService extends VersionAwareResponseService<DateTimeSor
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeSortDTO> getActions() {
 		return Actions.<DateTimeSortDTO>builder()
@@ -41,6 +44,7 @@ public class DateTimeSortService extends VersionAwareResponseService<DateTimeSor
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

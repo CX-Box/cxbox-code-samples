@@ -24,6 +24,7 @@ public class RequiredDateTimeService extends VersionAwareResponseService<Require
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<RequiredDateTimeDTO> doUpdateEntity(RequiredDateTime entity, RequiredDateTimeDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class RequiredDateTimeService extends VersionAwareResponseService<Require
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<RequiredDateTimeDTO> getActions() {
 		return Actions.<RequiredDateTimeDTO>builder()
@@ -41,6 +44,7 @@ public class RequiredDateTimeService extends VersionAwareResponseService<Require
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

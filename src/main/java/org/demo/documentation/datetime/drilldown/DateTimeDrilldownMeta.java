@@ -43,8 +43,8 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeDrilldownDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

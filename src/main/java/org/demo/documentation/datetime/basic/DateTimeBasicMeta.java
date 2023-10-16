@@ -32,8 +32,8 @@ public class DateTimeBasicMeta extends FieldMetaBuilder<DateTimeBasicDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeBasicDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

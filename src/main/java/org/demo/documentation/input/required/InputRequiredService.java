@@ -24,6 +24,7 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputRequiredDTO> doUpdateEntity(InputRequired entity, InputRequiredDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputRequiredDTO> getActions() {
 		return Actions.<InputRequiredDTO>builder()

@@ -36,8 +36,8 @@ public class DateTimeWithSecondsValidationRuntimeExEntityMeta extends
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsValidationRuntimeExEntityDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

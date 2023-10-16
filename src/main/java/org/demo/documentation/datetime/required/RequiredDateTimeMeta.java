@@ -35,8 +35,8 @@ public class RequiredDateTimeMeta extends FieldMetaBuilder<RequiredDateTimeDTO> 
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(RequiredDateTimeDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

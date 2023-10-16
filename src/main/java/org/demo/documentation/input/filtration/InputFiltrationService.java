@@ -24,6 +24,7 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputFiltrationDTO> doUpdateEntity(InputFiltration entity, InputFiltrationDTO data,
 			BusinessComponent bc) {
@@ -35,7 +36,9 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputFiltrationDTO> getActions() {
 		return Actions.<InputFiltrationDTO>builder()
@@ -44,6 +47,7 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

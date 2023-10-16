@@ -24,6 +24,7 @@ public class DateColorService extends VersionAwareResponseService<DateColorDTO, 
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateColorDTO> doUpdateEntity(dateColor entity, DateColorDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateColorDTO_.customField)) {
@@ -31,7 +32,9 @@ public class DateColorService extends VersionAwareResponseService<DateColorDTO, 
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateColorDTO> getActions() {
 		return Actions.<DateColorDTO>builder()
@@ -40,6 +43,7 @@ public class DateColorService extends VersionAwareResponseService<DateColorDTO, 
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

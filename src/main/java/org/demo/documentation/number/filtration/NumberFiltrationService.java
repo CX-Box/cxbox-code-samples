@@ -23,6 +23,7 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberFiltrationDTO> doUpdateEntity(NumberFiltrationEntity entity, NumberFiltrationDTO data,
 			BusinessComponent bc) {
@@ -31,7 +32,9 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberFiltrationDTO> getActions() {
 		return Actions.<NumberFiltrationDTO>builder()
@@ -40,6 +43,7 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

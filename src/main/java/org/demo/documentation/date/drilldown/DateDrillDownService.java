@@ -23,6 +23,7 @@ public class DateDrillDownService extends VersionAwareResponseService<DateDrillD
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateDrillDownDTO> doUpdateEntity(dateDrillDownEntity entity, DateDrillDownDTO data,
 			BusinessComponent bc) {
@@ -31,7 +32,9 @@ public class DateDrillDownService extends VersionAwareResponseService<DateDrillD
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateDrillDownDTO> getActions() {
 		return Actions.<DateDrillDownDTO>builder()
@@ -40,6 +43,7 @@ public class DateDrillDownService extends VersionAwareResponseService<DateDrillD
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

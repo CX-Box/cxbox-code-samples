@@ -24,6 +24,7 @@ public class InputDrilldownService extends VersionAwareResponseService<InputDril
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputDrilldownDTO> doUpdateEntity(InputDrilldown entity, InputDrilldownDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class InputDrilldownService extends VersionAwareResponseService<InputDril
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputDrilldownDTO> getActions() {
 		return Actions.<InputDrilldownDTO>builder()
@@ -41,6 +44,7 @@ public class InputDrilldownService extends VersionAwareResponseService<InputDril
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

@@ -25,13 +25,16 @@ public class NumberPlaceholderService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberPlaceholderDTO> doUpdateEntity(NumberPlaceholderEntity entity,
 			NumberPlaceholderDTO data, BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberPlaceholderDTO> getActions() {
 		return Actions.<NumberPlaceholderDTO>builder()
@@ -40,6 +43,7 @@ public class NumberPlaceholderService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

@@ -33,8 +33,8 @@ public class DateTimeWithSecondsPlaceholderMeta extends FieldMetaBuilder<DateTim
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsPlaceholderDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

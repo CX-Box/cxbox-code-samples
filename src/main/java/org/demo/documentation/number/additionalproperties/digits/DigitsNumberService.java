@@ -24,13 +24,16 @@ public class DigitsNumberService extends VersionAwareResponseService<DigitsNumbe
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DigitsNumberDTO> doUpdateEntity(DigitsNumberEntity entity, DigitsNumberDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DigitsNumberDTO> getActions() {
 		return Actions.<DigitsNumberDTO>builder()
@@ -39,6 +42,7 @@ public class DigitsNumberService extends VersionAwareResponseService<DigitsNumbe
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

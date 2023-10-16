@@ -30,8 +30,8 @@ public class DateConfirmMeta extends FieldMetaBuilder<DateConfirmDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateConfirmDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

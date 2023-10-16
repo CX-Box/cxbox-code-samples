@@ -25,6 +25,7 @@ public class DateTimeWithSecondsService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsDTO> doUpdateEntity(DateTimeWithSecondsEntity entity,
 			DateTimeWithSecondsDTO data, BusinessComponent bc) {
@@ -33,7 +34,9 @@ public class DateTimeWithSecondsService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeWithSecondsDTO> getActions() {
 		return Actions.<DateTimeWithSecondsDTO>builder()
@@ -42,6 +45,7 @@ public class DateTimeWithSecondsService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

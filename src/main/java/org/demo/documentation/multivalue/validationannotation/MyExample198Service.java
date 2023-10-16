@@ -32,6 +32,7 @@ public class MyExample198Service extends VersionAwareResponseService<MyExample19
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample198DTO> doUpdateEntity(MyEntity198 entity, MyExample198DTO data,
 			BusinessComponent bc) {
@@ -47,7 +48,9 @@ public class MyExample198Service extends VersionAwareResponseService<MyExample19
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<MyExample198DTO> getActions() {
 		return Actions.<MyExample198DTO>builder()
@@ -56,5 +59,6 @@ public class MyExample198Service extends VersionAwareResponseService<MyExample19
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 }

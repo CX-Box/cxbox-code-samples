@@ -40,8 +40,8 @@ public class DateDrillDownMeta extends FieldMetaBuilder<DateDrillDownDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateDrillDownDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

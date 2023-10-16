@@ -39,8 +39,8 @@ public class MyExample5Meta extends FieldMetaBuilder<MyExample5DTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample5DTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

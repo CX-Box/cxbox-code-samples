@@ -35,8 +35,8 @@ public class DateTimeColorCalcMeta extends FieldMetaBuilder<DateTimeColorCalcDTO
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeColorCalcDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -33,8 +33,8 @@ public class DateColorMeta extends FieldMetaBuilder<DateColorDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateColorDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

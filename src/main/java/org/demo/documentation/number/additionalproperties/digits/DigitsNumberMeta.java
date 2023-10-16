@@ -34,8 +34,8 @@ public class DigitsNumberMeta extends FieldMetaBuilder<DigitsNumberDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DigitsNumberDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

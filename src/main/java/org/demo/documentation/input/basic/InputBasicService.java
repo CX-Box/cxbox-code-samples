@@ -24,6 +24,7 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputBasicDTO> doUpdateEntity(InputBasic entity, InputBasicDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(InputBasicDTO_.customFieldRO)) {
@@ -34,7 +35,9 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputBasicDTO> getActions() {
 		return Actions.<InputBasicDTO>builder()
@@ -43,6 +46,7 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

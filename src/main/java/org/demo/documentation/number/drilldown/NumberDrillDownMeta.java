@@ -40,8 +40,8 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberDrillDownDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

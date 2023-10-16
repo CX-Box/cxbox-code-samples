@@ -31,13 +31,16 @@ public class DateTimeWithSecondsPlaceholderService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsPlaceholderDTO> doUpdateEntity(
 			DateTimeWithSecondsPlaceholderEntity entity, DateTimeWithSecondsPlaceholderDTO data, BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeWithSecondsPlaceholderDTO> getActions() {
 		return Actions.<DateTimeWithSecondsPlaceholderDTO>builder()
@@ -46,6 +49,7 @@ public class DateTimeWithSecondsPlaceholderService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

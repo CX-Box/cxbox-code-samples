@@ -24,6 +24,7 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateConfirmDTO> doUpdateEntity(DateConfirmEntity entity, DateConfirmDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateConfirmDTO> getActions() {
 		return Actions.<DateConfirmDTO>builder()
@@ -42,6 +45,7 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

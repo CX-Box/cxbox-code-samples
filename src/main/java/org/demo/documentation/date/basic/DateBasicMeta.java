@@ -31,8 +31,8 @@ public class DateBasicMeta extends FieldMetaBuilder<DateBasicDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateBasicDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

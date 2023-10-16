@@ -24,6 +24,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputPlaceholderDTO> doUpdateEntity(InputPlaceholder entity, InputPlaceholderDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputPlaceholderDTO> getActions() {
 		return Actions.<InputPlaceholderDTO>builder()
@@ -41,6 +44,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

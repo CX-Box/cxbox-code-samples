@@ -24,6 +24,7 @@ public class InputSortService extends VersionAwareResponseService<InputSortDTO, 
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputSortDTO> doUpdateEntity(InputSort entity, InputSortDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(InputSortDTO_.customField)) {
@@ -31,7 +32,9 @@ public class InputSortService extends VersionAwareResponseService<InputSortDTO, 
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputSortDTO> getActions() {
 		return Actions.<InputSortDTO>builder()
@@ -40,6 +43,7 @@ public class InputSortService extends VersionAwareResponseService<InputSortDTO, 
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }
