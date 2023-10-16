@@ -34,8 +34,8 @@ public class NumberConfirmMeta extends FieldMetaBuilder<NumberConfirmDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberConfirmDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

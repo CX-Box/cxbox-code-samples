@@ -30,6 +30,7 @@ public class DateValidationRuntimeExEntityService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateValidationRuntimeExEntityDTO> doUpdateEntity(DateValidationRuntimeExEntity entity,
 			DateValidationRuntimeExEntityDTO data, BusinessComponent bc) {
@@ -43,7 +44,9 @@ public class DateValidationRuntimeExEntityService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateValidationRuntimeExEntityDTO> getActions() {
 		return Actions.<DateValidationRuntimeExEntityDTO>builder()
@@ -52,6 +55,7 @@ public class DateValidationRuntimeExEntityService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

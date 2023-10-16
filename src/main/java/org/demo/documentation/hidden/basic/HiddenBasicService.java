@@ -24,6 +24,7 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<HiddenBasicDTO> doUpdateEntity(HiddenBasic entity, HiddenBasicDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<HiddenBasicDTO> getActions() {
 		return Actions.<HiddenBasicDTO>builder()
@@ -41,6 +44,7 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

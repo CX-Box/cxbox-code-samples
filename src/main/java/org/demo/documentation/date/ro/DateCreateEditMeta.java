@@ -29,8 +29,8 @@ public class DateCreateEditMeta extends FieldMetaBuilder<DateCreateEditDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateCreateEditDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

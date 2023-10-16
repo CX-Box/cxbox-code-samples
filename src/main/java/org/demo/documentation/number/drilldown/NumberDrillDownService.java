@@ -23,13 +23,16 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberDrillDownDTO> doUpdateEntity(NumberDrillDownEntity entity, NumberDrillDownDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberDrillDownDTO> getActions() {
 		return Actions.<NumberDrillDownDTO>builder()
@@ -38,6 +41,7 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

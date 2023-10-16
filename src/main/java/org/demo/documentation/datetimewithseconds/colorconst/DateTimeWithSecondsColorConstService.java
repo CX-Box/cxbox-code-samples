@@ -30,6 +30,7 @@ public class DateTimeWithSecondsColorConstService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsColorConstDTO> doUpdateEntity(DateTimeWithSecondsColorConstEntity entity,
 			DateTimeWithSecondsColorConstDTO data, BusinessComponent bc) {
@@ -39,7 +40,9 @@ public class DateTimeWithSecondsColorConstService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeWithSecondsColorConstDTO> getActions() {
 		return Actions.<DateTimeWithSecondsColorConstDTO>builder()
@@ -48,6 +51,7 @@ public class DateTimeWithSecondsColorConstService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

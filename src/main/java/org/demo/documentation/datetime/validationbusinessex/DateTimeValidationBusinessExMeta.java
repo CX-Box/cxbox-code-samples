@@ -34,8 +34,8 @@ public class DateTimeValidationBusinessExMeta extends FieldMetaBuilder<DateTimeV
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeValidationBusinessExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

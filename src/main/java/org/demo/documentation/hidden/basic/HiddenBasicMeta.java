@@ -33,8 +33,8 @@ public class HiddenBasicMeta extends FieldMetaBuilder<HiddenBasicDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(HiddenBasicDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

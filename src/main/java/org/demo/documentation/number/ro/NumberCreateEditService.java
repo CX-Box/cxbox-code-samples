@@ -23,6 +23,7 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberCreateEditDTO> doUpdateEntity(NumberCreateEditEntity entity, NumberCreateEditDTO data,
 			BusinessComponent bc) {
@@ -31,7 +32,9 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberCreateEditDTO> getActions() {
 		return Actions.<NumberCreateEditDTO>builder()
@@ -40,6 +43,7 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

@@ -24,6 +24,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputCreateEditDTO> doUpdateEntity(InputCreateEdit entity, InputCreateEditDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputCreateEditDTO> getActions() {
 		return Actions.<InputCreateEditDTO>builder()
@@ -41,6 +44,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

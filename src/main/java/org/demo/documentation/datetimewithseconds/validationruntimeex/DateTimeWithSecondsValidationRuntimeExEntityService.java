@@ -31,6 +31,7 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsValidationRuntimeExEntityDTO> doUpdateEntity(
 			DateTimeWithSecondsValidationRuntimeExEntity entity, DateTimeWithSecondsValidationRuntimeExEntityDTO data,
@@ -45,7 +46,9 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeWithSecondsValidationRuntimeExEntityDTO> getActions() {
 		return Actions.<DateTimeWithSecondsValidationRuntimeExEntityDTO>builder()
@@ -54,6 +57,7 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

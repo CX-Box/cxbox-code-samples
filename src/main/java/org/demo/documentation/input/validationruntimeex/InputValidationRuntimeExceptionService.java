@@ -31,6 +31,7 @@ public class InputValidationRuntimeExceptionService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputValidationRuntimeExceptionDTO> doUpdateEntity(InputValidationRuntimeException entity,
 			InputValidationRuntimeExceptionDTO data, BusinessComponent bc) {
@@ -44,7 +45,9 @@ public class InputValidationRuntimeExceptionService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputValidationRuntimeExceptionDTO> getActions() {
 		return Actions.<InputValidationRuntimeExceptionDTO>builder()
@@ -53,6 +56,7 @@ public class InputValidationRuntimeExceptionService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

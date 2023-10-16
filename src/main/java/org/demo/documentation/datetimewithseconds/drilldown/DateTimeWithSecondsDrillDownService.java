@@ -30,6 +30,7 @@ public class DateTimeWithSecondsDrillDownService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsDrillDownDTO> doUpdateEntity(DateTimeWithSecondsDrillDownEntity entity,
 			DateTimeWithSecondsDrillDownDTO data, BusinessComponent bc) {
@@ -38,7 +39,9 @@ public class DateTimeWithSecondsDrillDownService extends
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimeWithSecondsDrillDownDTO> getActions() {
 		return Actions.<DateTimeWithSecondsDrillDownDTO>builder()
@@ -47,6 +50,7 @@ public class DateTimeWithSecondsDrillDownService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

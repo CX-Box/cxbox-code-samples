@@ -30,8 +30,8 @@ public class NumberCreateEditMeta extends FieldMetaBuilder<NumberCreateEditDTO> 
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberCreateEditDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

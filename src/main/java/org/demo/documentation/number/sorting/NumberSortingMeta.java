@@ -34,8 +34,8 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberSortingDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

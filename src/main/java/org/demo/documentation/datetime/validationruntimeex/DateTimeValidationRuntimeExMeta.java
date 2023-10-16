@@ -32,8 +32,8 @@ public class DateTimeValidationRuntimeExMeta extends FieldMetaBuilder<DateTimeVa
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeValidationRuntimeExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

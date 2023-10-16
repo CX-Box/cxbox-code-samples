@@ -34,8 +34,8 @@ public class InputColorConstMeta extends FieldMetaBuilder<InputColorConstDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputColorConstDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -35,8 +35,8 @@ public class NumberColorConstMeta extends FieldMetaBuilder<NumberColorConstDTO> 
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberColorConstDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -35,8 +35,8 @@ public class DateTimeWithSecondsColorConstMeta extends FieldMetaBuilder<DateTime
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsColorConstDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -33,8 +33,8 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsValidationBusinessExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

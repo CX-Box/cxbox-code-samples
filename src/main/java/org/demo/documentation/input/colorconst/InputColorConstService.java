@@ -24,6 +24,7 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputColorConstDTO> doUpdateEntity(InputColorConst entity, InputColorConstDTO data,
 			BusinessComponent bc) {
@@ -32,7 +33,9 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputColorConstDTO> getActions() {
 		return Actions.<InputColorConstDTO>builder()

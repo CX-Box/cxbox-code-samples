@@ -25,6 +25,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberBusinessExDTO> doUpdateEntity(NumberBusinessExEntity entity, NumberBusinessExDTO data,
 			BusinessComponent bc) {
@@ -36,7 +37,9 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberBusinessExDTO> getActions() {
 		return Actions.<NumberBusinessExDTO>builder()
@@ -45,6 +48,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

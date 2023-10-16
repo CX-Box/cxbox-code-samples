@@ -33,8 +33,8 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputValidationBusinessExceptionDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

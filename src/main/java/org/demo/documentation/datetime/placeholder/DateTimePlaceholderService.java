@@ -25,13 +25,16 @@ public class DateTimePlaceholderService extends
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimePlaceholderDTO> doUpdateEntity(DateTimePlaceholderEntity entity,
 			DateTimePlaceholderDTO data, BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateTimePlaceholderDTO> getActions() {
 		return Actions.<DateTimePlaceholderDTO>builder()
@@ -40,6 +43,7 @@ public class DateTimePlaceholderService extends
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

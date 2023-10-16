@@ -40,8 +40,8 @@ public class DateTimeWithSecondsDrillDownMeta extends FieldMetaBuilder<DateTimeW
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsDrillDownDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

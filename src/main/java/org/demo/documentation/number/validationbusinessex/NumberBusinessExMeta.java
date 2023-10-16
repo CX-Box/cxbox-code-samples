@@ -35,8 +35,8 @@ public class NumberBusinessExMeta extends FieldMetaBuilder<NumberBusinessExDTO> 
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberBusinessExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

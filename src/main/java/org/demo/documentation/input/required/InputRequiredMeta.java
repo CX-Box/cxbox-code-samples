@@ -34,8 +34,8 @@ public class InputRequiredMeta extends FieldMetaBuilder<InputRequiredDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputRequiredDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

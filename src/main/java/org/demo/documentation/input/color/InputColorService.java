@@ -24,6 +24,7 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputColorDTO> doUpdateEntity(InputColor entity, InputColorDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(InputColorDTO_.customField)) {
@@ -31,7 +32,9 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<InputColorDTO> getActions() {
 		return Actions.<InputColorDTO>builder()
@@ -40,6 +43,7 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

@@ -35,8 +35,8 @@ public class DateTimeWithSecondsRequredMeta extends FieldMetaBuilder<DateTimeWit
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsRequredDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

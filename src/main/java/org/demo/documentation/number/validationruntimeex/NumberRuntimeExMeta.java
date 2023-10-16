@@ -34,8 +34,8 @@ public class NumberRuntimeExMeta extends FieldMetaBuilder<NumberRuntimeExDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberRuntimeExDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

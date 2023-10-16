@@ -35,8 +35,8 @@ public class DateTimeWithSecondsSortingMeta extends FieldMetaBuilder<DateTimeWit
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsSortingDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -33,8 +33,8 @@ public class DateSortingMeta extends FieldMetaBuilder<DateSortingDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateSortingDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -30,8 +30,8 @@ public class MaxInputMeta extends FieldMetaBuilder<MaxInputDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MaxInputDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

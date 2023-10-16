@@ -24,13 +24,16 @@ public class NumberColorService extends VersionAwareResponseService<NumberColorD
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberColorDTO> doUpdateEntity(NumberColorEntity entity, NumberColorDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberColorDTO> getActions() {
 		return Actions.<NumberColorDTO>builder()
@@ -39,6 +42,7 @@ public class NumberColorService extends VersionAwareResponseService<NumberColorD
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

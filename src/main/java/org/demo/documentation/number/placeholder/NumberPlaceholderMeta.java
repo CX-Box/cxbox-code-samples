@@ -36,8 +36,8 @@ public class NumberPlaceholderMeta extends FieldMetaBuilder<NumberPlaceholderDTO
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberPlaceholderDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

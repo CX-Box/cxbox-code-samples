@@ -23,6 +23,7 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateFiltrationDTO> doUpdateEntity(dateFiltrationEntity entity, DateFiltrationDTO data,
 			BusinessComponent bc) {
@@ -31,7 +32,9 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DateFiltrationDTO> getActions() {
 		return Actions.<DateFiltrationDTO>builder()
@@ -40,6 +43,7 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

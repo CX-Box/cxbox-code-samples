@@ -23,13 +23,16 @@ public class DatePlaceholderService extends VersionAwareResponseService<DatePlac
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DatePlaceholderDTO> doUpdateEntity(DatePlaceholderEntity entity, DatePlaceholderDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<DatePlaceholderDTO> getActions() {
 		return Actions.<DatePlaceholderDTO>builder()
@@ -38,6 +41,7 @@ public class DatePlaceholderService extends VersionAwareResponseService<DatePlac
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

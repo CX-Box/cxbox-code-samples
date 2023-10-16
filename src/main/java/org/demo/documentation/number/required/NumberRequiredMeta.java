@@ -34,8 +34,8 @@ public class NumberRequiredMeta extends FieldMetaBuilder<NumberRequiredDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberRequiredDTO_.customField);
 		}
-		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

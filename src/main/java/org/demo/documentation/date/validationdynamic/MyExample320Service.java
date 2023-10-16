@@ -28,6 +28,7 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample320DTO> doUpdateEntity(MyEntity320 entity, MyExample320DTO data,
 			BusinessComponent bc) {
@@ -41,7 +42,9 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<MyExample320DTO> getActions() {
 		return Actions.<MyExample320DTO>builder()
@@ -50,6 +53,7 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 	private void validateFields(BusinessComponent bc, MyExample320DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);

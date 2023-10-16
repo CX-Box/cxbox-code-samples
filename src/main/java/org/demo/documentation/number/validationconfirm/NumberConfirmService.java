@@ -25,13 +25,16 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberConfirmDTO> doUpdateEntity(NumberConfirmEntity entity, NumberConfirmDTO data,
 			BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<NumberConfirmDTO> getActions() {
 		return Actions.<NumberConfirmDTO>builder()
@@ -41,6 +44,7 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 				.add()
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }
