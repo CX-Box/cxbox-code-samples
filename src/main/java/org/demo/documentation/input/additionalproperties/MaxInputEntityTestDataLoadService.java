@@ -21,7 +21,7 @@ public class MaxInputEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MaxInputEntity().setCustomField("test data"));
+		repository.save(new MaxInputEntity().setCustomField("te"));
 	}
 
 }
