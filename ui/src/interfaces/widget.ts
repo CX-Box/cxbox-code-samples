@@ -4,11 +4,13 @@ import {
     WidgetOptions,
     WidgetListFieldBase,
     WidgetFormMeta,
-    WidgetTableMeta
+    WidgetTableMeta,
+    PickListFieldMeta
 } from '@cxbox-ui/core/interfaces/widget'
 
 export enum CustomFieldTypes {
-    MultipleSelect = 'multipleSelect'
+    MultipleSelect = 'multipleSelect',
+    SuggestionPickList = 'suggestionPickList'
 }
 
 export enum CustomWidgetTypes {
@@ -16,7 +18,8 @@ export enum CustomWidgetTypes {
     Steps = 'Steps',
     Funnel = 'Funnel',
     RingProgress = 'RingProgress',
-    DashboardList = 'DashboardList'
+    DashboardList = 'DashboardList',
+    SuggestionPickList = 'SuggestionPickList'
 }
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [WidgetTypes.List]
@@ -76,4 +79,16 @@ export interface AppWidgetTableMeta extends WidgetTableMeta {
 
 export interface WidgetFormPopupMeta extends Omit<WidgetFormMeta, 'type'> {
     type: CustomWidgetTypes.FormPopup
+}
+
+export interface SuggestionPickListWidgetMeta extends WidgetMeta {
+    type: CustomWidgetTypes.SuggestionPickList
+    fields: Array<{
+        title: string
+        key: string
+    }>
+}
+
+export interface SuggestionPickListField extends Omit<PickListFieldMeta, 'type'> {
+    type: CustomFieldTypes.SuggestionPickList
 }
