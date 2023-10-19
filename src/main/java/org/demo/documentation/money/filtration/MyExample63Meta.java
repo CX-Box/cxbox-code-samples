@@ -20,16 +20,17 @@ public class MyExample63Meta extends FieldMetaBuilder<MyExample63DTO> {
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample63DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
-	// --8<-- [start:filtration]
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample63DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExample63DTO_.customField);
-		// --8<-- [end:filtration]
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample63DTO_.customField);
 		}
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }
