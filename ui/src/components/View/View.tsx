@@ -31,6 +31,7 @@ import { AppState } from '../../interfaces/storeSlices'
 import ViewInfoLabel from '../DebugPanel/components/ViewInfoLabel'
 import PopupWidgetInfoLabel from '../DebugPanel/components/PopupWidgetInfoLabel'
 import FileUpload from '../../fields/FileUpload/FileUpload'
+import SuggestionPickListField from '../../fields/SuggestionPickList/SuggestionPickList'
 
 const skipWidgetTypes: WidgetTypes[] = []
 
@@ -43,7 +44,8 @@ const customFields = {
     [FieldType.pickList]: PickListField,
     [FieldType.inlinePickList]: InlinePickList,
     [CustomFieldTypes.MultipleSelect]: MultipleSelectField,
-    [FieldType.fileUpload]: FileUpload
+    [FieldType.fileUpload]: FileUpload,
+    [CustomFieldTypes.SuggestionPickList]: SuggestionPickListField
 }
 
 const customWidgets: Partial<Record<CustomWidgetTypes | WidgetTypes, CustomWidgetDescriptor>> = {
