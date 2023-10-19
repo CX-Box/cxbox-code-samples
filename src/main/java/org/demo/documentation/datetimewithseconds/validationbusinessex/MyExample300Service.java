@@ -29,6 +29,7 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:doUpdateEntity]
     @Override
     protected ActionResultDTO<MyExample300DTO> doUpdateEntity(MyEntity300 entity, MyExample300DTO data, BusinessComponent bc) {
         if (data.isFieldChanged(MyExample300DTO_.customField)) {
@@ -40,6 +41,7 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
 
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
+    // --8<-- [end:doUpdateEntity]
 
     @Override
     public Actions<MyExample300DTO> getActions() {
