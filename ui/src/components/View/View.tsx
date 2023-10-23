@@ -31,6 +31,7 @@ import { AppState } from '../../interfaces/storeSlices'
 import ViewInfoLabel from '../DebugPanel/components/ViewInfoLabel'
 import PopupWidgetInfoLabel from '../DebugPanel/components/PopupWidgetInfoLabel'
 import FileUpload from '../../fields/FileUpload/FileUpload'
+import TimeField from '../../fields/TimePicker/TimePickerField'
 
 const skipWidgetTypes: WidgetTypes[] = []
 
@@ -43,7 +44,8 @@ const customFields = {
     [FieldType.pickList]: PickListField,
     [FieldType.inlinePickList]: InlinePickList,
     [CustomFieldTypes.MultipleSelect]: MultipleSelectField,
-    [FieldType.fileUpload]: FileUpload
+    [FieldType.fileUpload]: FileUpload,
+    [CustomFieldTypes.Time]: TimeField
 }
 
 const customWidgets: Partial<Record<CustomWidgetTypes | WidgetTypes, CustomWidgetDescriptor>> = {
