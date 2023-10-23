@@ -15,6 +15,7 @@ export const initialState: ScreenState = {
     primaryView: '',
     cachedBc: {},
     filters: {},
+    fullTextFilter: {},
     sorters: {}
 }
 
@@ -66,6 +67,16 @@ export default function screenReducer(state: ScreenState = initialState, action:
          */
         case actionTypes.customAction: {
             return state
+        }
+        case actionTypes.changeBcFullTextFilter: {
+            const { bcName, fullTextFilterValue } = action.payload
+            return {
+                ...state,
+                fullTextFilter: {
+                    ...state.fullTextFilter,
+                    [bcName]: fullTextFilterValue
+                }
+            }
         }
         default:
             return state
