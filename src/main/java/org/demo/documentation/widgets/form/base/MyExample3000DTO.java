@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form;
+package org.demo.documentation.widgets.form.base;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

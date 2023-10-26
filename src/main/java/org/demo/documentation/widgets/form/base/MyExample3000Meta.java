@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form;
+package org.demo.documentation.widgets.form.base;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -17,7 +17,7 @@ public class MyExample3000Meta extends FieldMetaBuilder<MyExample3000DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3000DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+                                      Long id, Long parentId) {
 		fields.setEnabled(MyExample3000DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]

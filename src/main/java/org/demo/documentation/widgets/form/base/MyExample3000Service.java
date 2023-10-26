@@ -1,11 +1,10 @@
-package org.demo.documentation.widgets.form;
+package org.demo.documentation.widgets.form.base;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.text.basic.*;
 import org.springframework.stereotype.Service;
 
 
@@ -28,7 +27,7 @@ public class MyExample3000Service extends VersionAwareResponseService<MyExample3
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample3000DTO> doUpdateEntity(MyEntity3000 entity, MyExample3000DTO data,
-			BusinessComponent bc) {
+                                                               BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample3000DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
