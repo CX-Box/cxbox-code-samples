@@ -14,4 +14,8 @@ public class SourcesConfig {
 	private String scheme = "https";
 
 	private String targetPathPrefix = "/CX-Box/cxbox-code-samples";
+
+	private String gihubApi = "api.github.com/repos";
+
+
 }

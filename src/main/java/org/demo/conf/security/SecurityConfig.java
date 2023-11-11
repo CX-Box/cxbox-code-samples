@@ -1,6 +1,7 @@
 package org.demo.conf.security;
 
 
+import static org.demo.controller.SourcesController.GIHUBCOD_ORIGINAL_PATH_PREFIX;
 import static org.demo.controller.SourcesController.SOURCES_ORIGINAL_PATH_PREFIX;
 
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 						.antMatchers("/api/v1/auth/**").permitAll()
 						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
 						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
+						.antMatchers(GIHUBCOD_ORIGINAL_PATH_PREFIX + "/**").permitAll()
 						.antMatchers("/**").fullyAuthenticated());
 	}
 

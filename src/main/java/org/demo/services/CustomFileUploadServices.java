@@ -15,13 +15,13 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Service
-public class CustomFileServices {
+public class CustomFileUploadServices {
     private final MinioClient minioClient;
     private final String defaultBucketName;
     public static final String FILENAME_FIELD = "filename";
     public static final int FIVE_MIB = 5242880;
 
-    public CustomFileServices(
+    public CustomFileUploadServices(
             MinioClient minioClient,
             @Value("${minio.bucket.name}") String defaultBucketName) {
         this.minioClient = minioClient;
