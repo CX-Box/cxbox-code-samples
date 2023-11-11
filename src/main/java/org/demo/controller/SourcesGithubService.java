@@ -22,15 +22,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+
 
 import static org.demo.controller.SourcesController.*;
 
@@ -49,6 +45,7 @@ public class SourcesGithubService {
     private final GitHubApi zitHubApi;
     public static final String IN_ZIP_NAME = "in_sample.zip";
     public static final String OUT_ZIP_NAME = "out_sample.zip";
+    public static final String DOCUMENTATION_PATH= "/src/main/java/org/demo/documentation";
 
     @SneakyThrows
     public ResponseEntity<String> getSourceCode(HttpServletRequest request) {
@@ -73,10 +70,10 @@ public class SourcesGithubService {
     }
 
     @SneakyThrows
-    public void cleanGitHubCodeArchive(HttpServletRequest request,String fName) {
-        String requestBranch = request.getRequestURI().replace(GIHUBCOD_ORIGINAL_PATH_PREFIX,"");
-        String branch="";
-        if(!"".equals(requestBranch)){
+    public void cleanGitHubCodeArchive(HttpServletRequest request, String fName) {
+        String requestBranch = request.getRequestURI().replace(GIHUBCOD_ORIGINAL_PATH_PREFIX, "");
+        String branch = "";
+        if (!"".equals(requestBranch)) {
             branch = requestBranch;
         }
 
@@ -93,7 +90,7 @@ public class SourcesGithubService {
 
         List<FileHeader> fileHeaders = new ZipFile(TEMP_DIRECTORY + IN_ZIP_NAME).getFileHeaders();
         String rootFolder = fileHeaders.get(0).getFileName();
-        filesService.zip(TEMP_DIRECTORY + fName , TEMP_DIRECTORY);
+        filesService.zip(TEMP_DIRECTORY + fName+"/"+rootFolder+DOCUMENTATION_PATH, TEMP_DIRECTORY + OUT_ZIP_NAME);
 
     }
 
@@ -113,68 +110,17 @@ public class SourcesGithubService {
                     }
                 });
     }
-
-    private HashMap<String, byte[]> toUnzippedAndClean(Resource zipFileContent, Function<String, String> process) throws IOException {
-        HashMap<String, byte[]> map = new HashMap<>();
-        if (zipFileContent != null) {
-            try (ZipInputStream zipInputStream = new ZipInputStream(zipFileContent.getInputStream())) {
-                ZipEntry zipEntry = null;
-                byte[] buff = new byte[4096];
-                while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-                    try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-                        while (zipInputStream.available() > 0) {
-                            int byteLength = 0;
-                            while ((byteLength = zipInputStream.read(buff)) > 0) {
-                                byteArrayOutputStream.write(buff, 0, byteLength);
-                            }
-                        }
-                        if (zipEntry.getName().contains("documentation") && !zipEntry.isDirectory()) {
-
-                            String stringJava = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
-                            String cleanText = process.apply(stringJava);
-                            map.put(zipEntry.getName(), cleanText.getBytes(StandardCharsets.UTF_8));
-                        }
-                    }
-                }
-            }
-        }
-        return map;
-    }
-
-
-    public void extractWithZipInputStream(File zipFile) throws IOException {
-        net.lingala.zip4j.model.LocalFileHeader localFileHeader;
-        int readLen;
-        byte[] readBuffer = new byte[4096];
-
-        InputStream inputStream = new FileInputStream(zipFile);
-        try (net.lingala.zip4j.io.inputstream.ZipInputStream zipInputStream = new net.lingala.zip4j.io.inputstream.ZipInputStream(inputStream)) {
-            while ((localFileHeader = zipInputStream.getNextEntry()) != null) {
-                File extractedFile = new File(localFileHeader.getFileName());
-                try (OutputStream outputStream = new FileOutputStream(extractedFile)) {
-                    while ((readLen = zipInputStream.read(readBuffer)) != -1) {
-                        outputStream.write(readBuffer, 0, readLen);
-                    }
-                }
-            }
-        }
-    }
-
     @Nullable
-    public String cleanUpString(String stringJava) {
+    public String cleanUpString(String stringJava) throws IOException {
         List<String> resultLines = new ArrayList<>();
-        try {
-            try (BufferedReader result = new BufferedReader(new StringReader(stringJava))) {
-                while ((result.readLine()) != null) {
-                    resultLines = stringJava.lines()
-                            .filter(l -> !l.trim().startsWith("import "))
-                            .filter(l -> !l.trim().startsWith("package "))
-                            .map(SourcesGithubService::removeNumbersPrecededByLetters)
-                            .collect(Collectors.toList());
-                }
+        try (BufferedReader result = new BufferedReader(new StringReader(stringJava))) {
+            while ((result.readLine()) != null) {
+                resultLines = stringJava.lines()
+                        .filter(l -> !l.trim().startsWith("import "))
+                        .filter(l -> !l.trim().startsWith("package "))
+                        .map(SourcesGithubService::removeNumbersPrecededByLetters)
+                        .collect(Collectors.toList());
             }
-        } catch (Exception e) {
-            new Exception(e.getMessage());
         }
         return resultLines.stream()
                 .collect(Collectors.joining(System.lineSeparator()));

@@ -18,7 +18,7 @@ public class FilesService
         zipFile.extractAll(destinationFolderPath);
     }
 
-    public static void zip(String targetDir,String sourceDir) throws ZipException {
+    public static void zip( String sourceDir,String targetDir) throws ZipException {
         ZipFile zipFile = new ZipFile(targetDir);
         zipFile.addFolder(new File(sourceDir));
     }
