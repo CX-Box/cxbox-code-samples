@@ -73,34 +73,27 @@ public class SourcesGithubService {
     }
 
     @SneakyThrows
-    public void cleanGitHubCodeArchive(String fName) {
+    public void cleanGitHubCodeArchive(HttpServletRequest request,String fName) {
+        String requestBranch = request.getRequestURI().replace(GIHUBCOD_ORIGINAL_PATH_PREFIX,"");
+        String branch="";
+        if(!"".equals(requestBranch)){
+            branch = requestBranch;
+        }
 
         //get the archive from gitHub
-        ResponseEntity<Resource> response = zitHubApi.callZipball();
+        ResponseEntity<Resource> response = zitHubApi.callZipball(branch);
         //unzipped the archive from gitHub and clean code
         Resource zipFileContent = response.getBody();
 
-        Long currentDate;
-        currentDate = new Date().getTime();
         filesService.saveFile(zipFileContent, TEMP_DIRECTORY + IN_ZIP_NAME);
-        System.out.println("End saveFile" + (currentDate - new Date().getTime()));
 
-        currentDate = new Date().getTime();
-        filesService.unzip(TEMP_DIRECTORY + IN_ZIP_NAME, TEMP_DIRECTORY + fName + OUT_ZIP_NAME);
-        System.out.println("End unzip" + (currentDate - new Date().getTime()));
+        filesService.unzip(TEMP_DIRECTORY + IN_ZIP_NAME, TEMP_DIRECTORY + fName);
 
-        currentDate = new Date().getTime();
         walkFileTree(fName);
-        System.out.println("End walkFileTree" + (currentDate - new Date().getTime()));
-        //System.out.println("Start toUnzippedAndClean" + java.time.LocalDateTime.now());
-        // HashMap<String, byte[]> map = toUnzippedAndClean(zipFileContent, stringJava1 -> cleanUpString(stringJava1));
-        // System.out.println("End toUnzippedAndClean" + java.time.LocalDateTime.now());
-        currentDate = new Date().getTime();
+
         List<FileHeader> fileHeaders = new ZipFile(TEMP_DIRECTORY + IN_ZIP_NAME).getFileHeaders();
         String rootFolder = fileHeaders.get(0).getFileName();
-
-        filesService.zip(TEMP_DIRECTORY + fName + "/" + rootFolder, TEMP_DIRECTORY);
-        System.out.println("End zip" + (currentDate - new Date().getTime()));
+        filesService.zip(TEMP_DIRECTORY + fName , TEMP_DIRECTORY);
 
     }
 

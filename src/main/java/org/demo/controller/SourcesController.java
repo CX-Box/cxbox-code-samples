@@ -51,10 +51,10 @@ public class SourcesController {
     }
 
     @GetMapping("/" + GIHUBCODE_PATH)
-    public void cleanGitHubCodeArchive(HttpServletResponse response) {
+    public void cleanGitHubCodeArchive(HttpServletRequest request,HttpServletResponse response) {
         try {
             String fName = TEMP_FOLDER + java.util.UUID.randomUUID();
-            service.cleanGitHubCodeArchive(fName);
+            service.cleanGitHubCodeArchive(request,fName);
             Path tmpdirPath = Paths.get(TEMP_DIRECTORY + OUT_ZIP_NAME);
             response.setContentType("application/zip");
             response.setHeader("Content-Disposition", "attachment; filename=" + OUT_ZIP_NAME);

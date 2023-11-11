@@ -21,8 +21,8 @@ public class GitHubApi {
 
     private final RestTemplate proxyRestTemplate;
 
-    public ResponseEntity<Resource> callZipball() throws URISyntaxException {
-        String requestUrl = sourcesConfig.getGihubApi() + sourcesConfig.getTargetPathPrefix() + "/zipball";
+    public ResponseEntity<Resource> callZipball(String branch) throws URISyntaxException {
+        String requestUrl = sourcesConfig.getGihubApi() + sourcesConfig.getTargetPathPrefix() + "/zipball"+"/"+branch;
         URI uri = new URI(sourcesConfig.getScheme(), null, requestUrl, -1, null, null, null);
         uri = UriComponentsBuilder.fromUri(uri)
                 .build(true)
