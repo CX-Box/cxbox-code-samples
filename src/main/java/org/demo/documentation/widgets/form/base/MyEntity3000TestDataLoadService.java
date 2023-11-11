@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form;
+package org.demo.documentation.widgets.form.base;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
