@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.customname;
+package org.demo.documentation.widgets.form.title;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class MyEntity3003TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity3003().setCustomField("Test data"));
+		repository.save(new MyEntity3003().setCustomField(5L));
 	}
 
 }

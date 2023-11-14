@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.customname;
+package org.demo.documentation.widgets.form.title;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,6 @@ import javax.persistence.Entity;
 public class MyEntity3003 extends BaseEntity {
 
 	@Column
-	private String customField;
+	private Long customField;
 
-	@Column
-	private String customTitleField;
 }

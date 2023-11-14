@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.customname;
+package org.demo.documentation.widgets.form.title;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.BcIdentifier;
