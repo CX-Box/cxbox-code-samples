@@ -15,7 +15,7 @@ public class MyExample3004DTO extends DataResponseDTO {
 
 	public static final String SINGLE_COLUMN_LAYOUT_TEXT = "Shows each field on new row. Each field can have width from 1 to 24";
 	public static final String MULTI_COLUMN_LAYOUT_TEXT = "Shows fields in grid.Grid can contain any number of rows. Each row can contain any number of fields, until sum of fields widths in row is less than 24. Each field can have width from 1 to 24.";
-	public static final String ONLY_BUTTONS_TEXT = "only title and actions are shown. Usually used when standard buttons position needs to be changed (for example we want to show buttons under widget). One can hide buttons on widget with data. Create separate widget only with buttons and place it anywhere on view";
+	public static final String ONLY_BUTTONS_TEXT = "Only title and actions are shown. Usually used when standard buttons position needs to be changed (for example we want to show buttons under widget). One can hide buttons on widget with data. Create separate widget only with buttons and place it anywhere on view";
 
 
 	@SearchParameter(name = "customField", provider = StringValueProvider.class)
