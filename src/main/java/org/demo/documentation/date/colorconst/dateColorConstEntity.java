@@ -1,8 +1,8 @@
 package org.demo.documentation.date.colorconst;
 
 import java.time.LocalDateTime;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

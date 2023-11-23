@@ -1,4 +1,4 @@
-package org.demo.conf.security.keycloak;
+package org.demo.conf.security.cxboxkeycloak;
 
 import java.util.Map;
 import lombok.Getter;

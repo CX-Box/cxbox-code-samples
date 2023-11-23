@@ -1,8 +1,8 @@
 package org.demo.documentation.multifield.filtration;
 
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.multifield.basic.MyEntity160;

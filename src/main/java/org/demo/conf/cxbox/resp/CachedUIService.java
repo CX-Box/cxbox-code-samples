@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 import org.cxbox.api.data.dictionary.CoreDictionaries;
 import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.tx.TransactionService;
+import org.cxbox.core.config.cache.CacheConfig;
 import org.cxbox.core.service.ResponsibilitiesService;
 import org.cxbox.core.service.impl.UIServiceImpl;
 import org.cxbox.core.service.impl.UserRoleService;
 import org.cxbox.model.core.dao.JpaDao;
 import org.cxbox.model.core.entity.User;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,10 @@ public class CachedUIService extends UIServiceImpl {
 	}
 
 	@Override
+	@Cacheable(cacheResolver = CacheConfig.CXBOX_CACHE_RESOLVER,
+			cacheNames = {CacheConfig.USER_CACHE},
+			key = "{#root.methodName, #screenName, #user.id, #userRole}"
+	)
 	public List<String> getViews(final String screenName, final User user, final LOV userRole) {
 		final Set<String> responsibilities = getResponsibilities(user, userRole).keySet();
 		final boolean getAll = Objects.equals(userRole, CoreDictionaries.InternalRole.ADMIN) || isCommonScreen(screenName);

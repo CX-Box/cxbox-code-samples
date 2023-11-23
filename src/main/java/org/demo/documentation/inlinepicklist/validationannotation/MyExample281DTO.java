@@ -1,7 +1,7 @@
 package org.demo.documentation.inlinepicklist.validationannotation;
 
 import java.util.Optional;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

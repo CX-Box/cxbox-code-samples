@@ -1,8 +1,8 @@
 package org.demo.documentation.multipleselect.validationruntimeex;
 
 import java.util.Collections;
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.multipleselect.validationruntimeex.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;

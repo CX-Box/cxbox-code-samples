@@ -1,9 +1,11 @@
-package org.demo.conf.security.keycloak;
+package org.demo.conf.security.cxboxkeycloak;
 
-import static org.cxbox.api.service.session.InternalAuthorizationService.VANILLA;
+
+import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -16,20 +18,15 @@ import org.cxbox.model.core.entity.User_;
 import org.demo.repository.DepartmentRepository;
 import org.demo.repository.UserRepository;
 import org.hibernate.LockOptions;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
-import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @Slf4j
-public class CxboxKeycloakAuthenticationProvider extends KeycloakAuthenticationProvider {
+public class CxboxAuthUserRepository {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -49,35 +46,28 @@ public class CxboxKeycloakAuthenticationProvider extends KeycloakAuthenticationP
 	@Autowired
 	private UserRoleService userRoleService;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		Authentication auth = super.authenticate(authentication);
-		KeycloakAuthenticationToken accessToken = (KeycloakAuthenticationToken) auth;
-		SimpleKeycloakAccount account = (SimpleKeycloakAccount) accessToken.getDetails();
-
-		txService.invokeInTx(() -> {
-			upsertUserAndRoles(
-					account.getKeycloakSecurityContext().getToken(),
-					accessToken.getAccount().getRoles()
-			);
-			return null;
-		});
-
-		return authentication;
+	public Long getUserIdOrElseCreate(String login, Set<String> roles) throws AuthenticationException {
+		return txService.invokeInTx(() -> upsertUserAndRoles(login, roles));
 	}
 
 	//TODO>>taken "as is" from real project - refactor
-	private void upsertUserAndRoles(AccessToken accessToken, Set<String> roles) {
-		txService.invokeInNewTx(() -> {
-			authzService.loginAs(authzService.createAuthentication(VANILLA));
+	private Long upsertUserAndRoles(String login, Set<String> roles) {
+		return txService.invokeInNewTx(() -> {
+
 			User user = null;
 			try {
-				user = getUserByLogin(accessToken.getName().toUpperCase());
+				user = getUserByLogin(login.toUpperCase());
 				if (user == null) {
-					upsert(accessToken, roles.stream().findFirst().orElse(null));
+					upsert(login, roles.stream().findFirst().orElse(null));
 				}
-				user = getUserByLogin(accessToken.getName().toUpperCase());
-				userRoleService.upsertUserRoles(user.getId(), new ArrayList<>(roles));
+				user = getUserByLogin(login.toUpperCase());
+				Set<String> currentRoles = user.getUserRoleList().stream().map(e -> e.getInternalRoleCd().getKey())
+						.collect(Collectors.toSet());
+				if (!(currentRoles.containsAll(roles) && roles.containsAll(currentRoles))) {
+					authzService.loginAs(authzService.createAuthentication(VANILLA));
+					userRoleService.upsertUserRoles(user.getId(), new ArrayList<>(roles));
+				}
+
 			} catch (Exception e) {
 				log.error(e.getLocalizedMessage(), e);
 			}
@@ -86,24 +76,24 @@ public class CxboxKeycloakAuthenticationProvider extends KeycloakAuthenticationP
 				throw new UsernameNotFoundException(null);
 			}
 			SecurityContextHolder.getContext().setAuthentication(null);
-			return null;
+			return user.getId();
 		});
 	}
 
 	//TODO>>taken "as is" from real project - refactor
-	public User upsert(AccessToken accessToken, String role) {
+	public User upsert(String login, String role) {
 		txService.invokeInNewTx(() -> {
 					authzService.loginAs(authzService.createAuthentication(VANILLA));
 					for (int i = 1; i <= 10; i++) {
-						User existing = getUserByLogin(accessToken.getName().toUpperCase());
+						User existing = getUserByLogin(login.toUpperCase());
 						if (existing != null) {
 							jpaDao.lockAndRefresh(existing, LockOptions.WAIT_FOREVER);
-							updateUser(accessToken, role, existing);
+							updateUser(login, role, existing);
 							return existing;
 						}
 						try {
 							User newUser = new User();
-							updateUser(accessToken, role, newUser);
+							updateUser(login, role, newUser);
 							Long id = txService.invokeNoTx(() -> userRepository.save(newUser).getId());
 							return userRepository.findById(id);
 						} catch (Exception ex) {
@@ -123,23 +113,22 @@ public class CxboxKeycloakAuthenticationProvider extends KeycloakAuthenticationP
 
 	private User getUserByLogin(String login) {
 		return userRepository.findOne(
-				(root, cq, cb) -> cb.equal(cb.upper(root.get(User_.login)), login.toUpperCase())
+				(root, cq, cb) -> cb.equal(root.get(User_.login), login)
 		).orElse(null);
 	}
 
-	private void updateUser(AccessToken accessToken, String role, User user) {
+	private void updateUser(String login, String role, User user) {
 		if (user.getLogin() == null) {
-			user.setLogin(accessToken.getName().toUpperCase());
+			user.setLogin(login);
 		}
-
 		user.setInternalRole(new LOV(role));
-		user.setUserPrincipalName(accessToken.getName());
-		user.setFirstName(accessToken.getGivenName());
-		user.setLastName(accessToken.getFamilyName());
-		user.setTitle(accessToken.getName());
-		user.setFullUserName(accessToken.getName());
-		user.setEmail(accessToken.getEmail());
-		user.setPhone(accessToken.getPhoneNumber());
+		user.setUserPrincipalName(login);
+		user.setFirstName(login);
+		user.setLastName(login);
+		user.setTitle(login);
+		user.setFullUserName(login);
+		user.setEmail(login);
+		user.setPhone(login);
 		user.setActive(true);
 		user.setDepartment(departmentRepository.findById(0L).orElse(null));
 	}

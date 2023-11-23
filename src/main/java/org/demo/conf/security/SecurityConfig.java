@@ -4,106 +4,71 @@ package org.demo.conf.security;
 import static org.demo.controller.SourcesController.GIHUBCOD_ORIGINAL_PATH_PREFIX;
 import static org.demo.controller.SourcesController.SOURCES_ORIGINAL_PATH_PREFIX;
 
-import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
 import org.cxbox.core.config.properties.UIProperties;
 import org.cxbox.core.metahotreload.conf.properties.MetaConfigurationProperties;
-import org.demo.conf.security.keycloak.CxboxKeycloakAuthenticationProvider;
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
-import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
-import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.demo.conf.security.cxboxkeycloak.CxboxAuthUserRepository;
+import org.demo.conf.security.keycloack.KeycloakJwtTokenConverter;
+import org.demo.conf.security.keycloack.TokenConverterProperties;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.BeanIds;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+@SuppressWarnings({"java:S4502", "java:S5122", "java:S5804"})
 @EnableWebSecurity
-@ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
-@RequiredArgsConstructor
-@Order(100)
-@KeycloakConfiguration
 @Configuration
-public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-	@Autowired
-	private CxboxAuthenticationService cxboxAuthenticationService;
+	private final CxboxAuthenticationService cxboxAuthenticationService;
+	private final UIProperties uiProperties;
+	private final MetaConfigurationProperties metaConfigurationProperties;
+	private final KeycloakJwtTokenConverter keycloakJwtTokenConverter;
 
-	@Autowired
-	private UIProperties uiProperties;
+	public SecurityConfig(CxboxAuthenticationService cxboxAuthenticationService, UIProperties uiProperties, MetaConfigurationProperties metaConfigurationProperties, @Qualifier("tokenConverterProperties") TokenConverterProperties properties, CxboxAuthUserRepository cxboxAuthUserRepository) {
+		this.cxboxAuthenticationService = cxboxAuthenticationService;
+		this.uiProperties = uiProperties;
+		this.metaConfigurationProperties = metaConfigurationProperties;
+		this.keycloakJwtTokenConverter = new KeycloakJwtTokenConverter(new JwtGrantedAuthoritiesConverter(), properties,
+				cxboxAuthUserRepository
+		);
+	}
 
-	@Autowired
-	private CxboxKeycloakAuthenticationProvider cxboxKeycloakAuthenticationProvider;
-
-	@Autowired
-	private MetaConfigurationProperties metaConfigurationProperties;
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		super.configure(http);
-		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-		http.cors();
-		http.headers().frameOptions().sameOrigin();
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+		http.cors(cors -> cors.configure(http));
+		http.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin));
 		if (metaConfigurationProperties.isDevPanelEnabled()) {
-			http.authorizeRequests().antMatchers("/api/v1/bc-registry/**").authenticated();
+			http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/v1/bc-registry/**")
+					.authenticated());
 		} else {
-			http.authorizeRequests().antMatchers("/api/v1/bc-registry/**").denyAll();
+			http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/v1/bc-registry/**")
+					.denyAll());
 		}
 		http
-				.csrf().disable()
-				.authorizeRequests(authorizeRequests -> authorizeRequests
-						.antMatchers("/rest/**").permitAll()
-						.antMatchers("/css/**").permitAll()
-						.antMatchers(uiProperties.getPath() + "/**").permitAll()
-						.antMatchers("/api/v1/file/**").permitAll()
-						.antMatchers("/api/v1/auth/**").permitAll()
-						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
-						.antMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
-						.antMatchers(GIHUBCOD_ORIGINAL_PATH_PREFIX + "/**").permitAll()
-						.antMatchers("/**").fullyAuthenticated());
-	}
+				.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
+						.jwt(jwt -> jwt.jwtAuthenticationConverter(keycloakJwtTokenConverter)));
 
-	@Override
-	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
-		keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-		authenticationManagerBuilder.authenticationProvider(keycloakAuthenticationProvider);
-		authenticationManagerBuilder.userDetailsService(cxboxAuthenticationService);
-	}
-
-	@Override
-	protected KeycloakAuthenticationProvider keycloakAuthenticationProvider() {
-		return cxboxKeycloakAuthenticationProvider;
-	}
-
-	@Bean
-	@Override
-	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-		return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
-	}
-
-	@Bean
-	public KeycloakConfigResolver keycloakConfigResolver() {
-		return new KeycloakSpringBootConfigResolver();
-	}
-
-	@Bean(BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+		http
+				.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+						.requestMatchers("/rest/**").permitAll()
+						.requestMatchers("/css/**").permitAll()
+						.requestMatchers(uiProperties.getPath() + "/**").permitAll()
+						.requestMatchers("/api/v1/file/**").permitAll()
+						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
+						.requestMatchers(SOURCES_ORIGINAL_PATH_PREFIX + "/**").permitAll()
+						.requestMatchers(GIHUBCOD_ORIGINAL_PATH_PREFIX + "/**").permitAll()
+						.requestMatchers("/**").fullyAuthenticated());
+		return http.build();
 	}
 
 }

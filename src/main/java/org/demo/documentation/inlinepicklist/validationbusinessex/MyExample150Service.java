@@ -1,7 +1,7 @@
 package org.demo.documentation.inlinepicklist.validationbusinessex;
 
-import javax.persistence.EntityManager;
-import org.apache.commons.lang.StringUtils;
+import jakarta.persistence.EntityManager;
+import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;

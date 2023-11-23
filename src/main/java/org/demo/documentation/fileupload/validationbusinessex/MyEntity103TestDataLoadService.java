@@ -1,8 +1,8 @@
 package org.demo.documentation.fileupload.validationbusinessex;
 
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
 import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;

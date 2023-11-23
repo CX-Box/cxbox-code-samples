@@ -76,6 +76,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${FRONTEND_AUTH_SERVER_URL:http://localhost:9080/auth/realms/cxbox}
+          jwk-set-uri: http://localhost:9080/auth/realms/cxbox/protocol/openid-connect/certs
 
 keycloak:
   auth-server-url: ${BACKEND_AUTH_SERVER_URL:http://localhost:9080/auth}
@@ -121,3 +127,8 @@ decorator:
         enable-logging: true
         log-level: DEBUG
       multiline: true
+
+token:
+  converter:
+    principal-attribute: preferred_username
+    resource-id: cxbox-keycloak-client
