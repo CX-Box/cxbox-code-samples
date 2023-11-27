@@ -5,6 +5,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.form.title.MyExample3003DTO_;
 import org.springframework.stereotype.Service;
 
 
@@ -27,7 +28,9 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MaxInputDTO> doUpdateEntity(MaxInputEntity entity, MaxInputDTO data, BusinessComponent bc) {
-
+		if (data.isFieldChanged(MyExample3003DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]
