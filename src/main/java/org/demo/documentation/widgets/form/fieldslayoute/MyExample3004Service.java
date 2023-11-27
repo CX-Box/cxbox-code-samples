@@ -29,12 +29,7 @@ public class MyExample3004Service extends VersionAwareResponseService<MyExample3
     @Override
     protected ActionResultDTO<MyExample3004DTO> doUpdateEntity(MyEntity3004 entity, MyExample3004DTO data,
                                                                BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3004DTO_.customField7)) {
-            entity.setCustomField7(data.getCustomField7());
-        }
-        if (data.isFieldChanged(MyExample3004DTO_.customField6)) {
-            entity.setCustomField6(data.getCustomField6());
-        }
+
         if (data.isFieldChanged(MyExample3004DTO_.customField5)) {
             entity.setCustomField5(data.getCustomField5());
         }
@@ -46,9 +41,6 @@ public class MyExample3004Service extends VersionAwareResponseService<MyExample3
         }
         if (data.isFieldChanged(MyExample3004DTO_.customField2)) {
             entity.setCustomField2(data.getCustomField2());
-        }
-        if (data.isFieldChanged(MyExample3003DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));

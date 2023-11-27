@@ -14,7 +14,9 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class MyEntity3000 extends BaseEntity {
 
-	@Column
-	private String customField;
+    @Column
+    private String customField;
 
+    @Column
+    private String customField2;
 }

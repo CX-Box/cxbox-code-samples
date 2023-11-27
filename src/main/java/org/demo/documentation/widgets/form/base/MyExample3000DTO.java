@@ -12,12 +12,16 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyExample3000DTO extends DataResponseDTO {
 
+	public static final String TEXT = "Form widget is a component for data viewing and editing. Usually it shows multiple fields. Also, it can show available actions.";
+
 	@SearchParameter(name = "customField")
 	private String customField;
+
 
 	public MyExample3000DTO(MyEntity3000 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+
 	}
 
 }

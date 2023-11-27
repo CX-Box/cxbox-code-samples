@@ -1,19 +1,28 @@
 {
-  "name": "MyExample3003Form",
-  "title": "Constant Title",
+  "name": "MyExample3006Form",
+  "title": "Child entity",
   "type": "Form",
-  "bc": "myExampleBc3003",
+  "bc": "myExampleBc3006",
+  "showCondition": {
+    "bcName": "myExampleBc3007",
+    "key": "myExampleBc3007ShowCondition",
+    "sequence": 1,
+    "params": {
+      "fieldKey": "customFieldShowCondition",
+      "value": "true"
+    }
+  },
   "fields": [
-    {
-      "label": "",
-      "key": "INFO_TEXT_CONST_TITLE",
-      "type": "hint",
-      "showLength": 100
-    },
     {
       "label": "Custom Field",
       "key": "customField",
       "type": "input"
+    },
+    {
+      "label": "",
+      "key": "customField2",
+      "type": "hint",
+      "showLength": 100
     }
   ],
   "options": {
@@ -22,7 +31,7 @@
         {
           "cols": [
             {
-              "fieldKey": "INFO_TEXT_CONST_TITLE",
+              "fieldKey": "customField2",
               "span": 12
             }
           ]

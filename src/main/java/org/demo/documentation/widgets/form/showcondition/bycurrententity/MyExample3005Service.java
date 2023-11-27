@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.base;
+package org.demo.documentation.widgets.form.showcondition.bycurrententity;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -9,27 +9,30 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class MyExample3000Service extends VersionAwareResponseService<MyExample3000DTO, MyEntity3000> {
+public class MyExample3005Service extends VersionAwareResponseService<MyExample3005DTO, MyEntity3005> {
 
-    private final MyEntity3000Repository repository;
+    private final MyEntity3005Repository repository;
 
-    public MyExample3000Service(MyEntity3000Repository repository) {
-        super(MyExample3000DTO.class, MyEntity3000.class, null, MyExample3000Meta.class);
+    public MyExample3005Service(MyEntity3005Repository repository) {
+        super(MyExample3005DTO.class, MyEntity3005.class, null, MyExample3005Meta.class);
         this.repository = repository;
     }
 
     @Override
-    protected CreateResult<MyExample3000DTO> doCreateEntity(MyEntity3000 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample3005DTO> doCreateEntity(MyEntity3005 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     // --8<-- [start:doUpdateEntity]
     @Override
-    protected ActionResultDTO<MyExample3000DTO> doUpdateEntity(MyEntity3000 entity, MyExample3000DTO data,
+    protected ActionResultDTO<MyExample3005DTO> doUpdateEntity(MyEntity3005 entity, MyExample3005DTO data,
                                                                BusinessComponent bc) {
 
-        if (data.isFieldChanged(MyExample3000DTO_.customField)) {
+        if (data.isFieldChanged(MyExample3005DTO_.customField3)) {
+            entity.setCustomField3(data.getCustomField3());
+        }
+        if (data.isFieldChanged(MyExample3005DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
 
@@ -39,8 +42,8 @@ public class MyExample3000Service extends VersionAwareResponseService<MyExample3
 
     // --8<-- [start:getActions]
     @Override
-    public Actions<MyExample3000DTO> getActions() {
-        return Actions.<MyExample3000DTO>builder()
+    public Actions<MyExample3005DTO> getActions() {
+        return Actions.<MyExample3005DTO>builder()
                 .newAction()
                 .action("save", "save")
                 .add()
