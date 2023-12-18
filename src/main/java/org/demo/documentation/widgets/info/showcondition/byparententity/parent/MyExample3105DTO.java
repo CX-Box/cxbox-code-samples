@@ -1,35 +1,35 @@
-package org.demo.documentation.widgets.form.showcondition.byparententity.parent;
+package org.demo.documentation.widgets.info.showcondition.byparententity.parent;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3007DTO extends DataResponseDTO {
-
+public class MyExample3105DTO extends DataResponseDTO {
     public static final String INFO_TEXT = "Сondition can include boolean expression depending on current entity fields. Field updates will trigger condition recalculation only on save or if field is force active";
 
     public static final String INFO_TEXT2 = "Show condition child widget  - if CustomField  > 5 widget show.";
 
     @SearchParameter(name = "customFieldShowCondition", provider = StringValueProvider.class)
     private String customFieldShowCondition;
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
-    private Long customField;
+
     @SearchParameter(name = "customField3", provider = StringValueProvider.class)
     private String customField3;
     private String customField4;
+    @SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
+    private Long customField;
 
-
-    public MyExample3007DTO(MyEntity3007 entity) {
+    public MyExample3105DTO(MyEntity3105 entity) {
         this.id = entity.getId().toString();
         this.customFieldShowCondition = entity.getCustomField() > 7 ? "true" : "false";
         this.customField4 = entity.getCustomField4();
-        this.customField  = entity.getCustomField();
-    }
 
+        this.customField = entity.getCustomField();
+    }
 }
