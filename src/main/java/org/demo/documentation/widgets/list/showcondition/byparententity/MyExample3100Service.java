@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.fieldslayoute;
+package org.demo.documentation.widgets.list.showcondition.byparententity;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

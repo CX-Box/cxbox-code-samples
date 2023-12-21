@@ -15,11 +15,7 @@ import javax.persistence.*;
 public class MyEntity3107 extends BaseEntity {
 
     @Column
-    private Long customField;
-    @Column
-    private String customField2;
-    @Column
-    private String customField3;
+    private String customField;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")

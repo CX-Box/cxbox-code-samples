@@ -26,7 +26,6 @@ public class MyExample3005DTO extends DataResponseDTO {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customField3 = entity.getCustomField() > 5 ? "true" : "false";
-
     }
 
 }

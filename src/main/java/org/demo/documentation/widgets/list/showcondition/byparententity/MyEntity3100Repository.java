@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.fieldslayoute;
+package org.demo.documentation.widgets.list.showcondition.byparententity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

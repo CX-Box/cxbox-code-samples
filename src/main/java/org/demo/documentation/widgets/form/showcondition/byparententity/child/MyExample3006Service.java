@@ -30,13 +30,9 @@ public class MyExample3006Service extends VersionAwareResponseService<MyExample3
     protected ActionResultDTO<MyExample3006DTO> doUpdateEntity(MyEntity3006 entity, MyExample3006DTO data,
                                                                BusinessComponent bc) {
 
-        if (data.isFieldChanged(MyExample3006DTO_.customField3)) {
-            entity.setCustomField3(data.getCustomField3());
+        if (data.isFieldChanged(MyExample3006DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
         }
-        if (data.isFieldChanged(MyExample3006DTO_.customField2)) {
-            entity.setCustomField2(data.getCustomField2());
-        }
-
 
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

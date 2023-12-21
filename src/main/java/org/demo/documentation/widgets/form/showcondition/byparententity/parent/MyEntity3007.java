@@ -17,10 +17,5 @@ public class MyEntity3007 extends BaseEntity {
     @Column
     private String customFieldShowCondition;
     @Column
-    private String customField3;
-
-    @Column
-    private String customField4;
-    @Column
     private Long customField;
 }
