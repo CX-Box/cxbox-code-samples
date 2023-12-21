@@ -16,20 +16,14 @@ public class MyExample3007DTO extends DataResponseDTO {
 
     public static final String INFO_TEXT2 = "Show condition child widget  - if CustomField  > 5 widget show.";
 
-    @SearchParameter(name = "customFieldShowCondition", provider = StringValueProvider.class)
     private String customFieldShowCondition;
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private Long customField;
-    @SearchParameter(name = "customField3", provider = StringValueProvider.class)
-    private String customField3;
-    private String customField4;
-
 
     public MyExample3007DTO(MyEntity3007 entity) {
         this.id = entity.getId().toString();
-        this.customFieldShowCondition = entity.getCustomField() > 7 ? "true" : "false";
-        this.customField4 = entity.getCustomField4();
-        this.customField  = entity.getCustomField();
+        this.customFieldShowCondition = entity.getCustomField() > 5 ? "true" : "false";
+        this.customField = entity.getCustomField();
     }
 
 }

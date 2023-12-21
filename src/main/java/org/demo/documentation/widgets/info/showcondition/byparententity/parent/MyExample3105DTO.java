@@ -19,17 +19,12 @@ public class MyExample3105DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldShowCondition", provider = StringValueProvider.class)
     private String customFieldShowCondition;
 
-    @SearchParameter(name = "customField3", provider = StringValueProvider.class)
-    private String customField3;
-    private String customField4;
     @SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
     private Long customField;
 
     public MyExample3105DTO(MyEntity3105 entity) {
         this.id = entity.getId().toString();
-        this.customFieldShowCondition = entity.getCustomField() > 7 ? "true" : "false";
-        this.customField4 = entity.getCustomField4();
-
+        this.customFieldShowCondition = entity.getCustomField() > 5 ? "true" : "false";
         this.customField = entity.getCustomField();
     }
 }

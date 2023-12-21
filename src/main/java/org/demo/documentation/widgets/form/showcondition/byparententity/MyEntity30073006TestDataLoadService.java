@@ -30,6 +30,6 @@ public class MyEntity30073006TestDataLoadService {
         repository.deleteAll();
         MyEntity3007 myEntity3007 = new MyEntity3007().setCustomField(7L);
         repository.save(myEntity3007);
-        repository3006.save(new MyEntity3006().setCustomFieldEntity(myEntity3007));}
+        repository3006.save(new MyEntity3006().setCustomFieldEntity(myEntity3007).setCustomField("Test data"));}
 
 }

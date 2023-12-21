@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.fieldslayoute;
+package org.demo.documentation.widgets.list.showcondition.byparententity;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
