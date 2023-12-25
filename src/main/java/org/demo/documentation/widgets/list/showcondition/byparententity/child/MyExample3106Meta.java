@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition;
+package org.demo.documentation.widgets.list.showcondition.byparententity.child;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -9,15 +9,15 @@ import org.demo.conf.document.DocumentConfig;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyExample3101Meta extends FieldMetaBuilder<MyExample3101DTO> {
+public class MyExample3106Meta extends FieldMetaBuilder<MyExample3106DTO> {
 
     @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3101DTO> fields, InnerBcDescription bcDescription,
+    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3106DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
     }
 
     @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3101DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+    public void buildIndependentMeta(FieldsMeta<MyExample3106DTO> fields, InnerBcDescription bcDescription, Long parentId) {
     }
 
 }

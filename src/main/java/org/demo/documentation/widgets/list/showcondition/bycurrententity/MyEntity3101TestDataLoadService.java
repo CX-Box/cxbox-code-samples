@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition;
+package org.demo.documentation.widgets.list.showcondition.bycurrententity;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,9 @@ public class MyEntity3101TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        //repository.save(new MyEntity3101().setCustomField("Test data"));
+        repository.save(new MyEntity3101().setCustomField(4L));
+        repository.save(new MyEntity3101().setCustomField(8L));
+        repository.save(new MyEntity3101().setCustomField(2L));
     }
 
 }

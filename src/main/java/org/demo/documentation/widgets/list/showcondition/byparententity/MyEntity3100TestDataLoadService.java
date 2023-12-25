@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.list.showcondition.byparententity;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100;
+import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

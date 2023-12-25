@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition;
+package org.demo.documentation.widgets.list.showcondition.bycurrententity;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.BcIdentifier;
