@@ -31,6 +31,7 @@ public class MyExample3007Meta extends FieldMetaBuilder<MyExample3007DTO> {
         fields.enableFilter(MyExample3007DTO_.customField);
         if (configuration.getForceActiveEnabled()) {
             fields.setForceActive(MyExample3007DTO_.customField);
+            fields.setForceActive(MyExample3007DTO_.customFieldShowCondition);
         }
     }
     // --8<-- [end:buildIndependentMeta]

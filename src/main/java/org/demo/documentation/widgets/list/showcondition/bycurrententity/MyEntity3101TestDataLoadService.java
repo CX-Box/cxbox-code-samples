@@ -23,7 +23,7 @@ public class MyEntity3101TestDataLoadService {
         repository.deleteAll();
         repository.save(new MyEntity3101().setCustomField(4L));
         repository.save(new MyEntity3101().setCustomField(8L));
-        repository.save(new MyEntity3101().setCustomField(2L));
+        repository.save(new MyEntity3101().setCustomField(9L));
     }
 
 }
