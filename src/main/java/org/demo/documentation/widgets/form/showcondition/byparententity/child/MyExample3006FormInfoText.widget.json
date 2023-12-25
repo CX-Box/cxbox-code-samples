@@ -1,7 +1,7 @@
 {
-  "name": "MyExample3006Form",
-  "title": "",
-  "type": "Form",
+  "name": "MyExample3006FormInfoText",
+  "title": "Child entity",
+  "type": "Info",
   "bc": "myExampleBc3006",
   "showCondition": {
     "bcName": "myExampleBc3007",
@@ -13,24 +13,26 @@
   },
   "fields": [
     {
-      "label": "Custom Field",
-      "key": "customField",
-      "type": "input"
+      "blockId": "1",
+      "name": "General Information",
+      "fields": [
+        {
+          "label": "",
+          "key": "TEXT",
+          "type": "hint",
+          "showLength": 100
+        }
+      ]
     }
   ],
   "options": {
-    "actionGroups": {
-      "include": [
-        "create"
-      ]
-    },
     "layout": {
       "rows": [
         {
           "cols": [
             {
-              "fieldKey": "customField",
-              "span": 12
+              "fieldKey": "TEXT",
+              "span": 24
             }
           ]
         }

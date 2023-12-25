@@ -15,6 +15,6 @@ import javax.persistence.Entity;
 public class MyEntity3100 extends BaseEntity {
 
 	@Column
-	private String customField;
+	private Long customField;
 
 }

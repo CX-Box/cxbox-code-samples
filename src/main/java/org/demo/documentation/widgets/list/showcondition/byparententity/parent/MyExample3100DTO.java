@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 
 @Getter
 @Setter
@@ -14,9 +16,12 @@ public class MyExample3100DTO extends DataResponseDTO {
     public static final String ONLY_BUTTONS_TEXT = "Only title and actions are shown. Usually used when standard buttons position needs to be changed (for example we want to show buttons under widget). One can hide buttons on widget with data. Create separate widget only with buttons and place it anywhere on view";
     public static final String MULTI_COLUMN_LAYOUT_LONG_TEXT = "If the title text is long.";
     public static final String MULTI_COLUMN_LAYOUT_SUM_SPAN_TEXT = "If the sum span >24 (24+12).";
+    @SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
+    private Long customField;
 
     public MyExample3100DTO(MyEntity3100 entity) {
         this.id = entity.getId().toString();
 
+        this.customField = entity.getCustomField();
     }
 }

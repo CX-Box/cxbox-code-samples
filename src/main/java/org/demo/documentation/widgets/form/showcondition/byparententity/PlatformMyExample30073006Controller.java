@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * (because single line in this enum creates >6 rest endpoints)
  */
 @Getter
-public enum PlatformMyExample3006Controller implements EnumBcIdentifier {
+public enum PlatformMyExample30073006Controller implements EnumBcIdentifier {
 
 	// @formatter:on
 	// --8<-- [start:bc]
@@ -27,40 +27,40 @@ public enum PlatformMyExample3006Controller implements EnumBcIdentifier {
 	// @formatter:on
 
 
-	public static final EnumBcIdentifier.Holder<PlatformMyExample3006Controller> Holder = new Holder<>(
-			PlatformMyExample3006Controller.class);
+	public static final EnumBcIdentifier.Holder<PlatformMyExample30073006Controller> Holder = new Holder<>(
+			PlatformMyExample30073006Controller.class);
 
 	private final BcDescription bcDescription;
 
-	PlatformMyExample3006Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+	PlatformMyExample30073006Controller(String parentName, Class<?> serviceClass, boolean refresh) {
 		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
 	}
 
-	PlatformMyExample3006Controller(String parentName, Class<?> serviceClass) {
+	PlatformMyExample30073006Controller(String parentName, Class<?> serviceClass) {
 		this(parentName, serviceClass, false);
 	}
 
-	PlatformMyExample3006Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+	PlatformMyExample30073006Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
 		this(parent == null ? null : parent.getName(), serviceClass, refresh);
 	}
 
-	PlatformMyExample3006Controller(BcIdentifier parent, Class<?> serviceClass) {
+	PlatformMyExample30073006Controller(BcIdentifier parent, Class<?> serviceClass) {
 		this(parent, serviceClass, false);
 	}
 
-	PlatformMyExample3006Controller(Class<?> serviceClass, boolean refresh) {
+	PlatformMyExample30073006Controller(Class<?> serviceClass, boolean refresh) {
 		this((String) null, serviceClass, refresh);
 	}
 
-	PlatformMyExample3006Controller(Class<?> serviceClass) {
+	PlatformMyExample30073006Controller(Class<?> serviceClass) {
 		this((String) null, serviceClass, false);
 	}
 
 	@Component
-	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample3006Controller> {
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample30073006Controller> {
 
 		public BcSupplier() {
-			super(PlatformMyExample3006Controller.Holder);
+			super(PlatformMyExample30073006Controller.Holder);
 		}
 
 	}
