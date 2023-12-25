@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyExample3100Service;
 import org.springframework.stereotype.Component;
 
 /**

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition;
+package org.demo.documentation.widgets.list.showcondition.byparententity.child;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +9,9 @@ import org.cxbox.core.util.filter.SearchParameter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3101DTO extends DataResponseDTO {
+public class MyExample3106DTO extends DataResponseDTO {
 
-    public MyExample3101DTO(MyEntity3101 entity) {
+    public MyExample3106DTO(MyEntity3106 entity) {
         this.id = entity.getId().toString();
     }
 }

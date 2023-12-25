@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition;
+package org.demo.documentation.widgets.list.showcondition.bycurrententity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.showcondition.byparententity;
+package org.demo.documentation.widgets.list.showcondition.byparententity.parent;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
