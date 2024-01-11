@@ -14,10 +14,12 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class MyEntity3005 extends BaseEntity {
 
-	@Column
-	private Long customField;
+    @Column
+    private Long customField;
 
-	@Column
-	private String customField3;
+    @Column
+    private String customField3;
 
+    @Column
+    private String customField2;
 }

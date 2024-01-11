@@ -28,6 +28,7 @@ public class MyExample3105Service extends VersionAwareResponseService<MyExample3
     protected ActionResultDTO<MyExample3105DTO> doUpdateEntity(MyEntity3105 entity, MyExample3105DTO data, BusinessComponent bc) {
         if (data.isFieldChanged(MyExample3105DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
+            entity.setCustomFieldShowCondition(data.getCustomFieldShowCondition().toString());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));
