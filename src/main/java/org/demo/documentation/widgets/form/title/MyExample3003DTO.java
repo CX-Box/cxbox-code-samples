@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 
 @Getter
@@ -18,11 +19,14 @@ public class MyExample3003DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField")
     private String customField;
+    @SearchParameter(name = "customField2", provider = StringValueProvider.class)
+    private String customField2;
 
 
     public MyExample3003DTO(MyEntity3003 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
-     }
+        this.customField2 = entity.getCustomField2();
+    }
 
 }

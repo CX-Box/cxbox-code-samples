@@ -19,7 +19,6 @@ public class MyExample3006Meta extends FieldMetaBuilder<MyExample3006DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3006DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample3006DTO_.customField);
     }
     // --8<-- [end:buildRowDependentMeta]
 
