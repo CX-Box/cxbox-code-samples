@@ -18,7 +18,6 @@ public class MyExample3005DTO extends DataResponseDTO {
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private Long customField;
 
-    @SearchParameter(name = "customFieldShowCondition", provider = StringValueProvider.class)
     private Boolean customFieldShowCondition;
     @SearchParameter(name = "customField2", provider = StringValueProvider.class)
     private String customField2;

@@ -11,7 +11,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 @Setter
 @NoArgsConstructor
 public class MyExample3001DTO extends DataResponseDTO {
-	public static final String INFO_TEXT = "List widget is list the general information for many records and present it in a way that is easily interpretable for users.";
+	public static final String INFO_TEXT = "Info widget is a component only for data viewing";
 
 	@SearchParameter(name = "customField")
 	private String customField;
