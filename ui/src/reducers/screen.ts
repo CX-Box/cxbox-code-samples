@@ -1,5 +1,6 @@
 import { AnyAction, actionTypes } from '../interfaces/actions'
 import { AppState, ScreenState } from '../interfaces/storeSlices'
+import { FilterGroup } from '../interfaces/filters'
 
 /**
  * Your initial state for this slice
@@ -66,6 +67,58 @@ export default function screenReducer(state: ScreenState = initialState, action:
          */
         case actionTypes.customAction: {
             return state
+        }
+        case actionTypes.removeFilterGroup: {
+            const removedFilterGroup = action.payload
+
+            const newFilterGroups = state.bo.bc[removedFilterGroup.bc as string].filterGroups?.filter(
+                filterGroup => filterGroup.name !== removedFilterGroup.name
+            )
+
+            return {
+                ...state,
+                bo: {
+                    ...state.bo,
+                    bc: {
+                        ...state.bo.bc,
+                        [removedFilterGroup.bc]: { ...state.bo.bc[removedFilterGroup.bc], filterGroups: newFilterGroups }
+                    }
+                }
+            }
+        }
+
+        case actionTypes.addFilterGroup: {
+            const newFilterGroup = { ...action.payload, personal: true }
+            const newFilterGroups = state.bo.bc[newFilterGroup.bc as string].filterGroups?.slice()
+            newFilterGroups?.push(newFilterGroup)
+            return {
+                ...state,
+                bo: {
+                    ...state.bo,
+                    bc: { ...state.bo.bc, [newFilterGroup.bc]: { ...state.bo.bc[newFilterGroup.bc], filterGroups: newFilterGroups } }
+                }
+            }
+        }
+
+        case actionTypes.updateIdForFilterGroup: {
+            const newFilterGroup = action.payload
+            const newFilterGroups = state.bo.bc[newFilterGroup.bc as string].filterGroups?.reduce((newFilterGroups, oldFilterGroup) => {
+                if (oldFilterGroup.name === newFilterGroup.name) {
+                    newFilterGroups.push({ ...oldFilterGroup, id: newFilterGroup.id })
+                } else {
+                    newFilterGroups.push(oldFilterGroup)
+                }
+
+                return newFilterGroups
+            }, [] as FilterGroup[])
+
+            return {
+                ...state,
+                bo: {
+                    ...state.bo,
+                    bc: { ...state.bo.bc, [newFilterGroup.bc]: { ...state.bo.bc[newFilterGroup.bc], filterGroups: newFilterGroups } }
+                }
+            }
         }
         default:
             return state

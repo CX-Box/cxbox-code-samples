@@ -1,8 +1,8 @@
 import { axiosGet, buildUrl } from '@cxbox-ui/core'
-import { LoginResponse } from '@cxbox-ui/core/interfaces/session'
 import axios, { AxiosRequestConfig } from 'axios'
 import { keycloak, KEYCLOAK_MIN_VALIDITY } from '../keycloak'
 import { __API__ } from '../constants/constants'
+import { LoginResponse } from '../interfaces/session'
 
 const __AJAX_TIMEOUT__ = 900000
 const __CLIENT_ID__: number = Date.now()
@@ -31,7 +31,7 @@ function tokenInterceptor(rqConfig: AxiosRequestConfig) {
     })
 }
 
-export function axiosInstance() {
+function createAxiosInstance() {
     const instance = axios.create({
         baseURL: __API__,
         timeout: __AJAX_TIMEOUT__,
@@ -41,6 +41,10 @@ export function axiosInstance() {
             ...{ ClientId: __CLIENT_ID__ }
         }
     })
-    instance.interceptors.request.use(tokenInterceptor, () => Promise.reject())
+    if (!process.env['REACT_APP_NO_SSO']) {
+        instance.interceptors.request.use(tokenInterceptor, () => Promise.reject())
+    }
     return instance
 }
+
+export const axiosInstance = createAxiosInstance()

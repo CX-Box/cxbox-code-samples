@@ -1,11 +1,12 @@
 import { Observable } from 'rxjs'
-import { actionTypes, AnyAction } from '../interfaces/actions'
+import { CustomEpic, actionTypes, AnyAction } from '../interfaces/actions'
 import { OperationPreInvokeCustom, OperationPreInvokeSubType, OperationPreInvokeTypeCustom } from '../interfaces/operation'
 import { $do } from '../actions/types'
 import { WidgetMeta } from '@cxbox-ui/core/interfaces/widget'
 import { CustomWidgetTypes } from '../interfaces/widget'
 import { Epic } from 'redux-observable'
 import { AppState } from '../interfaces/storeSlices'
+import { deleteFilterGroup, saveFilterGroup } from '../api/filterGroups'
 
 const findFormPopupWidget = (operationType: string, widgets: WidgetMeta[], calleeBcName: string, widgetName?: string) => {
     const formPopupWidget = widgetName
@@ -74,7 +75,45 @@ const replaceTemporaryIdOnSavingEpic: Epic<AnyAction, AppState> = (action$, stor
         return Observable.empty()
     })
 
+const addFilterGroupEpic: CustomEpic = action$ =>
+    action$.ofType(actionTypes.addFilterGroup).switchMap(action => {
+        const newFilterGroup = action.payload
+
+        return saveFilterGroup({ filterGroups: [newFilterGroup] })
+            .switchMap((data = []) =>
+                Observable.concat(
+                    data.map(({ id }) =>
+                        Observable.of(
+                            $do.updateIdForFilterGroup({
+                                id: id,
+                                bc: newFilterGroup.bc,
+                                name: newFilterGroup.name
+                            })
+                        )
+                    )
+                )
+            )
+            .catch(() => {
+                console.error('addFilterGroup failed')
+
+                return Observable.of($do.removeFilterGroup({ bc: newFilterGroup.bc, name: newFilterGroup.name }))
+            })
+    })
+
+const deleteFilterGroupEpic: CustomEpic = action$ =>
+    action$.ofType(actionTypes.removeFilterGroup).switchMap(action => {
+        const { id } = action.payload
+
+        if (id) {
+            deleteFilterGroup(+id)
+        }
+
+        return Observable.empty()
+    })
+
 export const screenEpics = {
     replaceTemporaryIdOnSavingEpic,
-    processPreInvokeConfirm
+    processPreInvokeConfirm,
+    addFilterGroupEpic,
+    deleteFilterGroupEpic
 }
