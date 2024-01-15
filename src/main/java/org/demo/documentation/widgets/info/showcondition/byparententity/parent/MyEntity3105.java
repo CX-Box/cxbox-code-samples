@@ -15,7 +15,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class MyEntity3105 extends BaseEntity {
     @Column
-    private String customFieldShowCondition;
+    private Boolean customFieldShowCondition;
     @Column
     private Long customField;
 }
