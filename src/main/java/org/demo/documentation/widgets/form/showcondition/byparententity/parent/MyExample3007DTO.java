@@ -22,7 +22,7 @@ public class MyExample3007DTO extends DataResponseDTO {
 
     public MyExample3007DTO(MyEntity3007 entity) {
         this.id = entity.getId().toString();
-        this.customFieldShowCondition = entity.getCustomField() > 5 ?  true  :  false ;
+        this.customFieldShowCondition = entity.getCustomField() > 5 ;
         this.customField = entity.getCustomField();
     }
 
