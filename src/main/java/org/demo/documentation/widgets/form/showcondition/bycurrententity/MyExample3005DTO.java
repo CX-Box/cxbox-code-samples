@@ -26,7 +26,7 @@ public class MyExample3005DTO extends DataResponseDTO {
     public MyExample3005DTO(MyEntity3005 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
-        this.customFieldShowCondition = entity.getCustomField() > 5 ? true : false;
+        this.customFieldShowCondition = entity.getCustomField() > 5;
         this.customField2 = entity.getCustomField2();
     }
 

@@ -13,8 +13,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 public class MyExample3001DTO extends DataResponseDTO {
 	public static final String INFO_TEXT = "Info widget is a component only for data viewing";
 
-	public static final String INFO_TEXT = "Info widget is a component only for data viewing";
-
 	@SearchParameter(name = "customField")
 	private String customField;
 
