@@ -6,8 +6,10 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
+import org.cxbox.core.service.action.ActionInvoker;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.action.ActionsExt;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 
@@ -29,23 +31,32 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3400DTO> doUpdateEntity(MyEntity3400 entity, MyExample3400DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3400DTO_.customField2)) {
+            entity.setCustomField2(data.getCustomField2());
+        }
         if (data.isFieldChanged(MyExample3400DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
+
     private static PreAction confirmWithComment(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText + "?", "kycFromPopup", "Подтвердить", "Отменить");
+        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3400Formpopup", "Done", "Cancel");
     }
 
     @Override
     public Actions<MyExample3400DTO> getActions() {
         return Actions.<MyExample3400DTO>builder()
                 .newAction()
-                .action("save", "save")
+                .action("save-send", "Save and send on approval")
+                .withPreAction(confirmWithComment("Save and send on approval"))
+                .invoker((bc, data) -> withApproval())
                 .add()
                 .build();
+    }
+    private ActionResultDTO<MyExample3400DTO> withApproval() {
+        return new ActionResultDTO<>();
     }
 
 }

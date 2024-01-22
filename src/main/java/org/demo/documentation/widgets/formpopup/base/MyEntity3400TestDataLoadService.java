@@ -21,7 +21,7 @@ public class MyEntity3400TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3400().setCustomField("Test data"));
+        repository.save(new MyEntity3400().setCustomField("Text for approval"));
     }
 
 }
