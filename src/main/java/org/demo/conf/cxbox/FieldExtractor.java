@@ -26,7 +26,8 @@ public class FieldExtractor extends BaseFieldExtractor {
 		return Lists.newArrayList(
 				"Funnel",
 				"RingProgress",
-				"DashboardList"
+				"DashboardList",
+				"FormPopup"
 		);
 	}
 
@@ -34,5 +35,4 @@ public class FieldExtractor extends BaseFieldExtractor {
 	public int getPriority() {
 		return 1;
 	}
-
 }
