@@ -32,7 +32,11 @@ import ViewInfoLabel from '../DebugPanel/components/ViewInfoLabel'
 import PopupWidgetInfoLabel from '../DebugPanel/components/PopupWidgetInfoLabel'
 import FileUpload from '../../fields/FileUpload/FileUpload'
 
-const skipWidgetTypes: WidgetTypes[] = []
+const customPopupWidgetTypes: CustomWidgetTypes[] = [CustomWidgetTypes.FormPopup]
+
+const allPopupWidgetTypes: string[] = [...customPopupWidgetTypes, ...PopupWidgetTypes]
+
+const skipWidgetTypes: (WidgetTypes | CustomWidgetTypes)[] = [...customPopupWidgetTypes]
 
 const customFields = {
     [FieldType.number]: Number,
@@ -80,7 +84,8 @@ function View() {
                 disableDebugMode={true}
             />
 
-            {debugMode && widgets.filter(i => PopupWidgetTypes.includes(i.type)).map(i => <PopupWidgetInfoLabel key={i.name} meta={i} />)}
+            {debugMode &&
+                widgets.filter(i => allPopupWidgetTypes.includes(i.type)).map(i => <PopupWidgetInfoLabel key={i.name} meta={i} />)}
         </div>
     )
 }
