@@ -36,7 +36,7 @@ const customPopupWidgetTypes: CustomWidgetTypes[] = [CustomWidgetTypes.FormPopup
 
 const allPopupWidgetTypes: string[] = [...customPopupWidgetTypes, ...PopupWidgetTypes]
 
-const skipWidgetTypes: (WidgetTypes | CustomWidgetTypes)[] = [...customPopupWidgetTypes]
+const skipWidgetTypes: (WidgetTypes | CustomWidgetTypes)[] = []
 
 const customFields = {
     [FieldType.number]: Number,
@@ -59,7 +59,7 @@ const customWidgets: Partial<Record<CustomWidgetTypes | WidgetTypes, CustomWidge
     [CustomWidgetTypes.Funnel]: { component: Funnel, card: DashboardCard },
     [CustomWidgetTypes.RingProgress]: { component: RingProgress, card: DashboardCard },
     [CustomWidgetTypes.DashboardList]: { component: DashboardList, card: DashboardCard },
-    [CustomWidgetTypes.FormPopup]: { component: FormPopup },
+    [CustomWidgetTypes.FormPopup]: { component: FormPopup, card: null },
     [WidgetTypes.AssocListPopup]: AssocListPopup,
     [WidgetTypes.PickListPopup]: PickListPopup,
     [WidgetTypes.SecondLevelMenu]: { component: LevelMenu, card: EmptyCard },
