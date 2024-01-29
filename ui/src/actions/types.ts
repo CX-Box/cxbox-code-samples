@@ -3,6 +3,9 @@
  */
 import { ActionPayloadTypes as CxboxActionPayloadTypes, createActionCreators } from '@cxbox-ui/core'
 import { DataItem } from '@cxbox-ui/core/interfaces/data'
+import { NotificationState } from '../interfaces/notification'
+import { LoginResponse } from '../interfaces/session'
+import { FilterGroup } from '../interfaces/filters'
 
 const z = null as any
 
@@ -66,6 +69,16 @@ export class CustomActionTypes extends CxboxActionPayloadTypes {
     } = z
 
     sendOperationSuccess: CxboxActionPayloadTypes['sendOperationSuccess'] & { dataItem?: DataItem } = z
+
+    changeNotification: Partial<NotificationState> = z
+
+    loginDone: LoginResponse = z
+
+    updateIdForFilterGroup: { name: string; bc: string; id: string } = z
+
+    addFilterGroup: FilterGroup & { bc: string } = z
+
+    removeFilterGroup: { name: string; bc: string; id?: string } = z
 }
 
 /**

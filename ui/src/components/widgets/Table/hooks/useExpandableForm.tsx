@@ -1,4 +1,4 @@
-import { AppWidgetMeta } from '../../../../interfaces/widget'
+import { AppWidgetTableMeta } from '../../../../interfaces/widget'
 import React, { useCallback } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { AppState } from '../../../../interfaces/storeSlices'
@@ -24,7 +24,7 @@ const EXPAND_ICON_COLUMN: ColumnProps<DataItem> = {
     key: '_expandIconField'
 }
 
-export function useInternalWidgetSelector(externalWidget: AppWidgetMeta) {
+export function useInternalWidgetSelector(externalWidget: AppWidgetTableMeta) {
     return useSelector((state: AppState) => {
         const widgetNameForCreate = externalWidget.options?.create?.widget
         const widgetNameForEdit = externalWidget.options?.edit?.widget
@@ -59,7 +59,7 @@ function isExpandColumn(item: ControlColumn) {
     return item.column.key === EXPAND_ICON_COLUMN.key
 }
 
-export function useExpandableForm(currentWidgetMeta: AppWidgetMeta) {
+export function useExpandableForm(currentWidgetMeta: AppWidgetTableMeta) {
     const { internalWidget, internalWidgetOperations, internalWidgetActiveCursor, isCreateStyle, isEditStyle } =
         useInternalWidgetSelector(currentWidgetMeta)
     const { cursor: currentActiveRowId } = useSelector((state: AppState) => state.view.recordForm)

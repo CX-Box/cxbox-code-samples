@@ -7,6 +7,7 @@ function AppBar() {
     return (
         <div className={cn(styles.container)}>
             <UserMenu />
+            {/*<Notification />*/}
         </div>
     )
 }
