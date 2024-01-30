@@ -1,21 +1,22 @@
 import React from 'react'
 import { $do, useWidgetOperations } from '@cxbox-ui/core'
 import { isOperationGroup, Operation, OperationGroup } from '@cxbox-ui/core/interfaces/operation'
-import { WidgetMeta, WidgetTypes } from '@cxbox-ui/core/interfaces/widget'
+import { WidgetTypes } from '@cxbox-ui/core/interfaces/widget'
 import { Icon } from 'antd'
 import { AppState } from '../../interfaces/storeSlices'
 import styles from './Operations.less'
 import { useDispatch, useSelector } from 'react-redux'
 import OperationsGroup from './components/OperationsGroup'
-import { removeRecordOperationWidgets } from '../../interfaces/widget'
+import { AppWidgetMeta, removeRecordOperationWidgets } from '../../interfaces/widget'
 import Button, { customTypes } from '../ui/Button/Button'
 import { ExportButton } from './components/ExportButton/ExportButton'
 import cn from 'classnames'
+import TextSearchInput from './components/TextSearchInput/TextSearchInput'
 
 export interface OperationsOwnProps {
     className?: string
     bcName: string
-    widgetMeta: WidgetMeta
+    widgetMeta: AppWidgetMeta
     operations: Array<Operation | OperationGroup>
 }
 
@@ -65,6 +66,9 @@ function Operations(props: OperationsOwnProps) {
                     })}
                     <ExportButton widgetMeta={widgetMeta} />
                 </>
+            )}
+            {widgetMeta.options?.fullTextSearch?.enabled && (
+                <TextSearchInput bcName={bcName} placeholder={widgetMeta.options?.fullTextSearch?.placeholder} />
             )}
         </div>
     )
