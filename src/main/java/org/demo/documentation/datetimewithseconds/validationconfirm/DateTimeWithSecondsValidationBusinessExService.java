@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,7 @@ public class DateTimeWithSecondsValidationBusinessExService extends
 		return Actions.<DateTimeWithSecondsValidationBusinessExDTO>builder()
 				.newAction()
 				.action("save", "save")
+				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
 				.add()
 				.build();
 	}
