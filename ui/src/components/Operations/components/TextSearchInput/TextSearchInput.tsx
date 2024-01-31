@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
 import styles from './TextSearchInput.less'
-import { $do } from '../../../../actions/types'
+import { actions } from '@actions'
 import { useDispatch } from 'react-redux'
-import { useDebouncedTextSearch, useSearchWarning } from '../../../../hooks/search'
+import { useDebouncedTextSearch, useSearchWarning } from '@hooks/search'
 import SearchInput from '../SearchInput/SearchInput'
-import { useAppSelector } from '../../../../hooks/useAppSelector'
 import { useTranslation } from 'react-i18next'
 import { Icon, Popover } from 'antd'
+import { useAppSelector } from '@store'
 
 interface TextSearchInputProps {
     bcName: string
@@ -19,13 +19,13 @@ const TextSearchInput = ({ bcName, placeholder }: TextSearchInputProps) => {
     const dispatch = useDispatch()
 
     const handleSearch = useCallback(() => {
-        dispatch($do.bcChangePage({ bcName, page: 1 }))
+        dispatch(actions.bcChangePage({ bcName, page: 1 }))
     }, [dispatch, bcName])
 
     const handleInputValue = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             dispatch(
-                $do.changeBcFullTextFilter({
+                actions.changeBcFullTextFilter({
                     bcName,
                     fullTextFilterValue: (e.target.value || null) as string
                 })

@@ -1,11 +1,4 @@
-import {
-    WidgetMeta,
-    WidgetTypes,
-    WidgetOptions,
-    WidgetListFieldBase,
-    WidgetFormMeta,
-    WidgetTableMeta
-} from '@cxbox-ui/core/interfaces/widget'
+import { interfaces } from '@cxbox-ui/core'
 
 export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect'
@@ -16,31 +9,34 @@ export enum CustomWidgetTypes {
     Steps = 'Steps',
     Funnel = 'Funnel',
     RingProgress = 'RingProgress',
-    DashboardList = 'DashboardList'
+    DashboardList = 'DashboardList',
+    AdditionalInfo = 'AdditionalInfo'
 }
 
-export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [WidgetTypes.List]
+export const removeRecordOperationWidgets: Array<interfaces.WidgetTypes | string> = [interfaces.WidgetTypes.List]
 
-export interface StepsWidgetMeta extends WidgetMeta {
+export interface StepsWidgetMeta extends interfaces.WidgetMeta {
     type: CustomWidgetTypes.Steps
-    options: WidgetOptions & {
+    options: interfaces.WidgetOptions & {
         stepsOptions: {
             stepsDictionaryKey: string
         }
     }
 }
 
-export interface FunnelWidgetMeta extends WidgetMeta {
+export interface FunnelWidgetMeta extends interfaces.WidgetMeta {
     type: CustomWidgetTypes.Funnel
-    options: WidgetOptions & { funnelOptions: { dataKey: string } }
+    options: interfaces.WidgetOptions & { funnelOptions: { dataKey: string } }
 }
 
-export interface RingProgressWidgetMeta extends WidgetMeta {
+export interface RingProgressWidgetMeta extends interfaces.WidgetMeta {
     type: CustomWidgetTypes.RingProgress
-    options: WidgetOptions & { ringProgressOptions: { text: string; numberField: string; descriptionField: string; percentField: string } }
+    options: interfaces.WidgetOptions & {
+        ringProgressOptions: { text: string; numberField: string; descriptionField: string; percentField: string }
+    }
 }
 
-export type TableWidgetField = WidgetListFieldBase & {
+export type TableWidgetField = interfaces.WidgetListFieldBase & {
     /**
      * Width (px) to be set for the field when exporting to Excel
      */
@@ -52,8 +48,8 @@ type InternalWidgetOption = {
     style: 'inlineForm' | 'popup' | 'inline' | 'none'
 }
 
-export interface AppWidgetMeta extends WidgetMeta {
-    options?: WidgetOptions & {
+export interface AppWidgetMeta extends interfaces.WidgetMeta {
+    options?: interfaces.WidgetOptions & {
         primary?: {
             enabled: boolean
             title?: string
@@ -75,10 +71,10 @@ export interface AppWidgetMeta extends WidgetMeta {
     }
 }
 
-export interface AppWidgetTableMeta extends WidgetTableMeta {
+export interface AppWidgetTableMeta extends interfaces.WidgetTableMeta {
     options?: AppWidgetMeta['options']
 }
 
-export interface WidgetFormPopupMeta extends Omit<WidgetFormMeta, 'type'> {
+export interface WidgetFormPopupMeta extends Omit<interfaces.WidgetFormMeta, 'type'> {
     type: CustomWidgetTypes.FormPopup
 }
