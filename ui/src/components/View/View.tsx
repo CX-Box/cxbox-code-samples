@@ -31,7 +31,6 @@ import FileUpload from '../../fields/FileUpload/FileUpload'
 import { interfaces } from '@cxbox-ui/core'
 import { AdditionalInfoWidget } from '@components/widgets/AdditionalInfo/AdditionalInfoWidget'
 import { WidgetTypes } from '@cxbox-ui/schema'
-import TimeField from '../../fields/TimePicker/TimePickerField'
 
 // TODO We need to remove PopupWidgetTypes from the core and replace imports throughout the entire project
 const { PopupWidgetTypes, FieldType } = interfaces
@@ -51,8 +50,7 @@ const customFields = {
     [FieldType.pickList]: PickListField,
     [FieldType.inlinePickList]: InlinePickList,
     [CustomFieldTypes.MultipleSelect]: MultipleSelectField,
-    [FieldType.fileUpload]: FileUpload,
-    [CustomFieldTypes.Time]: TimeField
+    [FieldType.fileUpload]: FileUpload
 }
 
 const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, interfaces.CustomWidgetDescriptor>> = {
