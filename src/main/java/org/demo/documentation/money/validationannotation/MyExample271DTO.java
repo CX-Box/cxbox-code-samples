@@ -15,7 +15,7 @@ import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 public class MyExample271DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
-	@DecimalMin(value = "100000.00", message = "The field 'customField' cannot be less than 100 000.00.")
+	@DecimalMin(value = "100000.00", message = "The field  cannot be less than 100 000.00.")
 	private Double customField;
 
 	public MyExample271DTO(MyEntity271 entity) {

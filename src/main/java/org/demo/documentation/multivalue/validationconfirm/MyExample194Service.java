@@ -1,7 +1,6 @@
 package org.demo.documentation.multivalue.validationconfirm;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -58,7 +57,7 @@ public class MyExample194Service extends VersionAwareResponseService<MyExample19
 		return Actions.<MyExample194DTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

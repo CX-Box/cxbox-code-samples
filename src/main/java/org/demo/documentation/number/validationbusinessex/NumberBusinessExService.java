@@ -31,7 +31,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 			BusinessComponent bc) {
 		if (data.isFieldChanged(NumberBusinessExDTO_.customField)) {
 			if (data.getCustomField() < 20000) {
-				throw new BusinessException().addPopup("The field 'customField' cannot be less than 20 000.");
+				throw new BusinessException().addPopup("The field  cannot be less than 20 000.");
 			}
 			entity.setCustomField(data.getCustomField());
 		}

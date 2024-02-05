@@ -60,12 +60,12 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 	private void validateFields(BusinessComponent bc, MyExample328DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
 		if (dto.getCustomField() < 5) {
-			entity.addField(MyExample328DTO_.customField.getName(), "The field 'customField' cannot be less than 5%");
+			entity.addField(MyExample328DTO_.customField.getName(), "The field  cannot be less than 5%");
 		}
 		if (dto.getCustomField() < 5) {
 			entity.addField(
 					MyExample328DTO_.customFieldAdditional.getName(),
-					"The field 'customField' cannot be less than 5%"
+					"The field  cannot be less than 5%"
 			);
 		}
 		if (entity.getFields().size() > 0) {

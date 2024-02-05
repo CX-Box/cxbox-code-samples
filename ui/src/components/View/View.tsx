@@ -31,11 +31,15 @@ import FileUpload from '../../fields/FileUpload/FileUpload'
 import { interfaces } from '@cxbox-ui/core'
 import { AdditionalInfoWidget } from '@components/widgets/AdditionalInfo/AdditionalInfoWidget'
 import { WidgetTypes } from '@cxbox-ui/schema'
+import DocumentList from '../widgets/DocumentList/DocumentList'
+import DocumentPreviewField from '../../fields/DocumentPreview/DocumentPreview'
+import { DocumentFormPopup } from '../widgets/DocumentFormPopup/DocumentFormPopup'
+import TimeField from '../../fields/TimePicker/TimePickerField'
 
 // TODO We need to remove PopupWidgetTypes from the core and replace imports throughout the entire project
 const { PopupWidgetTypes, FieldType } = interfaces
 
-const customPopupWidgetTypes: CustomWidgetTypes[] = [CustomWidgetTypes.FormPopup]
+const customPopupWidgetTypes: CustomWidgetTypes[] = [CustomWidgetTypes.FormPopup, CustomWidgetTypes.DocumentFormPopup]
 
 const allPopupWidgetTypes: string[] = [...customPopupWidgetTypes, ...PopupWidgetTypes]
 
@@ -50,20 +54,24 @@ const customFields = {
     [FieldType.pickList]: PickListField,
     [FieldType.inlinePickList]: InlinePickList,
     [CustomFieldTypes.MultipleSelect]: MultipleSelectField,
-    [FieldType.fileUpload]: FileUpload
+    [CustomFieldTypes.DocumentPreview]: DocumentPreviewField,
+    [FieldType.fileUpload]: FileUpload,
+    [CustomFieldTypes.Time]: TimeField
 }
 
 const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, interfaces.CustomWidgetDescriptor>> = {
     [WidgetTypes.Form]: { component: Form },
     [WidgetTypes.Info]: { component: Info },
     [WidgetTypes.List]: { component: Table },
+    [CustomWidgetTypes.DocumentList]: { component: DocumentList },
     [WidgetTypes.HeaderWidget]: { component: Header, card: EmptyCard },
     [CustomWidgetTypes.Steps]: { component: Steps, card: EmptyCard },
     [CustomWidgetTypes.Funnel]: { component: Funnel, card: DashboardCard },
     [CustomWidgetTypes.RingProgress]: { component: RingProgress, card: DashboardCard },
     [CustomWidgetTypes.DashboardList]: { component: DashboardList, card: DashboardCard },
     [CustomWidgetTypes.FormPopup]: { component: FormPopup, card: null },
-    [CustomWidgetTypes.AdditionalInfo]: { component: AdditionalInfoWidget, card: null },
+    [CustomWidgetTypes.DocumentFormPopup]: { component: DocumentFormPopup, card: null },
+    [CustomWidgetTypes.AdditionalInfo]: { component: AdditionalInfoWidget, card: EmptyCard },
     [WidgetTypes.AssocListPopup]: AssocListPopup,
     [WidgetTypes.PickListPopup]: PickListPopup,
     [WidgetTypes.SecondLevelMenu]: { component: LevelMenu, card: EmptyCard },

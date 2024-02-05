@@ -42,7 +42,7 @@ public class InputValidationService extends VersionAwareResponseService<InputVal
 		return Actions.<InputValidationDTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

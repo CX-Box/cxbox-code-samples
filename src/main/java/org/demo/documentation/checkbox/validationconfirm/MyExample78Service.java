@@ -43,7 +43,7 @@ public class MyExample78Service extends VersionAwareResponseService<MyExample78D
 		return Actions.<MyExample78DTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

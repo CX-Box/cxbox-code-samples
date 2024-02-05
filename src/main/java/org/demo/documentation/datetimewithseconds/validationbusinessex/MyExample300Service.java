@@ -34,7 +34,7 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
     protected ActionResultDTO<MyExample300DTO> doUpdateEntity(MyEntity300 entity, MyExample300DTO data, BusinessComponent bc) {
         if (data.isFieldChanged(MyExample300DTO_.customField)) {
             if (data.getCustomField() != null && LocalDateTime.now().isAfter(data.getCustomField())) {
-                throw new BusinessException().addPopup("The field 'customField' cannot be less than the current date");
+                throw new BusinessException().addPopup("The field  cannot be less than the current date");
             }
             entity.setCustomField(data.getCustomField());
         }

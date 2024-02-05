@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.multipleselect.validationconfirm.enums.CustomFieldEnum;
+import org.demo.documentation.multipleselect.validationdynamic.enums.CustomFieldEnum;
 
 @Entity
 @Getter

@@ -41,7 +41,7 @@ public class InputValidationBusinessExceptionService extends
 			if (StringUtils.isNotEmpty(data.getCustomField())
 					&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
 			) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only letters.");
+				throw new BusinessException().addPopup("The field  can contain only letters.");
 			}
 			entity.setCustomField(data.getCustomField());
 		}

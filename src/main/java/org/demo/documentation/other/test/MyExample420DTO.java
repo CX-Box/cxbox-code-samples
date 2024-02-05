@@ -14,25 +14,25 @@ import org.cxbox.core.util.filter.SearchParameter;
 public class MyExample420DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	private String customField;
 
 	@SearchParameter(name = "customField2")
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	private String customField2;
 
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	private String customField3;
 
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	@SearchParameter(name = "customFieldForceActive")
 	private String customFieldForceActive;
 
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	@SearchParameter(name = "customFieldForceActive3")
 	private String customFieldForceActive3;
 
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	@SearchParameter(name = "customFieldForceActive2")
 	private String customFieldForceActive2;
 

@@ -41,7 +41,7 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 		return Actions.<DateConfirmDTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

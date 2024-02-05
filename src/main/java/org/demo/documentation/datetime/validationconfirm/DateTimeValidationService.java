@@ -41,7 +41,7 @@ public class DateTimeValidationService extends VersionAwareResponseService<DateT
 		return Actions.<DateTimeValidationDTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

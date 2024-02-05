@@ -35,7 +35,7 @@ public class MyExample103Service extends VersionAwareResponseService<MyExample10
 		if (data.isFieldChanged(MyExample103DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (!String.valueOf(data.getCustomField()).matches("[A-Za-z]+")) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only letters.");
+				throw new BusinessException().addPopup("The field  can contain only letters.");
 			}
 		}
 

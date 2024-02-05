@@ -15,7 +15,7 @@ import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 public class MyExample281DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customFieldEntity.customField")
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	private String customField;
 
 	@SearchParameter(name = "customFieldEntity.id", provider = LongValueProvider.class)

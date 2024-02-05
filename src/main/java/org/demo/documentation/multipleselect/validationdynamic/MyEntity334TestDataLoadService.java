@@ -4,7 +4,7 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.multipleselect.validationconfirm.enums.CustomFieldEnum;
+import org.demo.documentation.multipleselect.validationdynamic.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
