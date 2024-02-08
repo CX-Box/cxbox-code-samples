@@ -21,7 +21,7 @@ public class MyEntity70TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity70().setCustomField(CustomFieldEnum.MIDDLE));
+		repository.save(new MyEntity70().setCustomField(CustomFieldEnum.KOSTROMA));
 	}
 
 }

@@ -10,9 +10,20 @@ import lombok.NonNull;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldEnum {
-	HIGH("High"),
-	MIDDLE("Middle"),
-	LOW("Low");
+	BELGOROD("Belgorod region"),
+	BRYANSK("Bryansk region"),
+	VLADIMIR("Vladimir region"),
+	VORONEZH("Voronezh region"),
+	IVANOVO("Ivanovo region"),
+	KALUGA("Kaluga region"),
+	KOSTROMA("Kostroma region"),
+	KURSK("Kursk region"),
+	MOSCOW("Moscow region"),
+	ORYOL("Oryol region"),
+	RYAZAN("Ryazan region"),
+	SMOLENSK("Smolensk region"),
+	TAMBOV("Tambov region"),
+	TVER("Tver region");
 
 	@JsonValue
 	private final String value;
