@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 public class MyExample170DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
-	@Pattern(regexp = "[A-Za-z]+", message = "The field 'customField' can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
 	private String customField;
 
 	@SearchParameter(name = "customFieldId")

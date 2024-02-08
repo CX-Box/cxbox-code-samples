@@ -31,7 +31,7 @@ public class MyExample67Service extends VersionAwareResponseService<MyExample67D
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample67DTO_.customField)) {
 			if (data.getCustomField() < 100000) {
-				throw new BusinessException().addPopup("The field 'customField' cannot be less than 100 000.00.");
+				throw new BusinessException().addPopup("The field  cannot be less than 100 000.00.");
 			}
 			entity.setCustomField(data.getCustomField());
 		}

@@ -36,7 +36,7 @@ public class MyExample248Service extends VersionAwareResponseService<MyExample24
 					.stream()
 					.filter(val -> val.getValue().equals(CustomFieldEnum.HIGH.getValue()))
 					.findFirst()
-					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain 'High'"));
+					.orElseThrow(() -> new BusinessException().addPopup("The field  can contain 'High'"));
 			entity.setCustomField(
 					data.getCustomField().getValues()
 							.stream()

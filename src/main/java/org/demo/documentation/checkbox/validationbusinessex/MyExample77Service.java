@@ -31,7 +31,7 @@ public class MyExample77Service extends VersionAwareResponseService<MyExample77D
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample77DTO_.customField)) {
 			if (Boolean.FALSE.equals(data.getCustomField())) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only 'True'");
+				throw new BusinessException().addPopup("The field  can contain only 'True'");
 			}
 			entity.setCustomField(data.getCustomField());
 		}

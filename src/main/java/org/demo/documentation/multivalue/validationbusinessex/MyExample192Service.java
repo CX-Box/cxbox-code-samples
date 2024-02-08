@@ -42,7 +42,7 @@ public class MyExample192Service extends VersionAwareResponseService<MyExample19
 					.stream()
 					.filter(val -> !val.getValue().matches("[A-Za-z]+"))
 					.findFirst()
-					.orElseThrow(() -> new BusinessException().addPopup("The field 'customField' can contain only letters."));
+					.orElseThrow(() -> new BusinessException().addPopup("The field  can contain only letters."));
 			entity.getCustomFieldList().clear();
 			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
 					.map(MultivalueFieldSingleValue::getId)

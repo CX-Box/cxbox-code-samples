@@ -33,7 +33,7 @@ public class MyExample29Service extends VersionAwareResponseService<MyExample29D
 		if (data.isFieldChanged(MyExample29DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (!data.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
-				throw new BusinessException().addPopup("The field 'customField' can contain only 'High'");
+				throw new BusinessException().addPopup("The field  can contain only 'High'");
 			}
 		}
 

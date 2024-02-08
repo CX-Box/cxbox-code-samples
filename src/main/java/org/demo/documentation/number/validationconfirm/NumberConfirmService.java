@@ -40,7 +40,7 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 		return Actions.<NumberConfirmDTO>builder()
 				.newAction()
 				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value 'customField'?"))
+				.withPreAction(PreAction.confirm("You want to save the value ?"))
 				.add()
 				.build();
 	}

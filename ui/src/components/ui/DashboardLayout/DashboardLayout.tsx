@@ -41,11 +41,11 @@ export function DashboardLayout(props: DashboardLayoutProps) {
 
     if (additionalInfoWidgets.length !== 0) {
         return (
-            <Row gutter={8}>
+            <Row gutter={24}>
                 <Col span={18}>{CommonWidgets}</Col>
                 <Col span={6}>
                     {additionalInfoWidgets.map(widget => (
-                        <Row key={widget.name}>
+                        <Row key={widget.name} gutter={[8, 8]}>
                             <Col span={24}>
                                 <Widget
                                     meta={widget}
@@ -83,7 +83,13 @@ function groupByRow<WidgetMeta extends AppWidgetMeta>(widgets: WidgetMeta[], ski
 
 const { WidgetTypes } = interfaces
 
-const popupWidgets = [WidgetTypes.AssocListPopup, WidgetTypes.PickListPopup, WidgetTypes.FlatTreePopup, CustomWidgetTypes.FormPopup]
+const popupWidgets = [
+    WidgetTypes.AssocListPopup,
+    WidgetTypes.PickListPopup,
+    WidgetTypes.FlatTreePopup,
+    CustomWidgetTypes.FormPopup,
+    CustomWidgetTypes.DocumentFormPopup
+]
 function getColWidth(widget: AppWidgetMeta) {
     // this is necessary so that the popup widget does not affect the formation of the grid
     const needFullWidth = popupWidgets.includes(widget.type as interfaces.WidgetTypes)

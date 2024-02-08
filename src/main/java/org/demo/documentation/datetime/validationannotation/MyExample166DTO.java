@@ -15,7 +15,7 @@ import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
 public class MyExample166DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
-	@Future(message = "The field 'customField' cannot be less than the current date")
+	@Future(message = "The field  cannot be less than the current date")
 	private LocalDateTime customField;
 
 	public MyExample166DTO(MyEntity166 entity) {

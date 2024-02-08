@@ -15,7 +15,7 @@ public class MyExample169DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
 	@CustomerTypeSubset(anyOf = {CustomFieldEnum.HIGH, CustomFieldEnum.MIDDLE},
-			message = "The field 'customField' can contain any of 'High,Middle'")
+			message = "The field  can contain any of 'High,Middle'")
 	private CustomFieldEnum customField;
 
 	public MyExample169DTO(MyEntity169 entity) {

@@ -32,7 +32,7 @@ public class MyExample10Service extends VersionAwareResponseService<MyExample10D
 		if (data.isFieldChanged(MyExample10DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (data.getCustomField() < 10) {
-				throw new BusinessException().addPopup("The field 'customField' cannot be less than 10%.");
+				throw new BusinessException().addPopup("The field  cannot be less than 10%.");
 			}
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));

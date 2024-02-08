@@ -14,7 +14,7 @@ import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
 public class MyExample168DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = BooleanValueProvider.class)
-	@AssertTrue(message = "The field 'customField' can contain only 'True'")
+	@AssertTrue(message = "The field  can contain only 'True'")
 	private Boolean customField;
 
 	public MyExample168DTO(MyEntity168 entity) {
