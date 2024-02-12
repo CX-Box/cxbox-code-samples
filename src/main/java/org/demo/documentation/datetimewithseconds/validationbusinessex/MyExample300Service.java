@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static org.demo.documentation.main.TextError.LESS_CURRENT_DATE;
+
 
 @Service
 public class MyExample300Service extends VersionAwareResponseService<MyExample300DTO, MyEntity300> {
@@ -34,7 +36,7 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
     protected ActionResultDTO<MyExample300DTO> doUpdateEntity(MyEntity300 entity, MyExample300DTO data, BusinessComponent bc) {
         if (data.isFieldChanged(MyExample300DTO_.customField)) {
             if (data.getCustomField() != null && LocalDateTime.now().isAfter(data.getCustomField())) {
-                throw new BusinessException().addPopup("The field  cannot be less than the current date");
+                throw new BusinessException().addPopup(LESS_CURRENT_DATE);
             }
             entity.setCustomField(data.getCustomField());
         }
