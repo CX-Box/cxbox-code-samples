@@ -4,7 +4,10 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.multipleselect.validationconfirm.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class MyExample334Meta extends FieldMetaBuilder<MyExample334DTO> {
@@ -13,6 +16,12 @@ public class MyExample334Meta extends FieldMetaBuilder<MyExample334DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample334DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
+		fields.setDictionaryTypeWithCustomValues(MyExample334DTO_.customField, Arrays.stream(CustomFieldEnum.values())
+				.map(CustomFieldEnum::getValue)
+				.toArray(String[]::new));
+		fields.setDictionaryTypeWithCustomValues(MyExample334DTO_.customFieldAdditional, Arrays.stream(CustomFieldEnum.values())
+				.map(CustomFieldEnum::getValue)
+				.toArray(String[]::new));
 		fields.setEnabled(MyExample334DTO_.customField);
 		fields.setEnabled(MyExample334DTO_.customFieldAdditional);
 	}
