@@ -9,6 +9,8 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.radio.basic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.ONLY_HIGH;
+
 
 @Service
 public class MyExample29Service extends VersionAwareResponseService<MyExample29DTO, MyEntity29> {
@@ -33,7 +35,7 @@ public class MyExample29Service extends VersionAwareResponseService<MyExample29D
 		if (data.isFieldChanged(MyExample29DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (!data.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
-				throw new BusinessException().addPopup("The field  can contain only 'High'");
+				throw new BusinessException().addPopup(ONLY_HIGH);
 			}
 		}
 

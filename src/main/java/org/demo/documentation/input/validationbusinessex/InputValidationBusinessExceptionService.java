@@ -7,7 +7,10 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.main.TextError;
 import org.springframework.stereotype.Service;
+
+import static org.demo.documentation.main.TextError.ONLY_LETTER;
 
 
 @Service
@@ -15,7 +18,6 @@ public class InputValidationBusinessExceptionService extends
 		VersionAwareResponseService<InputValidationBusinessExceptionDTO, InputValidationBusinessExc> {
 
 	private final InputValidationBusinessExceptionRepository repository;
-
 	public InputValidationBusinessExceptionService(InputValidationBusinessExceptionRepository repository) {
 		super(
 				InputValidationBusinessExceptionDTO.class,
@@ -41,7 +43,7 @@ public class InputValidationBusinessExceptionService extends
 			if (StringUtils.isNotEmpty(data.getCustomField())
 					&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
 			) {
-				throw new BusinessException().addPopup("The field  can contain only letters.");
+				throw new BusinessException().addPopup(ONLY_LETTER);
 			}
 			entity.setCustomField(data.getCustomField());
 		}

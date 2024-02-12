@@ -8,6 +8,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.LESS_100000;
+
 
 @Service
 public class MyExample67Service extends VersionAwareResponseService<MyExample67DTO, MyEntity67> {
@@ -31,7 +33,7 @@ public class MyExample67Service extends VersionAwareResponseService<MyExample67D
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample67DTO_.customField)) {
 			if (data.getCustomField() < 100000) {
-				throw new BusinessException().addPopup("The field  cannot be less than 100 000.00.");
+				throw new BusinessException().addPopup(LESS_100000);
 			}
 			entity.setCustomField(data.getCustomField());
 		}

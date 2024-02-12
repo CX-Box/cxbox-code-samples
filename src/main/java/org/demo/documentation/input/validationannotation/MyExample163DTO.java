@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 
+import static org.demo.documentation.main.TextError.ONLY_LETTER;
+
 
 @Getter
 @Setter
@@ -14,7 +16,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 public class MyExample163DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
-	@Pattern(regexp = "[A-Za-z]+", message = "The field  can contain only letters.")
+	@Pattern(regexp = "[A-Za-z]+", message = ONLY_LETTER)
 	private String customField;
 
 	public MyExample163DTO(MyEntity163 entity) {

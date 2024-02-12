@@ -8,6 +8,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.LESS_10;
+
 
 @Service
 public class MyExample10Service extends VersionAwareResponseService<MyExample10DTO, MyEntity10> {
@@ -32,7 +34,7 @@ public class MyExample10Service extends VersionAwareResponseService<MyExample10D
 		if (data.isFieldChanged(MyExample10DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (data.getCustomField() < 10) {
-				throw new BusinessException().addPopup("The field  cannot be less than 10%.");
+				throw new BusinessException().addPopup(LESS_10);
 			}
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));

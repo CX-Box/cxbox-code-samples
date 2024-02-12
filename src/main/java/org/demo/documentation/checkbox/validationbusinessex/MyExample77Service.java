@@ -8,6 +8,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.ONLY_TRUE;
+
 
 @Service
 public class MyExample77Service extends VersionAwareResponseService<MyExample77DTO, MyEntity77> {
@@ -31,7 +33,7 @@ public class MyExample77Service extends VersionAwareResponseService<MyExample77D
 			BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample77DTO_.customField)) {
 			if (Boolean.FALSE.equals(data.getCustomField())) {
-				throw new BusinessException().addPopup("The field  can contain only 'True'");
+				throw new BusinessException().addPopup(ONLY_TRUE);
 			}
 			entity.setCustomField(data.getCustomField());
 		}

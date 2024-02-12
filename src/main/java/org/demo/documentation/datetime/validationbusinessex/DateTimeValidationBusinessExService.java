@@ -9,6 +9,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.LESS_CURRENT_DATE;
+
 @Service
 public class DateTimeValidationBusinessExService extends
 		VersionAwareResponseService<DateTimeValidationBusinessExDTO, DateTimeValidationBusinessEx> {
@@ -39,7 +41,7 @@ public class DateTimeValidationBusinessExService extends
 		if (data.isFieldChanged(DateTimeValidationBusinessExDTO_.customField)) {
 			LocalDateTime sysdate = LocalDateTime.now();
 			if (data.getCustomField() != null && sysdate.compareTo(data.getCustomField()) > 0) {
-				throw new BusinessException().addPopup("The field  cannot be less than the current date");
+				throw new BusinessException().addPopup(LESS_CURRENT_DATE);
 			}
 			entity.setCustomField(data.getCustomField());
 		}

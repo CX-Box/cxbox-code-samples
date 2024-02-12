@@ -13,6 +13,8 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.ONLY_LETTER;
+
 
 @Service
 public class MyExample192Service extends VersionAwareResponseService<MyExample192DTO, MyEntity192> {
@@ -42,7 +44,7 @@ public class MyExample192Service extends VersionAwareResponseService<MyExample19
 					.stream()
 					.filter(val -> !val.getValue().matches("[A-Za-z]+"))
 					.findFirst()
-					.orElseThrow(() -> new BusinessException().addPopup("The field  can contain only letters."));
+					.orElseThrow(() -> new BusinessException().addPopup(ONLY_LETTER));
 			entity.getCustomFieldList().clear();
 			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
 					.map(MultivalueFieldSingleValue::getId)

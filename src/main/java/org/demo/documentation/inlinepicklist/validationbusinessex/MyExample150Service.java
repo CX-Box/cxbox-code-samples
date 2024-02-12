@@ -12,6 +12,8 @@ import org.demo.documentation.inlinepicklist.validationbusinessex.picklist.MyEnt
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.main.TextError.ONLY_LETTER;
+
 
 @Service
 public class MyExample150Service extends VersionAwareResponseService<MyExample150DTO, MyEntity150> {
@@ -40,7 +42,7 @@ public class MyExample150Service extends VersionAwareResponseService<MyExample15
 			if (StringUtils.isNotEmpty(data.getCustomField())
 					&& !data.getCustomField().matches("[A-Za-z]+")
 			) {
-				throw new BusinessException().addPopup("The field  can contain only letters.");
+				throw new BusinessException().addPopup(ONLY_LETTER);
 			}
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
 					? entityManager.getReference(MyEntity151.class, data.getCustomFieldId())
