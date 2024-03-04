@@ -1,4 +1,4 @@
-package org.demo.documentation.time.base;
+package org.demo.documentation.time.filtration;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,10 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class MyEntity3500TestDataLoadService {
+public class MyEntity3504TestDataLoadService {
 
     @Autowired
-    MyEntity3500Repository repository;
+    MyEntity3504Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -22,7 +22,7 @@ public class MyEntity3500TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3500().setCustomField(LocalDateTime.now()));
+        repository.save(new MyEntity3504().setCustomField(LocalDateTime.now()));
     }
 
 }

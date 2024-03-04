@@ -1,4 +1,4 @@
-package org.demo.documentation.time.base;
+package org.demo.documentation.time.color;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +13,15 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3500DTO extends DataResponseDTO {
+public class MyExample3501DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = DateValueProvider.class)
     private LocalDateTime customField;
 
-    public MyExample3500DTO(MyEntity3500 entity) {
+    private String customFieldColor;
+    public MyExample3501DTO(MyEntity3501 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customFieldColor = "#eda6a6";
     }
 }

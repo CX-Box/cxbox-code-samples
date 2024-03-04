@@ -1,4 +1,4 @@
-package org.demo.documentation.time.base;
+package org.demo.documentation.time.drilldown;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3500DTO extends DataResponseDTO {
+public class MyExample3503DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = DateValueProvider.class)
     private LocalDateTime customField;
 
-    public MyExample3500DTO(MyEntity3500 entity) {
+    public MyExample3503DTO(MyEntity3503 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
     }

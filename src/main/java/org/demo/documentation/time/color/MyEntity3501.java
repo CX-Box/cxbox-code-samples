@@ -1,4 +1,4 @@
-package org.demo.documentation.time.base;
+package org.demo.documentation.time.color;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,12 @@ import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3500 extends BaseEntity {
+public class MyEntity3501 extends BaseEntity {
 
     @Column
     private LocalDateTime customField;

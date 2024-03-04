@@ -1,4 +1,4 @@
-package org.demo.documentation.time.base;
+package org.demo.documentation.time.drilldown;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3500 extends BaseEntity {
+public class MyEntity3503 extends BaseEntity {
 
     @Column
     private LocalDateTime customField;
