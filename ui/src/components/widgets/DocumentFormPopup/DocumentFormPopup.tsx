@@ -1,7 +1,7 @@
 import { actions } from '@actions'
 import { Spin } from 'antd'
 import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import styles from './DocumentFormPopup.less'
 import Form from '../Form/Form'
 import { WidgetFormPopupMeta } from '@interfaces/widget'
@@ -14,9 +14,9 @@ export interface DocumentFormPopupProps {
 }
 
 export function DocumentFormPopup({ meta }: DocumentFormPopupProps) {
-    const { bcName } = meta
+    const { bcName, name } = meta
     const popupData = useAppSelector(state => state.view.popupData)
-    const showed = popupData?.bcName === bcName
+    const showed = popupData?.bcName === bcName && name === popupData?.widgetName
 
     const dispatch = useDispatch()
     const bcLoading = useAppSelector(state => state.screen.bo.bc[bcName])?.loading

@@ -1,11 +1,10 @@
-/**
- * This is a utility class for typing payload of redux actions
- */
 import { createAction } from '@reduxjs/toolkit'
 import { actions, interfaces } from '@cxbox-ui/core'
 import { OperationPreInvokeCustom } from '@interfaces/operation'
 import { NotificationState } from '@interfaces/notification'
 import { LoginResponse } from '@interfaces/session'
+import { TableSettingsItem, TableSettingsList, TableSettingsMap } from '@interfaces/tableSettings'
+import { FilterGroup } from '@interfaces/filters'
 
 export const SSO_AUTH = createAction('SSO_AUTH')
 
@@ -25,7 +24,7 @@ export const customAction = createAction<{ customMessage: string }>('customActio
  */
 export const showViewPopup = createAction<
     ReturnType<typeof actions.showViewPopup>['payload'] & {
-        options?: { operation?: ReturnType<typeof processPreInvoke>['payload'] }
+        options?: { operation?: ReturnType<typeof processPreInvoke>['payload']; calleeFieldKey?: string }
     }
 >('showViewPopup')
 
@@ -73,3 +72,17 @@ export const changeBcFullTextFilter = createAction<{
     bcName: string
     fullTextFilterValue: string
 }>('changeBcFullTextFilter')
+
+export const initTableSettings = createAction<{ rawSettings: TableSettingsList | TableSettingsMap }>('initTableSettings')
+
+export const changeTableSettings = createAction<
+    Pick<TableSettingsItem, 'view' | 'widget'> & Partial<Omit<TableSettingsItem, 'view' | 'widget'>>
+>('changeTableSettings')
+
+export const resetTableSettings = createAction<Pick<TableSettingsItem, 'view' | 'widget'>>('resetTableSettings')
+
+export const updateIdForFilterGroup = createAction<{ name: string; bc: string; id: string }>('updateIdForFilterGroup')
+
+export const addFilterGroup = createAction<FilterGroup & { bc: string }>('addFilterGroup')
+
+export const removeFilterGroup = createAction<{ name: string; bc: string; id?: string }>('removeFilterGroup')

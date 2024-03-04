@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.checkbox.validationdynamic.MyExample289DTO_;
+
 import org.springframework.stereotype.Service;
 
 @Service
