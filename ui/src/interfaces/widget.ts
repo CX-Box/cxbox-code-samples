@@ -16,7 +16,8 @@ export enum CustomWidgetTypes {
     RingProgress = 'RingProgress',
     DashboardList = 'DashboardList',
     AdditionalInfo = 'AdditionalInfo',
-    SuggestionPickList = 'SuggestionPickList'
+    SuggestionPickList = 'SuggestionPickList',
+    StatsBlock = 'StatsBlock'
 }
 
 export const removeRecordOperationWidgets: Array<interfaces.WidgetTypes | string> = [interfaces.WidgetTypes.List]
@@ -85,6 +86,14 @@ export type DocumentPreviewGeneratedFileUrlOption = {
     fieldKeyForContentType: string
 }
 
+export type OperationCustomMode = 'default' | 'file-upload-dnd' | 'default-and-file-upload-dnd'
+
+export type OperationInfo = {
+    actionKey: string
+    fieldKey?: string
+    mode?: OperationCustomMode | string
+}
+
 export interface AppWidgetMeta extends interfaces.WidgetMeta {
     options?: interfaces.WidgetOptions & {
         documentPreview?: {
@@ -128,6 +137,19 @@ export interface AppWidgetMeta extends interfaces.WidgetMeta {
 
         filterSetting?: {
             enabled: boolean
+        }
+
+        stats?: {
+            valueFieldKey?: string
+            titleFieldKey?: string
+            iconFieldKey?: string
+            descriptionFieldKey?: string
+        }
+        buttons?: OperationInfo[]
+        pagination?: {
+            defaultLimit?: number
+            hideLimitOptions?: boolean
+            availableLimitsList?: number[]
         }
     }
 }
