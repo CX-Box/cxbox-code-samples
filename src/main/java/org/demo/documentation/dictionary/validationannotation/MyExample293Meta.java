@@ -9,8 +9,6 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.dictionary.validationannotation.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.constraints.NotNull;
-
 @Service
 @RequiredArgsConstructor
 public class MyExample293Meta extends FieldMetaBuilder<MyExample293DTO> {

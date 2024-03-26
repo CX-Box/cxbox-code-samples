@@ -9,7 +9,6 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MyExample3700Service extends VersionAwareResponseService<MyExample3700DTO, MyEntity3700> {
 
@@ -44,15 +43,15 @@ public class MyExample3700Service extends VersionAwareResponseService<MyExample3
                 .action("edit", "Edit")
                 .withoutAutoSaveBefore()
                 .invoker((bc, data) -> {
-                    MyExample3700DTO client = clientRepository.getById(bc.getIdAsLong());
+                    MyEntity3700 client = repository.getById(bc.getIdAsLong());
                     return new ActionResultDTO<MyExample3700DTO>()
                             .setAction(PostAction.drillDown(
                                     DrillDownType.INNER,
-                                    client.getEditStep().getEditView()
-                                            + CxboxRestController.clientEdit + "/"
+                                     PlatformMyExample3700Controller.myExampleBc3700 + "/"
                                             + bc.getId()
                             ));
                 })
+                .add()
                 .build();
     }
 
