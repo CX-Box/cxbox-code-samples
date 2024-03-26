@@ -2,7 +2,7 @@ package org.demo.documentation.inlinepicklist.sorting;
 
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.inlinepicklist.sorting.picklist.MyEntity149;
 import org.demo.documentation.inlinepicklist.sorting.picklist.MyEntity149Repository;

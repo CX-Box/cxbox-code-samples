@@ -1,7 +1,7 @@
 package org.demo.documentation.inlinepicklist.validationruntimeex;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.inlinepicklist.validationruntimeex.picklist.MyEntity155;
 import org.demo.documentation.inlinepicklist.validationruntimeex.picklist.MyEntity155Repository;

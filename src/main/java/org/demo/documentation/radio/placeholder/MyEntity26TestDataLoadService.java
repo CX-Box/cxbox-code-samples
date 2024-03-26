@@ -1,7 +1,7 @@
 package org.demo.documentation.radio.placeholder;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.radio.placeholder.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;

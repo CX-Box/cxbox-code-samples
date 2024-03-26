@@ -9,7 +9,7 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.dictionary.validationannotation.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Service
 @RequiredArgsConstructor

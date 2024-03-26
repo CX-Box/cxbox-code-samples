@@ -1,7 +1,7 @@
 package org.demo.documentation.multivalue.basic;
 
 import java.util.Objects;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;

@@ -1,7 +1,8 @@
 package org.demo.documentation.datetime.validationannotation;
 
 import java.time.LocalDateTime;
-import javax.validation.constraints.Future;
+
+import jakarta.validation.constraints.Future;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -2,7 +2,7 @@ package org.demo.documentation.multipleselect.validationconfirm;
 
 import java.util.Collections;
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.multipleselect.validationconfirm.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.info.showcondition.byparententity.parent.MyEntity3105;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter

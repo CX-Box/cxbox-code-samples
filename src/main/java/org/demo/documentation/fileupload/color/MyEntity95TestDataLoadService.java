@@ -1,7 +1,7 @@
 package org.demo.documentation.fileupload.color;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 
 import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
