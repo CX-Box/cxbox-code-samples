@@ -18,9 +18,7 @@
     <checktyle.config>src/main/resources/checkstyle-checker.xml</checktyle.config>
     <java.version>17</java.version>
     <mapstruct.version>1.5.5.Final</mapstruct.version>
-    <!-- dependencies versions -->
     <minio.version>8.3.0</minio.version>
-
   </properties>
 
   <repositories>
@@ -121,7 +119,16 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
