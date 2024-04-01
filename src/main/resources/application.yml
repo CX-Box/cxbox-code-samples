@@ -9,6 +9,8 @@ app:
     resource: cxbox-oidc-client
     public-client: true
     cors: true
+  integrations:
+    myentity-data-server-url: ${MYENTITY_DATA_SERVER_URL:http://localhost:8080/rest/api/v1/myentity3900}
 
 cxbox:
   bean:

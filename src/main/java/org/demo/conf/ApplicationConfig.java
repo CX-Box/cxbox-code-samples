@@ -11,6 +11,7 @@ import org.cxbox.meta.MetaApplicationConfig;
 import org.cxbox.meta.metahotreload.conf.MetaHotReloadConfiguration;
 import org.cxbox.model.core.config.PersistenceJPAConfig;
 import org.cxbox.model.core.tx.CxboxJpaTransactionManagerForceActiveAware;
+import org.demo.documentation.microservice.conf.IntegrationConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -42,6 +43,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaRepositories(basePackages = "org.demo")
 @EnableAsync
 @EntityScan({"org.cxbox", "org.demo"})
+@EnableConfigurationProperties(IntegrationConfiguration.class)
 public class ApplicationConfig {
 
 	@Bean
