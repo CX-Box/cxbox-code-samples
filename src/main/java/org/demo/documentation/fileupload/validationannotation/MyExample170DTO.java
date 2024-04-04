@@ -1,6 +1,6 @@
 package org.demo.documentation.fileupload.validationannotation;
 
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

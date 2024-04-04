@@ -9,7 +9,7 @@ import org.demo.documentation.other.alltypes.enums.DictionaryTypeEnum;
 import org.demo.documentation.other.alltypes.enums.MultipleTypeEnum;
 import org.demo.documentation.other.alltypes.enums.RadioTypeEnum;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;

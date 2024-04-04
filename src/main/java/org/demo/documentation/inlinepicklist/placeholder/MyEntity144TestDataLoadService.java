@@ -1,7 +1,7 @@
 package org.demo.documentation.inlinepicklist.placeholder;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import  jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.inlinepicklist.placeholder.picklist.MyEntity145Repository;
 import org.springframework.beans.factory.annotation.Autowired;

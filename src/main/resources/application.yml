@@ -1,12 +1,16 @@
 app:
   ui-path: /ui
-  keycloak:
+  auth-basic:
+    enabled: ${AUTH_BASIC_ENABLED:false}
+  oidc:
     realm: cxbox
     auth-server-url: ${FRONTEND_AUTH_SERVER_URL:http://localhost:9080/auth}
     ssl-require: none
-    resource: cxbox-keycloak-client
+    resource: cxbox-oidc-client
     public-client: true
     cors: true
+  integrations:
+    myentity-data-server-url: ${MYENTITY_DATA_SERVER_URL:http://localhost:8080/rest/api/v1/myentity3900}
 
 cxbox:
   bean:
@@ -18,7 +22,7 @@ cxbox:
     view-allowed-roles-enabled: true
   widget:
     fields:
-      include-packages: org.cxbox.core.ui.model.json.field.subtypes, org.demo.conf.cxbox.meta
+      include-packages: org.cxbox.meta, org.demo.conf.cxbox
   api:
     path: /api/v1
     use-servlet-context-path: false
@@ -76,15 +80,18 @@ spring:
   main:
     allow-bean-definition-overriding: true
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${FRONTEND_AUTH_SERVER_URL:http://localhost:9080/auth}/realms/cxbox
+          jwk-set-uri: ${BACKEND_AUTH_SERVER_URL:http://localhost:9080/auth}/realms/cxbox/protocol/openid-connect/certs
 
-keycloak:
-  auth-server-url: ${BACKEND_AUTH_SERVER_URL:http://localhost:9080/auth}
-  realm: cxbox
-  resource: cxbox-keycloak-client
-  bearer-only: true
-  public-client: true
-  use-resource-role-mappings: true
-  ssl-required: none
+token:
+  converter:
+    principal-attribute: preferred_username
+    resource-id: cxbox-oidc-client
+
 springdoc:
   packages-to-scan: org.demo
 

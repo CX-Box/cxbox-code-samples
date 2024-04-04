@@ -10,7 +10,7 @@ import org.demo.documentation.other.alltypes.enums.MultipleTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

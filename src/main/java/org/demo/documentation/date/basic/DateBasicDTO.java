@@ -1,7 +1,6 @@
 package org.demo.documentation.date.basic;
 
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
