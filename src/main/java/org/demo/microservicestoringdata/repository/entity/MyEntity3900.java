@@ -18,4 +18,5 @@ import jakarta.persistence.Entity;
 public class MyEntity3900 extends BaseEntity {
 
     private String customField;
+    private String customField2;
 }

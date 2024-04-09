@@ -12,8 +12,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MyEntity3800OutServiceDTO implements Serializable {
 
-    @SearchParameter(name = "customField")
     private String customField;
+
+    private String customField2;
 
     private String id;
 }

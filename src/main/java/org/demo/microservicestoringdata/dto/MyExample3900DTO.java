@@ -10,10 +10,11 @@ import org.demo.microservicestoringdata.repository.entity.MyEntity3900;
 @Setter
 @NoArgsConstructor
 public class MyExample3900DTO extends DataResponseDTO {
-
+    private String customField2;
     private String customField;
     public MyExample3900DTO(MyEntity3900 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customField2 = entity.getCustomField2();
     }
 }
