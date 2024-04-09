@@ -14,7 +14,5 @@ public class MyEntity3800OutServiceDTO implements Serializable {
 
     private String customField;
 
-    private String customField2;
-
     private String id;
 }

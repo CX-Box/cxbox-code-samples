@@ -9,13 +9,7 @@ import org.demo.documentation.widgets.info.showcondition.byparententity.child.My
 import org.demo.documentation.widgets.info.showcondition.byparententity.parent.MyExample3105Service;
 import org.springframework.stereotype.Component;
 
-/**
- * This is actually an analog of a usual @RestController.
- * When you add enum, you just add rest endpoints, that tesler UI can call.
- * We could actually make a usual @RestController and make it Generic,
- * but current enum approach shows, that it is less error-prone in huge enterprise projects
- * (because single line in this enum creates >5 rest endpoints)
- */
+
 @Getter
 public enum PlatformMyExample31053107Controller implements EnumBcIdentifier {
 
