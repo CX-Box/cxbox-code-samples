@@ -10,15 +10,16 @@ import org.demo.documentation.microservice.utils.IntegrationURLBuilder;
 import org.demo.documentation.microservice.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @Service
@@ -56,9 +57,6 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     }
 
     // --8<-- [end:getByIdIgnoringFirstLevelCache]
-    @Override
-    public void delete(BusinessComponent bc) {
-    }
 
     // --8<-- [start:getList]
     @Override
@@ -86,19 +84,40 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
                 GET, null, new ParameterizedTypeReference<>() {
                 }
         );
-        return responseEntity.getBody();
+      return responseEntity.getBody();
     }
     // --8<-- [end:getList]
 
     @Override
-    public MyEntity3800OutServiceDTO update(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
-        return null;
+    // --8<-- [start:delete]
+    public void delete(BusinessComponent bc) {
+         restTemplate.exchange(
+                fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
+                        .toUriString(),
+                DELETE, null, Void.class
+        );
     }
+    // --8<-- [end:delete]
+
+
 
     @Override
-    public MyEntity3800OutServiceDTO create(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
-        return null;
+    // --8<-- [start:create]
+    public  MyEntity3800OutServiceDTO create(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
+        return restTemplate.exchange(
+                fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                POST, new HttpEntity<>(entity), MyEntity3800OutServiceDTO.class
+        ).getBody();
     }
+    // --8<-- [end:create]
 
-
+    @Override
+    // --8<-- [start:update]
+    public MyEntity3800OutServiceDTO update(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
+        return restTemplate.exchange(
+                fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                PUT, new HttpEntity<>(entity), MyEntity3800OutServiceDTO.class
+        ).getBody();
+    }
+    // --8<-- [end:update]
 }
