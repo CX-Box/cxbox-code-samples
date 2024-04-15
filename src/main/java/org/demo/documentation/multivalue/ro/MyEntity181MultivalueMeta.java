@@ -30,6 +30,7 @@ public class MyEntity181MultivalueMeta extends FieldMetaBuilder<MyEntity181Multi
 	public void buildIndependentMeta(FieldsMeta<MyEntity181MultivalueDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 
+		fields.enableFilter(MyEntity181MultivalueDTO_.customField);
 	}
 
 }
