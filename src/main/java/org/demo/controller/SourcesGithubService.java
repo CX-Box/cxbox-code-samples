@@ -128,7 +128,6 @@ public class SourcesGithubService {
     }
 
 
-    @NonNull
     public String cleanUpCode(ResponseEntity<String> sourceCode) {
         return Optional.ofNullable(sourceCode.getBody())
                 .map(src -> {
