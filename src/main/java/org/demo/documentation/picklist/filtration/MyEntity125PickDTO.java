@@ -11,6 +11,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyEntity125PickDTO extends DataResponseDTO {
 
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "customFieldAdditional")
