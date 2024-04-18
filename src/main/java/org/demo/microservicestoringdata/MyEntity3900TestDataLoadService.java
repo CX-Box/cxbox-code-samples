@@ -2,7 +2,9 @@ package org.demo.microservicestoringdata;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.microservicestoringdata.repository.MyEntity3900Repository;
+import org.demo.microservicestoringdata.repository.MyEntity3910Repository;
 import org.demo.microservicestoringdata.repository.entity.MyEntity3900;
+import org.demo.microservicestoringdata.repository.entity.MyEntity3910;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class MyEntity3900TestDataLoadService {
 
     @Autowired
     MyEntity3900Repository repository;
+
+    @Autowired
+    MyEntity3910Repository repository3910;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -33,6 +38,18 @@ public class MyEntity3900TestDataLoadService {
         repository.save(new MyEntity3900().setCustomField("Test data8").setCustomField2("Test data8"));
         repository.save(new MyEntity3900().setCustomField("Test data9").setCustomField2("Test data9"));
         repository.save(new MyEntity3900().setCustomField("Test data10").setCustomField2("Test data10"));
+        repository3910.deleteAll();
+        repository3910.deleteAll();
+        repository3910.save(new MyEntity3910().setCustomField("Test data").setCustomField2("Test data"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data2").setCustomField2("Test data2"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data3").setCustomField2("Test data3"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data4").setCustomField2("Test data4"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data5").setCustomField2("Test data5"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data6").setCustomField2("Test data6"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data7").setCustomField2("Test data7"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data8").setCustomField2("Test data8"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data9").setCustomField2("Test data9"));
+        repository3910.save(new MyEntity3910().setCustomField("Test data10").setCustomField2("Test data10"));
     }
 
 }
