@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice;
+package org.demo.documentation.microservice.existingmicroservices;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;

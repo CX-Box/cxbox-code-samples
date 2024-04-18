@@ -26,7 +26,7 @@ import static org.cxbox.api.service.session.InternalAuthorizationService.SystemU
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/api/microservice/v1/myentity3900")
-public class MicroserviceStoringDataController {
+public class ExistingMicroserviceStoringDataController {
 
     private final MyEntity3900Mapper mapper;
 

@@ -1,10 +1,11 @@
-package org.demo.documentation.microservice;
+package org.demo.documentation.microservice.existingmicroservices;
 
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
+import org.demo.documentation.microservice.MyExample3800DTO_;
 import org.springframework.stereotype.Service;
 
 @Service

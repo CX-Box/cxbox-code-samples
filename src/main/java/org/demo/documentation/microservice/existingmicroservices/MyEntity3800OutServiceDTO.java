@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice;
+package org.demo.documentation.microservice.existingmicroservices;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
