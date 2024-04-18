@@ -11,7 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.demo.services.GitHubApi;
 import org.demo.services.FilesService;
-import org.jetbrains.annotations.Nullable;
+
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -111,7 +111,7 @@ public class SourcesGithubService {
                     }
                 });
     }
-    @Nullable
+    @NonNull
     public String cleanUpString(String stringJava) throws IOException {
         List<String> resultLines = new ArrayList<>();
         try (BufferedReader result = new BufferedReader(new StringReader(stringJava))) {
@@ -128,7 +128,7 @@ public class SourcesGithubService {
     }
 
 
-    @Nullable
+    @NonNull
     public String cleanUpCode(ResponseEntity<String> sourceCode) {
         return Optional.ofNullable(sourceCode.getBody())
                 .map(src -> {

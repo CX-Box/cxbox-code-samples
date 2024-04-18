@@ -69,8 +69,7 @@ public class UserRoleService {
 	 * @param intUserRoleKeyList List of roles based on ESK groups
 	 */
 	public void upsertUserRoles(Long userId, List<String> intUserRoleKeyList) {
-		User user = jpaDao.findById(User.class, userId);
-		List<UserRole> userRoleList = updateUserRoles(user, intUserRoleKeyList);
+		updateUserRoles(jpaDao.findById(User.class, userId), intUserRoleKeyList);
 	}
 
 	/**
@@ -107,7 +106,7 @@ public class UserRoleService {
 		List<UserRole> userRoleList = getListByUser(user);
 
 		if (userRoleList == null || userRoleList.isEmpty()) {
-			throw new ServerException(format("User [id=%s] has no roles!", user.getId()));
+			throw new ServerException(String.format("User [id=%s] has no roles!", user.getId()));
 		}
 
 		return userRoleList.stream()
