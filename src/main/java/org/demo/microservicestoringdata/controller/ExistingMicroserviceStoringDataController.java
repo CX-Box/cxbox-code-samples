@@ -3,7 +3,7 @@ package org.demo.microservicestoringdata.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
-import org.demo.microservicestoringdata.dto.MyExample3900DTO_;
+
 import org.demo.microservicestoringdata.repository.entity.MyEntity3900;
 import org.springframework.data.domain.Page;
 import lombok.RequiredArgsConstructor;
