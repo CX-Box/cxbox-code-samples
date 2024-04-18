@@ -2,7 +2,6 @@ package org.demo.microservicestoringdata.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-
 import org.demo.microservicestoringdata.repository.entity.MyEntity3900_;
 import org.demo.microservicestoringdata.repository.entity.MyEntity3900;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,7 @@ import static org.cxbox.api.service.session.InternalAuthorizationService.SystemU
 @Transactional
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rest/api/microservice/v1/myentity3900")
+@RequestMapping("/rest/api/microservices/v1/myentity3900")
 public class ExistingMicroserviceStoringDataController {
 
     private final MyEntity3900Mapper mapper;

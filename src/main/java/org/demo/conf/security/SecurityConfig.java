@@ -87,6 +87,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/v1/githubcode/**").permitAll()
 						.requestMatchers("/api/v1/file/**").permitAll()
 						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/microservices/v1/**").permitAll()
 						.requestMatchers("/**").fullyAuthenticated());
 		if (Boolean.TRUE.equals(authBasicConfigProperties.getEnabled())) {
 			http.httpBasic(c -> c.authenticationEntryPoint(customBasicAuthenticationEntryPoint()));
