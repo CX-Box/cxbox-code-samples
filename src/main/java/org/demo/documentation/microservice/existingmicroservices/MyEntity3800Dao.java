@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice;
+package org.demo.documentation.microservice.existingmicroservices;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
@@ -7,16 +7,20 @@ import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.microservice.utils.IntegrationURLBuilder;
+
 import org.demo.documentation.microservice.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.PUT;
@@ -61,37 +65,56 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     // --8<-- [start:getList]
     @Override
     public Page<MyEntity3800OutServiceDTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
-        String sortKey = "";
+
         //Page size
         String page = bc.getParameters().getParameter("_page");
+
         //Limit
         String limit = bc.getParameters().getParameter("_limit");
+
         //Filter
-        Optional<Map.Entry<String, String>> filter = queryParameters.getParameters().entrySet().stream().filter(f -> f.getKey().contains("contains")).findFirst();        //Sorting
-        Optional<Map.Entry<String, String>> sort = queryParameters.getParameters().entrySet().stream().filter(f -> f.getKey().contains("sort")).findFirst();
-        if (!sort.isEmpty()) {
-            String[] splitOperation = sort.get().getKey().split("\\.");
-            sortKey = splitOperation[splitOperation.length - 1];
-        }
+        List<String> filterCustomField = queryParameters.getParameters().entrySet().stream()
+                .filter(f -> f.getKey().contains("customField.contains"))
+                .map(Map.Entry::getValue)
+                .toList();
+        Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
+
+        //Sorting
+        List<String> sortCustomField = queryParameters.getParameters().entrySet().stream()
+                .filter(f -> f.getKey().contains("sort"))
+                .map(m -> {
+                            String[] splitOperation = m.getKey().split("\\.");
+                            return splitOperation[splitOperation.length - 1];
+                        }
+                ).toList();
+        Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
+
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV)
+                .queryParam("number", page)
+                .queryParam("size", limit)
+                .queryParamIfPresent("filterCustomField", filter)
+                .queryParamIfPresent("sortCustomField", sort)
+                .encode()
+                .toUriString();
 
         ResponseEntity<RestResponsePage<MyEntity3800OutServiceDTO>> responseEntity = restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV).toUriString()
-                        + "?_page=" + page
-                        + "&_limit=" + limit
-                        + (sort.isEmpty() ? "" : "&_sort=" + sort.get().getValue() + "&_order=" + sortKey)
-                        + (filter.isEmpty() ? "" : "&_filter.field." + filter.get().getKey() + "=" + filter.get().getValue())
-                ,
-                GET, null, new ParameterizedTypeReference<>() {
-                }
+                urlTemplate,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                },
+                filter
         );
-      return responseEntity.getBody();
+
+
+        return responseEntity.getBody();
     }
     // --8<-- [end:getList]
 
     @Override
     // --8<-- [start:delete]
     public void delete(BusinessComponent bc) {
-         restTemplate.exchange(
+        restTemplate.exchange(
                 fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 DELETE, null, Void.class
@@ -100,10 +123,9 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     // --8<-- [end:delete]
 
 
-
     @Override
     // --8<-- [start:create]
-    public  MyEntity3800OutServiceDTO create(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
+    public MyEntity3800OutServiceDTO create(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
         return restTemplate.exchange(
                 fromUriString(integrationConfig.getMyentityDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3800OutServiceDTO.class

@@ -29,7 +29,7 @@ public class MyEntity337MultivalueMeta extends FieldMetaBuilder<MyEntity337Multi
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity337MultivalueDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
-
+		fields.enableFilter(MyEntity337MultivalueDTO_.customField);
 	}
 
 }

@@ -28,6 +28,11 @@ public class MyEntity3900TestDataLoadService {
         repository.save(new MyEntity3900().setCustomField("Test data3").setCustomField2("Test data3"));
         repository.save(new MyEntity3900().setCustomField("Test data4").setCustomField2("Test data4"));
         repository.save(new MyEntity3900().setCustomField("Test data5").setCustomField2("Test data5"));
+        repository.save(new MyEntity3900().setCustomField("Test data6").setCustomField2("Test data6"));
+        repository.save(new MyEntity3900().setCustomField("Test data7").setCustomField2("Test data7"));
+        repository.save(new MyEntity3900().setCustomField("Test data8").setCustomField2("Test data8"));
+        repository.save(new MyEntity3900().setCustomField("Test data9").setCustomField2("Test data9"));
+        repository.save(new MyEntity3900().setCustomField("Test data10").setCustomField2("Test data10"));
     }
 
 }

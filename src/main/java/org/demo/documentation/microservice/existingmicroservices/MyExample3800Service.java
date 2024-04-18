@@ -1,10 +1,11 @@
-package org.demo.documentation.microservice;
+package org.demo.documentation.microservice.existingmicroservices;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+
 import org.springframework.stereotype.Service;
 
 

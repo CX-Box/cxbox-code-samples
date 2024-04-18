@@ -41,7 +41,7 @@ public class OidcJwtTokenConverter implements Converter<Jwt, OidcAuthenticationT
 				.map(resourceData -> (Collection<String>) resourceData.get(ROLES))
 				.stream()
 				.map(role -> new SimpleGrantedAuthority(role.stream().collect(Collectors.joining(""))))
-				.collect(Collectors.toList());
+				.toList();
 
 		Set<GrantedAuthority> authorities = Stream
 				.concat(jwtGrantedAuthoritiesConverter.convert(jwt).stream(), roles.stream())
