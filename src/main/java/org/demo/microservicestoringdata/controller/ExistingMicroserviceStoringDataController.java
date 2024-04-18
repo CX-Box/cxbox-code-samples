@@ -3,7 +3,7 @@ package org.demo.microservicestoringdata.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
-
+import org.demo.microservicestoringdata.repository.entity.MyEntity3900_;
 import org.demo.microservicestoringdata.repository.entity.MyEntity3900;
 import org.springframework.data.domain.Page;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +62,7 @@ public class ExistingMicroserviceStoringDataController {
         if (filter.isPresent()) {
             String filterValue = String.join("", filter.get().getValue());
             specification = (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(MyExample3900DTO_.customField.getName()), "%" + filterValue + "%");
+                    criteriaBuilder.like(root.get(MyEntity3900_.customField.getName()), "%" + filterValue + "%");
         }
 
         return ResponseEntity.ok().body(data3900Repository.findAll(specification, entityPageable).map(mapper::toDto));
@@ -75,7 +75,7 @@ public class ExistingMicroserviceStoringDataController {
         } else {
             entityOrderList = new Sort.Order(
                     sortCustomField.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                    MyExample3900DTO_.customField.getName());
+                    MyEntity3900_.customField.getName());
         }
         return PageRequest.of(Integer.parseInt(numberPage) - 1, Integer.parseInt(sizePage), Sort.by(entityOrderList));
     }
