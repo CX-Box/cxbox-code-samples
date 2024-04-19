@@ -36,6 +36,8 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
                 .newAction()
                 .action("save", "save")
                 .add()
+                .action("delete", "delete")
+                .add()
                 .build();
     }
 
