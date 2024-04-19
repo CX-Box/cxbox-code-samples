@@ -33,6 +33,7 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 	@Override
 	protected ActionResultDTO<MyExample334DTO> doUpdateEntity(MyEntity334 entity, MyExample334DTO data,
 			BusinessComponent bc) {
+		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample334DTO_.customField)) {
 			entity.setCustomField(
 					data.getCustomField().getValues()
@@ -47,7 +48,6 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 							.map(v -> CustomFieldEnum.getByValue(v.getValue()))
 							.collect(Collectors.toSet()));
 		}
-		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]
