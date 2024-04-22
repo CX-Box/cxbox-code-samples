@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.util.*;
+
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
@@ -23,8 +25,6 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @Service
 @RequiredArgsConstructor
 public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutServiceDTO> implements AnySourceBaseDAO<MyEntity3800OutServiceDTO> {
-
-    public static final String API_V_1_LOV = "";
 
     private final IntegrationConfiguration integrationConfig;
 
@@ -45,7 +45,7 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     @Override
     public MyEntity3800OutServiceDTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + API_V_1_LOV + "/{id}").build()
+                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + "/{id}").build()
                         .expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 GET, null, MyEntity3800OutServiceDTO.class
@@ -65,23 +65,14 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = queryParameters.getParameters().entrySet().stream()
-                .filter(f -> f.getKey().contains("customField.contains"))
-                .map(Map.Entry::getValue)
-                .toList();
+        List<String> filterCustomField = getFilterFieldName(queryParameters, "customField.", "contains");
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
-        List<String> sortCustomField = queryParameters.getParameters().entrySet().stream()
-                .filter(f -> f.getKey().contains("_.sort"))
-                .map(m -> {
-                            String[] splitOperation = m.getKey().split("\\.");
-                            return splitOperation[splitOperation.length - 1];
-                        }
-                ).toList();
+        List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
         Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + API_V_1_LOV)
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getMyentityExistingMicroservicesDataServerUrl())
                 .queryParam("number", page)
                 .queryParam("size", limit)
                 .queryParamIfPresent("filterCustomField", filter)
@@ -103,11 +94,30 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     }
     // --8<-- [end:getList]
 
+    private List<String> getSortFieldName(QueryParameters queryParameters, String fieldName) {
+        return queryParameters.getParameters().entrySet().stream()
+                .filter(f -> f.getKey().contains("_sort"))
+                .filter(f -> f.getValue().contains(fieldName))
+                .map(m -> {
+                            String[] splitOperation = m.getKey().split("\\.");
+                            return splitOperation[splitOperation.length - 1];
+                        }
+                ).toList();
+    }
+
+    private List<String> getFilterFieldName(QueryParameters queryParameters, String fieldName, String searchSpec) {
+        return queryParameters.getParameters().entrySet().stream()
+                .filter(f -> f.getKey().contains(fieldName + "." + searchSpec))
+                .map(Map.Entry::getValue)
+                .toList();
+    }
+
+
     @Override
     // --8<-- [start:delete]
     public void delete(BusinessComponent bc) {
         restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + API_V_1_LOV + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
+                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 DELETE, null, Void.class
         );
@@ -118,8 +128,9 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     @Override
     // --8<-- [start:create]
     public MyEntity3800OutServiceDTO create(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
+        entity.setId(null);
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3800OutServiceDTO.class
         ).getBody();
     }
@@ -129,7 +140,7 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
     // --8<-- [start:update]
     public MyEntity3800OutServiceDTO update(BusinessComponent bc, MyEntity3800OutServiceDTO entity) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getMyentityExistingMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 PUT, new HttpEntity<>(entity), MyEntity3800OutServiceDTO.class
         ).getBody();
     }
