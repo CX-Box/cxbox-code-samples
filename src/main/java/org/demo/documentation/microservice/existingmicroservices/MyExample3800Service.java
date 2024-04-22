@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class MyExample3800Service extends AnySourceVersionAwareResponseService<MyExample3800DTO, MyEntity3800OutServiceDTO> {
 
     public MyExample3800Service() {
-        super(MyExample3800DTO.class, MyEntity3800OutServiceDTO.class,  MyExample3800Meta.class, MyEntity3800Dao.class);
+        super(MyExample3800DTO.class, MyEntity3800OutServiceDTO.class, MyExample3800Meta.class, MyEntity3800Dao.class);
     }
 
     @Override
@@ -33,12 +33,20 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3800DTO> getActions() {
         return Actions.<MyExample3800DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .action("delete", "delete")
-                .add()
-                .build();
+                .create().text("Add").add()
+                .addGroup(
+                        "actions",
+                        "Actions",
+                        0,
+                        Actions.<MyExample3800DTO>builder()
+                                .newAction()
+                                .action("delete", "delete")
+                                .add()
+                                .newAction()
+                                .action("save", "save")
+                                .add()
+                                .build()).
+                build();
     }
 
 }
