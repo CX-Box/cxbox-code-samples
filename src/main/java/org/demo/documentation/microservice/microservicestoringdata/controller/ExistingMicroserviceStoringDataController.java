@@ -34,6 +34,34 @@ public class ExistingMicroserviceStoringDataController {
 
     private final InternalAuthorizationService authzService;
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final Long id) {
+        authzService.loginAs(authzService.createAuthentication(VANILLA));
+        data3900Repository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<MyExample3900DTO> update(@RequestBody final MyExample3900DTO request) {
+        authzService.loginAs(authzService.createAuthentication(VANILLA));
+        if (request.getId() == null) {
+            throw new IllegalArgumentException("Id mustn't be null for update process");
+        }
+        return ResponseEntity.ok().body(mapper.toDto(mapper.updateEntityByDto(
+                data3900Repository.findById(Long.valueOf(request.getId())).orElseThrow(),
+                request
+        )));
+    }
+
+    @PostMapping
+    public ResponseEntity<MyExample3900DTO> create(@RequestBody final MyExample3900DTO request) {
+        authzService.loginAs(authzService.createAuthentication(VANILLA));
+        if (request.getId() != null) {
+            throw new IllegalArgumentException("Id must be null for creation process");
+        }
+        mapper.newEntityByDto(null, request);
+        return ResponseEntity.ok().body(mapper.toDto(data3900Repository.save(mapper.newEntityByDto(null, request))));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<MyExample3900DTO> getOne(@PathVariable final Long id) {

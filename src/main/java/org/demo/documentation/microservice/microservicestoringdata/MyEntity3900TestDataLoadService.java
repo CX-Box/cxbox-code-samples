@@ -44,11 +44,11 @@ public class MyEntity3900TestDataLoadService {
         repository3910.save(new MyEntity3910().setCustomField("Test data3").setCustomFieldNew("Test data3"));
         repository3910.save(new MyEntity3910().setCustomField("Test data4").setCustomFieldNew("Test data4"));
         repository3910.save(new MyEntity3910().setCustomField("Test data5").setCustomFieldNew("Test data5"));
-        repository3910.save(new MyEntity3910().setCustomField("Test data6").setCustomFieldNew("Test data6"));
-        repository3910.save(new MyEntity3910().setCustomField("Test data7").setCustomFieldNew("Test data7"));
-        repository3910.save(new MyEntity3910().setCustomField("Test data8").setCustomFieldNew("Test data8"));
-        repository3910.save(new MyEntity3910().setCustomField("Test data9").setCustomFieldNew("Test data9"));
-        repository3910.save(new MyEntity3910().setCustomField("Test data10").setCustomFieldNew("Test data10"));
+        // repository3910.save(new MyEntity3910().setCustomField("Test data6").setCustomFieldNew("Test data6"));
+        // repository3910.save(new MyEntity3910().setCustomField("Test data7").setCustomFieldNew("Test data7"));
+        // repository3910.save(new MyEntity3910().setCustomField("Test data8").setCustomFieldNew("Test data8"));
+        // repository3910.save(new MyEntity3910().setCustomField("Test data9").setCustomFieldNew("Test data9"));
+        // repository3910.save(new MyEntity3910().setCustomField("Test data10").setCustomFieldNew("Test data10"));
     }
 
 }
