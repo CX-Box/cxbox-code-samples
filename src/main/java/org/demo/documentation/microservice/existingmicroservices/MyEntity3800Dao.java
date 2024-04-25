@@ -92,7 +92,7 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
 
         return responseEntity.getBody();
     }
-    // --8<-- [end:getList]
+
 
     private List<String> getSortFieldName(QueryParameters queryParameters, String fieldName) {
         return queryParameters.getParameters().entrySet().stream()
@@ -112,6 +112,7 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
                 .toList();
     }
 
+    // --8<-- [end:getList]
 
     @Override
     // --8<-- [start:delete]
