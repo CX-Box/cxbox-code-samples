@@ -1,5 +1,7 @@
 package org.demo.documentation.microservice.microservicestoringdata.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.demo.documentation.microservice.microservicestoringdata.dto.MyExample3900DTO;
@@ -17,8 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
 
@@ -69,28 +69,31 @@ public class ExistingMicroserviceStoringDataController {
         return ResponseEntity.ok().body(data3900Repository.findById(id).map(mapper::toDto).orElse(null));
     }
 
+
     @GetMapping
-    public ResponseEntity<Page<MyExample3900DTO>> getAll(@RequestParam("number") String numberPage,
-                                                         @RequestParam("size") String sizePage,
-                                                         HttpServletRequest request
+    public ResponseEntity<Page<MyExample3900DTO>> getAll(
+            @Parameter(in = ParameterIn.QUERY,
+                    description = "Sets a maximum limit on the number of items or records that can be returned", example = "1")
+            @RequestParam("number") String numberPage,
+            @Parameter(in = ParameterIn.QUERY,
+                    description = "Refers to the number of items or records displayed on a single page of a user interface", example = "5")
+            @RequestParam("size") String sizePage,
+            @Parameter(in = ParameterIn.QUERY,
+                    description = "Criteria for filtering the data by field CustomField", example = "Test data1")
+            @RequestParam(value = "filterCustomField", required = false) String filterCustomField,
+            @Parameter(in = ParameterIn.QUERY,
+                    description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
+            @RequestParam(value = "sortCustomField", required = false) String sortCustomField
     ) {
         authzService.loginAs(authzService.createAuthentication(VANILLA));
-        String sortValue = null;
-        Optional<Map.Entry<String, String[]>> sort = request.getParameterMap().entrySet().stream().filter(f -> f.getKey().contains("sortCustomField")).findFirst();
-        if (sort.isPresent()) {
-            sortValue = String.join("", sort.get().getValue());
 
-        }
-
-        Pageable entityPageable = getEntityPageable(numberPage, sizePage, sortValue);
+        Pageable entityPageable = getEntityPageable(numberPage, sizePage, sortCustomField);
 
 
-        Optional<Map.Entry<String, String[]>> filter = request.getParameterMap().entrySet().stream().filter(f -> f.getKey().contains("filterCustomField")).findFirst();
         Specification<MyEntity3900> specification = (root, query, cb) -> cb.and();
-        if (filter.isPresent()) {
-            String filterValue = String.join("", filter.get().getValue());
+        if (filterCustomField != null) {
             specification = (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(MyEntity3900_.customField.getName()), "%" + filterValue + "%");
+                    criteriaBuilder.like(root.get(MyEntity3900_.customField.getName()), "%" + filterCustomField + "%");
         }
 
         return ResponseEntity.ok().body(data3900Repository.findAll(specification, entityPageable).map(mapper::toDto));
