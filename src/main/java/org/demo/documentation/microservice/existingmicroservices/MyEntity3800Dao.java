@@ -65,7 +65,7 @@ public class MyEntity3800Dao extends AbstractAnySourceBaseDAO<MyEntity3800OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = getFilterFieldName(queryParameters, "customField.", "contains");
+        List<String> filterCustomField = getFilterFieldName(queryParameters, "customField", "contains");
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
