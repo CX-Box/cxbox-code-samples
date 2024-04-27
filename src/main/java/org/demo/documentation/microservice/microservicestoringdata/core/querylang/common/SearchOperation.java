@@ -11,26 +11,10 @@ import java.util.stream.Collectors;
 @Getter
 @RequiredArgsConstructor
 public enum SearchOperation {
-
-	/**
-	 * Equal
-	 */
-	EQUALS("equals", false),
-
-	/**
-	 * Greater
-	 */
-	GREATER_THAN("greaterThan", false),
-
-	/**
-	 * Less
-	 */
-	LESS_THAN("lessThan", false),
-
 	/**
 	 * Greater or equal
 	 */
-	GREATER_OR_EQUAL_THAN("greaterOrEqualThan", false),
+	GREATER_OR_EQUAL_THAN("greaterOrEqualThan",false),
 
 	/**
 	 * Less or equal
@@ -43,14 +27,9 @@ public enum SearchOperation {
 	CONTAINS("contains", false),
 
 	/**
-	 * Specified
+	 * Equal
 	 */
-	SPECIFIED("specified", false),
-
-	/*	*//**
-	 * Boolean value specified, use for sql entities
-	 *//*
-	SPECIFIED_BOOLEAN_SQL("specifiedBooleanSql"),*/
+	EQUALS("equals", false),
 
 	/**
 	 * Equal to one of the list
@@ -58,15 +37,36 @@ public enum SearchOperation {
 	EQUALS_ONE_OF("equalsOneOf", true),
 
 	/**
-	 * Contains one from the list
+	 * Specified
 	 */
-	CONTAINS_ONE_OF("containsOneOf", true)/*,
+	SPECIFIED("specified", false);
 
-	 *//**
+	/**
+	 * Greater
+
+	GREATER_THAN("greaterThan"),
+
+	/**
+	 * Less
+
+	LESS_THAN("lessThan"),
+
+
+	/**
+	 * Boolean value specified, use for sql entities
+
+	SPECIFIED_BOOLEAN_SQL("specifiedBooleanSql"),
+
+	/**
+	 * Contains one from the list
+
+	CONTAINS_ONE_OF("containsOneOf"),
+
+	/**
 	 * Specified value in intervals
-	 *//*
-	INTERVALS("intervals")*/;
 
+	INTERVALS("intervals");
+	 */
 	public static final Map<String, SearchOperation> OPERATIONS = EnumSet.allOf(SearchOperation.class).stream()
 			.collect(Collectors.toMap(
 					(Function<? super SearchOperation, ? extends String>) SearchOperation::getOperationName,

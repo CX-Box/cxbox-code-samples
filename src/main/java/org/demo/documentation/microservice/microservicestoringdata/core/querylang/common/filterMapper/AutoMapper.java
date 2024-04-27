@@ -87,7 +87,7 @@ public class AutoMapper implements DtoToEntityFilterParameterMapper {
 			if (isIdReference(dtoField)) {
 				return List.of(SearchOperation.EQUALS, SearchOperation.EQUALS_ONE_OF);
 			} else {
-				return List.of(SearchOperation.CONTAINS, SearchOperation.CONTAINS_ONE_OF);
+				return List.of(SearchOperation.CONTAINS);
 			}
 		}
 		return new ArrayList<>();

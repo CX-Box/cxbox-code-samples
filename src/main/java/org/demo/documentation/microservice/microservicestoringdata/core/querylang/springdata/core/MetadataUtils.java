@@ -200,10 +200,6 @@ public class MetadataUtils {
 					}
 				case CONTAINS:
 					return cb.like(cb.upper(field), "%" + requireString(value).toUpperCase() + "%");
-				case GREATER_THAN:
-					return cb.greaterThan(field, requireComparable(value));
-				case LESS_THAN:
-					return cb.lessThan(field, requireComparable(value));
 				case GREATER_OR_EQUAL_THAN:
 					return cb.greaterThanOrEqualTo(field, requireComparable(value));
 				case LESS_OR_EQUAL_THAN:
@@ -222,12 +218,6 @@ public class MetadataUtils {
 						return cb
 								.or(((List<Object>) value).stream().map(object -> cb.equal(field, object)).toArray(Predicate[]::new));
 					}
-				case CONTAINS_ONE_OF:
-					return cb.or(((List<Object>) value)
-							.stream()
-							.map(object -> cb
-									.like(cb.upper(field), "%".concat(requireString(object).toUpperCase()).concat("%")))
-							.toArray(Predicate[]::new));
 				default:
 					throw new IllegalArgumentException();
 			}

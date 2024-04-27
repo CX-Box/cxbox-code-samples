@@ -6,8 +6,8 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.microservice.utils.IntegrationURLBuilder;
-import org.demo.documentation.microservice.utils.RestResponsePage;
+import org.demo.documentation.microservice.createmicroservices.utils.IntegrationURLBuilder;
+import org.demo.documentation.microservice.createmicroservices.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
@@ -20,8 +20,6 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @Service
 @RequiredArgsConstructor
 public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutServiceDTO> implements AnySourceBaseDAO<MyEntity3810OutServiceDTO> {
-
-    public static final String API_V_1_LOV = "";
 
     private final IntegrationConfiguration integrationConfig;
 
@@ -44,7 +42,7 @@ public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutSer
     @Override
     public MyEntity3810OutServiceDTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + API_V_1_LOV + "/{id}").build()
+                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + "/{id}").build()
                         .expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 GET, null, MyEntity3810OutServiceDTO.class
@@ -57,7 +55,7 @@ public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutSer
     @Override
     public Page<MyEntity3810OutServiceDTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
         ResponseEntity<RestResponsePage<MyEntity3810OutServiceDTO>> responseEntity = restTemplate.exchange(
-                integrationURLBuilder.getURLWithQueryParams(bc, integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + API_V_1_LOV).build()
+                integrationURLBuilder.getURLWithQueryParams(bc, integrationConfig.getMyentityCreateMicroservicesDataServerUrl()).build()
                         .normalize().encode().toUriString(),
                 GET, null, new ParameterizedTypeReference<>() {
                 }
@@ -70,7 +68,7 @@ public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutSer
     // --8<-- [start:delete]
     public void delete(BusinessComponent bc) {
         restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + API_V_1_LOV + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
+                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl()  + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 DELETE, null, Void.class
         );
@@ -82,7 +80,7 @@ public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutSer
     // --8<-- [start:create]
     public MyEntity3810OutServiceDTO create(BusinessComponent bc, MyEntity3810OutServiceDTO entity) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3810OutServiceDTO.class
         ).getBody();
     }
@@ -92,7 +90,7 @@ public class MyEntity3810Dao extends AbstractAnySourceBaseDAO<MyEntity3810OutSer
     // --8<-- [start:update]
     public MyEntity3810OutServiceDTO update(BusinessComponent bc, MyEntity3810OutServiceDTO entity) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl() + API_V_1_LOV).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getMyentityCreateMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 PUT, new HttpEntity<>(entity), MyEntity3810OutServiceDTO.class
         ).getBody();
     }

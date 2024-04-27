@@ -6,7 +6,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.microservice.utils.RestResponsePage;
+import org.demo.documentation.microservice.createmicroservices.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
