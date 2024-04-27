@@ -18,6 +18,8 @@ public class MyExample3810Meta extends AnySourceFieldMetaBuilder<MyExample3810DT
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3810DTO> fields, BcDescription bcDescription,
                                      String parentId) {
+        fields.enableFilter(MyExample3810DTO_.customField);
+        fields.enableFilter(MyExample3810DTO_.customFieldDateTime);
     }
 
 }

@@ -2,7 +2,6 @@ package org.demo.documentation.microservice.microservicestoringdata.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.demo.documentation.microservice.microservicestoringdata.dto.MyExample3900DTO;
 import org.demo.documentation.microservice.microservicestoringdata.mapper.MyEntity3900Mapper;
@@ -99,7 +98,7 @@ public class ExistingMicroserviceStoringDataController {
         return ResponseEntity.ok().body(data3900Repository.findAll(specification, entityPageable).map(mapper::toDto));
     }
 
-    public Pageable getEntityPageable(String numberPage, String sizePage, String sortCustomField) {
+    private Pageable getEntityPageable(String numberPage, String sizePage, String sortCustomField) {
         Sort.Order entityOrderList;
         if (sortCustomField == null) {
             entityOrderList = new Sort.Order(Sort.Direction.DESC, "id");

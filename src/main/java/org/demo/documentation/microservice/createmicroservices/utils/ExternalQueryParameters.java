@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice.utils;
+package org.demo.documentation.microservice.createmicroservices.utils;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -19,8 +19,6 @@ public final class ExternalQueryParameters {
 	public static final String SORT_PARAM = "_sort";
 
 	public static final String ORDER_PARAM = "_order";
-
-	public static final String CONTAINS_PREFIX = ".contains";
 
 	private final Map<String, String> parameters;
 
@@ -58,16 +56,6 @@ public final class ExternalQueryParameters {
 			throw new IllegalArgumentException("Параметр _limit должен быть больше 0.");
 		}
 		return limit;
-	}
-
-	public Optional<Map<String, String>> getFilter() {
-		return this.parameters.entrySet().stream()
-				.filter(entry ->
-						entry.getKey().endsWith(CONTAINS_PREFIX)
-				).map(entry -> {
-					final String fieldName = entry.getKey().split("\\.")[0];
-					return Map.of(fieldName, entry.getValue());
-				}).findFirst();
 	}
 
 	public Map<String, String> parameters() {

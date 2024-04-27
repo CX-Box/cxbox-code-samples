@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -14,5 +15,6 @@ public class MyEntity3810OutServiceDTO implements Serializable {
 
     private String id;
     private String customField;
+    private LocalDateTime customFieldDateTime;
 
 }

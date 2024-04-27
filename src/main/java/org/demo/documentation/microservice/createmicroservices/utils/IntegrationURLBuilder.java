@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice.utils;
+package org.demo.documentation.microservice.createmicroservices.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;

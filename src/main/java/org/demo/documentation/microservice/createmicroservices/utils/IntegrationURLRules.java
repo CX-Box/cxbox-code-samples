@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice.utils;
+package org.demo.documentation.microservice.createmicroservices.utils;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-
-import static org.demo.documentation.microservice.utils.ExternalQueryParameters.FILTER_FIELD_PREFIX;
 
 
 @Getter
@@ -35,12 +33,12 @@ public enum IntegrationURLRules {
 						);
 			}
 	),
-	FILTER(ExternalQueryParameters.CONTAINS_PREFIX, (bc, builder) -> {
+	FILTER(ExternalQueryParameters.FILTER_FIELD_PREFIX, (bc, builder) -> {
 		Map<String, String> containsParameters = BcParseHelper.getContainsParameters(bc);
 		for (Entry<String, String> entry : containsParameters.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
-			builder.queryParam(FILTER_FIELD_PREFIX + key, value);
+			builder.queryParam(ExternalQueryParameters.FILTER_FIELD_PREFIX + key, value);
 		}
 	}
 	);

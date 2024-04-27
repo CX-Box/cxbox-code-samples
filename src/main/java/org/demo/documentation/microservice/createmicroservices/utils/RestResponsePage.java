@@ -1,4 +1,4 @@
-package org.demo.documentation.microservice.utils;
+package org.demo.documentation.microservice.createmicroservices.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
