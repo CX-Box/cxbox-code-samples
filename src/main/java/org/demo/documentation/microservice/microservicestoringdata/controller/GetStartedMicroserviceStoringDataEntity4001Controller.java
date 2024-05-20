@@ -3,7 +3,6 @@ package org.demo.documentation.microservice.microservicestoringdata.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.transaction.Transactional;
-import org.demo.documentation.microservice.microservicestoringdata.dto.MyExample3900DTO;
 import org.demo.documentation.microservice.microservicestoringdata.dto.MyExample4001DTO;
 import org.demo.documentation.microservice.microservicestoringdata.mapper.MyEntity4001Mapper;
 import org.demo.documentation.microservice.microservicestoringdata.repository.MyEntity4001Repository;

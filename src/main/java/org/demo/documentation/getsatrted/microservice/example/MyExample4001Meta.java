@@ -12,6 +12,7 @@ public class MyExample4001Meta extends AnySourceFieldMetaBuilder<MyExample4001DT
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4001DTO> fields, BcDescription bc,
                                       String id, String parentId) {
+        fields.setEnabled(MyExample4001DTO_.customField);
     }
 
     @Override
