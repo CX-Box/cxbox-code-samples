@@ -25,22 +25,6 @@ public enum PlatformMyExample4003Controller implements EnumBcIdentifier {
         this.bcDescription = buildDescription(parentName, serviceClass, refresh);
     }
 
-    PlatformMyExample4003Controller(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
-
-    PlatformMyExample4003Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
-
-    PlatformMyExample4003Controller(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
-
-    PlatformMyExample4003Controller(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
-
     PlatformMyExample4003Controller(Class<?> serviceClass) {
         this((String) null, serviceClass, false);
     }
