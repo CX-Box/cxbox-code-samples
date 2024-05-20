@@ -1,4 +1,4 @@
-package org.demo.documentation.getsatrted.microservice;
+package org.demo.documentation.getsatrted.microservice.example;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
@@ -25,23 +25,6 @@ public enum PlatformMyExample4001Controller implements EnumBcIdentifier {
     PlatformMyExample4001Controller(String parentName, Class<?> serviceClass, boolean refresh) {
         this.bcDescription = buildDescription(parentName, serviceClass, refresh);
     }
-
-    PlatformMyExample4001Controller(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
-
-    PlatformMyExample4001Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
-
-    PlatformMyExample4001Controller(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
-
-    PlatformMyExample4001Controller(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
-
     PlatformMyExample4001Controller(Class<?> serviceClass) {
         this((String) null, serviceClass, false);
     }

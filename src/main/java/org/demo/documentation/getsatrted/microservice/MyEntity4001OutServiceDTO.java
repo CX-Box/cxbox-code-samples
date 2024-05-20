@@ -1,16 +1,16 @@
 package org.demo.documentation.getsatrted.microservice;
 
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.model.core.entity.BaseEntity;
 
+import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity4001 extends BaseEntity {
+public class MyEntity4001OutServiceDTO implements Serializable {
 
+    private String id;
+    private String customField;
 }
