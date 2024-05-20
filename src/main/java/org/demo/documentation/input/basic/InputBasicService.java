@@ -17,12 +17,13 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 		super(InputBasicDTO.class, InputBasic.class, null, InputBasicMeta.class);
 		this.repository = repository;
 	}
-
+	// --8<-- [start:doCreateEntity]
 	@Override
 	protected CreateResult<InputBasicDTO> doCreateEntity(InputBasic entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
+	// --8<-- [end:doCreateEntity]
 
 	// --8<-- [start:doUpdateEntity]
 	@Override
