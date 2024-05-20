@@ -1,4 +1,4 @@
-package org.demo.documentation.getsatrted.microservice;
+package org.demo.documentation.getsatrted.microservice.example;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
