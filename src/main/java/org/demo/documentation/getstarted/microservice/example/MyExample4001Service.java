@@ -23,6 +23,9 @@ public class MyExample4001Service extends AnySourceVersionAwareResponseService<M
 
     @Override
     protected ActionResultDTO<MyExample4001DTO> doUpdateEntity(MyEntity4001OutServiceDTO entity, MyExample4001DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample4001DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
