@@ -2,9 +2,11 @@ package org.demo.documentation.microservice.microservicestoringdata;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.microservice.microservicestoringdata.repository.MyEntity3900Repository;
+import org.demo.documentation.microservice.microservicestoringdata.repository.MyEntity4001Repository;
 import org.demo.documentation.microservice.microservicestoringdata.repository.entity.MyEntity3900;
 import org.demo.documentation.microservice.microservicestoringdata.repository.MyEntity3910Repository;
 import org.demo.documentation.microservice.microservicestoringdata.repository.entity.MyEntity3910;
+import org.demo.documentation.microservice.microservicestoringdata.repository.entity.MyEntity4001;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class MyEntity3900TestDataLoadService {
 
     @Autowired
     MyEntity3910Repository repository3910;
+
+    @Autowired
+    MyEntity4001Repository repository4001;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -51,6 +56,9 @@ public class MyEntity3900TestDataLoadService {
         repository3910.save(new MyEntity3910().setCustomField("Test data8").setCustomFieldNew("Test data8").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(2)));
         repository3910.save(new MyEntity3910().setCustomField("Test data9").setCustomFieldNew("Test data9").setCustomFieldDateTime(LocalDateTime.now().minusMonths(3)));
         repository3910.save(new MyEntity3910().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)));
+        repository4001.deleteAll();
+        repository4001.save(new MyEntity4001().setCustomField("Test data").setCustomFieldNew("Test data").setCustomFieldDateTime(LocalDateTime.now().minusMinutes(3)));
+
     }
 
 }
