@@ -5,6 +5,7 @@ import { NotificationState } from '@interfaces/notification'
 import { LoginResponse } from '@interfaces/session'
 import { TableSettingsItem, TableSettingsList, TableSettingsMap } from '@interfaces/tableSettings'
 import { FilterGroup } from '@interfaces/filters'
+import { FileViewerPopupOptions } from '@interfaces/view'
 
 export const SSO_AUTH = createAction('SSO_AUTH')
 
@@ -27,6 +28,12 @@ export const showViewPopup = createAction<
         options?: { operation?: ReturnType<typeof processPreInvoke>['payload']; calleeFieldKey?: string }
     }
 >('showViewPopup')
+
+export const showFileViewerPopup = createAction<{
+    active: boolean
+    calleeWidgetName: string
+    options: FileViewerPopupOptions
+}>('showFileViewerPopup')
 
 /**
  * Set the number of records for BC
@@ -67,11 +74,6 @@ export const processPreInvoke = createAction<
 export const loginDone = createAction<LoginResponse>('loginDone')
 
 export const changeNotification = createAction<Partial<NotificationState>>('changeNotification')
-
-export const changeBcFullTextFilter = createAction<{
-    bcName: string
-    fullTextFilterValue: string
-}>('changeBcFullTextFilter')
 
 export const initTableSettings = createAction<{ rawSettings: TableSettingsList | TableSettingsMap }>('initTableSettings')
 

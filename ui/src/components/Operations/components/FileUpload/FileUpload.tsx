@@ -1,4 +1,4 @@
-import React, { DragEventHandler, ReactNode } from 'react'
+import React, { DragEventHandler, ReactNode, useCallback } from 'react'
 import { Icon, Upload } from 'antd'
 import styles from './FileUpload.less'
 import { getFileUploadEndpoint } from '@utils/api'
@@ -12,19 +12,19 @@ import { UploadListContainer } from '@components/Operations/components/FileUploa
 import {
     checkFileFormat,
     getFilesFromDataTransfer,
-    isFileDownloadComplete
+    isFileUploadComplete
 } from '@components/Operations/components/FileUpload/FileUpload.utils'
-import { UPLOAD_TYPE_ICON } from '@components/Operations/components/FileUpload/FileUpload.constants'
 import { useAppSelector } from '@store'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { RowMetaField } from '@interfaces/rowMeta'
+import { UPLOAD_TYPE } from '@components/Operations/components/FileUpload/FileUpload.constants'
 
 interface FileUploadProps {
     widget: WidgetMeta
     operationInfo?: OperationInfo
     mode?: 'default' | 'drag'
     children?: ReactNode
-    uploadType?: keyof typeof UPLOAD_TYPE_ICON
+    uploadType?: keyof typeof UPLOAD_TYPE
 }
 
 export const FileUpload = ({ mode, widget, operationInfo, children, uploadType = 'create' }: FileUploadProps) => {
@@ -35,17 +35,20 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
     const rowMeta = useAppSelector(state => state.view.rowMeta[bcName]?.[bcUrl])
     const rowMetaField = rowMeta?.fields.find(field => field.key === operationInfo?.fieldKey)
     const fileAccept = (rowMetaField as RowMetaField)?.fileAccept
+    const disabled = !rowMetaField
 
-    const { initializeNewAddedFile, updateAddedFile, getAddedFile, getAddedFileListWithout, clearAddedFiles, initializeNotSupportedFile } =
-        useBulkUploadFiles(bcName, fileAccept)
+    const {
+        initializeNewAddedFile,
+        updateAddedFile,
+        getAddedFile,
+        getAddedFileList,
+        clearAddedFiles,
+        initializeNotSupportedFile,
+        callbackRef
+    } = useBulkUploadFiles(bcName, fileAccept)
 
-    const commonUploadProps: UploadProps = {
-        disabled: rowMetaField ? rowMetaField.disabled : true,
-        action: uploadUrl,
-        accept: fileAccept,
-        showUploadList: false,
-        multiple: true,
-        beforeUpload: file => {
+    const beforeUpload = useCallback(
+        file => {
             if (checkFileFormat(file.name, fileAccept)) {
                 initializeNewAddedFile(file.uid, file.name, uploadType)
 
@@ -56,7 +59,11 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
 
             return false
         },
-        onChange: info => {
+        [fileAccept, initializeNewAddedFile, initializeNotSupportedFile, uploadType]
+    )
+
+    const onChange = useCallback(
+        info => {
             const { uid, status, percent, response } = info.file
             const needUpdatePercents =
                 getAddedFile(uid)?.status === 'init' || (!!percent && Math.floor(percent) % 10 === 0 && status === 'uploading')
@@ -65,10 +72,21 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
                 updateAddedFile(uid, { status, percent })
             }
 
-            if (isFileDownloadComplete(status)) {
+            if (isFileUploadComplete(status)) {
                 updateAddedFile(uid, { status, percent, id: response?.data?.id ?? null })
             }
-        }
+        },
+        [getAddedFile, updateAddedFile]
+    )
+
+    const commonUploadProps: UploadProps = {
+        disabled,
+        action: uploadUrl,
+        accept: fileAccept,
+        showUploadList: false,
+        multiple: true,
+        beforeUpload,
+        onChange
     }
 
     const hintText = useFileUploadHint(fileAccept)
@@ -87,7 +105,7 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
 
     return (
         <>
-            <div onDrop={handleDrop}>
+            <div onDrop={disabled ? undefined : handleDrop}>
                 {mode === 'drag' ? (
                     <Upload.Dragger {...commonUploadProps} className={styles.root}>
                         <p className={styles.icon}>
@@ -102,7 +120,16 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
                     <Upload {...commonUploadProps}>{children}</Upload>
                 )}
             </div>
-            <UploadListContainer addedFileList={getAddedFileListWithout(['updated'])} onClose={clearAddedFiles} />
+            <UploadListContainer
+                ref={callbackRef}
+                addedFileList={getAddedFileList()}
+                onClose={clearAddedFiles}
+                data-test-notification-inner-container={true}
+                data-test-notification-for-action={true}
+                data-test-action-key={operationInfo?.actionKey}
+                data-test-action-mode={operationInfo?.mode}
+                data-test-widget-name={widget?.name}
+            />
         </>
     )
 }
