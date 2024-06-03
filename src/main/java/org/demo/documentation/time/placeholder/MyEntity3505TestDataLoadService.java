@@ -22,7 +22,7 @@ public class MyEntity3505TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-       // repository.save(new MyEntity3505().setCustomField(LocalDateTime.now()));
+        repository.save(new MyEntity3505().setCustomField(LocalDateTime.now()));
     }
 
 }

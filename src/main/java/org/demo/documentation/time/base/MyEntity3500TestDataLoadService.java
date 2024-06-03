@@ -22,7 +22,16 @@ public class MyEntity3500TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3500().setCustomField(LocalDateTime.now()));
+        repository.save(new MyEntity3500()
+                .setCustomField(LocalDateTime.now())
+                .setCustomFieldh(LocalDateTime.now())
+                .setCustomFieldhmm(LocalDateTime.now())
+                .setCustomFieldhmmA(LocalDateTime.now())
+                .setCustomFieldmmss(LocalDateTime.now())
+                .setCustomFieldhmmssA(LocalDateTime.now())
+                .setCustomFieldss(LocalDateTime.now())
+                .setCustomFieldmm(LocalDateTime.now())
+        );
     }
 
 }
