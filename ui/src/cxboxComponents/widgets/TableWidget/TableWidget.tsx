@@ -239,7 +239,8 @@ export const TableWidget: FunctionComponent<TableWidgetProps> = props => {
     }, [columns, props.controlColumns])
 
     const [filterGroupName, setFilterGroupName] = React.useState<string | null>(null) // NOSONAR(S6440) hook is called conditionally, fix later
-    const filtersExist = !!props.filters?.length
+    const filtersCount = getFiltersCount(props.filters)
+    const filtersExist = !!filtersCount
 
     // eslint-disable-next-line prettier/prettier
     const handleShowAll = React.useCallback(() => { // NOSONAR(S6440) hook is called conditionally, fix later
@@ -288,9 +289,7 @@ export const TableWidget: FunctionComponent<TableWidgetProps> = props => {
                         ))}
                     </Select>
                 )}
-                {filtersExist && (
-                    <ActionLink onClick={handleRemoveFilters}>{t('Clear filters', { count: getFiltersCount(props.filters) })}</ActionLink>
-                )}
+                {filtersExist && <ActionLink onClick={handleRemoveFilters}>{t('Clear filters', { count: filtersCount })}</ActionLink>}
                 {props.limitBySelf && <ActionLink onClick={handleShowAll}> {t('Show all records')} </ActionLink>}
             </div>
         )
@@ -301,7 +300,7 @@ export const TableWidget: FunctionComponent<TableWidgetProps> = props => {
         handleAddFilters,
         filtersExist,
         handleRemoveFilters,
-        props.filters,
+        filtersCount,
         props.limitBySelf,
         handleShowAll
     ])
