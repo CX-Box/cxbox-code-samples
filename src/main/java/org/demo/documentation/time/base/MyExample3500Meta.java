@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyExample3500Meta extends FieldMetaBuilder<MyExample3500DTO> {
-
+// --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3500DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -21,10 +21,12 @@ public class MyExample3500Meta extends FieldMetaBuilder<MyExample3500DTO> {
         fields.setEnabled(MyExample3500DTO_.customFieldmmss);
         fields.setEnabled(MyExample3500DTO_.customFieldss);
     }
-
-    @Override
+   // --8<-- [end:buildRowDependentMeta]
+  
+   // --8<-- [start:buildIndependentMeta]
+  @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3500DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3500DTO_.customField);
     }
-
+   // --8<-- [end:buildIndependentMeta]
 }
