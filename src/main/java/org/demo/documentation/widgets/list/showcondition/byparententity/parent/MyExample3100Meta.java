@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class MyExample3100Meta extends FieldMetaBuilder<MyExample3100DTO> {
     private final DocumentConfig configuration;
 
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3100DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -27,5 +28,5 @@ public class MyExample3100Meta extends FieldMetaBuilder<MyExample3100DTO> {
         fields.enableFilter(MyExample3100DTO_.customField);
 
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }
