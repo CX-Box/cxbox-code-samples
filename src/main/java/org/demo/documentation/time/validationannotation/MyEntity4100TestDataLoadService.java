@@ -1,4 +1,4 @@
-package org.demo.documentation.time.validationbusinessex;
+package org.demo.documentation.time.validationannotation;
 
 import javax.annotation.PostConstruct;
 
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity4101TestDataLoadService {
+public class MyEntity4100TestDataLoadService {
 
     @Autowired
-    MyEntity4101Repository repository;
+    MyEntity4100Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -21,7 +21,7 @@ public class MyEntity4101TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity4101().setCustomField("Test data"));
+        repository.save(new MyEntity4100().setCustomField("Test data"));
     }
 
 }
