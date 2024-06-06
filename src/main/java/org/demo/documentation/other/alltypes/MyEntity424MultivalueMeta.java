@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity424MultivalueMeta extends FieldMetaBuilder<MyEntity424MultivalueDTO> {
-
+// --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity424MultivalueDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity424MultivalueDTO_.id);
         fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity424MultivalueDTO_.customField);
     }
-
-    @Override
+   // --8<-- [end:buildRowDependentMeta]
+  
+   // --8<-- [start:buildIndependentMeta]
+  @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity424MultivalueDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
 

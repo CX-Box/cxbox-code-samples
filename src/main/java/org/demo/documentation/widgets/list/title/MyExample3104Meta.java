@@ -19,8 +19,10 @@ public class MyExample3104Meta extends FieldMetaBuilder<MyExample3104DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3104DTO_.customField);
     }
-
-    @Override
+   // --8<-- [end:buildRowDependentMeta]
+  
+   // --8<-- [start:buildIndependentMeta]
+  @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3104DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3104DTO_.customField);
         if (configuration.getForceActiveEnabled()) {

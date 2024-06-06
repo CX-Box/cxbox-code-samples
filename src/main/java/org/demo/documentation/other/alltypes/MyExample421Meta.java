@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {
-
+// --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample421DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -51,8 +51,10 @@ public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {
         fields.setEnabled(MyExample421DTO_.hiddenType);
         fields.setEnabled(MyExample421DTO_.inputField);
     }
-
-    @Override
+   // --8<-- [end:buildRowDependentMeta]
+  
+   // --8<-- [start:buildIndependentMeta]
+  @Override
     public void buildIndependentMeta(FieldsMeta<MyExample421DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample421DTO_.multihoverType);
         fields.enableFilter(MyExample421DTO_.hintType);
