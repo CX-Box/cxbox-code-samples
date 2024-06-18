@@ -71,17 +71,15 @@ public class MyExample4200Dao extends AbstractAnySourceBaseDAO<MyExample4200DTO>
         MyExample4200DTO newRow = new MyExample4200DTO()
                 .setCustomFieldTitle("All record")
                 .setCustomFieldValue(String.valueOf(repository.count()))
-                .setCustomFieldColor("#779FE9")
                 .setCustomFieldIcon("team")
                 .setCustomFieldDescription("Count row in table");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
         MyExample4200DTO newSum = new MyExample4200DTO()
-                .setCustomFieldTitle("Custom Field Title")
-                .setCustomFieldValue(String.valueOf(repository.count()))
-                .setCustomFieldColor("#779FE9")
+                .setCustomFieldTitle("Custom Field Num Total")
+                .setCustomFieldValue(String.valueOf(repository.customTotal()))
                 .setCustomFieldIcon("team")
-                .setCustomFieldDescription("Count row in table");
+                .setCustomFieldDescription("Sum customFieldNum");
         newSum.setId(SUM_CUSTOM_FIELD_NUM);
         result.add(newSum);
 

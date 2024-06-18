@@ -70,22 +70,13 @@ public class MyExample4206Dao extends AbstractAnySourceBaseDAO<MyExample4206DTO>
     private List<MyExample4206DTO> getStats() {
         List<MyExample4206DTO> result = new ArrayList<>(ROWS_TOTAL);
         MyExample4206DTO newRow = new MyExample4206DTO()
-                .setTitle("New Clients")
+                .setTitle("All record")
                 .setValue(repository.count())
-                .setColor("#779FE9")
-                .setIcon("team") //same as in screen.json icon
-                .setDescription("New Clients. Press to filter List below");
+                .setIcon("team")
+                .setDescription("Count row in table")
+                .setColor("#edaa");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
-        MyExample4206DTO newSum = new MyExample4206DTO()
-                .setTitle("New Clients")
-                .setValue(repository.count())
-                .setColor("#779FE9")
-                .setIcon("team") //same as in screen.json icon
-                .setDescription("New Clients. Press to filter List below");
-        newRow.setId(COUNT_ROW_ID);
-        newSum.setId(SUM_CUSTOM_FIELD_NUM);
-        result.add(newSum);
 
         return result;
     }

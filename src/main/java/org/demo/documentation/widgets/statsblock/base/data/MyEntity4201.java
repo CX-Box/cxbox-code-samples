@@ -15,5 +15,5 @@ public class MyEntity4201 extends BaseEntity {
     @Column
     private String customField;
     @Column
-    private Integer customFieldNum = 0;
+    private Long customFieldNum = 0L;
 }

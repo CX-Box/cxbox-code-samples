@@ -6,6 +6,7 @@ import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
+import org.demo.documentation.widgets.statsblock.base.defaultfields.MyExample4203DTO;
 import org.demo.documentation.widgets.statsblock.color.data.MyEntity4204Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -69,22 +70,13 @@ public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO>
     private List<MyExample4205DTO> getStats() {
         List<MyExample4205DTO> result = new ArrayList<>(ROWS_TOTAL);
         MyExample4205DTO newRow = new MyExample4205DTO()
-                .setTitle("New Clients")
+                .setTitle("All record")
                 .setValue(repository.count())
-                .setColor("#779FE9")
-                .setIcon("team") //same as in screen.json icon
-                .setDescription("New Clients. Press to filter List below");
+                .setIcon("team")
+                .setDescription("Count row in table");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
-        MyExample4205DTO newSum = new MyExample4205DTO()
-                .setTitle("New Clients")
-                .setValue(repository.count())
-                .setColor("#779FE9")
-                .setIcon("team") //same as in screen.json icon
-                .setDescription("New Clients. Press to filter List below");
-        newRow.setId(COUNT_ROW_ID);
-        newSum.setId(SUM_CUSTOM_FIELD_NUM);
-        result.add(newSum);
+
 
         return result;
     }
