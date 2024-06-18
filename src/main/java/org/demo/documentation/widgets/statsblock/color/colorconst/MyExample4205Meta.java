@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.color.color;
+package org.demo.documentation.widgets.statsblock.color.colorconst;
 
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 

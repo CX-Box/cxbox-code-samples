@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample4205DTO extends DataResponseDTO {
-
+public class MyExample4206DTO extends DataResponseDTO {
     private String title;
 
     private Long value;

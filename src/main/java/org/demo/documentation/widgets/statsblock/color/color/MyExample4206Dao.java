@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.color.colorconst;
+package org.demo.documentation.widgets.statsblock.color.color;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

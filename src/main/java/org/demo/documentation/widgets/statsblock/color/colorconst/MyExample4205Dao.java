@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.color.color;
+package org.demo.documentation.widgets.statsblock.color.colorconst;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,6 @@ import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
-import org.demo.documentation.widgets.statsblock.base.defaultfields.MyExample4203DTO;
 import org.demo.documentation.widgets.statsblock.color.data.MyEntity4204Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

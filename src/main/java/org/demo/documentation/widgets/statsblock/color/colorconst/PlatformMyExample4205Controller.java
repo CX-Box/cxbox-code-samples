@@ -9,31 +9,31 @@ import org.springframework.stereotype.Component;
 
 
 @Getter
-public enum PlatformMyExample4206Controller implements EnumBcIdentifier {
+public enum PlatformMyExample4205Controller implements EnumBcIdentifier {
 
     // @formatter:on
-    myExampleBc4206(MyExample4206Service.class);
+    myExampleBc4205(MyExample4205Service.class);
 
     // @formatter:on
 
-    public static final EnumBcIdentifier.Holder<PlatformMyExample4206Controller> Holder = new Holder<>(
-            PlatformMyExample4206Controller.class);
+    public static final EnumBcIdentifier.Holder<PlatformMyExample4205Controller> Holder = new Holder<>(
+            PlatformMyExample4205Controller.class);
 
     private final BcDescription bcDescription;
 
-    PlatformMyExample4206Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+    PlatformMyExample4205Controller(String parentName, Class<?> serviceClass, boolean refresh) {
         this.bcDescription = buildDescription(parentName, serviceClass, refresh);
     }
 
-    PlatformMyExample4206Controller(Class<?> serviceClass) {
+    PlatformMyExample4205Controller(Class<?> serviceClass) {
         this((String) null, serviceClass, false);
     }
 
     @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4206Controller> {
+    public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4205Controller> {
 
         public BcSupplier() {
-            super(PlatformMyExample4206Controller.Holder);
+            super(PlatformMyExample4205Controller.Holder);
         }
 
     }
