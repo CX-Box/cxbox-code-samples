@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.color.color;
+package org.demo.documentation.widgets.statsblock.drilldown;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
-import org.demo.documentation.widgets.statsblock.base.defaultfields.MyExample4203DTO;
+
 import org.demo.documentation.widgets.statsblock.color.data.MyEntity4204Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,8 +18,8 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO> implements
-        AnySourceBaseDAO<MyExample4205DTO> {
+public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO> implements
+        AnySourceBaseDAO<MyExample4210DTO> {
 
 
     public static final int ROWS_TOTAL = 2;
@@ -32,17 +32,17 @@ public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO>
     private final MyEntity4204Repository repository;
 
     @Override
-    public String getId(final MyExample4205DTO entity) {
+    public String getId(final MyExample4210DTO entity) {
         return entity.getId();
     }
 
     @Override
-    public void setId(final String id, final MyExample4205DTO entity) {
+    public void setId(final String id, final MyExample4210DTO entity) {
         entity.setId(id);
     }
 
     @Override
-    public MyExample4205DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
+    public MyExample4210DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
         return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
     }
 
@@ -52,31 +52,31 @@ public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO>
     }
 
     @Override
-    public Page<MyExample4205DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
+    public Page<MyExample4210DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
         return new PageImpl<>(getStats());
     }
 
     @Override
-    public MyExample4205DTO update(BusinessComponent bc, MyExample4205DTO entity) {
+    public MyExample4210DTO update(BusinessComponent bc, MyExample4210DTO entity) {
         throw new IllegalStateException();
     }
 
     @Override
-    public MyExample4205DTO create(final BusinessComponent bc, final MyExample4205DTO entity) {
+    public MyExample4210DTO create(final BusinessComponent bc, final MyExample4210DTO entity) {
         throw new IllegalStateException();
     }
 
     @NonNull
-    private List<MyExample4205DTO> getStats() {
-        List<MyExample4205DTO> result = new ArrayList<>(ROWS_TOTAL);
-        MyExample4205DTO newRow = new MyExample4205DTO()
+    private List<MyExample4210DTO> getStats() {
+        List<MyExample4210DTO> result = new ArrayList<>(ROWS_TOTAL);
+        MyExample4210DTO newRow = new MyExample4210DTO()
                 .setTitle("All record")
                 .setValue(repository.count())
                 .setIcon("team")
-                .setDescription("Count rows in table");
+                .setDescription("Count rows in table")
+                .setColor("#edaa");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
-
 
         return result;
     }

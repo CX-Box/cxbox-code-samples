@@ -12,7 +12,6 @@ public class MyExample4200DTO extends DataResponseDTO {
 
     private String customFieldTitle;
     private String customFieldValue;
-    private String customFieldColor;
     private String customFieldIcon;
     private String customFieldDescription;
     private String customField;
