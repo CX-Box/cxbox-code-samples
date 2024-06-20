@@ -6,8 +6,8 @@ import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
-
-import org.demo.documentation.widgets.statsblock.color.data.MyEntity4204Repository;
+import org.demo.documentation.widgets.statsblock.drilldown.data.MyEntity4208Repository;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
     public static final String SUM_CUSTOM_FIELD_NUM = "1";
 
 
-    private final MyEntity4204Repository repository;
+    private final MyEntity4208Repository repository;
 
     @Override
     public String getId(final MyExample4210DTO entity) {
@@ -70,10 +70,10 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
     private List<MyExample4210DTO> getStats() {
         List<MyExample4210DTO> result = new ArrayList<>(ROWS_TOTAL);
         MyExample4210DTO newRow = new MyExample4210DTO()
-                .setTitle("All record")
-                .setValue(repository.count())
+                .setTitle("New record")
+                .setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.NEW))))
                 .setIcon("team")
-                .setDescription("Count rows in table")
+                .setDescription("Count rows status = new in table")
                 .setColor("#edaa");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
