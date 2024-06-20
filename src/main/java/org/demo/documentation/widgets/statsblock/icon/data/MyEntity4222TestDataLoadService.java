@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.title;
+package org.demo.documentation.widgets.statsblock.icon.data;
 
 import javax.annotation.PostConstruct;
 
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity4209TestDataLoadService {
+public class MyEntity4222TestDataLoadService {
 
     @Autowired
-    MyEntity4209Repository repository;
+    MyEntity4222Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -21,7 +21,7 @@ public class MyEntity4209TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-       // repository.save(new MyEntity4209().setCustomField("Test data"));
+        repository.save(new MyEntity4222().setCustomField("test data"));
     }
 
 }
