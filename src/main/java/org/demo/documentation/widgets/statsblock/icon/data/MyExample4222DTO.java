@@ -1,21 +1,20 @@
-package org.demo.documentation.widgets.statsblock.title;
+package org.demo.documentation.widgets.statsblock.icon.data;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample4209DTO extends DataResponseDTO {
+public class MyExample4222DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
 
-    public MyExample4209DTO(MyEntity4209 entity) {
+    public MyExample4222DTO(MyEntity4222 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
     }
