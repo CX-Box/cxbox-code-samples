@@ -20,7 +20,7 @@ import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210D
 public class MyExample4210Meta extends AnySourceFieldMetaBuilder<MyExample4210DTO> {
 
 
-    // --8<-- [start:buildIndependentMeta]
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4210DTO> fields, BcDescription bc,
                                       String id, String parentId) {
