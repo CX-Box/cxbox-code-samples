@@ -7,7 +7,8 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
-import org.demo.documentation.dictionary.color.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+
 
 @Getter
 @Setter

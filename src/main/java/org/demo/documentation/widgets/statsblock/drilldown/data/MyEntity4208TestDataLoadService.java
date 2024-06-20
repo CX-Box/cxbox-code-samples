@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class MyEntity4208TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity4208().setCustomField("Test data"));
+        repository.save(new MyEntity4208().setCustomField("Test data").setCustomFieldStatus(CustomFieldEnum.CLOSE));
     }
 
 }

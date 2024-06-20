@@ -8,7 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.dictionary.color.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+
 
 @Entity
 @Getter
@@ -19,7 +20,7 @@ public class MyEntity4208 extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column
-    private CustomFieldEnum customFieldStatus;
+    private CustomFieldEnum customFieldStatus = CustomFieldEnum.NEW;
     @Column
     private String customField;
 }
