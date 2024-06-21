@@ -19,9 +19,6 @@ import java.util.Objects;
 public class MyExample4228Dao extends AbstractAnySourceBaseDAO<MyExample4228DTO> implements
         AnySourceBaseDAO<MyExample4228DTO> {
 
-
-    public static final int ROWS_TOTAL = 2;
-
     @Override
     public String getId(final MyExample4228DTO entity) {
         return entity.getId();
@@ -59,7 +56,7 @@ public class MyExample4228Dao extends AbstractAnySourceBaseDAO<MyExample4228DTO>
 
     @NonNull
     private List<MyExample4228DTO> getStats() {
-        List<MyExample4228DTO> result = new ArrayList<>(ROWS_TOTAL);
+        List<MyExample4228DTO> result = new ArrayList<>();
         MyExample4228DTO newData1 = new MyExample4228DTO()
                 .setTitle("Constant Num1")
                 .setValue(1L)

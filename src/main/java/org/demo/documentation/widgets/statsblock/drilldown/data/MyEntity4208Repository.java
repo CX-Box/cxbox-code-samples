@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.statsblock.drilldown.data;
 
+import org.demo.conf.cxbox.meta.UserRole_;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldRegion;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,4 +15,13 @@ public interface MyEntity4208Repository extends JpaRepository<MyEntity4208, Long
     default Specification<MyEntity4208> statusIn(List<CustomFieldEnum> clientStatusList) {
         return (root, query, cb) -> root.get(MyEntity4208_.customFieldStatus).in(clientStatusList);
     }
+
+    default Specification<MyEntity4208> statusInRegionIn(List<CustomFieldEnum> clientStatusList, List<CustomFieldRegion> customFieldRegionList) {
+        return (root, query, cb) -> cb.and(
+                cb.in(root.get(MyEntity4208_.customFieldStatus).in(clientStatusList)),
+                cb.in(root.get(MyEntity4208_.customFieldRegion).in(customFieldRegionList))
+        );
+
+    }
+
 }

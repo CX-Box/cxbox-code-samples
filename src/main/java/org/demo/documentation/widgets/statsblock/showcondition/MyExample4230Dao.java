@@ -20,13 +20,7 @@ import java.util.Objects;
 public class MyExample4230Dao extends AbstractAnySourceBaseDAO<MyExample4230DTO> implements
         AnySourceBaseDAO<MyExample4230DTO> {
 
-
-    public static final int ROWS_TOTAL = 2;
-
     public static final String COUNT_ROW_ID = "0";
-
-    public static final String SUM_CUSTOM_FIELD_NUM = "1";
-
 
     private final MyEntity4229Repository repository;
 
@@ -67,7 +61,7 @@ public class MyExample4230Dao extends AbstractAnySourceBaseDAO<MyExample4230DTO>
 
     @NonNull
     private List<MyExample4230DTO> getStats() {
-        List<MyExample4230DTO> result = new ArrayList<>(ROWS_TOTAL);
+        List<MyExample4230DTO> result = new ArrayList<>();
         MyExample4230DTO newRow = new MyExample4230DTO()
                 .setTitle("All record")
                 .setValue(repository.count())
