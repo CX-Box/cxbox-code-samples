@@ -8,6 +8,7 @@ import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.widgets.statsblock.drilldown.data.MyEntity4208Repository;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldRegion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,11 @@ import java.util.Objects;
 public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO> implements
         AnySourceBaseDAO<MyExample4210DTO> {
 
+    public static final String COUNT_NEW_ROW_ID = "0";
 
-    public static final int ROWS_TOTAL = 2;
+    public static final String COUNT_NEW_IN_PROGRESS_ROW_ID = "1";
 
-    public static final String COUNT_ROW_ID = "0";
-
-    public static final String SUM_CUSTOM_FIELD_NUM = "1";
-
+    public static final String COUNT_NEW_KOSTROMA_ROW_ID = "2";
 
     private final MyEntity4208Repository repository;
 
@@ -68,16 +67,31 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
 
     @NonNull
     private List<MyExample4210DTO> getStats() {
-        List<MyExample4210DTO> result = new ArrayList<>(ROWS_TOTAL);
+        List<MyExample4210DTO> result = new ArrayList<>();
         MyExample4210DTO newRow = new MyExample4210DTO()
                 .setTitle("New record")
                 .setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.NEW))))
                 .setIcon("team")
                 .setDescription("Count rows status = new in table")
                 .setColor("#edaa");
-        newRow.setId(COUNT_ROW_ID);
+        newRow.setId(COUNT_NEW_ROW_ID);
         result.add(newRow);
-
+        MyExample4210DTO newRow2 = new MyExample4210DTO()
+                .setTitle("New record")
+                .setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.NEW,CustomFieldEnum.IN_PROGRESS))))
+                .setIcon("team")
+                .setDescription("Count rows status = new,in_progress in table")
+                .setColor("#edaa");
+        newRow2.setId(COUNT_NEW_IN_PROGRESS_ROW_ID);
+        result.add(newRow);
+        MyExample4210DTO newRow3 = new MyExample4210DTO()
+                .setTitle("New record")
+                .setValue(repository.count(repository.statusInRegionIn(List.of(CustomFieldEnum.NEW),List.of(CustomFieldRegion.KOSTROMA))))
+                .setIcon("team")
+                .setDescription("Count rows status = new,region Kostroma in table")
+                .setColor("#edaa");
+        newRow3.setId(COUNT_NEW_KOSTROMA_ROW_ID);
+        result.add(newRow);
         return result;
     }
 

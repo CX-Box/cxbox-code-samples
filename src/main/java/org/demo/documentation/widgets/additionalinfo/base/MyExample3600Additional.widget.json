@@ -5,24 +5,265 @@
   "bc": "myExampleBc3600",
   "fields": [
     {
-      "label": "customField",
-      "key": "customField",
-      "type": "input"
+      "label": "Custom Field Date",
+      "key": "customFieldDate",
+      "type": "date"
     },
     {
-      "label": "customField 2",
-      "key": "customField2",
-      "type": "input"
-    } ,
+      "label": "Custom Field MultivalueHover",
+      "key": "customFieldMultivalueHover",
+      "assocValueKey": "customField",
+      "popupBcName": "myEntity3600MultiAssocListPopup",
+      "type": "multivalueHover",
+      "displayedKey": "customFieldMultivalueHoverDisplayedKey"
+    },
     {
-      "label": "customField 3",
-      "key": "customField3",
+      "label": "Custom Field Hint",
+      "key": "customFieldHint",
+      "type": "hint"
+    },
+    {
+      "label": "Custom Field Multivalue",
+      "key": "customFieldMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueDisplayedKey",
+      "popupBcName": "myEntity3600PickAssocListPopup",
+      "assocValueKey": "customField"
+    },
+    {
+      "label": "Custom Field Multiple Select",
+      "key": "customFieldMultipleSelect",
+      "type": "multipleSelect"
+    },
+    {
+      "label": "Custom multifield style 'List'",
+      "key": "customFieldMultiField",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "label": "Custom Field Multi",
+          "key": "customField",
+          "type": "input"
+        },
+        {
+          "label": "Custom Field Percent Multi",
+          "key": "customFieldPercent",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "label": "Custom Field Pick List",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity3600Pick2PickListPopup",
+      "pickMap": {
+        "customFieldPickListId": "id",
+        "customFieldPickList": "customField"
+      }
+    },
+    {
+      "label": "Custom Field Inline Pick List",
+      "key": "customFieldInlinePickList",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3600PickPickListPopup",
+      "pickMap": {
+        "customFieldInlinePickList": "customField",
+        "customFieldInlinePickListId": "id"
+      }
+    },
+    {
+      "label": "Custom Field DateTimeWithSeconds",
+      "key": "customFieldDateTimeWithSeconds",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "label": "Custom Field Radio",
+      "key": "customFieldRadio",
+      "type": "radio"
+    },
+    {
+      "label": "Custom Field Money",
+      "key": "customFieldMoney",
+      "digits": 2,
+      "type": "money"
+    },
+    {
+      "label": "Custom Field Percent",
+      "key": "customFieldPercent",
+      "type": "percent"
+    },
+    {
+      "label": "Custom Field Num",
+      "key": "customFieldNum",
+      "type": "number"
+    },
+    {
+      "label": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "label": "Custom Field Checkbox",
+      "key": "customFieldCheckbox",
+      "type": "checkbox"
+    },
+    {
+      "label": "Custom Field DateTime",
+      "key": "customFieldDateTime",
+      "type": "dateTime"
+    },
+    {
+      "label": "Custom FieldText",
+      "key": "customFieldText",
+      "type": "text"
+    },
+    {
+      "label": "customField",
+      "key": "customField",
       "type": "input"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDate",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultivalueHover",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldHint",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultivalue",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultipleSelect",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultiField",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldInlinePickList",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDateTimeWithSeconds",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldText",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDateTime",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldCheckbox",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDictionary",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldNum",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPercent",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMoney",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldRadio",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
