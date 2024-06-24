@@ -49,10 +49,6 @@ public class MyExample3613Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
-                .delete()
-                .add()
                 .build();
     }
 
