@@ -1,10 +1,11 @@
-package org.demo.documentation.feature.drilldown.advancedoneview;
+package org.demo.documentation.feature.drilldown.advancedonebcfilter;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.drilldown.advancedoneview.MyExample3612DTO_;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,12 @@ public class MyExample3612Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3612DTO> doUpdateEntity(MyEntity3612 entity, MyExample3612DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3612DTO_.customFieldFilterDictionary)) {
+            entity.setCustomFieldFilterDictionary(data.getCustomFieldFilterDictionary());
+        }
+        if (data.isFieldChanged(MyExample3612DTO_.customFieldFilterDate)) {
+            entity.setCustomFieldFilterDate(data.getCustomFieldFilterDate());
+        }
         if (data.isFieldChanged(MyExample3612DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }

@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.drilldown.advancedoneview;
+package org.demo.documentation.feature.drilldown.advancedonebcfilter;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
