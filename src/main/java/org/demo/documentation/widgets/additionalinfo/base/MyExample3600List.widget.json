@@ -5,6 +5,80 @@
   "bc": "myExampleBc3600",
   "fields": [
     {
+      "title": "Custom Field Date",
+      "key": "customFieldDate",
+      "type": "date"
+    },
+    {
+      "title": "Custom Field MultivalueHover",
+      "key": "customFieldMultivalueHover",
+      "assocValueKey": "customField",
+      "popupBcName": "myEntity3600MultiAssocListPopup",
+      "type": "multivalueHover",
+      "displayedKey": "customFieldMultivalueHoverDisplayedKey"
+    },
+    {
+      "title": "Custom Field Hint",
+      "key": "customFieldHint",
+      "type": "hint"
+    },
+    {
+      "title": "Custom Field Multivalue",
+      "key": "customFieldMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueDisplayedKey",
+      "popupBcName": "myEntity3600PickAssocListPopup",
+      "assocValueKey": "customField"
+    },
+    {
+      "title": "Custom Field Multiple Select",
+      "key": "customFieldMultipleSelect",
+      "type": "multipleSelect"
+    },
+    {
+      "title": "Custom multifield style 'List'",
+      "key": "customFieldMultiField",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Custom Field Multi",
+          "key": "customField",
+          "type": "input"
+        },
+        {
+          "title": "Custom Field Percent Multi",
+          "key": "customFieldPercent",
+          "type": "input"
+        }
+      ]
+    },
+    {
+      "title": "Custom Field Pick List",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity3600Pick2PickListPopup",
+      "pickMap": {
+        "customFieldPickListId": "id",
+        "customFieldPickList": "customField"
+      }
+    },
+    {
+      "title": "Custom Field Inline Pick List",
+      "key": "customFieldInlinePickList",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3600PickPickListPopup",
+      "pickMap": {
+        "customFieldInlinePickList": "customField",
+        "customFieldInlinePickListId": "id"
+      }
+    },
+    {
+      "title": "Custom Field DateTimeWithSeconds",
+      "key": "customFieldDateTimeWithSeconds",
+      "type": "dateTimeWithSeconds"
+    },
+    {
       "title": "Custom Field Radio",
       "key": "customFieldRadio",
       "type": "radio"
@@ -36,7 +110,7 @@
       "type": "checkbox"
     },
     {
-      "title": "Custom Field Date Time",
+      "title": "Custom Field DateTime",
       "key": "customFieldDateTime",
       "type": "dateTime"
     },
