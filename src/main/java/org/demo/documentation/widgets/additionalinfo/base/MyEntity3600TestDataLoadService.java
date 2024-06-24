@@ -2,8 +2,10 @@ package org.demo.documentation.widgets.additionalinfo.base;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 
+import org.demo.documentation.multipleselect.basic.enums.CustomFieldEnum;
 import org.demo.documentation.multivalue.basic.MyEntityMultivalue177;
 import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldRadioEnum;
 import org.demo.documentation.widgets.additionalinfo.base.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -45,7 +48,6 @@ public class MyEntity3600TestDataLoadService {
         list.add(myEntity1);
         list.add(myEntity2);
         MyEntity3600Pick myEntityPick = new MyEntity3600Pick().setCustomField("Test data Pick");
-        MyEntity3600Pick myEntityPickNew = new MyEntity3600Pick().setCustomField("Test data Pick New");
         MyEntity3600Pick2 myEntityPick2 = new MyEntity3600Pick2().setCustomField("Test data Pick2");
         repositoryPick.save(myEntityPick);
         repositoryPick2.save(myEntityPick2);
@@ -67,6 +69,7 @@ public class MyEntity3600TestDataLoadService {
                 .setCustomFieldMoney(10000.0)
                 .setCustomFieldRadio(CustomFieldRadioEnum.LOW)
                 .setCustomFieldPickListEntity(myEntityPick2)
+                .setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
                 .setCustomFieldInlinePickListEntity(myEntityPick);
         repository.save(myEntity3600new.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
     }
