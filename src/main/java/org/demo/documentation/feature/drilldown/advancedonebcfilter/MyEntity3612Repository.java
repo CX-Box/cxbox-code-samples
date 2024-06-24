@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.drilldown.advancedoneview;
+package org.demo.documentation.feature.drilldown.advancedonebcfilter;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyExample3610Meta extends FieldMetaBuilder<MyExample3610DTO> {
-
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -23,7 +23,7 @@ public class MyExample3610Meta extends FieldMetaBuilder<MyExample3610DTO> {
         );
 
     }
-
+    // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3610DTO_.customFieldDrillDown);
