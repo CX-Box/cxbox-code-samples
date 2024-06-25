@@ -5,7 +5,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.drilldown.advancedoneview.MyExample3612DTO_;
+import org.demo.documentation.feature.drilldown.advancedonebcfilter.MyExample3612DTO_;
 import org.springframework.stereotype.Service;
 
 @Service
