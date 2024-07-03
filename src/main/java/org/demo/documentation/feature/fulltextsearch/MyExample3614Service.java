@@ -54,12 +54,12 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .build();
     }
-
+    // --8<-- [start:getSpecification]
     @Override
     protected Specification<MyEntity3614> getSpecification(BusinessComponent bc) {
         var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
         var specification = super.getSpecification(bc);
         return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
     }
-
+    // --8<-- [end:getSpecification]
 }

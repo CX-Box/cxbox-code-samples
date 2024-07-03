@@ -2,8 +2,6 @@ package org.demo.documentation.widgets.additionalinfo.base;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
 
-import org.demo.documentation.multipleselect.basic.enums.CustomFieldEnum;
-import org.demo.documentation.multivalue.basic.MyEntityMultivalue177;
 import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.additionalinfo.base.enums.CustomFieldRadioEnum;
