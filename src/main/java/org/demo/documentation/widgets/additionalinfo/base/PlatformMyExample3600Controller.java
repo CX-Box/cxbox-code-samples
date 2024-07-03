@@ -16,7 +16,11 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample3600Controller implements EnumBcIdentifier {
 
     // @formatter:on
-    myExampleBc3600(MyExample3600Service.class), myEntity3600MultiAssocListPopup(myExampleBc3600, MyEntity3600MultiMultivalueService.class), myEntity3600PickAssocListPopup(myExampleBc3600, MyEntity3600PickMultivalueService.class), myEntity3600Pick2PickListPopup(myExampleBc3600, MyEntity3600Pick2PickService.class), myEntity3600PickPickListPopup(myExampleBc3600, MyEntity3600PickPickService.class);
+    myExampleBc3600(MyExample3600Service.class),
+    myEntity3600MultiAssocListPopup(myExampleBc3600, MyEntity3600MultiMultivalueService.class),
+    myEntity3600PickAssocListPopup(myExampleBc3600, MyEntity3600PickMultivalueService.class),
+    myEntity3600Pick2PickListPopup(myExampleBc3600, MyEntity3600Pick2PickService.class),
+    myEntity3600PickPickListPopup(myExampleBc3600, MyEntity3600PickPickService.class);
 
     // @formatter:on
 
@@ -29,9 +33,6 @@ public enum PlatformMyExample3600Controller implements EnumBcIdentifier {
         this.bcDescription = buildDescription(parentName, serviceClass, refresh);
     }
 
-    PlatformMyExample3600Controller(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
 
     PlatformMyExample3600Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
         this(parent == null ? null : parent.getName(), serviceClass, refresh);
@@ -41,9 +42,6 @@ public enum PlatformMyExample3600Controller implements EnumBcIdentifier {
         this(parent, serviceClass, false);
     }
 
-    PlatformMyExample3600Controller(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
 
     PlatformMyExample3600Controller(Class<?> serviceClass) {
         this((String) null, serviceClass, false);

@@ -8,15 +8,12 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
-import org.demo.documentation.widgets.statsblock.drilldown.data.MyExample4208DTO_;
 import org.demo.documentation.widgets.statsblock.drilldown.data.PlatformMyExample4208Controller;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
 
 import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.*;
 
@@ -29,14 +26,18 @@ public class MyExample4210Meta extends AnySourceFieldMetaBuilder<MyExample4210DT
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4210DTO> fields, BcDescription bc,
                                       String id, String parentId) {
-
-        String urlBC = "/screen/myexample4210/view/myexample4210list" + "/" + PlatformMyExample4208Controller.myExampleBc4208;
-        String urlFilter = "?filters={\"" + "customFieldFilterDictionary.equalsOneOf=%5B%22Low%22%2C%22High%22%5";
+        String urlBC ="/screen/myexample4210/view/myexample4210list" + "/" + PlatformMyExample4208Controller.myExampleBc4208;
+        String urlFilterForField = URLEncoder.encode("customFieldFilterDictionary.equalsOneOf=%5B%22Low%22%2C%22High%22%5");
+        String urlFilter = "?filters={\""
+                + PlatformMyExample4208Controller.myExampleBc4208
+                + "\":\""
+                + urlFilterForField
+                + "\"}";
 
         fields.setDrilldown(
                 MyExample4210DTO_.value,
                 DrillDownType.INNER,
-                urlBC + "?filters={\"" + urlFilter + "\"}"
+                urlBC + urlFilter
         );
     }
 
