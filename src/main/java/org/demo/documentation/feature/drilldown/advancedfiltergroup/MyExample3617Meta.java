@@ -31,7 +31,6 @@ public class MyExample3617Meta extends FieldMetaBuilder<MyExample3617DTO> {
         String urlFilter = "?filters={\""
                 + CxboxMyExample3617Controller.myexample3617
                 + "\":\""
-                + "_"
                 + urlFilterForField
                 + "\"}";
         // --8<-- [end:urlFilter]
@@ -49,6 +48,7 @@ public class MyExample3617Meta extends FieldMetaBuilder<MyExample3617DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample3617DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3617DTO_.customFieldDrillDown);
         fields.enableFilter(MyExample3617DTO_.customFieldNew);
+        fields.enableFilter(MyExample3617DTO_.customField);
     }
 
 }
