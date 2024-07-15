@@ -5,6 +5,9 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.list.base.forfields.MyEntity3003MultivalueService;
+import org.demo.documentation.widgets.list.base.forfields.MyEntity3003PickService;
+import org.demo.documentation.widgets.list.base.forfields.MyEntity3002MultivalueService;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +16,7 @@ public enum PlatformMyExample3002Controller implements EnumBcIdentifier {
 
 	// @formatter:on
 	// --8<-- [start:bc]
-	myExampleBc3002(MyExample3002Service.class);
+	myExampleBc3002(MyExample3002Service.class), myEntity3002MultiAssocListPopup(myExampleBc3002, MyEntity3002MultivalueService.class), myEntity3003AssocListPopup(myExampleBc3002, MyEntity3003MultivalueService.class), myEntity3003PickListPopup(myExampleBc3002, MyEntity3003PickService.class);
 	// --8<-- [end:bc]
 	// @formatter:on
 
