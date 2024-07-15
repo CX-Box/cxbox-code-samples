@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 
-import static org.demo.documentation.main.TextError.ONLY_LETTER;
+import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 
 
 @Getter

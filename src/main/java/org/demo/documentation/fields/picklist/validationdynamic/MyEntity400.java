@@ -1,0 +1,24 @@
+package org.demo.documentation.fields.picklist.validationdynamic;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.model.core.entity.BaseEntity;
+// 400
+// 400
+//  ",
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyEntity400 extends BaseEntity {
+
+	@JoinColumn(name = "CUSTOM_FIELD_ID")
+	@ManyToOne
+	private MyEntity401Pick customFieldEntity;
+
+}
