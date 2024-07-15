@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.drilldown.onescreenonebc;
+package org.demo.documentation.feature.drilldown.goingforwardafterdrilldown;
 
 import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity3620TestDataLoadService {
+public class MyEntity3621TestDataLoadService {
 
     @Autowired
-    MyEntity3620Repository repository;
+    MyEntity3621Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -22,7 +22,7 @@ public class MyEntity3620TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3620().setCustomField("test data"));
+        repository.save(new MyEntity3621().setCustomField("test data"));
     }
 
 }

@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.drilldown.onescreenonebc;
+package org.demo.documentation.feature.drilldown.goingbackafterdrilldown;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

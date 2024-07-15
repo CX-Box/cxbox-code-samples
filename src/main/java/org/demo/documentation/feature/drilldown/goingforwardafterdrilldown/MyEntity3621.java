@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.drilldown.onescreenonebc;
+package org.demo.documentation.feature.drilldown.goingforwardafterdrilldown;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -12,7 +12,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3620 extends BaseEntity {
+public class MyEntity3621 extends BaseEntity {
     @Column
     private String customField;
 }

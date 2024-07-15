@@ -1,11 +1,15 @@
-package org.demo.documentation.feature.drilldown.onescreenonebc;
+package org.demo.documentation.feature.drilldown.goingbackafterdrilldown;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class MyExample3620Service extends VersionAwareResponseService<MyExample3620DTO, MyEntity3620> {
@@ -37,9 +41,16 @@ public class MyExample3620Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
-                .delete()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotolist", "Go to List")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3620DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3620"
+                            ));
+                })
                 .add()
                 .build();
     }
