@@ -27,7 +27,7 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MaxInputDTO> doUpdateEntity(MaxInputEntity entity, MaxInputDTO data, BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample3003DTO_.customField)) {
+		if (data.isFieldChanged(MaxInputDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
