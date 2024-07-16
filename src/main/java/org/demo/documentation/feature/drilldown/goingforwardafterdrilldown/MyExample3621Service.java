@@ -2,9 +2,13 @@ package org.demo.documentation.feature.drilldown.goingforwardafterdrilldown;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,9 +41,38 @@ public class MyExample3621Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotolist", "Go to List")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3621DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3621/"
+                            ));
+                })
                 .add()
-                .delete()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotostep2", "Go to Step2")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3621DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3621/view/myexample3621form/"
+                            ));
+                })
+                .add()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotostep3", "Go to Step3")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3621DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3621/view/myexample3621info2"
+                            ));
+                })
                 .add()
                 .build();
     }
