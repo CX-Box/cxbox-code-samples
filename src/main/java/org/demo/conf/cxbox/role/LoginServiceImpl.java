@@ -92,6 +92,7 @@ public class LoginServiceImpl implements LoginService {
 				.language(LocaleContextHolder.getLocale().getLanguage())
 				.timezone(LocaleContextHolder.getTimeZone().getID())
 				.devPanelEnabled(metaConfigurationProperties.isDevPanelEnabled())
+				.filterByRangeEnabled(metaConfigurationProperties.isFilterByRangeEnabled())
 				.build();
 
 	}
