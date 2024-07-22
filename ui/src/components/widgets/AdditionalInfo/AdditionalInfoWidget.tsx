@@ -7,6 +7,7 @@ import { useFlatFormFields } from '@hooks/useFlatFormFields'
 import { Col, Row } from 'antd'
 import { Field } from '@cxboxComponents'
 import styles from './AdditionalInfoWidget.module.css'
+import WidgetTitle from '@components/WidgetTitle/WidgetTitle'
 
 type AdditionalInfoWidgetMeta = Omit<interfaces.WidgetInfoMeta, 'type'>
 
@@ -26,8 +27,8 @@ export const AdditionalInfoWidget: React.FC<Props> = ({ meta }) => {
     return (
         <Row className={styles.widgetContainer}>
             <Row gutter={[8, 18]}>
-                <Col span={24} className={styles.title}>
-                    {meta.title}
+                <Col span={24}>
+                    <WidgetTitle className={styles.title} level={2} widgetName={meta.name} marginBottom={0} text={meta.title} />
                 </Col>
             </Row>
             {options?.layout?.rows.map((row, rowIndex) => {

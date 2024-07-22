@@ -23,7 +23,7 @@ interface ColumnFilterProps {
 function ColumnFilter({ widgetName, widgetMeta, rowMeta, components }: ColumnFilterProps) {
     const widget = useAppSelector(state => state.view.widgets.find(item => item.name === widgetName))
     const filterByRangeEnabled = useAppSelector(
-        state => state.session.featureSettings?.find(featureSetting => featureSetting.key === 'filterByRangeEnabled')?.active ?? false
+        state => state.session.featureSettings?.find(featureSetting => featureSetting.key === 'filterByRangeEnabled')?.value === 'true'
     )
     const bcName = widget?.bcName ?? ''
     const listFields = widget?.fields as interfaces.WidgetListField[]

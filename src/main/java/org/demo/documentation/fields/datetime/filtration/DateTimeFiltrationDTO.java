@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
 @NoArgsConstructor
 public class DateTimeFiltrationDTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", strict = true, provider = DateTimeValueProvider.class)
+	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
 	private LocalDateTime customField;
 
 	public DateTimeFiltrationDTO(DateTimeFiltration entity) {
