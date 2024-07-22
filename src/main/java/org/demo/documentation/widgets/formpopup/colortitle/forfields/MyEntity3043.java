@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.colortitle;
+package org.demo.documentation.widgets.formpopup.colortitle.forfields;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,11 +8,12 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3032 extends BaseEntity {
+public class MyEntity3043 extends BaseEntity {
     @Column
     private String customField;
 }

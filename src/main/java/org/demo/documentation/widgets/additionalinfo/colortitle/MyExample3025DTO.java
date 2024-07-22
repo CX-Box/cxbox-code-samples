@@ -3,14 +3,19 @@ package org.demo.documentation.widgets.additionalinfo.colortitle;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.demo.documentation.widgets.additionalinfo.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.additionalinfo.colortitle.enums.CustomFieldColorRadioEnum;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3034;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3035;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -51,6 +56,12 @@ public class MyExample3025DTO extends DataResponseDTO {
     private String customFieldColorInlinePicklist;
     @SearchParameter(name = "customFieldColorInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldColorInlinePicklistId;
+    @SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
+    private MultivalueField customFieldColorMultivalueHover;
+    private String customFieldColorMultivalueHoverDisplayedKey;
+    @SearchParameter(name = "customFieldColorMultivalueList.id", provider = LongValueProvider.class)
+    private MultivalueField customFieldColorMultivalue;
+    private String customFieldColorMultivalueDisplayedKey;
 
     public MyExample3025DTO(MyEntity3025 entity) {
         this.id = entity.getId().toString();
@@ -80,5 +91,17 @@ public class MyExample3025DTO extends DataResponseDTO {
         this.customFieldColorInlinePicklist = Optional.ofNullable(entity.getCustomFieldColorInlinePicklistEntity())
                 .map(e -> e.getCustomField())
                 .orElse(null);
+        this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
+                e -> String.valueOf(e.getId()),
+                MyEntity3034::getCustomField
+        ));
+        this.customFieldColorMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueHoverList().stream().map(MyEntity3034::getCustomField
+        ).collect(Collectors.joining(",")), 12);
+        this.customFieldColorMultivalue = entity.getCustomFieldColorMultivalueList().stream().collect(MultivalueField.toMultivalueField(
+                e -> String.valueOf(e.getId()),
+                MyEntity3035::getCustomField
+        ));
+        this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueList().stream().map(MyEntity3035::getCustomField
+        ).collect(Collectors.joining(",")), 12);
     }
 }

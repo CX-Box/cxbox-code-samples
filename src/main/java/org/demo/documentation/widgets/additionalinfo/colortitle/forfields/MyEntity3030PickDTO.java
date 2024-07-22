@@ -4,7 +4,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.demo.documentation.widgets.additionalinfo.colortitle.MyEntity3030;
 
 @Getter
 @Setter

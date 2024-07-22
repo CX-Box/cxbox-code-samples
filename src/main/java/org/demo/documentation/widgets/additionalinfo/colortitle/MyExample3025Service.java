@@ -3,11 +3,19 @@ package org.demo.documentation.widgets.additionalinfo.colortitle;
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3029;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3030;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3034;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3035;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MyExample3025Service extends VersionAwareResponseService<MyExample3025DTO, MyEntity3025> {
@@ -29,6 +37,24 @@ public class MyExample3025Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3025DTO> doUpdateEntity(MyEntity3025 entity, MyExample3025DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3025DTO_.customFieldColorMultivalue)) {
+            entity.getCustomFieldColorMultivalueList().clear();
+            entity.getCustomFieldColorMultivalueList().addAll(data.getCustomFieldColorMultivalue().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3035.class, e))
+                    .collect(Collectors.toList()));
+        }
+        if (data.isFieldChanged(MyExample3025DTO_.customFieldColorMultivalueHover)) {
+            entity.getCustomFieldColorMultivalueHoverList().clear();
+            entity.getCustomFieldColorMultivalueHoverList().addAll(data.getCustomFieldColorMultivalueHover().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3034.class, e))
+                    .collect(Collectors.toList()));
+        }
         if (data.isFieldChanged(MyExample3025DTO_.customFieldColorInlinePicklistId)) {
             entity.setCustomFieldColorInlinePicklistEntity(data.getCustomFieldColorInlinePicklistId() != null
                     ? entityManager.getReference(MyEntity3030.class, data.getCustomFieldColorInlinePicklistId())

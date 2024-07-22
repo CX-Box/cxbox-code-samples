@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.additionalinfo.colortitle.forfields;
 
 import lombok.Getter;
-import org.demo.documentation.widgets.additionalinfo.colortitle.MyEntity3029;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

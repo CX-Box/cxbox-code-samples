@@ -1,9 +1,25 @@
 {
   "name": "MyExample3026",
-  "title": "Form",
+  "title": "${customFieldColorInlinePicklistEntity} - ${customFieldColorPicklistEntity} - ${customFieldColorRadio} - ${customFieldColorMoney} - ${customFieldColorPercent} - ${customFieldColorNumber} - ${customFieldColorFileUploade} - ${customFieldColorFileUploadeId} - ${customFieldColorDictionary} - ${customFieldColorDateTimeWithSeconds} - ${customFieldColorDate} - ${customFieldColorCheckbox} - ${customFieldColorDateTime} - ${customFieldColorText} - ${customFieldColorInput} ",
   "type": "Form",
   "bc": "myexample3026",
   "fields": [
+    {
+      "label": "Custom Field Color Multivalue Hover",
+      "key": "customFieldColorMultivalueHover",
+      "assocValueKey": "customField",
+      "popupBcName": "myEntity3037AssocListPopup",
+      "type": "multivalueHover",
+      "displayedKey": "customFieldColorMultivalueHoverDisplayedKey"
+    },
+    {
+      "label": "Custom Field Color Multivalue",
+      "key": "customFieldColorMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldColorMultivalueDisplayedKey",
+      "popupBcName": "myEntity3038AssocListPopup",
+      "assocValueKey": "customField"
+    },
     {
       "label": "Custom Field Color Inline Picklist",
       "key": "customFieldColorInlinePicklist",
@@ -108,6 +124,22 @@
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldColorMultivalueHover",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldColorMultivalue",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {

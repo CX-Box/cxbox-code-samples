@@ -15,6 +15,8 @@ public class MyExample3025Meta extends FieldMetaBuilder<MyExample3025DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3025DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3025DTO_.customFieldColorMultivalue);
+        fields.setEnabled(MyExample3025DTO_.customFieldColorMultivalueHover);
         fields.setEnabled(MyExample3025DTO_.customFieldColorInlinePicklistId);
         fields.setEnabled(MyExample3025DTO_.customFieldColorInlinePicklist);
         fields.setEnabled(MyExample3025DTO_.customFieldColorPicklistId);
@@ -40,6 +42,8 @@ public class MyExample3025Meta extends FieldMetaBuilder<MyExample3025DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3025DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3025DTO_.customFieldColorMultivalue);
+        fields.enableFilter(MyExample3025DTO_.customFieldColorMultivalueHover);
         fields.enableFilter(MyExample3025DTO_.customFieldColorInlinePicklist);
         fields.enableFilter(MyExample3025DTO_.customFieldColorPicklist);
         fields.setEnumFilterValues(fields, MyExample3025DTO_.customFieldColorRadio, CustomFieldColorRadioEnum.values());

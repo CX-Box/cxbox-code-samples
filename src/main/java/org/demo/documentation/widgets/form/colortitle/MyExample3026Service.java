@@ -3,11 +3,16 @@ package org.demo.documentation.widgets.form.colortitle;
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.form.colortitle.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MyExample3026Service extends VersionAwareResponseService<MyExample3026DTO, MyEntity3026> {
@@ -29,6 +34,42 @@ public class MyExample3026Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3026DTO> doUpdateEntity(MyEntity3026 entity, MyExample3026DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalue)) {
+            entity.getCustomFieldColorMultivalueList().clear();
+            entity.getCustomFieldColorMultivalueList().addAll(data.getCustomFieldColorMultivalue().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3038.class, e))
+                    .collect(Collectors.toList()));
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalueHover)) {
+            entity.getCustomFieldColorMultivalueHoverList().clear();
+            entity.getCustomFieldColorMultivalueHoverList().addAll(data.getCustomFieldColorMultivalueHover().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3037.class, e))
+                    .collect(Collectors.toList()));
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalueHover)) {
+            entity.getCustomFieldColorMultivalueHoverList().clear();
+            entity.getCustomFieldColorMultivalueHoverList().addAll(data.getCustomFieldColorMultivalueHover().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3037.class, e))
+                    .collect(Collectors.toList()));
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalue)) {
+            entity.getCustomFieldColorMultivalueList().clear();
+            entity.getCustomFieldColorMultivalueList().addAll(data.getCustomFieldColorMultivalue().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3038.class, e))
+                    .collect(Collectors.toList()));
+        }
         if (data.isFieldChanged(MyExample3026DTO_.customFieldColorInput)) {
             entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
         }

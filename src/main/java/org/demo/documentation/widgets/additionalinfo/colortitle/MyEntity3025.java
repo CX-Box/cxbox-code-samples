@@ -7,13 +7,15 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.additionalinfo.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.additionalinfo.colortitle.enums.CustomFieldColorRadioEnum;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3029;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3030;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3034;
+import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.MyEntity3035;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-
-// 3025
-// 3025
-// Widget additionalinfo color
 
 @Entity
 @Getter
@@ -56,4 +58,20 @@ public class MyEntity3025 extends BaseEntity {
     @JoinColumn(name = "CUSTOM_FIELD_COLOR_INLINE_PICKLIST_ID")
     @ManyToOne
     private MyEntity3030 customFieldColorInlinePicklistEntity;
+    @JoinTable(name = "MyEntity3025_MyEntity3034",
+            joinColumns = @JoinColumn(name = "MyEntity3025_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity3034_id")
+    )
+    @ManyToMany(cascade =
+            {CascadeType.PERSIST,
+                    CascadeType.MERGE})
+    private List<MyEntity3034> customFieldColorMultivalueHoverList = new ArrayList<>();
+    @JoinTable(name = "MyEntity3025_MyEntity3035",
+            joinColumns = @JoinColumn(name = "MyEntity3025_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity3035_id")
+    )
+    @ManyToMany(cascade =
+            {CascadeType.PERSIST,
+                    CascadeType.MERGE})
+    private List<MyEntity3035> customFieldColorMultivalueList = new ArrayList<>();
 }

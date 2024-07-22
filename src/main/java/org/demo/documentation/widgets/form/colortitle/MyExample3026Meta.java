@@ -15,6 +15,10 @@ public class MyExample3026Meta extends FieldMetaBuilder<MyExample3026DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3026DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3026DTO_.customFieldColorMultivalue);
+        fields.setEnabled(MyExample3026DTO_.customFieldColorMultivalueHover);
+        fields.setEnabled(MyExample3026DTO_.customFieldColorMultivalueHover);
+        fields.setEnabled(MyExample3026DTO_.customFieldColorMultivalue);
         fields.setEnabled(MyExample3026DTO_.customFieldColorInput);
         fields.setEnabled(MyExample3026DTO_.customFieldColorText);
         fields.setEnabled(MyExample3026DTO_.customFieldColorDateTime);
@@ -40,6 +44,10 @@ public class MyExample3026Meta extends FieldMetaBuilder<MyExample3026DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3026DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3026DTO_.customFieldColorMultivalue);
+        fields.enableFilter(MyExample3026DTO_.customFieldColorMultivalueHover);
+        fields.enableFilter(MyExample3026DTO_.customFieldColorMultivalueHover);
+        fields.enableFilter(MyExample3026DTO_.customFieldColorMultivalue);
         fields.enableFilter(MyExample3026DTO_.customFieldColorInput);
         fields.enableFilter(MyExample3026DTO_.customFieldColorText);
         fields.enableFilter(MyExample3026DTO_.customFieldColorDateTime);
