@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.info.colortitle;
+package org.demo.documentation.widgets.list.colortitle;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,10 +8,10 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
-import org.demo.documentation.widgets.info.colortitle.enums.CustomFieldColorDictionaryEnum;
-import org.demo.documentation.widgets.info.colortitle.enums.CustomFieldColorRadioEnum;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040Multi;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040MultiMulti;
+import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorDictionaryEnum;
+import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorRadioEnum;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050Multi;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050MultiMulti;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3040DTO extends DataResponseDTO {
+public class MyExample3050DTO extends DataResponseDTO {
 
     private String customField;
     @SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
@@ -39,6 +39,8 @@ public class MyExample3040DTO extends DataResponseDTO {
     private Long customFieldColorPicklistId;
     @SearchParameter(name = "customFieldColorRadio", provider = EnumValueProvider.class)
     private CustomFieldColorRadioEnum customFieldColorRadio;
+    @SearchParameter(name = "customFieldColorMoney", provider = BigDecimalValueProvider.class)
+    private Double customFieldColorMoney;
     @SearchParameter(name = "customFieldColorPercent", provider = BigDecimalValueProvider.class)
     private Long customFieldColorPercent;
     @SearchParameter(name = "customFieldColorNumber", provider = BigDecimalValueProvider.class)
@@ -60,23 +62,21 @@ public class MyExample3040DTO extends DataResponseDTO {
     private String customFieldColorText;
     @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
     private String customFieldColorInput;
-    @SearchParameter(name = "customFieldColorMoney", provider = BigDecimalValueProvider.class)
-    private Double customFieldColorMoney;
 
-    public MyExample3040DTO(MyEntity3040 entity) {
+    public MyExample3050DTO(MyEntity3050 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
-                MyEntity3040Multi::getCustomField
+                MyEntity3050Multi::getCustomField
         ));
-        this.customFieldColorMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueHoverList().stream().map(MyEntity3040Multi::getCustomField
+        this.customFieldColorMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueHoverList().stream().map(MyEntity3050Multi::getCustomField
         ).collect(Collectors.joining(",")), 12);
         this.customFieldColorMultivalue = entity.getCustomFieldColorMultivalueList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
-                MyEntity3040MultiMulti::getCustomField
+                MyEntity3050MultiMulti::getCustomField
         ));
-        this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueList().stream().map(MyEntity3040MultiMulti::getCustomField
+        this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueList().stream().map(MyEntity3050MultiMulti::getCustomField
         ).collect(Collectors.joining(",")), 12);
         this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldColorInlinePicklistEntity())
                 .map(e -> e.getId())
@@ -91,6 +91,7 @@ public class MyExample3040DTO extends DataResponseDTO {
                 .map(e -> e.getCustomField())
                 .orElse(null);
         this.customFieldColorRadio = entity.getCustomFieldColorRadio();
+        this.customFieldColorMoney = entity.getCustomFieldColorMoney();
         this.customFieldColorPercent = entity.getCustomFieldColorPercent();
         this.customFieldColorNumber = entity.getCustomFieldColorNumber();
         this.customFieldColorFileUploade = entity.getCustomFieldColorFileUploade();
@@ -102,6 +103,5 @@ public class MyExample3040DTO extends DataResponseDTO {
         this.customFieldColorDateTime = entity.getCustomFieldColorDateTime();
         this.customFieldColorText = entity.getCustomFieldColorText();
         this.customFieldColorInput = entity.getCustomFieldColorInput();
-        this.customFieldColorMoney = entity.getCustomFieldColorMoney();
     }
 }

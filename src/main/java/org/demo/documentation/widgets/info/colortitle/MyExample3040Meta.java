@@ -16,6 +16,7 @@ public class MyExample3040Meta extends FieldMetaBuilder<MyExample3040DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3040DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3040DTO_.customFieldColorMoney);
         fields.setEnabled(MyExample3040DTO_.customFieldColorInput);
         fields.setEnabled(MyExample3040DTO_.customFieldColorText);
         fields.setEnabled(MyExample3040DTO_.customFieldColorDateTime);
@@ -42,6 +43,7 @@ public class MyExample3040Meta extends FieldMetaBuilder<MyExample3040DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3040DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3040DTO_.customFieldColorMoney);
         fields.enableFilter(MyExample3040DTO_.customFieldColorInput);
         fields.enableFilter(MyExample3040DTO_.customFieldColorText);
         fields.enableFilter(MyExample3040DTO_.customFieldColorDateTime);

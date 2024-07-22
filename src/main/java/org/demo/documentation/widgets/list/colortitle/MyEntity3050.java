@@ -1,16 +1,16 @@
-package org.demo.documentation.widgets.info.colortitle;
+package org.demo.documentation.widgets.list.colortitle;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.info.colortitle.enums.CustomFieldColorDictionaryEnum;
-import org.demo.documentation.widgets.info.colortitle.enums.CustomFieldColorRadioEnum;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040InlinePicklist;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040Multi;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040MultiMulti;
-import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040Picklist;
+import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorDictionaryEnum;
+import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorRadioEnum;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050InlinePicklist;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050Multi;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050MultiMulti;
+import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050Picklist;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,34 +21,36 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3040 extends BaseEntity {
+public class MyEntity3050 extends BaseEntity {
     @Column
     private String customField;
-    @JoinTable(name = "MyEntity3040_MyEntity3040Multi",
-            joinColumns = @JoinColumn(name = "MyEntity3040_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3040Multi_id")
+    @JoinTable(name = "MyEntity3050_MyEntity3050Multi",
+            joinColumns = @JoinColumn(name = "MyEntity3050_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity3050Multi_id")
     )
     @ManyToMany(cascade =
             {CascadeType.PERSIST,
                     CascadeType.MERGE})
-    private List<MyEntity3040Multi> customFieldColorMultivalueHoverList = new ArrayList<>();
-    @JoinTable(name = "MyEntity3040_MyEntity3040MultiMulti",
-            joinColumns = @JoinColumn(name = "MyEntity3040_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3040MultiMulti_id")
+    private List<MyEntity3050Multi> customFieldColorMultivalueHoverList = new ArrayList<>();
+    @JoinTable(name = "MyEntity3050_MyEntity3050MultiMulti",
+            joinColumns = @JoinColumn(name = "MyEntity3050_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity3050MultiMulti_id")
     )
     @ManyToMany(cascade =
             {CascadeType.PERSIST,
                     CascadeType.MERGE})
-    private List<MyEntity3040MultiMulti> customFieldColorMultivalueList = new ArrayList<>();
+    private List<MyEntity3050MultiMulti> customFieldColorMultivalueList = new ArrayList<>();
     @JoinColumn(name = "CUSTOM_FIELD_COLOR_INLINE_PICKLIST_ID")
     @ManyToOne
-    private MyEntity3040InlinePicklist customFieldColorInlinePicklistEntity;
+    private MyEntity3050InlinePicklist customFieldColorInlinePicklistEntity;
     @JoinColumn(name = "CUSTOM_FIELD_COLOR_PICKLIST_ID")
     @ManyToOne
-    private MyEntity3040Picklist customFieldColorPicklistEntity;
+    private MyEntity3050Picklist customFieldColorPicklistEntity;
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldColorRadioEnum customFieldColorRadio;
+    @Column
+    private Double customFieldColorMoney;
     @Column
     private Long customFieldColorPercent;
     @Column
@@ -72,6 +74,4 @@ public class MyEntity3040 extends BaseEntity {
     private String customFieldColorText;
     @Column
     private String customFieldColorInput;
-    @Column
-    private Double customFieldColorMoney;
 }
