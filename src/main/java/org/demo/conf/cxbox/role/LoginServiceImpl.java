@@ -25,6 +25,7 @@ import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.service.session.CoreSessionService;
 import org.cxbox.api.service.session.IUser;
 import org.cxbox.core.config.properties.UIProperties;
+import org.cxbox.core.config.properties.WidgetFieldsIdResolverProperties;
 import org.cxbox.core.dto.LoggedUser;
 import org.cxbox.core.util.session.LoginService;
 import org.cxbox.core.util.session.SessionService;
@@ -58,6 +59,10 @@ public class LoginServiceImpl implements LoginService {
 
     private final MetaConfigurationProperties metaConfigurationProperties;
 
+
+    private final WidgetFieldsIdResolverProperties widgetFieldsIdResolverProperties;
+
+
     private final UIProperties uiProperties;
 
     /**
@@ -75,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
         IUser<Long> user = sessionService.getSessionUser();
         User userEntity = userRepository.findById(user.getId()).orElseThrow();
         LOV activeUserRole = sessionService.getSessionUserRole();
-        SimpleDictionary filterByRangeEnabled = new SimpleDictionary("filterByRangeEnabled", String.valueOf(metaConfigurationProperties.isFilterByRangeEnabled()));
+        SimpleDictionary filterByRangeEnabled = new SimpleDictionary("filterByRangeEnabled", String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabled()));
         List<SimpleDictionary> featureSettingsList = new ArrayList<>();
         featureSettingsList.add(filterByRangeEnabled);
         return LoggedUser.builder()

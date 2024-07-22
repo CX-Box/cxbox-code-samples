@@ -1,0 +1,102 @@
+package org.demo.documentation.widgets.form.colortitle;
+
+import jakarta.persistence.EntityManager;
+import org.cxbox.core.crudma.bc.BusinessComponent;
+import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyExample3026Service extends VersionAwareResponseService<MyExample3026DTO, MyEntity3026> {
+
+    private final MyEntity3026Repository repository;
+    @Autowired
+    private EntityManager entityManager;
+
+    public MyExample3026Service(MyEntity3026Repository repository) {
+        super(MyExample3026DTO.class, MyEntity3026.class, null, MyExample3026Meta.class);
+        this.repository = repository;
+    }
+
+    @Override
+    protected CreateResult<MyExample3026DTO> doCreateEntity(MyEntity3026 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
+
+    @Override
+    protected ActionResultDTO<MyExample3026DTO> doUpdateEntity(MyEntity3026 entity, MyExample3026DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorInput)) {
+            entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorText)) {
+            entity.setCustomFieldColorText(data.getCustomFieldColorText());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorDateTime)) {
+            entity.setCustomFieldColorDateTime(data.getCustomFieldColorDateTime());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorCheckbox)) {
+            entity.setCustomFieldColorCheckbox(data.getCustomFieldColorCheckbox());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorDate)) {
+            entity.setCustomFieldColorDate(data.getCustomFieldColorDate());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorDateTimeWithSeconds)) {
+            entity.setCustomFieldColorDateTimeWithSeconds(data.getCustomFieldColorDateTimeWithSeconds());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorDictionary)) {
+            entity.setCustomFieldColorDictionary(data.getCustomFieldColorDictionary());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorFileUploadeId)) {
+            entity.setCustomFieldColorFileUploadeId(data.getCustomFieldColorFileUploadeId());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorFileUploade)) {
+            entity.setCustomFieldColorFileUploade(data.getCustomFieldColorFileUploade());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorNumber)) {
+            entity.setCustomFieldColorNumber(data.getCustomFieldColorNumber());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorPercent)) {
+            entity.setCustomFieldColorPercent(data.getCustomFieldColorPercent());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMoney)) {
+            entity.setCustomFieldColorMoney(data.getCustomFieldColorMoney());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorRadio)) {
+            entity.setCustomFieldColorRadio(data.getCustomFieldColorRadio());
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorPicklistId)) {
+            entity.setCustomFieldColorPicklistEntity(data.getCustomFieldColorPicklistId() != null
+                    ? entityManager.getReference(MyEntity3032.class, data.getCustomFieldColorPicklistId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customFieldColorInlinePicklistId)) {
+            entity.setCustomFieldColorInlinePicklistEntity(data.getCustomFieldColorInlinePicklistId() != null
+                    ? entityManager.getReference(MyEntity3031.class, data.getCustomFieldColorInlinePicklistId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample3026DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+
+    @Override
+    public Actions<MyExample3026DTO> getActions() {
+        return Actions.<MyExample3026DTO>builder()
+                .newAction()
+                .action("save", "save")
+                .add()
+                .create()
+                .add()
+                .delete()
+                .add()
+                .build();
+    }
+
+
+}
+
