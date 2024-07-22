@@ -16,8 +16,7 @@ public class MyExample3060Meta extends FieldMetaBuilder<MyExample3060DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3060DTO_.customFieldPicklistId);
         fields.setEnabled(MyExample3060DTO_.customFieldPicklist);
-        fields.setEnabled(MyExample3060DTO_.customField);
-        fields.setRequired(MyExample3060DTO_.customField);
+
     }
 
     @Override

@@ -34,9 +34,6 @@ public class MyExample3060Service extends VersionAwareResponseService<MyExample3
                     ? entityManager.getReference(MyEntity3061.class, data.getCustomFieldPicklistId())
                     : null);
         }
-        if (data.isFieldChanged(MyExample3060DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
