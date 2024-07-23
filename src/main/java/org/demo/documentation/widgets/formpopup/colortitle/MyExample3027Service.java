@@ -118,11 +118,20 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027Formpopup", "Done", "Cancel");
     }
 
+    private static PreAction confirmWithCommentColorConst(@NonNull String actionText) {
+        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027FormPopupColorConst", "Done", "Cancel");
+    }
+
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()
                 .newAction()
-                .action("save-send", "Save and send on approval")
+                .action("save-send-color-const", "Save and send on approval")
+                .withPreAction(confirmWithCommentColorConst("Save and send on approval"))
+                .invoker((bc, data) -> withApproval())
+                .add()
+                .newAction()
+                .action("save-send-color", "Save and send on approval")
                 .withPreAction(confirmWithComment("Save and send on approval"))
                 .invoker((bc, data) -> withApproval())
                 .add()

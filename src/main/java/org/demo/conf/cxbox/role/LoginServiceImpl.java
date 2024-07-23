@@ -80,9 +80,9 @@ public class LoginServiceImpl implements LoginService {
         IUser<Long> user = sessionService.getSessionUser();
         User userEntity = userRepository.findById(user.getId()).orElseThrow();
         LOV activeUserRole = sessionService.getSessionUserRole();
-        SimpleDictionary filterByRangeEnabled = new SimpleDictionary(widgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME, String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()));
+        // SimpleDictionary filterByRangeEnabled = new SimpleDictionary(widgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME, String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()));
         List<SimpleDictionary> featureSettingsList = new ArrayList<>();
-        featureSettingsList.add(filterByRangeEnabled);
+        // featureSettingsList.add(filterByRangeEnabled);
         return LoggedUser.builder()
                 .sessionId(sessionService.getSessionId())
                 .activeRole(activeUserRole.getKey())
