@@ -5,6 +5,10 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061MultiMultiMultivalueService;
+import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061MultiMultivalueService;
+import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061PickPickPickService;
+import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061PickPickService;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -12,7 +16,13 @@ public enum CxboxMyExample3060Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample3060(MyExample3060Service.class), myEntity3061PickListPopup(myexample3060, MyEntity3061PickService.class);
+    myexample3060(MyExample3060Service.class),
+    myEntity3061PickListPopup(myexample3060, MyEntity3061PickService.class),
+    myEntity3061PickListPopupColorConst(myexample3060, MyEntity3061PickService.class),
+    myEntity3061PickPickPickListPopup(myEntity3061PickListPopup, MyEntity3061PickPickPickService.class),
+    myEntity3061PickPickListPopup(myEntity3061PickListPopup, MyEntity3061PickPickService.class),
+    myEntity3061MultiMultiAssocListPopup(myEntity3061PickListPopup, MyEntity3061MultiMultiMultivalueService.class),
+    myEntity3061MultiAssocListPopup(myEntity3061PickListPopup, MyEntity3061MultiMultivalueService.class);
 
     // @formatter:on
 

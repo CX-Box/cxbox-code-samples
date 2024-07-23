@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.color;
+package org.demo.documentation.widgets.assoc.basic;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

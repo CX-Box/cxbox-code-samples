@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.color;
+package org.demo.documentation.widgets.assoc.basic;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

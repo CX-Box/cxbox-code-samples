@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class MyEntity3052MultiMultivalueDTO extends DataResponseDTO {
 
     private String customField;
+	private String customFieldColor;
 	@SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
 	private MultivalueField customFieldColorMultivalueHover;
 	private String customFieldColorMultivalueHoverDisplayedKey;
@@ -65,6 +66,7 @@ public class MyEntity3052MultiMultivalueDTO extends DataResponseDTO {
 
 	public MyEntity3052MultiMultivalueDTO(MyEntity3052Multi entity) {
         this.id = entity.getId().toString();
+		this.customFieldColor = "#eda6a6";
         this.customField = entity.getCustomField();
 		this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),

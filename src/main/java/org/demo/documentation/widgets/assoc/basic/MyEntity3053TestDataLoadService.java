@@ -1,6 +1,5 @@
-package org.demo.documentation.widgets.assoc.color;
+package org.demo.documentation.widgets.assoc.basic;
 
-import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;

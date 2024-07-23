@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.color;
+package org.demo.documentation.widgets.assoc.basic;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

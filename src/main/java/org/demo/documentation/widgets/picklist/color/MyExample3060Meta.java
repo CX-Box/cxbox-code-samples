@@ -14,6 +14,8 @@ public class MyExample3060Meta extends FieldMetaBuilder<MyExample3060DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3060DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3060DTO_.customFieldPicklistColorConstId);
+        fields.setEnabled(MyExample3060DTO_.customFieldPicklistColorConst);
         fields.setEnabled(MyExample3060DTO_.customFieldPicklistId);
         fields.setEnabled(MyExample3060DTO_.customFieldPicklist);
 
@@ -21,6 +23,7 @@ public class MyExample3060Meta extends FieldMetaBuilder<MyExample3060DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3060DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3060DTO_.customFieldPicklistColorConst);
         fields.enableFilter(MyExample3060DTO_.customFieldPicklist);
     }
 

@@ -1,12 +1,16 @@
 package org.demo.documentation.widgets.formpopup.colortitle;
 
 import jakarta.persistence.EntityManager;
+import lombok.NonNull;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
+import org.demo.conf.cxbox.action.ActionsExt;
+import org.demo.documentation.widgets.formpopup.base.MyExample3400DTO;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3041;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3042;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3043;
@@ -110,19 +114,25 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    private static PreAction confirmWithComment(@NonNull String actionText) {
+        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027Formpopup", "Done", "Cancel");
+    }
+
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()
                 .newAction()
-                .action("save", "save")
-                .add()
-                .create()
-                .add()
-                .delete()
+                .action("save-send", "Save and send on approval")
+                .withPreAction(confirmWithComment("Save and send on approval"))
+                .invoker((bc, data) -> withApproval())
                 .add()
                 .build();
+
     }
 
+    private ActionResultDTO<MyExample3027DTO> withApproval() {
+        return new ActionResultDTO<>();
+    }
 
 }
 

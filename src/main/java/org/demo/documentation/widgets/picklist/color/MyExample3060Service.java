@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061Pick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class MyExample3060Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3060DTO> doUpdateEntity(MyEntity3060 entity, MyExample3060DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3060DTO_.customFieldPicklistColorConstId)) {
+            entity.setCustomFieldPicklistColorConstEntity(data.getCustomFieldPicklistColorConstId() != null
+                    ? entityManager.getReference(MyEntity3061Pick.class, data.getCustomFieldPicklistColorConstId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3060DTO_.customFieldPicklistId)) {
             entity.setCustomFieldPicklistEntity(data.getCustomFieldPicklistId() != null
                     ? entityManager.getReference(MyEntity3061.class, data.getCustomFieldPicklistId())
