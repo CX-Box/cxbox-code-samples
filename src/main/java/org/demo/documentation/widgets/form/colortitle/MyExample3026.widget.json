@@ -1,6 +1,6 @@
 {
   "name": "MyExample3026",
-  "title": "${customFieldColorInlinePicklistEntity} - ${customFieldColorPicklistEntity} - ${customFieldColorRadio} - ${customFieldColorMoney} - ${customFieldColorPercent} - ${customFieldColorNumber} - ${customFieldColorFileUploade} - ${customFieldColorFileUploadeId} - ${customFieldColorDictionary} - ${customFieldColorDateTimeWithSeconds} - ${customFieldColorDate} - ${customFieldColorCheckbox} - ${customFieldColorDateTime} - ${customFieldColorText} - ${customFieldColorInput} ",
+   "title": "customField: ${customField} - customFieldColorInlinePicklistEntity: ${customFieldColorInlinePicklistEntity} - customFieldColorPicklistEntity: ${customFieldColorPicklistEntity} - customFieldColorRadio: ${customFieldColorRadio} - customFieldColorMoney: ${customFieldColorMoney} - customFieldColorPercent: ${customFieldColorPercent} - customFieldColorNumber: ${customFieldColorNumber} - customFieldColorFileUploade: ${customFieldColorFileUploade} - customFieldColorDictionary: ${customFieldColorDictionary} - customFieldColorDateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - customFieldColorDate: ${customFieldColorDate} - customFieldColorCheckbox: ${customFieldColorCheckbox} - customFieldColorDateTime: ${customFieldColorDateTime} - customFieldColorText: ${customFieldColorText} - customFieldColorInput:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}",
   "type": "Form",
   "bc": "myexample3026",
   "fields": [
@@ -11,7 +11,7 @@
       "popupBcName": "myEntity3037AssocListPopup",
       "type": "multivalueHover",
       "displayedKey": "customFieldColorMultivalueHoverDisplayedKey",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Custom Field Color Multivalue",
@@ -20,7 +20,7 @@
       "displayedKey": "customFieldColorMultivalueDisplayedKey",
       "popupBcName": "myEntity3038AssocListPopup",
       "assocValueKey": "customField",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Custom Field Color Inline Picklist",
@@ -31,7 +31,7 @@
         "customFieldColorInlinePicklistId": "id",
         "customFieldColorInlinePicklist": "customField"
       },
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Custom Field Color Picklist",
@@ -42,81 +42,81 @@
         "customFieldColorPicklistId": "id",
         "customFieldColorPicklist": "customField"
       },
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Radio",
       "key": "customFieldColorRadio",
       "type": "radio",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Money",
       "key": "customFieldColorMoney",
       "digits": 2,
       "type": "money",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Percent",
       "key": "customFieldColorPercent",
       "type": "percent",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Number",
       "key": "customFieldColorNumber",
       "type": "number",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color FileUploade",
       "key": "customFieldColorFileUploade",
       "type": "fileUpload",
       "fileIdKey": "customFieldColorFileUploadeId",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Dictionary",
       "key": "customFieldColorDictionary",
       "type": "dictionary",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Date Time With Seconds",
       "key": "customFieldColorDateTimeWithSeconds",
       "type": "dateTimeWithSeconds",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color date",
       "key": "customFieldColorDate",
       "type": "date",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Checkbox",
       "key": "customFieldColorCheckbox",
       "type": "checkbox",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Date Time",
       "key": "customFieldColorDateTime",
       "type": "dateTime",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Text",
       "key": "customFieldColorText",
       "type": "text",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "Color Input",
       "key": "customFieldColorInput",
       "type": "input",
-      "bgColor": "#eda6a6"
+      "bgColorKey": "customFieldColor"
     },
     {
       "label": "customField",
@@ -259,6 +259,22 @@
           "cols": [
             {
               "fieldKey": "customFieldColorDateTime",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldColorMultivalueHover",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldColorMultivalue",
               "span": 12
             }
           ]

@@ -63,6 +63,7 @@ public class MyEntity3050TestDataLoadService {
                 .setCustomFieldColorMoney(10000.0)
                 .setCustomFieldColorRadio(CustomFieldColorRadioEnum.LOW)
                 .setCustomFieldColorPicklistEntity(myEntityPick)
+                .setCustomFieldColorInput("Test data")
                 .setCustomFieldColorInlinePicklistEntity(myEntityPick2);
         repository.save(myEntity3050new.setCustomFieldColorMultivalueHoverList(list).setCustomFieldColorMultivalueList(list2));
     }
