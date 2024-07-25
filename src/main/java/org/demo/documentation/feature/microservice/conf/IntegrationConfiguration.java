@@ -14,4 +14,5 @@ public class IntegrationConfiguration {
 	private String myentityCreateMicroservicesDataServerUrl;
 	private String myentityExistingMicroservicesDataServerUrl;
 	private String myentityGetStartedMicroservicesDataServerUrl;
+	private String myentityNextAndPreviousMicroservicesDataServerUrl;
 }
