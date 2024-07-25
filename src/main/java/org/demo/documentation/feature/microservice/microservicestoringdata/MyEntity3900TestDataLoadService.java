@@ -4,9 +4,11 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity3900Repository;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity3910Repository;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity4001Repository;
+import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity4002ExternalRepository;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3900;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3910;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity4001;
+import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity4002External;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class MyEntity3900TestDataLoadService {
 
     @Autowired
     MyEntity4001Repository repository4001;
+
+    @Autowired
+    MyEntity4002ExternalRepository repository4002;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -58,7 +63,17 @@ public class MyEntity3900TestDataLoadService {
         repository3910.save(new MyEntity3910().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)));
         repository4001.deleteAll();
         repository4001.save(new MyEntity4001().setCustomField("Test data").setCustomFieldNew("Test data").setCustomFieldDateTime(LocalDateTime.now().minusMinutes(3)));
-
+        repository4002.deleteAll();
+        repository4002.save(new MyEntity4002External().setCustomField("Test data").setCustomFieldNew("Test data"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data2").setCustomFieldNew("Test data2"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data3").setCustomFieldNew("Test data3"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data4").setCustomFieldNew("Test data4"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data5").setCustomFieldNew("Test data5"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data6").setCustomFieldNew("Test data6"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data7").setCustomFieldNew("Test data7"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data8").setCustomFieldNew("Test data8"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data9").setCustomFieldNew("Test data9"));
+        repository4002.save(new MyEntity4002External().setCustomField("Test data10").setCustomFieldNew("Test data10"));
     }
 
 }
