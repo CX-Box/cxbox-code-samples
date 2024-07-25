@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.microservice.hasNext;
+package org.demo.documentation.feature.microservice.nextandpreviouswihhasnext;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
