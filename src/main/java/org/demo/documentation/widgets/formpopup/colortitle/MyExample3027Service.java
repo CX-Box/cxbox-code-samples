@@ -115,7 +115,7 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
     }
 
     private static PreAction confirmWithComment(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027Formpopup", "Done", "Cancel");
+        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027FormPopup", "Done", "Cancel");
     }
 
     private static PreAction confirmWithCommentColorConst(@NonNull String actionText) {
