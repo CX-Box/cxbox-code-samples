@@ -38,8 +38,8 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorInlinePicklist);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorMultivalue);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorMultivalueHover);
-        fields.setEnabled(org.demo.documentation.widgets.picklist.color.MyEntity3061PickDTO_.id);
-        fields.setEnabled(org.demo.documentation.widgets.picklist.color.MyEntity3061PickDTO_.customField);
+        fields.setEnabled(MyEntity3061PickDTO_.id);
+        fields.setEnabled(MyEntity3061PickDTO_.customField);
     }
 
     @Override
