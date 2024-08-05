@@ -11,8 +11,9 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties("app.integrations")
 public class IntegrationConfiguration {
 
-	private String myentityCreateMicroservicesDataServerUrl;
-	private String myentityExistingMicroservicesDataServerUrl;
-	private String myentityGetStartedMicroservicesDataServerUrl;
-	private String myentityNextAndPreviousMicroservicesDataServerUrl;
+	private String createMicroservicesDataServerUrl;
+	private String existingMicroservicesDataServerUrl;
+	private String getStartedMicroservicesDataServerUrl;
+	private String nextAndPreviousMicroservicesDataServerUrl;
+	private String suggestionMicroservicesDataServerUrl;
 }

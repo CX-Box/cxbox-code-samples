@@ -1,0 +1,23 @@
+package org.demo.documentation.fields.suggestion.drilldown;
+
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Getter;
+import org.cxbox.api.data.dto.DataResponseDTO;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyExample3084SuggestionDTO extends DataResponseDTO {
+
+    private String customFieldSuggestion;
+    private LocalDateTime customFieldSuggestionDate;
+
+    public MyExample3084SuggestionDTO(MyEntity3084OutServiceDTO entity) {
+        this.id = entity.getId().toString();
+        this.customFieldSuggestion = entity.getCustomFieldSuggestion();
+        this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
+    }
+}

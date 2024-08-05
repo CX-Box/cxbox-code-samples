@@ -1,5 +1,6 @@
 package org.demo.conf.cxbox;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import java.util.HashSet;
 import java.util.List;

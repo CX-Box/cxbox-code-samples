@@ -7,7 +7,7 @@ import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.getstarted.microservice.MyEntity4001OutServiceDTO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.feature.microservice.createmicroservices.utils.RestResponsePage;
+import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
@@ -47,7 +47,7 @@ public class MyEntity4003Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
     @Override
     public MyEntity4001OutServiceDTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityGetStartedMicroservicesDataServerUrl() + "/{id}").build()
+                fromUriString(integrationConfig.getGetStartedMicroservicesDataServerUrl() + "/{id}").build()
                         .expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 GET, null, MyEntity4001OutServiceDTO.class
@@ -74,7 +74,7 @@ public class MyEntity4003Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
         List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
         Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getMyentityGetStartedMicroservicesDataServerUrl())
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getGetStartedMicroservicesDataServerUrl())
                 .queryParam("number", page)
                 .queryParam("size", limit)
                 .queryParamIfPresent("filterCustomField", filter)
@@ -120,7 +120,7 @@ public class MyEntity4003Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
     // --8<-- [start:delete]
     public void delete(BusinessComponent bc) {
         restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityGetStartedMicroservicesDataServerUrl() + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
+                fromUriString(integrationConfig.getGetStartedMicroservicesDataServerUrl() + "/{id}").build().expand(bc.getIdAsLong()).normalize().encode()
                         .toUriString(),
                 DELETE, null, Void.class
         );
@@ -133,7 +133,7 @@ public class MyEntity4003Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
     public MyEntity4001OutServiceDTO create(BusinessComponent bc, MyEntity4001OutServiceDTO entity) {
         entity.setId(null);
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityGetStartedMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getGetStartedMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity4001OutServiceDTO.class
         ).getBody();
     }
@@ -143,7 +143,7 @@ public class MyEntity4003Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
     // --8<-- [start:update]
     public MyEntity4001OutServiceDTO update(BusinessComponent bc, MyEntity4001OutServiceDTO entity) {
         return restTemplate.exchange(
-                fromUriString(integrationConfig.getMyentityGetStartedMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
+                fromUriString(integrationConfig.getGetStartedMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 PUT, new HttpEntity<>(entity), MyEntity4001OutServiceDTO.class
         ).getBody();
     }
