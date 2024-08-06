@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.suggestion.basic;
+package org.demo.documentation.fields.suggestion.colorconst;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
