@@ -21,6 +21,4 @@ public class MyEntity3121 extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @Column
-    private Boolean customFieldCheckbox;
 }

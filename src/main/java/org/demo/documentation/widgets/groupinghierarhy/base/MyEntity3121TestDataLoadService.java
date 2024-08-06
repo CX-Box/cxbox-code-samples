@@ -23,13 +23,13 @@ public class MyEntity3121TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3121().setCustomField("test data 1").setCustomFieldDictionary(HIGH).setCustomFieldCheckbox(Boolean.TRUE));
+        repository.save(new MyEntity3121().setCustomField("test data 1").setCustomFieldDictionary(HIGH));
         repository.save(new MyEntity3121().setCustomField("test data 2").setCustomFieldDictionary(LOW));
-        repository.save(new MyEntity3121().setCustomField("test data 3").setCustomFieldDictionary(HIGH).setCustomFieldCheckbox(Boolean.TRUE));
-        repository.save(new MyEntity3121().setCustomField("test data 4").setCustomFieldDictionary(HIGH).setCustomFieldCheckbox(Boolean.FALSE));
+        repository.save(new MyEntity3121().setCustomField("test data 3").setCustomFieldDictionary(HIGH));
+        repository.save(new MyEntity3121().setCustomField("test data 4").setCustomFieldDictionary(HIGH));
         repository.save(new MyEntity3121().setCustomField("test data 5").setCustomFieldDictionary(LOW));
-        repository.save(new MyEntity3121().setCustomField("test data 6").setCustomFieldCheckbox(Boolean.TRUE));
-        repository.save(new MyEntity3121().setCustomField("test data 7").setCustomFieldCheckbox(Boolean.TRUE));
+        repository.save(new MyEntity3121().setCustomField("test data 6"));
+        repository.save(new MyEntity3121().setCustomField("test data 7"));
         repository.save(new MyEntity3121().setCustomField("test data 8").setCustomFieldDictionary(MIDDLE));
         repository.save(new MyEntity3121().setCustomField("test data 9"));
 
