@@ -37,7 +37,8 @@ public class FieldExtractor extends BaseFieldExtractor {
 				"Funnel",
 				"RingProgress",
 				"DashboardList",
-				"FormPopup"
+				"FormPopup",
+				"GroupingHierarchy"
 		);
 	}
 
