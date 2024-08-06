@@ -25,12 +25,14 @@ public class MyExample3121Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3121DTO> doUpdateEntity(MyEntity3121 entity, MyExample3121DTO data, BusinessComponent bc) {
-
         if (data.isFieldChanged(MyExample3121DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         if (data.isFieldChanged(MyExample3121DTO_.customFieldDictionary)) {
             entity.setCustomFieldDictionary(data.getCustomFieldDictionary());
+        }
+        if (data.isFieldChanged(MyExample3121DTO_.customFieldCheckbox)) {
+            entity.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

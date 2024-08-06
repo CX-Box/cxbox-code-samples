@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.base;
+package org.demo.documentation.widgets.groupinghierarhy.colortitle;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -8,19 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.colortitle.enums.CustomFieldDictionaryEnum;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3121 extends BaseEntity {
+public class MyEntity3133 extends BaseEntity {
     @Column
     private String customField;
-
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @Column
-    private Boolean customFieldCheckbox;
 }

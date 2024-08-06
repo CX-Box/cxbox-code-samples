@@ -1,30 +1,27 @@
-package org.demo.documentation.widgets.groupinghierarhy.base;
+package org.demo.documentation.widgets.groupinghierarhy.colortitle;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.colortitle.enums.CustomFieldDictionaryEnum;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3121DTO extends DataResponseDTO {
+public class MyExample3133DTO extends DataResponseDTO {
 
+    private String customFieldColor;
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
-    private Boolean customFieldCheckbox;
 
-    public MyExample3121DTO(MyEntity3121 entity) {
+    public MyExample3133DTO(MyEntity3133 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();
-        this.customFieldCheckbox = entity.getCustomFieldCheckbox();
+        this.customFieldColor = "#eda6a6";
     }
 }
