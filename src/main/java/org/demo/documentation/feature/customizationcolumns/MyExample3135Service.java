@@ -25,6 +25,10 @@ public class MyExample3135Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3135DTO> doUpdateEntity(MyEntity3135 entity, MyExample3135DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3135DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+        setIfChanged(data, MyExample3135DTO_.customFieldCheckBox, entity::setCustomFieldCheckBox);
+        setIfChanged(data, MyExample3135DTO_.customFieldDate, entity::setCustomFieldDate);
+        setIfChanged(data, MyExample3135DTO_.customFieldInput, entity::setCustomFieldInput);
         if (data.isFieldChanged(MyExample3135DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
