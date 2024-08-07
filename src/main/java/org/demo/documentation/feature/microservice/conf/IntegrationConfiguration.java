@@ -16,4 +16,5 @@ public class IntegrationConfiguration {
 	private String getStartedMicroservicesDataServerUrl;
 	private String nextAndPreviousMicroservicesDataServerUrl;
 	private String suggestionMicroservicesDataServerUrl;
+	private String dataServerUrl;
 }
