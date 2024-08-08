@@ -19,4 +19,7 @@ public class MyEntity3072 extends BaseEntity {
     @JoinColumn(name = "CUSTOM_FIELD_ID")
     @ManyToOne
     private MyEntity3072Pick customFieldEntity;
+    @JoinColumn(name = "CUSTOM_FIELD_INLINE_PICKLIST_ID")
+    @ManyToOne
+    private MyEntity3072InlinePick customFieldInlinePicklistEntity;
 }

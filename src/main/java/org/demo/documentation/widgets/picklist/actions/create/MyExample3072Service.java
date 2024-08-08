@@ -29,6 +29,11 @@ public class MyExample3072Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3072DTO> doUpdateEntity(MyEntity3072 entity, MyExample3072DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3072DTO_.customFieldInlinePicklistId)) {
+            entity.setCustomFieldInlinePicklistEntity(data.getCustomFieldInlinePicklistId() != null
+                    ? entityManager.getReference(MyEntity3072InlinePick.class, data.getCustomFieldInlinePicklistId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3072DTO_.customFieldId)) {
             entity.setCustomFieldEntity(data.getCustomFieldId() != null
                     ? entityManager.getReference(MyEntity3072Pick.class, data.getCustomFieldId())
