@@ -1,6 +1,5 @@
-package org.demo.navigation.tab.oldlogic;
+package org.demo.navigation.tab.typelegacy;
 
-import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;

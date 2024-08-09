@@ -1,9 +1,12 @@
-package org.demo.navigation.tab.oldlogic;
+package org.demo.navigation.tab.typelegacy;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +40,16 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
-                .delete()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotolist", "Go to List")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3235DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample32353/view/myexample3235list5"
+                            ));
+                })
                 .add()
                 .build();
     }
