@@ -18,6 +18,9 @@ public class MyEntity3072TestDataLoadService {
     MyEntity3072PickRepository repositoryPick;
 
     @Autowired
+    MyEntity3072InlinePickRepository repositoryInlinePick;
+
+    @Autowired
     InternalAuthorizationService authzService;
 
     @Transactional
@@ -27,7 +30,9 @@ public class MyEntity3072TestDataLoadService {
         repository.deleteAll();
         MyEntity3072Pick myEntity3072Pick = new MyEntity3072Pick().setCustomFieldPick("Test data") ;
         repositoryPick.save(myEntity3072Pick);
-        repository.save(new MyEntity3072().setCustomFieldEntity(myEntity3072Pick));
+        MyEntity3072InlinePick myEntity3072InlinePick = new MyEntity3072InlinePick().setCustomFieldPick("Test data Inline") ;
+        repositoryInlinePick.save(myEntity3072InlinePick);
+        repository.save(new MyEntity3072().setCustomFieldEntity(myEntity3072Pick).setCustomFieldInlinePicklistEntity(myEntity3072InlinePick));
     }
 
 

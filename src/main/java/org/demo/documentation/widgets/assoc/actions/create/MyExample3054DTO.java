@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.basic;
+package org.demo.documentation.widgets.assoc.actions.create;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,29 +7,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.demo.documentation.widgets.assoc.basic.forfield.MyEntity3053Multi;
 
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3053DTO extends DataResponseDTO {
+public class MyExample3054DTO extends DataResponseDTO {
 
 
     @SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
     private MultivalueField customField;
     private String customFieldDisplayedKey;
 
-    public MyExample3053DTO(MyEntity3053 entity) {
+    public MyExample3054DTO(MyEntity3054 entity) {
         this.id = entity.getId().toString();
 
         this.customField = entity.getCustomFieldList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
-                MyEntity3053Multi::getCustomField
+                MyEntity3054Multi::getCustomField
         ));
-        this.customFieldDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldList().stream().map(MyEntity3053Multi::getCustomField
+        this.customFieldDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldList().stream().map(MyEntity3054Multi::getCustomField
         ).collect(Collectors.joining(",")), 12);
     }
 }

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.basic;
+package org.demo.documentation.widgets.assoc.actions.create;
 
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -7,7 +7,6 @@ import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.assoc.basic.forfield.MyEntity3053Multi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,32 +14,32 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class MyExample3053Service extends VersionAwareResponseService<MyExample3053DTO, MyEntity3053> {
+public class MyExample3054Service extends VersionAwareResponseService<MyExample3054DTO, MyEntity3054> {
 
-    private final MyEntity3053Repository repository;
+    private final MyEntity3054Repository repository;
     @Autowired
     private EntityManager entityManager;
 
-    public MyExample3053Service(MyEntity3053Repository repository) {
-        super(MyExample3053DTO.class, MyEntity3053.class, null, MyExample3053Meta.class);
+    public MyExample3054Service(MyEntity3054Repository repository) {
+        super(MyExample3054DTO.class, MyEntity3054.class, null, MyExample3054Meta.class);
         this.repository = repository;
     }
 
     @Override
-    protected CreateResult<MyExample3053DTO> doCreateEntity(MyEntity3053 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample3054DTO> doCreateEntity(MyEntity3054 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample3053DTO> doUpdateEntity(MyEntity3053 entity, MyExample3053DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3053DTO_.customField)) {
+    protected ActionResultDTO<MyExample3054DTO> doUpdateEntity(MyEntity3054 entity, MyExample3054DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3054DTO_.customField)) {
             entity.getCustomFieldList().clear();
             entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
                     .map(MultivalueFieldSingleValue::getId)
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
-                    .map(e -> entityManager.getReference(MyEntity3053Multi.class, e))
+                    .map(e -> entityManager.getReference(MyEntity3054Multi.class, e))
                     .collect(Collectors.toList()));
         }
 
@@ -48,8 +47,8 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
     }
 
     @Override
-    public Actions<MyExample3053DTO> getActions() {
-        return Actions.<MyExample3053DTO>builder()
+    public Actions<MyExample3054DTO> getActions() {
+        return Actions.<MyExample3054DTO>builder()
                 .newAction()
                 .action("save", "save")
                 .add()
