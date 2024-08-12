@@ -1,5 +1,6 @@
-package org.demo.documentation.widgets.assoc.basic;
+package org.demo.documentation.feature.drilldown.byview;
 
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
@@ -8,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity3053TestDataLoadService {
+public class MyEntity3055TestDataLoadService {
 
     @Autowired
-    MyEntity3053Repository repository;
+    MyEntity3055Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -21,7 +22,7 @@ public class MyEntity3053TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        //repository.save(new MyEntity3053().setCustomField("test data"));
+        repository.save(new MyEntity3055().setCustomField("test data"));
     }
 
 }

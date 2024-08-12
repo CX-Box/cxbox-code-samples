@@ -1,5 +1,6 @@
-package org.demo.documentation.widgets.picklist.actions.create;
+package org.demo.documentation.widgets.assoc.actions.create;
 
+import lombok.Getter;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,32 +11,32 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@Getter
 @Service
-public class MyEntity3072PickPickService extends VersionAwareResponseService<MyEntity3072PickPickDTO, MyEntity3072Pick> {
-    private final MyEntity3072PickRepository repository;
+public class MyEntity3054MultiMultivalueService extends VersionAwareResponseService<MyEntity3054MultiMultivalueDTO, MyEntity3054Multi> {
+    private final MyEntity3054MultiRepository repository;
 
-    public MyEntity3072PickPickService(MyEntity3072PickRepository repository) {
-        super(MyEntity3072PickPickDTO.class, MyEntity3072Pick.class, null, MyEntity3072PickPickMeta.class);
+    public MyEntity3054MultiMultivalueService(MyEntity3054MultiRepository repository) {
+        super(MyEntity3054MultiMultivalueDTO.class, MyEntity3054Multi.class, null, MyEntity3054MultiMultivalueMeta.class);
         this.repository = repository;
     }
 
     @Override
-    protected CreateResult<MyEntity3072PickPickDTO> doCreateEntity(MyEntity3072Pick entity, BusinessComponent bc) {
+    protected CreateResult<MyEntity3054MultiMultivalueDTO> doCreateEntity(MyEntity3054Multi entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyEntity3072PickPickDTO> doUpdateEntity(MyEntity3072Pick entity, MyEntity3072PickPickDTO data,
-                                                                      BusinessComponent bc) {
-        setIfChanged(data, MyEntity3072PickPickDTO_.customFieldPick, entity::setCustomFieldPick);
+    protected ActionResultDTO<MyEntity3054MultiMultivalueDTO> doUpdateEntity(MyEntity3054Multi entity, MyEntity3054MultiMultivalueDTO data,
+                                                                             BusinessComponent bc) {
         repository.save(entity);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
-    public ActionResultDTO<MyEntity3072PickPickDTO> deleteEntity(BusinessComponent bc) {
-        ActionResultDTO<MyEntity3072PickPickDTO> contactDTOActionResultDTO;
+    public ActionResultDTO<MyEntity3054MultiMultivalueDTO> deleteEntity(BusinessComponent bc) {
+        ActionResultDTO<MyEntity3054MultiMultivalueDTO> contactDTOActionResultDTO;
         try {
             contactDTOActionResultDTO = super.deleteEntity(bc);
             repository.flush();
@@ -46,8 +47,8 @@ public class MyEntity3072PickPickService extends VersionAwareResponseService<MyE
     }
 
     @Override
-    public Actions<MyEntity3072PickPickDTO> getActions() {
-        return Actions.<MyEntity3072PickPickDTO>builder()
+    public Actions<MyEntity3054MultiMultivalueDTO> getActions() {
+        return Actions.<MyEntity3054MultiMultivalueDTO>builder()
                 .create().text("Add").add()
                 .save().text("Save").add()
                 .cancelCreate().text("Cancel").available(bc -> true).add()
@@ -55,4 +56,3 @@ public class MyEntity3072PickPickService extends VersionAwareResponseService<MyE
                 .build();
     }
 }
-

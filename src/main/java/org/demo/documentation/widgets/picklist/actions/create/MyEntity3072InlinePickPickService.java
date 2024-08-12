@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.picklist.actions.create;
 
 import lombok.Getter;
+import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -27,5 +28,12 @@ public class MyEntity3072InlinePickPickService extends VersionAwareResponseServi
         return null;
     }
 
-
+    public Actions<MyEntity3072InlinePickPickDTO> getActions() {
+        return Actions.<MyEntity3072InlinePickPickDTO>builder()
+                .create().text("Add").add()
+                .save().text("Save").add()
+                .cancelCreate().text("Cancel").available(bc -> true).add()
+                .delete().text("Delete").add()
+                .build();
+    }
 }

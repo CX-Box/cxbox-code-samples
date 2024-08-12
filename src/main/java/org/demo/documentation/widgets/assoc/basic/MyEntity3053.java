@@ -1,11 +1,14 @@
 package org.demo.documentation.widgets.assoc.basic;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.assoc.basic.forfield.MyEntity3053Multi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -13,6 +16,13 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity3053 extends BaseEntity {
-    @Column
-    private String customField;
+
+    @JoinTable(name = "MyEntity3053_MyEntity3053Multi",
+            joinColumns = @JoinColumn(name = "MyEntity3053_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity3053Multi_id")
+    )
+    @ManyToMany(cascade =
+            {CascadeType.PERSIST,
+                    CascadeType.MERGE})
+    private List<MyEntity3053Multi> customFieldList = new ArrayList<>();
 }
