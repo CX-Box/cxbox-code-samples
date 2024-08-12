@@ -47,18 +47,18 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .newAction()
                 .scope(ActionScope.RECORD)
-                .action("gotolistthirdlevel", "Go to List")
+                .action("gotolistthirdlevel", "Go to List 3 level")
                 .invoker((bc, dto) -> {
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
                                     DrillDownType.INNER,
-                                    "/screen/myexample32353/view/myexample3235thirdleveltab3"
+                                    "/screen/myexample3235/view/myexample3235thirdleveltab3"
                             ));
                 })
                 .add()
                 .newAction()
                 .scope(ActionScope.RECORD)
-                .action("gotolistfourthlevel", "Go to List")
+                .action("gotolistfourthlevel", "Go to List 4 level")
                 .invoker((bc, dto) -> {
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
