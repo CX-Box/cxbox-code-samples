@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.oldlogic;
+package org.demo.navigation.tab.typelegacy;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.oldlogic;
+package org.demo.navigation.tab.typelegacy;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
