@@ -16,7 +16,7 @@ public class MyExample3055Meta extends FieldMetaBuilder<MyExample3055DTO> {
         fields.setDrilldown(
                 MyExample3055DTO_.customField,
                 DrillDownType.INNER,
-                "/screen/myexample3611/view/myexample3611list"
+                "/screen/myexample32352/view/myexample3235thirdleveltab21/myexample3235"
         );
     }
 
