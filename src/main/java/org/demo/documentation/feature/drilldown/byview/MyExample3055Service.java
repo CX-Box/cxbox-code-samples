@@ -2,9 +2,13 @@ package org.demo.documentation.feature.drilldown.byview;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.navigation.tab.typelegacy.MyExample3235DTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +39,15 @@ public class MyExample3055Service extends VersionAwareResponseService<MyExample3
     public Actions<MyExample3055DTO> getActions() {
         return Actions.<MyExample3055DTO>builder()
                 .newAction()
-                .action("save", "save")
+                .scope(ActionScope.RECORD)
+                .action("gotoonerecord", "Go to List 3 level")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3055DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3055/view/myexample3055info/myexample3055/1100023"
+                            ));
+                })
                 .add()
                 .build();
     }
