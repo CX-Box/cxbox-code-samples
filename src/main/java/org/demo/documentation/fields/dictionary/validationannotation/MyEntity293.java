@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.fields.dictionary.validationannotation.enums.CustomFieldEnum;
-// 293
-// 293
-//  293",
 
 @Entity
 @Getter
