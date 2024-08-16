@@ -26,7 +26,7 @@ public class MyEntity3071TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        MyEntity3071Pick myEntity3071Pick = new MyEntity3071Pick().setCustomFieldPick("Test data") ;
+        MyEntity3071Pick myEntity3071Pick = new MyEntity3071Pick().setCustomFieldPick("Test data Pick") ;
         repositoryPick.save(myEntity3071Pick);
         repository.save(new MyEntity3071().setCustomFieldEntity(myEntity3071Pick));
     }

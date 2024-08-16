@@ -24,6 +24,7 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
 
     private String customField;
     private String customFieldColor;
+    private String customFieldColorFieldText;
     @SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldColorMultivalueHover;
     private String customFieldColorMultivalueHoverDisplayedKey;
@@ -68,6 +69,7 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldColor = "#eda6a6";
+        this.customFieldColorFieldText = "#a6eda6";
         this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
                 MyEntity3061Multi::getCustomField
