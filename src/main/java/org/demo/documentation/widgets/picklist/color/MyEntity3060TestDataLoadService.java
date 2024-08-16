@@ -38,9 +38,8 @@ public class MyEntity3060TestDataLoadService {
         repository.deleteAll();
         repository.save(new MyEntity3060().setCustomField("test data"));
         MyEntity3061Multi myEntity1 = new MyEntity3061Multi().setCustomField(
-                "Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
-        MyEntity3061Multi myEntity2 = new MyEntity3061Multi().setCustomField(
-                "Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.");
+                "Saturn's interior is thought to be composed of a rocky core");
+        MyEntity3061Multi myEntity2 = new MyEntity3061Multi().setCustomField("Saturn's mass is not in the gas phase");
         List<MyEntity3061Multi> list = new ArrayList<>();
         list.add(myEntity1);
         list.add(myEntity2);
@@ -60,7 +59,7 @@ public class MyEntity3060TestDataLoadService {
                 .setCustomFieldColorDateTime(LocalDateTime.now())
                 .setCustomFieldColorDateTimeWithSeconds(LocalDateTime.now())
                 .setCustomFieldColorDate(LocalDateTime.now())
-                .setCustomFieldColorText("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.")
+                .setCustomFieldColorText("Unlike a digital typeface")
                 .setCustomFieldColorNumber(7L)
                 .setCustomFieldColorPercent(9L)
                 .setCustomFieldColorMoney(10000.0)
