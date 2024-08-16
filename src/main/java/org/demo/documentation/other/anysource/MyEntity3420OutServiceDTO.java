@@ -17,4 +17,5 @@ public class MyEntity3420OutServiceDTO implements Serializable {
     private String customField;
     private String customFieldNew;
     private LocalDateTime customFieldDateTime;
+    private Double customFieldDouble;
 }

@@ -84,19 +84,18 @@ public class MyEntity3900TestDataLoadService {
         repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data7").setCustomFieldNew("Test data7").setCustomFieldSuggestionDate(LocalDateTime.now().minusYears(4)));
         repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data8").setCustomFieldNew("Test data8").setCustomFieldSuggestionDate(LocalDateTime.now().plusYears(6)));
         repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data9").setCustomFieldNew("Test data9").setCustomFieldSuggestionDate(LocalDateTime.now().minusDays(9)));
-        repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data10").setCustomFieldNew("Test data10").setCustomFieldSuggestionDate(LocalDateTime.now()));
-        repository3137.deleteAll();
+        repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data10").setCustomFieldNew("Test data10").setCustomFieldSuggestionDate(LocalDateTime.now()));repository3137.deleteAll();
         repository3137.save(new MyEntity3137().setCustomField("Test data").setCustomFieldNew("Test data").setCustomFieldDateTime(LocalDateTime.now().minusMinutes(3)));
         repository3137.save(new MyEntity3137().setCustomField("Test data2").setCustomFieldNew("Test data2").setCustomFieldDateTime(LocalDateTime.now().minusDays(3)));
-        repository3137.save(new MyEntity3137().setCustomField("Test data3").setCustomFieldNew("Test data3").setCustomFieldDateTime(LocalDateTime.now().minusDays(45)));
+        repository3137.save(new MyEntity3137().setCustomField("Test data3").setCustomFieldNew("Test data3").setCustomFieldDateTime(LocalDateTime.now().minusDays(45)).setCustomFieldDouble(Double.valueOf(100200)));
         repository3137.save(new MyEntity3137().setCustomField("Test data4").setCustomFieldNew("Test data4").setCustomFieldDateTime(LocalDateTime.now().minusYears(1)));
         repository3137.save(new MyEntity3137().setCustomField("Test data5").setCustomFieldNew("Test data5").setCustomFieldDateTime(LocalDateTime.now().minusYears(3)));
         repository3137.save(new MyEntity3137().setCustomField("Test data6").setCustomFieldNew("Test data6").setCustomFieldDateTime(LocalDateTime.now().minusMinutes(35)));
         repository3137.save(new MyEntity3137().setCustomField("Test data7").setCustomFieldNew("Test data7").setCustomFieldDateTime(LocalDateTime.now().minusMonths(6)));
         repository3137.save(new MyEntity3137().setCustomField("Test data8").setCustomFieldNew("Test data8").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(2)));
-        repository3137.save(new MyEntity3137().setCustomField("Test data9").setCustomFieldNew("Test data9").setCustomFieldDateTime(LocalDateTime.now().minusMonths(3)));
-        repository3137.save(new MyEntity3137().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)));
-        repository3137.save(new MyEntity3137().setCustomFieldDateTime(LocalDateTime.now().minusDays(3)));
+        repository3137.save(new MyEntity3137().setCustomField("Test data9").setCustomFieldNew("Test data9").setCustomFieldDateTime(LocalDateTime.now().minusMonths(3)).setCustomFieldDouble(Double.valueOf(201200)));
+        repository3137.save(new MyEntity3137().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)).setCustomFieldDouble(Double.valueOf(300200)));
+        repository3137.save(new MyEntity3137().setCustomField("Test data11").setCustomFieldDateTime(LocalDateTime.now().minusDays(3)));
         repository3137.save(new MyEntity3137().setCustomField("Test data2"));
     }
 
