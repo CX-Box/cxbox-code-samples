@@ -17,7 +17,10 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
                                       String id, String parentId) {
         fields.setEnabled(MyExample3420DTO_.customField);
         fields.setEnabled(MyExample3420DTO_.customFieldNew);
+        fields.setEnabled(MyExample3420DTO_.customFieldDouble);
         fields.setEnabled(MyExample3420DTO_.customFieldDateTime);
+        fields.setPlaceholder(MyExample3420DTO_.customFieldDouble,"More than 100 000.00");
+        fields.setPlaceholder(MyExample3420DTO_.customFieldDateTime,"Less sysdate");
     }
 
     @Override
@@ -25,6 +28,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
         fields.setForceActive(MyExample3420DTO_.customField);
         fields.setForceActive(MyExample3420DTO_.customFieldNew);
         fields.setForceActive(MyExample3420DTO_.customFieldDateTime);
+        fields.setForceActive(MyExample3420DTO_.customFieldDouble);
     }
 
 }

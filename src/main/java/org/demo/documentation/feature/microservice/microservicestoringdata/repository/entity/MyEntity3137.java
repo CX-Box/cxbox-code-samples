@@ -21,4 +21,5 @@ public class MyEntity3137 extends BaseEntity {
     private String customField;
     private String customFieldNew;
     private LocalDateTime customFieldDateTime;
+    private Double customFieldDouble;
 }

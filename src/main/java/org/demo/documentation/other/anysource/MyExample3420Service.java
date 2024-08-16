@@ -4,9 +4,15 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.existingmicroservices.MyExample3800DTO_;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
+import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_DATE;
 
 
 @Service
@@ -32,7 +38,14 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
             entity.setCustomFieldNew(data.getCustomFieldNew());
         }
         if (data.isFieldChanged(MyExample3420DTO_.customFieldDateTime)) {
+            LocalDateTime sysdate = LocalDateTime.now();
+            if (data.getCustomFieldDateTime() != null && sysdate.compareTo(data.getCustomFieldDateTime()) < 0) {
+                throw new BusinessException().addPopup(MORE_CURRENT_DATE);
+            }
             entity.setCustomFieldDateTime(data.getCustomFieldDateTime());
+        }
+        if (data.isFieldChanged(MyExample3420DTO_.customFieldDouble)) {
+            entity.setCustomFieldDouble(data.getCustomFieldDouble());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
