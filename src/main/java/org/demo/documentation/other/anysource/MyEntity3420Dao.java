@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
+import org.demo.documentation.feature.microservice.existingmicroservices.MyEntity3800OutServiceDTO;
 import org.demo.services.utils.IntegrationURLBuilder;
 import org.demo.services.utils.RestResponsePage;
 
@@ -130,6 +131,7 @@ public class MyEntity3420Dao extends AbstractAnySourceBaseDAO<MyEntity3420OutSer
     @Override
     // --8<-- [start:create]
     public MyEntity3420OutServiceDTO create(BusinessComponent bc, MyEntity3420OutServiceDTO entity) {
+        entity.setId(null);
         return restTemplate.exchange(
                 fromUriString(integrationConfig.getDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3420OutServiceDTO.class
