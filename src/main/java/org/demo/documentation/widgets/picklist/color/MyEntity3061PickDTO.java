@@ -60,16 +60,15 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
     private Boolean customFieldColorCheckbox;
     @SearchParameter(name = "customFieldColorDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldColorDateTime;
-    @SearchParameter(name = "customFieldColorText", provider = StringValueProvider.class)
+
     private String customFieldColorText;
-    @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
     private String customFieldColorInput;
 
     public MyEntity3061PickDTO(MyEntity3061 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldColor = "#eda6a6";
-        this.customFieldColorFieldText = "#a6eda6";
+        this.customFieldColorText = "#a6eda6";
         this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
                 MyEntity3061Multi::getCustomField

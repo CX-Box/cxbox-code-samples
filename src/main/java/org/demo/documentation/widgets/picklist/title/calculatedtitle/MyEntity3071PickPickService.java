@@ -1,6 +1,9 @@
 package org.demo.documentation.widgets.picklist.title.calculatedtitle;
 
 import lombok.Getter;
+import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.fields.time.base.MyExample3500DTO_;
+import org.demo.documentation.widgets.picklist.actions.create.MyExample3072DTO;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -24,8 +27,17 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
     @Override
     protected ActionResultDTO<MyEntity3071PickPickDTO> doUpdateEntity(MyEntity3071Pick entity, MyEntity3071PickPickDTO data,
                                                                       BusinessComponent bc) {
-        return null;
+        setIfChanged(data, MyEntity3071PickPickDTO_.customFieldPick, entity::setCustomFieldPick);
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    @Override
+    public Actions<MyEntity3071PickPickDTO> getActions() {
+        return Actions.<MyEntity3071PickPickDTO>builder()
+                .newAction()
+                .action("save", "save")
+                .add()
+                .build();
+    }
 
 }
