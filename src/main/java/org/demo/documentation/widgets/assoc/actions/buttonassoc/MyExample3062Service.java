@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class MyExample3062Service extends VersionAwareResponseService<MyExample3062DTO, MyEntity3062> {
 
     private final MyEntity3062Repository repository;
-  @Autowired
-  private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-  public MyExample3062Service(MyEntity3062Repository repository) {
+    public MyExample3062Service(MyEntity3062Repository repository) {
         super(MyExample3062DTO.class, MyEntity3062.class, null, MyExample3062Meta.class);
         this.repository = repository;
     }
@@ -38,17 +38,17 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3062DTO> doUpdateEntity(MyEntity3062 entity, MyExample3062DTO data, BusinessComponent bc) {
-      if (data.isFieldChanged(MyExample3062DTO_.customField)) {
-        entity.getCustomFieldList().clear();
-        entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
-                .map(MultivalueFieldSingleValue::getId)
-                .filter(Objects::nonNull)
-                .map(Long::parseLong)
-                .map(e -> entityManager.getReference(MyEntity3062Multi.class, e))
-                .collect(Collectors.toList()));
-      }
+        if (data.isFieldChanged(MyExample3062DTO_.customField)) {
+            entity.getCustomFieldList().clear();
+            entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3062Multi.class, e))
+                    .collect(Collectors.toList()));
+        }
 
-      return new ActionResultDTO<>(entityToDto(bc, entity));
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
@@ -60,11 +60,8 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3062DTO> getActions() {
         return Actions.<MyExample3062DTO>builder()
-                .newAction()
-                .action("assocPopup", "assocPopup")
-                .text("Popup Assoc")
-                .add()
                 .associate()
+                .text("Popup Assoc")
                 .add()
                 .build();
     }

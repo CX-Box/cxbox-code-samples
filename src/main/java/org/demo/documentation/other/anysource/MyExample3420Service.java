@@ -5,6 +5,7 @@ import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.microservice.existingmicroservices.MyExample3800DTO_;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +25,9 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
 
     @Override
     protected ActionResultDTO<MyExample3420DTO> doUpdateEntity(MyEntity3420OutServiceDTO entity, MyExample3420DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3420DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
