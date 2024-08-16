@@ -56,8 +56,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
+                .create().text("Add").add()
                 .delete()
                 .add()
                 .build();
