@@ -28,6 +28,12 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
         if (data.isFieldChanged(MyExample3420DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
+        if (data.isFieldChanged(MyExample3420DTO_.customFieldNew)) {
+            entity.setCustomFieldNew(data.getCustomFieldNew());
+        }
+        if (data.isFieldChanged(MyExample3420DTO_.customFieldDateTime)) {
+            entity.setCustomFieldDateTime(data.getCustomFieldDateTime());
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
