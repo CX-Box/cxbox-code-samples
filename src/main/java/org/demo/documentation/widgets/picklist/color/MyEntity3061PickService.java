@@ -37,12 +37,8 @@ public class MyEntity3061PickService extends VersionAwareResponseService<MyEntit
     @Override
     protected ActionResultDTO<MyEntity3061PickDTO> doUpdateEntity(MyEntity3061 entity, MyEntity3061PickDTO data,
                                                                   BusinessComponent bc) {
-        if (data.isFieldChanged(MyEntity3061PickDTO_.customFieldColorInput)) {
-            entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
-        }
-        if (data.isFieldChanged(MyEntity3061PickDTO_.customFieldColorText)) {
-            entity.setCustomFieldColorText(data.getCustomFieldColorText());
-        }
+        setIfChanged(data, MyEntity3061PickDTO_.customFieldColorText, entity::setCustomFieldColorText);
+        setIfChanged(data, MyEntity3061PickDTO_.customFieldColorInput, entity::setCustomFieldColorInput);
         if (data.isFieldChanged(MyEntity3061PickDTO_.customFieldColorDateTime)) {
             entity.setCustomFieldColorDateTime(data.getCustomFieldColorDateTime());
         }
@@ -110,7 +106,7 @@ public class MyEntity3061PickService extends VersionAwareResponseService<MyEntit
                     .map(e -> entityManager.getReference(MyEntity3061Multi.class, e))
                     .collect(Collectors.toList()));
         }
-        return null;
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
 

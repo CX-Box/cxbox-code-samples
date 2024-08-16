@@ -25,6 +25,8 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
     private String customField;
     private String customFieldColor;
     private String customFieldColorFieldText;
+    private String customFieldColorInputConst;
+    private String customFieldColorTextConst;
     @SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldColorMultivalueHover;
     private String customFieldColorMultivalueHoverDisplayedKey;
@@ -60,15 +62,17 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
     private Boolean customFieldColorCheckbox;
     @SearchParameter(name = "customFieldColorDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldColorDateTime;
-
-    private String customFieldColorText;
+    @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
     private String customFieldColorInput;
+    @SearchParameter(name = "customFieldColorText", provider = StringValueProvider.class)
+    private String customFieldColorText;
+
 
     public MyEntity3061PickDTO(MyEntity3061 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldColor = "#eda6a6";
-        this.customFieldColorText = "#a6eda6";
+        this.customFieldColorFieldText = "#a6eda6";
         this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
                 MyEntity3061Multi::getCustomField
@@ -106,8 +110,11 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
         this.customFieldColorDate = entity.getCustomFieldColorDate();
         this.customFieldColorCheckbox = entity.getCustomFieldColorCheckbox();
         this.customFieldColorDateTime = entity.getCustomFieldColorDateTime();
-        this.customFieldColorText = entity.getCustomFieldColorText();
+
+        this.customFieldColorInputConst = entity.getCustomFieldColorInputConst();
+        this.customFieldColorTextConst = entity.getCustomFieldColorTextConst();
         this.customFieldColorInput = entity.getCustomFieldColorInput();
+        this.customFieldColorText = entity.getCustomFieldColorText();
     }
 
 }

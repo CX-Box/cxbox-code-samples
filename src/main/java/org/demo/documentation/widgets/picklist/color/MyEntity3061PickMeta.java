@@ -15,8 +15,10 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3061PickDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyEntity3061PickDTO_.customFieldColorInput);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorText);
+        fields.setEnabled(MyEntity3061PickDTO_.customFieldColorInput);
+        fields.setEnabled(MyEntity3061PickDTO_.customFieldColorTextConst);
+        fields.setEnabled(MyEntity3061PickDTO_.customFieldColorInputConst);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorDateTime);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorCheckbox);
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorDate);
@@ -45,8 +47,10 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3061PickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
-        fields.enableFilter(MyEntity3061PickDTO_.customFieldColorInput);
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorText);
+        fields.enableFilter(MyEntity3061PickDTO_.customFieldColorInput);
+        fields.enableFilter(MyEntity3061PickDTO_.customFieldColorTextConst);
+        fields.enableFilter(MyEntity3061PickDTO_.customFieldColorInputConst);
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorDateTime);
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorCheckbox);
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorDate);

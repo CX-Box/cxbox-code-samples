@@ -74,4 +74,8 @@ public class MyEntity3061 extends BaseEntity {
     private String customFieldColorText;
     @Column
     private String customFieldColorInput;
+    @Column
+    private String customFieldColorInputConst;
+    @Column
+    private String customFieldColorTextConst;
 }
