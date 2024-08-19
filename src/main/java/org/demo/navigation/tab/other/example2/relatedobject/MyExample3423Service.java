@@ -1,4 +1,4 @@
-package org.demo.documentation.other.twobcshowcondition.child;
+package org.demo.navigation.tab.other.example2.relatedobject;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -6,45 +6,44 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-
+import org.demo.navigation.tab.other.example2.MyEntity3422;
+import org.demo.navigation.tab.other.example2.MyEntity3422_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyExample3145Service extends VersionAwareResponseService<MyExample3145DTO, MyEntity3145> {
+public class MyExample3423Service extends VersionAwareResponseService<MyExample3423DTO, MyEntity3423> {
 
-    private final MyEntity3145Repository repository;
+    private final MyEntity3423Repository repository;
 
-    public MyExample3145Service(MyEntity3145Repository repository) {
-        super(MyExample3145DTO.class, MyEntity3145.class, null, MyExample3145Meta.class);
+    public MyExample3423Service(MyEntity3423Repository repository) {
+        super(MyExample3423DTO.class, MyEntity3423.class, null, MyExample3423Meta.class);
         this.repository = repository;
     }
-
     @Override
-    protected Specification<MyEntity3145> getParentSpecification(BusinessComponent bc) {
+    protected Specification<MyEntity3423> getParentSpecification(BusinessComponent bc) {
         return (root, cq, cb) -> cb.and(
                 super.getParentSpecification(bc).toPredicate(root, cq, cb),
-                cb.equal(root.get(MyEntity3145_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
+                cb.equal(root.get(MyEntity3423_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
-
     @Override
-    protected CreateResult<MyExample3145DTO> doCreateEntity(MyEntity3145 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample3423DTO> doCreateEntity(MyEntity3423 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample3145DTO> doUpdateEntity(MyEntity3145 entity, MyExample3145DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3145DTO_.customField)) {
+    protected ActionResultDTO<MyExample3423DTO> doUpdateEntity(MyEntity3423 entity, MyExample3423DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3423DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
-    public Actions<MyExample3145DTO> getActions() {
-        return Actions.<MyExample3145DTO>builder()
+    public Actions<MyExample3423DTO> getActions() {
+        return Actions.<MyExample3423DTO>builder()
                 .newAction()
                 .action("save", "save")
                 .add()
