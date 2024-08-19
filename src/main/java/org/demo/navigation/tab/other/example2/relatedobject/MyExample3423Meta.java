@@ -20,7 +20,7 @@ public class MyExample3423Meta extends FieldMetaBuilder<MyExample3423DTO> {
         fields.setDrilldown(
                 MyExample3423DTO_.customField,
                 DrillDownType.INNER,
-                "/screen/myexample3422/view/agreementInfo/" + CxboxMyExample3422Controller.myexample3423 + "/" + id
+                "/screen/myexample3422/view/agreementInfo/"+ CxboxMyExample3422Controller.myexample3422 +"/"+ parentId +"/"+ CxboxMyExample3422Controller.myexample3423 + "/" + id
         );
     }
 
