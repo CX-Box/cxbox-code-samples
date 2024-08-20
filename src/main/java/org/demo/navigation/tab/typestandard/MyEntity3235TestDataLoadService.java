@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.typelegacy;
+package org.demo.navigation.tab.typestandard;
 
 import javax.annotation.PostConstruct;
 

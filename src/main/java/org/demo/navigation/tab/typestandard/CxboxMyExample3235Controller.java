@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.typelegacy;
+package org.demo.navigation.tab.typestandard;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
