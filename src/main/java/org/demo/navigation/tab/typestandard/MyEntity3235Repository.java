@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.typelegacy;
+package org.demo.navigation.tab.typestandard;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

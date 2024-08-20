@@ -1,4 +1,4 @@
-package org.demo.navigation.tab.typelegacy;
+package org.demo.navigation.tab.typestandard;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
