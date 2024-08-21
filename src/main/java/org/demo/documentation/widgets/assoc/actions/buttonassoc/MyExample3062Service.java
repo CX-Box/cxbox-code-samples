@@ -11,10 +11,15 @@ import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.model.core.entity.BaseEntity_;
+import org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3660;
+import org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3660_;
 import org.demo.documentation.widgets.assoc.actions.createwithparent.MyExample3660DTO_;
+import org.demo.documentation.widgets.assoc.actions.createwithparent.assoc.MyEntity3662_;
 import org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063;
 import org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063Multi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -53,7 +58,7 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
                     .map(e -> entityManager.getReference(MyEntity3062Multi.class, e))
                     .collect(Collectors.toList()));
         }
-        setIfChanged(data, MyExample3062DTO_.customFieldText, entity::setCustomFieldText);
+
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
