@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.assoc.actions.createwithparent.parent.MyEntity3661;
-import org.demo.documentation.widgets.assoc.actions.createwithparent.parent.MyEntity3662;
-import org.demo.documentation.widgets.assoc.actions.createwithparent.parent.MyEntity3663;
+import org.demo.documentation.widgets.assoc.actions.createwithparent.assoc.MyEntity3662;
+import org.demo.documentation.widgets.assoc.actions.createwithparent.assocreq.MyEntity3663;
 
 import java.util.ArrayList;
 import java.util.List;

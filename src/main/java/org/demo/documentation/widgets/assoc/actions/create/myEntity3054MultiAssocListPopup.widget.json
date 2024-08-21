@@ -1,13 +1,33 @@
 {
-  "title": "myEntity3054MultiAssocListPopup title",
+  "title": "Assoc widget action create",
   "name": "myEntity3054MultiAssocListPopup",
   "type": "AssocListPopup",
   "bc": "myEntity3054MultiAssocListPopup",
   "fields": [
     {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
       "title": "id",
       "key": "id",
       "type": "text"
     }
-  ]
+  ],
+  "options": {
+    "create": {
+      "widget": "myEntity3074FormForPopup"
+    },
+    "edit": {
+      "widget": "myEntity3074FormForPopup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
 }
+

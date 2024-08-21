@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.actions.createwithparent.parent;
+package org.demo.documentation.widgets.assoc.actions.createwithparent.assocreq;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

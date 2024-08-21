@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.actions.createwithparent;
+package org.demo.documentation.widgets.assoc.actions.createwithparent.assocreq;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
@@ -13,8 +13,8 @@ public class MyEntity3663MultivalueMeta extends FieldMetaBuilder<MyEntity3663Mul
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3663MultivalueDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3663MultivalueDTO_.id);
-        fields.setEnabled(org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3663MultivalueDTO_.customField);
+        fields.setEnabled(MyEntity3663MultivalueDTO_.id);
+        fields.setEnabled(MyEntity3663MultivalueDTO_.customField);
     }
 
     @Override
