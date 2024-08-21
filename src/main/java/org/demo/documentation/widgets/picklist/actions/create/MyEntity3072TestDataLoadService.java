@@ -1,10 +1,13 @@
 package org.demo.documentation.widgets.picklist.actions.create;
 
-import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.picklist.actions.create.inlinepicklist.MyEntity3072InlinePick;
+import org.demo.documentation.widgets.picklist.actions.create.inlinepicklist.MyEntity3072InlinePickRepository;
+import org.demo.documentation.widgets.picklist.actions.create.picklist.MyEntity3072Pick;
+import org.demo.documentation.widgets.picklist.actions.create.picklist.MyEntity3072PickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -5,6 +5,8 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.picklist.actions.create.inlinepicklist.MyEntity3072InlinePickPickService;
+import org.demo.documentation.widgets.picklist.actions.create.picklist.MyEntity3072PickPickService;
 import org.springframework.stereotype.Component;
 
 @Getter
