@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 public class MyEntity3062TestDataLoadService {
 
     @Autowired
-    MyEntity3062MultiRepository repository;
+    MyEntity3062MultiRepository repositoryMulti;
+
+    @Autowired
+    MyEntity3062Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -22,7 +25,8 @@ public class MyEntity3062TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3062Multi().setCustomField("test data"));
+        repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi"));
+        repository.save(new MyEntity3062().setCustomFieldText("test data"));
     }
 
 }

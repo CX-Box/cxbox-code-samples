@@ -62,14 +62,12 @@ public class MyExample3073Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:customSave]
     private ActionResultDTO<MyExample3073DTO> customSave(BusinessComponent bc, MyExample3073DTO dto) {
         Optional<MyEntity3073> entity = repository.findById(bc.getIdAsLong());
-        if (!entity.isPresent()) {
+        if (entity.isEmpty()) {
             return null;
         }
 
         Optional<MyEntity3073Pick> entityPick = repositoryPick.findById(dto.getCustomFieldId());
-        if (entityPick.isPresent()) {
-            entity.get().setCustomFieldEntity(entityPick.get());
-        }
+        entityPick.ifPresent(myEntity3073Pick -> entity.get().setCustomFieldEntity(myEntity3073Pick));
         return new ActionResultDTO<>(entityToDto(bc, entity.get()));
     }
     // --8<-- [end:customSave]

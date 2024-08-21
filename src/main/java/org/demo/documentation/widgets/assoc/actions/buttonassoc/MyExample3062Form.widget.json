@@ -3,8 +3,41 @@
   "title": "Form",
   "type": "Form",
   "bc": "myexample3062",
-  "fields": [],
+  "fields": [
+    {
+      "label":  "Custom Field Assoc",
+      "type": "multivalue",
+      "displayedKey": "customFieldDisplayedKey",
+      "popupBcName": "myexample3062Assoc",
+      "assocValueKey": "customField"
+    },
+    {
+      "label": "Custom Field Text",
+      "key": "customFieldText",
+      "type": "input"
+    }
+  ],
   "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDisplayedKey",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldText",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
     "actionGroups": {
       "include": [
         "associate"

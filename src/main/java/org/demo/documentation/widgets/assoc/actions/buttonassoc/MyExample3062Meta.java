@@ -14,12 +14,14 @@ public class MyExample3062Meta extends FieldMetaBuilder<MyExample3062DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3062DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3062DTO_.customFieldText);
         fields.setEnabled(MyExample3062DTO_.customField);
 
     }
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3062DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3062DTO_.customFieldText);
         fields.enableFilter(MyExample3062DTO_.customField);
     }
 

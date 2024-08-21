@@ -8,6 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 import java.util.stream.Collectors;
 
@@ -20,6 +21,8 @@ public class MyExample3063DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
     private MultivalueField customField;
     private String customFieldDisplayedKey;
+    @SearchParameter(name = "customFieldRequired", provider = StringValueProvider.class)
+    private String customFieldRequired;
 
     public MyExample3063DTO(MyEntity3063 entity) {
         this.id = entity.getId().toString();
@@ -30,5 +33,6 @@ public class MyExample3063DTO extends DataResponseDTO {
         ));
         this.customFieldDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldList().stream().map(MyEntity3063Multi::getCustomField
         ).collect(Collectors.joining(",")), 12);
+        this.customFieldRequired = entity.getCustomFieldRequired();
     }
 }
