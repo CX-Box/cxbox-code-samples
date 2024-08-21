@@ -24,4 +24,6 @@ public class MyEntity3063 extends BaseEntity {
             {CascadeType.PERSIST,
                     CascadeType.MERGE})
     private List<MyEntity3063Multi> customFieldList = new ArrayList<>();
+    @Column
+    private String customFieldRequired;
 }

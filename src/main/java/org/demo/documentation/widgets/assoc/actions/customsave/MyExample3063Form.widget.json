@@ -5,14 +5,30 @@
   "bc": "myexample3063",
   "fields": [
     {
-      "label": "customField",
+      "label": "Custom Field",
       "key": "customField",
+      "type": "multivalue",
+      "displayedKey": "customFieldDisplayedKey",
+      "popupBcName": "myEntity3063MultiAssocListPopup",
+      "assocValueKey": "customField"
+    },
+    {
+      "label": "Custom Field Required",
+      "key": "customFieldRequired",
       "type": "input"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldRequired",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
