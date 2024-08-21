@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.picklist.actions.createcustomsave;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,4 +20,6 @@ public class MyEntity3073 extends BaseEntity {
     @JoinColumn(name = "CUSTOM_FIELD_ID")
     @ManyToOne
     private MyEntity3073Pick customFieldEntity;
+    @Column
+    private String customFieldRequred;
 }

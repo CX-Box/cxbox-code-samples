@@ -13,6 +13,7 @@ public class MyExample3073Meta extends FieldMetaBuilder<MyExample3073DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3073DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3073DTO_.customFieldRequred);
         fields.setEnabled(MyExample3073DTO_.customFieldId);
         fields.setEnabled(MyExample3073DTO_.customField);
 
@@ -20,6 +21,7 @@ public class MyExample3073Meta extends FieldMetaBuilder<MyExample3073DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3073DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3073DTO_.customFieldRequred);
         fields.enableFilter(MyExample3073DTO_.customField);
 
     }

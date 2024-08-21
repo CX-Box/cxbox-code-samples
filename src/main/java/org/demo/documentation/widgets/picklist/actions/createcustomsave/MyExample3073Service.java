@@ -10,16 +10,22 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MyExample3073Service extends VersionAwareResponseService<MyExample3073DTO, MyEntity3073> {
 
     private final MyEntity3073Repository repository;
+
+    private final MyEntity3073PickRepository repositoryPick;
+
     @Autowired
     private EntityManager entityManager;
 
-    public MyExample3073Service(MyEntity3073Repository repository) {
+    public MyExample3073Service(MyEntity3073Repository repository, MyEntity3073PickRepository repositoryPick) {
         super(MyExample3073DTO.class, MyEntity3073.class, null, MyExample3073Meta.class);
         this.repository = repository;
+        this.repositoryPick = repositoryPick;
     }
 
     @Override
@@ -30,11 +36,7 @@ public class MyExample3073Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3073DTO> doUpdateEntity(MyEntity3073 entity, MyExample3073DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3073DTO_.customFieldId)) {
-            entity.setCustomFieldEntity(data.getCustomFieldId() != null
-                    ? entityManager.getReference(MyEntity3073Pick.class, data.getCustomFieldId())
-                    : null);
-        }
+        setIfChanged(data, MyExample3073DTO_.customFieldRequred, entity::setCustomFieldRequred);
         if (data.isFieldChanged(MyExample3073DTO_.customFieldId)) {
             entity.setCustomFieldEntity(data.getCustomFieldId() != null
                     ? entityManager.getReference(MyEntity3073Pick.class, data.getCustomFieldId())
@@ -47,16 +49,30 @@ public class MyExample3073Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3073DTO> getActions() {
         return Actions.<MyExample3073DTO>builder()
-                .action("customSave", "Save")
+                .create().text("Add").add()
+                .cancelCreate().text("Cancel").available(bc -> true).add()
+                .delete().text("Delete").add()
+                .action("custom save", "Custom Save")
                 .invoker(this::customSave)
                 .add()
                 .build();
     }
+    // --8<-- [end:getActions]
 
-    private ActionResultDTO<MyExample3073DTO> customSave(BusinessComponent businessComponent, MyExample3073DTO myExample3073DTO) {
-        return null;
+    // --8<-- [start:customSave]
+    private ActionResultDTO<MyExample3073DTO> customSave(BusinessComponent bc, MyExample3073DTO dto) {
+        Optional<MyEntity3073> entity = repository.findById(bc.getIdAsLong());
+        if (!entity.isPresent()) {
+            return null;
+        }
+
+        Optional<MyEntity3073Pick> entityPick = repositoryPick.findById(dto.getCustomFieldId());
+        if (entityPick.isPresent()) {
+            entity.get().setCustomFieldEntity(entityPick.get());
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity.get()));
     }
-
+    // --8<-- [end:customSave]
 
 }
 
