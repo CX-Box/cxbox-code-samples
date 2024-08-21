@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.assoc.actions.createwithparent;
+package org.demo.documentation.widgets.assoc.actions.createwithparent.assoc;
 
 import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class MyEntity3662MultivalueDTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
     private String customFieldText;
 
-    public MyEntity3662MultivalueDTO(org.demo.documentation.widgets.assoc.actions.createwithparent.parent.MyEntity3662 entity) {
+    public MyEntity3662MultivalueDTO(MyEntity3662 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldText = entity.getCustomFieldText();
