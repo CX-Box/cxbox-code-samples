@@ -12,7 +12,7 @@ public enum CxboxMyExample3063Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample3063(MyExample3063Service.class);
+    myexample3063(MyExample3063Service.class), myEntity3063MultiAssocListPopup(myexample3063, MyEntity3063MultiMultivalueService.class);
 
     // @formatter:on
 

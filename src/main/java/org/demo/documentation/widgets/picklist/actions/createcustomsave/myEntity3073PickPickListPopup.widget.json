@@ -1,0 +1,33 @@
+{
+  "title": "PickListPopup action create with custom save parent entity",
+  "name": "myEntity3073PickPickListPopup",
+  "type": "PickListPopup",
+  "bc": "myEntity3073PickPickListPopup",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "id",
+      "key": "id",
+      "type": "text"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "myEntity3073PickForm"
+    },
+    "edit": {
+      "widget": "myEntity3073PickForm"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}
+
