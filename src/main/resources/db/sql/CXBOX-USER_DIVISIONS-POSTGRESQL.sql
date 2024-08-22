@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE VIEW USER_DIVISIONS (USER_ID, DIVISIONS) AS
 SELECT u.id         AS user_id,
        ud.divisions as divisions
