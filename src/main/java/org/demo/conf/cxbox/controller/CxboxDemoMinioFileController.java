@@ -34,7 +34,8 @@ import java.util.Collections;
 import java.util.UUID;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.cxbox.core.file.dto.CxboxResponseDTO;
 import org.cxbox.core.file.dto.FileUploadDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,7 +111,7 @@ public class CxboxDemoMinioFileController {
 						"attachment;filename=\"" + statObjectResponse.userMetadata().get(FILENAME_FIELD) + "\""
 				)
 				.contentLength(statObjectResponse.size()) //
-				.body(outputStream -> IOUtils.copy(getObjectResponse, outputStream, FIVE_MIB));
+				.body(outputStream -> IOUtils.copy(getObjectResponse, outputStream));
 	}
 
 	@SneakyThrows

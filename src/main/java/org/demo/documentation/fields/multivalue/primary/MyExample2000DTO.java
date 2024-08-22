@@ -8,14 +8,15 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.demo.conf.cxbox.core.multivaluePrimary.MultivalueExt;
+import org.demo.conf.cxbox.multivaluePrimary.MultivalueExt;
 
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.demo.conf.cxbox.core.multivaluePrimary.MultivalueExt.PRIMARY;
+import static org.demo.conf.cxbox.multivaluePrimary.MultivalueExt.PRIMARY;
+
 
 @Getter
 @Setter

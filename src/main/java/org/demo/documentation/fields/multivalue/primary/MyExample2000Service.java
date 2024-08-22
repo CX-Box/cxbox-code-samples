@@ -6,7 +6,8 @@ import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.core.multivaluePrimary.MultivalueExt;
+
+import org.demo.conf.cxbox.multivaluePrimary.MultivalueExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.val;

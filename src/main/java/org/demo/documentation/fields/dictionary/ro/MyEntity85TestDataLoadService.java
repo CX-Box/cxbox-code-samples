@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.dictionary.ro;
 
-import javax.annotation.PostConstruct;
-import  jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.dictionary.ro.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;

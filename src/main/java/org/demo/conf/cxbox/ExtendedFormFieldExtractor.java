@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.cxbox.api.util.i18n.LocalizationFormatter.i18n;
 
-public class ExtendedFormFieldExtractor extends DemoBaseFieldExtractor {
+public class ExtendedFormFieldExtractor extends CodeSamplesBaseFieldExtractor {
 
 	public ExtendedFormFieldExtractor(LinkFieldExtractor linkFieldExtractor) {
 		super(linkFieldExtractor);

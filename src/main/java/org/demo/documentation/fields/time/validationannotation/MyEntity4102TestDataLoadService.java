@@ -1,6 +1,6 @@
 package org.demo.documentation.fields.time.validationannotation;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;

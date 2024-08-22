@@ -2,8 +2,7 @@ package org.demo.conf.cxbox;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.RequiredArgsConstructor;
-import org.cxbox.core.util.JuelUtils;
-import org.cxbox.core.util.JuelUtils.Property;
+
 import org.cxbox.meta.data.WidgetDTO;
 import org.cxbox.meta.ui.field.FieldExtractor;
 import org.cxbox.meta.ui.field.link.LinkFieldExtractor;
@@ -25,7 +24,7 @@ import java.util.Set;
 import static org.cxbox.api.util.i18n.LocalizationFormatter.i18n;
 
 @RequiredArgsConstructor
-public abstract class DemoBaseFieldExtractor implements FieldExtractor {
+public abstract class CodeSamplesBaseFieldExtractor implements FieldExtractor {
 
 	private final LinkFieldExtractor linkFieldExtractor;
 
@@ -129,11 +128,7 @@ public abstract class DemoBaseFieldExtractor implements FieldExtractor {
 		}
 		final String templateWithoutDefault = title
 				.replaceAll("\\$\\{(\\w*)(:[\\wа-яА-ЯёЁ\\-,. ]*)?}", "\\$\\{$1}");
-		for (final Property property : JuelUtils.getProperties(templateWithoutDefault)) {
-			fields.add(new BcField(widget.getBcName(), property.getIdentifier())
-					.putAttribute(Attribute.WIDGET_NAME, widget.getName())
-			);
-		}
+
 		return fields;
 	}
 

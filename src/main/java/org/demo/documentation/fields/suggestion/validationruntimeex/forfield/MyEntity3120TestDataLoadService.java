@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.suggestion.validationruntimeex.forfield;
 
 import java.time.LocalDateTime;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;

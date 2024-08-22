@@ -29,7 +29,8 @@ import org.cxbox.api.util.jackson.ser.contextual.I18NAwareStringContextualSerial
 import org.cxbox.api.util.jackson.ser.contextual.TZAwareJUDContextualSerializer;
 import org.cxbox.api.util.jackson.ser.contextual.TZAwareLDTContextualSerializer;
 import org.cxbox.core.config.properties.WidgetFieldsIdResolverProperties;
-import org.demo.conf.cxbox.core.multivaluePrimary.MultivalueExt;
+
+import org.demo.conf.cxbox.multivaluePrimary.MultivalueExt;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

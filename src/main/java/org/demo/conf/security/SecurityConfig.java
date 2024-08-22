@@ -32,32 +32,29 @@ import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BA
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-	private final UserService userService;
 	private final UIProperties uiProperties;
 	private final MetaConfigurationProperties metaConfigurationProperties;
 	private final OidcJwtTokenConverter oidcJwtTokenConverter;
 	private final AuthBasicConfigProperties authBasicConfigProperties;
 
 	public SecurityConfig(UserService userService, UIProperties uiProperties, MetaConfigurationProperties metaConfigurationProperties, @Qualifier("tokenConverterProperties") TokenConverterProperties properties, CxboxAuthUserRepository cxboxAuthUserRepository,
-                          AuthBasicConfigProperties authBasicConfigProperties) {
-		this.userService = userService;
+						  AuthBasicConfigProperties authBasicConfigProperties) {
 		this.uiProperties = uiProperties;
 		this.metaConfigurationProperties = metaConfigurationProperties;
 		this.authBasicConfigProperties = authBasicConfigProperties;
 		this.oidcJwtTokenConverter = new OidcJwtTokenConverter(new JwtGrantedAuthoritiesConverter(), properties,
-				this.userService, cxboxAuthUserRepository
+				userService, cxboxAuthUserRepository
 		);
 	}
 
 	@Bean
-	@ConditionalOnProperty(prefix = APP_AUTH_BASIC_PROP_PREFIX, name = APP_AUTH_BASIC_PROP_ENABLED, matchIfMissing = false)
+	@ConditionalOnProperty(prefix = APP_AUTH_BASIC_PROP_PREFIX, name = APP_AUTH_BASIC_PROP_ENABLED)
 	public BasicAuthenticationEntryPoint customBasicAuthenticationEntryPoint() {
 		return new CustomBasicAuthenticationEntryPoint("CustomRealm");
 	}
 
 	@Bean
-	@ConditionalOnProperty(prefix = APP_AUTH_BASIC_PROP_PREFIX, name = APP_AUTH_BASIC_PROP_ENABLED, matchIfMissing = false)
+	@ConditionalOnProperty(prefix = APP_AUTH_BASIC_PROP_PREFIX, name = APP_AUTH_BASIC_PROP_ENABLED)
 	public PasswordEncoder encoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
@@ -83,14 +80,14 @@ public class SecurityConfig {
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers(uiProperties.getPath() + "/**").permitAll()
 						.requestMatchers("/").permitAll()
-						.requestMatchers("/api/v1/notification/**").permitAll()
-						.requestMatchers("/api/v1/file/**").permitAll()
+						.requestMatchers("/actuator/metrics/**").permitAll()
 						.requestMatchers("/api/v1/auth/**").permitAll()
-						.requestMatchers("/api/v1/githubcode/**").permitAll()
-						.requestMatchers("/api/microservices/v1/**").permitAll()
+						.requestMatchers("/api/v1/websocketnotification/**").permitAll()
 						.requestMatchers("/swagger-ui/**").permitAll()
 						.requestMatchers("/v3/api-docs/**").permitAll()
- 						.requestMatchers("/**").fullyAuthenticated());
+						.requestMatchers("/api/v1/notification/**").permitAll()
+						.requestMatchers("/**").fullyAuthenticated())
+		;
 		if (Boolean.TRUE.equals(authBasicConfigProperties.getEnabled())) {
 			http.httpBasic(c -> c.authenticationEntryPoint(customBasicAuthenticationEntryPoint()));
 		} else {

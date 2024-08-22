@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.FileHeader;
-import org.apache.commons.io.FileUtils;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.demo.services.GitHubApi;
 import org.demo.services.FilesService;
@@ -103,7 +103,7 @@ public class SourcesGithubService {
                     @Override
                     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                         if (path.toString().contains("documentation")) {
-                            String content = FileUtils.readFileToString(new File(path.toString()));
+                            String content = null;// FileUtils.readFileToString(new File(path.toString()));
                             String cleanFile = cleanUpString(content);
                             Files.writeString(path, cleanFile);
                         }

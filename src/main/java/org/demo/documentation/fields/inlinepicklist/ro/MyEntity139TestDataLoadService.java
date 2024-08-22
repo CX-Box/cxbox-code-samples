@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.inlinepicklist.ro;
 
-import javax.annotation.PostConstruct;
-import  jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.inlinepicklist.ro.picklist.MyEntity138;
 import org.demo.documentation.fields.inlinepicklist.ro.picklist.MyEntity138Repository;
