@@ -4,7 +4,7 @@ package org.demo.conf.security;
 import org.cxbox.core.config.properties.UIProperties;
 import org.cxbox.meta.metahotreload.conf.properties.MetaConfigurationProperties;
 
-import org.demo.conf.cxbox.role.UserService;
+import org.demo.conf.cxbox.customization.role.UserService;
 import org.demo.conf.security.basic.AuthBasicConfigProperties;
 import org.demo.conf.security.basic.CustomBasicAuthenticationEntryPoint;
 import org.demo.conf.security.oidc.CxboxAuthUserRepository;

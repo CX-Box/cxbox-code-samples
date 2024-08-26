@@ -9,8 +9,8 @@ import org.cxbox.core.util.SQLExceptions;
 import org.cxbox.model.core.dao.JpaDao;
 
 import org.demo.conf.cxbox.meta.User;
-import org.demo.conf.cxbox.role.UserRoleService;
-import org.demo.conf.cxbox.role.UserService;
+import org.demo.conf.cxbox.customization.role.UserRoleService;
+import org.demo.conf.cxbox.customization.role.UserService;
 import org.demo.repository.DepartmentRepository;
 import org.demo.repository.UserRepository;
 import org.hibernate.LockOptions;

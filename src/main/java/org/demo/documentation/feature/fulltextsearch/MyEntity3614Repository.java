@@ -1,6 +1,6 @@
 package org.demo.documentation.feature.fulltextsearch;
 
-import org.demo.conf.cxbox.fulltextsearch.FullTextSearchExt;
+import org.demo.conf.cxbox.extention.fulltextsearch.FullTextSearchExt;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

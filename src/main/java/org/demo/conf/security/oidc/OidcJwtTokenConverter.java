@@ -3,7 +3,7 @@ package org.demo.conf.security.oidc;
 import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
 import org.demo.conf.cxbox.meta.User;
-import org.demo.conf.cxbox.role.UserService;
+import org.demo.conf.cxbox.customization.role.UserService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;

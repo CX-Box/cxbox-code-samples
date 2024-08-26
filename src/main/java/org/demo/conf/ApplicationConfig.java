@@ -37,7 +37,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		PersistenceJPAConfig.class,
 		UIConfig.class,
 		APIConfig.class,
-		LocalizationConfig.class
+		LocalizationConfig.class,
+		JacksonConfig.class
 })
 @ControllerScan({"org.cxbox.meta"})
 @EnableJpaRepositories(basePackages = "org.demo")
