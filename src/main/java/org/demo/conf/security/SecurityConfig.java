@@ -80,7 +80,6 @@ public class SecurityConfig {
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers(uiProperties.getPath() + "/**").permitAll()
 						.requestMatchers("/").permitAll()
-						.requestMatchers("/actuator/metrics/**").permitAll()
 						.requestMatchers("/api/v1/auth/**").permitAll()
 						.requestMatchers("/api/v1/websocketnotification/**").permitAll()
 						.requestMatchers("/swagger-ui/**").permitAll()

@@ -26,6 +26,7 @@ import org.cxbox.api.service.session.CoreSessionService;
 import org.cxbox.api.service.session.IUser;
 import org.cxbox.core.config.properties.UIProperties;
 
+import org.cxbox.core.config.properties.WidgetFieldsIdResolverProperties;
 import org.cxbox.core.dto.LoggedUser;
 import org.cxbox.core.util.session.LoginService;
 import org.cxbox.core.util.session.SessionService;
@@ -38,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.List;
 
 
 @Slf4j
@@ -61,6 +62,8 @@ public class LoginServiceImpl implements LoginService {
 
     private final UIProperties uiProperties;
 
+    private final WidgetFieldsIdResolverProperties widgetFieldsIdResolverProperties;
+
     /**
      * Build info for active session user for specific role
      *
@@ -76,7 +79,9 @@ public class LoginServiceImpl implements LoginService {
         IUser<Long> user = sessionService.getSessionUser();
         User userEntity = userRepository.findById(user.getId()).orElseThrow();
         LOV activeUserRole = sessionService.getSessionUserRole();
-
+        SimpleDictionary filterByRangeEnabled = new SimpleDictionary(widgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME, String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()));
+        List<SimpleDictionary> featureSettingsList = new ArrayList<>();
+        featureSettingsList.add(filterByRangeEnabled);
         return LoggedUser.builder()
                 .sessionId(sessionService.getSessionId())
                 .userId(userEntity.getId())
@@ -95,6 +100,7 @@ public class LoginServiceImpl implements LoginService {
                 .language(LocaleContextHolder.getLocale().getLanguage())
                 .timezone(LocaleContextHolder.getTimeZone().getID())
                 .devPanelEnabled(metaConfigurationProperties.isDevPanelEnabled())
+                .featureSettings(featureSettingsList)
                 .build();
 
     }
