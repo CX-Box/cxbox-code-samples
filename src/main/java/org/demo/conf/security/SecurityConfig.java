@@ -81,10 +81,8 @@ public class SecurityConfig {
 						.requestMatchers(uiProperties.getPath() + "/**").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/api/v1/auth/**").permitAll()
-						.requestMatchers("/api/v1/websocketnotification/**").permitAll()
 						.requestMatchers("/swagger-ui/**").permitAll()
 						.requestMatchers("/v3/api-docs/**").permitAll()
-						.requestMatchers("/api/v1/notification/**").permitAll()
 						.requestMatchers("/**").fullyAuthenticated())
 		;
 		if (Boolean.TRUE.equals(authBasicConfigProperties.getEnabled())) {
