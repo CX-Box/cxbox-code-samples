@@ -1,5 +1,4 @@
 app:
-  ui-path: /ui
   auth-basic:
     enabled: ${AUTH_BASIC_ENABLED:false}
   oidc:
@@ -124,13 +123,10 @@ logbook:
   format:
     style: http
 
-springdoc:
-  packages-to-scan: org.demo
-
-decorator:
-  datasource:
-    datasource-proxy:
-      query:
-        enable-logging: true
-        log-level: DEBUG
-      multiline: true
+management:
+  health:
+    jms:
+      enabled: false
+  endpoint:
+    metrics:
+      enabled: true

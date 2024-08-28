@@ -1,6 +1,6 @@
 package org.demo.conf.cxbox.customization;
 
-import com.google.common.collect.ImmutableSet;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import org.cxbox.meta.data.WidgetDTO;
@@ -20,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.cxbox.api.util.i18n.LocalizationFormatter.i18n;
 
@@ -28,7 +30,7 @@ public abstract class CodeSamplesBaseFieldExtractor implements FieldExtractor {
 
 	private final LinkFieldExtractor linkFieldExtractor;
 
-	private static Set<String> PICKLIST_TYPES = ImmutableSet.of(
+	private static final Set<String> PICKLIST_TYPES = Set.of(
 			"pickList",
 			"inline-pickList",
 			"suggestionPickList"
@@ -37,14 +39,12 @@ public abstract class CodeSamplesBaseFieldExtractor implements FieldExtractor {
 	protected Set<BcField> extract(final WidgetDTO widget, final FieldMeta fieldMeta) {
 		final Set<BcField> widgetFields = new HashSet<>();
 		final Set<BcField> pickListFields = new HashSet<>();
-		if (fieldMeta instanceof FieldMeta.FieldContainer) {
-			final FieldMeta.FieldContainer fieldContainer = (FieldMeta.FieldContainer) fieldMeta;
+		if (fieldMeta instanceof FieldMeta.FieldContainer fieldContainer) {
 			for (final FieldMeta child : fieldContainer.getChildren()) {
 				widgetFields.addAll(extract(widget, child));
 			}
 		}
-		if (fieldMeta instanceof FieldMeta.FieldMetaBase) {
-			final FieldMeta.FieldMetaBase fieldMetaBase = (FieldMeta.FieldMetaBase) fieldMeta;
+		if (fieldMeta instanceof FieldMeta.FieldMetaBase fieldMetaBase) {
 			for (final PickListField pickList : getPickLists(fieldMetaBase)) {
 				if (pickList.getPickMap() != null) {
 					for (final Entry<String, String> entry : pickList.getPickMap().entrySet()) {
@@ -126,10 +126,23 @@ public abstract class CodeSamplesBaseFieldExtractor implements FieldExtractor {
 		if (title == null) {
 			return fields;
 		}
-		final String templateWithoutDefault = title
-				.replaceAll("\\$\\{(\\w*)(:[\\wа-яА-ЯёЁ\\-,. ]*)?}", "\\$\\{$1}");
-
+		for (var fieldKey : fieldKeys(title)) {
+			fields.add(new BcField(widget.getBcName(), fieldKey)
+					.putAttribute(Attribute.WIDGET_NAME, widget.getName())
+			);
+		}
 		return fields;
+	}
+
+	@NonNull
+	public List<String> fieldKeys(String template) {
+		List<String> valueList = new ArrayList<>();
+		Matcher matcher = Pattern.compile("[$][{](\\w+)}").matcher(template);
+		while (matcher.find()) {
+			String key = matcher.group(1);
+			valueList.add(key);
+		}
+		return valueList;
 	}
 
 }

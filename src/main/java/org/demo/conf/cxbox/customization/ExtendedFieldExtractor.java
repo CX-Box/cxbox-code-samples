@@ -1,6 +1,5 @@
 package org.demo.conf.cxbox.customization;
 
-import com.google.common.collect.Lists;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +12,9 @@ import org.cxbox.meta.ui.model.json.field.FieldMeta;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FieldExtractor extends BaseFieldExtractor {
+public class ExtendedFieldExtractor extends BaseFieldExtractor {
 
-	protected FieldExtractor(LinkFieldExtractor linkFieldExtractor) {
+	protected ExtendedFieldExtractor(LinkFieldExtractor linkFieldExtractor) {
 		super(linkFieldExtractor);
 	}
 
@@ -30,11 +29,9 @@ public class FieldExtractor extends BaseFieldExtractor {
 
 	@Override
 	public List<String> getSupportedTypes() {
-		return Lists.newArrayList(
+		return List.of(
 				"StatsBlock",
 				"AdditionalInfo",
-				"Funnel",
-				"RingProgress",
 				"DashboardList",
 				"FormPopup",
 				"GroupingHierarchy"
