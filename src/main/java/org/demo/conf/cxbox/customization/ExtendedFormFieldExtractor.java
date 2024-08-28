@@ -1,6 +1,5 @@
 package org.demo.conf.cxbox.customization;
 
-import com.google.common.collect.ImmutableList;
 import org.cxbox.core.util.JsonUtils;
 import org.cxbox.meta.data.WidgetDTO;
 import org.cxbox.meta.ui.field.link.LinkFieldExtractor;
@@ -35,14 +34,9 @@ public class ExtendedFormFieldExtractor extends CodeSamplesBaseFieldExtractor {
 
 	@Override
 	public List<String> getSupportedTypes() {
-		return ImmutableList.of(
+		return List.of(
 				"Form"
 		);
-	}
-
-	@Override
-	public int getPriority() {
-		return Integer.MAX_VALUE;
 	}
 
 }
