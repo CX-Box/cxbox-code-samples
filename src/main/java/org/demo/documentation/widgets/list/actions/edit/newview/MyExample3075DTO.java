@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.list.actions.create.newview;
+package org.demo.documentation.widgets.list.actions.edit.newview;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,13 +11,13 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3066DTO extends DataResponseDTO {
+public class MyExample3075DTO extends DataResponseDTO {
 
     private String customField;
     @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
     private String customFieldText;
 
-    public MyExample3066DTO(MyEntity3066 entity) {
+    public MyExample3075DTO(MyEntity3075 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldText = entity.getCustomFieldText();
