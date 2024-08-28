@@ -10,7 +10,7 @@ app:
     public-client: true
     cors: true
   integrations:
-    reate-microservices-data-server-url: ${CREATE_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3910}
+    create-microservices-data-server-url: ${CREATE_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3910}
     existing-microservices-data-server-url: ${EXISTING_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3900}
     get-started-microservices-data-server-url: ${GET_STARTED_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity4001}
     next-and-previous-microservices-data-server-url: ${NEXT_PAGE_1_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity4002}
@@ -24,6 +24,7 @@ cxbox:
     dev-panel-enabled: ${DEV_PANEL_ENABLED:true}
     directory: ${META_DIRECTORY:file:./src}
     view-allowed-roles-enabled: true
+    bc-default-page-limit: 5
   widget:
     fields:
       include-packages: org.cxbox.meta, org.demo.conf.cxbox
@@ -97,9 +98,6 @@ token:
     principal-attribute: preferred_username
     resource-id: cxbox-oidc-client
 
-springdoc:
-  packages-to-scan: org.demo
-
 minio:
   access:
     name: ${MINIO_ACCESS_KEY:4eb6a7db8b58994ea61b}
@@ -125,6 +123,9 @@ logbook:
     max-body-size: 5000
   format:
     style: http
+
+springdoc:
+  packages-to-scan: org.demo
 
 decorator:
   datasource:

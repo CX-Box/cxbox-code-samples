@@ -1,6 +1,6 @@
 package org.demo.navigation.tab.other.example1;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;

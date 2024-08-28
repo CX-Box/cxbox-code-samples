@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.radio.validationdynamic;
 
-import javax.annotation.PostConstruct;
-import  jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.radio.validationdynamic.enums.CustomFieldAdditionalEnum;
 import org.demo.documentation.fields.radio.validationdynamic.enums.CustomFieldEnum;

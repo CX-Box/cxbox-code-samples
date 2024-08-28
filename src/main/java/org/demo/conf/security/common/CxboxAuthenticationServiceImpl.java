@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
 
-import org.demo.conf.cxbox.role.UserRoleService;
-import org.demo.conf.cxbox.role.UserService;
+import org.demo.conf.cxbox.customization.role.UserRoleService;
+import org.demo.conf.cxbox.customization.role.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.FileHeader;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.demo.services.GitHubApi;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.*;
 import java.net.URI;
 import java.nio.file.*;
@@ -46,7 +48,7 @@ public class SourcesGithubService {
     private final GitHubApi zitHubApi;
     public static final String IN_ZIP_NAME = "in_sample.zip";
     public static final String OUT_ZIP_NAME = "out_sample.zip";
-    public static final String DOCUMENTATION_PATH= "/src/main/java/org/demo/documentation";
+    public static final String DOCUMENTATION_PATH = "/src/main/java/org/demo/documentation";
 
     @SneakyThrows
     public ResponseEntity<String> getSourceCode(HttpServletRequest request) {
@@ -91,7 +93,7 @@ public class SourcesGithubService {
 
         List<FileHeader> fileHeaders = new ZipFile(TEMP_DIRECTORY + IN_ZIP_NAME).getFileHeaders();
         String rootFolder = fileHeaders.get(0).getFileName();
-        filesService.zip(TEMP_DIRECTORY + fName+"/"+rootFolder+DOCUMENTATION_PATH, TEMP_DIRECTORY + OUT_ZIP_NAME);
+        filesService.zip(TEMP_DIRECTORY + fName + "/" + rootFolder + DOCUMENTATION_PATH, TEMP_DIRECTORY + OUT_ZIP_NAME);
 
     }
 
@@ -111,6 +113,7 @@ public class SourcesGithubService {
                     }
                 });
     }
+
     @NonNull
     public String cleanUpString(String stringJava) throws IOException {
         List<String> resultLines = new ArrayList<>();

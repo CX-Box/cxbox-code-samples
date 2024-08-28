@@ -37,7 +37,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		PersistenceJPAConfig.class,
 		UIConfig.class,
 		APIConfig.class,
-		LocalizationConfig.class
+		LocalizationConfig.class,
+		JacksonConfig.class
 })
 @ControllerScan({"org.cxbox.meta"})
 @EnableJpaRepositories(basePackages = "org.demo")
@@ -60,13 +61,13 @@ public class ApplicationConfig {
 
 			@Override
 			public void configureAsyncSupport(@NonNull AsyncSupportConfigurer configurer) {
-				configurer.setTaskExecutor(getTaskExecutor());
+				configurer.setTaskExecutor(taskExecutor());
 			}
 		};
 	}
 
 	@Bean
-	protected ConcurrentTaskExecutor getTaskExecutor() {
+	protected ConcurrentTaskExecutor taskExecutor() {
 		return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(5));
 	}
 

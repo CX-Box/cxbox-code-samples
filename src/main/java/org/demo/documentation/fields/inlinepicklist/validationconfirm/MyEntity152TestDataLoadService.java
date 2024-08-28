@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.inlinepicklist.validationconfirm;
 
-import javax.annotation.PostConstruct;
-import  jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.inlinepicklist.validationconfirm.picklist.MyEntity153;
 import org.demo.documentation.fields.inlinepicklist.validationconfirm.picklist.MyEntity153Repository;

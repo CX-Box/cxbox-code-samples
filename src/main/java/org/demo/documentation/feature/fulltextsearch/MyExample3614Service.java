@@ -5,8 +5,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.fulltextsearch.FullTextSearchExt;
-import org.demo.documentation.feature.drilldown.advancedfulltextsearchfilter.MyEntity3615;
+import org.demo.conf.cxbox.extention.fulltextsearch.FullTextSearchExt;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

@@ -8,8 +8,8 @@ import org.demo.documentation.widgets.form.showcondition.byparententity.parent.M
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import  jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 
 @Service
 public class MyEntity30073006TestDataLoadService {
