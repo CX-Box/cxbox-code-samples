@@ -18,11 +18,14 @@ public class MyExample3132DTO extends DataResponseDTO {
     private String customField2;
     @SearchParameter(name = "customField3", provider = StringValueProvider.class)
     private String customField3;
+    @SearchParameter(name = "customFieldInfo", provider = StringValueProvider.class)
+    private String customFieldInfo;
 
     public MyExample3132DTO(MyEntity3132 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customField2 = entity.getCustomField2();
         this.customField3 = entity.getCustomField3();
+        this.customFieldInfo = entity.getCustomFieldInfo();
     }
 }
