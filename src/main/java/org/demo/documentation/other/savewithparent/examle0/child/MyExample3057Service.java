@@ -1,4 +1,4 @@
-package org.demo.documentation.other.savewithparent.child;
+package org.demo.documentation.other.savewithparent.examle0.child;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -6,12 +6,9 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.other.savewithparent.parent.MyEntity3058;
-import org.demo.documentation.other.savewithparent.parent.MyEntity3058Repository;
-import org.demo.documentation.other.savewithparent.parent.MyEntity3058_;
-import org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3660;
-import org.demo.documentation.widgets.assoc.actions.createwithparent.MyEntity3660_;
-import org.demo.documentation.widgets.form.showcondition.byparententity.parent.MyEntity3007;
+
+import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058;
+import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +51,13 @@ public class MyExample3057Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3057DTO> getActions() {
         return Actions.<MyExample3057DTO>builder()
-                .create().text("Add").add()
+                .action("addChild", "Add")
+                .invoker((bc, dto) -> {
+                    MyEntity3058 myEntityParent = repositoryParent.getById(bc.getParentIdAsLong());
+                    repositoryParent.save(myEntityParent);
+                    return new ActionResultDTO<MyExample3057DTO>() ;
+                })
+                .add()
                 .save().text("Save").add()
                 .cancelCreate().text("Cancel").available(bc -> true).add()
                 .delete().text("Delete").add()

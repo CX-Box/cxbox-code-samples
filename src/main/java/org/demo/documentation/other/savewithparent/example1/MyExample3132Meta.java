@@ -1,0 +1,28 @@
+package org.demo.documentation.other.savewithparent.example1;
+
+import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
+import org.cxbox.core.dto.rowmeta.FieldsMeta;
+import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
+import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyExample3132Meta extends FieldMetaBuilder<MyExample3132DTO> {
+
+    @Override
+    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3132DTO> fields, InnerBcDescription bcDescription,
+                                      Long id, Long parentId) {
+        fields.setEnabled(MyExample3132DTO_.customField3);
+        fields.setEnabled(MyExample3132DTO_.customField2);
+        fields.setEnabled(MyExample3132DTO_.customField);
+        fields.setRequired(MyExample3132DTO_.customField);
+    }
+
+    @Override
+    public void buildIndependentMeta(FieldsMeta<MyExample3132DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3132DTO_.customField3);
+        fields.enableFilter(MyExample3132DTO_.customField2);
+    }
+
+}

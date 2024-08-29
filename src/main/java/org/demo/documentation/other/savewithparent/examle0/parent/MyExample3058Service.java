@@ -1,10 +1,11 @@
-package org.demo.documentation.other.savewithparent.parent;
+package org.demo.documentation.other.savewithparent.examle0.parent;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+
 import org.springframework.stereotype.Service;
 
 @Service

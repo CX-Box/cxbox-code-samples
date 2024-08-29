@@ -1,11 +1,10 @@
-package org.demo.documentation.other.savewithparent.parent;
+package org.demo.documentation.other.savewithparent.examle0.parent;
 
-import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.conf.document.DocumentConfig;
+
 import org.springframework.stereotype.Service;
 
 @Service
