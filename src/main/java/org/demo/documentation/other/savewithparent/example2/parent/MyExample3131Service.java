@@ -37,7 +37,6 @@ public class MyExample3131Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3131DTO> getActions() {
         return Actions.<MyExample3131DTO>builder()
-                .newAction()
                 .action("saveAll", "SaveAll")
                 .invoker((bc, dto) -> {
                     MyEntity3131 myEntityParent = repository.getById(bc.getIdAsLong());
