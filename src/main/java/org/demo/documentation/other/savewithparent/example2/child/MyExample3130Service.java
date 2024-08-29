@@ -43,11 +43,7 @@ public class MyExample3130Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3130DTO> getActions() {
         return Actions.<MyExample3130DTO>builder()
-                .newAction()
-                .add()
                 .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
                 .build();
     }
 
