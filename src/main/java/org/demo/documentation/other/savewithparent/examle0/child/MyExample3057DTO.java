@@ -1,4 +1,4 @@
-package org.demo.documentation.other.savewithparent.child;
+package org.demo.documentation.other.savewithparent.examle0.child;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

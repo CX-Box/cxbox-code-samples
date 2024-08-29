@@ -1,9 +1,10 @@
-package org.demo.documentation.other.savewithparent.child;
+package org.demo.documentation.other.savewithparent.examle0.child;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service

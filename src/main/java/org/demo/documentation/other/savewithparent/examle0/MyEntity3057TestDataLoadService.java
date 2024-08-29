@@ -1,12 +1,12 @@
-package org.demo.documentation.other.savewithparent;
+package org.demo.documentation.other.savewithparent.examle0;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.other.savewithparent.child.MyEntity3057;
-import org.demo.documentation.other.savewithparent.child.MyEntity3057Repository;
-import org.demo.documentation.other.savewithparent.parent.MyEntity3058;
-import org.demo.documentation.other.savewithparent.parent.MyEntity3058Repository;
+import org.demo.documentation.other.savewithparent.examle0.child.MyEntity3057;
+import org.demo.documentation.other.savewithparent.examle0.child.MyEntity3057Repository;
+import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058;
+import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
