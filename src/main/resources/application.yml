@@ -8,6 +8,15 @@ app:
     resource: cxbox-oidc-client
     public-client: true
     cors: true
+  stomp:
+    stomp-post: ${STOMP_PORT:61613}
+    broker-type: ${BROKER_TYPE:simple}
+  activemq:
+    password: ${ACTIVEMQ_ADMIN_PASSWORD:admin}
+    user: ${ACTIVEMQ_ADMIN_LOGIN:admin}
+    broker-url: tcp://${ACTIVEQM_HOST:localhost}:${ACTIVEMQ_PORT:61616}
+    host: ${ACTIVEMQ_HOST:}
+    port: ${ACTIVEMQ_PORT:61616}
   integrations:
     create-microservices-data-server-url: ${CREATE_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3910}
     existing-microservices-data-server-url: ${EXISTING_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3900}
@@ -44,6 +53,10 @@ server:
         http-only: true
 
 spring:
+  websocket:
+    endpointToConnect: ${WEBSOCKET_ENDPOINT:/websocketnotification}
+    prefix: /user
+    urlPath: /queue/websocket.reply
   servlet:
     multipart:
       enabled: true
