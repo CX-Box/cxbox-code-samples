@@ -34,9 +34,11 @@ services:
       MINIO_SECRET_KEY: 'prCv8t9LGRH18FB5pLr5jqDZ/dixZkb9cFajueGW'
       MINIO_URL: 'http://cxbox-code-samples-minio:9000'
       MINIO_DEFAULT_BUCKETS: 'edcs3gnsadevb'
-      JAVA_TOOL_OPTIONS: '-agentlib:jdwp=transport=dt_socket,server=y,address=8989,suspend=n'
+      JAVA_TOOL_OPTIONS: '-agentlib:jdwp=transport=dt_socket,server=y,address=5005,suspend=n'
     expose:
       - 8080
+    ports:
+      - "127.0.0.1:5005:5005"
     restart: always
     depends_on:
       - cxbox-code-samples-postgres
