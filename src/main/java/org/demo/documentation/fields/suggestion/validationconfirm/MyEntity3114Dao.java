@@ -130,6 +130,7 @@ public class MyEntity3114Dao extends AbstractAnySourceBaseDAO<MyEntity3114OutSer
     @Override
     // --8<-- [start:create]
     public MyEntity3114OutServiceDTO create(BusinessComponent bc, MyEntity3114OutServiceDTO entity) {
+        entity.setId(null);
         return restTemplate.exchange(
                 fromUriString(integrationConfig.getSuggestionMicroservicesDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3114OutServiceDTO.class

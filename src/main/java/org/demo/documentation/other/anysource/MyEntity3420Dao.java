@@ -70,18 +70,18 @@ public class MyEntity3420Dao extends AbstractAnySourceBaseDAO<MyEntity3420OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = getFilterFieldName(queryParameters, "customFieldSuggestion", "contains");
+        List<String> filterCustomField = getFilterFieldName(queryParameters, "customField", "contains");
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
-        List<String> sortCustomField = getSortFieldName(queryParameters, "customFieldSuggestion");
+        List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
         Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
                 .queryParam("number", page)
                 .queryParam("size", limit)
-                .queryParamIfPresent("filterCustomFieldSuggestion", filter)
-                .queryParamIfPresent("sortCustomFieldSuggestion", sort)
+                .queryParamIfPresent("filterCustomField", filter)
+                .queryParamIfPresent("sortCustomField", sort)
                 .encode()
                 .toUriString();
 

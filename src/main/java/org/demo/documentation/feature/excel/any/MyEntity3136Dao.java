@@ -69,18 +69,18 @@ public class MyEntity3136Dao extends AbstractAnySourceBaseDAO<MyEntity3136OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = getFilterFieldName(queryParameters, "customFieldSuggestion", "contains");
+        List<String> filterCustomField = getFilterFieldName(queryParameters, "customField", "contains");
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
-        List<String> sortCustomField = getSortFieldName(queryParameters, "customFieldSuggestion");
+        List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
         Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
                 .queryParam("number", page)
                 .queryParam("size", limit)
-                .queryParamIfPresent("filterCustomFieldSuggestion", filter)
-                .queryParamIfPresent("sortCustomFieldSuggestion", sort)
+                .queryParamIfPresent("filterCustomField", filter)
+                .queryParamIfPresent("sortCustomField", sort)
                 .encode()
                 .toUriString();
 
@@ -130,6 +130,7 @@ public class MyEntity3136Dao extends AbstractAnySourceBaseDAO<MyEntity3136OutSer
     @Override
     // --8<-- [start:create]
     public MyEntity3136OutServiceDTO create(BusinessComponent bc, MyEntity3136OutServiceDTO entity) {
+        entity.setId(null);
         return restTemplate.exchange(
                 fromUriString(integrationConfig.getDataServerUrl()).build().normalize().encode().toUriString(),
                 POST, new HttpEntity<>(entity), MyEntity3136OutServiceDTO.class
