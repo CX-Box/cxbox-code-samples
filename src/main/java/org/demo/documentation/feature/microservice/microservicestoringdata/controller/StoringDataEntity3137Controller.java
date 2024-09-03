@@ -79,6 +79,7 @@ public class StoringDataEntity3137Controller {
             @Parameter(in = ParameterIn.QUERY,
                     description = "Criteria for filtering the data by field CustomField", example = "Test data1")
             @RequestParam(value = "filterCustomField", required = false) String filterCustomField,
+            @RequestParam(value = "filterParentId", required = false) String filterParentId,
             @Parameter(in = ParameterIn.QUERY,
                     description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
             @RequestParam(value = "sortCustomField", required = false) String sortCustomField
@@ -93,7 +94,10 @@ public class StoringDataEntity3137Controller {
             specification = (root, query, criteriaBuilder) ->
                     criteriaBuilder.like(root.get(MyEntity3137_.customField.getName()), "%" + filterCustomField + "%");
         }
-
+        if (filterParentId != null) {
+            specification = (root, query, criteriaBuilder) ->
+                    criteriaBuilder.equal(root.get(MyEntity3137_.parentId.getName()), filterParentId);
+        }
         return ResponseEntity.ok().body(dataRepository.findAll(specification, entityPageable).map(mapper::toDto));
     }
 

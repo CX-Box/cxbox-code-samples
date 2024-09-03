@@ -18,8 +18,10 @@ public class MyExample3137DTO implements Serializable {
     private String customFieldNew;
     private LocalDateTime customFieldDateTime;
     private Double customFieldDouble;
+    private String parentId;
     public MyExample3137DTO(MyEntity3137 entity) {
         this.id = entity.getId().toString();
+        this.parentId = entity.getParentId();
         this.customField = entity.getCustomField();
         this.customFieldNew = entity.getCustomFieldNew();
         this.customFieldDateTime = entity.getCustomFieldDateTime();
