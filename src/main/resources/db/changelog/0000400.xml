@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd"
+  logicalFilePath="db/changelog/0000400.xml">
+
+  <property name="now" value="current_timestamp" dbms="postgresql"/>
+  <property name="now" value="sysdate" dbms="oracle"/>
+
+  <changeSet id="local example data" author="cxbox" runOnChange="true" context="local">
+    <loadUpdateData tableName="BC_PROPERTIES" primaryKey="ID" separator=";" quotchar="'"
+      file="db/data/BC_PROPERTIES.csv">
+      <column header="ID" name="ID" type="NUMERIC"/>
+      <column header="BC" name="BC" type="STRING"/>
+      <column header="PAGE_LIMIT" name="PAGE_LIMIT" type="NUMERIC"/>
+      <column header="SORT" name="SORT" type="STRING"/>
+      <column header="FILTER" name="FILTER" type="STRING"/>
+    </loadUpdateData>
+  </changeSet>
+
+</databaseChangeLog>
