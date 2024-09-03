@@ -24,8 +24,7 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
 
     @Override
     protected CreateResult<MyExample3077DTO> doCreateEntity(MyEntity3077OutServiceDTO entity, BusinessComponent bc) {
-        entity.setParentId(String.valueOf(bc.getParentIdAsLong()));
-        return new CreateResult<>(entityToDto(bc, entity));
+        return new CreateResult<>(entityToDto(bc,  entity.setParentId(String.valueOf(bc.getParentIdAsLong()))));
     }
 
     @Override
