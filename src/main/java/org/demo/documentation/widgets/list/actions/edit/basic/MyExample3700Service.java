@@ -41,18 +41,6 @@ public class MyExample3700Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .action("edit", "Edit")
-                .withoutAutoSaveBefore()
-                .invoker((bc, data) -> {
-                    MyEntity3700 client = repository.getById(bc.getIdAsLong());
-                    return new ActionResultDTO<MyExample3700DTO>()
-                            .setAction(PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                     PlatformMyExample3700Controller.myExampleBc3700 + "/"
-                                            + bc.getId()
-                            ));
-                })
-                .add()
                 .build();
     }
 
