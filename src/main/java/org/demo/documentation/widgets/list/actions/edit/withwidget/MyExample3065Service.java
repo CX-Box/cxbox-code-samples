@@ -25,6 +25,7 @@ public class MyExample3065Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3065DTO> doUpdateEntity(MyEntity3065 entity, MyExample3065DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3065DTO_.customFieldText, entity::setCustomFieldText);
         if (data.isFieldChanged(MyExample3065DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
@@ -35,6 +36,7 @@ public class MyExample3065Service extends VersionAwareResponseService<MyExample3
     public Actions<MyExample3065DTO> getActions() {
         return Actions.<MyExample3065DTO>builder()
                 .save().text("Save").add()
+                .action("edit", "Edit").add()
                 .cancelCreate().text("Cancel").available(bc -> true).add()
                 .build();
     }
