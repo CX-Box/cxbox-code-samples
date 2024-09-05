@@ -2,6 +2,7 @@ package org.demo.documentation.other.savewithparent.example443.child;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
@@ -10,6 +11,8 @@ import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.feature.microservice.existingmicroservices.MyExample3800DTO_;
 import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130;
 import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130_;
+import org.demo.documentation.widgets.list.actions.create.newview.MyEntity3066;
+import org.demo.documentation.widgets.list.actions.create.newview.MyExample3066DTO;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +35,6 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
         if (data.isFieldChanged(MyExample3077DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
-        if (data.isFieldChanged(MyExample3077DTO_.parentId)) {
-            entity.setParentId(data.getParentId());
-        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
@@ -49,14 +49,16 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
                 .add()
 
                 .action("cancel", "Cancel")
-                .invoker(this::cancelActionInvoker)
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3077DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample3076"
+                            ));
+                })
                 .withoutAutoSaveBefore()
                 .add()
                 .build();
-    }
-
-    private ActionResultDTO<MyExample3077DTO> cancelActionInvoker(final BusinessComponent bc, final MyExample3077DTO dto) {
-        return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(bc));
     }
 
     private ActionResultDTO<MyExample3077DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3077DTO dto) {
