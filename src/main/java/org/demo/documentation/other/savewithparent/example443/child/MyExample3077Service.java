@@ -7,13 +7,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
-import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.feature.microservice.existingmicroservices.MyExample3800DTO_;
-import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130;
-import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130_;
-import org.demo.documentation.widgets.list.actions.create.newview.MyEntity3066;
-import org.demo.documentation.widgets.list.actions.create.newview.MyExample3066DTO;
-import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
 
 
