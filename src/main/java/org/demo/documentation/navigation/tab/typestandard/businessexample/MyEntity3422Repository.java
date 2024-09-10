@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2;
+package org.demo.documentation.navigation.tab.typestandard.businessexample;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

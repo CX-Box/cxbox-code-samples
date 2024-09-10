@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2;
+package org.demo.documentation.navigation.tab.typestandard.businessexample;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2.relatedobject;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.relatedobject;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.DrillDownType;
@@ -6,7 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 
-import org.demo.documentation.navigation.tab.other.example2.CxboxMyExample3422Controller;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.CxboxMyExample3422Controller;
 
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class MyExample3423Meta extends FieldMetaBuilder<MyExample3423DTO> {
         fields.setDrilldown(
                 MyExample3423DTO_.customField,
                 DrillDownType.INNER,
-                "/screen/myexample3422/view/agreementInfo/"+ CxboxMyExample3422Controller.myexample3422 +"/"+ parentId +"/"+ CxboxMyExample3422Controller.myexample3423 + "/" + id
+                "/screen/myexample3422/view/agreementinfo/"+ CxboxMyExample3422Controller.myexample3422 +"/"+ parentId +"/"+ CxboxMyExample3422Controller.myexample3423 + "/" + id
         );
     }
 

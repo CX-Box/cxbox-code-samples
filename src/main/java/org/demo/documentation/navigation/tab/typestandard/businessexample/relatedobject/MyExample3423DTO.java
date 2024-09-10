@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2.relatedobject;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.relatedobject;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

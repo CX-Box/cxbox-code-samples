@@ -1,10 +1,11 @@
-package org.demo.documentation.navigation.tab.other.example2.client;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.client;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+
 import org.springframework.stereotype.Service;
 
 @Service

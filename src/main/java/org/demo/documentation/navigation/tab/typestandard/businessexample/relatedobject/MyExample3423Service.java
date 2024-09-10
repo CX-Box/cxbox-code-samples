@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2.relatedobject;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.relatedobject;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -6,8 +6,8 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.navigation.tab.other.example2.MyEntity3422;
-import org.demo.documentation.navigation.tab.other.example2.MyEntity3422Repository;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.MyEntity3422;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.MyEntity3422Repository;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

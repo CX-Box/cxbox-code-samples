@@ -1,11 +1,11 @@
-package org.demo.documentation.navigation.tab.other.example2.client;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.client;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.navigation.tab.other.example2.MyEntity3422;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.MyEntity3422;
 
 @Entity
 @Getter

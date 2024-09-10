@@ -1,13 +1,13 @@
-package org.demo.documentation.navigation.tab.other.example2;
+package org.demo.documentation.navigation.tab.typestandard.businessexample;
 
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.navigation.tab.other.example2.client.MyEntity3425;
-import org.demo.documentation.navigation.tab.other.example2.client.MyEntity3425Repository;
-import org.demo.documentation.navigation.tab.other.example2.relatedobject.MyEntity3423;
-import org.demo.documentation.navigation.tab.other.example2.relatedobject.MyEntity3423Repository;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.client.MyEntity3425;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.client.MyEntity3425Repository;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.relatedobject.MyEntity3423;
+import org.demo.documentation.navigation.tab.typestandard.businessexample.relatedobject.MyEntity3423Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

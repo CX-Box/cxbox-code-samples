@@ -1,10 +1,10 @@
-package org.demo.documentation.navigation.tab.other.example2.client;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.client;
 
-import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service

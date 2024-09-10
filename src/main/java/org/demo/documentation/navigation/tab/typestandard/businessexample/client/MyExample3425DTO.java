@@ -1,4 +1,4 @@
-package org.demo.documentation.navigation.tab.other.example2.client;
+package org.demo.documentation.navigation.tab.typestandard.businessexample.client;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
