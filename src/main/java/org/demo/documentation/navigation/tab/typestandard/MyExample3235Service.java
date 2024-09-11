@@ -48,7 +48,7 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .newAction()
                 .scope(ActionScope.RECORD)
-                .action("gotolistthirdlevel", "Go to List 3 level")
+                .action("gotolistthirdlevel", "Go to view hidden 3 level")
                 .invoker((bc, dto) -> {
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
@@ -59,7 +59,18 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .newAction()
                 .scope(ActionScope.RECORD)
-                .action("gotolistfourthlevel", "Go to List 4 level")
+                .action("gotolistfourthlevel", "Go to view hidden 4 level")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3235DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample32353/view/myexample3235fourthleveltab3"
+                            ));
+                })
+                .add()
+                .newAction()
+                .scope(ActionScope.RECORD)
+                .action("gotolistsecondlevel", "Go to view hidden 2 level")
                 .invoker((bc, dto) -> {
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
