@@ -4,7 +4,10 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Controller;
+import org.demo.documentation.navigation.tab.other.example5.child3.MyExample3163DTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,12 +40,18 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
-                .delete()
+                .action("refreshParent", "refresh Parent bc")
+                .invoker(this::customSaveInvoker)
                 .add()
                 .build();
     }
+
+    private ActionResultDTO<MyExample3161DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3161DTO dto) {
+        MyEntity3161 entity = repository.findById(bc.getParentIdAsLong()).orElse(null);
+        entity.setCustomField("Test data" +  Math.random());
+         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
+    }
+
 
 
 }
