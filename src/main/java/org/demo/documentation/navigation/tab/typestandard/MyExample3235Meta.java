@@ -15,10 +15,12 @@ public class MyExample3235Meta extends FieldMetaBuilder<MyExample3235DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3235DTO_.customField);
         fields.setRequired(MyExample3235DTO_.customField);
+
     }
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3235DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+
     }
 
 }

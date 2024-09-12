@@ -20,7 +20,7 @@ public class MyExample3422Meta extends FieldMetaBuilder<MyExample3422DTO> {
         fields.setDrilldown(
                 MyExample3422DTO_.customFieldDrilldown,
                 DrillDownType.INNER,
-                "/screen/myexample3422/view/taskinfo/" + CxboxMyExample3422Controller.myexample3422 + "/" + id
+                "/screen/myexample3422/view/taskinfo3422/" + CxboxMyExample3422Controller.myexample3422 + "/" + id
         );
     }
 
