@@ -28,6 +28,8 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3161DTO> doUpdateEntity(MyEntity3161 entity, MyExample3161DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3161DTO_.customFieldText, entity::setCustomFieldText);
+        setIfChanged(data, MyExample3161DTO_.customFieldCheckBox, entity::setCustomFieldCheckBox);
         if (data.isFieldChanged(MyExample3161DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
@@ -37,21 +39,22 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3161DTO> getActions() {
         return Actions.<MyExample3161DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .action("refreshParent", "refresh Parent bc")
+                .create().text("Add").add()
+                .save().text("Save").add()
+                .cancelCreate().text("Cancel").available(bc -> true).add()
+                .delete().text("Delete").add()
+                .action("refreshCurrentBc", "refresh bc")
                 .invoker(this::customSaveInvoker)
                 .add()
                 .build();
     }
 
     private ActionResultDTO<MyExample3161DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3161DTO dto) {
-        MyEntity3161 entity = repository.findById(bc.getParentIdAsLong()).orElse(null);
-        entity.setCustomField("Test data" +  Math.random());
-         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
+        MyEntity3161 entity = repository.getById(bc.getIdAsLong());
+        entity.setCustomField("Test data" + Math.random());
+        repository.save(entity);
+        return new ActionResultDTO<MyExample3161DTO>().setAction(PostAction.refreshBc(bc));
     }
-
 
 
 }

@@ -5,15 +5,29 @@
   "bc": "myexample3161",
   "fields": [
     {
+      "label": "Custom Field text",
+      "key": "customFieldText",
+      "type": "text"
+    },
+    {
+      "label": "Custom Field CheckBox",
+      "key": "customFieldCheckBox",
+      "type": "checkbox"
+    },
+    {
       "label": "customField",
       "key": "customField",
-      "type": "input"
+      "type": "input",
+      "drillDown": "true"
     }
   ],
   "options": {
     "actionGroups": {
       "include": [
-        "refreshbc"
+        "refreshCurrentBc",
+        "create",
+        "save",
+        "cancel-create"
       ]
     },
     "layout": {
@@ -21,7 +35,23 @@
         {
           "cols": [
             {
+              "fieldKey": "customFieldText",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
               "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldCheckBox",
               "span": 12
             }
           ]

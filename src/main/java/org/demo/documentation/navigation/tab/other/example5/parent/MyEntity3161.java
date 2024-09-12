@@ -19,4 +19,8 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity3161 extends BaseEntity {
     @Column
     private String customField;
+    @Column
+    private Boolean customFieldCheckBox;
+    @Column
+    private String customFieldText;
 }

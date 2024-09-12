@@ -8,6 +8,7 @@ import org.demo.documentation.navigation.tab.other.example5.child2.MyEntity3162;
 import org.demo.documentation.navigation.tab.other.example5.child2.MyEntity3162Repository;
 import org.demo.documentation.navigation.tab.other.example5.child3.MyEntity3163;
 import org.demo.documentation.navigation.tab.other.example5.child3.MyEntity3163Repository;
+import org.demo.documentation.navigation.tab.other.example5.child4.MyEntity3165Repository;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class MyEntity3160TestDataLoadService {
     @Autowired
     MyEntity3163Repository repositoryChild;
     @Autowired
+    MyEntity3165Repository repositoryChild3;
+    @Autowired
     InternalAuthorizationService authzService;
 
     @Transactional
@@ -36,19 +39,19 @@ public class MyEntity3160TestDataLoadService {
         repositoryChild2.deleteAll();
         repositoryParent.deleteAll();
 
-        MyEntity3161 myEntity3161 = new MyEntity3161().setCustomField("test data1");
+        MyEntity3161 myEntity3161 = new MyEntity3161().setCustomField("test data1").setCustomFieldCheckBox(true).setCustomFieldText("test data1");
         repositoryParent.save(myEntity3161);
-        MyEntity3161 myEntity3161_2 = new MyEntity3161().setCustomField("test data2");
+        MyEntity3161 myEntity3161_2 = new MyEntity3161().setCustomField("test data2").setCustomFieldCheckBox(true).setCustomFieldText("test data2");
         repositoryParent.save(myEntity3161_2);
-        MyEntity3161 myEntity3161_3 = new MyEntity3161().setCustomField("test data3");
+        MyEntity3161 myEntity3161_3 = new MyEntity3161().setCustomField("test data3").setCustomFieldCheckBox(true).setCustomFieldText("test data3");
         repositoryParent.save(myEntity3161_3);
-        MyEntity3161 myEntity3161_4 = new MyEntity3161().setCustomField("test data4");
+        MyEntity3161 myEntity3161_4 = new MyEntity3161().setCustomField("test data4").setCustomFieldCheckBox(true).setCustomFieldText("test data4");
         repositoryParent.save(myEntity3161_4);
-        MyEntity3161 myEntity3161_5 = new MyEntity3161().setCustomField("test data5");
+        MyEntity3161 myEntity3161_5 = new MyEntity3161().setCustomField("test data5").setCustomFieldCheckBox(true).setCustomFieldText("test data5");
         repositoryParent.save(myEntity3161_5);
-        MyEntity3161 myEntity3161_6 = new MyEntity3161().setCustomField("test data6");
+        MyEntity3161 myEntity3161_6 = new MyEntity3161().setCustomField("test data6").setCustomFieldCheckBox(true).setCustomFieldText("test data6");
         repositoryParent.save(myEntity3161_6);
-        MyEntity3161 myEntity3161_7 = new MyEntity3161().setCustomField("test data7");
+        MyEntity3161 myEntity3161_7 = new MyEntity3161().setCustomField("test data7").setCustomFieldCheckBox(true).setCustomFieldText("test data7");
         repositoryParent.save(myEntity3161_7);
 
         repositoryChild2.save(new MyEntity3162().setCustomField("test data child").setCustomFieldEntity(myEntity3161));
