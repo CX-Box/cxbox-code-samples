@@ -29,7 +29,7 @@ public class MyEntity105TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt();
+		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
 		repository.save(new MyEntity105().setCustomField(file.getData().getName())
 				.setCustomFieldId(file.getData().getId()));
 	}

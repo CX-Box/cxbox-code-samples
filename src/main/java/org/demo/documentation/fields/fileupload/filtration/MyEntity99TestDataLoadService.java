@@ -28,13 +28,13 @@ public class MyEntity99TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt();
+		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
 		repository.save(new MyEntity99().setCustomField(file.getData().getName())
 				.setCustomFieldId(file.getData().getId()));
-		CxboxResponseDTO<FileUploadDto> file2 = customFileUploadServices.uploadTxt();
+		CxboxResponseDTO<FileUploadDto> file2 = customFileUploadServices.uploadTxt("2");
 		repository.save(new MyEntity99().setCustomField(file2.getData().getName())
 				.setCustomFieldId(file2.getData().getId()));
-		CxboxResponseDTO<FileUploadDto> file3 = customFileUploadServices.uploadTxt();
+		CxboxResponseDTO<FileUploadDto> file3 = customFileUploadServices.uploadTxt("3");
 		repository.save(new MyEntity99().setCustomField(file3.getData().getName())
 				.setCustomFieldId(file3.getData().getId()));
 
