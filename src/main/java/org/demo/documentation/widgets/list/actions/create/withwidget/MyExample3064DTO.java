@@ -15,10 +15,16 @@ public class MyExample3064DTO extends DataResponseDTO {
     private String customField;
     @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
     private String customFieldText;
+    @SearchParameter(name = "customFieldDisable", provider = StringValueProvider.class)
+    private String customFieldDisable;
+    @SearchParameter(name = "customFieldDisableDynamic", provider = StringValueProvider.class)
+    private String customFieldDisableDynamic;
 
     public MyExample3064DTO(MyEntity3064 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldText = entity.getCustomFieldText();
+        this.customFieldDisable = entity.getCustomFieldDisable();
+        this.customFieldDisableDynamic = entity.getCustomFieldDisableDynamic();
     }
 }
