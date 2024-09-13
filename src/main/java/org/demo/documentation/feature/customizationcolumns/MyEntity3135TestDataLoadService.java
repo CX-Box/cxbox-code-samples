@@ -42,7 +42,7 @@ public class MyEntity3135TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt();
+        CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
 
 
         MyEntity3135MultiHover myEntity1 = new MyEntity3135MultiHover().setCustomField(

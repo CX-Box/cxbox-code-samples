@@ -29,13 +29,10 @@ public class CustomFileUploadServices {
     }
 
     @SneakyThrows
-    public CxboxResponseDTO<FileUploadDto> uploadTxt() {
-        int min = 1000;
-        int max = 9999;
-
-        int randomNum = (int) (Math.random() * (max - min)) + min;
+    public CxboxResponseDTO<FileUploadDto> uploadTxt(String nameFile) {
+        //We do not generate random values because it would not be suitable for automated testing.
         String contentType = "text/plain";
-        String name = "FILE_" + randomNum + ".txt";
+        String name = "FILE_" + nameFile + ".txt";
         InputStream targetStream = new ByteArrayInputStream("Test data".getBytes());
         ObjectWriteResponse objectWriteResponse = minioClient.putObject(PutObjectArgs
                 .builder()
