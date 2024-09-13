@@ -48,12 +48,23 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .newAction()
                 .scope(ActionScope.RECORD)
+                .action("gotolistsecondlevel", "Go to view hidden 2 level")
+                .invoker((bc, dto) -> {
+                    return new ActionResultDTO<MyExample3235DTO>().setAction(
+                            PostAction.drillDown(
+                                    DrillDownType.INNER,
+                                    "/screen/myexample32359/view/myexample3235secondleveltabhidden"
+                            ));
+                })
+                .add()
+                .newAction()
+                .scope(ActionScope.RECORD)
                 .action("gotolistthirdlevel", "Go to view hidden 3 level")
                 .invoker((bc, dto) -> {
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
                                     DrillDownType.INNER,
-                                    "/screen/myexample3235/view/myexample3235thirdleveltab3"
+                                    "/screen/myexample32359/view/myexample3235thirdleveltabhidden"
                             ));
                 })
                 .add()
@@ -64,18 +75,7 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                     return new ActionResultDTO<MyExample3235DTO>().setAction(
                             PostAction.drillDown(
                                     DrillDownType.INNER,
-                                    "/screen/myexample32353/view/myexample3235fourthleveltab3"
-                            ));
-                })
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotolistsecondlevel", "Go to view hidden 2 level")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3235DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample32353/view/myexample3235fourthleveltab3"
+                                    "/screen/myexample32359/view/myexample3235fourthleveltabhidden"
                             ));
                 })
                 .add()
