@@ -22,7 +22,7 @@ import cn from 'classnames'
 import Header from '@components/widgets/Table/components/Header'
 import { Field, RowOperationsButton } from '@cxboxComponents'
 import { useRowMenu } from '@hooks/useRowMenu'
-import { DataItem, FieldType } from '@interfaces/core'
+import { DataItem, FieldType } from '@cxbox-ui/core'
 import { TableEventListeners } from 'antd/lib/table/interface'
 import { ExpandIconProps } from 'antd/lib/table'
 import { WidgetListField } from '@cxbox-ui/schema'
@@ -424,7 +424,7 @@ function Table({
                             const hideFieldForGroupingHierarchy =
                                 isGroupingHierarchy &&
                                 ((dataItem.pseudoRow && !isGroupingField) || (!dataItem.pseudoRow && isGroupingField && !editMode))
-                            const showField = !hideFieldForGroupingHierarchy || (unallocatedRecord && !isParentRow)
+                            const showField = !hideFieldForGroupingHierarchy || (unallocatedRecord && !isParentRow) || !enabledGrouping
 
                             return (
                                 showField && (
@@ -498,7 +498,8 @@ function Table({
         expandedRowKeys,
         bcName,
         onParentExpand,
-        selectCell
+        selectCell,
+        enabledGrouping
     ])
 
     const resultColumns = React.useMemo(() => {
