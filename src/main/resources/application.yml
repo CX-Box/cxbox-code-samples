@@ -14,10 +14,13 @@ app:
   activemq:
     password: ${ACTIVEMQ_ADMIN_PASSWORD:admin}
     user: ${ACTIVEMQ_ADMIN_LOGIN:admin}
-    broker-url: tcp://${ACTIVEQM_HOST:localhost}:${ACTIVEMQ_PORT:61616}
+    broker-url: tcp://${ACTIVEMQ_HOST:localhost}:${ACTIVEMQ_PORT:61616}
     host: ${ACTIVEMQ_HOST:}
     port: ${ACTIVEMQ_PORT:61616}
   integrations:
+    # exits in demo.cxbox.org, but NOT in code-samples.cxbox.org
+    #lov-server-url: ${LOV_SERVER_URL:http://localhost:8080/rest/api/v1/lov}
+    # exits ONLY in code-samples.cxbox.org
     create-microservices-data-server-url: ${CREATE_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3910}
     existing-microservices-data-server-url: ${EXISTING_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3900}
     get-started-microservices-data-server-url: ${GET_STARTED_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity4001}
@@ -30,13 +33,14 @@ cxbox:
       enabled: false
   meta:
     dev-panel-enabled: ${DEV_PANEL_ENABLED:true}
-    directory: ${META_DIRECTORY:file:./src}
+    directory: ${META_DIRECTORY:file:./src} #value ${META_DIRECTORY:file:./src/main/resources/meta} from demo.cxbox.org changed due to .json files are placed in java packages in code samples
     view-allowed-roles-enabled: true
     bc-default-page-limit: 5
   widget:
     fields:
       include-packages: org.cxbox.meta, org.demo.conf.cxbox
-      filter-by-range-enabled-default: false
+      sort-enabled-default: false
+      filter-by-range-enabled-default: true
   api:
     path: /api/v1
     use-servlet-context-path: false
@@ -45,7 +49,7 @@ cxbox:
     use-servlet-context-path: false
 
 server:
-  port: 8080
+  port: 89
   forward-headers-strategy: framework
   servlet:
     session:
@@ -53,15 +57,27 @@ server:
         http-only: true
 
 spring:
-  websocket:
-    endpointToConnect: ${WEBSOCKET_ENDPOINT:/websocketnotification}
-    prefix: /user
-    urlPath: /queue/websocket.reply
+  mail:
+    host: ${MAIL_HOST:false}  #  For local development empty - e.g. turned off. on server fill this prop
+    port: 587
+    username: ${MAIL_USER:}  #  For local development, you can use your own data, or use those prepared
+    password: ${MAIL_PASSWORD:}  #  from the CXBOX-1 ticket or the secrets of the EMAIL_DATA repository
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    test-connection: false
   servlet:
     multipart:
       enabled: true
       max-file-size: 1GB
       max-request-size: 1GB
+  websocket:
+    endpointToConnect: ${WEBSOCKET_ENDPOINT:/websocketnotification}
+    prefix: /user
+    urlPath: /queue/websocket.reply
   datasource:
     name: primaryDS
     driver-class-name: ${DATABASE_DRIVER:org.postgresql.Driver}
@@ -91,10 +107,11 @@ spring:
         jdbc:
           batch_size: 100
         hbm2ddl:
-          auto: update
+          auto: ${HIBERNATE_DDL_AUTO:update} #value ${HIBERNATE_DDL_AUTO:none} from demo.cxbox.org changed due code samples use tables auto creation by hibernate which is enough for demonstration purposes
     hibernate:
       naming:
         physical-strategy: org.cxbox.model.core.hbn.ImprovedPhysicalNamingStrategy
+
   main:
     allow-bean-definition-overriding: true
     banner-mode: off
@@ -118,9 +135,34 @@ minio:
   bucket:
     name: ${MINIO_DEFAULT_BUCKETS:edcs3gnsadevb}
 
-document:
-  force-active-enabled: ${FORCE_ACTIVE_ENABLED:true}
+management:
+  health:
+    jms:
+      enabled: false
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: 'metrics'
 
+# exits in demo.cxbox.org, but NOT in code-samples.cxbox.org
+#dadata:
+#  client:
+#    token: ${DADATA_API_KEY:885218b4321600b90d4161c85bc11766cd6810c1}
+#    base-url: ${DADATA_URL:https://suggestions.dadata.ru/suggestions/api/4_1/rs/}
+#
+#org:
+#  jobrunr:
+#    background-job-server:
+#      enabled: true
+#    dashboard:
+#      enabled: false
+
+
+# exits ONLY in code-samples.cxbox.org
 logbook:
   include:
     - /**
@@ -136,10 +178,8 @@ logbook:
   format:
     style: http
 
-management:
-  health:
-    jms:
-      enabled: false
-  endpoint:
-    metrics:
-      enabled: true
+document:
+  force-active-enabled: ${FORCE_ACTIVE_ENABLED:true}
+
+
+
