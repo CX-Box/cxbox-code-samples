@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+import org.demo.documentation.fields.date.sorting.DateSortingDTO_;
 import org.demo.documentation.fields.dictionary.sorting.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class MyExample90Meta extends FieldMetaBuilder<MyExample90DTO> {
 		}
 		fields.setEnumFilterValues(fields, MyExample90DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample90DTO_.customField);
+		fields.enableSort(MyExample90DTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

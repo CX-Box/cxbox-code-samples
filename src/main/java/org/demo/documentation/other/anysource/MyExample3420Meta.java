@@ -26,9 +26,13 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription, String parentId) {
         fields.setForceActive(MyExample3420DTO_.customField);
+        fields.enableSort(MyExample3420DTO_.customField);
         fields.setForceActive(MyExample3420DTO_.customFieldNew);
+        fields.enableSort(MyExample3420DTO_.customFieldNew);
         fields.setForceActive(MyExample3420DTO_.customFieldDateTime);
+        fields.enableSort(MyExample3420DTO_.customFieldDateTime);
         fields.setForceActive(MyExample3420DTO_.customFieldDouble);
+        fields.enableSort(MyExample3420DTO_.customFieldDouble);
     }
 
 }

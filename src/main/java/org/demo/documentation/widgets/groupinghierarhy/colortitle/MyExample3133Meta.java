@@ -22,6 +22,7 @@ public class MyExample3133Meta extends FieldMetaBuilder<MyExample3133DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample3133DTO> fields, InnerBcDescription bcDescription, Long parentId) {
       fields.setEnumFilterValues(fields, MyExample3133DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
       fields.enableFilter(MyExample3133DTO_.customFieldDictionary);
+      fields.enableSort(MyExample3133DTO_.customFieldDictionary);
     }
 
 }

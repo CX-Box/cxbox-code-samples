@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+import org.demo.documentation.fields.date.sorting.DateSortingDTO_;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +35,7 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberSortingDTO_.customField);
 		}
+		fields.enableSort(NumberSortingDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 

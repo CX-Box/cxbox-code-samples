@@ -22,6 +22,7 @@ public class MyExample3800Meta extends AnySourceFieldMetaBuilder<MyExample3800DT
     public void buildIndependentMeta(FieldsMeta<MyExample3800DTO> fields, BcDescription bcDescription,
                                      String parentId) {
         fields.enableFilter(MyExample3800DTO_.customField);
+      fields.enableSort(MyExample3800DTO_.customField);
     }
    // --8<-- [end:buildIndependentMeta]
 }

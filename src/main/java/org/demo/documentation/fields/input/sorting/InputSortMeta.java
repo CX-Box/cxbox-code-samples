@@ -17,7 +17,7 @@ public class InputSortMeta extends FieldMetaBuilder<InputSortDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputSortDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputSortDTO_.customField
 		);
@@ -33,6 +33,7 @@ public class InputSortMeta extends FieldMetaBuilder<InputSortDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputSortDTO_.customField);
 		}
+		fields.enableSort(InputSortDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

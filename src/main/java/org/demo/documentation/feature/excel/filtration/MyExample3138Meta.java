@@ -23,9 +23,13 @@ public class MyExample3138Meta extends FieldMetaBuilder<MyExample3138DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3138DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3138DTO_.customFieldText);
+        fields.enableSort(MyExample3138DTO_.customFieldText);
         fields.enableFilter(MyExample3138DTO_.customFieldInput);
+        fields.enableSort(MyExample3138DTO_.customFieldInput);
         fields.enableFilter(MyExample3138DTO_.customFieldNumber);
+        fields.enableSort(MyExample3138DTO_.customFieldNumber);
         fields.enableFilter(MyExample3138DTO_.customFieldDateTime);
+        fields.enableSort(MyExample3138DTO_.customFieldDateTime);
     }
 
 }

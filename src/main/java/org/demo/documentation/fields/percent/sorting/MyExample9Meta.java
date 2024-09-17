@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+import org.demo.documentation.fields.date.sorting.DateSortingDTO_;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +31,7 @@ public class MyExample9Meta extends FieldMetaBuilder<MyExample9DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample9DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableSort(MyExample9DTO_.customField);
 		//
 	}
 

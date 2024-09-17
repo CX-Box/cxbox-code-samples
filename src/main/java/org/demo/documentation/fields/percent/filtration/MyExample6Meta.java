@@ -34,6 +34,7 @@ public class MyExample6Meta extends FieldMetaBuilder<MyExample6DTO> {
 			fields.setForceActive(MyExample6DTO_.customField);
 		}
 		fields.enableFilter(MyExample6DTO_.customField);
+		fields.enableSort(MyExample6DTO_.customField);
 	}
 
 

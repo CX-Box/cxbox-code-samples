@@ -20,6 +20,7 @@ public class MyExample3504Meta extends FieldMetaBuilder<MyExample3504DTO> {
   @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3504DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3504DTO_.customField);
+        fields.enableSort(MyExample3504DTO_.customField);
     }
    // --8<-- [end:buildIndependentMeta]
 }

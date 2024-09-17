@@ -31,8 +31,11 @@ public class MyExample3428Meta extends FieldMetaBuilder<MyExample3428DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3428DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3428DTO_.meetDate);
+        fields.enableSort(MyExample3428DTO_.meetDate);
         fields.enableFilter(MyExample3428DTO_.customFieldAdditional);
+        fields.enableSort(MyExample3428DTO_.customFieldAdditional);
         fields.enableFilter(MyExample3428DTO_.customFieldDrilldown);
+        fields.enableSort(MyExample3428DTO_.customFieldDrilldown);
     }
 
 }
