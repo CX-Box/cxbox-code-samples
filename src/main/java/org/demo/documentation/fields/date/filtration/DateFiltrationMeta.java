@@ -35,6 +35,7 @@ public class DateFiltrationMeta extends FieldMetaBuilder<DateFiltrationDTO> {
 			fields.setForceActive(DateFiltrationDTO_.customField);
 		}
 		fields.enableFilter(DateFiltrationDTO_.customField);
+		fields.enableSort(DateFiltrationDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

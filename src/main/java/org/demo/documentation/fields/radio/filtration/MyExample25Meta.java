@@ -32,6 +32,7 @@ public class MyExample25Meta extends FieldMetaBuilder<MyExample25DTO> {
 		}
 		fields.setEnumFilterValues(fields, MyExample25DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample25DTO_.customField);
+		fields.enableSort(MyExample25DTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

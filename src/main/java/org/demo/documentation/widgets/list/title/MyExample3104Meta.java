@@ -26,6 +26,7 @@ public class MyExample3104Meta extends FieldMetaBuilder<MyExample3104DTO> {
   @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3104DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3104DTO_.customField);
+        fields.enableSort(MyExample3104DTO_.customField);
         if (configuration.getForceActiveEnabled()) {
             fields.setForceActive(MyExample3104DTO_.customField);
         }

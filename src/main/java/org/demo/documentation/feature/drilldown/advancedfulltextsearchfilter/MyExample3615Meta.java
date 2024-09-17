@@ -45,7 +45,9 @@ public class MyExample3615Meta extends FieldMetaBuilder<MyExample3615DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3615DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3615DTO_.address);
+        fields.enableSort(MyExample3615DTO_.address);
         fields.enableFilter(MyExample3615DTO_.fullName);
+        fields.enableSort(MyExample3615DTO_.fullName);
 
     }
 

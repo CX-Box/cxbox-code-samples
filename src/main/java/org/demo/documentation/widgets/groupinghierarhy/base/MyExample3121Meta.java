@@ -25,8 +25,10 @@ public class MyExample3121Meta extends FieldMetaBuilder<MyExample3121DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3121DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3121DTO_.customFieldCheckbox);
+        fields.enableSort(MyExample3121DTO_.customFieldCheckbox);
         fields.setEnumFilterValues(fields, MyExample3121DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample3121DTO_.customFieldDictionary);
+        fields.enableSort(MyExample3121DTO_.customFieldDictionary);
     }
 
 }

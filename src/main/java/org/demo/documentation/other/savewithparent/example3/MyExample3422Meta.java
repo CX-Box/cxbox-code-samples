@@ -27,6 +27,7 @@ public class MyExample3422Meta extends FieldMetaBuilder<MyExample3422DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3422DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3422DTO_.customFieldDrilldown);
+        fields.enableSort(MyExample3422DTO_.customFieldDrilldown);
     }
 
 }

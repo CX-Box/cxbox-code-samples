@@ -37,6 +37,7 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 			fields.setForceActive(NumberFiltrationDTO_.customField);
 		}
 		fields.enableFilter(NumberFiltrationDTO_.customField);
+		fields.enableSort(NumberFiltrationDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

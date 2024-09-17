@@ -19,6 +19,7 @@ public class MyExample3235Meta extends FieldMetaBuilder<MyExample3235DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3235DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableSort(MyExample3235DTO_.customField);
     }
 
 }

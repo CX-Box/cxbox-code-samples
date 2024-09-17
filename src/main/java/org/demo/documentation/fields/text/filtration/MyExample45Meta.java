@@ -29,6 +29,7 @@ public class MyExample45Meta extends FieldMetaBuilder<MyExample45DTO> {
 			fields.setForceActive(MyExample45DTO_.customField);
 		}
 		fields.enableFilter(MyExample45DTO_.customField);
+		fields.enableSort(MyExample45DTO_.customField);
 	}
 
 

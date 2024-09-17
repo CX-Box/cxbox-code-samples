@@ -37,6 +37,7 @@ public class DateTimeFiltrationMeta extends FieldMetaBuilder<DateTimeFiltrationD
 			fields.setForceActive(DateTimeFiltrationDTO_.customField);
 		}
 		fields.enableFilter(DateTimeFiltrationDTO_.customField);
+		fields.enableSort(DateTimeFiltrationDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

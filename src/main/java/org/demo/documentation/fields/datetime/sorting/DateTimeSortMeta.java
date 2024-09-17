@@ -34,6 +34,7 @@ public class DateTimeSortMeta extends FieldMetaBuilder<DateTimeSortDTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeSortDTO_.customField);
 		}
+		fields.enableSort(DateTimeSortDTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 
