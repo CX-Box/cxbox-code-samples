@@ -18,6 +18,7 @@ public class MyExample3136Meta extends AnySourceFieldMetaBuilder<MyExample3136DT
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3136DTO> fields, BcDescription bcDescription, String parentId) {
         fields.enableSort(MyExample3136DTO_.customField);
+        fields.enableSort(MyExample3136DTO_.customFieldDateTime);
     }
 
 }

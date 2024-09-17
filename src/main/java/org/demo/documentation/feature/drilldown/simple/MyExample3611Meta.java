@@ -26,6 +26,8 @@ public class MyExample3611Meta extends FieldMetaBuilder<MyExample3611DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3611DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3611DTO_.customFieldDrillDowm);
+        fields.enableSort(MyExample3611DTO_.customFieldDrillDowm);
+        fields.enableSort(MyExample3611DTO_.customField);
     }
 
 }

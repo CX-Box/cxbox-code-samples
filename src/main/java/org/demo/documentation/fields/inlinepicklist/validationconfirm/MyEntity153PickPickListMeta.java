@@ -28,6 +28,8 @@ public class MyEntity153PickPickListMeta extends FieldMetaBuilder<MyEntity153Pic
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity153PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
+		fields.enableSort(MyEntity153PickDTO_.id);
+		fields.enableSort(MyEntity153PickDTO_.customField);
 
 	}
 
