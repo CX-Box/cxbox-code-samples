@@ -42,6 +42,7 @@ public class MyExample256Meta extends FieldMetaBuilder<MyExample256DTO> {
 				.collect(Collectors.toList())
 		);
 		fields.enableFilter(MyExample256DTO_.customField);
+		fields.enableSort(MyExample256DTO_.customField);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

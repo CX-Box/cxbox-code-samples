@@ -33,6 +33,7 @@ public class MyExample113Meta extends FieldMetaBuilder<MyExample113DTO> {
 		}
 		fields.enableFilter(MyExample113DTO_.customField);
 		fields.enableSort(MyExample113DTO_.customField);
+		fields.enableSort(MyExample113DTO_.customFieldId);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

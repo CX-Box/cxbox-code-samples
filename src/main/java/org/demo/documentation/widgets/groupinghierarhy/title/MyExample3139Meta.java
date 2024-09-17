@@ -26,6 +26,7 @@ public class MyExample3139Meta extends FieldMetaBuilder<MyExample3139DTO> {
         fields.setEnumFilterValues(fields, MyExample3139DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample3139DTO_.customFieldDictionary);
         fields.enableSort(MyExample3139DTO_.customFieldDictionary);
+        fields.enableSort(MyExample3139DTO_.customField);
     }
 
 }

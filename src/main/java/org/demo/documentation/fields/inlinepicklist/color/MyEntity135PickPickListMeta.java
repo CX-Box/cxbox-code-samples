@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
+import org.demo.documentation.feature.customizationcolumns.forfields.MyEntity3135PickPickDTO_;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
@@ -28,6 +29,8 @@ public class MyEntity135PickPickListMeta extends FieldMetaBuilder<MyEntity135Pic
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity135PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
+		fields.enableSort(MyEntity135PickDTO_.id);
+		fields.enableSort(MyEntity135PickDTO_.customField);
 
 //
 	}
