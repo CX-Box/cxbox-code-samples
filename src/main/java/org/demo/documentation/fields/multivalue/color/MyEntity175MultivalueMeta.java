@@ -33,6 +33,8 @@ public class MyEntity175MultivalueMeta extends FieldMetaBuilder<MyEntity175Multi
 			fields.setForceActive(MyEntity175MultivalueDTO_.customField);
 		}
 		fields.enableFilter(MyEntity175MultivalueDTO_.customField);
+		fields.enableSort(MyEntity175MultivalueDTO_.customField);
+		fields.enableSort(MyEntity175MultivalueDTO_.id);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

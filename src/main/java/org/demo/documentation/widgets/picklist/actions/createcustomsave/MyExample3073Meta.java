@@ -23,6 +23,9 @@ public class MyExample3073Meta extends FieldMetaBuilder<MyExample3073DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample3073DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3073DTO_.customFieldRequred);
         fields.enableFilter(MyExample3073DTO_.customField);
+        fields.enableSort(MyExample3073DTO_.customField);
+        fields.enableSort(MyExample3073DTO_.customFieldRequred);
+        fields.enableSort(MyExample3073DTO_.customFieldId);
 
     }
 

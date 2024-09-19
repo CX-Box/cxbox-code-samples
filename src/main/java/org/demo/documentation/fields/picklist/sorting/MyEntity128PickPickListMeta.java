@@ -30,6 +30,7 @@ public class MyEntity128PickPickListMeta extends FieldMetaBuilder<MyEntity128Pic
 			Long parentId) {
 		fields.enableFilter(MyEntity128PickDTO_.customField);
 		fields.enableSort(MyEntity128PickDTO_.customField);
+		fields.enableSort(MyEntity128PickDTO_.id);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

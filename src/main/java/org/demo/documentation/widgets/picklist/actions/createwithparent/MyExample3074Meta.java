@@ -26,6 +26,10 @@ public class MyExample3074Meta extends FieldMetaBuilder<MyExample3074DTO> {
         fields.enableFilter(MyExample3074DTO_.customFieldRequred);
         fields.enableFilter(MyExample3074DTO_.customFieldText);
         fields.enableFilter(MyExample3074DTO_.customField);
+        fields.enableSort(MyExample3074DTO_.customFieldRequred);
+        fields.enableSort(MyExample3074DTO_.customFieldText);
+        fields.enableSort(MyExample3074DTO_.customField);
+        fields.enableSort(MyExample3074DTO_.id);
     }
 
 }

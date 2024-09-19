@@ -24,6 +24,7 @@ public class MyEntity2001MultivalueMeta extends FieldMetaBuilder<MyEntity2001Mul
 									 Long parentId) {
 		fields.enableFilter(MyEntity2001MultivalueDTO_.customField);
 		fields.enableSort(MyEntity2001MultivalueDTO_.customField);
+		fields.enableSort(MyEntity2001MultivalueDTO_.id);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

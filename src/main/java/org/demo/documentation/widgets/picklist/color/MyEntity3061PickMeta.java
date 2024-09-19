@@ -69,6 +69,26 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorMultivalue);
         fields.enableFilter(MyEntity3061PickDTO_.customFieldColorMultivalueHover);
 
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorText);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorInput);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorTextConst);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorInputConst);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorDateTime);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorCheckbox);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorDate);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorDateTimeWithSeconds);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorDictionary);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorFileUploade);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorFileUploade);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorNumber);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorPercent);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorMoney);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorRadio);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorPicklist);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorInlinePicklist);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorMultivalue);
+        fields.enableSort(MyEntity3061PickDTO_.customFieldColorMultivalueHover);
+
     }
 
 }
