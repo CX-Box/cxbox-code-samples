@@ -25,6 +25,8 @@ public class MyExample3072Meta extends FieldMetaBuilder<MyExample3072DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample3072DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3072DTO_.customFieldInlinePicklist);
         fields.enableFilter(MyExample3072DTO_.customField);
+        fields.enableSort(MyExample3072DTO_.customFieldInlinePicklist);
+        fields.enableSort(MyExample3072DTO_.customField);
     }
 
 }

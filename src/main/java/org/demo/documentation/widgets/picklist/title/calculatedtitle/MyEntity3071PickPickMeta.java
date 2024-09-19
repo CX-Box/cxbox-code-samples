@@ -21,6 +21,9 @@ public class MyEntity3071PickPickMeta extends FieldMetaBuilder<MyEntity3071PickP
     public void buildIndependentMeta(FieldsMeta<MyEntity3071PickPickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
 
+        fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.id);
+        fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.customFieldPick);
+
     }
 
 }

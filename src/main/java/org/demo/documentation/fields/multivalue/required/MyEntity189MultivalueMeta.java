@@ -31,6 +31,7 @@ public class MyEntity189MultivalueMeta extends FieldMetaBuilder<MyEntity189Multi
 			Long parentId) {
 		fields.enableFilter(MyEntity189MultivalueDTO_.customField);
 		fields.enableSort(MyEntity189MultivalueDTO_.customField);
+		fields.enableSort(MyEntity189MultivalueDTO_.id);
 	}
 
 }

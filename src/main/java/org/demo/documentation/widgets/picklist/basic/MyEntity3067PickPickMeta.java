@@ -64,6 +64,24 @@ public class MyEntity3067PickPickMeta extends FieldMetaBuilder<MyEntity3067PickP
         fields.enableFilter(MyEntity3067PickPickDTO_.customFieldMultivalue);
         fields.enableFilter(MyEntity3067PickPickDTO_.customFieldMultivalueHover);
 
+        fields.enableSort(MyEntity3067PickPickDTO_.customField);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldInput);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldText);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldDateTime);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldCheckbox);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldDate);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldDateTimeWithSeconds);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldDictionary);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldFileUploade);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldNumber);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldPercent);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldMoney);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldRadio);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldPicklist);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldInlinePicklist);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldMultivalue);
+        fields.enableSort(MyEntity3067PickPickDTO_.customFieldMultivalueHover);
+
     }
 
 }

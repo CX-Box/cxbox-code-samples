@@ -29,6 +29,8 @@ public class MyEntity122PickPickListMeta extends FieldMetaBuilder<MyEntity122Pic
 	public void buildIndependentMeta(FieldsMeta<MyEntity122PickDTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
 		fields.enableFilter(MyEntity122PickDTO_.customField);
+		fields.enableSort(MyEntity122PickDTO_.customField);
+		fields.enableSort(MyEntity122PickDTO_.id);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }
