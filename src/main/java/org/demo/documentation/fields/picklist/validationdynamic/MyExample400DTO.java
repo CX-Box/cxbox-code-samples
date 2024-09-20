@@ -15,7 +15,7 @@ public class MyExample400DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldEntity.customField")
 	private String customField;
 
-	@SearchParameter(name = "")
+	@SearchParameter(name = "customFieldEntity.customFieldAdditional")
 	private String customFieldAdditional;
 
 	private Long customFieldId;
