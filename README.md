@@ -21,7 +21,7 @@ mvn clean install -PUI
 ```
 docker-compose up -d
 ```
-* run application
+* run applicationEntity
 ```
 press green button in Application.java
 ```

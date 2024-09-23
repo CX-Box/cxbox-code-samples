@@ -1,0 +1,38 @@
+{
+  "name": "taskList",
+  "title": "Tasks",
+  "type": "List",
+  "bc": "task",
+  "fields": [
+    {
+      "title": "ID",
+      "key": "id",
+      "type": "input",
+      "readOnly" : true
+    },
+    {
+      "title": "Name",
+      "key": "name",
+      "type": "input"
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "taskEdit"
+    },
+    "edit": {
+      "widget": "taskEdit"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}
