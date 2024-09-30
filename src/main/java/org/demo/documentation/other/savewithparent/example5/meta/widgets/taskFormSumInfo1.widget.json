@@ -15,19 +15,27 @@
       "type": "dictionary"
     },
     {
-      "label": "Executor Name",
+      "label": "Executor",
       "key": "executorName",
       "type": "pickList",
-      "popupBcName": "executor",
+      "popupBcName": "taskPickList",
       "pickMap": {
-        "executorName": "name",
-        "id": "id"
+        "executorId": "id",
+        "executorName": "name"
       }
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "executorName",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
@@ -43,15 +51,12 @@
               "span": 12
             }
           ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "executorName",
-              "span": 12
-            }
-          ]
         }
       ]
-    }}
+    },
+    "actionGroups": {
+      "include": [
+      ]
+    }
+  }
 }

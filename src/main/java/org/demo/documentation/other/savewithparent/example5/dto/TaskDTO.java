@@ -1,20 +1,17 @@
 package org.demo.documentation.other.savewithparent.example5.dto;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
-import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
+import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.enums.ImportanceEnum;
 import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -53,15 +50,25 @@ public class TaskDTO extends DataResponseDTO {
 
 	public TaskDTO(Task task) {
 		this.id = task.getId().toString();
-		this.executorName = task.getExecutorId() == null ? null : task.getExecutorId().getName();
+
+		this.executorName = Optional.ofNullable(task.getExecutorId())
+				.map(Executor::getName)
+				.orElse(null);
+
 		this.createdDate = task.getCreatedDate();
 		this.name = task.getName();
 		this.importance = task.getImportance();
 		this.status = task.getStatus();
 		this.file = task.getFile();
 		this.comment = task.getComment();
-		this.executorId = task.getExecutorId() == null ? null : task.getExecutorId().getId().toString();
+
+		this.executorId = Optional.ofNullable(task.getExecutorId())
+				.map(Executor::getId)
+				.map(String::valueOf)
+				.orElse(null);
+
 		this.applicationEntity = task.getApplicationEntityId().getName();
 		this.fileId = task.getFileId();
 	}
+
 }

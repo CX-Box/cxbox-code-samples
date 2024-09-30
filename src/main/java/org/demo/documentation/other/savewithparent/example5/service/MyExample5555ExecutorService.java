@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5555ExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
-	private static final String EXECUTOR = "/screen/autosave/view/executor";
-	private static final String SUB_INFO = "/screen/autosave/view/executor";
+	private static final String SUB_INFO = "/screen/autosave/view/sumInfo";
 
 	public static final String NEXT = "Next";
 
@@ -48,26 +47,9 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 	@Override
 	public Actions<ExecutorDTO> getActions() {
 		ActionsBuilder<ExecutorDTO> builder = Actions.builder();
-		builder.action("save", "Add");
+		builder.create().text("Add").add();
 
-		builder.create()
-				.withAutoSaveBefore();
-
-		builder.delete();
-
-		builder.cancelCreate()
-						.text("Cancel");
-
-		builder.action("nextExecutor", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<ExecutorDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										EXECUTOR
-								))
-				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore();
+		builder.save().text("Save").add();
 
 		builder.action("nextSubInfo", NEXT)
 				.invoker((bc, dto) ->
@@ -78,7 +60,8 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 								))
 				)
 				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore();
+				.withoutAutoSaveBefore()
+				.add();
 
 		return builder.build();
 	}

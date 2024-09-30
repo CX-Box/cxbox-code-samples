@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.other.savewithparent.example5.service.MyExample5555ApplicationService;
+import org.demo.documentation.other.savewithparent.example5.service.MyExample5555ExecutorPickService;
 import org.demo.documentation.other.savewithparent.example5.service.MyExample5555ExecutorService;
 import org.demo.documentation.other.savewithparent.example5.service.MyExample5555TaskService;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,9 @@ public enum CxboxMyExample5555Controller implements EnumBcIdentifier {
 // @formatter:on
 
 	application(MyExample5555ApplicationService.class),
-	task(MyExample5555TaskService.class),
+	task(application, MyExample5555TaskService.class),
+	taskEdit(MyExample5555TaskService.class),
+	taskPickList(task, MyExample5555ExecutorPickService.class),
 	executor(MyExample5555ExecutorService.class),
 	executorPickListPopup(executor, MyExample5555ExecutorService.class);
 	// --8<-- [end:bc]
