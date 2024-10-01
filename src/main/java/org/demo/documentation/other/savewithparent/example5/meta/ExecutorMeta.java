@@ -7,9 +7,6 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO_;
-import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO;
-import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO_;
-import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +14,8 @@ import org.springframework.stereotype.Service;
 public class ExecutorMeta extends FieldMetaBuilder<ExecutorDTO> {
 
 	@Override
-	public void buildRowDependentMeta(RowDependentFieldsMeta<ExecutorDTO> fields, InnerBcDescription bcDescription, Long id, Long parentId) {
+	public void buildRowDependentMeta(RowDependentFieldsMeta<ExecutorDTO> fields, InnerBcDescription bcDescription,
+			Long id, Long parentId) {
 		fields.setEnabled(ExecutorDTO_.name);
 		fields.setRequired(ExecutorDTO_.name);
 		fields.setEnabled(ExecutorDTO_.role);
@@ -29,7 +27,10 @@ public class ExecutorMeta extends FieldMetaBuilder<ExecutorDTO> {
 		fields.enableSort(ExecutorDTO_.name);
 		fields.enableFilter(ExecutorDTO_.role);
 		fields.enableSort(ExecutorDTO_.role);
-		fields.setForceActive(ExecutorDTO_.role,
-				ExecutorDTO_.name);
+		fields.setForceActive(
+				ExecutorDTO_.role,
+				ExecutorDTO_.name
+		);
 	}
+
 }

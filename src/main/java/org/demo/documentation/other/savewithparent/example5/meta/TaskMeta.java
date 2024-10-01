@@ -22,7 +22,6 @@ public class TaskMeta extends FieldMetaBuilder<TaskDTO> {
 				TaskDTO_.name,
 				TaskDTO_.status,
 				TaskDTO_.applicationEntity,
-				TaskDTO_.createdDate,
 				TaskDTO_.importance,
 				TaskDTO_.executorId,
 				TaskDTO_.executorName,

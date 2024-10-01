@@ -46,7 +46,8 @@ public class MyExample5555ApplicationService extends
 	public Actions<ApplicationEntityDTO> getActions() {
 		return Actions.<ApplicationEntityDTO>builder()
 				.create().text("Add").add()
-				.save().add()
+				.save().text("Save").add()
+				.delete().text("Delete").add()
 				.build();
 	}
 

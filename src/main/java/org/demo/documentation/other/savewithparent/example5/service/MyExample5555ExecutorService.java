@@ -8,7 +8,7 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.cxbox.core.service.action.ActionsBuilder;
+import org.demo.documentation.other.savewithparent.example5.CxboxMyExample5555Controller;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
@@ -20,6 +20,10 @@ import org.springframework.stereotype.Service;
 public class MyExample5555ExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
 	private static final String SUB_INFO = "/screen/autosave/view/sumInfo";
+
+	private static final String EXECUTOR_EDIT = "/screen/autosave/view/executorEdit/";
+
+	private static final String EXECUTOR = "/screen/autosave/view/executor";
 
 	public static final String NEXT = "Next";
 
@@ -33,7 +37,13 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 	@Override
 	protected CreateResult<ExecutorDTO> doCreateEntity(Executor entity, BusinessComponent bc) {
 		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
+		return new CreateResult<>(entityToDto(bc, entity))
+				.setAction(PostAction.drillDown(
+						DrillDownType.INNER,
+						EXECUTOR_EDIT
+								+ CxboxMyExample5555Controller.executor + "/"
+								+ entity.getId()
+				));
 	}
 
 	@Override
@@ -46,12 +56,20 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 
 	@Override
 	public Actions<ExecutorDTO> getActions() {
-		ActionsBuilder<ExecutorDTO> builder = Actions.builder();
-		builder.create().text("Add").add();
-
-		builder.save().text("Save").add();
-
-		builder.action("nextSubInfo", NEXT)
+		return Actions.<ExecutorDTO>builder()
+				.create().text("Add").add()
+				.action("finish", "Save")
+				.invoker((bc, dto) -> {
+					Executor executor = repository.getById(bc.getIdAsLong());
+					repository.save(executor);
+					return new ActionResultDTO<ExecutorDTO>().setAction(
+							PostAction.drillDown(
+									DrillDownType.INNER,
+									EXECUTOR
+							));
+				})
+				.add()
+				.action("nextSubInfo", NEXT)
 				.invoker((bc, dto) ->
 						new ActionResultDTO<ExecutorDTO>().setAction(
 								PostAction.drillDown(
@@ -61,10 +79,16 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 				)
 				.scope(ActionScope.BC)
 				.withoutAutoSaveBefore()
-				.add();
-
-		return builder.build();
+				.add()
+				.save().text("Save").scope(ActionScope.BC)
+				.add()
+				.delete().text("Delete")
+				.add()
+				.cancelCreate()
+				.text("Cancel")
+				.scope(ActionScope.BC)
+				.add()
+				.build();
 	}
-
 
 }

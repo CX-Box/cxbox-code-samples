@@ -72,7 +72,7 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 	public Actions<TaskDTO> getActions() {
 		return Actions.<TaskDTO>builder()
 				.create().text("Add").add()
-				.save().add()
+				.save().text("Save").add()
 				.action("nextTaskDocument", NEXT)
 				.invoker((bc, dto) ->
 						new ActionResultDTO<TaskDTO>().setAction(
@@ -94,6 +94,8 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 				)
 				.scope(ActionScope.BC)
 				.withoutAutoSaveBefore()
+				.add()
+				.delete().text("Delete")
 				.add()
 				.build();
 

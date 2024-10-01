@@ -21,8 +21,7 @@ public class ApplicationMeta extends FieldMetaBuilder<ApplicationEntityDTO> {
 			InnerBcDescription bcDescription, Long id, Long parentId) {
 		fields.setEnabled(
 				ApplicationEntityDTO_.name,
-				ApplicationEntityDTO_.status,
-				ApplicationEntityDTO_.createdDate
+				ApplicationEntityDTO_.status
 		);
 		fields.setRequired(ApplicationEntityDTO_.name);
 		fields.setEnumValues(ApplicationEntityDTO_.status, StatusEnum.values());

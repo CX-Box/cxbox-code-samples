@@ -47,13 +47,17 @@ public class MyExample5555ExecutorPickService extends VersionAwareResponseServic
 	@Override
 	public Actions<ExecutorDTO> getActions() {
 		ActionsBuilder<ExecutorDTO> builder = Actions.builder();
-		builder.action("save", "Add");
+		builder.action("save", "Add").add();
 
 		builder.create()
-				.withAutoSaveBefore();
+				.text("Add")
+				.withAutoSaveBefore()
+				.add();
 
-		builder.delete();
-
+		builder
+				.delete()
+				.text("Delete")
+				.add();
 
 		builder.action("nextExecutor", NEXT)
 				.invoker((bc, dto) ->
@@ -64,8 +68,8 @@ public class MyExample5555ExecutorPickService extends VersionAwareResponseServic
 								))
 				)
 				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore();
-
+				.withoutAutoSaveBefore()
+				.add();
 
 		return builder.build();
 	}
