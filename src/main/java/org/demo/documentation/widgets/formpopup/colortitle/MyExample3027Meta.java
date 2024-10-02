@@ -39,7 +39,7 @@ public class MyExample3027Meta extends FieldMetaBuilder<MyExample3027DTO> {
         fields.setEnabled(MyExample3027DTO_.customFieldColorMultivalue);
         fields.setEnabled(MyExample3027DTO_.customFieldColorMultivalueHover);
         fields.setEnabled(MyExample3027DTO_.customField);
-        fields.setRequired(MyExample3027DTO_.customField);
+        fields.setEnabled(MyExample3027DTO_.customFieldText);
     }
    // --8<-- [end:buildRowDependentMeta]
     @Override

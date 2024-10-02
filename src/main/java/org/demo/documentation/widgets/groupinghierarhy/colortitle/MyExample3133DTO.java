@@ -14,6 +14,7 @@ import org.demo.documentation.widgets.groupinghierarhy.colortitle.enums.CustomFi
 public class MyExample3133DTO extends DataResponseDTO {
 
     private String customFieldColor;
+    private String customFieldDictionaryColor;
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
@@ -22,6 +23,10 @@ public class MyExample3133DTO extends DataResponseDTO {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();
+        this.customFieldDictionaryColor = entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.HIGH ? "#ec5454" :
+                (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.LOW ? "#5af737" :
+                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#c4b50a" : "#3c98cc")
+                );
         this.customFieldColor = entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.HIGH ? "#eda6a6" :
                 (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.LOW ? "#b3eda6" :
                         (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#ffeb00" : "#6eaacc")
