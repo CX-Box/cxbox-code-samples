@@ -46,6 +46,7 @@ public class MyEntity3072PickPickService extends VersionAwareResponseService<MyE
         return contactDTOActionResultDTO;
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3072PickPickDTO> getActions() {
         return Actions.<MyEntity3072PickPickDTO>builder()

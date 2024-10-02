@@ -43,6 +43,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3400Formpopup", "Done", "Cancel");
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3400DTO> getActions() {
         return Actions.<MyExample3400DTO>builder()

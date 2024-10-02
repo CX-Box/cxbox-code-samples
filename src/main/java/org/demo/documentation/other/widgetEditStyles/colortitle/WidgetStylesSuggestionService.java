@@ -27,6 +27,7 @@ public class WidgetStylesSuggestionService extends AnySourceVersionAwareResponse
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<WidgetStylesSuggestionDTO> getActions() {
         return Actions.<WidgetStylesSuggestionDTO>builder()
@@ -36,5 +37,5 @@ public class WidgetStylesSuggestionService extends AnySourceVersionAwareResponse
                 .build();
     }
 
-
+     // --8<-- [end:getActions]  
 }

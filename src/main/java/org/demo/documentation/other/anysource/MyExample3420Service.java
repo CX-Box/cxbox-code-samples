@@ -50,6 +50,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3420DTO> getActions() {
         return Actions.<MyExample3420DTO>builder()
@@ -62,5 +63,5 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
                 .build();
     }
 
-
+     // --8<-- [end:getActions]  
 }

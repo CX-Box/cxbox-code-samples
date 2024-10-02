@@ -29,6 +29,7 @@ public class MyExample4001Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4001DTO> getActions() {
         return Actions.<MyExample4001DTO>builder()
@@ -37,5 +38,5 @@ public class MyExample4001Service extends AnySourceVersionAwareResponseService<M
                 .add()
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

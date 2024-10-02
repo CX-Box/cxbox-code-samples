@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 public class MyExample3162Meta extends FieldMetaBuilder<MyExample3162DTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3162DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3162DTO_.customField);
         fields.setRequired(MyExample3162DTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3162DTO> fields, InnerBcDescription bcDescription, Long parentId) {
     }

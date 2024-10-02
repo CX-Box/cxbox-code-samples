@@ -27,6 +27,7 @@ public class MyExample3110SuggestionService extends AnySourceVersionAwareRespons
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3110SuggestionDTO> getActions() {
         return Actions.<MyExample3110SuggestionDTO>builder()
@@ -36,5 +37,5 @@ public class MyExample3110SuggestionService extends AnySourceVersionAwareRespons
                 .build();
     }
 
-
+     // --8<-- [end:getActions]  
 }

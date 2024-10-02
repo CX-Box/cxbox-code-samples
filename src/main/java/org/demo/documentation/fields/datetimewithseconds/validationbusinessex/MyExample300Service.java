@@ -53,5 +53,5 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
                 .add()
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

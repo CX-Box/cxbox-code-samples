@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class WidgetStylesPicklistPickMeta extends FieldMetaBuilder<WidgetStylesPicklistPickDTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesPicklistPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
         fields.setEnabled(WidgetStylesPicklistPickDTO_.id);
         fields.setEnabled(WidgetStylesPicklistPickDTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<WidgetStylesPicklistPickDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
