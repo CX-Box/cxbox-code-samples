@@ -1,14 +1,14 @@
 {
-  "name": "MyExample3026",
-   "title": "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}",
-  "type": "Form",
-  "bc": "myexample3026",
+  "name": "MyExample3040all",
+  "title": "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}",
+  "type": "Info",
+  "bc": "myexample3040",
   "fields": [
     {
       "label": "Custom Field Color Multivalue Hover",
       "key": "customFieldColorMultivalueHover",
       "assocValueKey": "customField",
-      "popupBcName": "myEntity3037AssocListPopup",
+      "popupBcName": "myEntity3040MultiAssocListPopup",
       "type": "multivalueHover",
       "displayedKey": "customFieldColorMultivalueHoverDisplayedKey",
       "bgColorKey": "customFieldColor"
@@ -18,7 +18,7 @@
       "key": "customFieldColorMultivalue",
       "type": "multivalue",
       "displayedKey": "customFieldColorMultivalueDisplayedKey",
-      "popupBcName": "myEntity3038AssocListPopup",
+      "popupBcName": "myEntity3040MultiMultiAssocListPopup",
       "assocValueKey": "customField",
       "bgColorKey": "customFieldColor"
     },
@@ -26,18 +26,17 @@
       "label": "Custom Field Color Inline Picklist",
       "key": "customFieldColorInlinePicklist",
       "type": "inline-pickList",
-      "popupBcName": "myEntity3031PickListPopup",
+      "popupBcName": "myEntity3040InlinePicklistPickListPopup",
       "pickMap": {
         "customFieldColorInlinePicklistId": "id",
         "customFieldColorInlinePicklist": "customField"
-      },
-      "bgColorKey": "customFieldColor"
+      }
     },
     {
       "label": "Custom Field Color Picklist",
       "key": "customFieldColorPicklist",
       "type": "pickList",
-      "popupBcName": "myEntity3032PickListPopup",
+      "popupBcName": "myEntity3040PicklistPickListPopup",
       "pickMap": {
         "customFieldColorPicklistId": "id",
         "customFieldColorPicklist": "customField"
@@ -130,7 +129,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldColorMultivalueHover",
+              "fieldKey": "customFieldColorMultivalue",
               "span": 12
             }
           ]
@@ -138,7 +137,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldColorMultivalue",
+              "fieldKey": "customFieldColorMultivalueHover",
               "span": 12
             }
           ]
