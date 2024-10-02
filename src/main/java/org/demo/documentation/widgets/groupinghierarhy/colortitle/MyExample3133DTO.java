@@ -24,7 +24,7 @@ public class MyExample3133DTO extends DataResponseDTO {
         this.customFieldDictionary = entity.getCustomFieldDictionary();
         this.customFieldColor = entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.HIGH ? "#eda6a6" :
                 (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.LOW ? "#b3eda6" :
-                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#ffeb00" : "")
+                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#ffeb00" : "#6eaacc")
                 );
     }
 }

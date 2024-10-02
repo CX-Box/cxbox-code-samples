@@ -25,6 +25,8 @@ public class MyEntity3025 extends BaseEntity {
     @Column
     private String customField;
     @Column
+    private String customFieldText;
+    @Column
     private String customFieldColorInput;
     @Column
     private String customFieldColorText;
