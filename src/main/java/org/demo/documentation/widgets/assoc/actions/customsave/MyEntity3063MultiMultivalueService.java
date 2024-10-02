@@ -46,6 +46,7 @@ public class MyEntity3063MultiMultivalueService extends VersionAwareResponseServ
         return contactDTOActionResultDTO;
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3063MultiMultivalueDTO> getActions() {
         return Actions.<MyEntity3063MultiMultivalueDTO>builder()
@@ -55,5 +56,5 @@ public class MyEntity3063MultiMultivalueService extends VersionAwareResponseServ
                 .delete().text("Delete").add()
                 .build();
     }
-
+    // --8<-- [end:getActions]
 }

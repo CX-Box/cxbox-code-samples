@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3061PickDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyEntity3061PickDTO_.customFieldColorText);
@@ -43,7 +44,7 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
         fields.setEnabled(MyEntity3061PickDTO_.id);
         fields.setEnabled(MyEntity3061PickDTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3061PickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {

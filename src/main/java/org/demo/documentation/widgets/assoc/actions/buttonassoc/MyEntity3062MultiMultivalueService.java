@@ -47,6 +47,7 @@ public class MyEntity3062MultiMultivalueService extends VersionAwareResponseServ
         return contactDTOActionResultDTO;
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3062MultiMultivalueDTO> getActions() {
         return Actions.<MyEntity3062MultiMultivalueDTO>builder()

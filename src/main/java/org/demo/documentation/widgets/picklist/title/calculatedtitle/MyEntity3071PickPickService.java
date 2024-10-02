@@ -31,6 +31,7 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3071PickPickDTO> getActions() {
         return Actions.<MyEntity3071PickPickDTO>builder()
@@ -39,5 +40,5 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
                 .add()
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

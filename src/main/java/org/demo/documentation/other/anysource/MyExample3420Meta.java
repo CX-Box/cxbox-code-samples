@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @Service
 public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription,
                                       String id, String parentId) {
         fields.setEnabled(MyExample3420DTO_.customField);
@@ -22,7 +23,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
         fields.setPlaceholder(MyExample3420DTO_.customFieldDouble,"More than 100 000.00");
         fields.setPlaceholder(MyExample3420DTO_.customFieldDateTime,"Less sysdate");
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription, String parentId) {
         fields.setForceActive(MyExample3420DTO_.customField);

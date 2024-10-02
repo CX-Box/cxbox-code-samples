@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3135DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3135DTO_.customFieldMultivalueHover);
@@ -58,7 +59,7 @@ public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
         fields.setEnabled(MyExample3135DTO_.customField);
         fields.setRequired(MyExample3135DTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3135DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3135DTO_.customFieldMultivalueHover);

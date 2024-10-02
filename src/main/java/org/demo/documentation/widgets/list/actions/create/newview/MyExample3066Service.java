@@ -21,7 +21,7 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
         super(MyExample3066DTO.class, MyEntity3066.class, null, MyExample3066Meta.class);
         this.repository = repository;
     }
-
+    // --8<-- [start:doCreateEntity]
     @Override
     protected CreateResult<MyExample3066DTO> doCreateEntity(MyEntity3066 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -32,6 +32,7 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
                                 + CxboxMyExample3066Controller.myexample3066 + "/"
                                 + entity.getId()));
     }
+    // --8<-- [end:doCreateEntity]
 
     @Override
     protected ActionResultDTO<MyExample3066DTO> doUpdateEntity(MyEntity3066 entity, MyExample3066DTO data, BusinessComponent bc) {
@@ -42,6 +43,7 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3066DTO> getActions() {
         return Actions.<MyExample3066DTO>builder()
@@ -59,7 +61,5 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .build();
     }
-
-
+     // --8<-- [end:getActions]  
 }
-

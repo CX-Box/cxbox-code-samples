@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class MyExample3422Meta extends FieldMetaBuilder<MyExample3422DTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3422DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3422DTO_.customFieldDrilldown);
@@ -23,7 +24,7 @@ public class MyExample3422Meta extends FieldMetaBuilder<MyExample3422DTO> {
                 "/screen/myexample3422/view/taskinfo/" + CxboxMyExample3422Controller.myexample3422 + "/" + id
         );
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3422DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3422DTO_.customFieldDrilldown);

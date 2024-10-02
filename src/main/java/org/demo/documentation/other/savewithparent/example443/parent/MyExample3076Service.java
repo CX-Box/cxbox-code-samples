@@ -43,6 +43,7 @@ public class MyExample3076Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3076DTO> getActions() {
         return Actions.<MyExample3076DTO>builder()

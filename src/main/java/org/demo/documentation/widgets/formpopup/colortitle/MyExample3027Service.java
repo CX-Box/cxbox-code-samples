@@ -121,6 +121,7 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3027FormPopupColorConst", "Done", "Cancel");
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()

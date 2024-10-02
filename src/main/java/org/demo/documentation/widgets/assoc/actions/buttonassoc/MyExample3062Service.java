@@ -79,6 +79,7 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
         return new AssociateResultDTO((List) collect);
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3062DTO> getActions() {
         return Actions.<MyExample3062DTO>builder()
@@ -87,7 +88,5 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .build();
     }
-
-
+     // --8<-- [end:getActions]  
 }
-

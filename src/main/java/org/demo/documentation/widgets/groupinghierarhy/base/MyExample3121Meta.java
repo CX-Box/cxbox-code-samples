@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class MyExample3121Meta extends FieldMetaBuilder<MyExample3121DTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3121DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3121DTO_.customFieldCheckbox);
@@ -21,7 +22,7 @@ public class MyExample3121Meta extends FieldMetaBuilder<MyExample3121DTO> {
         fields.setEnabled(MyExample3121DTO_.customField);
         fields.setRequired(MyExample3121DTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3121DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3121DTO_.customFieldCheckbox);

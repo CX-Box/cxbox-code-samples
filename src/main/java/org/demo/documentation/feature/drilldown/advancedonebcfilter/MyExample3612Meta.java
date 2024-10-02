@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 public class MyExample3612Meta extends FieldMetaBuilder<MyExample3612DTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnumValues(MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());
@@ -41,7 +42,7 @@ public class MyExample3612Meta extends FieldMetaBuilder<MyExample3612DTO> {
         );
         // --8<-- [end:url]
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.setEnumFilterValues(fields, MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());

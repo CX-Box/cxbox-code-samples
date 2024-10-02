@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3428Meta extends FieldMetaBuilder<MyExample3428DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3428DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3428DTO_.meetDate);
@@ -27,7 +28,7 @@ public class MyExample3428Meta extends FieldMetaBuilder<MyExample3428DTO> {
                 "/screen/myexample3428/view/taskinfo/" + CxboxMyExample3428Controller.myexample3428 + "/" + id
         );
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3428DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3428DTO_.meetDate);
