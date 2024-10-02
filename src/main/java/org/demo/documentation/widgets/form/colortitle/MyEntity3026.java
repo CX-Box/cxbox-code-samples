@@ -24,6 +24,8 @@ import java.util.List;
 public class MyEntity3026 extends BaseEntity {
     @Column
     private String customField;
+    @Column
+    private String customFieldText;
     @JoinColumn(name = "CUSTOM_FIELD_COLOR_INLINE_PICKLIST_ID")
     @ManyToOne
     private MyEntity3031 customFieldColorInlinePicklistEntity;

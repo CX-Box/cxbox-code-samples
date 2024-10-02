@@ -49,6 +49,7 @@ public class MyEntity3026TestDataLoadService {
         list2.add(myEntity3);
         list2.add(myEntity4);
         MyEntity3026 myEntity3026new = new MyEntity3026().setCustomField("Test data")
+                .setCustomFieldText("Test data text")
                 .setCustomFieldColorCheckbox(true)
                 .setCustomFieldColorDictionary(CustomFieldColorDictionaryEnum.HIGH)
                 .setCustomFieldColorDateTime(LocalDateTime.now())
