@@ -65,7 +65,7 @@ public class MyExample3057Service extends VersionAwareResponseService<MyExample3
                 .delete().text("Delete").add()
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 

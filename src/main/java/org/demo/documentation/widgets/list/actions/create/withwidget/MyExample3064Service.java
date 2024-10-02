@@ -43,7 +43,7 @@ public class MyExample3064Service extends VersionAwareResponseService<MyExample3
                 .delete().text("Delete").add()
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 

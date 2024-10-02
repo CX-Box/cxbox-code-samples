@@ -41,7 +41,7 @@ public class MyExample3058Service extends VersionAwareResponseService<MyExample3
                 .cancelCreate().text("Cancel").available(bc -> true).add()
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 

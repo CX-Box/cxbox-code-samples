@@ -53,6 +53,7 @@ public class MyExample3615Service extends VersionAwareResponseService<MyExample3
                 .add()
                 .build();
     }
+    // --8<-- [end:getActions]
 
     // --8<-- [start:getSpecification]
     @Override

@@ -56,4 +56,5 @@ public class MyEntity3054MultiMultivalueService extends VersionAwareResponseServ
                 .delete().text("Delete").add()
                 .build();
     }
+    // --8<-- [end:getActions]
 }

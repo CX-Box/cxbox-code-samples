@@ -55,10 +55,11 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
                 .add()
                 .build();
     }
-
+    // --8<-- [end:getActions]
+    // --8<-- [start:customSaveInvoker]
     private ActionResultDTO<MyExample3077DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3077DTO dto) {
         this.getBaseDao().flush(bc);
         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(bc));
     }
-
+    // --8<-- [end:customSaveInvoker]
 }

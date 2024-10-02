@@ -42,6 +42,7 @@ public class MyExample91Service extends VersionAwareResponseService<MyExample91D
     }
     // --8<-- [end:doUpdateEntity]
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample91DTO> getActions() {
         return Actions.<MyExample91DTO>builder()
