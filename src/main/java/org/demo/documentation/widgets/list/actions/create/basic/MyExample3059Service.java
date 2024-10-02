@@ -4,9 +4,13 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-
+import org.demo.documentation.widgets.picklist.actions.createcustomsave.MyEntity3073;
+import org.demo.documentation.widgets.picklist.actions.createcustomsave.MyEntity3073Pick;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class MyExample3059Service extends VersionAwareResponseService<MyExample3059DTO, MyEntity3059> {
@@ -33,16 +37,29 @@ public class MyExample3059Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3059DTO> getActions() {
         return Actions.<MyExample3059DTO>builder()
-                .create().text("Add").add()
+                .create().text("Add Standart").add()
                 .save().text("Save").add()
                 .cancelCreate().text("Cancel").available(bc -> true).add()
                 .delete().text("Delete").add()
+                .newAction()
+                .scope(ActionScope.BC)
+                .action("add-custom", "Add Custom")
+                .invoker(this::customAdd)
+                .add()
                 .build();
     }
+    // --8<-- [end:getActions]
 
+    // --8<-- [start:customAdd]
+    private ActionResultDTO<MyExample3059DTO> customAdd(BusinessComponent bc, MyExample3059DTO dto) {
+        MyEntity3059 entity = new MyEntity3059().setCustomFieldText("Custom Field Text");
+        repository.save(entity);
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:customAdd]
 
 }
-
