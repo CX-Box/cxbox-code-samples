@@ -41,25 +41,12 @@ public class MyExample3059Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3059DTO> getActions() {
         return Actions.<MyExample3059DTO>builder()
-                .create().text("Add Standart").add()
+                .create().text("Add").add()
                 .save().text("Save").add()
                 .cancelCreate().text("Cancel").available(bc -> true).add()
                 .delete().text("Delete").add()
-                .newAction()
-                .scope(ActionScope.BC)
-                .action("add-custom", "Add Custom")
-                .invoker(this::customAdd)
-                .add()
                 .build();
     }
     // --8<-- [end:getActions]
-
-    // --8<-- [start:customAdd]
-    private ActionResultDTO<MyExample3059DTO> customAdd(BusinessComponent bc, MyExample3059DTO dto) {
-        MyEntity3059 entity = new MyEntity3059().setCustomFieldText("Custom Field Text");
-        repository.save(entity);
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
-    // --8<-- [end:customAdd]
 
 }
