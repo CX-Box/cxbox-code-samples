@@ -16,16 +16,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-// 3027
-// 3027
-// 3027
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyEntity3027 extends BaseEntity {
+    @Column
+    private String customFieldText;
+
     @Column
     private String customField;
     @JoinTable(name = "MyEntity3027_MyEntity3041",

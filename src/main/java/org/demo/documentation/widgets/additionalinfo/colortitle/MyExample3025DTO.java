@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 public class MyExample3025DTO extends DataResponseDTO {
 
     private String customField;
+    private String customFieldText;
+    private String customFieldColor;
+    private String customFieldTextColor;
     @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
     private String customFieldColorInput;
     @SearchParameter(name = "customFieldColorText", provider = StringValueProvider.class)
@@ -62,9 +65,12 @@ public class MyExample3025DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldColorMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldColorMultivalue;
     private String customFieldColorMultivalueDisplayedKey;
-    private String customFieldColor;
+
     public MyExample3025DTO(MyEntity3025 entity) {
         this.id = entity.getId().toString();
+        this.customFieldColor = "#eda6a6";
+        this.customFieldTextColor = "#a6eda6";
+        this.customFieldText = entity.getCustomFieldText();
         this.customField = entity.getCustomField();
         this.customFieldColorInput = entity.getCustomFieldColorInput();
         this.customFieldColorText = entity.getCustomFieldColorText();
@@ -103,6 +109,5 @@ public class MyExample3025DTO extends DataResponseDTO {
         ));
         this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueList().stream().map(MyEntity3035::getCustomField
         ).collect(Collectors.joining(",")), 12);
-        this.customFieldColor = "#eda6a6";
     }
 }

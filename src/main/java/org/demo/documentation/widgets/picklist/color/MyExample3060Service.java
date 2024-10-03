@@ -50,10 +50,6 @@ public class MyExample3060Service extends VersionAwareResponseService<MyExample3
                 .newAction()
                 .action("save", "save")
                 .add()
-                .create()
-                .add()
-                .delete()
-                .add()
                 .build();
     }
      // --8<-- [end:getActions]  

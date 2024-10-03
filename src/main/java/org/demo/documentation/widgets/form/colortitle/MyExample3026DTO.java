@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 public class MyExample3026DTO extends DataResponseDTO {
 
     private String customField;
+    private String customFieldText;
     private String customFieldColor;
+    private String customFieldTextColor;
     @SearchParameter(name = "customFieldColorInlinePicklistEntity.customField", provider = StringValueProvider.class)
     private String customFieldColorInlinePicklist;
     @SearchParameter(name = "customFieldColorInlinePicklistEntity.id", provider = LongValueProvider.class)
@@ -65,10 +67,13 @@ public class MyExample3026DTO extends DataResponseDTO {
     private MultivalueField customFieldColorMultivalue;
     private String customFieldColorMultivalueDisplayedKey;
 
-
+    // --8<-- [start:colorDTO]
     public MyExample3026DTO(MyEntity3026 entity) {
         this.id = entity.getId().toString();
         this.customFieldColor = "#eda6a6";
+        this.customFieldTextColor = "#a6eda6";
+        this.customFieldText = entity.getCustomFieldText();
+    // --8<-- [end:colorDTO]
         this.customField = entity.getCustomField();
         this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldColorInlinePicklistEntity())
                 .map(e -> e.getId())

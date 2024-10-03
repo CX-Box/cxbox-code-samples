@@ -17,6 +17,7 @@ public class MyExample3050Meta extends FieldMetaBuilder<MyExample3050DTO> {
    // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3050DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3050DTO_.customFieldText);
         fields.setEnabled(MyExample3050DTO_.customFieldColorInput);
         fields.setEnabled(MyExample3050DTO_.customFieldColorText);
         fields.setEnabled(MyExample3050DTO_.customFieldColorDateTime);

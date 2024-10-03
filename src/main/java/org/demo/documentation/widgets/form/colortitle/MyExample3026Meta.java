@@ -40,7 +40,7 @@ public class MyExample3026Meta extends FieldMetaBuilder<MyExample3026DTO> {
         fields.setEnabled(MyExample3026DTO_.customFieldColorInlinePicklistId);
         fields.setEnabled(MyExample3026DTO_.customFieldColorInlinePicklist);
         fields.setEnabled(MyExample3026DTO_.customField);
-        fields.setRequired(MyExample3026DTO_.customField);
+        fields.setEnabled(MyExample3026DTO_.customFieldText);
     }
    // --8<-- [end:buildRowDependentMeta]
     @Override

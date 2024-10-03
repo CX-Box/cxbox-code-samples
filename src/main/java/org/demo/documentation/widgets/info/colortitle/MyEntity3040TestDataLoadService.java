@@ -52,12 +52,13 @@ public class MyEntity3040TestDataLoadService {
         list2.add(myEntity3);
         list2.add(myEntity4);
         MyEntity3040 myEntity3040new = new MyEntity3040().setCustomField("Test data")
+                .setCustomFieldText("Test data text")
                 .setCustomFieldColorCheckbox(true)
                 .setCustomFieldColorDictionary(CustomFieldColorDictionaryEnum.HIGH)
                 .setCustomFieldColorDateTime(LocalDateTime.now())
                 .setCustomFieldColorDateTimeWithSeconds(LocalDateTime.now())
                 .setCustomFieldColorDate(LocalDateTime.now())
-                .setCustomFieldColorText("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.")
+                .setCustomFieldColorText("Test data")
                 .setCustomFieldColorNumber(7L)
                 .setCustomFieldColorPercent(9L)
                 .setCustomFieldColorMoney(10000.0)
