@@ -42,13 +42,11 @@ public class MyExample3612Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3612DTO> getActions() {
         return Actions.<MyExample3612DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .create()
-                .add()
-                .delete()
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .create(crt -> crt)
+                .delete(dlt -> dlt)
                 .build();
     }
      // --8<-- [end:getActions]  

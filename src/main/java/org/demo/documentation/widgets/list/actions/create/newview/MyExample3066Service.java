@@ -47,18 +47,19 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3066DTO> getActions() {
         return Actions.<MyExample3066DTO>builder()
-                .create().text("Add").add()
-                .action("finish", "Save and Close")
-                .invoker((bc, dto) -> {
-                    MyEntity3066 myEntity = repository.getById(bc.getIdAsLong());
-                    repository.save(myEntity);
-                    return new ActionResultDTO<MyExample3066DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3066/view/myexample3066list"
-                            ));
-                })
-                .add()
+                .create(crt -> crt.text("Add"))
+                .action(act -> act
+                        .action("finish", "Save and Close")
+                        .invoker((bc, dto) -> {
+                            MyEntity3066 myEntity = repository.getById(bc.getIdAsLong());
+                            repository.save(myEntity);
+                            return new ActionResultDTO<MyExample3066DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3066/view/myexample3066list"
+                                    ));
+                        })
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

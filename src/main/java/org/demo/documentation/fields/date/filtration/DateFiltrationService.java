@@ -38,9 +38,9 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 	@Override
 	public Actions<DateFiltrationDTO> getActions() {
 		return Actions.<DateFiltrationDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

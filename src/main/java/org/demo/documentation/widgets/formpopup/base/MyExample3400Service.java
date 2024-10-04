@@ -47,11 +47,11 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3400DTO> getActions() {
         return Actions.<MyExample3400DTO>builder()
-                .newAction()
-                .action("save-send", "Save and send on approval")
-                .withPreAction(confirmWithComment("Save and send on approval"))
-                .invoker((bc, data) -> withApproval())
-                .add()
+                .action(act -> act
+                        .action("save-send", "Save and send on approval")
+                        .withPreAction(confirmWithComment("Save and send on approval"))
+                        .invoker((bc, data) -> withApproval())
+                )
                 .build();
     }
     private ActionResultDTO<MyExample3400DTO> withApproval() {

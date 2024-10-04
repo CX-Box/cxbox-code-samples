@@ -37,9 +37,9 @@ public class DigitsNumberService extends VersionAwareResponseService<DigitsNumbe
 	@Override
 	public Actions<DigitsNumberDTO> getActions() {
 		return Actions.<DigitsNumberDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -53,9 +53,9 @@ public class DateValidationBusinessExService extends
 	@Override
 	public Actions<DateValidationBusinessExDTO> getActions() {
 		return Actions.<DateValidationBusinessExDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

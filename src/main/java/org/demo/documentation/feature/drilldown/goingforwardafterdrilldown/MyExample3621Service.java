@@ -39,42 +39,42 @@ public class MyExample3621Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3621DTO> getActions() {
         return Actions.<MyExample3621DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotolist", "Go to List")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3621DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3621/"
-                            ));
-                })
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotostep2", "Go to Step2")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3621DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3621/view/myexample3621form/"
-                            ));
-                })
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotostep3", "Go to Step3")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3621DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3621/view/myexample3621info2"
-                            ));
-                })
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotolist", "Go to List")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3621DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3621/"
+                                    ));
+                        })
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotostep2", "Go to Step2")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3621DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3621/view/myexample3621form/"
+                                    ));
+                        })
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotostep3", "Go to Step3")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3621DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3621/view/myexample3621info2"
+                                    ));
+                        })
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

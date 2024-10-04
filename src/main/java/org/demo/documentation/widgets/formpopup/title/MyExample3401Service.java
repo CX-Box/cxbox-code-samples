@@ -47,16 +47,16 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3401DTO> getActions() {
         return Actions.<MyExample3401DTO>builder()
-                .newAction()
-                .action("see-constant-title", "See constant title")
-                .withPreAction(seeConstantTitle("See constant title "))
-                .invoker((bc, data) -> withApproval())
-                .add()
-                .newAction()
-                .action("see-custom-title", "See custom title")
-                .withPreAction(seeCustomTitle("Custom Title - value field"))
-                .invoker((bc, data) -> withApproval())
-                .add()
+                .action(act -> act
+                        .action("see-constant-title", "See constant title")
+                        .withPreAction(seeConstantTitle("See constant title "))
+                        .invoker((bc, data) -> withApproval())
+                )
+                .action(act -> act
+                        .action("see-custom-title", "See custom title")
+                        .withPreAction(seeCustomTitle("Custom Title - value field"))
+                        .invoker((bc, data) -> withApproval())
+                )
                 .build();
     }
     private ActionResultDTO<MyExample3401DTO> withApproval() {

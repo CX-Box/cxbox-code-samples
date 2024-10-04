@@ -133,9 +133,9 @@ public class MyExample3002Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3002DTO> getActions() {
         return Actions.<MyExample3002DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
     // --8<-- [end:getActions]

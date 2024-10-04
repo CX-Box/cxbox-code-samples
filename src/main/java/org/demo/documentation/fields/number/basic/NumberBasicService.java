@@ -38,9 +38,9 @@ public class NumberBasicService extends VersionAwareResponseService<NumberBasicD
 	@Override
 	public Actions<NumberBasicDTO> getActions() {
 		return Actions.<NumberBasicDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

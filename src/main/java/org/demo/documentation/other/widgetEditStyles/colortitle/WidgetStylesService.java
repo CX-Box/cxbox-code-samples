@@ -131,14 +131,13 @@ public class WidgetStylesService extends VersionAwareResponseService<WidgetStyle
 	@Override
 	public Actions<WidgetStylesDTO> getActions() {
 		return Actions.<WidgetStylesDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
-				.create()
-				.withAutoSaveBefore()
-				.add()
-				.delete()
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .create(crt -> crt
+                        .withAutoSaveBefore()
+                )
+                .delete(dlt -> dlt)
 				.build();
 	}
 

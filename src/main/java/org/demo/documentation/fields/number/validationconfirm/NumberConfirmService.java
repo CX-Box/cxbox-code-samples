@@ -38,10 +38,10 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 	@Override
 	public Actions<NumberConfirmDTO> getActions() {
 		return Actions.<NumberConfirmDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value ?"))
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                        .withPreAction(PreAction.confirm("You want to save the value ?"))
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

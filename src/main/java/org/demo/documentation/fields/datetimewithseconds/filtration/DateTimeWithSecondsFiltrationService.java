@@ -43,9 +43,9 @@ public class DateTimeWithSecondsFiltrationService extends
 	@Override
 	public Actions<DateTimeWithSecondsFiltrationDTO> getActions() {
 		return Actions.<DateTimeWithSecondsFiltrationDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

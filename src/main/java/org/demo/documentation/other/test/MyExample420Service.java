@@ -62,15 +62,16 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	@Override
 	public Actions<MyExample420DTO> getActions() {
 		return Actions.<MyExample420DTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
-				.action("check", "check")
-				.invoker((bc, dto) -> {
-					validateFields(bc, dto);
-					return new ActionResultDTO<>();
-				})
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .action(act -> act
+                        .action("check", "check")
+                        .invoker((bc, dto) -> {
+                            validateFields(bc, dto);
+                            return new ActionResultDTO<>();
+                        })
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -38,9 +38,9 @@ public class DateTimeColorService extends VersionAwareResponseService<DateTimeCo
 	@Override
 	public Actions<DateTimeColorDTO> getActions() {
 		return Actions.<DateTimeColorDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -39,9 +39,9 @@ public class RequiredDateTimeService extends VersionAwareResponseService<Require
 	@Override
 	public Actions<RequiredDateTimeDTO> getActions() {
 		return Actions.<RequiredDateTimeDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

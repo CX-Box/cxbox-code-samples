@@ -39,10 +39,10 @@ public class DateTimeValidationService extends VersionAwareResponseService<DateT
 	@Override
 	public Actions<DateTimeValidationDTO> getActions() {
 		return Actions.<DateTimeValidationDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value ?"))
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                        .withPreAction(PreAction.confirm("You want to save the value ?"))
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

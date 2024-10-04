@@ -54,12 +54,11 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3420DTO> getActions() {
         return Actions.<MyExample3420DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .create().text("Add").add()
-                .delete()
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .create(crt -> crt.text("Add"))
+                .delete(dlt -> dlt)
                 .build();
     }
 

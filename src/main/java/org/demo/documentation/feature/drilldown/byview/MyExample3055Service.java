@@ -38,17 +38,17 @@ public class MyExample3055Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3055DTO> getActions() {
         return Actions.<MyExample3055DTO>builder()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotoonerecord", "Go to List 3 level")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3055DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3055/view/myexample3055info/myexample3055/1100023"
-                            ));
-                })
-                .add()
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotoonerecord", "Go to List 3 level")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3055DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3055/view/myexample3055info/myexample3055/1100023"
+                                    ));
+                        })
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

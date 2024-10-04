@@ -39,9 +39,9 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 	@Override
 	public Actions<InputCreateEditDTO> getActions() {
 		return Actions.<InputCreateEditDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

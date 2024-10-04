@@ -38,9 +38,9 @@ public class DateBasicService extends VersionAwareResponseService<DateBasicDTO, 
 	@Override
 	public Actions<DateBasicDTO> getActions() {
 		return Actions.<DateBasicDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+				.action(act -> act
+						.action("save", "save")
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]

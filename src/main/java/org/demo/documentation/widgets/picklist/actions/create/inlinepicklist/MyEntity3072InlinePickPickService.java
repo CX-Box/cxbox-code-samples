@@ -34,10 +34,10 @@ public class MyEntity3072InlinePickPickService extends VersionAwareResponseServi
 
     public Actions<MyEntity3072InlinePickPickDTO> getActions() {
         return Actions.<MyEntity3072InlinePickPickDTO>builder()
-                .create().text("Add").add()
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
 }

@@ -31,9 +31,9 @@ public class WidgetStylesSuggestionService extends AnySourceVersionAwareResponse
     @Override
     public Actions<WidgetStylesSuggestionDTO> getActions() {
         return Actions.<WidgetStylesSuggestionDTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
 

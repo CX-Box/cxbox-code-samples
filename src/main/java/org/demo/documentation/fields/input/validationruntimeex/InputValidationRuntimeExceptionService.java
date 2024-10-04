@@ -51,9 +51,9 @@ public class InputValidationRuntimeExceptionService extends
 	@Override
 	public Actions<InputValidationRuntimeExceptionDTO> getActions() {
 		return Actions.<InputValidationRuntimeExceptionDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

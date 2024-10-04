@@ -39,7 +39,7 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 	@Override
 	public Actions<InputColorConstDTO> getActions() {
 		return Actions.<InputColorConstDTO>builder()
-				.save().available(bc -> true).add()
+                .save(sv -> sv.available(bc -> true))
 				.build();
 	}
 
