@@ -39,38 +39,38 @@ public class MyExample3156Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3156DTO> getActions() {
         return Actions.<MyExample3156DTO>builder()
-                .newAction()
-                .action("gotolistthirdlevel", "Go to List 3 level")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3156DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3156/view/myexample3156infothirdlevel3"
-                            ));
-                })
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotolistfourthlevel", "Go to List 4 level")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3156DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3156/view/myexample3156infofourthlevel3"
-                            ));
-                })
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotolistsecondlevel", "Go to List 2 level")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3156DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3156/view/myexample3156secondlevel"
-                            ));
-                })
-                .add()
+                .action(act -> act
+                        .action("gotolistthirdlevel", "Go to List 3 level")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3156DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3156/view/myexample3156infothirdlevel3"
+                                    ));
+                        })
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotolistfourthlevel", "Go to List 4 level")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3156DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3156/view/myexample3156infofourthlevel3"
+                                    ));
+                        })
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotolistsecondlevel", "Go to List 2 level")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3156DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3156/view/myexample3156secondlevel"
+                                    ));
+                        })
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

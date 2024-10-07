@@ -121,22 +121,26 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()
-                .action("save-send-color-const-all", "Save and send on approval")
-                .withPreAction(confirmWithComment("MyExample3027FormPopupColorConstAll","InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
-                .invoker((bc, data) -> withApproval())
-                .add()
-                .action("save-send-color-all", "Save and send on approval")
-                .withPreAction(confirmWithComment("MyExample3027FormPopupAll","InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
-                .invoker((bc, data) -> withApproval())
-                .add()
-                .action("save-send-color-const", "Save and send on approval")
-                .withPreAction(confirmWithComment("MyExample3027FormPopupColorConst","customField: ${customField},  customFieldText: ${customFieldText}"))
-                .invoker((bc, data) -> withApproval())
-                .add()
-                .action("save-send-color", "Save and send on approval")
-                .withPreAction(confirmWithComment("MyExample3027FormPopup","customField: ${customField},  customFieldText: ${customFieldText}"))
-                .invoker((bc, data) -> withApproval())
-                .add()
+                .action(act -> act
+                        .action("save-send-color-const-all", "Save and send on approval")
+                        .withPreAction(confirmWithComment("MyExample3027FormPopupColorConstAll", "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
+                        .invoker((bc, data) -> withApproval())
+                )
+                .action(act -> act
+                        .action("save-send-color-all", "Save and send on approval")
+                        .withPreAction(confirmWithComment("MyExample3027FormPopupAll", "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
+                        .invoker((bc, data) -> withApproval())
+                )
+                .action(act -> act
+                        .action("save-send-color-const", "Save and send on approval")
+                        .withPreAction(confirmWithComment("MyExample3027FormPopupColorConst", "customField: ${customField},  customFieldText: ${customFieldText}"))
+                        .invoker((bc, data) -> withApproval())
+                )
+                .action(act -> act
+                        .action("save-send-color", "Save and send on approval")
+                        .withPreAction(confirmWithComment("MyExample3027FormPopup", "customField: ${customField},  customFieldText: ${customFieldText}"))
+                        .invoker((bc, data) -> withApproval())
+                )
                 .build();
 
     }

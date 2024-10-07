@@ -46,9 +46,9 @@ public class MyExample256Service extends VersionAwareResponseService<MyExample25
 	@Override
 	public Actions<MyExample256DTO> getActions() {
 		return Actions.<MyExample256DTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -35,13 +35,11 @@ public class MyExample4221Service extends VersionAwareResponseService<MyExample4
     @Override
     public Actions<MyExample4221DTO> getActions() {
         return Actions.<MyExample4221DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .create()
-                .add()
-                .delete()
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .create(crt -> crt)
+                .delete(dlt -> dlt)
                 .build();
     }
      // --8<-- [end:getActions]  

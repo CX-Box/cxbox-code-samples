@@ -33,18 +33,18 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3800DTO> getActions() {
         return Actions.<MyExample3800DTO>builder()
-                .create().text("Add").add()
+                .create(crt -> crt.text("Add"))
                 .addGroup(
                         "actions",
                         "Actions",
                         0,
                         Actions.<MyExample3800DTO>builder()
-                                .newAction()
-                                .action("delete", "delete")
-                                .add()
-                                .newAction()
-                                .action("save", "save")
-                                .add()
+                                .action(act -> act
+                                        .action("delete", "delete")
+                                )
+                                .action(act -> act
+                                        .action("save", "save")
+                                )
                                 .build()).
                 build();
     }

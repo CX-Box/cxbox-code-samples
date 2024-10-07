@@ -39,20 +39,20 @@ public class MyExample3620Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3620DTO> getActions() {
         return Actions.<MyExample3620DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .newAction()
-                .scope(ActionScope.RECORD)
-                .action("gotolist", "Go to List")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3620DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3620"
-                            ));
-                })
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotolist", "Go to List")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3620DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3620"
+                                    ));
+                        })
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

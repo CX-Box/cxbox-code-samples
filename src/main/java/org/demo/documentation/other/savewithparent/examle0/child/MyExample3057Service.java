@@ -52,17 +52,18 @@ public class MyExample3057Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3057DTO> getActions() {
         return Actions.<MyExample3057DTO>builder()
-                .action("addChild", "Add")
-                .invoker((bc, dto) -> {
-                    MyEntity3058 myEntityParent = repositoryParent.getById(bc.getParentIdAsLong());
-                    repositoryParent.save(myEntityParent);
-                    return new ActionResultDTO<MyExample3057DTO>() ;
-                })
-                .add()
-                .create().text("Add").add()
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .action(act -> act
+                        .action("addChild", "Add")
+                        .invoker((bc, dto) -> {
+                            MyEntity3058 myEntityParent = repositoryParent.getById(bc.getParentIdAsLong());
+                            repositoryParent.save(myEntityParent);
+                            return new ActionResultDTO<MyExample3057DTO>();
+                        })
+                )
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
     // --8<-- [end:getActions]

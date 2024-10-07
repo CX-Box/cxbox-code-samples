@@ -36,23 +36,25 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3077DTO> getActions() {
         return Actions.<MyExample3077DTO>builder()
-                .create().text("Add child").withAutoSaveBefore()
-                .add()
+                .create(crt -> crt.text("Add child").withAutoSaveBefore()
+                )
+                .action(act -> act
 
-                .action("customSave", "Custom Save")
-                .invoker(this::customSaveInvoker)
-                .add()
+                        .action("customSave", "Custom Save")
+                        .invoker(this::customSaveInvoker)
+                )
+                .action(act -> act
 
-                .action("cancel", "Cancel")
-                .invoker((bc, dto) -> {
-                    return new ActionResultDTO<MyExample3077DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3076"
-                            ));
-                })
-                .withoutAutoSaveBefore()
-                .add()
+                        .action("cancel", "Cancel")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3077DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3076"
+                                    ));
+                        })
+                        .withoutAutoSaveBefore()
+                )
                 .build();
     }
     // --8<-- [end:getActions]

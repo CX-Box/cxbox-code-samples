@@ -83,9 +83,9 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3062DTO> getActions() {
         return Actions.<MyExample3062DTO>builder()
-                .associate()
-                .text("Popup Assoc")
-                .add()
+                .associate(ast -> ast
+                        .text("Popup Assoc")
+                )
                 .build();
     }
      // --8<-- [end:getActions]  

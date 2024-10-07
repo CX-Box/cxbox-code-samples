@@ -47,11 +47,11 @@ public class MyExample3076Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3076DTO> getActions() {
         return Actions.<MyExample3076DTO>builder()
-                .create().text("Add parent").withAutoSaveBefore()
-                .add()
+                .create(crt -> crt.text("Add parent").withAutoSaveBefore()
+                )
 
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .build();
     }
 

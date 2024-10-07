@@ -42,9 +42,9 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 	@Override
 	public Actions<InputBasicDTO> getActions() {
 		return Actions.<InputBasicDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

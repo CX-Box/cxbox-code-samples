@@ -36,10 +36,10 @@ public class MyExample3116Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3116DTO> getActions() {
         return Actions.<MyExample3116DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .withPreAction(PreAction.confirm("You want to save the value ?"))
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                        .withPreAction(PreAction.confirm("You want to save the value ?"))
+                )
                 .build();
     }
      // --8<-- [end:getActions]  
