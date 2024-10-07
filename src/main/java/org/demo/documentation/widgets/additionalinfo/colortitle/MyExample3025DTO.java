@@ -65,13 +65,14 @@ public class MyExample3025DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldColorMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldColorMultivalue;
     private String customFieldColorMultivalueDisplayedKey;
-
+    // --8<-- [start:colorDTO]
     public MyExample3025DTO(MyEntity3025 entity) {
         this.id = entity.getId().toString();
         this.customFieldColor = "#eda6a6";
         this.customFieldTextColor = "#a6eda6";
         this.customFieldText = entity.getCustomFieldText();
         this.customField = entity.getCustomField();
+    // --8<-- [end:colorDTO]
         this.customFieldColorInput = entity.getCustomFieldColorInput();
         this.customFieldColorText = entity.getCustomFieldColorText();
         this.customFieldColorDateTime = entity.getCustomFieldColorDateTime();
