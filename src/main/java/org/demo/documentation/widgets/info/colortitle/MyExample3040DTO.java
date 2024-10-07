@@ -66,12 +66,14 @@ public class MyExample3040DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldColorMoney", provider = BigDecimalValueProvider.class)
     private Double customFieldColorMoney;
 
+    // --8<-- [start:colorDTO]
     public MyExample3040DTO(MyEntity3040 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldColor = "#eda6a6";
         this.customFieldTextColor = "#a6eda6";
         this.customFieldText = entity.getCustomFieldText();
+    // --8<-- [end:colorDTO]
         this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
                 MyEntity3040Multi::getCustomField
