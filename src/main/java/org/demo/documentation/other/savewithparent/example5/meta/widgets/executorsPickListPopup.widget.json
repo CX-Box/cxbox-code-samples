@@ -1,0 +1,37 @@
+{
+  "title": "ExecutorsPickListPopup",
+  "name": "executorsPickListPopup",
+  "type": "PickListPopup",
+  "bc": "taskPickList",
+  "fields": [
+    {
+      "title": "id",
+      "key": "id",
+      "type": "input"
+    },
+    {
+      "title": "Name",
+      "key": "name",
+      "type": "input"
+    },
+    {
+      "title": "Role",
+      "key": "role",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "executorEditPickListPopup"
+    },
+    "edit": {
+      "widget": "executorEditPickListPopup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

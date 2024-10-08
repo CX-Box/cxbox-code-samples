@@ -1,0 +1,38 @@
+{
+  "name": "applicationList",
+  "title": "Application",
+  "type": "List",
+  "bc": "application",
+  "fields": [
+    {
+      "title": "ID",
+      "key": "id",
+      "type": "input"
+    },
+    {
+      "title": "Name",
+      "key": "name",
+      "type": "input",
+      "drillDown":true
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "applicationEdit"
+    },
+    "edit": {
+      "widget": "applicationEdit"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}
