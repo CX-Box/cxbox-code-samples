@@ -31,6 +31,7 @@ public class MyExample3300Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3300DTO> getActions() {
         return Actions.<MyExample3300DTO>builder()
@@ -39,6 +40,7 @@ public class MyExample3300Service extends VersionAwareResponseService<MyExample3
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .build();
     }
+    // --8<-- [end:getActions]
 
 
 }
