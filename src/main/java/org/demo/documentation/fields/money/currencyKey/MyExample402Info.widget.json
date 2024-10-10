@@ -1,0 +1,35 @@
+{
+  "name": "MyExample402Info",
+  "title": "Info title",
+  "type": "Info",
+  "bc": "myExampleBc56",
+  "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customFieldCurrency",
+      "type": "dictionary",
+      "hidden": true
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "money",
+      "digits": 2,
+      "currencyKey": "customFieldCurrency"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
