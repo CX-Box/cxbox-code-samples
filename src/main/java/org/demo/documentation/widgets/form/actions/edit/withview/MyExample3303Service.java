@@ -42,7 +42,17 @@ public class MyExample3303Service extends VersionAwareResponseService<MyExample3
     public Actions<MyExample3303DTO> getActions() {
         return Actions.<MyExample3303DTO>builder()
                 .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .action(act -> act
+                        .action("cancel", "Cancel")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3303DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3303/view/myexample3303form"
+                                    ));
+                        })
+                        .withoutAutoSaveBefore()
+                )
                 .action(act -> act
                         .scope(ActionScope.RECORD)
                         .withAutoSaveBefore()

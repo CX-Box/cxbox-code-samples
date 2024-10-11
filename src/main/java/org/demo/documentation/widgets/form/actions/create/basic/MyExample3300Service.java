@@ -42,6 +42,5 @@ public class MyExample3300Service extends VersionAwareResponseService<MyExample3
     }
     // --8<-- [end:getActions]
 
-
 }
 

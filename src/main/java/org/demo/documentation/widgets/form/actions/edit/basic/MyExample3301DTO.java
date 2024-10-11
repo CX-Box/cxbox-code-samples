@@ -11,6 +11,14 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @Setter
 @NoArgsConstructor
 public class MyExample3301DTO extends DataResponseDTO {
+    public static final String INFO_TEXT_CREATE_BASIC = "Form widget. Basic Edit." ;
+    public static final String INFO_TEXT_CREATE_BASIC2 = "Edit Basic implies inline-edit. Click twice on the value you want to change.." ;
+
+    public static final String INFO_TEXT_CREATE_VIEW = "Form widget. Create with view" ;
+    public static final String INFO_TEXT_CREATE_VIEW2 = "With Create with view, clicking the \"Add\" button opens a separate view that displays only the data entry form. After completing the form and saving, the system returns to the form of entities with the new row added." ;
+
+    public static final String INFO_TEXT = "Form widget. Basic Edit." ;
+    public static final String INFO_TEXT2 = "Edit Basic implies inline-edit. Click twice on the value you want to change.." ;
 
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;

@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.form.actions.edit.basic.MyExample3301Service;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -12,8 +13,8 @@ public enum CxboxMyExample3302Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample3302(MyExample3302Service.class);
-
+    myexample3302(MyExample3302Service.class),
+    myexample3301(MyExample3301Service.class);
     // @formatter:on
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3302Controller> Holder = new Holder<>(

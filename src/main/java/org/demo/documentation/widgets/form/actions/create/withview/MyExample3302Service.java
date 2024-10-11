@@ -46,6 +46,17 @@ public class MyExample3302Service extends VersionAwareResponseService<MyExample3
         return Actions.<MyExample3302DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .action(act -> act
+                        .action("cancel", "Cancel")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3302DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3302/view/myexample3302form"
+                                    ));
+                        })
+                        .withoutAutoSaveBefore()
+                )
+                .action(act -> act
                         .action("finish", "Save and Close")
                         .invoker((bc, data) -> {
                                     MyEntity3302 myEntity = repository.getById(bc.getIdAsLong());
