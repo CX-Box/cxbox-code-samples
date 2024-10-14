@@ -16,10 +16,6 @@ public class MyExample3301DTO extends DataResponseDTO {
 
     public static final String INFO_TEXT = "Edit Basic implies inline-edit. Click twice on the value you want to change." ;
 
-    public static final String INFO_TEXT_CREATE_VIEW = "With Create with view, clicking the \"Add\" button opens a separate view that displays only the data entry form. After completing the form and saving, the system returns to the form of entities with the new row added." ;
-
-    public static final String INFO_TEXT = "Edit Basic implies inline-edit. Click twice on the value you want to change." ;
-
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
 
