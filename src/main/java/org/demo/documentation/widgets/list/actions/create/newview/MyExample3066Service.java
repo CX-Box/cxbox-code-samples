@@ -64,14 +64,4 @@ public class MyExample3066Service extends VersionAwareResponseService<MyExample3
     }
      // --8<-- [end:getActions]
 
-
-    @Override
-    public ActionResultDTO<MyExample3066DTO> onCancel(BusinessComponent bc) {
-        return new ActionResultDTO<MyExample3066DTO>().setAction(
-                PostAction.drillDown(
-                        DrillDownType.INNER,
-                        "/screen/myexample3066/view/myexample3066list"
-                ));
-    }
-
 }

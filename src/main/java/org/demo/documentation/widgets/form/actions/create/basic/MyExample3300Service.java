@@ -35,8 +35,8 @@ public class MyExample3300Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3300DTO> getActions() {
         return Actions.<MyExample3300DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
+                .create(crt -> crt.text("Add").available(bc -> true))
+                .save(sv -> sv.text("Save").available(bc -> true))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .build();
     }
