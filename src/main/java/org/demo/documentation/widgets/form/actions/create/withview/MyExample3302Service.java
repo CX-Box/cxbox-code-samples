@@ -19,6 +19,7 @@ public class MyExample3302Service extends VersionAwareResponseService<MyExample3
         this.repository = repository;
     }
 
+    // --8<-- [start:doCreateEntity]
     @Override
     protected CreateResult<MyExample3302DTO> doCreateEntity(MyEntity3302 entity, BusinessComponent bc) {
         repository.save(entity);
