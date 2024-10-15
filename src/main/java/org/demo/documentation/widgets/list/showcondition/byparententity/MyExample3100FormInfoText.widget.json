@@ -1,13 +1,13 @@
 {
-  "name": "MyExample3107",
-  "title": "Child Entity",
+  "name": "MyExample3100FormInfoText",
+  "title": "Information about Child entity",
   "type": "Info",
-  "bc": "myExampleBc3107",
+  "bc": "myexample3106",
   "showCondition": {
-    "bcName": "myExampleBc3105",
+    "bcName": "myexample3100",
     "params": {
       "fieldKey": "customFieldShowCondition",
-      "value": true
+      "value": "true"
     }
   },
   "fields": [
@@ -16,20 +16,26 @@
       "name": "General Information",
       "fields": [
         {
-          "label": "Custom Field",
-          "key": "customField",
-          "type": "input"
+          "label": "",
+          "key": "TEXT",
+          "type": "hint",
+          "showLength": 100
         }
       ]
     }
   ],
   "options": {
+    "actionGroups": {
+      "include": [
+        "create"
+      ]
+    },
     "layout": {
       "rows": [
         {
           "cols": [
             {
-              "fieldKey": "customField",
+              "fieldKey": "TEXT",
               "span": 24
             }
           ]
