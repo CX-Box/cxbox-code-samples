@@ -8,10 +8,6 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
 
-// 3184
-// 
-// 
-
 @Entity
 @Getter
 @Setter
@@ -20,5 +16,5 @@ public class MyEntity3184 extends BaseEntity {
     @Column
     private String customField;
     @Column
-    private Boolean customFieldCheckbox;
+    private Boolean customFieldCheckbox = true;
 }

@@ -15,8 +15,8 @@ public enum CxboxMyExample3183Controller implements EnumBcIdentifier {
 
     // @formatter:on
     myexample3184(MyExample3184Service.class),
-    myexample3183(myexample3184,MyExample3183Service .class),
-    myexample31853(myexample3183, MyExample3185Service.class);
+    myexample3185(myexample3184,MyExample3185Service.class),
+    myexample3183(myexample3185, MyExample3183Service.class);
 
     // @formatter:on
 

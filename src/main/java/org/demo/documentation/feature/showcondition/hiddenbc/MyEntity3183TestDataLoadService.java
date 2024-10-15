@@ -9,6 +9,7 @@ import org.demo.documentation.feature.showcondition.hiddenbc.mainbc.MyEntity3184
 import org.demo.documentation.feature.showcondition.hiddenbc.mainbc.MyEntity3184Repository;
 import org.demo.documentation.feature.showcondition.hiddenbc.parent.MyEntity3185;
 import org.demo.documentation.feature.showcondition.hiddenbc.parent.MyEntity3185Repository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,18 @@ public class MyEntity3183TestDataLoadService {
         repositoryMain.deleteAll();
         repositoryParent.deleteAll();
 
-       /* MyEntity3184 myEntity3184 = new MyEntity3184().setCustomField("test data");
+        MyEntity3184 myEntity3184 = new MyEntity3184().setCustomField("test data");
         repositoryMain.save(myEntity3184);
 
-        MyEntity3185 myEntity3185 = new MyEntity3185().setCustomField("test data");
-        repositoryParent.save(new MyEntity3185().setCustomFieldEntity(myEntity3184));
+        MyEntity3185 myEntity3185 = new MyEntity3185().setCustomField("test data").setCustomFieldCheckbox(true);
+        repositoryParent.save(myEntity3185.setCustomFieldEntity(myEntity3184));
+
+        MyEntity3185 myEntity3185_2 = new MyEntity3185().setCustomField("test data2").setCustomFieldCheckbox(false);
+        repositoryParent.save(myEntity3185_2.setCustomFieldEntity(myEntity3184));
 
         repositoryChild.save(new MyEntity3183().setCustomField("test data").setCustomFieldEntity(myEntity3185));
-*/
+        repositoryChild.save(new MyEntity3183().setCustomField("test data2").setCustomFieldEntity(myEntity3185_2));
+
     }
 
 }

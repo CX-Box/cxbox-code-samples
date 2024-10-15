@@ -19,5 +19,5 @@ public class MyEntity3185 extends BaseEntity {
     @JoinColumn(name = "PARENT_ID")
     private MyEntity3184 customFieldEntity;
     @Column
-    private Boolean customFieldCheckbox;
+    private Boolean customFieldCheckbox = false;
 }
