@@ -6,6 +6,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.list.showcondition.byparententity.child.MyExample3106Service;
 import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyExample3100Service;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample3100Controller implements EnumBcIdentifier {
 
     // @formatter:on
-    myExampleBc3100(MyExample3100Service.class);
+
+    myexample3100(MyExample3100Service.class),
+    myexample3106(myexample3100,MyExample3106Service.class);
 
     // @formatter:on
 

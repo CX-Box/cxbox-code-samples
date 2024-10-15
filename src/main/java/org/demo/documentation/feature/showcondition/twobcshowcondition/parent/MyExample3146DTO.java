@@ -1,13 +1,11 @@
-package org.demo.documentation.other.twobcshowcondition.parent;
+package org.demo.documentation.feature.showcondition.twobcshowcondition.parent;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
-import org.demo.documentation.widgets.form.showcondition.byparententity.parent.MyEntity3007;
 
 @Getter
 @Setter

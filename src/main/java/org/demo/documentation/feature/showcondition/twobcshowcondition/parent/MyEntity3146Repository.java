@@ -1,4 +1,4 @@
-package org.demo.documentation.other.twobcshowcondition.parent;
+package org.demo.documentation.feature.showcondition.twobcshowcondition.parent;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

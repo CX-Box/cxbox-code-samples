@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.list.showcondition.byparententity;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.list.showcondition.byparententity.child.MyEntity3106;
+import org.demo.documentation.widgets.list.showcondition.byparententity.child.MyEntity3106Repository;
 import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100;
 import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,10 @@ import jakarta.transaction.Transactional;
 public class MyEntity3100TestDataLoadService {
 
     @Autowired
-    MyEntity3100Repository repository;
+    MyEntity3100Repository repositoryParent;
+
+    @Autowired
+    MyEntity3106Repository repositoryChild;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -22,8 +27,12 @@ public class MyEntity3100TestDataLoadService {
     @PostConstruct
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3100().setCustomField(8L));
+        repositoryParent.deleteAll();
+        repositoryChild.deleteAll();
+        MyEntity3100 myEntity3100Parent = new MyEntity3100().setCustomFieldNumber(8L).setCustomField("Test data");
+        repositoryParent.save(myEntity3100Parent);
+        repositoryChild.save(new MyEntity3106().setCustomFieldEntity(myEntity3100Parent).setCustomField("Test data"));
+
     }
 
 }

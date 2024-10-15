@@ -1,4 +1,4 @@
-package org.demo.documentation.other.twobcshowcondition.parent;
+package org.demo.documentation.feature.showcondition.twobcshowcondition.parent;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

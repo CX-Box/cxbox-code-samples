@@ -1,4 +1,4 @@
-package org.demo.documentation.other.twobcshowcondition.child;
+package org.demo.documentation.feature.showcondition.twobcshowcondition.child;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -6,9 +6,9 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.MyEntity3146;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.MyEntity3146Repository;
 
-import org.demo.documentation.other.twobcshowcondition.parent.MyEntity3146;
-import org.demo.documentation.other.twobcshowcondition.parent.MyEntity3146Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,12 @@
-package org.demo.documentation.other.twobcshowcondition;
+package org.demo.documentation.feature.showcondition.twobcshowcondition;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.other.twobcshowcondition.child.MyExample3145Service;
-import org.demo.documentation.other.twobcshowcondition.parent.MyExample3146Service;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.child.MyExample3145Service;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.MyExample3146Service;
 import org.springframework.stereotype.Component;
 
 @Getter

@@ -18,6 +18,8 @@ public class MyEntity3106 extends BaseEntity {
 
     @Column
     private String customField;
+    @Column
+    private Long customFieldNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")

@@ -1,13 +1,12 @@
-package org.demo.documentation.other.twobcshowcondition;
+package org.demo.documentation.feature.showcondition.twobcshowcondition;
 
 import jakarta.annotation.PostConstruct;
-
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.other.twobcshowcondition.child.MyEntity3145;
-import org.demo.documentation.other.twobcshowcondition.child.MyEntity3145Repository;
-import org.demo.documentation.other.twobcshowcondition.parent.MyEntity3146;
-import org.demo.documentation.other.twobcshowcondition.parent.MyEntity3146Repository;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.child.MyEntity3145;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.child.MyEntity3145Repository;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.MyEntity3146;
+import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.MyEntity3146Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

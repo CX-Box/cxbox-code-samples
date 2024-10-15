@@ -1,8 +1,8 @@
-package org.demo.documentation.other.twobcshowcondition.child;
+package org.demo.documentation.feature.showcondition.twobcshowcondition.child;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 
 @Getter

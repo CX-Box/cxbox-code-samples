@@ -14,7 +14,13 @@ import jakarta.persistence.Entity;
 @NoArgsConstructor
 public class MyEntity3100 extends BaseEntity {
 
-	@Column
-	private Long customField;
+    @Column
+    private String customField;
+
+    @Column
+    private Long customFieldNumber= 0L;
+
+    @Column
+    private Boolean customFieldShowCondition;
 
 }
