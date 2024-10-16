@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.actions.cancelcreate;
+package org.demo.documentation.widgets.form.actions.cancelcreate.postaction;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity3182TestDataLoadService {
+public class MyEntity3187TestDataLoadService {
 
     @Autowired
-    MyEntity3182Repository repository;
+    MyEntity3187Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -20,7 +20,7 @@ public class MyEntity3182TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3182().setCustomField("test data"));
+        repository.save(new MyEntity3187().setCustomField("test data"));
     }
 
 }

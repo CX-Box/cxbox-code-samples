@@ -1,8 +1,14 @@
 {
-  "name": "MyExample3302Form",
+  "name": "MyExample3187FormCreate",
+  "title": "Form",
   "type": "Form",
-  "bc": "myexample3302",
+  "bc": "myexample3187",
   "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customFieldText",
+      "type": "text"
+    },
     {
       "label": "customField",
       "key": "customField",
@@ -12,8 +18,8 @@
   "options": {
     "actionGroups": {
       "include": [
-        "create",
-        "delete"
+        "finish",
+        "cancel"
       ]
     },
     "layout": {
@@ -22,6 +28,14 @@
           "cols": [
             {
               "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldText",
               "span": 12
             }
           ]

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.actions.cancelcreate;
+package org.demo.documentation.widgets.form.actions.cancelcreate.basic;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

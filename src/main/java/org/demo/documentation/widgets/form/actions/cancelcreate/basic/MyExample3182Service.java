@@ -1,10 +1,11 @@
-package org.demo.documentation.widgets.form.actions.cancelcreate;
+package org.demo.documentation.widgets.form.actions.cancelcreate.basic;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +32,7 @@ public class MyExample3182Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3182DTO> getActions() {
         return Actions.<MyExample3182DTO>builder()
@@ -38,7 +40,7 @@ public class MyExample3182Service extends VersionAwareResponseService<MyExample3
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 

@@ -1,25 +1,25 @@
 {
-  "name": "MyExample3302Create",
-  "title": "Create view",
+  "name": "MyExample3186FormCreate",
+  "title": "Form Create",
   "type": "Form",
-  "bc": "myexample3302",
+  "bc": "myexample3186",
   "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
     {
       "label": "Custom Field Text",
       "key": "customFieldText",
       "type": "text"
-    },
-    {
-      "label": "customField",
-      "key": "customField",
-      "type": "input"
     }
   ],
   "options": {
     "actionGroups": {
       "include": [
         "finish",
-        "cancel"
+        "cancel-create"
       ]
     },
     "layout": {
@@ -27,7 +27,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customField",
+              "fieldKey": "customFieldText",
               "span": 12
             }
           ]
@@ -35,7 +35,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldText",
+              "fieldKey": "customField",
               "span": 12
             }
           ]
@@ -44,4 +44,3 @@
     }
   }
 }
-

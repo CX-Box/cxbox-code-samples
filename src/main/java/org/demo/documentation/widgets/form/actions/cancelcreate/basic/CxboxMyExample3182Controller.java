@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.form.actions.cancelcreate;
+package org.demo.documentation.widgets.form.actions.cancelcreate.basic;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

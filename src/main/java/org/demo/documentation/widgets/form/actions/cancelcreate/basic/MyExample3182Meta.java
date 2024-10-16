@@ -1,9 +1,10 @@
-package org.demo.documentation.widgets.form.actions.cancelcreate;
+package org.demo.documentation.widgets.form.actions.cancelcreate.basic;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+
 import org.springframework.stereotype.Service;
 
 @Service
