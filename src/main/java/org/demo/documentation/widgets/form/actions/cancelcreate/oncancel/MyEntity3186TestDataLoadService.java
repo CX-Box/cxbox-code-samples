@@ -1,17 +1,16 @@
-package org.demo.documentation.widgets.list.actions.edit.basic;
+package org.demo.documentation.widgets.form.actions.cancelcreate.oncancel;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
-
 @Service
-public class MyEntity3700TestDataLoadService {
+public class MyEntity3186TestDataLoadService {
 
     @Autowired
-    MyEntity3700Repository repository;
+    MyEntity3186Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -21,7 +20,7 @@ public class MyEntity3700TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3700().setCustomField("Test data").setCustomFieldText("Test data"));
+        repository.save(new MyEntity3186().setCustomField("test data"));
     }
 
 }
