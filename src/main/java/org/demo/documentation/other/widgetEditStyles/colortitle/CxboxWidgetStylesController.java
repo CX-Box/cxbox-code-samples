@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxWidgetStylesController implements EnumBcIdentifier {
 
-    // @formatter:on
+
 
     widgetStyles(WidgetStylesService.class),
     widgetStylesPicklistPickListPopup(widgetStyles, WidgetStylesPicklistPickService.class),
@@ -23,7 +23,7 @@ public enum CxboxWidgetStylesController implements EnumBcIdentifier {
     widgetStylesMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultivalueService.class),
     widgetStylesNone(widgetStyles, WidgetStylesService.class);
 
-    // @formatter:on
+
 
     public static final EnumBcIdentifier.Holder<CxboxWidgetStylesController> Holder = new Holder<>(
             CxboxWidgetStylesController.class);

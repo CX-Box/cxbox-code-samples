@@ -5,18 +5,18 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.widgets.info.base.MyExample3001Service;
+
 import org.springframework.stereotype.Component;
 
 
 @Getter
 public enum PlatformMyExample3008Controller implements EnumBcIdentifier {
 
-	// @formatter:on
+
 	// --8<-- [start:bc]
 	myExampleBc3008(MyExample3008Service.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+
 
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample3008Controller> Holder = new Holder<>(

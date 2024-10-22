@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxMyExample3303Controller implements EnumBcIdentifier {
 
-    // @formatter:on
+
 
     myexample3303(MyExample3303Service.class);
 
-    // @formatter:on
+
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3303Controller> Holder = new Holder<>(
             CxboxMyExample3303Controller.class);

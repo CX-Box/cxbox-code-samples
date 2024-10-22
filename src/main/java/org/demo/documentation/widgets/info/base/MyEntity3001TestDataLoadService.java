@@ -1,10 +1,14 @@
 package org.demo.documentation.widgets.info.base;
 
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.info.base.enums.CustomFieldDictionaryEnum;
-import org.demo.documentation.widgets.info.base.enums.CustomFieldMultipleSelectEnum;
-import org.demo.documentation.widgets.info.base.enums.CustomFieldRadioEnum;
-import org.demo.documentation.widgets.info.base.forfields.*;
+import org.demo.documentation.widgets.info.base.allfields.MyEntity3001;
+import org.demo.documentation.widgets.info.base.allfields.MyEntity3001Repository;
+import org.demo.documentation.widgets.info.base.allfields.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.info.base.allfields.enums.CustomFieldMultipleSelectEnum;
+import org.demo.documentation.widgets.info.base.allfields.enums.CustomFieldRadioEnum;
+import org.demo.documentation.widgets.info.base.allfields.forfields.*;
+import org.demo.documentation.widgets.info.base.onefield.MyEntity3009;
+import org.demo.documentation.widgets.info.base.onefield.MyEntity3009Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,9 @@ public class MyEntity3001TestDataLoadService {
 	MyEntity3001Repository repository;
 
 	@Autowired
+	MyEntity3009Repository repository3009;
+
+	@Autowired
 	MyEntity4222PickRepository repositoryPick;
 
 	@Autowired
@@ -35,6 +42,10 @@ public class MyEntity3001TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
+		repository3009.deleteAll();
+
+		repository3009.save(new MyEntity3009().setCustomField("test data"));
+
 		MyEntity4222Multi myEntity1 = new MyEntity4222Multi().setCustomField(
 				"Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
 		MyEntity4222Multi myEntity2 = new MyEntity4222Multi().setCustomField(

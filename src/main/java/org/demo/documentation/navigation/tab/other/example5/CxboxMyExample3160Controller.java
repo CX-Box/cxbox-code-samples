@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxMyExample3160Controller implements EnumBcIdentifier {
 
-    // @formatter:on
+
     myexample3161(MyExample3161Service.class),
     myexample3162(myexample3161,MyExample3162Service.class),
     myexample3163(myexample3161,MyExample3163Service.class),
     myexample3160(myexample3161,MyExample3160Service.class);
 
-    // @formatter:on
+
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3160Controller> Holder = new Holder<>(
             CxboxMyExample3160Controller.class);

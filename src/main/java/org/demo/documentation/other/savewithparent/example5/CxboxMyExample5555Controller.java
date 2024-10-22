@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample5555Controller implements EnumBcIdentifier {
-// @formatter:on
+
 
 	application(MyExample5555ApplicationService.class),
 	task(application, MyExample5555TaskService.class),
@@ -22,7 +22,7 @@ public enum CxboxMyExample5555Controller implements EnumBcIdentifier {
 	executor(MyExample5555ExecutorService.class),
 	executorPickListPopup(executor, MyExample5555ExecutorService.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample5555Controller> Holder = new Holder<>(
