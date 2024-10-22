@@ -44,7 +44,7 @@ public class MyEntity3001TestDataLoadService {
 		repository.deleteAll();
 		repository3009.deleteAll();
 
-		repository3009.save(new MyEntity3009().setCustomField("test data"));
+		repository3009.save(new MyEntity3009().setCustomField("test data").setCustomFieldText("test data"));
 
 		MyEntity4222Multi myEntity1 = new MyEntity4222Multi().setCustomField(
 				"Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");

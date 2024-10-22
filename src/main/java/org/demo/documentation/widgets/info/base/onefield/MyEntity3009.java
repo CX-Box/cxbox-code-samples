@@ -15,4 +15,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity3009 extends BaseEntity {
     @Column
     private String customField;
+    @Column
+    private String customFieldText;
 }

@@ -95,10 +95,7 @@ public class MyExample3010Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3010DTO> getActions() {
         return Actions.<MyExample3010DTO>builder()
-                .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
 

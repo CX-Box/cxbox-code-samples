@@ -25,6 +25,7 @@ public class MyExample3009Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3009DTO> doUpdateEntity(MyEntity3009 entity, MyExample3009DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3009DTO_.customFieldText, entity::setCustomFieldText);
         if (data.isFieldChanged(MyExample3009DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
