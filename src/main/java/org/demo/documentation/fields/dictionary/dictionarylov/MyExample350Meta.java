@@ -1,8 +1,8 @@
 package org.demo.documentation.fields.dictionary.dictionarylov;
 
-import static org.cxbox.api.data.dto.rowmeta.IconCode.ARROW_UP_ORANGE;
-import static org.cxbox.api.data.dto.rowmeta.IconCode.ARROW_UP_RED;
+import static org.cxbox.api.data.dto.rowmeta.IconCode.*;
 import static org.demo.documentation.fields.dictionary.dictionarylov.AdministeredDictionaryType.REGIONS;
+import static org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionaryEnum.*;
 
 import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.data.dto.rowmeta.IconCode;
@@ -31,12 +31,11 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample350DTO_.customField);
         fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
-        Map<LOV, IconCode> valueIconMap = new HashMap<>();
-        valueIconMap.put(REGIONS.lookupName("MOSCOW"), ARROW_UP_RED);
-        valueIconMap.put(REGIONS.lookupName("SAINT PETERBURG"), ARROW_UP_ORANGE);
-        valueIconMap.put(REGIONS.lookupName("KOSTROMA"), ARROW_UP_ORANGE);
-        valueIconMap.put(REGIONS.lookupName("SYKTYVKAR"), ARROW_UP_RED);
-
+        Map<LOV, IconCode> valueIconMap = Map.of(
+                REGIONS.lookupName("MOSCOW"), ARROW_UP_RED,
+                REGIONS.lookupName("SAINT PETERBURG"), ARROW_UP_ORANGE,
+                REGIONS.lookupName("SYKTYVKAR"), ARROW_UP_ORANGE,
+                REGIONS.lookupName("KOSTROMA"), ARROW_DOWN_GREEN);
         fields.setDictionaryValuesWithIcons(MyExample350DTO_.customField, REGIONS,valueIconMap);
     }
     // --8<-- [end:buildRowDependentMeta]
@@ -49,20 +48,13 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
         fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
         fields.enableFilter(MyExample350DTO_.customField);
         fields.enableSort(MyExample350DTO_.customField);
-        fields.setFilterValuesWithIcons();
-        Map<LOV, IconCode> valueIconMap = new HashMap<>();
-        valueIconMap.put(REGIONS.lookupName("MOSCOW"), ARROW_UP_RED);
-        valueIconMap.put(REGIONS.lookupName("SAINT PETERBURG"), ARROW_UP_ORANGE);
-        valueIconMap.put(REGIONS.lookupName("KOSTROMA"), ARROW_UP_ORANGE);
-        valueIconMap.put(REGIONS.lookupName("SYKTYVKAR"), ARROW_UP_RED);
-        Optional.ofNullable(MyExample3011DTO_.customFieldDictionary).map(dtoField -> fields.get(dtoField.getName()))
-                .ifPresent(fieldDTO -> {
-                    fieldDTO.setDictionaryName(fieldDTO.getDictionaryName());
-                    fieldDTO.clearFilterValues();
-                    valueIconMap
-                            .forEach((key, value) -> fieldDTO
-                                    .setIconWithValue(key.getKey(), value, true));
-                });
+
+        Map<LOV, IconCode> valueIconMap = Map.of(
+                REGIONS.lookupName("MOSCOW"), ARROW_UP_RED,
+                REGIONS.lookupName("SAINT PETERBURG"), ARROW_UP_ORANGE,
+                REGIONS.lookupName("SYKTYVKAR"), ARROW_UP_ORANGE,
+                REGIONS.lookupName("KOSTROMA"), ARROW_DOWN_GREEN);
+        fields.setFilterValuesWithIcons(MyExample350DTO_.customField, REGIONS,valueIconMap);
     }
     // --8<-- [end:buildIndependentMeta]
 }
