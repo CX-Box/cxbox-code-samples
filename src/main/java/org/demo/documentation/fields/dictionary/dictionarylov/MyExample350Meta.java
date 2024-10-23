@@ -49,7 +49,7 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
         fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
         fields.enableFilter(MyExample350DTO_.customField);
         fields.enableSort(MyExample350DTO_.customField);
-
+        fields.setFilterValuesWithIcons();
         Map<LOV, IconCode> valueIconMap = new HashMap<>();
         valueIconMap.put(REGIONS.lookupName("MOSCOW"), ARROW_UP_RED);
         valueIconMap.put(REGIONS.lookupName("SAINT PETERBURG"), ARROW_UP_ORANGE);
