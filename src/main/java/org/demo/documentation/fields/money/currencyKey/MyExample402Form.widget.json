@@ -1,0 +1,35 @@
+{
+  "name": "MyExample402Form",
+  "title": "Form title",
+  "type": "Form",
+  "bc": "myExampleBc421",
+  "fields": [
+    {
+      "label": "Dictionary Type Enum",
+      "key": "dictionaryType",
+      "type": "dictionary",
+      "hidden": true
+    },
+    {
+      "label": "Money Type",
+      "key": "moneyType",
+      "type": "money",
+      "digits": 2,
+      "currencyKey": "dictionaryType"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "moneyType",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
