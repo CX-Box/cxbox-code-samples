@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample31053107Controller implements EnumBcIdentifier {
 
-    // @formatter:on
-    // @formatter:on
+
+
     // --8<-- [start:bc]
     myExampleBc3105(MyExample3105Service.class),
     myExampleBc3107(myExampleBc3105, MyExample3107Service.class);
     // --8<-- [end:bc]
-    // @formatter:on
 
-    // @formatter:on
+
+
 
     public static final EnumBcIdentifier.Holder<PlatformMyExample31053107Controller> Holder = new Holder<>(
             PlatformMyExample31053107Controller.class);

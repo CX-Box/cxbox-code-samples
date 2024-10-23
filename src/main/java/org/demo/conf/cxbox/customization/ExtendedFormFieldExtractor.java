@@ -22,13 +22,6 @@ public class ExtendedFormFieldExtractor extends CodeSamplesBaseFieldExtractor {
 	@Override
 	public Set<BcField> extract(WidgetDTO widget) {
 		final Set<BcField> widgetFields = new HashSet<>(extractFieldsFromTitle(widget, i18n(widget.getTitle())));
-		for (final FieldGroup group : JsonUtils.readValue(FieldGroup[].class, widget.getFields())) {
-			if (group.getChildren() != null) {
-				for (final FieldMeta field : group.getChildren()) {
-					widgetFields.addAll(extract(widget, field));
-				}
-			}
-		}
 		return widgetFields;
 	}
 

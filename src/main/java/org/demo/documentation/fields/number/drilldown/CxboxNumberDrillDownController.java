@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxNumberDrillDownController implements EnumBcIdentifier {
 
-	// @formatter:on
+
 
 	numberDrillDown(NumberDrillDownService.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+
 
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberDrillDownController> Holder = new Holder<>(
