@@ -59,10 +59,9 @@ public class MyExample3011Meta extends FieldMetaBuilder<MyExample3011DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample3011DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableSort(MyExample3011DTO_.customFieldDictionary);
         fields.enableFilter(MyExample3011DTO_.customFieldDictionary);
-        Map<String, IconCode> valueIconMap = new HashMap<>();
-        valueIconMap.put(HIGH.getValue(), ARROW_UP_RED);
-        valueIconMap.put(MIDDLE.getValue(), ARROW_UP_ORANGE);
-        valueIconMap.put(LOW.getValue(), ARROW_DOWN_GREEN);
+        Map<String, IconCode> valueIconMap = Map.of(HIGH.getValue(), ARROW_UP_RED,
+                MIDDLE.getValue(), ARROW_UP_ORANGE,
+                LOW.getValue(), ARROW_DOWN_GREEN);
         Optional.ofNullable(MyExample3011DTO_.customFieldDictionary).map(dtoField -> fields.get(dtoField.getName()))
                 .ifPresent(fieldDTO -> {
                     fieldDTO.setDictionaryName(fieldDTO.getDictionaryName());
