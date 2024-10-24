@@ -33,16 +33,17 @@ public class MyExample3064Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3064DTO> getActions() {
         return Actions.<MyExample3064DTO>builder()
-                .create().text("Add").add()
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 

@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample150Controller implements EnumBcIdentifier {
 
-	// @formatter:on
+
 	// --8<-- [start:bc]
 	myExampleBc150(MyExample150Service.class),
 	myEntity151PickListPopup(myExampleBc150, MyEntity151PickPickListService.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+
 
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample150Controller> Holder = new Holder<>(

@@ -34,18 +34,16 @@ public class MyExample3611Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3611DTO> getActions() {
         return Actions.<MyExample3611DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .create()
-                .add()
-                .delete()
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .create(crt -> crt)
+                .delete(dlt -> dlt)
                 .build();
     }
-
-
+     // --8<-- [end:getActions]  
 }

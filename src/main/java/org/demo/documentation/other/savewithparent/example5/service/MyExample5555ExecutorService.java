@@ -58,36 +58,33 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 	public Actions<ExecutorDTO> getActions() {
 		return Actions.<ExecutorDTO>builder()
 				.create().text("Add").add()
-				.action("finish", "Save")
-				.invoker((bc, dto) -> {
-					Executor executor = repository.getById(bc.getIdAsLong());
-					repository.save(executor);
-					return new ActionResultDTO<ExecutorDTO>().setAction(
-							PostAction.drillDown(
-									DrillDownType.INNER,
-									EXECUTOR
-							));
-				})
-				.add()
-				.action("nextSubInfo", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<ExecutorDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										SUB_INFO
-								))
+				.action(act -> act
+						.action("finish", "Save")
+						.invoker((bc, dto) -> {
+							Executor executor = repository.getById(bc.getIdAsLong());
+							repository.save(executor);
+							return new ActionResultDTO<ExecutorDTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											EXECUTOR
+									));
+						})
 				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add()
-				.save().text("Save").scope(ActionScope.BC)
-				.add()
-				.delete().text("Delete")
-				.add()
-				.cancelCreate()
-				.text("Cancel")
-				.scope(ActionScope.BC)
-				.add()
+				.action(act -> act
+						.action("nextSubInfo", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<ExecutorDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												SUB_INFO
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
+				)
+				.save(sv -> sv.text("Save").scope(ActionScope.BC))
+				.delete(dlt -> dlt.text("Delete"))
+				.cancelCreate(ccr -> ccr.text("Cancel").scope(ActionScope.BC))
 				.build();
 	}
 

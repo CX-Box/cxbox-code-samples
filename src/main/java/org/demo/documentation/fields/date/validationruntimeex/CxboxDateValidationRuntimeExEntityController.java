@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxDateValidationRuntimeExEntityController implements EnumBcIdentifier {
 
-	// @formatter:on
+	
 
 	dateValidationRuntimeExEntity(DateValidationRuntimeExEntityService.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+	
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateValidationRuntimeExEntityController> Holder = new Holder<>(

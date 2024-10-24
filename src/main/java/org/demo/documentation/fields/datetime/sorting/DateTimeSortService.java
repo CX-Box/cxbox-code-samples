@@ -39,9 +39,9 @@ public class DateTimeSortService extends VersionAwareResponseService<DateTimeSor
 	@Override
 	public Actions<DateTimeSortDTO> getActions() {
 		return Actions.<DateTimeSortDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

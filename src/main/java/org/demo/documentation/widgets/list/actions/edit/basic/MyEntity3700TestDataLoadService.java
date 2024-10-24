@@ -21,7 +21,7 @@ public class MyEntity3700TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3700().setCustomField("Test data"));
+        repository.save(new MyEntity3700().setCustomField("Test data").setCustomFieldText("Test data"));
     }
 
 }

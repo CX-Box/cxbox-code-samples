@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3025Meta extends FieldMetaBuilder<MyExample3025DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3025DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3025DTO_.customFieldColorMultivalue);
@@ -37,9 +38,9 @@ public class MyExample3025Meta extends FieldMetaBuilder<MyExample3025DTO> {
         fields.setEnabled(MyExample3025DTO_.customFieldColorText);
         fields.setEnabled(MyExample3025DTO_.customFieldColorInput);
         fields.setEnabled(MyExample3025DTO_.customField);
-        fields.setRequired(MyExample3025DTO_.customField);
+        fields.setEnabled(MyExample3025DTO_.customFieldText);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3025DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3025DTO_.customFieldColorMultivalue);

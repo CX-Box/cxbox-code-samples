@@ -39,7 +39,7 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 	@Override
 	public Actions<InputRequiredDTO> getActions() {
 		return Actions.<InputRequiredDTO>builder()
-				.save().available(bc -> true).add()
+                .save(sv -> sv.available(bc -> true))
 				.build();
 	}
 

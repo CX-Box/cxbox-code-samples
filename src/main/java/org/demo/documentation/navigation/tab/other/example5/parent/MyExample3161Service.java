@@ -34,24 +34,28 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3161DTO> getActions() {
         return Actions.<MyExample3161DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
-                .action("refreshParent", "refresh Parent bc")
-                .invoker(this::customSaveInvoker)
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .action(act -> act
+                        .action("refreshParent", "refresh Parent bc")
+                        .invoker(this::customSaveInvoker)
+                )
                 .build();
     }
+    // --8<-- [end:getActions]
 
+    // --8<-- [start:customSaveInvoker]
     private ActionResultDTO<MyExample3161DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3161DTO dto) {
         MyEntity3161 entity = repository.findById(bc.getParentIdAsLong()).orElse(null);
         entity.setCustomField("Test data" +  Math.random());
          return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
     }
-
+    // --8<-- [end:customSaveInvoker]
 
 
 }

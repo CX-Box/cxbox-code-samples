@@ -46,15 +46,17 @@ public class MyExample3073Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3073DTO> getActions() {
         return Actions.<MyExample3073DTO>builder()
-                .create().text("Add").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
-                .action("custom save", "Custom Save")
-                .invoker(this::customSave)
-                .add()
+                .create(crt -> crt.text("Add"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
+                .action(act -> act
+                        .action("custom save", "Custom Save")
+                        .invoker(this::customSave)
+                )
                 .build();
     }
     // --8<-- [end:getActions]

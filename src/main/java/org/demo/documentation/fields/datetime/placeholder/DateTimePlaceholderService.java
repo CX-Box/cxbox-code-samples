@@ -38,9 +38,9 @@ public class DateTimePlaceholderService extends
 	@Override
 	public Actions<DateTimePlaceholderDTO> getActions() {
 		return Actions.<DateTimePlaceholderDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

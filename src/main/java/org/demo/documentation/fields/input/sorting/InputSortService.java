@@ -38,9 +38,9 @@ public class InputSortService extends VersionAwareResponseService<InputSortDTO, 
 	@Override
 	public Actions<InputSortDTO> getActions() {
 		return Actions.<InputSortDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

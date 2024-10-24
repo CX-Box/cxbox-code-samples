@@ -28,13 +28,14 @@ public class MyExample3810Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3810DTO> getActions() {
         return Actions.<MyExample3810DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

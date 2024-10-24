@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxNumberRuntimeExController implements EnumBcIdentifier {
 
-	// @formatter:on
+
 
 	numberRuntimeEx(NumberRuntimeExService.class);
 	// --8<-- [end:bc]
-	// @formatter:on
+
 
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberRuntimeExController> Holder = new Holder<>(

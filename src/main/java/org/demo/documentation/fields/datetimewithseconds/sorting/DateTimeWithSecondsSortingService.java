@@ -45,9 +45,9 @@ public class DateTimeWithSecondsSortingService extends
 	@Override
 	public Actions<DateTimeWithSecondsSortingDTO> getActions() {
 		return Actions.<DateTimeWithSecondsSortingDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

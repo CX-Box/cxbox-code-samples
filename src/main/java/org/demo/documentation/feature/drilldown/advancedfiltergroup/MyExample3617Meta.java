@@ -16,7 +16,8 @@ import java.net.URLEncoder;
 @Service
 public class MyExample3617Meta extends FieldMetaBuilder<MyExample3617DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3617DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3617DTO_.customFieldDrillDown);
@@ -43,7 +44,7 @@ public class MyExample3617Meta extends FieldMetaBuilder<MyExample3617DTO> {
         // --8<-- [end:url]
 
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3617DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3617DTO_.customFieldDrillDown);

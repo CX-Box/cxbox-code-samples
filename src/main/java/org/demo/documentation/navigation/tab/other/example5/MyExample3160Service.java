@@ -50,12 +50,14 @@ public class MyExample3160Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3160DTO> getActions() {
         return Actions.<MyExample3160DTO>builder()
-                .action("refreshParent", "refresh Parent bc")
-                .invoker(this::customSaveInvoker)
-                .add()
+                .action(act -> act
+                        .action("refreshParent", "refresh Parent bc")
+                        .invoker(this::customSaveInvoker)
+                )
 
                 .build();
     }

@@ -38,9 +38,9 @@ public class DateDrillDownService extends VersionAwareResponseService<DateDrillD
 	@Override
 	public Actions<DateDrillDownDTO> getActions() {
 		return Actions.<DateDrillDownDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

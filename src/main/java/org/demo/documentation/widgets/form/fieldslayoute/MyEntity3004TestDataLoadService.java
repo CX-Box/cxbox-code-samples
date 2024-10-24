@@ -28,6 +28,10 @@ public class MyEntity3004TestDataLoadService {
                 .setCustomField4("Test data")
                 .setCustomField5("Test data")
                 .setCustomField6("Test data")
+                .setCustomField7("Test data")
+                .setCustomField8("Test data")
+                .setCustomField9("Test data")
+                .setCustomField10("Test data")
         );
     }
 

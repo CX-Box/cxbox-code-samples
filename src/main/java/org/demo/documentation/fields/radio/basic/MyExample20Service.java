@@ -40,9 +40,9 @@ public class MyExample20Service extends VersionAwareResponseService<MyExample20D
 	@Override
 	public Actions<MyExample20DTO> getActions() {
 		return Actions.<MyExample20DTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

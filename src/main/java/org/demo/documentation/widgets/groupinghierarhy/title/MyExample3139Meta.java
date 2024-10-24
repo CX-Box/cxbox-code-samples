@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3139Meta extends FieldMetaBuilder<MyExample3139DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3139DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnumValues(MyExample3139DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
@@ -20,7 +21,7 @@ public class MyExample3139Meta extends FieldMetaBuilder<MyExample3139DTO> {
         fields.setEnabled(MyExample3139DTO_.customField);
         fields.setRequired(MyExample3139DTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3139DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.setEnumFilterValues(fields, MyExample3139DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());

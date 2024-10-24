@@ -38,9 +38,9 @@ public class DateCreateEditService extends VersionAwareResponseService<DateCreat
 	@Override
 	public Actions<DateCreateEditDTO> getActions() {
 		return Actions.<DateCreateEditDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -35,37 +35,39 @@ public class MyExample3075Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3075DTO> getActions() {
         return Actions.<MyExample3075DTO>builder()
-                .action("finish", "Save and Close")
-                .invoker((bc, dto) -> {
-                    MyEntity3075 myEntity = repository.getById(bc.getIdAsLong());
-                    repository.save(myEntity);
-                    return new ActionResultDTO<MyExample3075DTO>().setAction(
-                            PostAction.drillDown(
-                                    DrillDownType.INNER,
-                                    "/screen/myexample3075/view/myexample3075list"
-                            ));
-                })
-                .add()
+                .action(act -> act
+                        .action("finish", "Save and Close")
+                        .invoker((bc, dto) -> {
+                            MyEntity3075 myEntity = repository.getById(bc.getIdAsLong());
+                            repository.save(myEntity);
+                            return new ActionResultDTO<MyExample3075DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3075/view/myexample3075list"
+                                    ));
+                        })
+                )
                 .addGroup(
                         "actions",
                         "Actions",
                         0,
                         Actions.<MyExample3075DTO>builder()
-                                .newAction()
-                                .action("edit", "Edit")
-                                .withoutAutoSaveBefore()
-                                .invoker((bc, data) -> {
-                                    return new ActionResultDTO<MyExample3075DTO>()
-                                            .setAction(PostAction.drillDown(
-                                                    DrillDownType.INNER,
-                                                    "/screen/myexample3075/view/myexample3075form/"
-                                                            + CxboxMyExample3075Controller.myexample3075 + "/"
-                                                            + bc.getId()
-                                            ));
-                                }).add().build()
+                                .action(act -> act
+                                        .action("edit", "Edit")
+                                        .withoutAutoSaveBefore()
+                                        .invoker((bc, data) -> {
+                                            return new ActionResultDTO<MyExample3075DTO>()
+                                                    .setAction(PostAction.drillDown(
+                                                            DrillDownType.INNER,
+                                                            "/screen/myexample3075/view/myexample3075form/"
+                                                                    + CxboxMyExample3075Controller.myexample3075 + "/"
+                                                                    + bc.getId()
+                                                    ));
+                                        })).build()
                 )
                 .build();
     }

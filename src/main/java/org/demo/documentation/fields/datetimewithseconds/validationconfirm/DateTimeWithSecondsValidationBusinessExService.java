@@ -48,10 +48,10 @@ public class DateTimeWithSecondsValidationBusinessExService extends
 	@Override
 	public Actions<DateTimeWithSecondsValidationBusinessExDTO> getActions() {
 		return Actions.<DateTimeWithSecondsValidationBusinessExDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.withPreAction(PreAction.confirm("You want to save the value ?"))
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                        .withPreAction(PreAction.confirm("You want to save the value ?"))
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

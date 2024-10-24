@@ -61,12 +61,13 @@ public class MyExample3063Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3063DTO> getActions() {
         return Actions.<MyExample3063DTO>builder()
-                .create().text("Add").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
-                .action("custom save", "Custom Save")
-                .invoker(this::customSave)
-                .add()
+                .create(crt -> crt.text("Add"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
+                .action(act -> act
+                        .action("custom save", "Custom Save")
+                        .invoker(this::customSave)
+                )
                 .build();
     }
     // --8<-- [end:getActions]

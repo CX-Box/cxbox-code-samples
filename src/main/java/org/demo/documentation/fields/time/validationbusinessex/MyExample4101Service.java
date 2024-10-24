@@ -30,13 +30,14 @@ public class MyExample4101Service extends VersionAwareResponseService<MyExample4
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4101DTO> getActions() {
         return Actions.<MyExample4101DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

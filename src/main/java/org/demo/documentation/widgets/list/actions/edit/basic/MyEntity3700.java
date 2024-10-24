@@ -17,4 +17,6 @@ public class MyEntity3700 extends BaseEntity {
 
     @Column
     private String customField;
+    @Column
+    private String customFieldText;
 }

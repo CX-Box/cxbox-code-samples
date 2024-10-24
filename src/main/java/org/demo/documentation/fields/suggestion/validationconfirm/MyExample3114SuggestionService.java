@@ -27,14 +27,15 @@ public class MyExample3114SuggestionService extends AnySourceVersionAwareRespons
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3114SuggestionDTO> getActions() {
         return Actions.<MyExample3114SuggestionDTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
 
-
+     // --8<-- [end:getActions]  
 }

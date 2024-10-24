@@ -45,13 +45,14 @@ public class MyExample300Service extends VersionAwareResponseService<MyExample30
     }
     // --8<-- [end:doUpdateEntity]
 
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample300DTO> getActions() {
         return Actions.<MyExample300DTO>builder()
-                .newAction()
-                .action("save", "save")
-                .add()
+                .action(act -> act
+                        .action("save", "save")
+                )
                 .build();
     }
-
+     // --8<-- [end:getActions]  
 }

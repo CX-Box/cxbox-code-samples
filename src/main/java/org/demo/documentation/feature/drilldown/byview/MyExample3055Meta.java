@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class MyExample3055Meta extends FieldMetaBuilder<MyExample3055DTO> {
 
     @Override
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3055DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setDrilldown(
@@ -19,7 +20,7 @@ public class MyExample3055Meta extends FieldMetaBuilder<MyExample3055DTO> {
                 "/screen/myexample32352/view/myexample3235thirdleveltab21/myexample3235"
         );
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3055DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableSort(MyExample3055DTO_.customField);

@@ -47,13 +47,14 @@ public class MyEntity3663MultivalueService extends VersionAwareResponseService<M
         return contactDTOActionResultDTO;
     }
 
+     // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3663MultivalueDTO> getActions() {
         return Actions.<MyEntity3663MultivalueDTO>builder()
-                .create().text("Add").add()
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
 }

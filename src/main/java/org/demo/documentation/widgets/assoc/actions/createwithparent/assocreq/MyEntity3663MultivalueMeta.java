@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3663MultivalueMeta extends FieldMetaBuilder<MyEntity3663MultivalueDTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3663MultivalueDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyEntity3663MultivalueDTO_.id);
         fields.setEnabled(MyEntity3663MultivalueDTO_.customField);
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3663MultivalueDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {

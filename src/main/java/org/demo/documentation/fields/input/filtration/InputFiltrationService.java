@@ -42,9 +42,9 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 	@Override
 	public Actions<InputFiltrationDTO> getActions() {
 		return Actions.<InputFiltrationDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

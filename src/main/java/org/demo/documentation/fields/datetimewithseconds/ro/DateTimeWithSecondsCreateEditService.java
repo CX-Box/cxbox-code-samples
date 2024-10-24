@@ -45,9 +45,9 @@ public class DateTimeWithSecondsCreateEditService extends
 	@Override
 	public Actions<DateTimeWithSecondsCreateEditDTO> getActions() {
 		return Actions.<DateTimeWithSecondsCreateEditDTO>builder()
-				.newAction()
-				.action("save", "save")
-				.add()
+                .action(act -> act
+                        .action("save", "save")
+                )
 				.build();
 	}
 	// --8<-- [end:getActions]

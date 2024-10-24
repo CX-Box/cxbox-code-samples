@@ -23,6 +23,8 @@ import java.util.List;
 @NoArgsConstructor
 public class MyEntity3040 extends BaseEntity {
     @Column
+    private String customFieldText;
+    @Column
     private String customField;
     @JoinTable(name = "MyEntity3040_MyEntity3040Multi",
             joinColumns = @JoinColumn(name = "MyEntity3040_id"),

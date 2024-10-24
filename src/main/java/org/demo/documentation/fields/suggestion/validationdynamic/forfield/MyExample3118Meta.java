@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3118Meta extends FieldMetaBuilder<MyExample3118DTO> {
 
-    @Override
+    @Override  
+   // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3118DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3118DTO_.customField);
@@ -17,7 +18,7 @@ public class MyExample3118Meta extends FieldMetaBuilder<MyExample3118DTO> {
         fields.setPlaceholder(MyExample3118DTO_.customField, "Only letters");
         fields.setPlaceholder(MyExample3118DTO_.customFieldAdditional, "Only letters");
     }
-
+   // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3118DTO> fields, InnerBcDescription bcDescription, Long parentId) {
     }
