@@ -1,19 +1,23 @@
 {
-  "name": "MyExample62Form",
-  "title": "Form title",
-  "type": "Form",
-  "bc": "myExampleBc62",
+  "name": "MyExample3151GH",
+  "title": "GroupingHierarchy widget",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3151",
   "fields": [
     {
-      "label": "Custom Field",
+      "label": "customField",
       "key": "customField",
       "digits": 2,
       "type": "money",
-      "drillDown": "true",
-      "currency": "₽"
+      "currencyKey": "customFieldCurrency"
     }
   ],
   "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldCurrency"
+      ]
+    },
     "layout": {
       "rows": [
         {

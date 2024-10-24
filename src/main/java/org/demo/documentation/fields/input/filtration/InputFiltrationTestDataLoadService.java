@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class InputFiltrationTestDataLoadService {
 
 	@Autowired
-    InputPlaceholderRepository repository;
+	InputFiltrationRepository repository;
 
 	@Autowired
 	InternalAuthorizationService authzService;
@@ -22,7 +22,13 @@ public class InputFiltrationTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new InputPlaceholder().setCustomField(""));
+		repository.save(new InputFiltration().setCustomField("Test data1"));
+		repository.save(new InputFiltration().setCustomField("Test data2"));
+		repository.save(new InputFiltration().setCustomField("Test data3"));
+		repository.save(new InputFiltration().setCustomField("Test data4"));
+		repository.save(new InputFiltration().setCustomField("Test data5"));
+		repository.save(new InputFiltration().setCustomField("Test data6"));
+		repository.save(new InputFiltration().setCustomField("Test data7"));
 	}
 
 }
