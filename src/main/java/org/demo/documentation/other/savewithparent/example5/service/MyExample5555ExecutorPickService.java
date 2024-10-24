@@ -8,7 +8,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.cxbox.core.service.action.ActionsBuilder;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
@@ -46,32 +45,23 @@ public class MyExample5555ExecutorPickService extends VersionAwareResponseServic
 
 	@Override
 	public Actions<ExecutorDTO> getActions() {
-		ActionsBuilder<ExecutorDTO> builder = Actions.builder();
-		builder.action("save", "Add").add();
+		return Actions.<ExecutorDTO>builder()
+				.create(crt -> crt.text("Add").scope(ActionScope.BC))
+				.delete(del -> del.text("Delete").scope(ActionScope.BC))
+				.save(save -> save.text("Save").scope(ActionScope.BC))
+				.action(act -> act
+						.action("nextExecutor", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<ExecutorDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												EXECUTOR
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore())
+				.build();
 
-		builder.create()
-				.text("Add")
-				.withAutoSaveBefore()
-				.add();
-
-		builder
-				.delete()
-				.text("Delete")
-				.add();
-
-		builder.action("nextExecutor", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<ExecutorDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										EXECUTOR
-								))
-				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add();
-
-		return builder.build();
 	}
 
 
