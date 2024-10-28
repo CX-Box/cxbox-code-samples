@@ -6,6 +6,7 @@ import CoreNumberInput from '../../../fields/NumberInput/CoreNumberInput'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { interfaces } from '@cxbox-ui/core'
 import { AppMoneyFieldMeta } from '@interfaces/widget'
+import CurrencySelect from '../../../fields/NumberInput/CurrencySelect/CurrencySelect'
 import styles from './MoneyFilter.less'
 
 interface MoneyFilterProps {
@@ -23,7 +24,7 @@ export const MoneyFilter = ({ value, bcName, onChange, meta }: MoneyFilterProps)
     const localCurrencyValue = useAppSelector(state => state.screen.bo.bc[bcName]?.localFilterValues?.[currencyKey]) as string[]
     const activeCurrencyFilter = useAppSelector(state => state.screen.filters[bcName]?.find(item => item.fieldName === currencyKey))
     const rowMeta = useAppSelector(state => bcName && bcUrl && state.view.rowMeta[bcName]?.[bcUrl])
-    const rowFieldMeta = (rowMeta as interfaces.RowMeta)?.fields.find(field => field.key === currencyKey)
+    const rowFieldMetaCurrency = (rowMeta as interfaces.RowMeta)?.fields.find(field => field.key === currencyKey)
 
     const handleChangeCurrency = useCallback(
         (item: string | string[]) => {
@@ -38,6 +39,18 @@ export const MoneyFilter = ({ value, bcName, onChange, meta }: MoneyFilterProps)
         [bcName, dispatch, currencyKey]
     )
 
+    const currencyComponent = currencyKey ? (
+        <CurrencySelect
+            currency={localCurrencyValue}
+            currencyValues={rowFieldMetaCurrency?.filterValues}
+            disabled={!rowFieldMetaCurrency?.filterable}
+            multiple={true}
+            onChangeCurrency={handleChangeCurrency}
+        />
+    ) : (
+        meta.currency
+    )
+
     useEffect(() => {
         handleChangeCurrency(activeCurrencyFilter?.value as string[])
     }, [activeCurrencyFilter?.value, handleChangeCurrency])
@@ -48,14 +61,11 @@ export const MoneyFilter = ({ value, bcName, onChange, meta }: MoneyFilterProps)
                 meta={meta}
                 value={value}
                 type={NumberTypes.money}
-                currency={currencyKey ? localCurrencyValue : meta.currency}
-                currencyValues={rowFieldMeta?.filterValues}
+                currencyComponent={currencyComponent}
                 digits={meta.digits}
                 nullable={meta.nullable}
                 forceFocus={true}
-                multipleCurrency={true}
                 onChange={onChange}
-                onChangeCurrency={handleChangeCurrency}
             />
         </div>
     )
