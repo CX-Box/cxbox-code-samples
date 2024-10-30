@@ -1,0 +1,43 @@
+{
+  "name": "MyExample3151FormLine",
+  "title": "List",
+  "type": "Form",
+  "bc": "myexample3151",
+  "fields": [
+    {
+      "label": "Custom Field Currency",
+      "key": "customFieldCurrency",
+      "type": "dictionary",
+      "hidden": true
+    },
+    {
+      "label": "customField",
+      "key": "customField",
+      "digits": 2,
+      "type": "money",
+      "currencyKey": "customFieldCurrency"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+

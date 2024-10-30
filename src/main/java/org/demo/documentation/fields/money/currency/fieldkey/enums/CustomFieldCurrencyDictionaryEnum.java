@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldCurrencyDictionaryEnum {
-    DOLLAR("Dollar"),
-    RUBLE("Ruble"),
-    EURO("Euro"),
-	FORINT("Forint"),
-	PS("Pound sterling"),
-	DK("Danish krone");
+    DOLLAR("USD"),
+    RUBLE("RUB"),
+    EURO("EUR"),
+	FORINT("HUF"),
+	PS("GBP"),
+	DK("DKK");
 
     @JsonValue
     private final String value;
