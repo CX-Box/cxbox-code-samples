@@ -5,6 +5,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel.MyExample3164DTO_;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel.enums.CustomFieldDictionaryLevelTwoEnum;
 import org.springframework.stereotype.Service;
@@ -31,30 +32,17 @@ public class MyExample3157Meta extends FieldMetaBuilder<MyExample3157DTO> {
         fields.enableFilter(MyExample3157DTO_.customFieldDictionaryLevelTwo);
         fields.setEnumFilterValues(fields, MyExample3157DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample3157DTO_.customFieldDictionary);
-
         fields.defaultGroupingHierarchy(
                 MyExample3157DTO_.customFieldDictionary,
                 MyExample3157DTO_.customFieldDictionaryLevelTwo,
-                Set.of(
-                        Level.builder(
-                                CustomFieldDictionaryEnum.LEVEL_1_HIGH,
-                                Set.of(
-                                        Level.builder(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).build()
-                                )).build(),
-                        Level.builder(
-                                CustomFieldDictionaryEnum.LEVEL_1_MIDDLE,
-                                Set.of(
-                                        Level.builder(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_HIGH).build()
-                                )
-                        ).build(),
-                        Level.builder(
-                                        CustomFieldDictionaryEnum.LEVEL_1_MIDDLE,
-                                        new HashSet<Level<CustomFieldDictionaryLevelTwoEnum, ?>>()
-                                )
-                                .build()
-                )
+                lvl -> lvl
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_HIGH,
+                                lvl2 -> lvl2
+                                        .add(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE)
+                                        .add(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_HIGH)
+                        )
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE)
         );
-
     }
 
 }

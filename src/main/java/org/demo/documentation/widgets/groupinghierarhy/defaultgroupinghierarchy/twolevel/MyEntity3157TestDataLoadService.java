@@ -22,16 +22,11 @@ public class MyEntity3157TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-      /*  repository.save(new MyEntity3157().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW));
-        repository.save(new MyEntity3157().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW));
-        repository.save(new MyEntity3157().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE));
+        repository.save(new MyEntity3157().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE));
+        repository.save(new MyEntity3157().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE));
+        repository.save(new MyEntity3157().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE));
         repository.save(new MyEntity3157().setCustomField("test data3").setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW));
-        repository.save(new MyEntity3157().setCustomField("test data4").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW));
         repository.save(new MyEntity3157().setCustomField("test data5"));
-        repository.save(new MyEntity3157().setCustomField("test data6").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_HIGH));
-        repository.save(new MyEntity3157().setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_HIGH));
-        repository.save(new MyEntity3157().setCustomField("test data8").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH));
-    */
     }
 
 }

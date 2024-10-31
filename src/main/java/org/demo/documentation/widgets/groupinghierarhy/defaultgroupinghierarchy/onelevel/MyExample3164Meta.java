@@ -1,14 +1,11 @@
 package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel;
 
-import org.cxbox.api.data.dto.hierarhy.grouping.Level;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class MyExample3164Meta extends FieldMetaBuilder<MyExample3164DTO> {
@@ -27,10 +24,9 @@ public class MyExample3164Meta extends FieldMetaBuilder<MyExample3164DTO> {
         fields.enableFilter(MyExample3164DTO_.customFieldDictionary);
         fields.defaultGroupingHierarchy(
                 MyExample3164DTO_.customFieldDictionary,
-                Set.of(
-                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_HIGH).build(),
-                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).build()
-                ));
+                lvl -> lvl
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_HIGH)
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
     }
 
 }
