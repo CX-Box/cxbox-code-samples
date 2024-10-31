@@ -21,13 +21,14 @@ public class MyEntity3155TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3155().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
-        repository.save(new MyEntity3155().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
-        repository.save(new MyEntity3155().setCustomField("test data3"));
-        repository.save(new MyEntity3155().setCustomField("test data4").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
-        repository.save(new MyEntity3155().setCustomField("test data5"));
-        repository.save(new MyEntity3155().setCustomField("test data6").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH));
-
+        //repository.save(new MyEntity3155().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
+        //repository.save(new MyEntity3155().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
+        //repository.save(new MyEntity3155().setCustomField("test data3"));
+        //repository.save(new MyEntity3155().setCustomField("test data4").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
+        //repository.save(new MyEntity3155().setCustomField("test data5"));
+        //repository.save(new MyEntity3155().setCustomField("test data6").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH));
+        //repository.save(new MyEntity3155().setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
+        //repository.save(new MyEntity3155().setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH));
     }
 
 }

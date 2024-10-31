@@ -28,10 +28,9 @@ public class MyExample3155Meta extends FieldMetaBuilder<MyExample3155DTO> {
         fields.defaultGroupingHierarchy(
                 MyExample3155DTO_.customFieldDictionary,
                 Set.of(
-                        Level.builder(
-                                CustomFieldDictionaryEnum.LEVEL_1_HIGH
-                        ).build())
-        );
+                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_HIGH).build(),
+                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).build()
+                ));
     }
 
 }

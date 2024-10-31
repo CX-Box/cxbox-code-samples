@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldDictionaryLevelTwoEnum {
-    HIGH("High"),
-    MIDDLE("Middle"),
-    LOW("Low");
+    LEVEL_2_HIGH("Level 2 High"),
+    LEVEL_2_MIDDLE("Level 2 Middle"),
+    LEVEL_2_LOW("Level 2 Low");
 
     @JsonValue
     private final String value;

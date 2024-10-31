@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryLevelThreeEnum;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryLevelTwoEnum;
 
 
 @Entity
@@ -21,4 +23,10 @@ public class MyEntity3165 extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldDictionaryEnum customFieldDictionary;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldDictionaryLevelThreeEnum customFieldDictionaryLevelThree;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldDictionaryLevelTwoEnum customFieldDictionaryLevelTwo;
 }
