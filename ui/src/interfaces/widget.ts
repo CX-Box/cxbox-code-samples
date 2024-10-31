@@ -173,10 +173,9 @@ export type FileUploadFieldMeta = CoreFileUploadFieldMeta & {
 }
 
 export type WidgetField = CoreWidgetField | FileUploadFieldMeta
-
-export type AppMoneyFieldMeta = interfaces.NumberFieldMeta & {
+// todo нужно ли вынести в cxbox-ui?
+export type AppNumberFieldMeta = interfaces.NumberFieldMeta & {
     currency?: string
-    currencyKey?: string
 }
 
 export const enum ETitleMode {

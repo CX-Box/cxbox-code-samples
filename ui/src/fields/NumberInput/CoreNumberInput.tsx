@@ -3,7 +3,6 @@ import { Input } from 'antd'
 import { InputProps } from 'antd/es/input'
 import { fractionsRound, NumberInputFormat, NumberTypes } from './formaters'
 import ReadOnlyField from '../../components/ui/ReadOnlyField/ReadOnlyField'
-import CurrencySelect from './CurrencySelect/CurrencySelect'
 import { BaseFieldProps } from '@cxboxComponents/Field/Field'
 import styles from './CoreNumberInput.less'
 
@@ -15,11 +14,7 @@ export interface CoreNumberInputProps extends BaseFieldProps {
     type: NumberTypes
     maxInput?: number
     forceFocus?: boolean
-    currency?: string | string[]
-    currencyValues?: Array<{ value: string }>
-    currencyDisabled?: boolean
-    multipleCurrency?: boolean
-    onChangeCurrency?: (currency: string | string[]) => void
+    currency?: string
 }
 
 /**
@@ -28,20 +23,10 @@ export interface CoreNumberInputProps extends BaseFieldProps {
  * @category Components
  */
 const CoreNumberInput: React.FunctionComponent<CoreNumberInputProps> = props => {
-    const {
-        type,
-        value,
-        currency,
-        currencyValues,
-        currencyDisabled,
-        multipleCurrency,
-        digits,
-        nullable,
-        maxInput,
-        onChange,
-        onChangeCurrency
-    } = props
+    const { type, value, digits, nullable, maxInput, onChange } = props
     const inputRef = React.useRef<Input>(null)
+
+    const currency = type === NumberTypes.money && props.currency
 
     const getDisplayedValueText = React.useCallback(
         (newValue?: number): string => {
@@ -144,17 +129,7 @@ const CoreNumberInput: React.FunctionComponent<CoreNumberInputProps> = props => 
             backgroundColor: props.backgroundColor || '#fff'
         },
         className: styles.container,
-        addonAfter: currencyValues?.length ? (
-            <CurrencySelect
-                disabled={currencyDisabled}
-                currency={currency}
-                currencyValues={currencyValues}
-                multiple={multipleCurrency}
-                onChangeCurrency={onChangeCurrency}
-            />
-        ) : (
-            currency
-        ),
+        addonAfter: currency,
         onChange: handleOnChange,
         onBlur: handleOnBlur,
         onFocus: handleOnFocus,
