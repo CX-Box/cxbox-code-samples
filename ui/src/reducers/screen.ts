@@ -1,4 +1,4 @@
-import { BcMetaState, DataValue, interfaces, reducers } from '@cxbox-ui/core'
+import { BcMetaState, interfaces, reducers } from '@cxbox-ui/core'
 import { actions, changeMenuCollapsed, customAction, sendOperationSuccess } from '@actions'
 import { createReducer, isAnyOf } from '@reduxjs/toolkit'
 import { FilterGroup } from '@interfaces/filters'
@@ -7,13 +7,7 @@ export interface ScreenState extends interfaces.ScreenState {
     menuCollapsed: boolean
     bo: {
         activeBcName: string
-        bc: Record<
-            string,
-            BcMetaState & {
-                filterGroups?: FilterGroup[]
-                localFilterValues?: Record<string, DataValue | DataValue[]>
-            }
-        >
+        bc: Record<string, BcMetaState & { filterGroups?: FilterGroup[] }>
     }
     pagination: { [bcName: string]: { limit?: number } }
 }
@@ -71,15 +65,6 @@ const screenReducerBuilder = reducers
 
         state.bo.bc[bcName] = state.bo.bc[bcName] ?? {}
         state.bo.bc[bcName].loading = false
-    })
-    .addCase(actions.setLocalFilterValue, (state, action) => {
-        const { bcName, fieldKey, value } = action.payload
-
-        if (value?.toString()) {
-            state.bo.bc[bcName].localFilterValues = { [fieldKey]: value }
-        } else {
-            delete state.bo.bc[bcName].localFilterValues?.[fieldKey]
-        }
     })
     .addMatcher(isAnyOf(actions.selectScreen), (state, action) => {
         // временное решение чтобы сохранялся лимит при сменен экранов
