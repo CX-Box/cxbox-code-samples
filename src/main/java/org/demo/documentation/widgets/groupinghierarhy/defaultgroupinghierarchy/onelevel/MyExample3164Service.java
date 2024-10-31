@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel;
+package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -25,6 +25,7 @@ public class MyExample3164Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3164DTO> doUpdateEntity(MyEntity3164 entity, MyExample3164DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3164DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
         if (data.isFieldChanged(MyExample3164DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel.enums;
+package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel.enums;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldDictionaryEnum {
-	LEVEL_1_HIGH("Level 1 High"),
+    LEVEL_1_HIGH("Level 1 High"),
 	LEVEL_1_MIDDLE("Level 1 Middle"),
 	LEVEL_1_LOW("Level 1 Low");
 

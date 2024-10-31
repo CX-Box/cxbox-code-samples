@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel;
+package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

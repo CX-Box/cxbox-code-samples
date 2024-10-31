@@ -15,7 +15,7 @@ import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3155 extends BaseEntity {
+public class MyEntity3164 extends BaseEntity {
     @Column
     private String customField;
     @Enumerated(value = EnumType.STRING)

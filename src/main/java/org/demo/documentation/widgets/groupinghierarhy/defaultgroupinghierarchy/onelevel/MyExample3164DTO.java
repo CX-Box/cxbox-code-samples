@@ -12,14 +12,14 @@ import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3155DTO extends DataResponseDTO {
+public class MyExample3164DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
 
-    public MyExample3155DTO(MyEntity3155 entity) {
+    public MyExample3164DTO(MyEntity3164 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();

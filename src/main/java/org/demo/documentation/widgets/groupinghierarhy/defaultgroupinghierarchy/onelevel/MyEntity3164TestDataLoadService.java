@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel;
+package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;

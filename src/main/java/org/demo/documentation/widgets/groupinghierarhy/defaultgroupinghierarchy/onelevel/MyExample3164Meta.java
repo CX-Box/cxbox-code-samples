@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class MyExample3155Meta extends FieldMetaBuilder<MyExample3155DTO> {
+public class MyExample3164Meta extends FieldMetaBuilder<MyExample3164DTO> {
 
     @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3155DTO> fields, InnerBcDescription bcDescription,
+    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3164DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnumValues(MyExample3155DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.setEnabled(MyExample3155DTO_.customFieldDictionary);
-        fields.setEnabled(MyExample3155DTO_.customField);
+        fields.setEnumValues(MyExample3164DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+        fields.setEnabled(MyExample3164DTO_.customFieldDictionary);
+        fields.setEnabled(MyExample3164DTO_.customField);
     }
 
     @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3155DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.setEnumFilterValues(fields, MyExample3155DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.enableFilter(MyExample3155DTO_.customFieldDictionary);
+    public void buildIndependentMeta(FieldsMeta<MyExample3164DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.setEnumFilterValues(fields, MyExample3164DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+        fields.enableFilter(MyExample3164DTO_.customFieldDictionary);
         fields.defaultGroupingHierarchy(
-                MyExample3155DTO_.customFieldDictionary,
+                MyExample3164DTO_.customFieldDictionary,
                 Set.of(
                         Level.builder(CustomFieldDictionaryEnum.LEVEL_1_HIGH).build(),
                         Level.builder(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).build()
