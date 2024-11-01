@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel;
 
-import org.cxbox.api.data.dto.hierarhy.grouping.Level;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
@@ -42,10 +41,10 @@ public class MyExample3155Meta extends FieldMetaBuilder<MyExample3155DTO> {
         fields.enableFilter(MyExample3155DTO_.customFieldDictionary);
         fields.defaultGroupingHierarchy(
                 MyExample3155DTO_.customFieldDictionary,
-                Set.of(
-                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_HIGH).build(),
-                        Level.builder(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).build()
-                ));
+                lvl -> lvl.add(CustomFieldDictionaryEnum.LEVEL_1_HIGH,
+                                lvl2->lvl2.add(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE))
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE)
+        );
     }
 
 }

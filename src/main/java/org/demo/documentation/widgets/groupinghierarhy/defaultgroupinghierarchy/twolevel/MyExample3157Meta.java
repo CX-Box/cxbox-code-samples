@@ -1,17 +1,12 @@
 package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel;
 
-import org.cxbox.api.data.dto.hierarhy.grouping.Level;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.onelevel.MyExample3164DTO_;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel.enums.CustomFieldDictionaryLevelTwoEnum;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class MyExample3157Meta extends FieldMetaBuilder<MyExample3157DTO> {

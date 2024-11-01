@@ -1,13 +1,11 @@
 package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fivelevel;
 
-import org.cxbox.api.data.dto.hierarhy.grouping.HierarchyBuilder;
-import org.cxbox.api.data.dto.hierarhy.grouping.Level;
+import org.cxbox.api.data.dto.hierarhy.grouping.Hierarchy;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fivelevel.enums.*;
-import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.MyExample3165DTO_;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,30 +42,13 @@ public class MyExample3158Meta extends FieldMetaBuilder<MyExample3158DTO> {
         fields.enableFilter(MyExample3158DTO_.customFieldDictionaryLevelTwo);
         fields.setEnumFilterValues(fields, MyExample3158DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample3158DTO_.customFieldDictionary);
+        fields.enableSort(MyExample3158DTO_.customFieldDictionaryLevelTwo);
+       /* Hierarchy  hierarchy =  new Hierarchy<>();
+        Hierarchy  hierarchy2 =  new Hierarchy<>();
+        hierarchy.add((Object) CustomFieldDictionaryEnum.LEVEL_1_HIGH,
+                hierarchy2.add(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE));
 
-        Set levels = Set.of(
-                Level.builder(
-                         CustomFieldDictionaryEnum.LEVEL_1_HIGH,
-                        Set.of(
-                                Level.builder(
-                                         CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE,
-                                        Set.of(
-                                                Level.builder(
-                                                          CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE
-                                                ).build()
-                                        )).build()
-                        )).build(),
-                Level.builder(
-                          CustomFieldDictionaryEnum.LEVEL_1_MIDDLE,
-                        Set.of(
-                                Level.builder(
-                                         CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE,
-                                        Set.of(
-                                                Level.builder(
-                                                       CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE
-                                                ).build()
-                                        )).build()
-                        )).build());
+
 
 
         fields.defaultGroupingHierarchy(
@@ -75,7 +56,7 @@ public class MyExample3158Meta extends FieldMetaBuilder<MyExample3158DTO> {
                         MyExample3158DTO_.customFieldDictionaryLevelTwo,
                         MyExample3158DTO_.customFieldDictionaryLevelThree,
                         MyExample3158DTO_.customFieldDictionaryLevelFour,
-                        MyExample3158DTO_.customFieldDictionaryLevelFive), levels);
+                        MyExample3158DTO_.customFieldDictionaryLevelFive), (Hierarchy<?, ?>) levels);*/
     }
 
 }

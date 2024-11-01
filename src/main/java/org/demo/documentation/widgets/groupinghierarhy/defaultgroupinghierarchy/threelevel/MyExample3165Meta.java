@@ -5,6 +5,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fivelevel.MyExample3158DTO_;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryLevelThreeEnum;
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.threelevel.enums.CustomFieldDictionaryLevelTwoEnum;
@@ -36,7 +37,20 @@ public class MyExample3165Meta extends FieldMetaBuilder<MyExample3165DTO> {
         fields.enableFilter(MyExample3165DTO_.customFieldDictionaryLevelThree);
         fields.setEnumFilterValues(fields, MyExample3165DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample3165DTO_.customFieldDictionary);
-
+        fields.enableSort(MyExample3165DTO_.customFieldDictionaryLevelTwo);
+        fields.enableSort(MyExample3165DTO_.customFieldDictionary);
+        fields.enableSort(MyExample3165DTO_.customFieldDictionaryLevelThree);
+        fields.defaultGroupingHierarchy(
+                MyExample3165DTO_.customFieldDictionary,
+                MyExample3165DTO_.customFieldDictionaryLevelTwo,
+                MyExample3165DTO_.customFieldDictionaryLevelThree,
+                lvl -> lvl
+                .add(CustomFieldDictionaryEnum.LEVEL_1_HIGH,
+                        lvl2 -> lvl2
+                                .add( CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE)
+                                .add( CustomFieldDictionaryLevelTwoEnum.LEVEL_2_HIGH)
+                )
+                .add(org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.twolevel.enums.CustomFieldDictionaryEnum.LEVEL_1_MIDDLE)
         fields.defaultGroupingHierarchy(
                 MyExample3165DTO_.customFieldDictionary,
                 MyExample3165DTO_.customFieldDictionaryLevelTwo,
