@@ -26,7 +26,8 @@ public class MyExample3164Meta extends FieldMetaBuilder<MyExample3164DTO> {
                 MyExample3164DTO_.customFieldDictionary,
                 lvl -> lvl
                         .add(CustomFieldDictionaryEnum.LEVEL_1_HIGH)
-                        .add(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
+                        .add(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE)
+        );
     }
 
 }
