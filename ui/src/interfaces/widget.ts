@@ -115,6 +115,7 @@ export interface AppWidgetMeta extends interfaces.WidgetMeta {
             type?: 'nextAndPreviousWihHasNext' | 'nextAndPreviousSmart' | 'nextAndPreviousWithCount'
         }
         groupingHierarchy?: {
+            counterMode?: 'none' | 'always' | 'collapsed'
             fields: string[]
         }
     }
@@ -173,10 +174,6 @@ export type FileUploadFieldMeta = CoreFileUploadFieldMeta & {
 }
 
 export type WidgetField = CoreWidgetField | FileUploadFieldMeta
-// todo нужно ли вынести в cxbox-ui?
-export type AppNumberFieldMeta = interfaces.NumberFieldMeta & {
-    currency?: string
-}
 
 export const enum ETitleMode {
     left = 'left',
