@@ -4,6 +4,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import cn from 'classnames'
 import styles from './CheckboxFilter.less'
 import { interfaces } from '@cxbox-ui/core'
+import { useTranslation } from 'react-i18next'
 
 export interface CheckboxFilterProps {
     title: string
@@ -32,6 +33,8 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = props => {
         props.onChange?.(newValues)
     }
 
+    const { t } = useTranslation()
+
     return (
         <div>
             <li className={cn(styles.listItem, styles.header)}>
@@ -42,7 +45,7 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = props => {
                     checked={props.value?.length === filterValues.length}
                     onChange={handleAll}
                 />
-                {props.title}
+                {props.title ?? t('All')}
             </li>
             <ul className={styles.list}>
                 {filterValues.map((item, index) => {
