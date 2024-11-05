@@ -1,0 +1,45 @@
+{
+  "name": "MyExample3011GH",
+  "title": "GroupingHierarchy Mode default",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3011",
+  "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDictionary",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

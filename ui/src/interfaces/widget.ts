@@ -1,4 +1,4 @@
-import { interfaces, WidgetTypes } from '@cxbox-ui/core'
+import { DictionaryFieldMeta, interfaces, WidgetTypes } from '@cxbox-ui/core'
 import { FileUploadFieldMeta as CoreFileUploadFieldMeta, WidgetField as CoreWidgetField } from '@cxbox-ui/schema'
 import { TableSettingsItem } from '@interfaces/tableSettings'
 
@@ -177,6 +177,15 @@ export type WidgetField = CoreWidgetField | FileUploadFieldMeta
 // todo нужно ли вынести в cxbox-ui?
 export type AppNumberFieldMeta = interfaces.NumberFieldMeta & {
     currency?: string
+}
+
+export const enum EDictionaryMode {
+    default = 'default',
+    icon = 'icon'
+}
+
+export type AppDictionaryFieldMeta = DictionaryFieldMeta & {
+    mode?: EDictionaryMode
 }
 
 export const enum ETitleMode {
