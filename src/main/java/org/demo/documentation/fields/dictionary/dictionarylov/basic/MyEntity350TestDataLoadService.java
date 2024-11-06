@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov;
+package org.demo.documentation.fields.dictionary.dictionarylov.basic;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;

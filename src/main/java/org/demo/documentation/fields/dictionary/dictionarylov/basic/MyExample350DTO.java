@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov;
+package org.demo.documentation.fields.dictionary.dictionarylov.basic;
 
 
 import static org.demo.documentation.fields.dictionary.dictionarylov.AdministeredDictionaryType.REGIONS;
@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LovValueProvider;
+import org.demo.documentation.fields.dictionary.dictionarylov.AdministeredDictionary;
 
 @Getter
 @Setter
