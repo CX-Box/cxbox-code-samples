@@ -26,6 +26,7 @@ public class MyEntity3012PickMeta extends FieldMetaBuilder<MyEntity3012PickDTO> 
         fields.setAllValuesWithIcons(MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.enableFilter(MyEntity3012PickDTO_.customFieldDictionary);
         fields.setEnumFilterValues(fields, MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+        fields.setEnumValues(MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
     }
 
 }

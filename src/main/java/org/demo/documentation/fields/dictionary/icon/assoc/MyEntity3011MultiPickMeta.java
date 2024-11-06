@@ -24,6 +24,7 @@ public class MyEntity3011MultiPickMeta extends FieldMetaBuilder<MyEntity3011Mult
         fields.setAllValuesWithIcons(MyEntity3011MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.enableFilter(MyEntity3011MultiPickDTO_.customFieldDictionary);
         fields.setEnumFilterValues(fields,MyEntity3011MultiPickDTO_.customFieldDictionary,CustomFieldDictionaryEnum.values());
+        fields.setEnumValues(MyEntity3011MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
     }
 
 }
