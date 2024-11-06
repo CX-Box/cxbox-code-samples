@@ -21,7 +21,7 @@ function Dictionary(props: DictionaryProps) {
     const rowFieldMetaValues = useMemo(() => {
         return rowFieldMeta?.values?.map(valuesItem => ({
             ...valuesItem,
-            icon: valuesItem.icon || rowFieldMeta?.allValues?.find(allValuesItem => allValuesItem.value === valuesItem.value)?.icon
+            icon: rowFieldMeta?.allValues?.find(allValuesItem => allValuesItem.value === valuesItem.value)?.icon
         }))
     }, [rowFieldMeta?.allValues, rowFieldMeta?.values])
 

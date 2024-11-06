@@ -35,7 +35,7 @@ export const ColumnFilterControl: React.FC<ColumnFilterControlProps> = props => 
             const rowFieldMeta = props.rowFieldMeta
             const rowFieldMetaFilterValues = rowFieldMeta?.filterValues?.map(item => ({
                 ...item,
-                icon: item.icon || rowFieldMeta?.allValues?.find(allValuesItem => allValuesItem.value === item.value)?.icon
+                icon: rowFieldMeta?.allValues?.find(allValuesItem => allValuesItem.value === item.value)?.icon
             }))
             return (
                 <CheckboxFilter
