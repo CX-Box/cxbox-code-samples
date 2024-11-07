@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov;
+package org.demo.documentation.fields.dictionary.dictionarylov.basic;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

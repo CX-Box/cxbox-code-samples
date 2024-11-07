@@ -13,5 +13,6 @@ public enum IconsEnum implements Icon {
     DOWN("down");
 
     private final String icon;
+
 }
 

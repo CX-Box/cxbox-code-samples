@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov;
+package org.demo.documentation.fields.dictionary.dictionarylov.basic;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

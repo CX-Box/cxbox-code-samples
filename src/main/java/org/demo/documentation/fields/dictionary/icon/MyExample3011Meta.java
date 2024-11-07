@@ -22,19 +22,23 @@ public class MyExample3011Meta extends FieldMetaBuilder<MyExample3011DTO> {
         fields.setEnabled(MyExample3011DTO_.customFieldDictionary);
         fields.setEnabled(MyExample3011DTO_.customField);
     }
+    // --8<-- [end:buildRowDependentMeta]
 
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3011DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3011DTO_.customFieldMultivalueModeIcon);
         fields.enableFilter(MyExample3011DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3011DTO_.customFieldDictionaryInlinePickList);
         fields.enableFilter(MyExample3011DTO_.customFieldPickList);
-        fields.setEnumFilterValues(fields,MyExample3011DTO_.customFieldPickList,CustomFieldDictionaryEnum.values());
-        fields.enableSort(MyExample3011DTO_.customFieldDictionary);
         fields.enableFilter(MyExample3011DTO_.customFieldDictionary);
+        fields.enableSort(MyExample3011DTO_.customFieldDictionary);
+
+        fields.setEnumFilterValues(fields,MyExample3011DTO_.customFieldPickList,CustomFieldDictionaryEnum.values());
         fields.setEnumFilterValues(fields,MyExample3011DTO_.customFieldDictionary,CustomFieldDictionaryEnum.values());
+
         fields.setAllValuesWithIcons(MyExample3011DTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.setEnumValues(MyExample3011DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }
