@@ -14,7 +14,8 @@ import org.cxbox.api.data.dto.rowmeta.Icon;
 @AllArgsConstructor
 public enum CustomFieldDictionaryEnum {
 
-    HIGH("High", IconsEnum.ARROW_UP),
+    HIGH("High", IconsEnum.ARROW_UP_BLUE),
+    UPPER_MIDDLE("Upper middle", IconsEnum.ARROW_UP),
     MIDDLE("Middle", IconsEnum.DOWN),
     LOW("Low", IconsEnum.WATERMELON);
 
