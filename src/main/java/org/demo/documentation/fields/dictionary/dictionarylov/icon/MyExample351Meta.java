@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.fields.dictionary.dictionarylov.basic.MyExample350DTO_;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -23,6 +24,7 @@ public class MyExample351Meta extends FieldMetaBuilder<MyExample351DTO> {
                                       Long id, Long parentId) {;
         fields.setEnabled(MyExample351DTO_.customFieldDictionary);
         fields.setEnabled(MyExample351DTO_.customField);
+        fields.setDictionaryTypeWithAllValues(MyExample351DTO_.customFieldDictionary,REGIONS);
     }
 
     @Override
@@ -36,8 +38,7 @@ public class MyExample351Meta extends FieldMetaBuilder<MyExample351DTO> {
                 REGIONS.lookupName("SYKTYVKAR"), WATERMELON,
                 REGIONS.lookupName("KOSTROMA"), WATERMELON);
         fields.setAllValuesWithIcons(MyExample351DTO_.customFieldDictionary, REGIONS, valueIconMap);
-
-
+        fields.setAllFilterValuesByLovType(MyExample351DTO_.customFieldDictionary, REGIONS);
     }
 
 }
