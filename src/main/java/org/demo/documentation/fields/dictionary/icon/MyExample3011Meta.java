@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3011Meta extends FieldMetaBuilder<MyExample3011DTO> {
 
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3011DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {

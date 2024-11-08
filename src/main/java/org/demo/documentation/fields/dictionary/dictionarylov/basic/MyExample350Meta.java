@@ -6,6 +6,8 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.fields.dictionary.dictionarylov.AdministeredDictionaryType.REGIONS;
+
 @Service
 public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 
@@ -20,7 +22,7 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample350DTO_.customField);
-
+        fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField,REGIONS);
     }
     // --8<-- [end:buildRowDependentMeta]
 
@@ -30,6 +32,7 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
                                      Long parentId) {
         fields.enableFilter(MyExample350DTO_.customField);
         fields.enableSort(MyExample350DTO_.customField);
+        fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
     }
     // --8<-- [end:buildIndependentMeta]
 }
