@@ -2,12 +2,12 @@
 
 login: `demo`, password: `demo`
 
-### Prerequisites:
+## Prerequisites:
 #####
-* java 8+
+* java 17
 * maven 3.6+
-* node.js 14.4+
-* npm 6.14+
+* node.js 18+
+* yarn installed globally (npm install -g yarn / sudo npm install -g yarn)
 * git
 * docker
 * docker-compose
