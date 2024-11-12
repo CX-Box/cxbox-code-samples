@@ -22,7 +22,6 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample350DTO_.customField);
-        fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField,REGIONS);
     }
     // --8<-- [end:buildRowDependentMeta]
 
@@ -30,9 +29,7 @@ public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
-        fields.enableFilter(MyExample350DTO_.customField);
-        fields.enableSort(MyExample350DTO_.customField);
-        fields.setAllFilterValuesByLovType(MyExample350DTO_.customField, REGIONS);
+        fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
     }
     // --8<-- [end:buildIndependentMeta]
 }

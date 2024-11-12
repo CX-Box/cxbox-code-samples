@@ -29,6 +29,7 @@ public class MyExample85Meta extends FieldMetaBuilder<MyExample85DTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample85DTO_.customField);
 		}
+		fields.setEnumValues(MyExample85DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumFilterValues(fields, MyExample85DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample85DTO_.customField);
 	}

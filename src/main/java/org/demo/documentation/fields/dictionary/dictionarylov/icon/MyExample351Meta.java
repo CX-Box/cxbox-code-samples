@@ -26,7 +26,6 @@ public class MyExample351Meta extends FieldMetaBuilder<MyExample351DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample351DTO_.customFieldDictionary);
         fields.setEnabled(MyExample351DTO_.customField);
-        fields.setDictionaryTypeWithAllValues(MyExample351DTO_.customFieldDictionary, REGIONS);
     }
     // --8<-- [end:buildRowDependentMeta]
 
@@ -35,6 +34,7 @@ public class MyExample351Meta extends FieldMetaBuilder<MyExample351DTO> {
     public void buildIndependentMeta(FieldsMeta<MyExample351DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample351DTO_.customFieldDictionary);
         fields.enableSort(MyExample351DTO_.customFieldDictionary);
+        fields.setDictionaryTypeWithAllValues(MyExample351DTO_.customFieldDictionary, REGIONS);
         Map<LOV, Icon> valueIconMap = Map.of(
                 MOSCOW, ARROW_UP,
                 SAINT_PETERBURG, DOWN,
