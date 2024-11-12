@@ -25,6 +25,7 @@ public class MyExample323Meta extends FieldMetaBuilder<MyExample323DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample323DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
+		fields.setEnumValues(MyExample323DTO_.customFieldAdditional);
 	}
 
 }

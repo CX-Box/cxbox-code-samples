@@ -19,7 +19,6 @@ public class MyExample89Meta extends FieldMetaBuilder<MyExample89DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample89DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
-		fields.setEnumValues(MyExample89DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample89DTO_.customField);
 		fields.setRequired(MyExample89DTO_.customField);
 	}
@@ -31,6 +30,7 @@ public class MyExample89Meta extends FieldMetaBuilder<MyExample89DTO> {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample89DTO_.customField);
 		}
+		fields.setEnumValues(MyExample89DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumFilterValues(fields, MyExample89DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample89DTO_.customField);
 	}
