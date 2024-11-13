@@ -18,13 +18,13 @@
       <column name="WIDGET" remarks="Название WIDGET" type="VARCHAR2(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="ORDER_FIELDS" remarks="Последовательность полей" type="VARCHAR2(400 BYTE)">
+      <column name="ORDER_FIELDS" remarks="Последовательность полей" type="CLOB">
         <constraints nullable="false"/>
       </column>
-      <column name="ADDED_TO_ADDITIONAL_FIELDS" remarks="Добавленные поля" type="VARCHAR2(4000 BYTE)">
+      <column name="ADDED_TO_ADDITIONAL_FIELDS" remarks="Добавленные поля" type="CLOB">
         <constraints nullable="false"/>
       </column>
-      <column name="REMOVED_FROM_ADDITIONAL_FIELDS" remarks="Скрытые поля" type="VARCHAR2(4000 BYTE)">
+      <column name="REMOVED_FROM_ADDITIONAL_FIELDS" remarks="Скрытые поля" type="CLOB">
         <constraints nullable="false"/>
       </column>
       <column defaultValueComputed="current_timestamp" name="UPDATED_DATE" remarks="Дата изменения"
