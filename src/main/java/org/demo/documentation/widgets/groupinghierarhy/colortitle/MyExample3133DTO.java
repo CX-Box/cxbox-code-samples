@@ -25,11 +25,11 @@ public class MyExample3133DTO extends DataResponseDTO {
         this.customFieldDictionary = entity.getCustomFieldDictionary();
         this.customFieldDictionaryColor = entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.HIGH ? "#ec5454" :
                 (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.LOW ? "#5af737" :
-                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#c4b50a" : "#3c98cc")
+                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#c4b50a" : "")
                 );
         this.customFieldColor = entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.HIGH ? "#eda6a6" :
                 (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.LOW ? "#b3eda6" :
-                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#ffeb00" : "#6eaacc")
+                        (entity.getCustomFieldDictionary() == CustomFieldDictionaryEnum.MIDDLE ? "#ffeb00" : "")
                 );
     }
 }
