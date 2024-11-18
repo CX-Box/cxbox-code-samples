@@ -1,0 +1,37 @@
+{
+  "name": "MyExample3168GH",
+  "title": "GroupingHierarchy",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3168",
+  "fields": [
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "customField",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "myEntity3168EditForm"
+    },
+    "edit": {
+      "widget": "myEntity3168EditForm"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    },
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    }
+  }
+}
