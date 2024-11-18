@@ -9,14 +9,16 @@ import org.demo.documentation.widgets.groupinghierarhy.actions.create.basic.MyEx
 import org.demo.documentation.widgets.groupinghierarhy.actions.create.newview.MyExample3149Service;
 import org.demo.documentation.widgets.groupinghierarhy.actions.create.withwidget.MyExample3159Service;
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.basic.MyExample3166Service;
+import org.demo.documentation.widgets.groupinghierarhy.actions.edit.newview.MyExample3167Service;
+import org.demo.documentation.widgets.groupinghierarhy.actions.edit.withwidget.MyExample3168Service;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample3166Controller implements EnumBcIdentifier {
 
     // @formatter:on
-    myexample3167(MyExample3159Service.class),
-    myexample3168(MyExample3148Service.class),
+    myexample3167(MyExample3167Service.class),
+    myexample3168(MyExample3168Service.class),
     myexample3166(MyExample3166Service.class);
 
     // @formatter:on

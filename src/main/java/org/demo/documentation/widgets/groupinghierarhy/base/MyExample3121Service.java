@@ -25,6 +25,7 @@ public class MyExample3121Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3121DTO> doUpdateEntity(MyEntity3121 entity, MyExample3121DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3121DTO_.customFieldRadio, entity::setCustomFieldRadio);
 
         if (data.isFieldChanged(MyExample3121DTO_.customFieldCheckbox)) {
             entity.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
@@ -38,7 +39,7 @@ public class MyExample3121Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3121DTO> getActions() {
         return Actions.<MyExample3121DTO>builder()
@@ -49,5 +50,5 @@ public class MyExample3121Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
