@@ -30,4 +30,17 @@
                     '[]', '[]');
         </sql>
     </changeSet>
+
+    <changeSet id="ADD CUSTOMIZATION COLUMN GH" author="cxbox">
+        <sql>
+            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+                                                  removed_from_additional_fields)
+            VALUES (3, '1101075', 'myexample3175gholdfields', 'MyExample3175GHOldFields', '[]',
+                    '["customField","customFieldOld","customFieldDictionary"]', '[]');
+            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+                                                  removed_from_additional_fields)
+            VALUES (4, '1101075', 'myexample3175ghaddfields', 'MyExample3175GHAddedFields', '["customFieldPercent","customFieldDictionary"]',
+                    '[]', '[]');
+        </sql>
+    </changeSet>
 </databaseChangeLog>

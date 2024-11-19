@@ -9,6 +9,7 @@ import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldRadioEnum;
 
 @Getter
 @Setter
@@ -20,11 +21,14 @@ public class MyExample3121DTO extends DataResponseDTO {
     private CustomFieldDictionaryEnum customFieldDictionary;
     @SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
     private Boolean customFieldCheckbox;
+    @SearchParameter(name = "customFieldRadio", provider = EnumValueProvider.class)
+    private CustomFieldRadioEnum customFieldRadio;
 
     public MyExample3121DTO(MyEntity3121 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();
         this.customFieldCheckbox = entity.getCustomFieldCheckbox();
+        this.customFieldRadio = entity.getCustomFieldRadio();
     }
 }

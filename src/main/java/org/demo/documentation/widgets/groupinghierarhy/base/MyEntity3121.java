@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldRadioEnum;
 
 @Entity
 @Getter
@@ -23,4 +24,7 @@ public class MyEntity3121 extends BaseEntity {
     private CustomFieldDictionaryEnum customFieldDictionary;
     @Column
     private Boolean customFieldCheckbox;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldRadioEnum customFieldRadio;
 }
