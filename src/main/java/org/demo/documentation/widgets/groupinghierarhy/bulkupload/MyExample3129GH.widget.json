@@ -1,0 +1,48 @@
+{
+  "name": "MyExample3129GH",
+  "title": "GroupingHierarchy (GH) bulk upload",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3129",
+  "fields": [
+    {
+      "title": "Custom Field FileUpload",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId",
+      "preview": {
+        "enabled": true,
+        "mode": "popup"
+      }
+    },
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "customField",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "associate",
+        "delete"
+      ]
+    }
+  }
+}

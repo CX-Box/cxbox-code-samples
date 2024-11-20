@@ -1,0 +1,39 @@
+{
+  "name": "MyExample3200List",
+  "title": "List",
+  "type": "List",
+  "bc": "myexample3200",
+  "fields": [
+    {
+      "title": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId",
+      "preview": {
+        "enabled": true,
+        "mode": "popup"
+      }
+    },
+    {
+      "title": "customField",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "associate",
+        "delete"
+      ]
+    }
+  }
+}
+
