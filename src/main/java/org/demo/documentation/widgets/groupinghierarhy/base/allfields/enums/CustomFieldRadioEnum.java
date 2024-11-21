@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultexpanded.enums;
+package org.demo.documentation.widgets.groupinghierarhy.base.allfields.enums;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 @Getter
 @AllArgsConstructor
-public enum CustomFieldDictionaryEnum {
+public enum CustomFieldRadioEnum {
     HIGH("High"),
     MIDDLE("Middle"),
     LOW("Low");
@@ -18,8 +18,8 @@ public enum CustomFieldDictionaryEnum {
     @JsonValue
     private final String value;
 
-    public static CustomFieldDictionaryEnum getByValue(@NonNull String value) {
-        return Arrays.stream(CustomFieldDictionaryEnum.values())
+    public static CustomFieldRadioEnum getByValue(@NonNull String value) {
+        return Arrays.stream(CustomFieldRadioEnum.values())
                 .filter(enm -> Objects.equals(enm.getValue(), value))
                 .findFirst()
                 .orElse(null);

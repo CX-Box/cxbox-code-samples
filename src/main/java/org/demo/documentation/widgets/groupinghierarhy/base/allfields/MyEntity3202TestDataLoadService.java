@@ -1,9 +1,9 @@
-package org.demo.documentation.widgets.groupinghierarhy.defaultexpanded;
+package org.demo.documentation.widgets.groupinghierarhy.base.allfields;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.groupinghierarhy.defaultexpanded.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.base.allfields.enums.CustomFieldDictionaryEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
