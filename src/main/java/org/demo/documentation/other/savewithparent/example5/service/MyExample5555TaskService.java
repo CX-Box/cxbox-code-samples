@@ -1,13 +1,17 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
+import lombok.NonNull;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.meta.ui.field.WidgetName;
+import org.demo.conf.cxbox.extention.action.ActionsExt;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
@@ -97,8 +101,27 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 				.add()
 				.delete().text("Delete")
 				.add()
+				.action(act -> act
+						.action("save-send-application", "Save and send on approval")
+						.withPreAction(confirmWithComment("Save and send on approval", "applicationFormPopup"))
+						.invoker((bc, data) -> withApproval())
+				)
+				.action(act -> act
+						.action("save-send-task", "Save and send on approval")
+						.withPreAction(confirmWithComment("Save and send on approval", "taskFormPopup"))
+						.invoker((bc, data) -> withApproval())
+				)
 				.build();
 
+
+	}
+
+	private static PreAction confirmWithComment(@NonNull String actionText, @WidgetName @NonNull String widget) {
+		return ActionsExt.confirmWithCustomWidget(actionText, widget, "Done", "Cancel");
+	}
+
+	private ActionResultDTO<TaskDTO> withApproval() {
+		return new ActionResultDTO<>();
 	}
 
 }
