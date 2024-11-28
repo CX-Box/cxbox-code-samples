@@ -86,4 +86,5 @@ public class MyExample3203Meta extends FieldMetaBuilder<MyExample3203DTO> {
         );
 
     }
+    // --8<-- [end:buildIndependentMeta]
 }
