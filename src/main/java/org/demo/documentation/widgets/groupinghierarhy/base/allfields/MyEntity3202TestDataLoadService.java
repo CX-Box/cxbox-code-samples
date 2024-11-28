@@ -71,7 +71,26 @@ public class MyEntity3202TestDataLoadService {
                 .setCustomFieldFileUpload(file.getData().getName())
                 .setCustomFieldFileUploadId(file.getData().getId())
                 ;
+        MyEntity3202 myEntitynew2 = new MyEntity3202().setCustomField("Test data")
+                .setCustomFieldCheckbox(true)
+                .setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH)
+                .setCustomFieldDateTime(LocalDateTime.now())
+                .setCustomFieldDateTimeWithSeconds(LocalDateTime.now())
+                .setCustomFieldDate(LocalDateTime.now())
+                .setCustomFieldText("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.")
+                .setCustomFieldNumber(7L)
+                .setCustomFieldPercent(9L)
+                .setCustomFieldHint("Test data Hint")
+                .setCustomFieldMoney(10000.0)
+                .setCustomFieldRadio(CustomFieldRadioEnum.LOW)
+                .setCustomFieldPickListEntity(myEntityPick)
+                .setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
+                .setCustomFieldInlineEntity(myEntityPick2)
+                .setCustomFieldFileUpload(file.getData().getName())
+                .setCustomFieldFileUploadId(file.getData().getId())
+                ;
         repository.save(myEntitynew.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
+        repository.save(myEntitynew2);
 
     }
 
