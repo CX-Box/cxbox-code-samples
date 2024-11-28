@@ -29,6 +29,7 @@ public class MyExample3165Meta extends FieldMetaBuilder<MyExample3165DTO> {
 		fields.setEnabled(MyExample3165DTO_.customField);
 	}
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3165DTO> fields, InnerBcDescription bcDescription,
 			Long parentId) {
@@ -75,5 +76,5 @@ public class MyExample3165Meta extends FieldMetaBuilder<MyExample3165DTO> {
 		);
 
 	}
-
+	// --8<-- [end:buildIndependentMeta]
 }
