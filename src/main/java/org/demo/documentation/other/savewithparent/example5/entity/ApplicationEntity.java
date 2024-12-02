@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "feeefredfsfd")
+@Table(name = "APPLICATION_ENTITY")
 public class ApplicationEntity extends BaseEntity {
 
 	@Column
