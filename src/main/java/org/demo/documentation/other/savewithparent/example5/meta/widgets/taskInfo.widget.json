@@ -20,15 +20,22 @@
       "type": "input"
     },
     {
-      "label": "File",
-      "key": "file",
-      "type": "fileUpload",
-      "fileIdKey": "fileId"
+      "label": "Number of documents",
+      "key": "documentCount",
+      "type": "number"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "documentCount",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
@@ -49,14 +56,6 @@
           "cols": [
             {
               "fieldKey": "name",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "file",
               "span": 12
             }
           ]

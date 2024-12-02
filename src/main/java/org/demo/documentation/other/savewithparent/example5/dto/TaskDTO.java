@@ -19,7 +19,7 @@ import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
 public class TaskDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "applicationEntityId.name", provider = LongValueProvider.class)
-	private String applicationEntity;
+	private Long applicationEntityId;
 
 	@SearchParameter
 	private String name;
@@ -48,6 +48,9 @@ public class TaskDTO extends DataResponseDTO {
 	@SearchParameter(name = "executorId.name")
 	private String executorName;
 
+	private Integer documentCount;
+
+	private Integer taskCount;
 	public TaskDTO(Task task) {
 		this.id = task.getId().toString();
 
@@ -59,7 +62,6 @@ public class TaskDTO extends DataResponseDTO {
 		this.name = task.getName();
 		this.importance = task.getImportance();
 		this.status = task.getStatus();
-		this.file = task.getFile();
 		this.comment = task.getComment();
 
 		this.executorId = Optional.ofNullable(task.getExecutorId())
@@ -67,8 +69,10 @@ public class TaskDTO extends DataResponseDTO {
 				.map(String::valueOf)
 				.orElse(null);
 
-		this.applicationEntity = task.getApplicationEntityId().getName();
-		this.fileId = task.getFileId();
+		Optional.ofNullable(task.getApplicationEntityId())
+				.ifPresent(application -> this.applicationEntityId = application.getId());
+		Optional.ofNullable(task.getDocuments())
+				.ifPresent(tasks -> this.documentCount = tasks.size());
 	}
 
 }

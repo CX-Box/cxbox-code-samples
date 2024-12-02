@@ -21,12 +21,13 @@ public class TaskMeta extends FieldMetaBuilder<TaskDTO> {
 		fields.setEnabled(
 				TaskDTO_.name,
 				TaskDTO_.status,
-				TaskDTO_.applicationEntity,
+				TaskDTO_.applicationEntityId,
 				TaskDTO_.importance,
 				TaskDTO_.executorId,
 				TaskDTO_.executorName,
 				TaskDTO_.file,
-				TaskDTO_.comment
+				TaskDTO_.comment,
+				TaskDTO_.documentCount
 		);
 		fields.setRequired(
 				TaskDTO_.name,
@@ -49,7 +50,6 @@ public class TaskMeta extends FieldMetaBuilder<TaskDTO> {
 				TaskDTO_.id,
 				TaskDTO_.status
 		);
-
 		fields.setEnumFilterValues(fields, TaskDTO_.status, StatusEnum.values());
 	}
 

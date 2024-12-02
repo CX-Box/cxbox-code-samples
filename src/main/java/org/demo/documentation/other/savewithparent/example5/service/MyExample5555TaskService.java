@@ -11,16 +11,20 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.meta.ui.field.WidgetName;
+import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.conf.cxbox.extention.action.ActionsExt;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
+import org.demo.documentation.other.savewithparent.example5.entity.Task_;
 import org.demo.documentation.other.savewithparent.example5.meta.TaskMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.ApplicationRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
+import org.demo.documentation.other.savewithparent.example5.repositories.TaskDocumentRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,9 +42,11 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 
 	private final ExecutorRepository executorRepository;
 
+
 	public MyExample5555TaskService(TaskRepository repository,
 			ApplicationRepository applicationRepository,
-			ExecutorRepository executorRepository) {
+			ExecutorRepository executorRepository,
+			TaskDocumentRepository taskDocumentRepository) {
 		super(TaskDTO.class, Task.class, null, TaskMeta.class);
 		this.repository = repository;
 		this.applicationRepository = applicationRepository;
@@ -60,7 +66,6 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 		setIfChanged(data, TaskDTO_.name, entity::setName);
 		setIfChanged(data, TaskDTO_.status, entity::setStatus);
 		setIfChanged(data, TaskDTO_.comment, entity::setComment);
-		setIfChanged(data, TaskDTO_.file, entity::setFile);
 		setIfChanged(data, TaskDTO_.importance, entity::setImportance);
 
 		if (data.isFieldChanged(TaskDTO_.executorId)) {
@@ -103,9 +108,8 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 				.add()
 				.action(act -> act
 						.action("save-send-application", "Save and send on approval")
-						.withPreAction(confirmWithComment("Save and send on approval", "applicationFormPopup"))
-						.invoker((bc, data) -> withApproval())
-				)
+						.withPreAction(confirmWithComment("Save and send on approval", "applicationFormPopupapplicationFormPopup"))
+						.invoker((bc, data) -> withApproval()))
 				.action(act -> act
 						.action("save-send-task", "Save and send on approval")
 						.withPreAction(confirmWithComment("Save and send on approval", "taskFormPopup"))
@@ -122,6 +126,15 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 
 	private ActionResultDTO<TaskDTO> withApproval() {
 		return new ActionResultDTO<>();
+	}
+
+	@Override
+	protected Specification<Task> getParentSpecification(BusinessComponent bc) {
+		return (root, cq, cb) -> cb.and(
+				super.getParentSpecification(bc).toPredicate(root, cq, cb),
+				cb.equal(root.get(Task_.applicationEntityId).get(BaseEntity_.id), bc.getParentIdAsLong())
+		);
+
 	}
 
 }
