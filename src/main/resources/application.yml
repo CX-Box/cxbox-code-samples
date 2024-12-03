@@ -108,6 +108,10 @@ spring:
           batch_size: 100
         hbm2ddl:
           auto: ${HIBERNATE_DDL_AUTO:update} #value ${HIBERNATE_DDL_AUTO:none} from demo.cxbox.org changed due code samples use tables auto creation by hibernate which is enough for demonstration purposes
+    org:
+      cxbox:
+        dictionary:
+          enable_types_contributor: true
     hibernate:
       naming:
         physical-strategy: org.cxbox.model.core.hbn.ImprovedPhysicalNamingStrategy

@@ -1,6 +1,5 @@
 package org.demo.conf.security.oidc;
 
-import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
 import org.demo.conf.cxbox.meta.User;
 import org.demo.conf.cxbox.customization.role.UserService;
@@ -16,12 +15,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OidcJwtTokenConverter implements Converter<Jwt, OidcAuthenticationToken> {
+
 	private static final String RESOURCE_ACCESS = "resource_access";
+
 	private static final String ROLES = "roles";
+
 	private static final String ROLE_PREFIX = "ROLE_";
+
 	private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter;
+
 	private final TokenConverterProperties properties;
+
 	private final UserService userService;
+
 	private final CxboxAuthUserRepository cxboxAuthUserRepository;
 
 	public OidcJwtTokenConverter(
@@ -40,8 +46,9 @@ public class OidcJwtTokenConverter implements Converter<Jwt, OidcAuthenticationT
 				.map(claimMap -> (Map<String, Object>) claimMap.get(properties.getResourceId()))
 				.map(resourceData -> (Collection<String>) resourceData.get(ROLES))
 				.stream()
-				.map(role -> new SimpleGrantedAuthority(role.stream().collect(Collectors.joining(""))))
-				.toList();
+				.flatMap(Collection::stream)
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
 
 		Set<GrantedAuthority> authorities = Stream
 				.concat(jwtGrantedAuthoritiesConverter.convert(jwt).stream(), roles.stream())
@@ -56,10 +63,11 @@ public class OidcJwtTokenConverter implements Converter<Jwt, OidcAuthenticationT
 
 		CxboxUserDetailsInterface userDetails = userService.createUserDetails(
 				user,
-				new LOV(roles.stream().findFirst().get().getAuthority())
+				roles.stream().findFirst().get().getAuthority()
 		);
-		return new OidcAuthenticationToken(jwt, authorities, properties.getPrincipalAttribute(), userDetails);
+		return new OidcAuthenticationToken(jwt, authorities, login, userDetails);
 
 
 	}
+
 }

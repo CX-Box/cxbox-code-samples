@@ -1,7 +1,6 @@
 package org.demo.conf.cxbox.customization.role;
 
 import lombok.RequiredArgsConstructor;
-import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.service.session.CxboxUserDetails;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
 
@@ -24,15 +23,11 @@ public class UserService {
 		).orElse(null);
 	}
 
-	public CxboxUserDetailsInterface createUserDetails(final User user, final LOV userRole) {
+	public CxboxUserDetailsInterface createUserDetails(final User user, final String userRole) {
 		return CxboxUserDetails.builder()
 				.id(user.getId())
-				.departmentId(user.getDepartment().getId())
-				.username(user.getLogin())
-				.password(user.getPassword())
+				.departmentId(user.getDepartmentId())
 				.userRole(userRole)
-				.timezone(user.getTimezone())
-				.localeCd(user.getLocale())
 				.authorities(Collections.emptySet())
 				.build();
 	}
