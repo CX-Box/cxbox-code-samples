@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.basic;
+package org.demo.documentation.fields.dictionary.dictionarylov.icon;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,19 +7,24 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DictionaryValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.demo.documentation.fields.dictionary.dictionarylov.basic.Regions;
+
+import java.util.Optional;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample352DTO extends DataResponseDTO {
+public class MyExample355DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
 
     @SearchParameter(name = "customFieldDictionary", provider = DictionaryValueProvider.class)
-    private Regions customFieldDictionary;
+    private CustomDictionary customFieldDictionary;
 
-    public MyExample352DTO(MyEntity352 entity) {
+    private String color;
+
+    public MyExample355DTO(MyEntity355 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();

@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.basic;
+package org.demo.documentation.fields.dictionary.dictionarylov.icon;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity352TestDataLoadService {
+public class MyEntity355TestDataLoadService {
 
     @Autowired
-    MyEntity352Repository repository;
+    MyEntity355Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -20,8 +20,7 @@ public class MyEntity352TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity352().setCustomField("test data2").setCustomFieldDictionary(Regions.MOSCOW));
-        repository.save(new MyEntity352().setCustomField("test data").setCustomFieldDictionary(Regions.SAINT_PETERBURG));
+        repository.save(new MyEntity355().setCustomField("test data").setCustomFieldDictionary(CustomDictionary.HIGH));
     }
 
 }

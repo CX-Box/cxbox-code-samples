@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.basic;
+package org.demo.documentation.fields.dictionary.dictionarylov.icon;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -7,36 +7,37 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+
 @Service
-public class MyExample352Service extends VersionAwareResponseService<MyExample352DTO, MyEntity352> {
+public class MyExample355Service extends VersionAwareResponseService<MyExample355DTO, MyEntity355> {
 
-    private final MyEntity352Repository repository;
+    private final MyEntity355Repository repository;
 
-    public MyExample352Service(MyEntity352Repository repository) {
-        super(MyExample352DTO.class, MyEntity352.class, null, MyExample352Meta.class);
+    public MyExample355Service(MyEntity355Repository repository) {
+        super(MyExample355DTO.class, MyEntity355.class, null, MyExample355Meta.class);
         this.repository = repository;
     }
 
     @Override
-    protected CreateResult<MyExample352DTO> doCreateEntity(MyEntity352 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample355DTO> doCreateEntity(MyEntity355 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample352DTO> doUpdateEntity(MyEntity352 entity, MyExample352DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample352DTO_.customField)) {
+    protected ActionResultDTO<MyExample355DTO> doUpdateEntity(MyEntity355 entity, MyExample355DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample355DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
-        if (data.isFieldChanged(MyExample352DTO_.customFieldDictionary)) {
+        if (data.isFieldChanged(MyExample355DTO_.customFieldDictionary)) {
             entity.setCustomFieldDictionary(data.getCustomFieldDictionary());
         }
-         return new ActionResultDTO<>(entityToDto(bc, entity));
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
-    public Actions<MyExample352DTO> getActions() {
-        return Actions.<MyExample352DTO>builder()
+    public Actions<MyExample355DTO> getActions() {
+        return Actions.<MyExample355DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
