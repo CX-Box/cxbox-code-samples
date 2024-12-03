@@ -60,9 +60,9 @@ public class LoginServiceImpl implements LoginService {
 
     private final MetaConfigurationProperties metaConfigurationProperties;
 
-    private final UIProperties uiProperties;
-
     private final WidgetFieldsIdResolverProperties widgetFieldsIdResolverProperties;
+
+    private final UIProperties uiProperties;
 
     /**
      * Build info for active session user for specific role
@@ -78,29 +78,23 @@ public class LoginServiceImpl implements LoginService {
 
         IUser<Long> user = sessionService.getSessionUser();
         User userEntity = userRepository.findById(user.getId()).orElseThrow();
-        LOV activeUserRole = sessionService.getSessionUserRole();
-        SimpleDictionary filterByRangeEnabled = new SimpleDictionary(widgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME, String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()));
-        List<SimpleDictionary> featureSettingsList = new ArrayList<>();
-        featureSettingsList.add(filterByRangeEnabled);
+        String activeUserRole = sessionService.getSessionUserRole();
+
         return LoggedUser.builder()
                 .sessionId(sessionService.getSessionId())
                 .userId(userEntity.getId())
-                .activeRole(activeUserRole.getKey())
+                .activeRole(activeUserRole)
                 .roles(userRoleService.getUserRoles(userEntity))
                 .screens(screenResponsibilityService.getScreens(user, activeUserRole))
                 .userSettingsVersion(null)
                 .lastName(userEntity.getLastName())
                 .firstName(userEntity.getFirstName())
-                .patronymic(userEntity.getPatronymic())
                 .fullName(userEntity.getFullName())
-                .principalName(userEntity.getUserPrincipalName())
-                .phone(userEntity.getPhone())
                 .featureSettings(this.getFeatureSettings())
                 .systemUrl(uiProperties.getSystemUrl())
                 .language(LocaleContextHolder.getLocale().getLanguage())
                 .timezone(LocaleContextHolder.getTimeZone().getID())
                 .devPanelEnabled(metaConfigurationProperties.isDevPanelEnabled())
-                .featureSettings(featureSettingsList)
                 .build();
 
     }
@@ -111,10 +105,8 @@ public class LoginServiceImpl implements LoginService {
             return;
         }
         User user = userRepository.getById(userDetails.getId());
-
-        LOV userRole = new LOV(role);
-        userDetails.setUserRole(userRole);
-        userRoleService.updateMainUserRole(user, userRole);
+        userDetails.setUserRole(role);
+        userRoleService.updateMainUserRole(user, role);
     }
 
     /**
@@ -125,6 +117,16 @@ public class LoginServiceImpl implements LoginService {
      * Following keys were supported historically: FEATURE_COMMENTS, FEATURE_NOTIFICATIONS, FEATURE_HIDE_SYSTEM_ERRORS
      */
     public Collection<SimpleDictionary> getFeatureSettings() {
-        return new ArrayList<>();
+        ArrayList<SimpleDictionary> featureSettings = new ArrayList<>();
+        featureSettings.add(new SimpleDictionary(
+                WidgetFieldsIdResolverProperties.SORT_ENABLED_DEFAULT_PARAM_NAME,
+                String.valueOf(widgetFieldsIdResolverProperties.isSortEnabledDefault())
+        ));
+        featureSettings.add(new SimpleDictionary(
+                WidgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME,
+                String.valueOf(widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault())
+        ));
+        return featureSettings;
     }
+
 }

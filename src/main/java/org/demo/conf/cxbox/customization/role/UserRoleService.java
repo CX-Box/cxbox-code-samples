@@ -18,7 +18,6 @@ package org.demo.conf.cxbox.customization.role;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.DictionaryCache;
-import org.cxbox.api.data.dictionary.LOV;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.exception.ServerException;
 import org.cxbox.model.core.dao.JpaDao;
@@ -32,8 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.lang.String.format;
 
 @Service
 @Transactional
@@ -50,7 +47,7 @@ public class UserRoleService {
 	 * @param user User
 	 * @return LOV
 	 */
-	public LOV getMainUserRoleKey(User user) {
+	public String getMainUserRoleKey(User user) {
 		List<UserRole> userRoleList = getListByUser(user);
 		return userRoleList != null ? userRoleList.stream()
 				.filter(UserRole::getMain)
@@ -59,7 +56,7 @@ public class UserRoleService {
 				.orElse(userRoleList.stream()
 						.findFirst()
 						.map(UserRole::getInternalRoleCd)
-						.orElse(user.getInternalRole())) : user.getInternalRole();
+						.orElse(null)) : null;
 	}
 
 	/**
@@ -110,9 +107,9 @@ public class UserRoleService {
 		}
 
 		return userRoleList.stream()
-				.filter(userRole -> userRole.getActive() && !userRole.getInternalRoleCd().getKey().contains("OPT_"))
+				.filter(userRole -> userRole.getActive() && !userRole.getInternalRoleCd().contains("OPT_"))
 				.map(userRole -> {
-					String key = userRole.getInternalRoleCd().getKey();
+					String key = userRole.getInternalRoleCd();
 					String value = dictRoleMap.get(key);
 					return value != null ? new SimpleDictionary(key, value) : new SimpleDictionary(key, key);
 				}).collect(Collectors.toList());
@@ -124,8 +121,7 @@ public class UserRoleService {
 	 * @param user user
 	 * @param mainUserRole main role
 	 */
-	public void updateMainUserRole(User user, LOV mainUserRole) {
-		user.setInternalRole(mainUserRole);
+	public void updateMainUserRole(User user, String mainUserRole) {
 		List<UserRole> userRoleList = getListByUser(user);
 		if (userRoleList != null && mainUserRole != null) {
 			userRoleList.stream()
@@ -133,7 +129,7 @@ public class UserRoleService {
 					.findFirst()
 					.ifPresent(mur -> mur.setMain(false));
 			userRoleList.stream()
-					.filter(ur -> ur.getInternalRoleCd().getKey().equals(mainUserRole.getKey()))
+					.filter(ur -> ur.getInternalRoleCd().equals(mainUserRole))
 					.findFirst()
 					.ifPresent(ur -> ur.setMain(true));
 		}
@@ -150,7 +146,7 @@ public class UserRoleService {
 		List<UserRole> userRoleList = getListByUser(user);
 		List<UserRole> activeUserRoleList = new ArrayList<>();
 		for (UserRole userRole : userRoleList) {
-			if (intUserRoleKeyList.contains(userRole.getInternalRoleCd().getKey())) {
+			if (intUserRoleKeyList.contains(userRole.getInternalRoleCd())) {
 				userRole.setActive(true);
 				activeUserRoleList.add(userRole);
 			} else {
@@ -160,19 +156,19 @@ public class UserRoleService {
 		}
 
 		List<String> userRoleKeyList = userRoleList.stream()
-				.map(userRole -> userRole.getInternalRoleCd().getKey())
+				.map(userRole -> userRole.getInternalRoleCd())
 				.collect(Collectors.toList());
 
 		for (String userRoleKey : intUserRoleKeyList) {
 			if (!userRoleKeyList.contains(userRoleKey)) {
-				activeUserRoleList.add(createUserRole(user, new LOV(userRoleKey)));
+				activeUserRoleList.add(createUserRole(user, userRoleKey));
 			}
 		}
 
 		if (activeUserRoleList.stream().noneMatch(UserRole::getMain)) {
 			final String mainUserRole = getMainUserRole(intUserRoleKeyList);
 			activeUserRoleList.stream()
-					.filter(ur -> ur.getInternalRoleCd().getKey().equals(mainUserRole))
+					.filter(ur -> ur.getInternalRoleCd().equals(mainUserRole))
 					.findFirst()
 					.ifPresent(userRole -> userRole.setMain(true));
 		}
@@ -180,7 +176,7 @@ public class UserRoleService {
 		return activeUserRoleList;
 	}
 
-	private UserRole createUserRole(User user, final LOV internalRoleCd) {
+	private UserRole createUserRole(User user, final String internalRoleCd) {
 		jpaDao.lockAndRefresh(user, LockOptions.WAIT_FOREVER);
 		UserRole userRole = jpaDao.getSingleResultOrNull(UserRole.class, (root, query, cb) -> cb.and(
 				cb.equal(root.get(UserRole_.user), user),

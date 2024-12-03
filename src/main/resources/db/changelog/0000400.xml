@@ -7,24 +7,13 @@
     <property name="now" value="current_timestamp" dbms="postgresql"/>
     <property name="now" value="sysdate" dbms="oracle"/>
 
-    <changeSet id="local example data" author="cxbox" runOnChange="true" context="local">
-        <loadUpdateData tableName="BC_PROPERTIES" primaryKey="ID" separator=";" quotchar="'"
-                        file="db/data/BC_PROPERTIES.csv">
-            <column header="ID" name="ID" type="NUMERIC"/>
-            <column header="BC" name="BC" type="STRING"/>
-            <column header="PAGE_LIMIT" name="PAGE_LIMIT" type="NUMERIC"/>
-            <column header="SORT" name="SORT" type="STRING"/>
-            <column header="FILTER" name="FILTER" type="STRING"/>
-        </loadUpdateData>
-    </changeSet>
-
     <changeSet id="ADD CUSTOMIZATION COLUMN" author="cxbox">
         <sql>
-            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+            INSERT INTO public.ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
                                                   removed_from_additional_fields)
             VALUES (1, '1101075', 'myexample3135listold', 'MyExample3135ListOldsFields', '[]',
                     '["customField","customFieldOld"]', '[]');
-            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+            INSERT INTO public.ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
                                                   removed_from_additional_fields)
             VALUES (2, '1101075', 'myexample3135listaddedfields', 'MyExample3135ListAddedFields', '["customFieldPercent","customField","customFieldRadio"]',
                     '[]', '[]');
@@ -33,11 +22,11 @@
 
     <changeSet id="ADD CUSTOMIZATION COLUMN GH" author="cxbox">
         <sql>
-            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+            INSERT INTO public.ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
                                                   removed_from_additional_fields)
             VALUES (3, '1101075', 'myexample3175gholdfields', 'MyExample3175GHOldFields', '[]',
                     '["customField","customFieldOld","customFieldDictionary"]', '[]');
-            INSERT INTO public.additional_fields (id, user_id, view, widget, order_fields, added_to_additional_fields,
+            INSERT INTO public.ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
                                                   removed_from_additional_fields)
             VALUES (4, '1101075', 'myexample3175ghaddfields', 'MyExample3175GHAddedFields', '["customFieldPercent","customFieldDictionary"]',
                     '[]', '[]');

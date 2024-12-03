@@ -41,7 +41,7 @@ public class UserRole extends BaseEntity {
 	private Division division;*/
 
 	@Column(name = "INTERNAL_ROLE_CD")
-	private LOV internalRoleCd;
+	private String internalRoleCd;
 
 	@Column
 	//@Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
