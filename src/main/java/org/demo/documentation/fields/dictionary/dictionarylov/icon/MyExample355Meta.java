@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample355Meta extends FieldMetaBuilder<MyExample355DTO> {
 
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample355DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -17,11 +18,13 @@ public class MyExample355Meta extends FieldMetaBuilder<MyExample355DTO> {
         fields.setDictionaryValues(MyExample355DTO_.customFieldDictionary);
 
     }
+    // --8<-- [end:buildRowDependentMeta]
 
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample355DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.setDictionaryFilterValues(MyExample355DTO_.customFieldDictionary);
         fields.setDictionaryIcons(MyExample355DTO_.customFieldDictionary,CustomDictionary.icons);
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }

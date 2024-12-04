@@ -1,0 +1,66 @@
+{
+  "name": "MyExample357DictionaryList",
+  "title": "Dictionary configurable dictionary administration",
+  "type": "GroupingHierarchy",
+  "bc": "myexample357",
+  "fields": [
+    {
+      "title": "Type",
+      "key": "type",
+      "type": "pickList",
+      "popupBcName": "dictionaryTypeDescPick",
+      "pickMap": {
+        "type": "type",
+        "typeId": "id"
+      }
+    },
+    {
+      "title": "Key",
+      "key": "key",
+      "type": "input"
+    },
+    {
+      "title": "Value",
+      "key": "value",
+      "type": "input"
+    },
+    {
+      "title": "Order",
+      "key": "displayOrder",
+      "type": "number"
+    },
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "title": "Active",
+      "key": "active",
+      "type": "checkbox",
+      "width": 50
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "MyExample357DictionaryForm"
+    },
+    "edit": {
+      "widget": "MyExample357DictionaryForm"
+    },
+    "groupingHierarchy": {
+      "counterMode": "always",
+      "fields": [
+        "type"
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete",
+        "reload-cache"
+      ]
+    }
+  }
+}
