@@ -6,8 +6,10 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 
+import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.widgets.form.showcondition.byparententity.parent.MyEntity3007;
 import org.demo.documentation.widgets.form.showcondition.byparententity.parent.MyEntity3007Repository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +26,14 @@ public class MyExample3006Service extends VersionAwareResponseService<MyExample3
         this.repositoryParent = repositoryParent;
     }
 
+    @Override
+    protected Specification<MyEntity3006> getParentSpecification(BusinessComponent bc) {
+
+        return (root, cq, cb) -> cb.and(
+                super.getParentSpecification(bc).toPredicate(root, cq, cb),
+                cb.equal(root.get(MyEntity3006_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
+        );
+    }
     @Override
     protected CreateResult<MyExample3006DTO> doCreateEntity(MyEntity3006 entity, BusinessComponent bc) {
         MyEntity3007 myEntity3007 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
