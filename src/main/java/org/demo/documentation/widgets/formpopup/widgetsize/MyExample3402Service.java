@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.formpopup.fieldslayoute;
+package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import lombok.NonNull;
 import org.cxbox.core.crudma.bc.BusinessComponent;

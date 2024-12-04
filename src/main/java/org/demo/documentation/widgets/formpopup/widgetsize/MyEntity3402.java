@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.formpopup.fieldslayoute;
+package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;

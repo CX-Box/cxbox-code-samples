@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.formpopup.fieldslayoute;
+package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
