@@ -21,6 +21,9 @@ public class MyEntity355TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity355().setCustomField("test data").setCustomFieldDictionary(CustomDictionary.HIGH));
+        repository.save(new MyEntity355().setCustomField("test data").setCustomFieldDictionary(CustomDictionary.MIDDLE));
+        repository.save(new MyEntity355().setCustomField("test data").setCustomFieldDictionary(CustomDictionary.UPPER_MIDDLE));
+        repository.save(new MyEntity355().setCustomField("test data").setCustomFieldDictionary(CustomDictionary.LOW));
     }
 
 }

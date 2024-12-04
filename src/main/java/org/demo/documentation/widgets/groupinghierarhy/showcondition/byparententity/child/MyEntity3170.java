@@ -1,14 +1,12 @@
 package org.demo.documentation.widgets.groupinghierarhy.showcondition.byparententity.child;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.groupinghierarhy.showcondition.byparententity.child.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.showcondition.byparententity.parent.MyEntity3169;
 
 @Entity
 @Getter
@@ -20,4 +18,8 @@ public class MyEntity3170 extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldDictionaryEnum customFieldDictionary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_ID")
+    private MyEntity3169 customFieldEntity;
 }

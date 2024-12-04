@@ -6,9 +6,13 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Controller;
+import org.demo.documentation.widgets.info.showcondition.byparententity.child.MyEntity3107;
+import org.demo.documentation.widgets.info.showcondition.byparententity.child.MyEntity3107_;
 import org.demo.documentation.widgets.list.showcondition.byparententity.PlatformMyExample3100Controller;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
@@ -22,6 +26,14 @@ public class MyExample3106Service extends VersionAwareResponseService<MyExample3
         this.repository = repository;
     }
 
+    @Override
+    protected Specification<MyEntity3106> getParentSpecification(BusinessComponent bc) {
+
+        return (root, cq, cb) -> cb.and(
+                super.getParentSpecification(bc).toPredicate(root, cq, cb),
+                cb.equal(root.get(MyEntity3106_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
+        );
+    }
     @Override
     protected CreateResult<MyExample3106DTO> doCreateEntity(MyEntity3106 entity, BusinessComponent bc) {
         repository.save(entity);

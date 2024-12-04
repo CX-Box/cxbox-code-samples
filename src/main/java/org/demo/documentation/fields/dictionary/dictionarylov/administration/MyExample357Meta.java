@@ -7,32 +7,30 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyExample357Meta extends FieldMetaBuilder<MyExample357DTO> {
+public class MyExample357Meta extends FieldMetaBuilder<DictionaryItemDTO> {
 
     // --8<-- [start:buildRowDependentMeta]
     @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample357DTO> fields, InnerBcDescription bcDescription,
+    public void buildRowDependentMeta(RowDependentFieldsMeta<DictionaryItemDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample357DTO_.active);
-        fields.setEnabled(MyExample357DTO_.description);
-        fields.setEnabled(MyExample357DTO_.displayOrder);
-        fields.setEnabled(MyExample357DTO_.value);
-        fields.setEnabled(MyExample357DTO_.key);
-        fields.setEnabled(MyExample357DTO_.typeId);
-        fields.setEnabled(MyExample357DTO_.type);
-        fields.setEnabled(MyExample357DTO_.customField);
+        fields.setEnabled(DictionaryItemDTO_.active);
+        fields.setEnabled(DictionaryItemDTO_.description);
+        fields.setEnabled(DictionaryItemDTO_.displayOrder);
+        fields.setEnabled(DictionaryItemDTO_.value);
+        fields.setEnabled(DictionaryItemDTO_.key);
+        fields.setEnabled(DictionaryItemDTO_.type);
     }
     // --8<-- [end:buildRowDependentMeta]
 
     // --8<-- [start:buildIndependentMeta]
     @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample357DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample357DTO_.active);
-        fields.enableFilter(MyExample357DTO_.description);
-        fields.enableFilter(MyExample357DTO_.displayOrder);
-        fields.enableFilter(MyExample357DTO_.value);
-        fields.enableFilter(MyExample357DTO_.key);
-        fields.enableFilter(MyExample357DTO_.type);
+    public void buildIndependentMeta(FieldsMeta<DictionaryItemDTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(DictionaryItemDTO_.active);
+        fields.enableFilter(DictionaryItemDTO_.description);
+        fields.enableFilter(DictionaryItemDTO_.displayOrder);
+        fields.enableFilter(DictionaryItemDTO_.value);
+        fields.enableFilter(DictionaryItemDTO_.key);
+        fields.enableFilter(DictionaryItemDTO_.type);
     }
     // --8<-- [end:buildIndependentMeta]
 }
