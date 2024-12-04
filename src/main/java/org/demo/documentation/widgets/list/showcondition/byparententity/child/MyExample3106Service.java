@@ -4,7 +4,11 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
+import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Controller;
+import org.demo.documentation.widgets.list.showcondition.byparententity.PlatformMyExample3100Controller;
 import org.springframework.stereotype.Service;
 
 
@@ -35,10 +39,15 @@ public class MyExample3106Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3106DTO> getActions() {
         return Actions.<MyExample3106DTO>builder()
-                .action(act -> act.action("save", "save"))
-                .create(crt -> crt)
-                .delete(dlt -> dlt)
-                .build();
+                .action(act -> act.action("save", "save")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3106DTO>().setAction(
+                                    PostAction.refreshBc(PlatformMyExample3100Controller.myexample3100
+                                    ));
+                        }))
+                        .create(crt -> crt)
+                        .delete(dlt -> dlt)
+                        .build();
     }
     // --8<-- [end:getActions]
 }
