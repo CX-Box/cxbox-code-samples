@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.formpopup.fieldslayoute;
+package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

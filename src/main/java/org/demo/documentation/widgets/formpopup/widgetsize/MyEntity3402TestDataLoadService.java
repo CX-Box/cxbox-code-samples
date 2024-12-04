@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.formpopup.fieldslayoute;
+package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
