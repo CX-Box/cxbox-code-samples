@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 public class DigitsNumberDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
-	private Long customField;
+	private Double customField;
 
 	public DigitsNumberDTO(DigitsNumberEntity entity) {
 		this.id = entity.getId().toString();

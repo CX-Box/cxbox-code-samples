@@ -18,6 +18,6 @@ public class DigitsNumberEntity extends BaseEntity {
 
 
 	@Column
-	private Long customField;
+	private Double customField;
 
 }
