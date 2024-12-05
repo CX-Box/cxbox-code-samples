@@ -7,23 +7,23 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
-import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Controller;
-import org.demo.documentation.widgets.info.showcondition.byparententity.child.MyEntity3107;
-import org.demo.documentation.widgets.info.showcondition.byparententity.child.MyEntity3107_;
 import org.demo.documentation.widgets.list.showcondition.byparententity.PlatformMyExample3100Controller;
+import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100;
+import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class MyExample3106Service extends VersionAwareResponseService<MyExample3106DTO, MyEntity3106> {
 
     private final MyEntity3106Repository repository;
 
-    public MyExample3106Service(MyEntity3106Repository repository) {
+    private final MyEntity3100Repository repositoryParent;
+
+    public MyExample3106Service(MyEntity3106Repository repository, MyEntity3100Repository repositoryParent) {
         super(MyExample3106DTO.class, MyEntity3106.class, null, MyExample3106Meta.class);
         this.repository = repository;
+        this.repositoryParent = repositoryParent;
     }
 
     @Override
@@ -36,6 +36,8 @@ public class MyExample3106Service extends VersionAwareResponseService<MyExample3
     }
     @Override
     protected CreateResult<MyExample3106DTO> doCreateEntity(MyEntity3106 entity, BusinessComponent bc) {
+        MyEntity3100 myEntity3100 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
+        entity.setCustomFieldEntity(myEntity3100);
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
