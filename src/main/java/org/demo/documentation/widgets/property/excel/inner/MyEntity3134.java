@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldCurrencyDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldRadioEnum;
@@ -83,4 +84,11 @@ public class MyEntity3134 extends BaseEntity {
     private String customFieldText;
     @Column
     private String customFieldHidden;
+    @Column
+    private Double customFieldMoneyWithCurrencyConst;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldCurrencyDictionaryEnum customFieldCurrencyDictionary;
+    @Column
+    private Double customFieldMoneyWithCurrencyDynamic;
 }

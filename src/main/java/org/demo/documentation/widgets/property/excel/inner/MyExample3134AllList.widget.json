@@ -1,8 +1,8 @@
 {
-  "name": "MyExample3134GH",
-  "title": "Widget property Excel inner source - GroupingHierarchy (All fields)",
-  "type": "GroupingHierarchy",
-  "bc": "myexample3134GH",
+  "name": "MyExample3134AllList",
+  "title": "Widget property Excel inner source - List (all fields)",
+  "type": "List",
+  "bc": "myexample3134",
   "fields": [
     {
       "title": "Custom Field Multivalue Hover",
@@ -136,17 +136,29 @@
       "title": "Custom Field",
       "key": "customField",
       "type": "input"
+    },
+    {
+      "title": "Custom Field Money With Currency const",
+      "key": "customFieldMoneyWithCurrencyConst",
+      "digits": 2,
+      "type": "money",
+      "currency": "₽"
+    },
+    {
+      "title": "Custom Field Money With Currency",
+      "key": "customFieldMoneyWithCurrencyDynamic",
+      "digits": 2,
+      "type": "money",
+      "currencyKey": "customFieldCurrency"
     }
   ],
   "options": {
-      "groupingHierarchy": {
-        "fields": [
-          "customFieldDictionary"
-        ]
-      },
     "export": {
       "enabled": true,
       "title": "Custom Name"
+    },
+    "additional": {
+      "enabled": true
     }
   }
 }

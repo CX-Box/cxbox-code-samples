@@ -39,6 +39,8 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3134DTO> doUpdateEntity(MyEntity3134 entity, MyExample3134DTO data, BusinessComponent bc) {
+      setIfChanged(data, MyExample3134DTO_.customFieldMoneyWithCurrencyDynamic, entity::setCustomFieldMoneyWithCurrencyDynamic);
+      setIfChanged(data, MyExample3134DTO_.customFieldMoneyWithCurrencyConst, entity::setCustomFieldMoneyWithCurrencyConst);
       setIfChanged(data, MyExample3134DTO_.customFieldHidden, entity::setCustomFieldHidden);
       setIfChanged(data, MyExample3134DTO_.customFieldText, entity::setCustomFieldText);
       setIfChanged(data, MyExample3134DTO_.customFieldDateTime, entity::setCustomFieldDateTime);
@@ -94,7 +96,7 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+  // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3134DTO> getActions() {
         return Actions.<MyExample3134DTO>builder()
@@ -105,5 +107,5 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+  // --8<-- [end:getActions]
 }

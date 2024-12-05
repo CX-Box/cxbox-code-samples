@@ -8,6 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
+import org.demo.documentation.fields.money.currency.fieldkey.enums.CustomFieldCurrencyDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldRadioEnum;
@@ -17,6 +18,9 @@ import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity313
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.demo.documentation.fields.money.currency.fieldkey.enums.CustomFieldCurrencyDictionaryEnum.DOLLAR;
+import static org.demo.documentation.fields.money.currency.fieldkey.enums.CustomFieldCurrencyDictionaryEnum.RUBLE;
 
 @Getter
 @Setter
@@ -66,10 +70,17 @@ public class MyExample3134DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
     private String customFieldText;
     private String customFieldHidden;
+    @SearchParameter(name = "customFieldMoneyWithCurrencyConst", provider = BigDecimalValueProvider.class)
+    private Double customFieldMoneyWithCurrencyConst;
+    @SearchParameter(name = "customFieldCurrency", provider = EnumValueProvider.class)
+    private CustomFieldCurrencyDictionaryEnum customFieldCurrency;
+    @SearchParameter(name = "customFieldMoneyWithCurrencyDynamic", provider = BigDecimalValueProvider.class)
+    private Double customFieldMoneyWithCurrencyDynamic;
 
     public MyExample3134DTO(MyEntity3134 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customFieldCurrency = entity.getCustomFieldMoney() > 50000 ? RUBLE : DOLLAR;
         this.customFieldMultivalueHover = entity.getCustomFieldMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
                 e -> String.valueOf(e.getId()),
                 MyEntity3134MultiHover::getCustomField
@@ -109,5 +120,7 @@ public class MyExample3134DTO extends DataResponseDTO {
         this.customFieldDateTime = entity.getCustomFieldDateTime();
         this.customFieldText = entity.getCustomFieldText();
         this.customFieldHidden = entity.getCustomFieldHidden();
+        this.customFieldMoneyWithCurrencyConst = entity.getCustomFieldMoneyWithCurrencyConst();
+        this.customFieldMoneyWithCurrencyDynamic = entity.getCustomFieldMoneyWithCurrencyDynamic();
     }
 }

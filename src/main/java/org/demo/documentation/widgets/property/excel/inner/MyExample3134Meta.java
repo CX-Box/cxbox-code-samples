@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class MyExample3134Meta extends FieldMetaBuilder<MyExample3134DTO> {
 
-    @Override  
-   // --8<-- [start:buildRowDependentMeta]
+    @Override
+    // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3134DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+      fields.setEnabled(MyExample3134DTO_.customFieldMoneyWithCurrencyDynamic);
+      fields.setEnabled(MyExample3134DTO_.customFieldMoneyWithCurrencyConst);
       fields.setEnabled(MyExample3134DTO_.customFieldHidden);
       fields.setEnabled(MyExample3134DTO_.customFieldText);
       fields.setEnabled(MyExample3134DTO_.customFieldDateTime);
@@ -50,9 +52,12 @@ public class MyExample3134Meta extends FieldMetaBuilder<MyExample3134DTO> {
       fields.setEnabled(MyExample3134DTO_.customField);
         fields.setRequired(MyExample3134DTO_.customField);
     }
-   // --8<-- [end:buildRowDependentMeta]
+
+  // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3134DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+      fields.enableFilter(MyExample3134DTO_.customFieldMoneyWithCurrencyDynamic);
+      fields.enableFilter(MyExample3134DTO_.customFieldMoneyWithCurrencyConst);
       fields.enableFilter(MyExample3134DTO_.customFieldText);
       fields.enableFilter(MyExample3134DTO_.customFieldDateTime);
       fields.enableFilter(MyExample3134DTO_.customFieldCheckbox);
