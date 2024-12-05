@@ -20,7 +20,7 @@ public class DigitsNumberEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DigitsNumberEntity().setCustomField(Long.valueOf(123456)));
+		repository.save(new DigitsNumberEntity().setCustomField(Double.valueOf(123456)));
 	}
 
 }
