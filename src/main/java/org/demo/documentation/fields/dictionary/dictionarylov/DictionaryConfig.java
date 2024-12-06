@@ -16,17 +16,36 @@ package org.demo.documentation.fields.dictionary.dictionarylov;
  * limitations under the License.
  */
 
+import java.net.URI;
 import java.util.Collection;
+import java.util.List;
+
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.dictionary.Dictionary;
 import org.cxbox.dictionary.DictionaryProvider;
+import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.demo.controller.SourcesController.SOURCES_ORIGINAL_PATH_PREFIX;
 
 @Configuration
 public class DictionaryConfig {
+    final RestTemplate proxyRestTemplate;
+    private final IntegrationConfiguration integrationConfig;
+
+    public DictionaryConfig(RestTemplate proxyRestTemplate, IntegrationConfiguration integrationConfig) {
+        this.proxyRestTemplate = proxyRestTemplate;
+        this.integrationConfig = integrationConfig;
+    }
 
     @Bean
     public DictionaryProvider dictionaryProvider() {
@@ -46,14 +65,37 @@ public class DictionaryConfig {
 
             @Override
             public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
+                ResponseEntity<String> lov = getLov();
                 return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
                         .stream()
                         .map(e -> Dictionary.of(dictionaryType, e.getKey()))
                         .toList();
             }
 
+            public List<Dictionary> getAllDictionaryExternal(Class<Dictionary> dictionaryType) {
+
+                ResponseEntity<String> lov = getLov();
+                return null;
+            }
+
+            @SneakyThrows
+            public ResponseEntity<String> getLov() {
+                URI uri = new URI(integrationConfig.getDictionaryDataServerUrl());
+                uri = UriComponentsBuilder.fromUri(uri)
+                        .build("type", "DICTIONARY_TYPE");
+                try {
+                    return proxyRestTemplate.getForEntity(uri, String.class);
+                } catch (HttpStatusCodeException e) {
+                    //log.error(e.getMessage());
+                    return ResponseEntity
+                            .status(e.getRawStatusCode())
+                            .headers(e.getResponseHeaders())
+                            .body(e.getResponseBodyAsString());
+                }
+
+            }
+
+
         };
     }
-
-
 }

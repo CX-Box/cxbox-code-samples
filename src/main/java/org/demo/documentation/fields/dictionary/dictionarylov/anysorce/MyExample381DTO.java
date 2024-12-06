@@ -12,8 +12,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @NoArgsConstructor
 public class MyExample381DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
-    private String customField;
+    private DictionaryType customField;
 
     public MyExample381DTO(MyEntity381 entity) {
         this.id = entity.getId().toString();
