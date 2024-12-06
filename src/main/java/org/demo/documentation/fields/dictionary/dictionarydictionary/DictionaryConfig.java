@@ -65,37 +65,11 @@ public class DictionaryConfig {
 
             @Override
             public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
-                ResponseEntity<String> lov = getLov();
                 return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
                         .stream()
                         .map(e -> Dictionary.of(dictionaryType, e.getKey()))
                         .toList();
             }
-
-            public List<Dictionary> getAllDictionaryExternal(Class<Dictionary> dictionaryType) {
-
-                ResponseEntity<String> lov = getLov();
-                return null;
-            }
-
-            @SneakyThrows
-            public ResponseEntity<String> getLov() {
-                URI uri = new URI(integrationConfig.getDictionaryDataServerUrl());
-                uri = UriComponentsBuilder.fromUri(uri)
-                        .build("type", "DICTIONARY_TYPE");
-                try {
-                    return proxyRestTemplate.getForEntity(uri, String.class);
-                } catch (HttpStatusCodeException e) {
-                    //log.error(e.getMessage());
-                    return ResponseEntity
-                            .status(e.getRawStatusCode())
-                            .headers(e.getResponseHeaders())
-                            .body(e.getResponseBodyAsString());
-                }
-
-            }
-
-
         };
     }
 }
