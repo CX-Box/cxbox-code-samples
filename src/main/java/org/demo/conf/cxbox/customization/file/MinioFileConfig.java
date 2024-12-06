@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CxboxFileMinioConfig {
+public class MinioFileConfig {
 
 	@Bean
 	public MinioClient minioClient(

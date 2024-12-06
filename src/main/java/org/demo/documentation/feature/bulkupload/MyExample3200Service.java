@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.demo.conf.cxbox.customization.file.CxboxSamplesMinioFileController.FILENAME_FIELD;
+import static org.demo.conf.cxbox.customization.file.FileService.FILENAME_FIELD;
+
 
 @Service
 public class MyExample3200Service extends VersionAwareResponseService<MyExample3200DTO, MyEntity3200> {
