@@ -13,5 +13,5 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity381 extends BaseEntity {
     @Column
-    private String customField;
+    private DictionaryType customField;
 }
