@@ -12,19 +12,17 @@ import org.demo.documentation.other.savewithparent.example5.service.MyExample555
 import org.demo.documentation.other.savewithparent.example5.service.MyExample5555TaskService;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings({"java:S115", "java:S1144"})
 @Getter
 public enum CxboxMyExample5555Controller implements EnumBcIdentifier {
 
-
+	// @formatter:off
 	application(MyExample5555ApplicationService.class),
 		task(application, MyExample5555TaskService.class),
 			document(task, MyExample5555TaskDocumentService.class),
-			taskPickList(task, MyExample5555ExecutorPickService.class),
-	taskEdit(MyExample5555TaskService.class),
-	executor(MyExample5555ExecutorService.class),
-		executorPickListPopup(executor, MyExample5555ExecutorService.class);
-	// --8<-- [end:bc]
-
+			taskExecutor(task, MyExample5555ExecutorPickService.class),
+	executor(MyExample5555ExecutorService.class);
+	// @formatter:on
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample5555Controller> Holder = new Holder<>(

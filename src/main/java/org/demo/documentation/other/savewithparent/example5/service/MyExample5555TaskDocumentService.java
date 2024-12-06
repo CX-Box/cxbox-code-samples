@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -23,7 +22,6 @@ import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO_
 import org.demo.documentation.other.savewithparent.example5.entity.TaskDocument;
 import org.demo.documentation.other.savewithparent.example5.entity.TaskDocument_;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
-import org.demo.documentation.other.savewithparent.example5.meta.TaskDocumentMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskDocumentRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +32,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5555TaskDocumentService extends VersionAwareResponseService<TaskDocumentDTO, TaskDocument> {
 
-	@Autowired
-	private MinioClient minioClient;
-
 	private final TaskRepository taskRepository;
 
 	private final TaskDocumentRepository documentRepository;
+
+	@Autowired
+	private MinioClient minioClient;
 
 	@Value("${minio.bucket.name}")
 	private String defaultBucketName;
 
 	public MyExample5555TaskDocumentService(TaskRepository taskRepository,
 			TaskDocumentRepository documentRepository) {
-		super(TaskDocumentDTO.class, TaskDocument.class, null, TaskDocumentMeta.class);
+		super(TaskDocumentDTO.class, TaskDocument.class, null, MyExample5555TaskDocumentMeta.class);
 		this.taskRepository = taskRepository;
 		this.documentRepository = documentRepository;
 	}
@@ -60,7 +58,8 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 	}
 
 	@Override
-	protected ActionResultDTO<TaskDocumentDTO> doUpdateEntity(TaskDocument entity, TaskDocumentDTO data, BusinessComponent bc) {
+	protected ActionResultDTO<TaskDocumentDTO> doUpdateEntity(TaskDocument entity, TaskDocumentDTO data,
+			BusinessComponent bc) {
 		setIfChanged(data, TaskDocumentDTO_.id, entity::setFileId);
 		setIfChanged(data, TaskDocumentDTO_.file, entity::setFile);
 		if (data.isFieldChanged(TaskDocumentDTO_.taskId)) {
@@ -91,9 +90,10 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 	@Override
 	protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {
 		List<TaskDocument> documents = fileUpload(data, bc);
-		List<TaskDocumentDTO> collect = documents.stream().map(e -> entityToDto(bc, e))
+		List<TaskDocumentDTO> collect = documents.stream()
+				.map(e -> entityToDto(bc, e))
 				.map(documentDTO -> documentDTO.setTaskId(bc.getParentIdAsLong()))
-				.collect(Collectors.toList());
+				.toList();
 		return new AssociateResultDTO((List) collect);
 	}
 
@@ -127,4 +127,5 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 				cb.equal(root.get(TaskDocument_.task).get(BaseEntity_.id), bc.getParentIdAsLong())
 		);
 	}
+
 }

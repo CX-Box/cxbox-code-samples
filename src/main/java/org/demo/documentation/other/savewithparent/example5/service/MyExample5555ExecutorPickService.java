@@ -11,21 +11,16 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
-import org.demo.documentation.other.savewithparent.example5.meta.ExecutorMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MyExample5555ExecutorPickService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
-	private static final String EXECUTOR = "/screen/autosave/view/executor";
-
-	public static final String NEXT = "Next";
-
 	private final ExecutorRepository repository;
 
 	public MyExample5555ExecutorPickService(ExecutorRepository repository) {
-		super(ExecutorDTO.class, Executor.class, null, ExecutorMeta.class);
+		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorPickMeta.class);
 		this.repository = repository;
 	}
 
@@ -50,12 +45,12 @@ public class MyExample5555ExecutorPickService extends VersionAwareResponseServic
 				.delete(del -> del.text("Delete").scope(ActionScope.BC))
 				.save(save -> save.text("Save").scope(ActionScope.BC))
 				.action(act -> act
-						.action("nextExecutor", NEXT)
+						.action("nextExecutor", "Next")
 						.invoker((bc, dto) ->
 								new ActionResultDTO<ExecutorDTO>().setAction(
 										PostAction.drillDown(
 												DrillDownType.INNER,
-												EXECUTOR
+												"/screen/autosave/view/executor"
 										))
 						)
 						.scope(ActionScope.BC)

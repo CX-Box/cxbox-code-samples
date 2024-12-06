@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskDocumentRepository extends JpaRepository<TaskDocument, Long>, JpaSpecificationExecutor<TaskDocument> {
+public interface TaskDocumentRepository extends JpaRepository<TaskDocument, Long>,
+		JpaSpecificationExecutor<TaskDocument> {
 
-	Integer getCountByTaskId(Long id);
 }

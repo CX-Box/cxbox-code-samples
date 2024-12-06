@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.enums.ImportanceEnum;
@@ -20,6 +21,8 @@ public class TaskDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "applicationEntityId.name", provider = LongValueProvider.class)
 	private Long applicationEntityId;
+
+	private String applicationEntityName;
 
 	@SearchParameter
 	private String name;
@@ -53,7 +56,7 @@ public class TaskDTO extends DataResponseDTO {
 	private Integer taskCount;
 	public TaskDTO(Task task) {
 		this.id = task.getId().toString();
-
+		this.applicationEntityName = Optional.ofNullable(task.getApplicationEntityId()).map(ApplicationEntity::getName).orElse(null);
 		this.executorName = Optional.ofNullable(task.getExecutorId())
 				.map(Executor::getName)
 				.orElse(null);

@@ -19,10 +19,8 @@ import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEn
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.entity.Task_;
-import org.demo.documentation.other.savewithparent.example5.meta.TaskMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.ApplicationRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
-import org.demo.documentation.other.savewithparent.example5.repositories.TaskDocumentRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -30,32 +28,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5555TaskService extends VersionAwareResponseService<TaskDTO, Task> {
 
-	private static final String EXECUTOR = "/screen/autosave/view/executor";
-
-	public static final String LINK_TASK_DOCUMENT = "/screen/autosave/view/taskDocument";
-
-	public static final String NEXT = "Next";
-
 	private final TaskRepository repository;
 
 	private final ApplicationRepository applicationRepository;
 
 	private final ExecutorRepository executorRepository;
 
-
 	public MyExample5555TaskService(TaskRepository repository,
 			ApplicationRepository applicationRepository,
-			ExecutorRepository executorRepository,
-			TaskDocumentRepository taskDocumentRepository) {
-		super(TaskDTO.class, Task.class, null, TaskMeta.class);
+			ExecutorRepository executorRepository) {
+		super(TaskDTO.class, Task.class, null, MyExample5555TaskMeta.class);
 		this.repository = repository;
 		this.applicationRepository = applicationRepository;
 		this.executorRepository = executorRepository;
 	}
 
 	@Override
+	protected Specification<Task> getParentSpecification(BusinessComponent bc) {
+		return (root, cq, cb) -> cb.and(
+				super.getParentSpecification(bc).toPredicate(root, cq, cb),
+				cb.equal(root.get(Task_.applicationEntityId).get(BaseEntity_.id), bc.getParentIdAsLong())
+		);
+
+	}
+
+	@Override
 	protected CreateResult<TaskDTO> doCreateEntity(Task entity, BusinessComponent bc) {
-		ApplicationEntity application = applicationRepository.getById(bc.getParentIdAsLong());
+		ApplicationEntity application = applicationRepository.getReferenceById(bc.getParentIdAsLong());
 		entity.setApplicationEntityId(application);
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -67,12 +66,10 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 		setIfChanged(data, TaskDTO_.status, entity::setStatus);
 		setIfChanged(data, TaskDTO_.comment, entity::setComment);
 		setIfChanged(data, TaskDTO_.importance, entity::setImportance);
-
 		if (data.isFieldChanged(TaskDTO_.executorId)) {
-			Executor executor = executorRepository.getById(Long.valueOf(data.getExecutorId()));
+			Executor executor = executorRepository.getReferenceById(Long.valueOf(data.getExecutorId()));
 			entity.setExecutorId(executor);
 		}
-
 		repository.save(entity);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -80,35 +77,37 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 	@Override
 	public Actions<TaskDTO> getActions() {
 		return Actions.<TaskDTO>builder()
-				.create().text("Add").add()
-				.save().text("Save").add()
-				.action("nextTaskDocument", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<TaskDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										LINK_TASK_DOCUMENT
-								))
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt.text("Add"))
+				.action(act -> act
+						.action("nextTaskDocument", "Next")
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												"/screen/autosave/view/taskDocument"
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
 				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add()
-				.action("nextExecutor", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<TaskDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										EXECUTOR
-								))
+				.action(act -> act
+						.action("nextExecutor", "Next")
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												"/screen/autosave/view/executor"
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
 				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add()
-				.delete().text("Delete")
-				.add()
+				.delete(dlt -> dlt.text("Delete")
+				)
 				.action(act -> act
 						.action("save-send-application", "Save and send on approval")
-						.withPreAction(confirmWithComment("Save and send on approval", "applicationFormPopupapplicationFormPopup"))
+						.withPreAction(confirmWithComment("Save and send on approval", "taskApprovalFormPopup"))
 						.invoker((bc, data) -> withApproval()))
 				.action(act -> act
 						.action("save-send-task", "Save and send on approval")
@@ -126,15 +125,6 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 
 	private ActionResultDTO<TaskDTO> withApproval() {
 		return new ActionResultDTO<>();
-	}
-
-	@Override
-	protected Specification<Task> getParentSpecification(BusinessComponent bc) {
-		return (root, cq, cb) -> cb.and(
-				super.getParentSpecification(bc).toPredicate(root, cq, cb),
-				cb.equal(root.get(Task_.applicationEntityId).get(BaseEntity_.id), bc.getParentIdAsLong())
-		);
-
 	}
 
 }
