@@ -51,7 +51,9 @@ public class DictionaryConfig {
                         .map(e -> Dictionary.of(dictionaryType, e.getKey()))
                         .toList();
             }
+
         };
     }
+
 
 }
