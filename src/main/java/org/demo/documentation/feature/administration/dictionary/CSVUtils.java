@@ -22,7 +22,7 @@ public class CSVUtils {
 		try (FileWriter writer = new FileWriter(tmpFile)) {
 			writer.write(csv);
 		}
-		return new FileDownloadDto(
+		FileDownloadDto fileDownloadDto = new FileDownloadDto(
 				() -> {
 					try {
 						return new FileInputStream(tmpFile);
@@ -34,6 +34,7 @@ public class CSVUtils {
 				name,
 				"text/csv"
 		);
+		return fileDownloadDto;
 	}
 
 	private static String convertToCSV(@NonNull List<String> data, @NonNull String delimiter) {
