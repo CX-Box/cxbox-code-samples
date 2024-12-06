@@ -5,17 +5,15 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.fields.dictionary.dictionarylov.anysorce.dictionaryanysource.MyExample380Service;
+
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample381Controller implements EnumBcIdentifier {
 
-    // @formatter:on
-    myexample380(MyExample380Service.class),
+
     myexample381(MyExample381Service.class);
 
-    // @formatter:on
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample381Controller> Holder = new Holder<>(
             CxboxMyExample381Controller.class);
