@@ -21,7 +21,7 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 	private final ExecutorRepository repository;
 
 	public MyExample5555ExecutorService(ExecutorRepository repository) {
-		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorPickMeta.class);
+		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorMeta.class);
 		this.repository = repository;
 	}
 

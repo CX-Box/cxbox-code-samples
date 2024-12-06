@@ -15,12 +15,12 @@ import org.demo.documentation.other.savewithparent.example5.repositories.Executo
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyExample5555ExecutorPickService extends VersionAwareResponseService<ExecutorDTO, Executor> {
+public class MyExample5555TaskExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
 	private final ExecutorRepository repository;
 
-	public MyExample5555ExecutorPickService(ExecutorRepository repository) {
-		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorPickMeta.class);
+	public MyExample5555TaskExecutorService(ExecutorRepository repository) {
+		super(ExecutorDTO.class, Executor.class, null, MyExample5555TaskExecutorMeta.class);
 		this.repository = repository;
 	}
 

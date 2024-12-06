@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MyExample5555ExecutorPickMeta extends FieldMetaBuilder<ExecutorDTO> {
+public class MyExample5555ExecutorMeta extends FieldMetaBuilder<ExecutorDTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<ExecutorDTO> fields, InnerBcDescription bcDescription,
