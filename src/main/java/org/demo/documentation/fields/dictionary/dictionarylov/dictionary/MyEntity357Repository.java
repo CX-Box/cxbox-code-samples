@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 
 import org.cxbox.model.dictionary.entity.DictionaryItem;
 import org.springframework.data.jpa.repository.JpaRepository;

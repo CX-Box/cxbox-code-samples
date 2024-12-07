@@ -1,11 +1,11 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.feature.administration.dictionary.example.ClientImportance;
-import org.demo.documentation.feature.administration.dictionary.example.MyEntity356;
-import org.demo.documentation.feature.administration.dictionary.example.MyEntity356Repository;
+import org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example.ClientImportance;
+import org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example.MyEntity356;
+import org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example.MyEntity356Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 import lombok.Getter;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.dictionary.entity.DictionaryTypeDesc;

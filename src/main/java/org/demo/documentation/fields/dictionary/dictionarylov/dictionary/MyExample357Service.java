@@ -1,14 +1,19 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 
 import jakarta.persistence.EntityManager;
+import lombok.SneakyThrows;
 import org.cxbox.api.data.dictionary.DictionaryCache;
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.api.service.LocaleService;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.exception.BusinessException;
+import org.cxbox.core.file.dto.FileDownloadDto;
+import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.api.TranslationId;
@@ -17,10 +22,14 @@ import org.cxbox.model.dictionary.entity.DictionaryItemTranslation;
 import org.cxbox.model.dictionary.entity.DictionaryItem_;
 import org.cxbox.model.dictionary.entity.DictionaryTypeDesc;
 import org.hibernate.exception.ConstraintViolationException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +44,9 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
 
     @Autowired
     private LocaleService localeService;
+
+    @Autowired
+    private CxboxFileService cxboxFileService;
 
     public MyExample357Service(MyEntity357Repository repository) {
         super(DictionaryItemDTO.class, DictionaryItem.class, null, MyExample357Meta.class);
@@ -71,13 +83,21 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:updateEntity]
+    @Override
+    public ActionResultDTO<DictionaryItemDTO> updateEntity(BusinessComponent bc, DataResponseDTO data) {
+        var result = super.updateEntity(bc, data);
+        validate(bc, result);
+        return result;
+    }
+    // --8<-- [end:updateEntity]
 
     // --8<-- [start:getActions]
     @Override
     public Actions<DictionaryItemDTO> getActions() {
         return Actions.<DictionaryItemDTO>builder()
                 .action(act -> act
-                        .action("reload-cache", "Clear Cache")
+                        .action("clear-cache", "Clear Cache")
                         .scope(ActionScope.BC)
                         .invoker((bc, data) -> {
                             // This will not work in cluster (>1 app nodes).
@@ -85,6 +105,12 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
                             dictionaryCache.reload();
                             return new ActionResultDTO<>();
                         }))
+                .action(act -> act
+                        .action("export_liquibase", "Export")
+                        .scope(ActionScope.BC)
+                        .invoker((data, bc) -> new ActionResultDTO<DictionaryItemDTO>()
+                                .setAction(PostAction.downloadFile(cxboxFileService.upload(toCsv(), null))))
+                )
                 .create(crt -> crt.text("Create"))
                 .cancelCreate(ccr -> ccr.text("Cancel"))
                 .save(sv -> sv.text("Save"))
@@ -115,4 +141,28 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
     }
     // --8<-- [end:validate]
 
+    // --8<-- [start:toCsv]
+    @SneakyThrows
+    @NotNull
+    private FileDownloadDto toCsv() {
+        String name = "DICTIONARY.csv";
+        var header = List.of("TYPE", "KEY", "VALUE", "DISPLAY_ORDER", "DESCRIPTION", "ACTIVE", "ID");
+        var body = repository.findAll().stream()
+                .sorted(Comparator.comparing(DictionaryItem::getType)
+                        .thenComparing(dictionaryItem -> Optional.ofNullable(dictionaryItem.getDisplayOrder()).orElse(Integer.MAX_VALUE))
+                        .thenComparing(DictionaryItem::getValue)
+                        .thenComparing(DictionaryItem::getId)
+                )
+                .map(e -> List.of(
+                        e.getType(),
+                        e.getKey(),
+                        e.getValue(),
+                        Optional.ofNullable(e.getDisplayOrder()).map(d -> "" + d).orElse(""),
+                        e.getDescription(),
+                        e.isActive() ? "" : "false",
+                        ""
+                ));
+        return CSVUtils.toCsv(header, body, name, ";");
+    }
+    // --8<-- [end:toCsv]
 }
