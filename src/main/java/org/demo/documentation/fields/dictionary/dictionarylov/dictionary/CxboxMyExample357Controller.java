@@ -1,22 +1,23 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.feature.administration.dictionary.example.MyExample356Service;
+import org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example.MyExample356Service;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample357Controller implements EnumBcIdentifier {
 
-    // @formatter:on
+
     myexample356(MyExample356Service.class),
+    // --8<-- [start:bc]
     myexample357(MyExample357Service.class),
         dictionaryTypeDescPick(myexample357, DictionaryTypeDescPickService.class);
+    // --8<-- [start:bc]
 
-    // @formatter:on
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample357Controller> Holder = new Holder<>(
             CxboxMyExample357Controller.class);

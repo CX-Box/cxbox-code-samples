@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.administration.dictionary;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary;
 
 import jakarta.persistence.EntityManager;
 import lombok.SneakyThrows;
@@ -83,13 +83,14 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:updateEntity]
     @Override
     public ActionResultDTO<DictionaryItemDTO> updateEntity(BusinessComponent bc, DataResponseDTO data) {
         var result = super.updateEntity(bc, data);
         validate(bc, result);
         return result;
     }
-
+    // --8<-- [end:updateEntity]
 
     // --8<-- [start:getActions]
     @Override
@@ -139,6 +140,8 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
         }
     }
     // --8<-- [end:validate]
+
+    // --8<-- [start:toCsv]
     @SneakyThrows
     @NotNull
     private FileDownloadDto toCsv() {
@@ -161,4 +164,5 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
                 ));
         return CSVUtils.toCsv(header, body, name, ";");
     }
+    // --8<-- [end:toCsv]
 }

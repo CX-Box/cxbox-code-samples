@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.administration.dictionary.example;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;

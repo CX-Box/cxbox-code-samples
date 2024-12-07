@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.administration.dictionary.example;
+package org.demo.documentation.fields.dictionary.dictionarylov.dictionary.example;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
