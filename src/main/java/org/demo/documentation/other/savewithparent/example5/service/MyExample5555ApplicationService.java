@@ -9,7 +9,6 @@ import org.demo.documentation.other.savewithparent.example5.dto.ApplicationEntit
 import org.demo.documentation.other.savewithparent.example5.dto.ApplicationEntityDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
-import org.demo.documentation.other.savewithparent.example5.meta.ApplicationMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,8 @@ public class MyExample5555ApplicationService extends
 
 	private final ApplicationRepository repository;
 
-
 	public MyExample5555ApplicationService(ApplicationRepository repository) {
-		super(ApplicationEntityDTO.class, ApplicationEntity.class, null, ApplicationMeta.class);
+		super(ApplicationEntityDTO.class, ApplicationEntity.class, null, MyExample5555ApplicationMeta.class);
 		this.repository = repository;
 	}
 
@@ -38,16 +36,15 @@ public class MyExample5555ApplicationService extends
 		setIfChanged(data, ApplicationEntityDTO_.name, entity::setName);
 		setIfChanged(data, ApplicationEntityDTO_.status, entity::setStatus);
 		setIfChanged(data, ApplicationEntityDTO_.createdDate, entity::setCreatedDate);
-		repository.save(entity);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
 	@Override
 	public Actions<ApplicationEntityDTO> getActions() {
 		return Actions.<ApplicationEntityDTO>builder()
-				.create().text("Add").add()
-				.save().text("Save").add()
-				.delete().text("Delete").add()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.delete(dlt -> dlt.text("Delete"))
 				.build();
 	}
 

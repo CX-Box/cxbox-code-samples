@@ -1,0 +1,46 @@
+{
+  "name": "taskEditForm",
+  "title": "TaskEdit",
+  "type": "Form",
+  "bc": "task",
+  "fields": [
+    {
+      "label": "Name",
+      "key": "name",
+      "type": "input"
+    },
+    {
+      "label": "Status",
+      "key": "status",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "name",
+              "span": 10
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "status",
+              "span": 10
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    }
+  }
+}

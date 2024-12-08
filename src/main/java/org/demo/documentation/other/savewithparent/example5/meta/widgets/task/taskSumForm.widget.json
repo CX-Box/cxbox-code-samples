@@ -1,0 +1,62 @@
+{
+  "name": "taskSumForm",
+  "title": "",
+  "type": "Form",
+  "bc": "task",
+  "fields": [
+    {
+      "label": "Importance",
+      "key": "importance",
+      "type": "dictionary"
+    },
+    {
+      "label": "Status",
+      "key": "status",
+      "type": "dictionary"
+    },
+    {
+      "label": "Executor",
+      "key": "executorName",
+      "type": "pickList",
+      "popupBcName": "taskExecutor",
+      "pickMap": {
+        "executorId": "id",
+        "executorName": "name"
+      }
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "executorName",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "importance",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "status",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+      ]
+    }
+  }
+}

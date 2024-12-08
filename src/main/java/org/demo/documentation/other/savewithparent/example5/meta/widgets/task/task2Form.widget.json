@@ -1,0 +1,40 @@
+{
+  "name": "task2Form",
+  "title": "",
+  "type": "Form",
+  "bc": "task",
+  "fields": [
+    {
+      "label": "Executor",
+      "key": "executorId",
+      "type": "pickList",
+      "popupBcName": "taskExecutor",
+      "pickMap": {
+        "executorId": "id",
+        "executorName": "name"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel",
+        "nextTaskDocument",
+        "save-send-application"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "executorId",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

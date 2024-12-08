@@ -21,7 +21,6 @@ public class Task extends BaseEntity {
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "application_id")
 	private ApplicationEntity applicationEntityId;
 
 	@Enumerated(value = EnumType.STRING)
@@ -33,16 +32,12 @@ public class Task extends BaseEntity {
 	private StatusEnum status;
 
 	@Column
-	private String file;
-
-	@Column
-	private String fileId;
-
-	@Column
 	private String comment;
 
 	@JoinColumn(name = "executor_id")
 	@ManyToOne
 	private Executor executorId;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+	private List<TaskDocument> documents;
 }
