@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.anysorce;
+package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

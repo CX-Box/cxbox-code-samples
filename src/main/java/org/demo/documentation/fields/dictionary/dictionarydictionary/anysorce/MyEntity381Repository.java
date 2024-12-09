@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.anysorce;
+package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -139,29 +139,8 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
             throw e;
         }
     }
+
     // --8<-- [end:validate]
-    @SneakyThrows
-    @NotNull
-    private FileDownloadDto toCsv() {
-        String name = "DICTIONARY.csv";
-        var header = List.of("TYPE", "KEY", "VALUE", "DISPLAY_ORDER", "DESCRIPTION", "ACTIVE", "ID");
-        var body = repository.findAll().stream()
-                .sorted(Comparator.comparing(DictionaryItem::getType)
-                        .thenComparing(dictionaryItem -> Optional.ofNullable(dictionaryItem.getDisplayOrder()).orElse(Integer.MAX_VALUE))
-                        .thenComparing(DictionaryItem::getValue)
-                        .thenComparing(DictionaryItem::getId)
-                )
-                .map(e -> List.of(
-                        e.getType(),
-                        e.getKey(),
-                        e.getValue(),
-                        Optional.ofNullable(e.getDisplayOrder()).map(d -> "" + d).orElse(""),
-                        e.getDescription(),
-                        e.isActive() ? "" : "false",
-                        ""
-                ));
-        return CSVUtils.toCsv(header, body, name, ";");
-    }
 
     // --8<-- [start:toCsv]
     @SneakyThrows

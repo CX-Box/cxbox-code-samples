@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.anysorce;
+package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;

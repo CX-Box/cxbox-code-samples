@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.dictionary.dictionarylov.anysorce;
+package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

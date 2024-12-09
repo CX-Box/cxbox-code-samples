@@ -8,13 +8,6 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample380ExternalDTO;
 import org.demo.documentation.feature.microservice.microservicestoringdata.mapper.MyEntity380Mapper;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity380Repository;
-import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity380;
-import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity380_;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
