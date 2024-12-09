@@ -1,7 +1,5 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata.controller;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -14,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
-
 @Transactional
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest/api/microservices/v1/myentity380")
-public class DictionaryEntity380Controller {
+public class DictionaryEntity380ExternalController {
 
     private final MyEntity380Mapper mapper;
 
@@ -40,7 +37,7 @@ public class DictionaryEntity380Controller {
             @RequestParam("type") String type
     ) {
         authzService.loginAs(authzService.createAuthentication(VANILLA));
-        return ResponseEntity.ok().body(dataRepository.findAllByType(type).stream().map(mapper::toDto).toList());
+        return ResponseEntity.ok().body(dataRepository.findAllByTypeAndKey(type, type).map(mapper::toDto).stream().toList()jr);
     }
 
 }

@@ -14,8 +14,11 @@ import java.util.Optional;
 
 @Repository
 public interface MyEntity380Repository extends
- JpaRepository<MyEntity380, Long>, JpaSpecificationExecutor<MyEntity380>,
+        JpaRepository<MyEntity380, Long>, JpaSpecificationExecutor<MyEntity380>,
         QueryLanguageRepository<MyEntity380, Long> {
-    public Optional<MyEntity380> findAllByTypeAndKey(String type, String key);
-    public List<MyEntity380> findAllByType(String type);
+
+    Optional<MyEntity380> findAllByTypeAndKey(String type, String key);
+
+    List<MyEntity380> findAllByType(String type);
+
 }
