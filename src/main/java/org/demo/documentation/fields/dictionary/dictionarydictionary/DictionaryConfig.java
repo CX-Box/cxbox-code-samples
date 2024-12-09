@@ -1,22 +1,9 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary;
 
-/*
- * © OOO "SI IKS LAB", 2022-2023
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import lombok.NonNull;
 import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
@@ -27,10 +14,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DictionaryConfig {
-
     @Bean
-    public DictionaryProvider dictionaryProvider() {
+    DictionaryProvider dictionaryProvider() {
         return new DictionaryProvider() {
+            public List<Dictionary> getAllExternal(Class<Dictionary> type) {
+                var dictionaryType = Dictionary.of(type, "").getDictionaryType();
+
+                // ResponseEntity<RestResponsePage<DictionaryItemDTO>> tt =   dictionaryServiceCall.getAll(type);
+
+                return new ArrayList<>();
+            }
 
             @Override
             public <T extends Dictionary> T lookupName(@NonNull Class<T> type, @NonNull DictionaryValue value) {
@@ -53,5 +46,4 @@ public class DictionaryConfig {
             }
         };
     }
-
 }
