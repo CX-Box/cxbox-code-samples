@@ -37,7 +37,7 @@ public class DictionaryEntity380ExternalController {
             @RequestParam("type") String type
     ) {
         authzService.loginAs(authzService.createAuthentication(VANILLA));
-        return ResponseEntity.ok().body(dataRepository.findAllByTypeAndKey(type, type).map(mapper::toDto).stream().toList()jr);
+        return ResponseEntity.ok().body(dataRepository.findAllByTypeAndKey(type, type).map(mapper::toDto).stream().toList());
     }
 
 }

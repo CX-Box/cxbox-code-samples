@@ -23,7 +23,7 @@ public class DictionaryProvider2 implements DictionaryProvider
         public List<Dictionary> getAllExternal(Class<Dictionary> type) {
         var dictionaryType = Dictionary.of(type, "").getDictionaryType();
 
-        ResponseEntity<RestResponsePage<DictionaryItemDTO>> tt =   dictionaryServiceCall.getAll(type);
+      //  ResponseEntity<RestResponsePage<DictionaryItemDTO>> tt =   dictionaryServiceCall.getAll(type);
 
         return  new ArrayList<>();
     }
