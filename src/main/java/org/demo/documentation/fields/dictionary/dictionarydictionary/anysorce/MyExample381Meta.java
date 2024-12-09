@@ -13,6 +13,8 @@ public class MyExample381Meta extends FieldMetaBuilder<MyExample381DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample381DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample381DTO_.customField);
+
+        fields.setDictionaryValues(MyExample381DTO_.customField);
     }
 
     @Override

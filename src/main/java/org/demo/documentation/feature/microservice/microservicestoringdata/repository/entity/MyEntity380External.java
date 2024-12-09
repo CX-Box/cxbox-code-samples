@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class MyEntity380 extends BaseEntity {
+public class MyEntity380External extends BaseEntity {
 
     private String type;
     private String key;

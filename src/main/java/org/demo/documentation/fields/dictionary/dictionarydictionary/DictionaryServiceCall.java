@@ -1,50 +1,67 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary;
 
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.dictionary.Dictionary;
-import org.cxbox.dictionary.DictionaryProvider;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary.DictionaryItemDTO;
-import org.demo.services.utils.IntegrationURLBuilder;
-import org.demo.services.utils.IntegrationURLRules;
-import org.demo.services.utils.RestResponsePage;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample380ExternalDTO;
+import org.demo.documentation.fields.dictionary.dictionarydictionary.restapi.MyEntity380ExternalResponse;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import static org.springframework.http.HttpMethod.*;
-import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DictionaryServiceCall {
 
-    private final IntegrationConfiguration integrationConfig;
-
     private final RestTemplate restTemplate;
 
-    private final IntegrationURLBuilder integrationURLBuilder;
+    private final IntegrationConfiguration integrationConfig;
 
-    public  DictionaryItemDTO  getAll(final Class<Dictionary> type) {
+    public static final String TYPE = "type";
+    public static final String KEY = "key";
 
-        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDictionaryDataServerUrl());
+    public List<MyEntity380ExternalResponse> getAll(String type) {
 
-        var responseEntity = restTemplate.exchange(builder.build()
-                .normalize().encode().toUriString(),
-        GET, null, new ParameterizedTypeReference<>() {
-        });
-        return (DictionaryItemDTO) responseEntity.getBody();
+        Map<String, String> params = new HashMap<>();
+        params.put(TYPE, type);
+
+        ResponseEntity<List<MyEntity380ExternalResponse>> response = restTemplate.exchange(
+                fromUriString(integrationConfig.getDictionaryDataServerUrl() + "/all?type={type}").build(params).normalize(),
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+
+        return response.getBody();
+    }
+
+    public Optional<MyExample380ExternalDTO> getOne(String type, String key) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put(TYPE, type);
+        params.put(KEY, key);
+
+        ResponseEntity<Optional<MyExample380ExternalDTO>> response = restTemplate.exchange(
+                fromUriString(integrationConfig.getDictionaryDataServerUrl() + "/one/?type={type}&key={key}").build(params).normalize(),
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return response.getBody();
     }
 
 }
