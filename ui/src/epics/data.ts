@@ -98,7 +98,6 @@ export const bcSaveDataEpic: RootEpic = (action$, state$, { api }) =>
                     return concat(
                         of(actions.bcSaveDataSuccess({ bcName, cursor, dataItem: responseDataItem })),
                         of(actions.bcFetchRowMeta({ widgetName, bcName })),
-                        of(actions.deselectTableRow()),
                         of(...fetchChildrenBcData),
                         postInvoke
                             ? of(
