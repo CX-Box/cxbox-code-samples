@@ -16,5 +16,5 @@ public interface MyEntity3137Repository extends
         QueryLanguageRepository<MyEntity3137, Long> {
 
 
-     public List <MyEntity3137> findAllByCustomField(String customField);
+       List <MyEntity3137> findAllByCustomField(String customField);
 }

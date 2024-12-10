@@ -33,6 +33,9 @@ public class MyEntity3900TestDataLoadService {
     MyEntity3137Repository repository3137;
 
     @Autowired
+    MyEntity380ExternalRepository repository380;
+
+    @Autowired
     InternalAuthorizationService authzService;
 
     @Transactional
@@ -97,6 +100,11 @@ public class MyEntity3900TestDataLoadService {
         repository3137.save(new MyEntity3137().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)).setCustomFieldDouble(Double.valueOf(300200)));
         repository3137.save(new MyEntity3137().setCustomField("Test data11").setCustomFieldDateTime(LocalDateTime.now().minusDays(3)));
         repository3137.save(new MyEntity3137().setCustomField("Test data2"));
+
+        repository380.save(new MyEntity380External().setType("DICTIONARY_TYPE").setKey("HIGH").setValue("High").setDisplayOrder(1));
+        repository380.save(new MyEntity380External().setType("DICTIONARY_TYPE").setKey("MIDDLE").setValue("Middle").setDisplayOrder(2));
+        repository380.save(new MyEntity380External().setType("DICTIONARY_TYPE").setKey("LOW").setValue("Low").setDisplayOrder(3));
+
     }
 
 }
