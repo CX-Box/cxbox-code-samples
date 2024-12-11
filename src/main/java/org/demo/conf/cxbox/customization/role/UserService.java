@@ -3,7 +3,6 @@ package org.demo.conf.cxbox.customization.role;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxUserDetails;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
-
 import org.demo.conf.cxbox.meta.User;
 import org.demo.conf.cxbox.meta.User_;
 import org.demo.repository.UserRepository;
