@@ -5,7 +5,8 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.nio.file.*;
 
 import static org.demo.controller.SourcesGithubService.*;
 
+@Slf4j
 @RestController
 @RequestMapping(SourcesController.CONTROLLER_PATH)
 @RequiredArgsConstructor
@@ -64,7 +66,7 @@ public class SourcesController {
 
         } catch (IOException ioe) {
             response.setStatus(500);
-            ioe.printStackTrace();
+            log.error("Ops!", ioe);
         }
     }
 

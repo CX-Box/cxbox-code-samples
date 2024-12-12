@@ -71,32 +71,33 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 	@Override
 	public Actions<TaskDTO> getActions() {
 		return Actions.<TaskDTO>builder()
-				.create().text("Add").add()
-				.save().text("Save").add()
-				.action("nextTaskDocument", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<TaskDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										LINK_TASK_DOCUMENT
-								))
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.action("nextTaskDocument", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												LINK_TASK_DOCUMENT
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
 				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add()
-				.action("nextExecutor", NEXT)
-				.invoker((bc, dto) ->
-						new ActionResultDTO<TaskDTO>().setAction(
-								PostAction.drillDown(
-										DrillDownType.INNER,
-										EXECUTOR
-								))
+				.action(act -> act
+						.action("nextExecutor", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												EXECUTOR
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
 				)
-				.scope(ActionScope.BC)
-				.withoutAutoSaveBefore()
-				.add()
-				.delete().text("Delete")
-				.add()
+				.delete(dlt -> dlt.text("Delete"))
 				.build();
 
 	}

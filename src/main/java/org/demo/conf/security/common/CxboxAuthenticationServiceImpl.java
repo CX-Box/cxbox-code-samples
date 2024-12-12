@@ -16,9 +16,9 @@
 
 package org.demo.conf.security.common;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
-
 import org.demo.conf.cxbox.customization.role.UserRoleService;
 import org.demo.conf.cxbox.customization.role.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +31,9 @@ import org.springframework.stereotype.Service;
 public class CxboxAuthenticationServiceImpl implements CxboxAuthenticationService {
 
 	private final UserService userService;
+
 	private final UserRoleService userRoleService;
+
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		return loadUserByUsername(username, null);
@@ -39,7 +41,7 @@ public class CxboxAuthenticationServiceImpl implements CxboxAuthenticationServic
 
 	@SuppressWarnings("java:S5804")
 	@Override
-	public UserDetails loadUserByUsername(final String username, final String userRole) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(final String username, final Set<String> userRole) throws UsernameNotFoundException {
 		final var user = userService.getUserByLogin(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
@@ -50,5 +52,11 @@ public class CxboxAuthenticationServiceImpl implements CxboxAuthenticationServic
 						? userRoleService.getMainUserRoleKey(user)
 						: userRole
 		);
+
 	}
+
+
+
+
+
 }

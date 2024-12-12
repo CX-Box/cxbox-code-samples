@@ -57,7 +57,7 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 	@Override
 	public Actions<ExecutorDTO> getActions() {
 		return Actions.<ExecutorDTO>builder()
-				.create().text("Add").add()
+				.create(crt -> crt.text("Add"))
 				.action(act -> act
 						.action("finish", "Save")
 						.invoker((bc, dto) -> {
