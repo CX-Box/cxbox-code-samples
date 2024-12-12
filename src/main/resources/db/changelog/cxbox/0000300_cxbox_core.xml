@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd"
-  logicalFilePath="db/changelog/cxbox/0000300_cxbox_core.xml">
+  logicalFilePath="db/changelog/0000999_data.xml">
 
   <property name="app_seq_next_val" value="nextval('APP_SEQ')" dbms="postgresql"/>
   <property name="app_seq_next_val" value="APP_SEQ.NEXTVAL" dbms="oracle"/>
@@ -340,12 +340,12 @@
       <column name="ID" remarks="Идентификатор" type="NUMBER(19, 0)">
         <constraints primaryKey="true"/>
       </column>
-      <column name="INTERNAL_ROLE_CD" remarks="Роль" type="VARCHAR2(255 BYTE)"/>
-      <column name="DEPT_ID" remarks="Департмент" type="NUMBER(19, 0)"/>
-      <column name="RESPONSIBILITIES" remarks="Респонсибилити" type="VARCHAR2(255 BYTE)"/>
-      <column name="SCREENS" remarks="Доступные пользователю скрины" type="CLOB"/>
-      <column name="RESP_TYPE" type="VARCHAR2(255)"/>
-      <column defaultValueNumeric="0" name="READ_ONLY" type="BOOLEAN">
+      <column name="INTERNAL_ROLE_CD" remarks="role" type="VARCHAR2(255 BYTE)"/>
+      <column name="DEPT_ID" remarks="department" type="NUMBER(19, 0)" defaultValue="0"/>
+      <column name="RESPONSIBILITIES" remarks="responsibilities" type="VARCHAR2(255 BYTE)"/>
+      <column name="SCREENS" remarks="screens available to the user" type="java.sql.Types.CLOB"/>
+      <column name="RESP_TYPE" type="VARCHAR2(255)" defaultValue="VIEW"/>
+      <column defaultValueNumeric="0" name="READ_ONLY" type="BOOLEAN" defaultValue="false">
         <constraints nullable="false"/>
       </column>
       <column defaultValueComputed="current_timestamp" name="CREATED_DATE" remarks="Дата создания"
@@ -354,6 +354,35 @@
       </column>
       <column defaultValueComputed="current_timestamp" name="UPDATED_DATE" remarks="Дата изменения"
         type="TIMESTAMP(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueNumeric="1" name="CREATED_BY_USER_ID" type="NUMBER(19, 0)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueNumeric="1" name="LAST_UPD_BY_USER_ID" type="NUMBER(19, 0)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueNumeric="0" name="VSTAMP" type="NUMBER(19, 0)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="cxbox" id="RESPONSIBILITIES_ACTION TABLE">
+    <createTable remarks="ROLE_ACTION" tableName="RESPONSIBILITIES_ACTION">
+      <column name="ID" remarks="ID" type="NUMBER(19, 0)">
+        <constraints primaryKey="true"/>
+      </column>
+
+      <column name="INTERNAL_ROLE_CD" type="VARCHAR2(255)"/>
+      <column name="ACTION" type="VARCHAR2(255)"/>
+      <column name="VIEW" type="VARCHAR2(255)"/>
+      <column name="WIDGET" type="VARCHAR2(255)"/>
+
+      <column defaultValueComputed="current_timestamp" name="CREATED_DATE" type="TIMESTAMP(6)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="current_timestamp" name="UPDATED_DATE" type="TIMESTAMP(6)">
         <constraints nullable="false"/>
       </column>
       <column defaultValueNumeric="1" name="CREATED_BY_USER_ID" type="NUMBER(19, 0)">
@@ -566,6 +595,14 @@
     <addPrimaryKey columnNames="ID, LANGUAGE" constraintName="DICTIONARY_ITEM_TR_PK"
       forIndexName="DICTIONARY_ITEM_TR_PK" tableName="DICTIONARY_ITEM_TR"/>
   </changeSet>
+  <changeSet author="cxbox" id="DICTIONARY_ITEM_TR INDEXES" dbms="postgresql">
+    <createIndex indexName="DICTIONARY_ITEM_IND3" tableName="DICTIONARY_ITEM_TR" unique="true">
+      <column name="ID"/>
+      <column name="LANGUAGE"/>
+    </createIndex>
+    <addPrimaryKey columnNames="ID, LANGUAGE" constraintName="DICTIONARY_ITEM_TR_PK"
+      tableName="DICTIONARY_ITEM_TR"/>
+  </changeSet>
 
   <changeSet author="cxbox" id="USERS INDEXES">
     <addUniqueConstraint columnNames="LOGIN" constraintName="UK_LOGIN_NAME" tableName="USERS"/>
@@ -639,6 +676,13 @@
         name="CASE &quot;TYPE&quot; WHEN 'BC' THEN &quot;BC_NAME&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; WHEN 'LINK' THEN &quot;BC_NAME&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; WHEN 'SECURITY' THEN &quot;ROLE_CD&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; ELSE NULL END"/>
     </createIndex>
   </changeSet>
+  <changeSet author="cxbox" dbms="postgresql" id="SEARCH_SPEC INDEXES">
+    <createIndex indexName="SEARCH_SPEC_SVC_NAME_FK" tableName="SEARCH_SPEC" unique="true">
+      <column computed="true"
+        name="(CASE 'TYPE' WHEN 'BC' THEN 'BC_NAME' || 'NAME' || 'SERVICE_NAME' WHEN 'LINK' THEN 'BC_NAME' || 'NAME' || 'SERVICE_NAME' WHEN 'SECURITY' THEN 'ROLE_CD' || 'NAME' || 'SERVICE_NAME' ELSE NULL END)"/>
+    </createIndex>
+  </changeSet>
+
   <changeSet author="cxbox" id="DICTIONARY_ITEM CONSTRAINTS">
     <addForeignKeyConstraint baseColumnNames="DICTIONARY_TYPE_ID" baseTableName="DICTIONARY_ITEM"
       constraintName="CONS_DICTIONARY_TYPE_ID" deferrable="true" initiallyDeferred="true"

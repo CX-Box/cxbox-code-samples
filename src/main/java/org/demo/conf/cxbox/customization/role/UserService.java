@@ -1,14 +1,15 @@
 package org.demo.conf.cxbox.customization.role;
 
+import java.util.Collections;
+import java.util.Set;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxUserDetails;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
-import org.demo.conf.cxbox.meta.User;
-import org.demo.conf.cxbox.meta.User_;
-import org.demo.repository.UserRepository;
+import org.demo.entity.core.User;
+import org.demo.entity.core.User_;
+import org.demo.repository.core.UserRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +23,11 @@ public class UserService {
 		).orElse(null);
 	}
 
-	public CxboxUserDetailsInterface createUserDetails(final User user, final String userRole) {
+	public CxboxUserDetailsInterface createUserDetails(@NonNull final User user, @NonNull final Set<String> userRole) {
 		return CxboxUserDetails.builder()
 				.id(user.getId())
 				.departmentId(user.getDepartmentId())
-				.userRole(userRole)
+				.userRoles(userRole)
 				.authorities(Collections.emptySet())
 				.build();
 	}

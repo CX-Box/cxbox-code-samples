@@ -1,12 +1,16 @@
 package org.demo.conf;
 
 import java.util.concurrent.Executors;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.config.CxboxBeanProperties;
 import org.cxbox.api.service.tx.ITransactionStatus;
-import org.cxbox.core.config.*;
+import org.cxbox.core.config.APIConfig;
+import org.cxbox.core.config.ControllerScan;
+import org.cxbox.core.config.CoreApplicationConfig;
+import org.cxbox.core.config.JacksonConfig;
+import org.cxbox.core.config.LocalizationConfig;
+import org.cxbox.core.config.UIConfig;
 import org.cxbox.core.config.properties.WidgetFieldsIdResolverProperties;
 import org.cxbox.meta.MetaApplicationConfig;
 import org.cxbox.meta.metahotreload.conf.MetaHotReloadConfiguration;

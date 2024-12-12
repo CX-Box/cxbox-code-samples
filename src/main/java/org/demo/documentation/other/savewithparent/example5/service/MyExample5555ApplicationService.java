@@ -45,9 +45,9 @@ public class MyExample5555ApplicationService extends
 	@Override
 	public Actions<ApplicationEntityDTO> getActions() {
 		return Actions.<ApplicationEntityDTO>builder()
-				.create().text("Add").add()
-				.save().text("Save").add()
-				.delete().text("Delete").add()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.delete(dlt -> dlt.text("Delete"))
 				.build();
 	}
 
