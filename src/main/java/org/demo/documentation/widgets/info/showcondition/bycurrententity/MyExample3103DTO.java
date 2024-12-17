@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 @Getter
@@ -19,10 +20,16 @@ public class MyExample3103DTO extends DataResponseDTO {
     private Long customField;
 
     private String customFieldShowCond;
+    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    private String customFieldText;
+    @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
+    private Long customFieldNumber;
 
     public MyExample3103DTO(MyEntity3103 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldShowCond = entity.getCustomField() > 5 ? "true" : "false";
+        this.customFieldText = entity.getCustomFieldText();
+        this.customFieldNumber = entity.getCustomFieldNumber();
     }
 }
