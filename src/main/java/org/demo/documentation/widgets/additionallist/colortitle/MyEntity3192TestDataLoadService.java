@@ -51,6 +51,9 @@ public class MyEntity3192TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity3196().setCustomField("test data"));
+        repository.save(new MyEntity3196().setCustomField("test data3"));
+        repository.save(new MyEntity3196().setCustomField("test data4"));
+        repository.save(new MyEntity3196().setCustomField("test data5"));
 
         CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
         MyEntity3192MultiHover myEntity1 = new MyEntity3192MultiHover().setCustomField(
