@@ -6,17 +6,22 @@ import java.util.List;
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.cxbox.core.file.dto.CxboxResponseDTO;
+import org.cxbox.core.file.dto.FileUploadDto;
 import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorRadioEnum;
 import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050InlinePicklist;
 import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050Multi;
 import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050MultiMulti;
 import org.demo.documentation.widgets.list.colortitle.forfields.MyEntity3050Picklist;
+import org.demo.services.CustomFileUploadServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class MyEntity3050TestDataLoadService {
     @Autowired
     MyEntity3050Repository repository;
@@ -30,11 +35,14 @@ public class MyEntity3050TestDataLoadService {
     @Autowired
     InternalAuthorizationService authzService;
 
+    private final CustomFileUploadServices customFileUploadServices;
+
     @Transactional
     @PostConstruct
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
         MyEntity3050Multi myEntity1 = new MyEntity3050Multi().setCustomField(
                 "Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
         MyEntity3050Multi myEntity2 = new MyEntity3050Multi().setCustomField(
@@ -65,6 +73,8 @@ public class MyEntity3050TestDataLoadService {
                 .setCustomFieldColorRadio(CustomFieldColorRadioEnum.LOW)
                 .setCustomFieldColorPicklistEntity(myEntityPick)
                 .setCustomFieldColorInput("Test data")
+                .setCustomFieldColorFileUploade(file.getData().getName())
+                .setCustomFieldColorFileUploadeId(file.getData().getId())
                 .setCustomFieldColorInlinePicklistEntity(myEntityPick2);
         repository.save(myEntity3050new.setCustomFieldColorMultivalueHoverList(list).setCustomFieldColorMultivalueList(list2));
     }

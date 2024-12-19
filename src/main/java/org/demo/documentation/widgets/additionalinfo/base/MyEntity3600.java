@@ -59,7 +59,7 @@ public class MyEntity3600 extends BaseEntity {
     @ManyToOne
     private MyEntity3600Pick2 customFieldPickListEntity;
     @Enumerated(value = EnumType.STRING)
-    @CollectionTable(name = "CUSTOM_FIELD_MULTIPLE_SELECT", joinColumns = @JoinColumn(name = "MyEntity3600_ID"))
+    @CollectionTable(name = "CUSTOM_FIELD_MULTIPLE_SELECT_3600", joinColumns = @JoinColumn(name = "MyEntity3600_ID"))
     @ElementCollection(targetClass = CustomFieldMultipleSelectEnum.class)
     @Column(name = "VALUE", nullable = false)
     private Set<CustomFieldMultipleSelectEnum> customFieldMultipleSelect = new HashSet<>();
