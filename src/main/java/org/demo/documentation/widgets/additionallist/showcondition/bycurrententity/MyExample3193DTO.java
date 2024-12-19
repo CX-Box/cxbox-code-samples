@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.additionallist.showcondition;
+package org.demo.documentation.widgets.additionallist.showcondition.bycurrententity;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.additionallist.showcondition;
+package org.demo.documentation.widgets.additionallist.showcondition.bycurrententity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
