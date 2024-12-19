@@ -8,9 +8,6 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
 
-// 3194
-// 3194
-// 3194
 
 @Entity
 @Getter
@@ -19,4 +16,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity3194 extends BaseEntity {
     @Column
     private String customField;
+    @Column
+    private String customFieldText;
 }
