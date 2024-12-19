@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.additionallist.showcondition;
+package org.demo.documentation.widgets.additionallist.showcondition.bycurrententity;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -25,6 +25,7 @@ public class MyExample3193Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3193DTO> doUpdateEntity(MyEntity3193 entity, MyExample3193DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3193DTO_.customFieldText, entity::setCustomFieldText);
         if (data.isFieldChanged(MyExample3193DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }

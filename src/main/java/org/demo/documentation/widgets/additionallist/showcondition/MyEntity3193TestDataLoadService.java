@@ -3,6 +3,8 @@ package org.demo.documentation.widgets.additionallist.showcondition;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.additionallist.showcondition.bycurrententity.MyEntity3193;
+import org.demo.documentation.widgets.additionallist.showcondition.bycurrententity.MyEntity3193Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
