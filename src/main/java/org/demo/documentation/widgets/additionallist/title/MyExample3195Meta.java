@@ -18,6 +18,7 @@ public class MyExample3195Meta extends FieldMetaBuilder<MyExample3195DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3195DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3195DTO_.customFieldText);
     }
 
 }
