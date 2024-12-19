@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.additionallist.showcondition.bycurrententity.MyExample3193Service;
 import org.springframework.stereotype.Component;
 
 @Getter
