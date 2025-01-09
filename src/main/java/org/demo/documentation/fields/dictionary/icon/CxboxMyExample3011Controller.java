@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxMyExample3011Controller implements EnumBcIdentifier {
 
-    // @formatter:on
+    
 
     myexample3011(MyExample3011Service.class), myEntity3012MultiPick(myexample3011, MyEntity3012MultiPickService.class), myEntity3011MultiPick(myexample3011, MyEntity3011MultiPickService.class), myEntity3013Pick(myexample3011, MyEntity3013PickService.class),
     myEntity3012Pick(myexample3011, MyEntity3012PickService.class);
 
-    // @formatter:on
+    
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3011Controller> Holder = new Holder<>(
             CxboxMyExample3011Controller.class);

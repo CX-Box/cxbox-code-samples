@@ -33,7 +33,7 @@ public enum CxboxRestController implements EnumBcIdentifier {
 		responsibilitiesActionSuggestion(responsibilitiesAction, ActionSuggestionAdminService.class);
 
 
-	// @formatter:on
+	
 
 	public static final EnumBcIdentifier.Holder<CxboxRestController> Holder = new Holder<>(CxboxRestController.class);
 
