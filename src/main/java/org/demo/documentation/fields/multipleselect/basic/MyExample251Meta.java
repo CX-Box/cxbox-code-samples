@@ -2,6 +2,7 @@ package org.demo.documentation.fields.multipleselect.basic;
 
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
+import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
@@ -20,9 +21,10 @@ public class MyExample251Meta extends FieldMetaBuilder<MyExample251DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample251DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
-		fields.setDictionaryTypeWithCustomValues(MyExample251DTO_.customField, Arrays.stream(CustomFieldEnum.values())
+		 fields.setConcreteValues(MyExample251DTO_.customField, Arrays.stream(CustomFieldEnum.values())
 				.map(CustomFieldEnum::getValue)
-				.toArray(String[]::new));
+				.map(e -> new SimpleDictionary(e, e))
+				.toList());
 		fields.setEnabled(MyExample251DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
