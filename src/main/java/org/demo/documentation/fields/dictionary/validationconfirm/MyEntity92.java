@@ -14,8 +14,7 @@ import org.demo.documentation.fields.dictionary.validationconfirm.enums.CustomFi
 @Getter
 @Setter
 @NoArgsConstructor
-public class
-MyEntity92 extends BaseEntity {
+public class MyEntity92 extends BaseEntity {
 
 	@Enumerated(value = EnumType.STRING)
 	@Column

@@ -27,7 +27,8 @@ public class MyExample90Service extends VersionAwareResponseService<MyExample90D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample90DTO> doUpdateEntity(MyEntity90 entity, MyExample90DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
+		setIfChanged(data, MyExample90DTO_.customFieldDictionaryCustomOrder, entity::setCustomFieldDictionaryCustomOrder);
 		if (data.isFieldChanged(MyExample90DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
