@@ -28,7 +28,7 @@ public class NumberRequiredService extends VersionAwareResponseService<NumberReq
 	@Override
 	protected ActionResultDTO<NumberRequiredDTO> doUpdateEntity(NumberRequiredEntity entity, NumberRequiredDTO data,
 			BusinessComponent bc) {
-
+		setIfChanged(data, NumberRequiredDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

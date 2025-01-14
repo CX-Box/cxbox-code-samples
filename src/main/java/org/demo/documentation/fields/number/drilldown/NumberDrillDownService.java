@@ -27,7 +27,7 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 	@Override
 	protected ActionResultDTO<NumberDrillDownDTO> doUpdateEntity(NumberDrillDownEntity entity, NumberDrillDownDTO data,
 			BusinessComponent bc) {
-
+		setIfChanged(data, NumberDrillDownDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

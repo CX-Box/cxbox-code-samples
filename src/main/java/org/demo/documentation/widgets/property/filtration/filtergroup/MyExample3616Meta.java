@@ -18,12 +18,15 @@ public class MyExample3616Meta extends FieldMetaBuilder<MyExample3616DTO> {
         fields.setRequired(MyExample3616DTO_.customField);
     }
    // --8<-- [end:buildRowDependentMeta]
+
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3616DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3616DTO_.customFieldNew);
-        fields.enableSort(MyExample3616DTO_.customFieldNew);
         fields.enableFilter(MyExample3616DTO_.customField);
+
+        fields.enableSort(MyExample3616DTO_.customFieldNew);
         fields.enableSort(MyExample3616DTO_.customField);
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }

@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.fields.number.color.NumberColorDTO_;
 import org.springframework.stereotype.Service;
 
 
@@ -29,7 +30,7 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 	@Override
 	protected ActionResultDTO<NumberConfirmDTO> doUpdateEntity(NumberConfirmEntity entity, NumberConfirmDTO data,
 			BusinessComponent bc) {
-
+		setIfChanged(data, NumberConfirmDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

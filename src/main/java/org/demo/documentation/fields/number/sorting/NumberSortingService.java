@@ -28,7 +28,7 @@ public class NumberSortingService extends VersionAwareResponseService<NumberSort
 	@Override
 	protected ActionResultDTO<NumberSortingDTO> doUpdateEntity(NumberSortingEntity entity, NumberSortingDTO data,
 			BusinessComponent bc) {
-
+		setIfChanged(data, NumberSortingDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]
