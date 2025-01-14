@@ -29,7 +29,7 @@ public class NumberPlaceholderService extends
 	@Override
 	protected ActionResultDTO<NumberPlaceholderDTO> doUpdateEntity(NumberPlaceholderEntity entity,
 			NumberPlaceholderDTO data, BusinessComponent bc) {
-
+		setIfChanged(data, NumberPlaceholderDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

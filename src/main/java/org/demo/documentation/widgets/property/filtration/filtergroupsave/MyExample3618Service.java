@@ -1,0 +1,48 @@
+package org.demo.documentation.widgets.property.filtration.filtergroupsave;
+
+import org.cxbox.core.crudma.bc.BusinessComponent;
+import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.Actions;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyExample3618Service extends VersionAwareResponseService<MyExample3618DTO, MyEntity3618> {
+
+    private final MyEntity3618Repository repository;
+
+    public MyExample3618Service(MyEntity3618Repository repository) {
+        super(MyExample3618DTO.class, MyEntity3618.class, null, MyExample3618Meta.class);
+        this.repository = repository;
+    }
+
+    @Override
+    protected CreateResult<MyExample3618DTO> doCreateEntity(MyEntity3618 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
+
+    @Override
+    protected ActionResultDTO<MyExample3618DTO> doUpdateEntity(MyEntity3618 entity, MyExample3618DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3618DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+        setIfChanged(data, MyExample3618DTO_.customFieldNew, entity::setCustomFieldNew);
+        if (data.isFieldChanged(MyExample3618DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+
+    @Override
+    public Actions<MyExample3618DTO> getActions() {
+        return Actions.<MyExample3618DTO>builder()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
+                .build();
+    }
+
+
+}
+
