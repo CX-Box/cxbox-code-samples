@@ -20,11 +20,9 @@ public class MyEntity106TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity106().setCustomField("test data").setCustomFieldDictionary(CustomDictionarySorting.HIGH));
-        repository.save(new MyEntity106().setCustomField("test data2").setCustomFieldDictionary(CustomDictionarySorting.MIDDLE));
-        repository.save(new MyEntity106().setCustomField("test data3").setCustomFieldDictionary(CustomDictionarySorting.MIDDLE));
+        repository.save(new MyEntity106().setCustomField("test data").setCustomFieldDictionary(CustomDictionarySorting.HIGH).setCustomFieldDictionaryExample(CustomDictionarySortingExample.HIGH));
+        repository.save(new MyEntity106().setCustomField("test data2").setCustomFieldDictionary(CustomDictionarySorting.MIDDLE).setCustomFieldDictionaryExample(CustomDictionarySortingExample.LOW));        repository.save(new MyEntity106().setCustomField("test data3").setCustomFieldDictionary(CustomDictionarySorting.MIDDLE));
         repository.save(new MyEntity106().setCustomField("test data4"));
-        repository.save(new MyEntity106().setCustomField("test data5"));
-    }
+        repository.save(new MyEntity106().setCustomField("test data5").setCustomFieldDictionaryExample(CustomDictionarySortingExample.HIGH));    }
 
 }
