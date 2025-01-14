@@ -1,6 +1,6 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
-import static org.demo.conf.cxbox.customization.file.CxboxSamplesMinioFileController.FILENAME_FIELD;
+import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
 
 import io.minio.MinioClient;
 import io.minio.StatObjectArgs;

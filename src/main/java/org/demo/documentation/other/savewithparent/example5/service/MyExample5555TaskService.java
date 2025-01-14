@@ -12,7 +12,7 @@ import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.meta.ui.field.WidgetName;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.conf.cxbox.extention.action.ActionsExt;
+import org.demo.conf.cxbox.extension.action.ActionsExt;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
