@@ -27,6 +27,7 @@ app:
     next-and-previous-microservices-data-server-url: ${NEXT_PAGE_1_MS_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity4002}
     suggestion-microservices-data-server-url: ${SUGGESTION_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3081}
     data-server-url: ${DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/myentity3137}
+    dictionary_data-server-url: ${DICTIONRY_DATA_SERVER_URL:http://localhost:8080/rest/api/microservices/v1/dictionary}
 cxbox:
   bean:
     multipart-resolver:
@@ -35,6 +36,8 @@ cxbox:
     dev-panel-enabled: ${DEV_PANEL_ENABLED:true}
     directory: ${META_DIRECTORY:file:./src} #value ${META_DIRECTORY:file:./src/main/resources/meta} from demo.cxbox.org changed due to .json files are placed in java packages in code samples
     view-allowed-roles-enabled: true
+    widget-action-groups-enabled: true
+    widget-action-groups-compact: true
     bc-default-page-limit: 5
   widget:
     fields:
@@ -43,10 +46,10 @@ cxbox:
       filter-by-range-enabled-default: true
   api:
     path: /api/v1
-    use-servlet-context-path: false
   ui:
     path: /ui
-    use-servlet-context-path: false
+    multi-role-enabled: false
+    drill-down-tooltip: newAndCopy
 
 server:
   port: 8080

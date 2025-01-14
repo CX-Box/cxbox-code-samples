@@ -31,6 +31,7 @@ public class MyEntity3062MultiMultivalueService extends VersionAwareResponseServ
     @Override
     protected ActionResultDTO<MyEntity3062MultiMultivalueDTO> doUpdateEntity(MyEntity3062Multi entity, MyEntity3062MultiMultivalueDTO data,
                                                                              BusinessComponent bc) {
+        setIfChanged(data, MyEntity3062MultiMultivalueDTO_.customField, entity::setCustomField);
         repository.save(entity);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

@@ -28,6 +28,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5555TaskService extends VersionAwareResponseService<TaskDTO, Task> {
 
+	private static final String EXECUTOR = "/screen/autosave/view/executor";
+
+	public static final String LINK_TASK_DOCUMENT = "/screen/autosave/view/taskDocument";
+
+	public static final String NEXT = "Next";
+
 	private final TaskRepository repository;
 
 	private final ApplicationRepository applicationRepository;
@@ -77,6 +83,33 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 	@Override
 	public Actions<TaskDTO> getActions() {
 		return Actions.<TaskDTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.action("nextTaskDocument", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												LINK_TASK_DOCUMENT
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
+				)
+				.action(act -> act
+						.action("nextExecutor", NEXT)
+						.invoker((bc, dto) ->
+								new ActionResultDTO<TaskDTO>().setAction(
+										PostAction.drillDown(
+												DrillDownType.INNER,
+												EXECUTOR
+										))
+						)
+						.scope(ActionScope.BC)
+						.withoutAutoSaveBefore()
+				)
+				.delete(dlt -> dlt.text("Delete"))
 				.save(sv -> sv.text("Save"))
 				.create(crt -> crt.text("Add"))
 				.action(act -> act

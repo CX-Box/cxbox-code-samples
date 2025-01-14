@@ -26,6 +26,10 @@ public class MyEntity3062TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi"));
+        repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi2"));
+        repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi3"));
+        repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi4"));
+        repositoryMulti.save(new MyEntity3062Multi().setCustomField("test data multi5"));
         repository.save(new MyEntity3062().setCustomFieldText("test data"));
     }
 

@@ -1,12 +1,17 @@
 package org.demo.conf;
 
 import java.util.concurrent.Executors;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.config.CxboxBeanProperties;
 import org.cxbox.api.service.tx.ITransactionStatus;
-import org.cxbox.core.config.*;
+import org.cxbox.core.config.APIConfig;
+import org.cxbox.core.config.ControllerScan;
+import org.cxbox.core.config.CoreApplicationConfig;
+import org.cxbox.core.config.JacksonConfig;
+import org.cxbox.core.config.LocalizationConfig;
+import org.cxbox.core.config.UIConfig;
+import org.cxbox.core.config.properties.WidgetFieldsIdResolverProperties;
 import org.cxbox.meta.MetaApplicationConfig;
 import org.cxbox.meta.metahotreload.conf.MetaHotReloadConfiguration;
 import org.cxbox.model.core.config.PersistenceJPAConfig;
@@ -26,7 +31,6 @@ import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
 @SuppressWarnings("java:S5122")
 @Configuration
 @RequiredArgsConstructor
@@ -44,7 +48,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaRepositories(basePackages = "org.demo")
 @EnableAsync
 @EntityScan({"org.cxbox", "org.demo"})
-@EnableConfigurationProperties(IntegrationConfiguration.class)
+@EnableConfigurationProperties({IntegrationConfiguration.class, WidgetFieldsIdResolverProperties.class})
 public class ApplicationConfig {
 
 	@Bean
@@ -55,7 +59,7 @@ public class ApplicationConfig {
 				registry
 						.addMapping("/**")
 						.allowedMethods("*")
-						.allowedOrigins("*")
+						.allowedOriginPatterns("*")
 						.allowedHeaders("*");
 			}
 

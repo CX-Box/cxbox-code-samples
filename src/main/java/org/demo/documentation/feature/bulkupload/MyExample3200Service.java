@@ -9,9 +9,10 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.file.dto.FileDownloadDto;
+import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,15 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.demo.conf.cxbox.customization.file.CxboxSamplesMinioFileController.FILENAME_FIELD;
 
 @Service
 public class MyExample3200Service extends VersionAwareResponseService<MyExample3200DTO, MyEntity3200> {
     @Autowired
-    private MinioClient minioClient;
-
-    @Value("${minio.bucket.name}")
-    private String defaultBucketName;
+    private CxboxFileService cxboxFileService;
 
     private final MyEntity3200Repository repository;
 
@@ -67,14 +64,8 @@ public class MyExample3200Service extends VersionAwareResponseService<MyExample3
             var documents = new MyEntity3200();
             var fileId = item.getId();
             documents.setCustomFieldFileId(fileId);
-            var statObjectResponse = minioClient.statObject(StatObjectArgs
-                    .builder()
-                    .bucket(defaultBucketName)
-                    .object(fileId)
-                    .build()
-            );
-            var fileName = statObjectResponse.userMetadata().get(FILENAME_FIELD);
-            documents.setCustomFieldFile(fileName);
+            FileDownloadDto download = cxboxFileService.download(fileId, null);
+            documents.setCustomFieldFile(download.getName());
             meetingDocumentsList.add(repository.save(documents));
 
         }
