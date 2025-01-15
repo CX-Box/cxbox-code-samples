@@ -1,16 +1,25 @@
 package org.demo.documentation.widgets.property.filtration.filtergroup;
 
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.property.filtration.filtergroup.forassoc.MyEntity3623;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MyExample3616Service extends VersionAwareResponseService<MyExample3616DTO, MyEntity3616> {
 
     private final MyEntity3616Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample3616Service(MyEntity3616Repository repository) {
         super(MyExample3616DTO.class, MyEntity3616.class, null, MyExample3616Meta.class);
@@ -25,6 +34,15 @@ public class MyExample3616Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3616DTO> doUpdateEntity(MyEntity3616 entity, MyExample3616DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3616DTO_.customFieldMultivalue)) {
+            entity.getCustomFieldMultivalueList().clear();
+            entity.getCustomFieldMultivalueList().addAll(data.getCustomFieldMultivalue().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3623.class, e))
+                    .collect(Collectors.toList()));
+        }
         if (data.isFieldChanged(MyExample3616DTO_.customFieldNew)) {
             entity.setCustomFieldNew(data.getCustomFieldNew());
         }
@@ -34,7 +52,7 @@ public class MyExample3616Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3616DTO> getActions() {
         return Actions.<MyExample3616DTO>builder()
@@ -45,5 +63,5 @@ public class MyExample3616Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
