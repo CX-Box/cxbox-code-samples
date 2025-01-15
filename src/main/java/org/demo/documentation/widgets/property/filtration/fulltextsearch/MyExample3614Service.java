@@ -1,13 +1,20 @@
 package org.demo.documentation.widgets.property.filtration.fulltextsearch;
 
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
+import org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
@@ -15,6 +22,8 @@ import static org.cxbox.api.data.dao.SpecificationUtils.and;
 public class MyExample3614Service extends VersionAwareResponseService<MyExample3614DTO, MyEntity3614> {
 
     private final MyEntity3614Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample3614Service(MyEntity3614Repository repository) {
         super(MyExample3614DTO.class, MyEntity3614.class, null, MyExample3614Meta.class);
@@ -29,6 +38,15 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3614DTO> doUpdateEntity(MyEntity3614 entity, MyExample3614DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3614DTO_.customFieldMultivalueDisplayedKey)) {
+            entity.getCustomFieldMultivalueDisplayedKeyList().clear();
+            entity.getCustomFieldMultivalueDisplayedKeyList().addAll(data.getCustomFieldMultivalueDisplayedKey().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3625.class, e))
+                    .collect(Collectors.toList()));
+        }
         if (data.isFieldChanged(MyExample3614DTO_.address)) {
             entity.setAddress(data.getAddress());
         }
@@ -41,7 +59,7 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3614DTO> getActions() {
         return Actions.<MyExample3614DTO>builder()
@@ -52,6 +70,7 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
+
     // --8<-- [start:getSpecification]
     @Override
     protected Specification<MyEntity3614> getSpecification(BusinessComponent bc) {

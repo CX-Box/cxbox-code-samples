@@ -1,16 +1,25 @@
 package org.demo.documentation.widgets.property.filtration.filtergroupsave;
 
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.MyEntity3624;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MyExample3618Service extends VersionAwareResponseService<MyExample3618DTO, MyEntity3618> {
 
     private final MyEntity3618Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample3618Service(MyEntity3618Repository repository) {
         super(MyExample3618DTO.class, MyEntity3618.class, null, MyExample3618Meta.class);
@@ -25,6 +34,15 @@ public class MyExample3618Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3618DTO> doUpdateEntity(MyEntity3618 entity, MyExample3618DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3618DTO_.customFieldMultivalueDisplayedKey)) {
+            entity.getCustomFieldMultivalueDisplayedKeyList().clear();
+            entity.getCustomFieldMultivalueDisplayedKeyList().addAll(data.getCustomFieldMultivalueDisplayedKey().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3624.class, e))
+                    .collect(Collectors.toList()));
+        }
         setIfChanged(data, MyExample3618DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
         setIfChanged(data, MyExample3618DTO_.customFieldNew, entity::setCustomFieldNew);
         if (data.isFieldChanged(MyExample3618DTO_.customField)) {
