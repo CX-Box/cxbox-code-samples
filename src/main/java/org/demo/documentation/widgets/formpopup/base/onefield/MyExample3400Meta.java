@@ -9,20 +9,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyExample3400Meta extends FieldMetaBuilder<MyExample3400DTO> {
-// --8<-- [start:buildRowDependentMeta]
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3400DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3400DTO_.customFieldInlinePicklistId);
+        fields.setEnabled(MyExample3400DTO_.customFieldInlinePicklist);
         fields.setEnabled(MyExample3400DTO_.customField2);
         fields.setEnabled(MyExample3400DTO_.customField);
     }
-   // --8<-- [end:buildRowDependentMeta]
-  
-   // --8<-- [start:buildIndependentMeta]
-  @Override
+    // --8<-- [end:buildRowDependentMeta]
+
+    // --8<-- [start:buildIndependentMeta]
+    @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3400DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3400DTO_.customFieldInlinePicklist);
         fields.enableFilter(MyExample3400DTO_.customField2);
         fields.enableFilter(MyExample3400DTO_.customField);
     }
-   // --8<-- [end:buildIndependentMeta]
+    // --8<-- [end:buildIndependentMeta]
 }
