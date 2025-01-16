@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625;
 import org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625Repository;
+import org.demo.documentation.widgets.property.filtration.fulltextsearch.forpicklist.MyEntity3614Pick;
+import org.demo.documentation.widgets.property.filtration.fulltextsearch.forpicklist.MyEntity3614PickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class MyEntity3614TestDataLoadService {
     MyEntity3614Repository repository;
     @Autowired
     MyEntity3625Repository repository3625;
+    @Autowired
+    MyEntity3614PickRepository repository3614Pick;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -35,6 +39,11 @@ public class MyEntity3614TestDataLoadService {
         repository3625.save(new MyEntity3625().setCustomField("test data2"));
         repository3625.save(new MyEntity3625().setCustomField("test data3"));
         repository3625.save(new MyEntity3625().setCustomField("test data"));
+
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data2"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data3"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data"));
 
     }
 
