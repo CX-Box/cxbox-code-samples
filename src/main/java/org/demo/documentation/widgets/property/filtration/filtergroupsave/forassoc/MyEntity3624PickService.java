@@ -24,6 +24,7 @@ public class MyEntity3624PickService extends VersionAwareResponseService<MyEntit
     @Override
     protected ActionResultDTO<MyEntity3624PickDTO> doUpdateEntity(org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.MyEntity3624 entity, MyEntity3624PickDTO data,
                                                                   BusinessComponent bc) {
+        setIfChanged(data, MyEntity3624PickDTO_.customFieldDictionary, entity::setCustomFieldDictionary);
         return null;
     }
 

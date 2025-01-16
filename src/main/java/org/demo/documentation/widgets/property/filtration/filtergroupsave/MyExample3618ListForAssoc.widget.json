@@ -5,6 +5,11 @@
   "bc": "myexample3618",
   "fields": [
     {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
       "label": "Custom Field Multivalue",
       "key": "customFieldMultivalueDisplayedKey",
       "type": "multivalue",
@@ -14,9 +19,6 @@
     }
   ],
   "options": {
-    "actionGroups": {
-      "include": []
-    },
     "layout": {
       "rows": [
         {
@@ -30,12 +32,15 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldMultivalue",
+              "fieldKey": "customField",
               "span": 12
             }
           ]
         }
       ]
+    },
+    "actionGroups": {
+      "include": []
     }
   }
 }

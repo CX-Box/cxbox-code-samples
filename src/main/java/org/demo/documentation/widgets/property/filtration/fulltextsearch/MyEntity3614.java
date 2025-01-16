@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625;
+import org.demo.documentation.widgets.property.filtration.fulltextsearch.forpicklist.MyEntity3614Pick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +31,7 @@ public class MyEntity3614 extends BaseEntity {
             {CascadeType.PERSIST,
                     CascadeType.MERGE})
     private List<MyEntity3625> customFieldMultivalueDisplayedKeyList = new ArrayList<>();
+    @JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
+    @ManyToOne
+    private MyEntity3614Pick customFieldPicklistEntity;
 }
