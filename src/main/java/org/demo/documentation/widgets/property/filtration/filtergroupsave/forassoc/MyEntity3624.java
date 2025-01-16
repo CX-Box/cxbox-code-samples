@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.property.filtration.filtergroupsave.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.enums.CustomFieldDictionaryEnum;
 
 
 @Entity
@@ -20,4 +20,7 @@ public class MyEntity3624 extends BaseEntity {
     private String customField;
     @Column
     private String customFieldNew;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldDictionaryEnum customFieldDictionary;
 }

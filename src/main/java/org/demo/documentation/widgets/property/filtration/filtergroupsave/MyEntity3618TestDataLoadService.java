@@ -6,6 +6,8 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.widgets.property.filtration.filtergroupsave.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.MyEntity3624;
 import org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.MyEntity3624Repository;
+import org.demo.documentation.widgets.property.filtration.filtergroupsave.forpicklist.MyEntity3618Pick;
+import org.demo.documentation.widgets.property.filtration.filtergroupsave.forpicklist.MyEntity3618PickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class MyEntity3618TestDataLoadService {
 
     @Autowired
     MyEntity3624Repository repository3624;
+
+    @Autowired
+    MyEntity3618PickRepository repository3618Pick;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -42,6 +47,13 @@ public class MyEntity3618TestDataLoadService {
         repository3624.save(new MyEntity3624().setCustomField("test data 6").setCustomFieldNew("test data new 6"));
         repository3624.save(new MyEntity3624().setCustomField("test data 7").setCustomFieldNew("test data new 7"));
 
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 5").setCustomFieldNew("test data new"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 2").setCustomFieldNew("test data new 2"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 3").setCustomFieldNew("test data new 3"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 5").setCustomFieldNew("test data new 4"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 5").setCustomFieldNew("test data new 5"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 6").setCustomFieldNew("test data new 6"));
+        repository3618Pick.save(new MyEntity3618Pick().setCustomField("test data 7").setCustomFieldNew("test data new 7"));
     }
 
 }
