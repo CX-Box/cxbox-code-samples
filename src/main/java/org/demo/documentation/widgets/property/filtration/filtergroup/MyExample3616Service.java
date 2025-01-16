@@ -8,6 +8,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.property.filtration.filtergroup.forassoc.MyEntity3623;
+import org.demo.documentation.widgets.property.filtration.filtergroup.forpicklist.MyEntity3630;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,11 @@ public class MyExample3616Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3616DTO> doUpdateEntity(MyEntity3616 entity, MyExample3616DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3616DTO_.customFieldPicklistId)) {
+            entity.setCustomFieldPicklistEntity(data.getCustomFieldPicklistId() != null
+                    ? entityManager.getReference(MyEntity3630.class, data.getCustomFieldPicklistId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3616DTO_.customFieldMultivalue)) {
             entity.getCustomFieldMultivalueList().clear();
             entity.getCustomFieldMultivalueList().addAll(data.getCustomFieldMultivalue().getValues().stream()

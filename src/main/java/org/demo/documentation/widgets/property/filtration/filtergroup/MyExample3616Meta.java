@@ -13,6 +13,8 @@ public class MyExample3616Meta extends FieldMetaBuilder<MyExample3616DTO> {
     // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3616DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3616DTO_.customFieldPicklistId);
+        fields.setEnabled(MyExample3616DTO_.customFieldPicklist);
         fields.setEnabled(MyExample3616DTO_.customFieldMultivalue);
         fields.setEnabled(MyExample3616DTO_.customFieldNew);
         fields.setEnabled(MyExample3616DTO_.customField);
@@ -23,6 +25,7 @@ public class MyExample3616Meta extends FieldMetaBuilder<MyExample3616DTO> {
     // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3616DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3616DTO_.customFieldPicklist);
         fields.enableFilter(MyExample3616DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3616DTO_.customFieldNew);
         fields.enableFilter(MyExample3616DTO_.customField);
