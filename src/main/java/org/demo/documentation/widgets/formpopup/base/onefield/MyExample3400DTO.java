@@ -25,6 +25,8 @@ public class MyExample3400DTO extends DataResponseDTO {
     private String customFieldInlinePicklist;
     @SearchParameter(name = "customFieldInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePicklistId;
+    @SearchParameter(name = "customFieldRequired", provider = StringValueProvider.class)
+    private String customFieldRequired;
 
     public MyExample3400DTO(MyEntity3400 entity) {
         this.id = entity.getId().toString();
@@ -36,5 +38,6 @@ public class MyExample3400DTO extends DataResponseDTO {
         this.customFieldInlinePicklist = Optional.ofNullable(entity.getCustomFieldInlinePicklistEntity())
                 .map(e -> e.getCustomField())
                 .orElse(null);
+        this.customFieldRequired = entity.getCustomFieldRequired();
     }
 }

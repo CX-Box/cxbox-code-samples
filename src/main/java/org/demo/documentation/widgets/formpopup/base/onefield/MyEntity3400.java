@@ -25,4 +25,6 @@ public class MyEntity3400 extends BaseEntity {
     @JoinColumn(name = "CUSTOM_FIELD_INLINE_PICKLIST_ID")
     @ManyToOne
     private MyEntity3400InlinePicklist customFieldInlinePicklistEntity;
+    @Column
+    private String customFieldRequired;
 }

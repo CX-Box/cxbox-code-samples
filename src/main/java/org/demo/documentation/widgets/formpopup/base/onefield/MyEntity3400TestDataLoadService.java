@@ -28,7 +28,7 @@ public class MyEntity3400TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3400().setCustomField("Text for approval"));
+        repository.save(new MyEntity3400().setCustomField("Text for approval").setCustomFieldRequired("Test"));
         repository3400.save(new MyEntity3400InlinePicklist().setCustomField("Test1"));
         repository3400.save(new MyEntity3400InlinePicklist().setCustomField("Test2"));
         repository3400.save(new MyEntity3400InlinePicklist().setCustomField("Test3"));
