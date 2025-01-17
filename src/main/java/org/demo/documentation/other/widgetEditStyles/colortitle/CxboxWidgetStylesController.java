@@ -21,8 +21,8 @@ public enum CxboxWidgetStylesController implements EnumBcIdentifier {
     widgetStylesInlinePicklistPickListPopup(widgetStyles, WidgetStylesInlinePicklistPickService.class),
     widgetStylesMultiMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultiMultivalueService.class),
     widgetStylesMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultivalueService.class),
-    widgetStylesNone(widgetStyles, WidgetStylesService.class);
-
+    widgetStylesNone(widgetStyles, WidgetStylesService.class),
+        widgetStylesPicklistPickListPopupNone(widgetStylesNone, WidgetStylesPicklistPickService.class);
 
 
     public static final EnumBcIdentifier.Holder<CxboxWidgetStylesController> Holder = new Holder<>(

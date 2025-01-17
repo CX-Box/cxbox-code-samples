@@ -12,9 +12,12 @@ import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO;
@@ -73,19 +76,18 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
-	@Override
-	public Actions<TaskDocumentDTO> getActions() {
-		return Actions.<TaskDocumentDTO>builder()
-				.create(crt -> crt.text("Add"))
-				.save(sv -> sv.text("Save"))
-				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-				.delete(dlt -> dlt.text("Delete"))
-				.associate(ast -> ast
-						.withCustomParameter(Map.of("subtype", "multiFileUpload"))
-						.text("Add Files")
-				)
-				.build();
-	}
+    @Override
+    public Actions<TaskDocumentDTO> getActions() {
+        return Actions.<TaskDocumentDTO>builder()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
+                .associate(ast -> ast
+                        .withCustomParameter(Map.of("subtype", "multiFileUpload"))
+                        .text("Add Files")
+                ).build();
+    }
 
 	@Override
 	protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {
