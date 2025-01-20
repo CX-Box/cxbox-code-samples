@@ -7,6 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.fields.dictionary.dictionarydictionary.basic.MyExample352DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample106Meta extends FieldMetaBuilder<MyExample106DTO> {
     // --8<-- [start:buildRowDependentMeta]

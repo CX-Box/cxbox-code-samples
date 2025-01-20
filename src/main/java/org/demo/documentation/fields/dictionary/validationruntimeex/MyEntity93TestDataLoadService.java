@@ -7,6 +7,7 @@ import org.demo.documentation.fields.dictionary.validationruntimeex.enums.Custom
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity93TestDataLoadService {
 

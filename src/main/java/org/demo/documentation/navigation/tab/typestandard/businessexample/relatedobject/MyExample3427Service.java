@@ -12,6 +12,7 @@ import org.demo.documentation.navigation.tab.typestandard.businessexample.task.M
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3427Service extends VersionAwareResponseService<MyExample3427DTO, MyEntity3427> {
 

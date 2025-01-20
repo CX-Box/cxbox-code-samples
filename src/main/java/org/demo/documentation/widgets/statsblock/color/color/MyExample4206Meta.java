@@ -8,6 +8,7 @@ import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4206Meta extends AnySourceFieldMetaBuilder<MyExample4206DTO> {
 

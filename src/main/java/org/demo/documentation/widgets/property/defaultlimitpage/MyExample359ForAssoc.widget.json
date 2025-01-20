@@ -1,0 +1,47 @@
+{
+  "name": "MyExample359ForAssoc",
+  "title": "AssocListPopup widget",
+  "type": "Form",
+  "bc": "myexample359",
+  "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Multivalue",
+      "key": "customFieldMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueDisplayedKey",
+      "popupBcName": "myEntity359AssocPick",
+      "assocValueKey": "customField"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultivalue",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": []
+    }
+  }
+}
+

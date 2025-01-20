@@ -11,6 +11,7 @@ import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO;
 import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3118Service extends VersionAwareResponseService<MyExample3118DTO, MyEntity3118> {
 

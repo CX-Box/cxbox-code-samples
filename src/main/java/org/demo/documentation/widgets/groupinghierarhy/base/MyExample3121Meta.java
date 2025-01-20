@@ -10,6 +10,7 @@ import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldDic
 import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldRadioEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3121Meta extends FieldMetaBuilder<MyExample3121DTO> {
 

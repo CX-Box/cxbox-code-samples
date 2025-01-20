@@ -13,6 +13,7 @@ import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161R
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3160TestDataLoadService {
 

@@ -12,6 +12,7 @@ import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161Repository;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3162Service extends VersionAwareResponseService<MyExample3162DTO, MyEntity3162> {
 

@@ -25,6 +25,7 @@ import org.demo.documentation.other.savewithparent.example5.repositories.TaskRep
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample5555TaskService extends VersionAwareResponseService<TaskDTO, Task> {
 

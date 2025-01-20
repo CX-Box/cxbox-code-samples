@@ -9,6 +9,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.other.savewithparent.example3.CxboxMyExample3422Controller;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3423Meta extends FieldMetaBuilder<MyExample3423DTO> {
 

@@ -10,6 +10,7 @@ import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorDict
 import org.demo.documentation.widgets.list.colortitle.enums.CustomFieldColorRadioEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3050Meta extends FieldMetaBuilder<MyExample3050DTO> {
 

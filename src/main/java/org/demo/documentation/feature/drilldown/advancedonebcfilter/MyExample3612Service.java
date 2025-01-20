@@ -8,6 +8,7 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.drilldown.advancedonebcfilter.MyExample3612DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3612Service extends VersionAwareResponseService<MyExample3612DTO, MyEntity3612> {
 

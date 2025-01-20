@@ -9,6 +9,7 @@ import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao;
 import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Meta;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4223Service extends AnySourceVersionAwareResponseService<MyExample4223DTO, MyExample4223DTO> {
 

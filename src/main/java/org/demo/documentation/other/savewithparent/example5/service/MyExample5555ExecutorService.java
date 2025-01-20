@@ -15,6 +15,7 @@ import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample5555ExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 

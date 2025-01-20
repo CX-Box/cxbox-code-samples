@@ -10,6 +10,7 @@ import org.cxbox.model.core.entity.BaseEntity_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3185Service extends VersionAwareResponseService<MyExample3185DTO, MyEntity3185> {
 
