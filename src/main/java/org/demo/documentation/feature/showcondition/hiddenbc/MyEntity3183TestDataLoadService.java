@@ -13,6 +13,7 @@ import org.demo.documentation.feature.showcondition.hiddenbc.parent.MyEntity3185
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3183TestDataLoadService {
 

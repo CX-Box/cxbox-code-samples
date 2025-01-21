@@ -10,6 +10,7 @@ import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Co
 import org.demo.documentation.navigation.tab.other.example5.child3.MyExample3163DTO;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3161Service extends VersionAwareResponseService<MyExample3161DTO, MyEntity3161> {
 

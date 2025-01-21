@@ -11,6 +11,7 @@ import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.CxboxMyE
 import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3621Meta extends FieldMetaBuilder<MyExample3621DTO> {
 

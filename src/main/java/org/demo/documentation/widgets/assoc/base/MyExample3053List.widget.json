@@ -1,0 +1,40 @@
+{
+  "name": "MyExample3053List",
+  "title": "List",
+  "type": "List",
+  "bc": "myexample3053",
+  "fields": [
+    {
+      "title": "Custom Field New",
+      "key": "customFieldNew",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "multivalue",
+      "displayedKey": "customFieldDisplayedKey",
+      "popupBcName": "myEntity3053MultiAssocListPopup",
+      "assocValueKey": "customField"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "associate"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

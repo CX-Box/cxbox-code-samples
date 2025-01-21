@@ -9,6 +9,7 @@ import org.demo.documentation.feature.drilldown.advancedonebcfilter.enums.Custom
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3612TestDataLoadService {
 

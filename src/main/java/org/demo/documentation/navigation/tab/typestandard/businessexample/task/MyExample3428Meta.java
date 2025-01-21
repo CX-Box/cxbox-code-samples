@@ -10,6 +10,7 @@ import org.demo.documentation.navigation.tab.typestandard.businessexample.CxboxM
 
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3428Meta extends FieldMetaBuilder<MyExample3428DTO> {
 

@@ -12,6 +12,7 @@ import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
 import org.demo.documentation.other.savewithparent.example5.repositories.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample5555ApplicationService extends
 		VersionAwareResponseService<ApplicationEntityDTO, ApplicationEntity> {

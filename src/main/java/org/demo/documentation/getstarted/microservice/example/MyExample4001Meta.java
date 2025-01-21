@@ -6,6 +6,7 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4001Meta extends AnySourceFieldMetaBuilder<MyExample4001DTO> {
 // --8<-- [start:buildRowDependentMeta]

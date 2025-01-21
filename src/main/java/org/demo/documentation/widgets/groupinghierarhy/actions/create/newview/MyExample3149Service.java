@@ -12,6 +12,7 @@ import org.demo.documentation.widgets.groupinghierarhy.actions.edit.newview.MyEn
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.newview.MyExample3167DTO;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3149Service extends VersionAwareResponseService<MyExample3149DTO, MyEntity3149> {
 

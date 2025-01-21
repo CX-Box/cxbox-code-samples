@@ -9,6 +9,7 @@ import org.demo.documentation.fields.radio.validationdynamic.enums.CustomFieldAd
 import org.demo.documentation.fields.radio.validationdynamic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample340Meta extends FieldMetaBuilder<MyExample340DTO> {
 

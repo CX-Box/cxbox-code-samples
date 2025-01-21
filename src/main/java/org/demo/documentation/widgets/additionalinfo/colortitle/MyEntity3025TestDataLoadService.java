@@ -13,6 +13,7 @@ import org.demo.documentation.widgets.additionalinfo.colortitle.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3025TestDataLoadService {
     @Autowired

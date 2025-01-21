@@ -9,6 +9,7 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.widgets.groupinghierarhy.fieldslayoute.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3140Meta extends FieldMetaBuilder<MyExample3140DTO> {
 

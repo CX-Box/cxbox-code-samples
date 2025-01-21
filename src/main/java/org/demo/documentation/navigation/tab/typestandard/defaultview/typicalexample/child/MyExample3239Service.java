@@ -17,6 +17,7 @@ import org.demo.documentation.widgets.list.actions.create.newview.MyExample3066D
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3239Service extends VersionAwareResponseService<MyExample3239DTO, MyEntity3239> {
 

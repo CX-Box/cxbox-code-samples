@@ -12,6 +12,7 @@ import org.demo.documentation.feature.showcondition.twobcshowcondition.parent.My
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3145Service extends VersionAwareResponseService<MyExample3145DTO, MyEntity3145> {
 

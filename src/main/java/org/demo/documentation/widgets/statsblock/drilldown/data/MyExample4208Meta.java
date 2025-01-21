@@ -8,6 +8,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4208Meta extends FieldMetaBuilder<MyExample4208DTO> {
 
