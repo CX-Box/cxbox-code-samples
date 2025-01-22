@@ -19,25 +19,25 @@ public class MyExample3004DTO extends DataResponseDTO {
     public static final String MULTI_COLUMN_LAYOUT_LONG_TEXT = "If the title text is long.";
     public static final String MULTI_COLUMN_LAYOUT_SUM_SPAN_TEXT = "If the sum span >24 (24+12).";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customField2", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField2")
     private String customField2;
-    @SearchParameter(name = "customField3", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField3")
     private String customField3;
-    @SearchParameter(name = "customField4", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField4")
     private String customField4;
-    @SearchParameter(name = "customField5", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField5")
     private String customField5;
-    @SearchParameter(name = "customField6", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField6")
     private String customField6;
-    @SearchParameter(name = "customField7", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField7")
     private String customField7;
-    @SearchParameter(name = "customField8", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField8")
     private String customField8;
-    @SearchParameter(name = "customField9", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField9")
     private String customField9;
-    @SearchParameter(name = "customField10", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField10")
     private String customField10;
 
 

@@ -12,19 +12,25 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 @Service
 public class MyEntity3625PickService extends VersionAwareResponseService<MyEntity3625PickDTO, org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625> {
 
-    public MyEntity3625PickService() {
+    private final MyEntity3625Repository repository;
+
+    public MyEntity3625PickService(MyEntity3625Repository repository) {
         super(MyEntity3625PickDTO.class, org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625.class, null, MyEntity3625PickMeta.class);
+        this.repository = repository;
     }
 
     @Override
     protected CreateResult<MyEntity3625PickDTO> doCreateEntity(org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625 entity, BusinessComponent bc) {
-        return null;
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
     }
+
 
     @Override
     protected ActionResultDTO<MyEntity3625PickDTO> doUpdateEntity(org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625 entity, MyEntity3625PickDTO data,
                                                                   BusinessComponent bc) {
-        return null;
+        setIfChanged(data, MyEntity3625PickDTO_.customField, entity::setCustomField);
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
 

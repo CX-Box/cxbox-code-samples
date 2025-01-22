@@ -14,13 +14,13 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample3613DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldExternal", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldExternal")
     private String customFieldExternal;
-    @SearchParameter(name = "customFieldExternalNew", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldExternalNew")
     private String customFieldExternalNew;
-    @SearchParameter(name = "customFieldRelative", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRelative")
     private String customFieldRelative;
-    @SearchParameter(name = "customFieldRelativeNew", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRelativeNew")
     private String customFieldRelativeNew;
 
     public MyExample3613DTO(MyEntity3613 entity) {

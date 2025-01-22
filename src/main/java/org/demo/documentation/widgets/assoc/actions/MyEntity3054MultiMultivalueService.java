@@ -34,7 +34,7 @@ public class MyEntity3054MultiMultivalueService extends VersionAwareResponseServ
         setIfChanged(data, MyEntity3054MultiMultivalueDTO_.customField, entity::setCustomField);
         repository.save(entity);
         return new ActionResultDTO<>(entityToDto(bc, entity)).setAction(
-                PostAction.refreshBc(bc));
+                PostAction.refreshParentBc(bc));
     }
 
     @Override

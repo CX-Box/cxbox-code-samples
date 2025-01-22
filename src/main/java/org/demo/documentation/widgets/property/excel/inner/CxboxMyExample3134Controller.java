@@ -21,8 +21,9 @@ public enum CxboxMyExample3134Controller implements EnumBcIdentifier {
         myEntity3134PickPickListPopup(myexample3134, MyEntity3134PickPickService.class),
         myEntity3134InlinePickPickListPopup(myexample3134, MyEntity3134InlinePickPickService.class),
         myEntity3134MultiAssocListPopup(myexample3134, MyEntity3134MultiMultivalueService.class),
-        myEntity3134MultiHoverAssocListPopup(myexample3134, MyEntity3134MultiHoverMultivalueService.class);
-
+        myEntity3134MultiHoverAssocListPopup(myexample3134, MyEntity3134MultiHoverMultivalueService.class),
+        myEntity3134MultiAssocListPopupForPickListPopup(myexample3134, MyEntity3134MultiMultivalueService.class),
+        myEntity3134PickPickListPopupForPick(myexample3134, MyEntity3134PickPickService.class);
 
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3134Controller> Holder = new Holder<>(

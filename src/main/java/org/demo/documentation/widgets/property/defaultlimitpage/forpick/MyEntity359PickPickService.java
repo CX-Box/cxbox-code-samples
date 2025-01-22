@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.property.defaultlimitpage.forpick;
 
 import lombok.Getter;
-import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Pick;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

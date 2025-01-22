@@ -16,11 +16,11 @@ import java.util.Optional;
 public class MyExample3073DTO extends DataResponseDTO {
 
 
-    @SearchParameter(name = "customFieldEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldEntity.customField")
     private String customField;
     @SearchParameter(name = "customFieldEntity.id", provider = LongValueProvider.class)
     private Long customFieldId;
-    @SearchParameter(name = "customFieldRequred", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequred")
     private String customFieldRequred;
 
     public MyExample3073DTO(MyEntity3073 entity) {

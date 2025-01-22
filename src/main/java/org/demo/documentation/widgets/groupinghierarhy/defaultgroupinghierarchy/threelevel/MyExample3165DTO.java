@@ -16,7 +16,7 @@ import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.
 @NoArgsConstructor
 public class MyExample3165DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

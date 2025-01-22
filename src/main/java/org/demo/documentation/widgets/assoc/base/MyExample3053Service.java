@@ -86,6 +86,7 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
     }
     // --8<-- [end:getActions]
 
+    // --8<-- [start:addNewRecords]
     @SneakyThrows
     private List<MyEntity3053> addNewRecords(List<AssociateDTO> dataIds, BusinessComponent bc) {
         List<MyEntity3053> recordList = new ArrayList<>();
@@ -98,5 +99,5 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
         }
         return recordList;
     }
-
+    // --8<-- [end:addNewRecords]
 }

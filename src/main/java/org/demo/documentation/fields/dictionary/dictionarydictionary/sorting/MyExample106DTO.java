@@ -14,7 +14,7 @@ import org.demo.documentation.fields.dictionary.dictionarydictionary.basic.Regio
 @NoArgsConstructor
 public class MyExample106DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     @SearchParameter(name = "customFieldDictionary", provider = DictionaryValueProvider.class)

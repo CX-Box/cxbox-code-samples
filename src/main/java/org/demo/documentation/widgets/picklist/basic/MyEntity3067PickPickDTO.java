@@ -29,11 +29,11 @@ public class MyEntity3067PickPickDTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldMultivalue;
     private String customFieldMultivalueDisplayedKey;
-    @SearchParameter(name = "customFieldInlinePicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePicklistEntity.customField")
     private String customFieldInlinePicklist;
     @SearchParameter(name = "customFieldInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePicklistId;
-    @SearchParameter(name = "customFieldPicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPicklistEntity.customField")
     private String customFieldPicklist;
     @SearchParameter(name = "customFieldPicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldPicklistId;
@@ -45,7 +45,7 @@ public class MyEntity3067PickPickDTO extends DataResponseDTO {
     private Long customFieldPercent;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;
-    @SearchParameter(name = "customFieldFileUploade", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUploade")
     private String customFieldFileUploade;
     private String customFieldFileUploadeId;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
@@ -58,11 +58,11 @@ public class MyEntity3067PickPickDTO extends DataResponseDTO {
     private Boolean customFieldCheckbox;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
-    @SearchParameter(name = "customFieldInput", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInput")
     private String customFieldInput;
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyEntity3067PickPickDTO(MyEntity3067Pick entity) {

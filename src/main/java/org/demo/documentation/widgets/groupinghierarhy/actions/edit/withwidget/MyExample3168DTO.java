@@ -14,7 +14,7 @@ import org.demo.documentation.widgets.groupinghierarhy.actions.edit.enums.Custom
 @NoArgsConstructor
 public class MyExample3168DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

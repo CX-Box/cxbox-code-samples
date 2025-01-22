@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3078DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldTest", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldTest")
     private String customFieldTest;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;

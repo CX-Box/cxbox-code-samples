@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class MyExample3428DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldDrilldown", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDrilldown")
     private String customFieldDrilldown;
-    @SearchParameter(name = "customFieldAdditional", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldAdditional")
     private String customFieldAdditional;
     @SearchParameter(name = "meetDate", provider = DateValueProvider.class)
     private LocalDateTime meetDate;

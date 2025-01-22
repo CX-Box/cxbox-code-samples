@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample3422DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldDrilldown", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDrilldown")
     private String customFieldDrilldown;
 
     public MyExample3422DTO(MyEntity3422 entity) {

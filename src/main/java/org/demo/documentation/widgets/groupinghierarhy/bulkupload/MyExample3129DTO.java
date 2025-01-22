@@ -14,11 +14,11 @@ import org.demo.documentation.widgets.groupinghierarhy.bulkupload.enums.CustomFi
 @NoArgsConstructor
 public class MyExample3129DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customFieldFile", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFile")
     private String customFieldFile;
     private String customFieldFileId;
 

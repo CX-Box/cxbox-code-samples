@@ -21,7 +21,7 @@ public class MyExample3062DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
     private MultivalueField customField;
     private String customFieldDisplayedKey;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3062DTO(MyEntity3062 entity) {

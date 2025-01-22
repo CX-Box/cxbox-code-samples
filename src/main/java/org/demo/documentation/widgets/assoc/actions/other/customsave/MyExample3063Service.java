@@ -71,15 +71,13 @@ public class MyExample3063Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:customSave]
     private ActionResultDTO<MyExample3063DTO> customSave(BusinessComponent bc, MyExample3063DTO dto) {
         Optional<MyEntity3063> entity = repository.findById(bc.getIdAsLong());
-        if (!entity.isPresent()) {
+        if (entity.isEmpty()) {
             return null;
         }
         List<MyEntity3063Multi> listMultivalue = new ArrayList<>();
-        dto.getCustomField().getValues().stream().forEach(v -> {
+        dto.getCustomField().getValues().forEach(v -> {
             Optional<MyEntity3063Multi> entityChild = repositoryMulti.findById(Long.valueOf(v.getId()));
-            if (entityChild.isPresent()) {
-                listMultivalue.add(entityChild.get());
-            }
+            entityChild.ifPresent(listMultivalue::add);
         });
         entity.get().setCustomFieldList(listMultivalue);
         return new ActionResultDTO<>(entityToDto(bc, entity.get()));

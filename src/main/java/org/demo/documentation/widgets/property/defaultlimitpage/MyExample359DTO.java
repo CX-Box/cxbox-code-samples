@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample359DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldMultivalue;
     private String customFieldMultivalueDisplayedKey;
-    @SearchParameter(name = "customFieldPicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPicklistEntity.customField")
     private String customFieldPicklist;
     @SearchParameter(name = "customFieldPicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldPicklistId;

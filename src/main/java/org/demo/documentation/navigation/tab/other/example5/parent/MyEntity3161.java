@@ -8,10 +8,6 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
 
-// 3161
-// 
-// 
-
 @Entity
 @Getter
 @Setter

@@ -15,7 +15,7 @@ public class MyExample3066DTO extends DataResponseDTO {
     public static final String INFO_TEXT = "List widget is list the general information for many records and present it in a way that is easily interpretable for users.";
 
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3066DTO(MyEntity3066 entity) {

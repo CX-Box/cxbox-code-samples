@@ -1,17 +1,27 @@
 package org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount;
 
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forassoc.MyEntity3862Assoc;
+import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forpicklist.MyEntity3862Pick;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3862Service extends VersionAwareResponseService<MyExample3862DTO, MyEntity3862> {
 
     private final MyEntity3862Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample3862Service(MyEntity3862Repository repository) {
         super(MyExample3862DTO.class, MyEntity3862.class, null, MyExample3862Meta.class);
@@ -26,6 +36,20 @@ public class MyExample3862Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3862DTO> doUpdateEntity(MyEntity3862 entity, MyExample3862DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3862DTO_.customFieldMultivalueDisplayedKey)) {
+            entity.getCustomFieldMultivalueDisplayedKeyList().clear();
+            entity.getCustomFieldMultivalueDisplayedKeyList().addAll(data.getCustomFieldMultivalueDisplayedKey().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3862Assoc.class, e))
+                    .collect(Collectors.toList()));
+        }
+        if (data.isFieldChanged(MyExample3862DTO_.customFieldPicklistId)) {
+            entity.setCustomFieldPicklistEntity(data.getCustomFieldPicklistId() != null
+                    ? entityManager.getReference(MyEntity3862Pick.class, data.getCustomFieldPicklistId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3862DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }

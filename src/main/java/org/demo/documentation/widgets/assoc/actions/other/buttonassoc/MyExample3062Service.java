@@ -55,7 +55,7 @@ public class MyExample3062Service extends VersionAwareResponseService<MyExample3
     @Override
     protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {
         Optional<MyEntity3062> entity = repository.findById(bc.getIdAsLong());
-        if (!entity.isPresent()) {
+        if (entity.isEmpty()) {
             return null;
         }
         List<MyEntity3062Multi> listMultivalue = new ArrayList<>();

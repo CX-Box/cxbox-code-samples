@@ -14,7 +14,7 @@ import org.demo.documentation.feature.meta.buildindependentmeta.addconcretevalue
 @NoArgsConstructor
 public class MyExample3152DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

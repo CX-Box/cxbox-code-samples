@@ -14,7 +14,7 @@ import org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionary
 public class MyEntity3012PickDTO extends DataResponseDTO {
 
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyEntity3012PickDTO(MyEntity3012 entity) {

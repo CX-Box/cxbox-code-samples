@@ -18,7 +18,7 @@ public class TaskDocumentDTO extends DataResponseDTO {
 
 	private String fileId;
 
-	@SearchParameter(name = "file", provider = StringValueProvider.class)
+	@SearchParameter(name = "file")
 	private String file;
 
 	@SearchParameter(name = "task.id", provider = LongValueProvider.class)

@@ -18,7 +18,7 @@ public class MyExample3193DTO extends DataResponseDTO {
     private Long customField;
 
     private String customFieldShowCond;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3193DTO(MyEntity3193 entity) {

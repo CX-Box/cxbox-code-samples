@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Assoc;
-import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Pick;
+import org.demo.documentation.widgets.property.defaultlimitpage.forpick.MyEntity359Pick;
 
 import java.util.ArrayList;
 import java.util.List;

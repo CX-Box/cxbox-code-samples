@@ -17,7 +17,7 @@ public class MyExample3169DTO extends DataResponseDTO {
 
     public static final String TEXT2 = "Show condition - if CustomFieldNumber  > 5 widget show.";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

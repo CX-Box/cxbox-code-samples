@@ -14,11 +14,11 @@ import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexa
 @NoArgsConstructor
 public class MyExample3238DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "fullName", provider = StringValueProvider.class)
+    @SearchParameter(name = "fullName")
     private String fullName;
-    @SearchParameter(name = "address", provider = StringValueProvider.class)
+    @SearchParameter(name = "address")
     private String address;
     @SearchParameter(name = "status", provider = EnumValueProvider.class)
     private StatusEnum status;
