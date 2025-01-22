@@ -1,12 +1,7 @@
 name: Test project
 
-on:
-  push:
-    branches-ignore:
-      - 'main'
-  pull_request:
-    branches-ignore:
-      - 'main'
+on: [deployment]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,5 +16,6 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'adopt'
           cache: "maven"
+          
       - name: Run tests
         run: mvn --batch-mode -Dsurefire.rerunFailingTestsCount=3 test
