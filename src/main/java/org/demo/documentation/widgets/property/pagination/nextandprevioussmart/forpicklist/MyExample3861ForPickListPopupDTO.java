@@ -17,7 +17,7 @@ public class MyExample3861ForPickListPopupDTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
+    @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
     public MyExample3861ForPickListPopupDTO(MyEntity3861ForPickListpopupOutServiceDTO entity) {
         this.id = entity.getId();
