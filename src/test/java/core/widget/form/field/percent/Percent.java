@@ -2,7 +2,6 @@ package core.widget.form.field.percent;
 
 import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
-import core.widget.form.field.BaseField;
 import core.widget.form.field.number.Number;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
