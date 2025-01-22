@@ -12,9 +12,9 @@ import org.demo.documentation.widgets.assoc.colortitle.MyEntity3056Multi;
 @Setter
 @NoArgsConstructor
 public class MyEntity3056MultiPickDTO extends DataResponseDTO {
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     private String customFieldColor;
     private String customFieldColorFieldText;

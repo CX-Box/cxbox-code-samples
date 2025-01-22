@@ -8,7 +8,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Assoc;
-import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Pick;
+import org.demo.documentation.widgets.property.defaultlimitpage.forpick.MyEntity359Pick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

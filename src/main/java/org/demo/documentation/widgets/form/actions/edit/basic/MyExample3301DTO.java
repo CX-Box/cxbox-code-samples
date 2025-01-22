@@ -16,7 +16,7 @@ public class MyExample3301DTO extends DataResponseDTO {
 
     public static final String INFO_TEXT = "Edit Basic implies inline-edit. Click twice on the value you want to change." ;
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyExample3301DTO(MyEntity3301 entity) {

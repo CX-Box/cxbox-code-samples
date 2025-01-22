@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @NoArgsConstructor
 public class MyExample3185DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
     private Boolean customFieldCheckbox;

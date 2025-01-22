@@ -14,7 +14,7 @@ public class MyExample3107DTO extends DataResponseDTO {
 
     public static final String TEXT = "Condition can include boolean expression depending on parent entity. Parent field updates will trigger condition recalculation only on save or if field is force active shown on same view";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyExample3107DTO(MyEntity3107 entity) {

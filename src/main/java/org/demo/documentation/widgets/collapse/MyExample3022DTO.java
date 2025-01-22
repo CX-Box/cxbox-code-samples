@@ -15,7 +15,7 @@ import org.demo.documentation.widgets.collapse.enums.EditStep;
 @NoArgsConstructor
 public class MyExample3022DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

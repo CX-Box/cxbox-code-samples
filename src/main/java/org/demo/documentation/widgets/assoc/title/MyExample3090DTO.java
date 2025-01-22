@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3090DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldMultivalue;

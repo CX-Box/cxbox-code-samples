@@ -22,7 +22,7 @@ public class MyExample3053DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
     private MultivalueField customField;
     private String customFieldDisplayedKey;
-    @SearchParameter(name = "customFieldNew", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldNew")
     private String customFieldNew;
 
     public MyExample3053DTO(MyEntity3053 entity) {

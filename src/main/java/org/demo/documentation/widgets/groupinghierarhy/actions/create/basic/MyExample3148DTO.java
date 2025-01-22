@@ -14,11 +14,11 @@ import org.demo.documentation.widgets.groupinghierarhy.actions.create.enums.Cust
 @NoArgsConstructor
 public class MyExample3148DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3148DTO(MyEntity3148 entity) {

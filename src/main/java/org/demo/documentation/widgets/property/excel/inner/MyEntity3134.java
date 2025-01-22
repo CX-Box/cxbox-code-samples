@@ -54,7 +54,7 @@ public class MyEntity3134 extends BaseEntity {
     @Column
     private CustomFieldRadioEnum customFieldRadio;
     @Column
-    private Double customFieldMoney;
+    private Double customFieldMoney=10000.0;
     @JoinColumn(name = "CUSTOM_FIELD_INLINE_ID")
     @ManyToOne
     private MyEntity3134InlinePick customFieldInlineEntity;
@@ -62,9 +62,9 @@ public class MyEntity3134 extends BaseEntity {
     @ManyToOne
     private MyEntity3134Pick customFieldPickListEntity;
     @Column
-    private Long customFieldPercent;
+    private Long customFieldPercent=0L;
     @Column
-    private Long customFieldNumber;
+    private Long customFieldNumber=0L;
     @Column
     private String customFieldFileUpload;
     @Column
@@ -85,10 +85,10 @@ public class MyEntity3134 extends BaseEntity {
     @Column
     private String customFieldHidden;
     @Column
-    private Double customFieldMoneyWithCurrencyConst;
+    private Double customFieldMoneyWithCurrencyConst=10000.0;
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldCurrencyDictionaryEnum customFieldCurrencyDictionary;
     @Column
-    private Double customFieldMoneyWithCurrencyDynamic;
+    private Double customFieldMoneyWithCurrencyDynamic=10000.0;
 }

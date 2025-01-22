@@ -11,7 +11,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @Setter
 @NoArgsConstructor
 public class MyEntity3618PickPickDTO extends DataResponseDTO {
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyEntity3618PickPickDTO(MyEntity3618Pick entity) {

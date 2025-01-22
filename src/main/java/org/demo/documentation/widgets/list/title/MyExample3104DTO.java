@@ -16,7 +16,7 @@ public class MyExample3104DTO extends DataResponseDTO {
     public static final String INFO_TEXT_CUSTOM_TITLE = "Title calculate. Shows value provided in hidden text field, e.g. it can be calculated based on business logic of application";
     public static final String INFO_TEXT_CONST_TITLE = "Title constant. Shows constant text";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyExample3104DTO(MyEntity3104 entity) {

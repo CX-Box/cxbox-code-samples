@@ -29,7 +29,7 @@ public class MyExample3002DTO extends DataResponseDTO {
     @SearchParameter(name = "customField")
     private String customField;
     private String customFieldHidden;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
@@ -41,7 +41,7 @@ public class MyExample3002DTO extends DataResponseDTO {
     private LocalDateTime customFieldDateTimeWithSeconds;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customFieldFileUpload", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUpload")
     private String customFieldFileUpload;
     private String customFieldFileUploadId;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
@@ -52,11 +52,11 @@ public class MyExample3002DTO extends DataResponseDTO {
     private Double customFieldMoney;
     @SearchParameter(name = "customFieldRadio", provider = EnumValueProvider.class)
     private CustomFieldRadioEnum customFieldRadio;
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
-    @SearchParameter(name = "customFieldInlineEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlineEntity.customField")
     private String customFieldInline;
     @SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlineId;

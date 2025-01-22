@@ -14,7 +14,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample3611DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldDrillDowm", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDrillDowm")
     private String customFieldDrillDowm;
 
     public MyExample3611DTO(MyEntity3611 entity) {

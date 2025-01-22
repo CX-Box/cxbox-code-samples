@@ -1,24 +1,33 @@
 {
   "name": "MyExample3134ForPicklist",
   "title": "PickList widget",
-  "type": "List",
+  "type": "Form",
   "bc": "myexample3134",
   "fields": [
     {
-      "title": "Custom Field",
-      "key": "customField",
-      "type": "input"
-    },
-    {
-      "title": "Custom Field PickList",
-      "key": "customFieldPicklist",
+      "label": "Custom Field Pick List",
+      "key": "customFieldPickList",
       "type": "pickList",
-      "popupBcName": "myEntity3134PickPickListPopup",
+      "popupBcName": "myEntity3134PickPickListPopupForPick",
       "pickMap": {
-        "customFieldPicklistId": "id",
-        "customFieldPicklist": "customField"
+        "customFieldPickList": "customField",
+        "customFieldPickListId": "id"
       }
     }
-  ]
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
 

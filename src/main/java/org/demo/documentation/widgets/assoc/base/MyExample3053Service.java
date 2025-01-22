@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.assoc.base;
 
-import io.minio.StatObjectArgs;
 import jakarta.persistence.EntityManager;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
@@ -11,9 +10,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO;
-import org.demo.documentation.other.savewithparent.example5.entity.TaskDocument;
-import org.demo.documentation.widgets.assoc.actions.buttonassoc.MyEntity3062Multi;
 import org.demo.documentation.widgets.assoc.base.forfield.MyEntity3053Multi;
 import org.demo.documentation.widgets.assoc.base.forfield.MyEntity3053MultiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +20,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
 
 @Service
 public class MyExample3053Service extends VersionAwareResponseService<MyExample3053DTO, MyEntity3053> {
@@ -92,6 +86,7 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
     }
     // --8<-- [end:getActions]
 
+    // --8<-- [start:addNewRecords]
     @SneakyThrows
     private List<MyEntity3053> addNewRecords(List<AssociateDTO> dataIds, BusinessComponent bc) {
         List<MyEntity3053> recordList = new ArrayList<>();
@@ -104,5 +99,5 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
         }
         return recordList;
     }
-
+    // --8<-- [end:addNewRecords]
 }

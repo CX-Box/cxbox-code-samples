@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3600DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customField2", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField2")
     private String customField2;
-    @SearchParameter(name = "customField3", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField3")
     private String customField3;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
@@ -47,11 +47,11 @@ public class MyExample3600DTO extends DataResponseDTO {
     private CustomFieldRadioEnum customFieldRadio;
     @SearchParameter(name = "customFieldDateTimeWithSeconds", provider = DateValueProvider.class)
     private LocalDateTime customFieldDateTimeWithSeconds;
-    @SearchParameter(name = "customFieldInlinePickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePickListEntity.customField")
     private String customFieldInlinePickList;
     @SearchParameter(name = "customFieldInlinePickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePickListId;
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;

@@ -17,15 +17,15 @@ public class MyExample3400DTO extends DataResponseDTO {
 
     public static final String TEXT = "Form Popup widget is a component for confirmation text.";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customField2", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField2")
     private String customField2;
-    @SearchParameter(name = "customFieldInlinePicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePicklistEntity.customField")
     private String customFieldInlinePicklist;
     @SearchParameter(name = "customFieldInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePicklistId;
-    @SearchParameter(name = "customFieldRequired", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequired")
     private String customFieldRequired;
 
     public MyExample3400DTO(MyEntity3400 entity) {

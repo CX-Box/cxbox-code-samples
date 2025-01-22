@@ -15,9 +15,9 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample3089DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldPicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPicklistEntity.customField")
     private String customFieldPicklist;
     @SearchParameter(name = "customFieldPicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldPicklistId;

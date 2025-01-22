@@ -13,7 +13,7 @@ import org.demo.documentation.getstarted.microservice.MyEntity4001OutServiceDTO;
 @NoArgsConstructor
 public class MyExample4001DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyExample4001DTO(MyEntity4001OutServiceDTO entity) {

@@ -14,7 +14,7 @@ import org.demo.documentation.widgets.property.filtration.filtergroupsave.forass
 @NoArgsConstructor
 public class MyEntity3624PickDTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

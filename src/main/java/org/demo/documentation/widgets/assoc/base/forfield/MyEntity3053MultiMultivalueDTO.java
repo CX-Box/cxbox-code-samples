@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyEntity3053MultiMultivalueDTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldNew", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldNew")
     private String customFieldNew;
 
     public MyEntity3053MultiMultivalueDTO(MyEntity3053Multi entity) {

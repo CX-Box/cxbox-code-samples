@@ -14,7 +14,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyEntity3078AssocPickDTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;
