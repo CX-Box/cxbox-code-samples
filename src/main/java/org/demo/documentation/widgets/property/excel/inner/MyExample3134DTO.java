@@ -72,7 +72,6 @@ public class MyExample3134DTO extends DataResponseDTO {
     private String customFieldHidden;
     @SearchParameter(name = "customFieldMoneyWithCurrencyConst", provider = BigDecimalValueProvider.class)
     private Double customFieldMoneyWithCurrencyConst;
-    @SearchParameter(name = "customFieldCurrency", provider = EnumValueProvider.class)
     private CustomFieldCurrencyDictionaryEnum customFieldCurrency;
     @SearchParameter(name = "customFieldMoneyWithCurrencyDynamic", provider = BigDecimalValueProvider.class)
     private Double customFieldMoneyWithCurrencyDynamic;
