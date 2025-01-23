@@ -21,7 +21,7 @@ public class MyExample334DTO extends DataResponseDTO {
 	private MultivalueField customField;
 
 	@EnumValueProvider.BaseEnum(value = CustomFieldEnum.class)
-	@SearchParameter(name = "customFieldAdditional.value", multiFieldKey = StringValueProvider.class)
+	@SearchParameter(name = "customFieldAdditional", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customFieldAdditional;
 
 	public MyExample334DTO(MyEntity334 entity) {

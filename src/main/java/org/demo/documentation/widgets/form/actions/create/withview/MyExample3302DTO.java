@@ -16,7 +16,7 @@ public class MyExample3302DTO extends DataResponseDTO {
     private String customField;
     @SearchParameter(name = "customFieldText")
     private String customFieldText;
-    @SearchParameter(name = "iNFO_TEXT")
+
     private String iNFO_TEXT;
 
     public MyExample3302DTO(MyEntity3302 entity) {
