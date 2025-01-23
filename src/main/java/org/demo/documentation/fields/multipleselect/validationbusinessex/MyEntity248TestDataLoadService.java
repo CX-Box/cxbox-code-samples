@@ -8,7 +8,6 @@ import org.demo.documentation.fields.multipleselect.validationbusinessex.enums.C
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity248TestDataLoadService {
 

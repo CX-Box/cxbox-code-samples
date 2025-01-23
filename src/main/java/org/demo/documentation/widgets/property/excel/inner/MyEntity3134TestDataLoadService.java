@@ -15,7 +15,6 @@ import org.demo.documentation.widgets.property.excel.inner.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3134TestDataLoadService {
 

@@ -9,7 +9,6 @@ import org.demo.documentation.widgets.assoc.base.forfield.MyEntity3053MultiRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3053TestDataLoadService {
 

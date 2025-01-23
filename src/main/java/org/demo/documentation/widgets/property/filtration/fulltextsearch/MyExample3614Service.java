@@ -31,6 +31,15 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
         this.repository = repository;
     }
 
+    // --8<-- [start:getSpecification]
+    @Override
+    protected Specification<MyEntity3614> getSpecification(BusinessComponent bc) {
+        var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
+        var specification = super.getSpecification(bc);
+        return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
+    }
+    // --8<-- [end:getSpecification]
+
     @Override
     protected CreateResult<MyExample3614DTO> doCreateEntity(MyEntity3614 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -76,13 +85,6 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
+    // --8<-- [end:getActions]
 
-    // --8<-- [start:getSpecification]
-    @Override
-    protected Specification<MyEntity3614> getSpecification(BusinessComponent bc) {
-        var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
-        var specification = super.getSpecification(bc);
-        return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
-    }
-    // --8<-- [end:getSpecification]
 }

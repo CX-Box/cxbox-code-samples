@@ -9,7 +9,6 @@ import org.demo.documentation.fields.multipleselect.required.enums.CustomFieldEn
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity247TestDataLoadService {
 

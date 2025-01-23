@@ -14,10 +14,13 @@ public class MyEntity3614PickPickDTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField")
     private String customField;
+    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    private String customFieldText;
 
     public MyEntity3614PickPickDTO(MyEntity3614Pick entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customFieldText = entity.getCustomFieldText();
     }
 
 }

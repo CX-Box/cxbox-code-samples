@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.property.filtration.fulltextsearch.forpick
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3614TestDataLoadService {
 
@@ -36,15 +35,15 @@ public class MyEntity3614TestDataLoadService {
         repository.save(new MyEntity3614().setCustomField("test data3").setFullName("Jared K. Moser"));
         repository.save(new MyEntity3614().setCustomField("test data").setAddress("Moscow, Dmitrov, st. Soviet, 14"));
 
-        repository3625.save(new MyEntity3625().setCustomField("test data"));
-        repository3625.save(new MyEntity3625().setCustomField("test data2"));
-        repository3625.save(new MyEntity3625().setCustomField("test data3"));
-        repository3625.save(new MyEntity3625().setCustomField("test data"));
+        repository3625.save(new MyEntity3625().setCustomField("test data").setCustomFieldText("test data text2"));
+        repository3625.save(new MyEntity3625().setCustomField("test data2").setCustomFieldText("test data text3"));
+        repository3625.save(new MyEntity3625().setCustomField("test data3").setCustomFieldText("test data text1"));
+        repository3625.save(new MyEntity3625().setCustomField("test data2").setCustomFieldText("test data text2"));
 
-        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data"));
-        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data2"));
-        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data3"));
-        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data").setCustomFieldText("test data text2"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data2").setCustomFieldText("test data text1"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data3").setCustomFieldText("test data text2"));
+        repository3614Pick.save(new MyEntity3614Pick().setCustomField("test data2").setCustomFieldText("test data text3"));
 
     }
 

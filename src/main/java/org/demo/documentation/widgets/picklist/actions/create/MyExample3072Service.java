@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.picklist.actions.create.picklist.MyEntity3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3072Service extends VersionAwareResponseService<MyExample3072DTO, MyEntity3072> {
 
