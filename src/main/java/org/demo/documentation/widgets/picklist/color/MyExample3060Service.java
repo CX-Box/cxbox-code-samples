@@ -10,7 +10,6 @@ import org.demo.documentation.widgets.picklist.color.forfields.MyEntity3061Pick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3060Service extends VersionAwareResponseService<MyExample3060DTO, MyEntity3060> {
 

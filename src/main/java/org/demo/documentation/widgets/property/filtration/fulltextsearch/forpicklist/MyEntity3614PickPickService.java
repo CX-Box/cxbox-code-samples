@@ -1,31 +1,59 @@
 package org.demo.documentation.widgets.property.filtration.fulltextsearch.forpicklist;
 
 import lombok.Getter;
+import org.cxbox.core.service.action.Actions;
+import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
+import static org.cxbox.api.data.dao.SpecificationUtils.and;
+
 
 @Getter
 @Service
 public class MyEntity3614PickPickService extends VersionAwareResponseService<MyEntity3614PickPickDTO, MyEntity3614Pick> {
 
-    public MyEntity3614PickPickService() {
+    private final MyEntity3614PickRepository repository;
+
+    // --8<-- [start:getSpecification]
+    @Override
+    protected Specification<MyEntity3614Pick> getSpecification(BusinessComponent bc) {
+        var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
+        var specification = super.getSpecification(bc);
+        return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
+    }
+    // --8<-- [end:getSpecification]
+
+    public MyEntity3614PickPickService(MyEntity3614PickRepository repository) {
         super(MyEntity3614PickPickDTO.class, MyEntity3614Pick.class, null, MyEntity3614PickPickMeta.class);
+        this.repository = repository;
     }
 
     @Override
     protected CreateResult<MyEntity3614PickPickDTO> doCreateEntity(MyEntity3614Pick entity, BusinessComponent bc) {
-        return null;
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
     protected ActionResultDTO<MyEntity3614PickPickDTO> doUpdateEntity(MyEntity3614Pick entity, MyEntity3614PickPickDTO data,
                                                                       BusinessComponent bc) {
-        return null;
+        setIfChanged(data, MyEntity3614PickPickDTO_.customFieldText, entity::setCustomFieldText);
+        setIfChanged(data, MyEntity3614PickPickDTO_.customField, entity::setCustomField);
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
-
-
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyEntity3614PickPickDTO> getActions() {
+        return Actions.<MyEntity3614PickPickDTO>builder()
+                .action(act -> act
+                        .action("save", "save")
+                )
+                .build();
+    }
+    // --8<-- [end:getActions]
 }

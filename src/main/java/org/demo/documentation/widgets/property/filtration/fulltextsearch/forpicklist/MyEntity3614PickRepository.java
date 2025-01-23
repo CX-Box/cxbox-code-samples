@@ -11,4 +11,11 @@ public interface MyEntity3614PickRepository extends JpaRepository<MyEntity3614Pi
     default Specification<MyEntity3614Pick> getCustomFieldLikeIgnoreCaseSpecification(String value) {
         return (root, query, cb) -> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(MyEntity3614Pick_.customField));
     }
+    default Specification<MyEntity3614Pick> getCustomFieldTextLikeIgnoreCaseSpecification(String value) {
+        return (root, query, cb) -> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(MyEntity3614Pick_.customFieldText));
+    }
+    default Specification<MyEntity3614Pick> getFullTextSearchSpecification(String value) {
+        return getCustomFieldLikeIgnoreCaseSpecification(value)
+                .or(getCustomFieldTextLikeIgnoreCaseSpecification(value));
+    }
 }

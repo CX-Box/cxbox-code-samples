@@ -8,7 +8,6 @@ import org.demo.documentation.fields.multipleselect.ro.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity253TestDataLoadService {
 

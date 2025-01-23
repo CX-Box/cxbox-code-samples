@@ -6,7 +6,6 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class InputColorConstTestDataLoadService {
 

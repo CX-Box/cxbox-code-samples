@@ -10,7 +10,6 @@ import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcou
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3862TestDataLoadService {
 

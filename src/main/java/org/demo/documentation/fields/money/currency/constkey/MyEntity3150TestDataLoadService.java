@@ -7,7 +7,6 @@ import org.demo.documentation.fields.money.currency.constkey.enums.CustomFieldDi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3150TestDataLoadService {
 

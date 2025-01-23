@@ -16,7 +16,6 @@ import org.demo.documentation.widgets.info.colortitle.forfields.MyEntity3040Pick
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3040TestDataLoadService {
     @Autowired

@@ -8,8 +8,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyEntity3625Repository extends JpaRepository<MyEntity3625, Long>, JpaSpecificationExecutor<MyEntity3625> {
+
     default Specification<MyEntity3625> getCustomFieldLikeIgnoreCaseSpecification(String value) {
         return (root, query, cb) -> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(MyEntity3625_.customField));
     }
 
+    default Specification<MyEntity3625> getCustomFieldTextLikeIgnoreCaseSpecification(String value) {
+        return (root, query, cb) -> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(MyEntity3625_.customFieldText));
+    }
+
+    default Specification<MyEntity3625> getFullTextSearchSpecification(String value) {
+        return getCustomFieldLikeIgnoreCaseSpecification(value)
+                .or(getCustomFieldTextLikeIgnoreCaseSpecification(value));
+    }
 }

@@ -11,7 +11,6 @@ import org.demo.documentation.other.savewithparent.example2.parent.MyEntity3131R
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3131TestDataLoadService {
 

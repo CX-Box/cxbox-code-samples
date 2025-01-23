@@ -10,7 +10,6 @@ import org.demo.documentation.widgets.property.defaultlimitpage.forpick.MyEntity
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity359TestDataLoadService {
 
