@@ -24,12 +24,14 @@ public class MyEntity3625PickService extends VersionAwareResponseService<MyEntit
         this.repository = repository;
     }
 
+    // --8<-- [start:getSpecification]
     @Override
     protected Specification<MyEntity3625> getSpecification(BusinessComponent bc) {
         var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
         var specification = super.getSpecification(bc);
         return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
     }
+    // --8<-- [end:getSpecification]
 
     @Override
     protected CreateResult<MyEntity3625PickDTO> doCreateEntity(org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625 entity, BusinessComponent bc) {
