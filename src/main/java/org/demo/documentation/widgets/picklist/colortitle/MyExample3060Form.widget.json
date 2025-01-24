@@ -1,0 +1,37 @@
+{
+  "name": "MyExample3060Form",
+  "title": "PickListPopup widget color calculated",
+  "type": "Form",
+  "bc": "myexample3060",
+  "fields": [
+    {
+      "label": "Custom Field Picklist",
+      "key": "customFieldPicklist",
+      "type": "pickList",
+      "popupBcName": "myEntity3061PickListPopup",
+      "pickMap": {
+        "customFieldPicklist": "customField",
+        "customFieldPicklistId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPicklist",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
