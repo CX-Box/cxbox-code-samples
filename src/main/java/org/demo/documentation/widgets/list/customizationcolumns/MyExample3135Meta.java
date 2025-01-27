@@ -13,7 +13,6 @@ import org.demo.documentation.widgets.list.customizationcolumns.enums.CustomFiel
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {

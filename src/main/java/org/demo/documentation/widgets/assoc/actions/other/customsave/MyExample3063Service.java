@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Optional; 
 
 @Service
 public class MyExample3063Service extends VersionAwareResponseService<MyExample3063DTO, MyEntity3063> {

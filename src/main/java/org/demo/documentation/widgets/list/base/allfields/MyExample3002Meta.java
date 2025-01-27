@@ -14,7 +14,6 @@ import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldRadio
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

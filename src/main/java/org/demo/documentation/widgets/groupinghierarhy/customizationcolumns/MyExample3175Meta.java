@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.groupinghierarhy.customizationcolumns.enum
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3175Meta extends FieldMetaBuilder<MyExample3175DTO> {

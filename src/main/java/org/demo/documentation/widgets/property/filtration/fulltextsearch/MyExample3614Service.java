@@ -15,8 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 @Service

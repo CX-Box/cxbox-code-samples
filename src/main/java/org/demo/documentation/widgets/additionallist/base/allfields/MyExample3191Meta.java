@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.additionallist.base.allfields.enums.Custom
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3191Meta extends FieldMetaBuilder<MyExample3191DTO> {

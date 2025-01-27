@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.groupinghierarhy.base.allfields.enums.Cust
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3202Meta extends FieldMetaBuilder<MyExample3202DTO> {
