@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionaryEnum;
 
 @Getter

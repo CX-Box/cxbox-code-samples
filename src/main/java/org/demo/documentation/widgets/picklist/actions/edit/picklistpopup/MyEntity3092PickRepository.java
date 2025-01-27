@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.picklist.actions.edit.picklistpopup;
 
-import org.demo.documentation.widgets.picklist.actions.edit.MyEntity3092;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

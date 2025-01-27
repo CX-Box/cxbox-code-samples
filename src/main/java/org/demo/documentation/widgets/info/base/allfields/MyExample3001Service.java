@@ -60,7 +60,7 @@ public class MyExample3001Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity4222Multi2.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3001DTO_.customFieldMultivalueHover)) {
             entity.getCustomFieldMultivalueHoverList().clear();
@@ -69,7 +69,7 @@ public class MyExample3001Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity4222Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3001DTO_.customFieldText)) {
             entity.setCustomFieldText(data.getCustomFieldText());

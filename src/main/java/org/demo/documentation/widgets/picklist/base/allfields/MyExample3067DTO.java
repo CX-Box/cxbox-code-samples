@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public class MyExample3067DTO extends DataResponseDTO {
     private String customField;
     @SearchParameter(name = "customFieldEntity.id", provider = LongValueProvider.class)
     private Long customFieldId;
-    @SearchParameter(name = "customFieldInlinePickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePickListEntity.customField")
     private String customFieldInlinePickList;
     @SearchParameter(name = "customFieldInlinePickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePickListId;

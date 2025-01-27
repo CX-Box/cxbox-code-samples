@@ -15,10 +15,10 @@ public enum CxboxMyExample3092Controller implements EnumBcIdentifier {
     // @formatter:on
 
     myexample3092(MyExample3092Service.class),
-        myEntity3092PickPick1(myexample3092, MyEntity3092PickPick0Service.class),
-        myEntity3092PickPick0(myexample3092, MyEntity3092PickPick0Service.class),
-        myEntity3092PickPick2(myexample3092, MyEntity3092PickPickService.class),
-        myEntity3092PickPick(myexample3092, MyEntity3092PickPickService.class);
+        myEntity3092InlinePickListInline(myexample3092, MyEntity3092PickPick0Service.class),
+        myEntity3092InlinePickListInlineForm(myexample3092, MyEntity3092PickPick0Service.class),
+        myEntity3092PickInline(myexample3092, MyEntity3092PickPickService.class),
+        myEntity3092PickInlineForm(myexample3092, MyEntity3092PickPickService.class);
 
     // @formatter:on
 

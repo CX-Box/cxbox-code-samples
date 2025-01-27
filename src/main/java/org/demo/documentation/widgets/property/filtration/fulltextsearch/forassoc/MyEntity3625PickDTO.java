@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyEntity3625PickDTO extends DataResponseDTO {
     @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyEntity3625PickDTO(org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625 entity) {

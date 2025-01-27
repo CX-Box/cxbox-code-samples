@@ -95,7 +95,7 @@ public class MyEntity3061PickService extends VersionAwareResponseService<MyEntit
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3061MultiMulti.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyEntity3061PickDTO_.customFieldColorMultivalueHover)) {
             entity.getCustomFieldColorMultivalueHoverList().clear();
@@ -104,7 +104,7 @@ public class MyEntity3061PickService extends VersionAwareResponseService<MyEntit
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3061Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

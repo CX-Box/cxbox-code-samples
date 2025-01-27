@@ -17,7 +17,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3660Service extends VersionAwareResponseService<MyExample3660DTO, MyEntity3660> {
@@ -59,7 +58,7 @@ public class MyExample3660Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3663.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         setIfChanged(data, MyExample3660DTO_.customFieldTextReq, entity::setCustomFieldTextReq);
         setIfChanged(data, MyExample3660DTO_.customFieldText, entity::setCustomFieldText);
@@ -70,7 +69,7 @@ public class MyExample3660Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3662.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));

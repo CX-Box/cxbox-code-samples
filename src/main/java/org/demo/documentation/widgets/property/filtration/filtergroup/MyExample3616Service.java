@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3616Service extends VersionAwareResponseService<MyExample3616DTO, MyEntity3616> {
@@ -47,7 +46,7 @@ public class MyExample3616Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3623.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3616DTO_.customFieldNew)) {
             entity.setCustomFieldNew(data.getCustomFieldNew());

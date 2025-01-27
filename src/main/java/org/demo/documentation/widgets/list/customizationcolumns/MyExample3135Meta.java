@@ -64,7 +64,7 @@ public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
         fields.enableFilter(MyExample3135DTO_.customFieldMultivalueHover);
         fields.setConcreteFilterValues(MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum1.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3135DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3135DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3135DTO_.customFieldText);
@@ -80,7 +80,7 @@ public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
         fields.enableFilter(MyExample3135DTO_.customFieldRadio);
         fields.setConcreteFilterValues(MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3135DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3135DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3135DTO_.customFieldMultivalueHover);

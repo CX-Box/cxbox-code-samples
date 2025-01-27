@@ -20,12 +20,13 @@ public class MyEntity3072PickPickService extends VersionAwareResponseService<MyE
         this.repository = repository;
     }
 
+    // --8<-- [start:doCreateEntity]
     @Override
     protected CreateResult<MyEntity3072PickPickDTO> doCreateEntity(MyEntity3072Pick entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
-
+    // --8<-- [end:doCreateEntity]
     @Override
     protected ActionResultDTO<MyEntity3072PickPickDTO> doUpdateEntity(MyEntity3072Pick entity, MyEntity3072PickPickDTO data,
                                                                       BusinessComponent bc) {
@@ -56,5 +57,6 @@ public class MyEntity3072PickPickService extends VersionAwareResponseService<MyE
                 .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
+    // --8<-- [end:getActions]
 }
 

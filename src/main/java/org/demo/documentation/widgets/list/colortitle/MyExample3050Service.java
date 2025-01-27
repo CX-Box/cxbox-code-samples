@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3050Service extends VersionAwareResponseService<MyExample3050DTO, MyEntity3050> {
@@ -93,7 +92,7 @@ public class MyExample3050Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3050MultiMulti.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3050DTO_.customFieldColorMultivalueHover)) {
             entity.getCustomFieldColorMultivalueHoverList().clear();
@@ -102,7 +101,7 @@ public class MyExample3050Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3050Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3050DTO_.customField)) {
             entity.setCustomField(data.getCustomField());

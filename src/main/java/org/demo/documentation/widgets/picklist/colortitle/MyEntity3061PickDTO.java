@@ -104,14 +104,11 @@ public class MyEntity3061PickDTO extends DataResponseDTO {
         this.customFieldColorNumber = entity.getCustomFieldColorNumber();
         this.customFieldColorFileUploade = entity.getCustomFieldColorFileUploade();
         this.customFieldColorFileUploadeId = entity.getCustomFieldColorFileUploadeId();
-        this.customFieldColorFileUploade = entity.getCustomFieldColorFileUploade();
-        this.customFieldColorFileUploadeId = entity.getCustomFieldColorFileUploadeId();
         this.customFieldColorDictionary = entity.getCustomFieldColorDictionary();
         this.customFieldColorDateTimeWithSeconds = entity.getCustomFieldColorDateTimeWithSeconds();
         this.customFieldColorDate = entity.getCustomFieldColorDate();
         this.customFieldColorCheckbox = entity.getCustomFieldColorCheckbox();
         this.customFieldColorDateTime = entity.getCustomFieldColorDateTime();
-
         this.customFieldColorInputConst = entity.getCustomFieldColorInputConst();
         this.customFieldColorTextConst = entity.getCustomFieldColorTextConst();
         this.customFieldColorInput = entity.getCustomFieldColorInput();

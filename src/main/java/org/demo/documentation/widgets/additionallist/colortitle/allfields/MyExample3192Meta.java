@@ -67,7 +67,7 @@ public class MyExample3192Meta extends FieldMetaBuilder<MyExample3192DTO> {
         fields.enableFilter(MyExample3192DTO_.customFieldRadio);
         fields.setConcreteFilterValues(MyExample3192DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3192DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3192DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3192DTO_.customFieldMultivalueHoverDisplayedKey);

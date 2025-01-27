@@ -25,6 +25,7 @@ public enum CxboxMyExample3067Controller implements EnumBcIdentifier {
         myEntity3079PickPick(myexample3079, MyEntity3079PickPickService.class),
     myexample3067(MyExample3067Service.class),
         myEntity3067PickPick(myexample3067, MyEntity3067PickPick0Service.class),
+            myEntity3067PickPickPopup(myEntity3067PickPick, MyEntity3067PickPicklistPickService.class),
         myEntity3067PickPickListPopup(myexample3067, MyEntity3067PickPick0Service.class),
             myEntity3067PickPicklistPickListPopup(myEntity3067PickPickListPopup, MyEntity3067PickPicklistPickService.class), myEntity3067PickInlinePicklistPickListPopup(myEntity3067PickPickListPopup, MyEntity3067PickInlinePicklistPickService.class), myEntity3067MultiAssocListPopup(myEntity3067PickPickListPopup, MyEntity3067MultiMultivalueService.class), myEntity3067MultiMultiAssocListPopup(myEntity3067PickPickListPopup, MyEntity3067MultiMultiMultivalueService.class);
 
