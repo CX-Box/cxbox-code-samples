@@ -22,9 +22,10 @@ public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {
         fields.setEnabled(MyExample421DTO_.multihoverType);
         fields.setEnabled(MyExample421DTO_.hintType);
         fields.setEnabled(MyExample421DTO_.multivalueType);
-        fields.setDictionaryTypeWithCustomValues(MyExample421DTO_.multipleType, Arrays.stream(MultipleTypeEnum.values())
+        fields.setConcreteValues(MyExample421DTO_.multipleType, Arrays.stream(MultipleTypeEnum.values())
                 .map(MultipleTypeEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample421DTO_.multipleType);
         fields.setEnabled(MyExample421DTO_.inlinepicklistTypeId);
         fields.setEnabled(MyExample421DTO_.inlinepicklistType);

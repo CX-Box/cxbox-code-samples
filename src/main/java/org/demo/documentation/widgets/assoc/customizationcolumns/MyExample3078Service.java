@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("EmptyMethod")
 @Service
@@ -41,7 +40,7 @@ public class MyExample3078Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3078Assoc.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         setIfChanged(data, MyExample3078DTO_.customFieldNumber, entity::setCustomFieldNumber);
         setIfChanged(data, MyExample3078DTO_.customFieldTest, entity::setCustomFieldTest);

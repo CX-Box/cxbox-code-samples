@@ -9,7 +9,7 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3011Multi;
 import org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3012Multi;
 import org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionaryEnum;

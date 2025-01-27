@@ -15,8 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 @Service
@@ -60,7 +58,7 @@ public class MyExample3614Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3625.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3614DTO_.address)) {
             entity.setAddress(data.getAddress());

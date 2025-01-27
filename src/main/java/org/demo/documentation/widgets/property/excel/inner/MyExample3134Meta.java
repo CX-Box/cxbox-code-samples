@@ -42,9 +42,10 @@ public class MyExample3134Meta extends FieldMetaBuilder<MyExample3134DTO> {
       fields.setEnabled(MyExample3134DTO_.customFieldMoney);
       fields.setEnumValues(MyExample3134DTO_.customFieldRadio, CustomFieldRadioEnum.values());
       fields.setEnabled(MyExample3134DTO_.customFieldRadio);
-      fields.setDictionaryTypeWithCustomValues(MyExample3134DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+      fields.setConcreteValues(MyExample3134DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
               .map(CustomFieldMultipleSelectEnum::getValue)
-              .toArray(String[]::new));
+              .map(e -> new SimpleDictionary(e, e))
+              .toList());
       fields.setEnabled(MyExample3134DTO_.customFieldMultipleSelect);
       fields.setEnabled(MyExample3134DTO_.customFieldMultivalue);
       fields.setEnabled(MyExample3134DTO_.customFieldHint);
@@ -75,7 +76,7 @@ public class MyExample3134Meta extends FieldMetaBuilder<MyExample3134DTO> {
       fields.enableFilter(MyExample3134DTO_.customFieldRadio);
       fields.setConcreteFilterValues(MyExample3134DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
               .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-              .collect(Collectors.toList()));
+              .toList());
       fields.enableFilter(MyExample3134DTO_.customFieldMultipleSelect);
       fields.enableFilter(MyExample3134DTO_.customFieldMultivalue);
       fields.enableFilter(MyExample3134DTO_.customFieldMultivalueHover);

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3054Service extends VersionAwareResponseService<MyExample3054DTO, MyEntity3054> {
@@ -40,7 +39,7 @@ public class MyExample3054Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3054Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));

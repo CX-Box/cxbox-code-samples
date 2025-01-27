@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Optional; 
 
 @Service
 public class MyExample3063Service extends VersionAwareResponseService<MyExample3063DTO, MyEntity3063> {
@@ -47,7 +46,7 @@ public class MyExample3063Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3063Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));

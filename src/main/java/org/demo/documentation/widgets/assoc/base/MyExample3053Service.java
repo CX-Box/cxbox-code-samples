@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3053Service extends VersionAwareResponseService<MyExample3053DTO, MyEntity3053> {
@@ -53,7 +52,7 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3053Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
 
         return new ActionResultDTO<>(entityToDto(bc, entity));

@@ -14,7 +14,6 @@ import org.demo.documentation.widgets.info.base.allfields.enums.CustomFieldRadio
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,9 +42,10 @@ public class MyExample3001Meta extends FieldMetaBuilder<MyExample3001DTO> {
         fields.setEnabled(MyExample3001DTO_.customFieldRadio);
         fields.setEnabled(MyExample3001DTO_.customFieldDateTimeWithSeconds);
         fields.setEnabled(MyExample3001DTO_.customFieldPercent);
-        fields.setDictionaryTypeWithCustomValues(MyExample3001DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+        fields.setConcreteValues(MyExample3001DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3001DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3001DTO_.customFieldHint);
         fields.setEnabled(MyExample3001DTO_.customFieldDate);
@@ -73,7 +73,7 @@ public class MyExample3001Meta extends FieldMetaBuilder<MyExample3001DTO> {
         fields.enableFilter(MyExample3001DTO_.customFieldPercent);
         fields.setConcreteFilterValues(MyExample3001DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3001DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3001DTO_.customFieldDate);
         if (configuration.getForceActiveEnabled()) {

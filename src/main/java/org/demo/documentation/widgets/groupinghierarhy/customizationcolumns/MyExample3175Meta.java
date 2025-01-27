@@ -11,7 +11,6 @@ import org.demo.documentation.widgets.groupinghierarhy.customizationcolumns.enum
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3175Meta extends FieldMetaBuilder<MyExample3175DTO> {
@@ -62,7 +61,7 @@ public class MyExample3175Meta extends FieldMetaBuilder<MyExample3175DTO> {
         fields.enableFilter(MyExample3175DTO_.customFieldRadio);
         fields.setConcreteFilterValues(MyExample3175DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3175DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3175DTO_.customFieldMultivalue);
         fields.enableFilter(MyExample3175DTO_.customFieldMultivalueHover);

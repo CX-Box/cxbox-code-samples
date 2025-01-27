@@ -78,7 +78,7 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
                 .filter(Objects::nonNull)
                 .map(Long::parseLong)
                 .map(e -> entityManager.getReference(MyEntity3134Multi.class, e))
-                .collect(Collectors.toList()));
+                .toList());
       }
       setIfChanged(data, MyExample3134DTO_.customFieldHint, entity::setCustomFieldHint);
       if (data.isFieldChanged(MyExample3134DTO_.customFieldMultivalueHover)) {
@@ -88,7 +88,7 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
                 .filter(Objects::nonNull)
                 .map(Long::parseLong)
                 .map(e -> entityManager.getReference(MyEntity3134MultiHover.class, e))
-                .collect(Collectors.toList()));
+                .toList());
       }
       if (data.isFieldChanged(MyExample3134DTO_.customField)) {
             entity.setCustomField(data.getCustomField());

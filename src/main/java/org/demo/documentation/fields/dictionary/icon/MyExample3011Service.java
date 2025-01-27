@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3011Service extends VersionAwareResponseService<MyExample3011DTO, MyEntity3011> {
@@ -44,7 +43,7 @@ public class MyExample3011Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3012Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3011DTO_.customFieldMultivalue)) {
             entity.getCustomFieldMultivalueList().clear();
@@ -53,7 +52,7 @@ public class MyExample3011Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3011Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3011DTO_.customFieldDictionaryInlinePickListId)) {
             entity.setCustomFieldDictionaryInlinePickListEntity(data.getCustomFieldDictionaryInlinePickListId() != null

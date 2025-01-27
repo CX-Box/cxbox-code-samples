@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("EmptyMethod")
 @Service
@@ -43,7 +42,7 @@ public class MyExample3862Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3862Assoc.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3862DTO_.customFieldPicklistId)) {
             entity.setCustomFieldPicklistEntity(data.getCustomFieldPicklistId() != null

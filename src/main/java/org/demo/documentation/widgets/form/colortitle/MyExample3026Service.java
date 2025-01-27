@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample3026Service extends VersionAwareResponseService<MyExample3026DTO, MyEntity3026> {
@@ -41,7 +40,7 @@ public class MyExample3026Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3038.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalueHover)) {
             entity.getCustomFieldColorMultivalueHoverList().clear();
@@ -50,7 +49,7 @@ public class MyExample3026Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3037.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalueHover)) {
             entity.getCustomFieldColorMultivalueHoverList().clear();
@@ -59,7 +58,7 @@ public class MyExample3026Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3037.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3026DTO_.customFieldColorMultivalue)) {
             entity.getCustomFieldColorMultivalueList().clear();
@@ -68,7 +67,7 @@ public class MyExample3026Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3038.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3026DTO_.customFieldColorInput)) {
             entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
