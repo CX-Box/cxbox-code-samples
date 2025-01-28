@@ -1,12 +1,10 @@
 package org.demo.documentation.widgets.statsblock.drilldown;
 
 import lombok.NonNull;
-import org.cxbox.core.controller.param.SearchOperation;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
-
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.demo.documentation.widgets.statsblock.drilldown.data.PlatformMyExample4208Controller;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
@@ -14,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 
-
-import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.*;
+import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.COUNT_NEW_IN_PROGRESS_ROW_ID;
+import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.COUNT_NEW_ROW_ID;
 
 
 @Service

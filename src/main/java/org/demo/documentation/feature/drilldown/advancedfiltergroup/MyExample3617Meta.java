@@ -1,14 +1,10 @@
 package org.demo.documentation.feature.drilldown.advancedfiltergroup;
 
-import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.conf.document.DocumentConfig;
-import org.demo.documentation.feature.drilldown.advancedfulltextsearchfilter.CxboxMyExample3615Controller;
-import org.demo.documentation.feature.drilldown.advancedfulltextsearchfilter.MyExample3615DTO_;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;

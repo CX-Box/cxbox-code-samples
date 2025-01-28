@@ -16,6 +16,9 @@ public class MyEntity3054TestDataLoadService {
     MyEntity3054Repository repository;
 
     @Autowired
+    MyEntity3054MultiRepository repositoryMulti;
+
+    @Autowired
     InternalAuthorizationService authzService;
 
     @Transactional
@@ -23,6 +26,14 @@ public class MyEntity3054TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        repositoryMulti.deleteAll();
+
+        repositoryMulti.save(new MyEntity3054Multi().setCustomField("Test data 2"));
+        repositoryMulti.save(new MyEntity3054Multi().setCustomField("Test data 3"));
+        repositoryMulti.save(new MyEntity3054Multi().setCustomField("Test data 4"));
+        repositoryMulti.save(new MyEntity3054Multi().setCustomField("Test data 5"));
+        repositoryMulti.save(new MyEntity3054Multi().setCustomField("Test data 6"));
+
         MyEntity3054Multi myEntity = new MyEntity3054Multi().setCustomField("Test data 1");
         List<MyEntity3054Multi> list = new ArrayList<>();
         list.add(myEntity);

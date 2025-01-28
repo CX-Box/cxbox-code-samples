@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.multipleselect.drilldown;
 
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -10,6 +9,8 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
