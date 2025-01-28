@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createcustomsave;
+package org.demo.documentation.widgets.picklist.actions.other.createcustomsave;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

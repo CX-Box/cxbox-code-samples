@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createcustomsave;
+package org.demo.documentation.widgets.picklist.actions.other.createcustomsave;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -27,4 +27,6 @@ public class MyEntity3400 extends BaseEntity {
     private MyEntity3400InlinePicklist customFieldInlinePicklistEntity;
     @Column
     private String customFieldRequired;
+    @Column
+    private String customFieldRequired2;
 }

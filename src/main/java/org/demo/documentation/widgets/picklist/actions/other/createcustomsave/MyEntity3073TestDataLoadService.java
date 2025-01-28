@@ -1,6 +1,5 @@
-package org.demo.documentation.widgets.picklist.actions.createwithparent;
+package org.demo.documentation.widgets.picklist.actions.other.createcustomsave;
 
-import java.time.LocalDateTime;
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
@@ -9,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity3074TestDataLoadService {
+public class MyEntity3073TestDataLoadService {
 
     @Autowired
-    MyEntity3074Repository repository;
+    MyEntity3073Repository repository;
+
+    @Autowired
+    MyEntity3073PickRepository repositoryPick;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -22,7 +24,10 @@ public class MyEntity3074TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity3074().setCustomFieldText("test data text"));
+        repositoryPick.deleteAll();
+
+        repository.save(new MyEntity3073().setCustomFieldRequred("test data"));
+        repositoryPick.save(new MyEntity3073Pick().setCustomField("test data pick"));
     }
 
 }

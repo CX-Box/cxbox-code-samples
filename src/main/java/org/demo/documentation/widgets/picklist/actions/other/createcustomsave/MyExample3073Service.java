@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createcustomsave;
+package org.demo.documentation.widgets.picklist.actions.other.createcustomsave;
 
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
