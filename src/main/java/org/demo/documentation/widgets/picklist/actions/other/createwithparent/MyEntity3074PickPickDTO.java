@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createwithparent;
+package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;

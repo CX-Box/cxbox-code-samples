@@ -35,6 +35,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3400DTO> doUpdateEntity(MyEntity3400 entity, MyExample3400DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3400DTO_.customFieldRequired2, entity::setCustomFieldRequired2);
         setIfChanged(data, MyExample3400DTO_.customFieldRequired, entity::setCustomFieldRequired);
         if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistId)) {
             entity.setCustomFieldInlinePicklistEntity(data.getCustomFieldInlinePicklistId() != null

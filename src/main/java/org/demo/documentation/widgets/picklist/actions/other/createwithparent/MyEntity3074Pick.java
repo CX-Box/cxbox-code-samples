@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createwithparent;
+package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

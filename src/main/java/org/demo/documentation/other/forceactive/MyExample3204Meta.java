@@ -5,8 +5,6 @@ import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.fields.date.drilldown.CxboxDateDrillDownController;
-import org.demo.documentation.fields.date.drilldown.DateDrillDownDTO_;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createwithparent;
+package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

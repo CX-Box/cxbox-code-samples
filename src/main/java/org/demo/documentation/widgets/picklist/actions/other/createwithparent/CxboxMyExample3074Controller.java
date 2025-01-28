@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.createwithparent;
+package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
