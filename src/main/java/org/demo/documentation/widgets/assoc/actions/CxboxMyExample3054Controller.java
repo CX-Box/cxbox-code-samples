@@ -15,7 +15,8 @@ public enum CxboxMyExample3054Controller implements EnumBcIdentifier {
     myexample3054(MyExample3054Service.class),
         myEntity3054MultiAssocListPopupCreate(myexample3054, MyEntity3054MultiMultivalueService.class),
         myEntity3054MultiAssocListPopup(myexample3054, MyEntity3054MultiMultivalueService.class),
-
+        myEntity3054MultiAssocDeleteListPopup(myexample3054, MyEntity3054MultiMultivalueService.class),
+        myEntity3054MultiAssocSaveListPopup(myexample3054, MyEntity3054MultiMultivalueService.class),
         myEntity3054MultiAssocListPopupEditInline(myexample3054, MyEntity3054MultiMultivalueService.class),
         myEntity3054MultiAssocListPopupEditInlineForm(myexample3054, MyEntity3054MultiMultivalueService.class);
 

@@ -10,11 +10,6 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.MyEntity3092Pick;
 
-
-// 3092
-// 3092
-// 3092
-
 @Entity
 @Getter
 @Setter
