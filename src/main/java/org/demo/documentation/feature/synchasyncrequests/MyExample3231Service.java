@@ -1,15 +1,15 @@
 package org.demo.documentation.feature.synchasyncrequests;
 
-import lombok.RequiredArgsConstructor;
-import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.synchasyncrequests.anysorce.MyEntity3231AnySourceOutServiceDTO;
+import org.demo.documentation.feature.synchasyncrequests.enums.MyEntity3231QueueRepository;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -51,6 +49,8 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3231DTO> doUpdateEntity(MyEntity3231 entity, MyExample3231DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3231DTO_.customFieldForm, entity::setCustomFieldForm);
+        setIfChanged(data, MyExample3231DTO_.statusResponse, entity::setStatusResponse);
         if (data.isFieldChanged(MyExample3231DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
@@ -66,37 +66,42 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt.text("Delete"))
                 .action(act -> act
                         .action("findClient", "find Data")
-                        .scope(ActionScope.BC)
+                        .scope(ActionScope.RECORD)
                         .invoker((bc, dto) -> {
-                            callService(bc, dto);
-                            return new ActionResultDTO<>();
+                            finInExternalSystem(bc, dto);
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
+                                    PostAction.waitUntil(
+                                            MyExample3231DTO_.statusResponse,
+                                            StatusEnum.DONE
+                                    ).build());
                         })
                 )
                 .build();
     }
 
     // --8<-- [start:callService]
-    private void queryData(BusinessComponent bc, MyExample3231DTO dto) {
-        // call async service
-        // callService ()...
-        callService(bc, dto);
-        // create queue
-        MyEntity3231Queue myEntity3231Queue = new MyEntity3231Queue().setCustomFieldDictionary(StatusEnum.IN_PROGRESS).setEntityId(bc.getId());
-        repositoryQueue.save(myEntity3231Queue);
+    private ActionResultDTO<MyExample3231DTO> finInExternalSystem(BusinessComponent bc, MyExample3231DTO dto) {
+        MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+        if (entityExternal.isPresent()) {
+            myEntity3231.setCustomField(entityExternal.get().getCustomField());
+            repository.save(myEntity3231);
+        }
+        return doUpdateEntity(myEntity3231, dto, bc)
+                .setAction(PostAction.refreshBc(bc));
     }
     // --8<-- [end:callService]
 
     // --8<-- [start:callService]
-    public Page<MyEntity3231AnySourceOutServiceDTO> callService(final BusinessComponent bc, MyExample3231DTO dto) {
+    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
 
-        String page = bc.getParameters().getParameter("_page");
-        String limit = bc.getParameters().getParameter("_limit");
-        Optional<String> filter = ("customField.contains=" + dto.getCustomField()).describeConstable();
+
+        Optional<String> filter = Optional.ofNullable(dto.getCustomField());
 
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
-                .queryParam("number", page)
-                .queryParam("size", limit)
-                .queryParamIfPresent("filterCustomField",filter)
+                .queryParam("number", 1)
+                .queryParam("size", 1)
+                .queryParamIfPresent("filterCustomField", filter)
                 .encode()
                 .toUriString();
 
@@ -110,8 +115,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
         );
         return responseEntity.getBody();
     }
-
-
     // --8<-- [end:callService]
+
 }
 

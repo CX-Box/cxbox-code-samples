@@ -4,22 +4,11 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.feature.synchasyncrequests.MyEntity3231Queue;
-import org.demo.documentation.feature.synchasyncrequests.MyEntity3231QueueRepository;
-import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
-import org.demo.services.utils.RestResponsePage;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.demo.documentation.feature.synchasyncrequests.enums.MyEntity3231QueueRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Optional;
 
 
 @Service

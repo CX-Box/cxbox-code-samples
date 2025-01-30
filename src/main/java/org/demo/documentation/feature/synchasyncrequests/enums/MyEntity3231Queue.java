@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.enums;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 
 @Entity
 @Getter
@@ -20,7 +19,7 @@ public class MyEntity3231Queue extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column
-    private StatusEnum customFieldDictionary;
+    private StatusEnum2 customFieldDictionary;
 
     @Column
     private String entityId;

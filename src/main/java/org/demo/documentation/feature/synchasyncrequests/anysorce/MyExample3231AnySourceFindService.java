@@ -7,10 +7,9 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
-import org.demo.documentation.feature.synchasyncrequests.CxboxMyExample3231Controller;
-import org.demo.documentation.feature.synchasyncrequests.MyEntity3231Queue;
-import org.demo.documentation.feature.synchasyncrequests.MyEntity3231QueueRepository;
-import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
+import org.demo.documentation.feature.synchasyncrequests.enums.MyEntity3231Queue;
+import org.demo.documentation.feature.synchasyncrequests.enums.MyEntity3231QueueRepository;
+import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum2;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -21,8 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Optional;
-
-import static org.demo.documentation.feature.synchasyncrequests.CxboxMyExample3231Controller.myexample3231AnySource;
 
 
 @Service
@@ -81,7 +78,7 @@ public class MyExample3231AnySourceFindService extends AnySourceVersionAwareResp
         Page<MyEntity3231AnySourceOutServiceFindDTO> entityPage  = callService(dto);
         Optional<MyEntity3231AnySourceOutServiceFindDTO>  entity = entityPage.get().findFirst();
         // create queue
-        MyEntity3231Queue myEntity3231Queue = new MyEntity3231Queue().setCustomFieldDictionary(StatusEnum.IN_PROGRESS).setEntityId(bc.getId());
+        MyEntity3231Queue myEntity3231Queue = new MyEntity3231Queue().setCustomFieldDictionary(StatusEnum2.IN_PROGRESS).setEntityId(bc.getId());
         repositoryQueue.save(myEntity3231Queue);
         return entity.get();
     }

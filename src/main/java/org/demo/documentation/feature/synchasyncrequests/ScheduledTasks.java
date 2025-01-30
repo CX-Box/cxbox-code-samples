@@ -13,22 +13,22 @@ import static org.cxbox.api.service.session.InternalAuthorizationService.SystemU
 @Component
 public class ScheduledTasks {
 
-    private final MyEntity3231QueueRepository repositoryQueue;
+    private final MyEntity3231Repository repository;
     private final InternalAuthorizationService authzService;
 
-    public ScheduledTasks(MyEntity3231QueueRepository repositoryQueue, InternalAuthorizationService authzService) {
-        this.repositoryQueue = repositoryQueue;
+    public ScheduledTasks(MyEntity3231Repository repository, InternalAuthorizationService authzService) {
+        this.repository = repository;
         this.authzService = authzService;
     }
 
     @Scheduled(fixedRate = 15000)
     public void changeStatus() {
         authzService.loginAs(authzService.createAuthentication(VANILLA));
-        List<MyEntity3231Queue> dataListInProgress = repositoryQueue.findAllByCustomFieldDictionary(StatusEnum.IN_PROGRESS);
-        dataListInProgress.forEach(d -> {
-                    d.setUpdatedDate(LocalDateTime.now());
-                    d.setCustomFieldDictionary(StatusEnum.DONE);
-                    repositoryQueue.save(d);
+        List<MyEntity3231> dataListInProgress = repository.findAllByStatusResponse(StatusEnum.IN_PROGRESS);
+        dataListInProgress.forEach(data -> {
+                    data.setUpdatedDate(LocalDateTime.now());
+                    data.setStatusResponse(StatusEnum.DONE);
+                    repository.save(data);
                 }
         );
     }

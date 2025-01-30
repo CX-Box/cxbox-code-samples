@@ -10,16 +10,17 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 @Getter
 @AllArgsConstructor
-public enum StatusEnum {
-	IN_PROGRESS("In Progress"),
-	ERROR("Error"),
-	NEW("New"),
+public enum StatusEnum2 {
+    IN_PROGRESS("In Progress"),
+    ERROR("Error"),
+    NEW("New"),
 	DONE("Done");
+
     @JsonValue
     private final String value;
 
-    public static StatusEnum getByValue(@NonNull String value) {
-        return Arrays.stream(StatusEnum.values())
+    public static StatusEnum2 getByValue(@NonNull String value) {
+        return Arrays.stream(StatusEnum2.values())
                 .filter(enm -> Objects.equals(enm.getValue(), value))
                 .findFirst()
                 .orElse(null);

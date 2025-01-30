@@ -3,7 +3,7 @@ package org.demo.documentation.feature.synchasyncrequests;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
+import org.demo.documentation.feature.synchasyncrequests.enums.MyEntity3231QueueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,6 @@ public class MyEntity3231TestDataLoadService {
 
     @Autowired
     MyEntity3231Repository repository;
-
-    @Autowired
-    MyEntity3231QueueRepository repositoryQ;
 
     @Autowired
     InternalAuthorizationService authzService;
