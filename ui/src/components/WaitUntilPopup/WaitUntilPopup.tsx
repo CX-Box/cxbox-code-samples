@@ -43,7 +43,7 @@ function WaitUntilPopup(props: WaitUntilPopupProps) {
                 </div>
                 <div className={styles.footer}>
                     {!waiting && (
-                        <Button type="primary" onClick={handleOk}>
+                        <Button type="formOperationRed" onClick={handleOk}>
                             {t('Ok')}
                         </Button>
                     )}
