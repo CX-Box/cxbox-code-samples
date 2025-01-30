@@ -92,8 +92,10 @@ public class StoringDataEntity3137Controller {
         Specification<MyEntity3137> specification = (root, query, cb) -> cb.and();
         if (filterCustomField != null) {
             specification = (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(MyEntity3137_.customField.getName()), "%" + filterCustomField + "%");
-        }
+            criteriaBuilder.like(
+                    criteriaBuilder.upper(root.get(MyEntity3137_.customField.getName())),
+                    "%"+filterCustomField.toUpperCase()+"%");
+                }
         if (filterParentId != null) {
             specification = (root, query, criteriaBuilder) ->
                     criteriaBuilder.equal(root.get(MyEntity3137_.parentId.getName()), filterParentId);

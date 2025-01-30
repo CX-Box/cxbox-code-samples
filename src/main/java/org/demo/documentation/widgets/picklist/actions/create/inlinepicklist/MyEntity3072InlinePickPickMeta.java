@@ -17,7 +17,7 @@ public class MyEntity3072InlinePickPickMeta extends FieldMetaBuilder<MyEntity307
         fields.setEnabled(MyEntity3072InlinePickPickDTO_.id);
         fields.setEnabled(MyEntity3072InlinePickPickDTO_.customFieldPick);
     }
-   // --8<-- [end:buildRowDependentMeta]\
+   // --8<-- [end:buildRowDependentMeta]
 
     // --8<-- [start:buildIndependentMeta]
     @Override
