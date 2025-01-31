@@ -8,6 +8,7 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
+import org.demo.documentation.feature.synchasyncrequests.CxboxMyExample3231Controller;
 import org.demo.documentation.feature.synchasyncrequests.anysorce.MyEntity3231AnySourceOutServiceDTO;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 import org.demo.services.utils.RestResponsePage;
@@ -62,18 +63,24 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
                 .action(act -> act
-                        .action("findClient", "find Data")
-                        .scope(ActionScope.RECORD)
+                        .action("createAndFind", "create andFind")
+                        .scope(ActionScope.BC)
                         .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(bc, dto);
+                            findInExternalSystemAsync(myEntity3232);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.waitUntil(
+                                    PostAction.drillDownAndWaitUntil(
+                                            "/myexample3231/view/myexample3231asyncform/"+
+                                                    CxboxMyExample3231Controller.myexample3232+"/"+ myEntity3232.getId(),
+                                            CxboxMyExample3231Controller.myexample3232,
                                             MyExample3232DTO_.statusResponse,
                                             StatusEnum.DONE
-                                    ).timeout(Duration.ofSeconds(30000)).build());
+                                    )         .inProgressMessage("In Progress Message")
+                                            .successMessage("Success Message")
+                                            .timeoutMessage("Timeout Message")
+                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
                         })
                 )
                 .build();
@@ -82,12 +89,9 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:getActions]
 
     // --8<-- [start:findInExternalSystem]
-    @Async
-    @Transactional
-    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3232DTO dto){
+    protected void findInExternalSystemAsync(MyEntity3232 myEntity3232){
 
-        MyEntity3232 myEntity3232 = repository.findById(bc.getIdAsLong()).orElseThrow();
-        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService().get().findFirst();
         if (entityExternal.isPresent()) {
             myEntity3232.setCustomField(entityExternal.get().getCustomField());
         }
@@ -96,9 +100,9 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:findInExternalSystem]
 
     // --8<-- [start:callService]
-    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3232DTO dto) {
-        try {
-            Optional<String> filter = Optional.ofNullable(dto.getCustomField());
+    public Page<MyEntity3231AnySourceOutServiceDTO> callService() {
+
+            Optional<String> filter = Optional.ofNullable("custom Field 3");
 
             String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
                     .queryParam("number", 1)
@@ -117,9 +121,6 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
             );
 
             return responseEntity.getBody();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
     // --8<-- [end:callService]
 

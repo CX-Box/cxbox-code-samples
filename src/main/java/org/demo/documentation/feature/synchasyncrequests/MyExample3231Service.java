@@ -65,7 +65,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
                 .action(act -> act
-                        .action("findClient", "find Data")
+                        .action("findClient", "Find data with all message")
                         .scope(ActionScope.RECORD)
                         .invoker((bc, dto) -> {
                             MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
@@ -75,11 +75,75 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                                return new ActionResultDTO<MyExample3231DTO>().setAction(
                                     PostAction.waitUntil(
                                             MyExample3231DTO_.statusResponse,
-                                            StatusEnum.DONE
-                                    ).inProgressMessage("In Progress Message")
+                                            StatusEnum.DONE)
+                                            .timeoutMessage("Timeout Message")
+                                            .inProgressMessage("In Progress Message")
                                             .successMessage("Success Message")
                                             .timeoutMessage("Timeout Message")
                                             .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                        })
+                )
+                .action(act -> act
+                        .action("findClientWithSuccessMessage", "Find data with Success message")
+                        .scope(ActionScope.RECORD)
+                        .invoker((bc, dto) -> {
+                            MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
+                            repository.save(myEntity3231);
+                            findInExternalSystemAsync(bc, dto);
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
+                                    PostAction.waitUntil(
+                                                    MyExample3231DTO_.statusResponse,
+                                                    StatusEnum.DONE)
+                                            .successMessage("Success Message")
+                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                        })
+                )
+                .action(act -> act
+                        .action("findClientWithoutCustomMessage", "Find data with without custom message")
+                        .scope(ActionScope.RECORD)
+                        .invoker((bc, dto) -> {
+                            MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
+                            repository.save(myEntity3231);
+                            findInExternalSystemAsync(bc, dto);
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
+                                    PostAction.waitUntil(
+                                                    MyExample3231DTO_.statusResponse,
+                                                    StatusEnum.DONE)
+                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                        })
+                )
+                .action(act -> act
+                        .action("findClientWithCustomMessage", "Find data with in progress message")
+                        .scope(ActionScope.RECORD)
+                        .invoker((bc, dto) -> {
+                            MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
+                            repository.save(myEntity3231);
+                            findInExternalSystemAsync(bc, dto);
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
+                                    PostAction.waitUntil(
+                                                    MyExample3231DTO_.statusResponse,
+                                                    StatusEnum.DONE)
+                                            .inProgressMessage("In Progress Message")
+                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                        })
+                )
+                .action(act -> act
+                        .action("findClientWithTimeoutCustomMessage", "Find data with timeout message")
+                        .scope(ActionScope.RECORD)
+                        .invoker((bc, dto) -> {
+                            MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
+                            repository.save(myEntity3231);
+                            findInExternalSystemAsync(bc, dto);
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
+                                    PostAction.waitUntil(
+                                                    MyExample3231DTO_.statusResponse,
+                                                    StatusEnum.DONE)
+                                            .timeoutMessage("Timeout Message")
+                                            .timeoutMaxRequests(1).timeout(Duration.ofSeconds(10)).build());
                         })
                 )
                 .build();
@@ -101,7 +165,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
 
     // --8<-- [start:callService]
     public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
-        try {
+
             Optional<String> filter = Optional.ofNullable(dto.getCustomField());
 
             String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
@@ -121,9 +185,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
             );
 
             return responseEntity.getBody();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
     // --8<-- [end:callService]
 

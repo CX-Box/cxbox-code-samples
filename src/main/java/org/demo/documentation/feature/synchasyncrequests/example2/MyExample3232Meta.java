@@ -13,6 +13,8 @@ public class MyExample3232Meta extends FieldMetaBuilder<MyExample3232DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3232DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3232DTO_.customField);
+        fields.setEnabled(MyExample3232DTO_.customFieldForm);
+        fields.setEnabled(MyExample3232DTO_.statusResponse);
     }
 
     @Override
