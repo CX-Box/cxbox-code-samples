@@ -76,7 +76,10 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                                     PostAction.waitUntil(
                                             MyExample3231DTO_.statusResponse,
                                             StatusEnum.DONE
-                                    ).timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                                    ).inProgressMessage("In Progress Message")
+                                            .successMessage("Success Message")
+                                            .timeoutMessage("Timeout Message")
+                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
                         })
                 )
                 .build();
