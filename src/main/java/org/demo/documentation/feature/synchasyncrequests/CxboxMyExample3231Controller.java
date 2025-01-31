@@ -5,16 +5,12 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.feature.synchasyncrequests.anysorce.MyExample3231AnySourceFindService;
-import org.demo.documentation.feature.synchasyncrequests.anysorce.MyExample3231AnySourceService;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample3231Controller implements EnumBcIdentifier {
 
     // @formatter:on
-    myexample3231AnySourceFind(MyExample3231AnySourceFindService.class),
-    myexample3231AnySource(MyExample3231AnySourceService.class),
     myexample3231(MyExample3231Service.class);
 
     // @formatter:on

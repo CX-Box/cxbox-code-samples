@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.example2;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity3231TestDataLoadService {
+public class MyEntity3232TestDataLoadService {
 
     @Autowired
-    MyEntity3231Repository repository;
+    MyEntity3232Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -20,6 +20,7 @@ public class MyEntity3231TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        repository.save(new MyEntity3232().setCustomField("test data"));
     }
 
 }

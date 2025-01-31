@@ -13,5 +13,5 @@ public class MyEntity3231AnySourceOutServiceDTO implements Serializable {
 
     private String id;
     private String customField;
-
+    private String customFieldForm;
 }

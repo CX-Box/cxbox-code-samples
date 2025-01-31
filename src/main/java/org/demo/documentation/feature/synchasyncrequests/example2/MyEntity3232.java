@@ -1,26 +1,28 @@
-package org.demo.documentation.feature.synchasyncrequests.enums;
+package org.demo.documentation.feature.synchasyncrequests.example2;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
+
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3231Queue extends BaseEntity {
+public class MyEntity3232 extends BaseEntity {
     @Column
     private String customField;
 
     @Enumerated(value = EnumType.STRING)
     @Column
-    private StatusEnum2 customFieldDictionary;
+    private StatusEnum statusResponse = StatusEnum.NEW;
 
     @Column
-    private String entityId;
+    private String customFieldForm;
 }

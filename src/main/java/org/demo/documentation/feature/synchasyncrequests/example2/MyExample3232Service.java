@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.example2;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -25,41 +25,38 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Service
-public class MyExample3231Service extends VersionAwareResponseService<MyExample3231DTO, MyEntity3231> {
+public class MyExample3232Service extends VersionAwareResponseService<MyExample3232DTO, MyEntity3232> {
 
     private final IntegrationConfiguration integrationConfig;
 
     private final RestTemplate restTemplate;
 
-    private final MyEntity3231Repository repository;
+    private final MyEntity3232Repository repository;
 
-    public MyExample3231Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate, MyEntity3231Repository repository) {
-        super(MyExample3231DTO.class, MyEntity3231.class, null, MyExample3231Meta.class);
+    public MyExample3232Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate, MyEntity3232Repository repository) {
+        super(MyExample3232DTO.class, MyEntity3232.class, null, MyExample3232Meta.class);
         this.integrationConfig = integrationConfig;
         this.restTemplate = restTemplate;
         this.repository = repository;
     }
 
     @Override
-    protected CreateResult<MyExample3231DTO> doCreateEntity(MyEntity3231 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample3232DTO> doCreateEntity(MyEntity3232 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample3231DTO> doUpdateEntity(MyEntity3231 entity, MyExample3231DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3231DTO_.customFieldForm, entity::setCustomFieldForm);
-        setIfChanged(data, MyExample3231DTO_.statusResponse, entity::setStatusResponse);
-        if (data.isFieldChanged(MyExample3231DTO_.customField)) {
+    protected ActionResultDTO<MyExample3232DTO> doUpdateEntity(MyEntity3232 entity, MyExample3232DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3232DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-    // --8<-- [start:getActions]
     @Override
-    public Actions<MyExample3231DTO> getActions() {
-        return Actions.<MyExample3231DTO>builder()
+    public Actions<MyExample3232DTO> getActions() {
+        return Actions.<MyExample3232DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
@@ -68,15 +65,15 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                         .action("findClient", "find Data")
                         .scope(ActionScope.RECORD)
                         .invoker((bc, dto) -> {
-                            MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
-                            myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3231);
+                            MyEntity3232 myEntity3232 = repository.findById(bc.getIdAsLong()).orElseThrow();
+                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+                            repository.save(myEntity3232);
                             findInExternalSystemAsync(bc, dto);
-                               return new ActionResultDTO<MyExample3231DTO>().setAction(
+                            return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.waitUntil(
-                                            MyExample3231DTO_.statusResponse,
+                                            MyExample3232DTO_.statusResponse,
                                             StatusEnum.DONE
-                                    ).timeoutMaxRequests(6).timeout(Duration.ofSeconds(100)).build());
+                                    ).timeout(Duration.ofSeconds(30000)).build());
                         })
                 )
                 .build();
@@ -85,19 +82,21 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:getActions]
 
     // --8<-- [start:findInExternalSystem]
-    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3231DTO dto){
+    @Async
+    @Transactional
+    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3232DTO dto){
 
-        MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
+        MyEntity3232 myEntity3232 = repository.findById(bc.getIdAsLong()).orElseThrow();
         Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
         if (entityExternal.isPresent()) {
-            myEntity3231.setCustomField(entityExternal.get().getCustomField());
+            myEntity3232.setCustomField(entityExternal.get().getCustomField());
         }
-        repository.save(myEntity3231);
+        repository.save(myEntity3232);
     }
     // --8<-- [end:findInExternalSystem]
 
     // --8<-- [start:callService]
-    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
+    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3232DTO dto) {
         try {
             Optional<String> filter = Optional.ofNullable(dto.getCustomField());
 
@@ -125,4 +124,5 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:callService]
 
 }
+
 

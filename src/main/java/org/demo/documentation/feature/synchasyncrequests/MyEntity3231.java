@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
-import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum2;
 
 
 @Entity

@@ -1,12 +1,12 @@
 {
-  "name": "MyExample3231AsynInfo",
-  "title": "Info about external system response status",
-  "type": "Info",
+  "name": "MyExample3231AsynForm",
+  "title": "External data",
+  "type": "Form",
   "bc": "myexample3231",
   "fields": [
     {
-      "label": "Status Response",
-      "key": "statusResponse",
+      "label": "customField",
+      "key": "customField",
       "type": "dictionary"
     }
   ],
@@ -16,11 +16,16 @@
         {
           "cols": [
             {
-              "fieldKey": "statusResponse",
+              "fieldKey": "customField",
               "span": 12
             }
           ]
         }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "findClient"
       ]
     }
   }
