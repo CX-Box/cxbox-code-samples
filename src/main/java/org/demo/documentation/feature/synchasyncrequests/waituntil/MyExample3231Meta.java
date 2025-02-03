@@ -4,7 +4,6 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.feature.synchasyncrequests.MyExample3231DTO_;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 import org.springframework.stereotype.Service;
 

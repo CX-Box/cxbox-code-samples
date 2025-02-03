@@ -10,14 +10,13 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.synchasyncrequests.anysorce.MyEntity3231AnySourceOutServiceDTO;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
+import org.demo.documentation.feature.synchasyncrequests.waituntil.*;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -74,8 +73,8 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                             findInExternalSystemAsync(bc, dto);
                             return new ActionResultDTO<MyExample3231DTO>().setAction(
                                     PostAction.waitUntil(
-                                                    MyExample3231DTO_.statusResponseFlag,
-                                                    true)
+                                                    MyExample3231DTO_.customField,
+                                                    "custom data2")
                                             .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
                         })
                 )

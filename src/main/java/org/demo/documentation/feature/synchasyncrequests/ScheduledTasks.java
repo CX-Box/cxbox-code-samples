@@ -4,6 +4,8 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 import org.demo.documentation.feature.synchasyncrequests.drilldownandwaituntil.MyEntity3232;
 import org.demo.documentation.feature.synchasyncrequests.drilldownandwaituntil.MyEntity3232Repository;
+import org.demo.documentation.feature.synchasyncrequests.waituntil.MyEntity3231;
+import org.demo.documentation.feature.synchasyncrequests.waituntil.MyEntity3231Repository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
