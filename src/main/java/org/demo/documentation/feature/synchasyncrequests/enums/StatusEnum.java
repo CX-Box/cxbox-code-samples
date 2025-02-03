@@ -11,11 +11,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum StatusEnum {
-    IN_PROGRESS("In Progress"),
-    ERROR("Error"),
-    NEW("New"),
+	IN_PROGRESS("In Progress"),
+	ERROR("Error"),
+	NEW("New"),
 	DONE("Done");
-
     @JsonValue
     private final String value;
 
