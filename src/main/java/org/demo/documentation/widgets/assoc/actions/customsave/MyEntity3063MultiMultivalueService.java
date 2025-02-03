@@ -3,6 +3,7 @@ package org.demo.documentation.widgets.assoc.actions.customsave;
 import lombok.Getter;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.assoc.actions.other.customsave.MyEntity3063MultiMultivalueDTO_;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -30,6 +31,7 @@ public class MyEntity3063MultiMultivalueService extends VersionAwareResponseServ
     @Override
     protected ActionResultDTO<MyEntity3063MultiMultivalueDTO> doUpdateEntity(MyEntity3063Multi entity, MyEntity3063MultiMultivalueDTO data,
                                                                              BusinessComponent bc) {
+        setIfChanged(data, MyEntity3063MultiMultivalueDTO_.customFieldReq, entity::setCustomFieldReq);
         setIfChanged(data, MyEntity3063MultiMultivalueDTO_.customField, entity::setCustomField);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
@@ -46,7 +48,7 @@ public class MyEntity3063MultiMultivalueService extends VersionAwareResponseServ
         return contactDTOActionResultDTO;
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3063MultiMultivalueDTO> getActions() {
         return Actions.<MyEntity3063MultiMultivalueDTO>builder()

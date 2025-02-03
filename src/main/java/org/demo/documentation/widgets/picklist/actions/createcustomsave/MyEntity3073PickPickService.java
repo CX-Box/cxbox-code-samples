@@ -3,6 +3,7 @@ package org.demo.documentation.widgets.picklist.actions.createcustomsave;
 import lombok.Getter;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.picklist.actions.other.createcustomsave.MyEntity3073PickPickDTO_;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -32,6 +33,7 @@ public class MyEntity3073PickPickService extends VersionAwareResponseService<MyE
     @Override
     protected ActionResultDTO<MyEntity3073PickPickDTO> doUpdateEntity(MyEntity3073Pick entity, MyEntity3073PickPickDTO data,
                                                                       BusinessComponent bc) {
+        setIfChanged(data, MyEntity3073PickPickDTO_.customFieldReq, entity::setCustomFieldReq);
         setIfChanged(data, MyEntity3073PickPickDTO_.customField, entity::setCustomField);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.widgets.assoc.actions.other.customsave.MyEntity3063MultiMultivalueDTO_;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
@@ -11,18 +12,22 @@ import org.springframework.stereotype.Service;
 public class MyEntity3063MultiMultivalueMeta extends FieldMetaBuilder<MyEntity3063MultiMultivalueDTO> {
 
     @Override
-   // --8<-- [start:buildRowDependentMeta]
+    // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063MultiMultivalueDTO_.id);
-        fields.setEnabled(org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063MultiMultivalueDTO_.customField);
+        fields.setEnabled(MyEntity3063MultiMultivalueDTO_.customFieldReq);
+        fields.setEnabled(MyEntity3063MultiMultivalueDTO_.id);
+        fields.setEnabled(MyEntity3063MultiMultivalueDTO_.customField);
+        fields.setRequired(MyEntity3063MultiMultivalueDTO_.customFieldReq);
     }
-   // --8<-- [end:buildRowDependentMeta]
+
+    // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
-        fields.enableSort(org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063MultiMultivalueDTO_.id);
-        fields.enableSort(org.demo.documentation.widgets.assoc.actions.customsave.MyEntity3063MultiMultivalueDTO_.customField);
+        fields.enableFilter(MyEntity3063MultiMultivalueDTO_.customFieldReq);
+        fields.enableSort(MyEntity3063MultiMultivalueDTO_.id);
+        fields.enableSort(MyEntity3063MultiMultivalueDTO_.customField);
 
     }
 
