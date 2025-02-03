@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.waituntil;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;

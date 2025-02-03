@@ -5,7 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.feature.synchasyncrequests.example2.MyExample3232Service;
+import org.demo.documentation.feature.synchasyncrequests.drilldownandwaituntil.MyExample3232Service;
 import org.springframework.stereotype.Component;
 
 @Getter

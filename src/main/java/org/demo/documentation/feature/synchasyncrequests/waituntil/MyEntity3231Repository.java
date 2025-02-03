@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.waituntil;
 
 import org.demo.documentation.feature.synchasyncrequests.enums.StatusEnum;
 import org.springframework.data.jpa.repository.JpaRepository;

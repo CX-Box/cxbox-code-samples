@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests.example2;
+package org.demo.documentation.feature.synchasyncrequests.drilldownandwaituntil;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
@@ -14,7 +14,6 @@ public class MyExample3232Meta extends FieldMetaBuilder<MyExample3232DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3232DTO_.customField);
         fields.setEnabled(MyExample3232DTO_.customFieldForm);
-        fields.setEnabled(MyExample3232DTO_.statusResponse);
     }
 
     @Override

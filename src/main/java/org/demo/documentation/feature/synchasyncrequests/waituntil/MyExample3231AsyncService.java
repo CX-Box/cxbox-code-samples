@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.waituntil;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;

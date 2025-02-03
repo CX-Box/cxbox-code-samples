@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.synchasyncrequests;
+package org.demo.documentation.feature.synchasyncrequests.waituntil;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,11 +21,13 @@ public class MyExample3231DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldForm", provider = StringValueProvider.class)
     private String customFieldForm;
 
+    private Boolean statusResponseFlag;
 
     public MyExample3231DTO(MyEntity3231 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.statusResponse = entity.getStatusResponse();
         this.customFieldForm = entity.getCustomFieldForm();
+        this.statusResponseFlag = entity.getStatusResponse() == StatusEnum.DONE || entity.getStatusResponse() == StatusEnum.ERROR;
     }
 }
