@@ -16,11 +16,12 @@ function WaitUntilPopup(props: WaitUntilPopupProps) {
     const { type, options, bcName } = popupData || {}
     const visibility = type === 'waitUntil'
     const { message, status } = options || {}
-    const hasCompletionMessage = ['success', 'timeout'].includes(status as string) && message
-    const waiting = !hasCompletionMessage
+    const isFinishStatus = ['success', 'timeout'].includes(status as string)
+    const hasCompletionMessage = isFinishStatus && message
+    const waiting = !isFinishStatus
 
     const dispatch = useDispatch()
-    const handleOk = useCallback(() => {
+    const closePopup = useCallback(() => {
         dispatch(actions.closeViewPopup({ bcName }))
     }, [bcName, dispatch])
 
@@ -29,12 +30,13 @@ function WaitUntilPopup(props: WaitUntilPopupProps) {
             <Modal
                 className={styles.modal}
                 visible={visibility}
-                closable={false}
+                closable={true}
                 cancelText={null}
                 centered={true}
                 footer={null}
                 maskClosable={false}
                 maskStyle={{ backdropFilter: 'blur(50px)' }}
+                onCancel={closePopup}
             >
                 <div className={styles.content}>
                     <span className={styles.title}>{t('Please, wait')}</span>
@@ -42,8 +44,8 @@ function WaitUntilPopup(props: WaitUntilPopupProps) {
                     <span className={styles.text}>{message ?? t('Operation in progress')}</span>
                 </div>
                 <div className={styles.footer}>
-                    {!waiting && (
-                        <Button type="formOperationRed" onClick={handleOk}>
+                    {hasCompletionMessage && (
+                        <Button type="formOperationRed" onClick={closePopup}>
                             {t('Ok')}
                         </Button>
                     )}

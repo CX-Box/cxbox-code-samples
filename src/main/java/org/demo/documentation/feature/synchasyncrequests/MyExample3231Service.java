@@ -115,7 +115,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                         })
                 )
                 .action(act -> act
-                        .action("findClientWithCustomMessage", "Find data with in progress message")
+                        .action("findClientWithInProgressCustomMessage", "Find data with in progress message")
                         .scope(ActionScope.RECORD)
                         .invoker((bc, dto) -> {
                             MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();

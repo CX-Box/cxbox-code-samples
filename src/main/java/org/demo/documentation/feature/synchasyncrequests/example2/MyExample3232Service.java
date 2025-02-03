@@ -72,7 +72,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             findInExternalSystemAsync(myEntity3232);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
-                                            "/myexample3231/view/myexample3231asyncform/"+
+                                            "/screen/myexample3231/view/myexample3232form/"+
                                                     CxboxMyExample3231Controller.myexample3232+"/"+ myEntity3232.getId(),
                                             CxboxMyExample3231Controller.myexample3232,
                                             MyExample3232DTO_.statusResponse,
