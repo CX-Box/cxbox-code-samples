@@ -4,6 +4,7 @@ import {
     OperationError,
     OperationErrorEntity,
     OperationPostInvokeAny,
+    OperationPostInvokeRefreshBc,
     OperationPostInvokeType,
     OperationPreInvoke,
     OperationTypeCrud,
@@ -18,7 +19,6 @@ import { postOperationRoutine } from './utils/postOperationRoutine'
 import { AppWidgetGroupingHierarchyMeta } from '@interfaces/widget'
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
-import { OperationPostInvokeRefreshBc } from '../../../../cxbox-ui/src'
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
