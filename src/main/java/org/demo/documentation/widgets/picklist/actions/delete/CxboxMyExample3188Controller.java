@@ -13,7 +13,8 @@ public enum CxboxMyExample3188Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample3188(MyExample3188Service.class), myEntity3188PickPick(myexample3188, MyEntity3188PickPickService.class);
+    myexample3188(MyExample3188Service.class),
+        myEntity3188PickPick(myexample3188, MyEntity3188PickPickService.class);
 
     // @formatter:on
 
