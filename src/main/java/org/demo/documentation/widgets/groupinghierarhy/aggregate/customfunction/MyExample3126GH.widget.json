@@ -1,0 +1,57 @@
+{
+  "name": "MyExample3126GH",
+  "title": "GroupingHierarchy (GH) widget custom functional",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3126",
+  "fields": [
+    {
+      "title": "Location",
+      "key": "location",
+      "type": "input"
+    },
+    {
+      "title": "Object",
+      "key": "object",
+      "type": "input"
+    },
+    {
+      "title": "Insurance value",
+      "key": "insuranceValue",
+      "type": "number"
+    },
+    {
+      "title": "Insured amount",
+      "key": "insuranceAmount",
+      "digits": 2,
+      "type": "number"
+    },
+    {
+      "title": "Percent Rate Calculate field",
+      "key": "percentInsuranceAmount",
+      "digits": 2,
+      "type": "number"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "location",
+        "object"
+      ],
+      "aggLevels": [
+        {
+          "level": 1,
+          "aggFields": [
+            {
+              "fieldKey": "insuranceValue",
+              "func": "min",
+              "argFieldKeys": [
+                "percentInsuranceAmount"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
