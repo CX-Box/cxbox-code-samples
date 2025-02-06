@@ -1,6 +1,7 @@
 package core.widget.form.field;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.form.FormWidget;
@@ -120,6 +121,7 @@ public abstract class BaseField<E> {
     @Step("Getting a value from a field RequiredMessage")
     @Attachment
     public String getRequiredMessage() {
+        Selenide.sleep(100);
         return getFieldByName()
                 .$(REQUIRED_MESSAGE)
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))

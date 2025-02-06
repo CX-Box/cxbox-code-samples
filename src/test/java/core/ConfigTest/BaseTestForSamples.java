@@ -42,7 +42,7 @@ public class BaseTestForSamples {
         Configuration.browserCapabilities = getChromeOptions();
         Configuration.webdriverLogsEnabled = false;
 
-        Selenide.open("http://code-samples.cxbox.org/ui/#/");
+        Selenide.open(System.getProperty("app.url"));
         page = new LoginPage().loginKeyCloak("demo", "demo");
     }
 

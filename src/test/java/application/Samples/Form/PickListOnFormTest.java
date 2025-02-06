@@ -214,7 +214,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
         var customField = form.pickList("Custom Field");
         var customField2 = form.pickList("Custom Field Additional");
         form.clickButton("save");
-        assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
+        assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters."); //Don't work, data-test-field-type=inline picklist at this version
         assertThat(customField2.getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
 

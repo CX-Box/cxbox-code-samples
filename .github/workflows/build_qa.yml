@@ -1,0 +1,49 @@
+name: Test project
+
+on:
+  push:
+    - main
+  pull_request:
+    branches:
+      -main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker-compose build
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: "maven"
+
+      - name: Stop and remove containers, networks
+        run: docker-compose -f docker-compose-test.yml down
+
+      - name: Remove unused data
+        run: docker system prune -f
+
+      - name: Build docker-compose
+        run: docker-compose -f docker-compose-test.yml build
+
+      - name: Start docker-compose run
+        run: docker-compose -f docker-compose-test.yml up -d
+
+      - name: Wait for application to start
+        run: curl --retry 10 --retry-delay 5 --retry-connrefused http://localhost:81
+
+      - name: Run tests
+        run: mvn --batch-mode --update-snapshots -DrunTests=true verify
+
+      - name: Stop and remove Docker compose
+        run:  docker-compose -f docker-compose-test.yml down

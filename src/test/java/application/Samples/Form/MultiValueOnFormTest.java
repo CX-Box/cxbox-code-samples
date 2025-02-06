@@ -52,17 +52,6 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         assertThat(customField.getHexColor()).isNull();
     }
 
-//    @Test
-//    @Tag("Positive")
-//    @DisplayName("A test to check the field for \"Read-only\"")
-//    @Description("The test checks for the disabled attribute.")
-//    void readonly() {
-//        MainPages.click("MultiValue readonly");
-//        MainPages.FirstLevelMenu.click("Form");
-//        FormWidget form = page.findFormWidgetByTitle("Form title");
-//        var customField = form.multiValue("Custom Field");
-//        assertThat(customField.getReadOnly()).isTrue();
-//    }
 
     @Test
     @Severity(CRITICAL)
@@ -144,7 +133,6 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.setValueAll();
-        //popupAssocListPopup.setValueAll();
         var popup = page.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
@@ -166,6 +154,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.setValueAll();
+        popupAssocListPopup.close();
         form.clickButton("save");
         var popup = page.findPopup("confirm");
         assertThat(popup).isPresent();
@@ -179,7 +168,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message validation test for one field")
-     @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
+    @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
     void fieldLevelValidationAnnotation() {
         MainPages.click("MultiValue validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
@@ -222,7 +211,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
     void required() {
         MainPages.click("MultiValue required");
         MainPages.FirstLevelMenu.click("Form");
@@ -263,12 +252,12 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
+        customField.clear();
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.setValueAll();
-        customField.openModalWindow();
-        popupAssocListPopup.setValueAll();
+        popupAssocListPopup.close();
         assertThat(customField.getValue()).isEqualTo(List.of("Abs data",
                 "Test data",
                 "Information data",
@@ -293,6 +282,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
+        customField.clear();
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
@@ -309,11 +299,13 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
+        customField.clear();
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.setValues("Custom Field", List.of("Information7 data", "Information9 data", "Abs data"), true);
         customField.openModalWindow();
+        var popupAssocListPopup2 = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         List<Pair<Boolean, String>> expectedPairs = new ArrayList<>();
         expectedPairs.add(Pair.of(false, "Information10 data"));
         expectedPairs.add(Pair.of(true, "Information9 data"));
@@ -327,8 +319,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         expectedPairs.add(Pair.of(false, "Information data"));
         expectedPairs.add(Pair.of(false, "Test data"));
         expectedPairs.add(Pair.of(true, "Abs data"));
-        assertThat(popupAssocListPopup.getStatusValue("Custom Field")).isEqualTo(expectedPairs);
-        popupAssocListPopup.close();
+        assertThat(popupAssocListPopup2.getStatusValue("Custom Field")).isEqualTo(expectedPairs);
     }
     @Test
     @Severity(CRITICAL)
@@ -344,8 +335,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
-        popupAssocListPopup.setValue("Abs data" ,true);
+        popupAssocListPopup.setValue("Abs data", true);
         assertThat(customField.getValue()).isEqualTo(List.of("Abs data"));
     }
-
 }

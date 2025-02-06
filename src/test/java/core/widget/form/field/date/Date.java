@@ -33,7 +33,7 @@ public class Date extends BaseField<LocalDate> {
     @Override
     @Step("Setting the {value} in the field")
     public void setValue(LocalDate value) {
-        Selenide.sleep(10);
+        Selenide.sleep(100);
         setFocusField();
         Calendar.clear();
         Calendar.setDate(value);

@@ -49,7 +49,6 @@
         <junit.version>5.9.3</junit.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <allure.version>2.27.0</allure.version>
         <allure-maven.version>2.12.0</allure-maven.version>
         <selenide.version>7.7.0</selenide.version>
@@ -309,29 +308,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>ui-resources</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/ui</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/ui/build</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -340,7 +316,14 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.3</version>
+                <configuration>
+                    <skipTests>true</skipTests> <!-- По умолчанию тесты отключены -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -429,28 +412,39 @@
             </build>
         </profile>
         <profile>
-            <id>nativeTest</id>
+            <id>Test</id>
+            <activation>
+                <property>
+                    <name>runTests</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <build>
-                 <plugins>
-                     <plugin>
-                         <groupId>org.apache.maven.plugins</groupId>
-                         <artifactId>maven-surefire-plugin</artifactId>
-                         <version>3.2.3</version>
-                         <configuration>
-                             <argLine>
-                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                             </argLine>
-                         </configuration>
-                         <dependencies>
-                             <dependency>
-                                 <groupId>org.aspectj</groupId>
-                                 <artifactId>aspectjweaver</artifactId>
-                                 <version>${aspectj.version}</version>
-                                 <scope>runtime</scope>
-                             </dependency>
-                         </dependencies>
-                     </plugin>
-                 </plugins>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.3</version>
+                        <configuration>
+                            <skipTests>false</skipTests>
+                            <systemPropertyVariables>
+                                <app.url> http://localhost:81/ui/#/ </app.url>
+                            </systemPropertyVariables>
+                            <argLine>
+                                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                            </argLine>
+                            <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.aspectj</groupId>
+                                <artifactId>aspectjweaver</artifactId>
+                                <version>${aspectj.version}</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>

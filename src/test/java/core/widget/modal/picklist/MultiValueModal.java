@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.sleep;
 
 public class MultiValueModal extends AbstractPickList {
     public MultiValueModal(String title) {
@@ -95,6 +94,7 @@ public class MultiValueModal extends AbstractPickList {
                 break;
             }
             pressRight(1);
+            Selenide.sleep(200);
         }
     }
 
@@ -120,16 +120,19 @@ public class MultiValueModal extends AbstractPickList {
     public void setValueAll() {
         while (true) {
             getCheckBoxAll().click();
+
+            if(Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+
             if (isLastPage()) {
                 break;
             }
+
             pressRight(1);
+            Selenide.sleep(200);
         }
-        Selenide.sleep(100);
-        if(Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        close();
+
     }
 
     public List<String> getColumnName() {
@@ -145,10 +148,12 @@ public class MultiValueModal extends AbstractPickList {
                 .$("div[class=\"ant-modal-title\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$("i[aria-label=\"icon: close\"]");
-        for (SelenideElement i : icons) {
-            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .click();
-            sleep(100);
+        List<SelenideElement> listIcons = new ArrayList<>(icons.stream().toList());
+        Collections.reverse(listIcons);
+        for (SelenideElement i : listIcons) {
+            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+            waitingForTests.getWaitAllElements(i);
+            i.click();
         }
     }
 
@@ -172,9 +177,11 @@ public class MultiValueModal extends AbstractPickList {
                         statusAndNames.add(Pair.of(status, name));
                     });
             if (isLastPage()) {
+                System.out.println(statusAndNames);
                 break;
             }
             pressRight(1);
+            Selenide.sleep(200);
         }
         return statusAndNames;
     }

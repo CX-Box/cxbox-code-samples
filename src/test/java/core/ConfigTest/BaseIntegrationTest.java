@@ -37,7 +37,7 @@ public abstract class BaseIntegrationTest {
                 .pageLoadTimeout(60000)
                 .browserCapabilities(getChromeOptions());
 
-        Selenide.open("http://demo.cxbox.org/ui/#/");
+        Selenide.open(System.getProperty("app.url"));
         page = new LoginPage().loginKeyCloak("demo", "demo");
     }
 
