@@ -5,7 +5,7 @@ on:
    inputs:
      choice-test:
        type: choice
-       description: Packege
+       description: Package
        options:
        - All tests
        - Package, class or test
@@ -28,16 +28,17 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'adopt'
           cache: "maven"
+
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
         
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' }} 
-        run: mvn --batch-mode  -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true -Dapp.url=http://code-samples.cxbox.org/ui/#/ -Dtest=application.Samples.Form.**,application.Samples.Info.** test
             
       - name: Run some kind of Form test 
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode  -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode DrunTests=true -Dapp.url=http://code-samples.cxbox.org/ui/#/ -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
           
         
       - name: List screenshots directory
