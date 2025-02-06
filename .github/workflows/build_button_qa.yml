@@ -1,0 +1,56 @@
+name: Test project
+
+on: 
+  workflow_dispatch:
+   inputs:
+     choice-test:
+       type: choice
+       description: Package
+       options:
+       - All tests
+       - Package, class or test
+     test-path:
+       description: include PATH
+       type: string
+       required: false
+
+env:
+  APP_URL: http://code-samples.cxbox.org/ui/#/
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['17']
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: "maven"
+
+      - name: Create reports directory
+        run: mkdir -p build/reports/tests/
+        
+      - name: Run default tests
+        if: ${{inputs.choice-test == 'All tests' }} 
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+            
+      - name: Run some kind of Form test 
+        if: ${{inputs.choice-test == 'Package, class or test'}}
+        run: mvn --batch-mode DrunTests=true -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
+          
+        
+      - name: List screenshots directory
+        if: always()
+        run: ls -la build/reports/tests/
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots
+          path: build/reports/tests/
