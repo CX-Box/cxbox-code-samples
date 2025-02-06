@@ -13,6 +13,9 @@ on:
        description: include PATH
        type: string
        required: false
+
+env:
+  APP_URL: http://code-samples.cxbox.org/ui/#/
     
 jobs:
   build:
@@ -34,11 +37,11 @@ jobs:
         
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' }} 
-        run: mvn --batch-mode -DrunTests=true -Dapp.url=http://code-samples.cxbox.org/ui/#/ -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
             
       - name: Run some kind of Form test 
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode DrunTests=true -Dapp.url=http://code-samples.cxbox.org/ui/#/ -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode DrunTests=true -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
           
         
       - name: List screenshots directory
