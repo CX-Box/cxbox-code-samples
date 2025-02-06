@@ -59,7 +59,7 @@ public class MyExample325Service extends VersionAwareResponseService<MyExample32
 					"The field 'customFieldAdditional' can contain only letters."
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

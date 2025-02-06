@@ -111,7 +111,7 @@ public class LoginServiceImpl implements LoginService {
 		if (roles == null || roles.isEmpty() || userDetails == null) {
 			return;
 		}
-		User user = userRepository.getById(userDetails.getId());
+		User user = userRepository.getReferenceById(userDetails.getId());
 		userDetails.setUserRoles(roles);
 		userRoleService.updateMainUserRole(user, roles.size() == 1 ? roles.stream().findFirst().orElse(null) : null);
 	}

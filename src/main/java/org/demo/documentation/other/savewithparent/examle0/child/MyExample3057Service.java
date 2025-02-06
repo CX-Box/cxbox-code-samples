@@ -56,7 +56,7 @@ public class MyExample3057Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("addChild", "Add")
                         .invoker((bc, dto) -> {
-                            MyEntity3058 myEntityParent = repositoryParent.getById(bc.getParentIdAsLong());
+                            MyEntity3058 myEntityParent = repositoryParent.getReferenceById(bc.getParentIdAsLong());
                             repositoryParent.save(myEntityParent);
                             return new ActionResultDTO<MyExample3057DTO>();
                         })

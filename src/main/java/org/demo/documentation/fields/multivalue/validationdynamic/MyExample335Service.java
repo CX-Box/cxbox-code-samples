@@ -57,7 +57,7 @@ public class MyExample335Service extends VersionAwareResponseService<MyExample33
 		if (!String.valueOf(dto.getCustomFieldAdditional()).matches("[A-Za-z]+")) {
 			entity.addField(MyExample335DTO_.customFieldAdditional.getName(), "Custom message about required field");
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

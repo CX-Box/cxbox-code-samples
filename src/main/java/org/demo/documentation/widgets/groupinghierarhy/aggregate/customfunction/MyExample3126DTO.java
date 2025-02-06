@@ -5,9 +5,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -36,12 +33,6 @@ public class MyExample3126DTO extends DataResponseDTO {
         this.insuranceAmount = entity.getInsuranceAmount();
         this.netAnnualRate = entity.getNetAnnualRate();
 
-
-       // AggregateService aggregateService = SpringBeanUtils
-              //  .getBean(AggregateService.class);
-     //   this.percentInsuranceAmount = entity.getInsuranceValue() == null && entity.getInsuranceAmount() == null ?
-         //       null :
-         //       Math.ceil(entity.getInsuranceAmount() % aggregateService.sumInsuranceAmount(entity)) * 100;
     }
 
 }

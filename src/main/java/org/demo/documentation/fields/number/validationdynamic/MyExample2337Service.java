@@ -59,7 +59,7 @@ public class MyExample2337Service extends VersionAwareResponseService<MyExample2
 					"The field 'customFieldAdditional' cannot be less than 100 000."
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}
