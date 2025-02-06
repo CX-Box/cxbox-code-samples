@@ -17,13 +17,13 @@ public enum CxboxWidgetStylesController implements EnumBcIdentifier {
 
 
     widgetStyles(WidgetStylesService.class),
-    widgetStylesPicklistPickListPopup(widgetStyles, WidgetStylesPicklistPickService.class),
-    widgetStylesInlinePicklistPickListPopup(widgetStyles, WidgetStylesInlinePicklistPickService.class),
+        widgetStylesPicklistPickListPopup(widgetStyles, WidgetStylesPicklistPickService.class),
+        widgetStylesInlinePicklistPickListPopup(widgetStyles, WidgetStylesInlinePicklistPickService.class),
     widgetStylesMultiMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultiMultivalueService.class),
     widgetStylesMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultivalueService.class),
     widgetStylesNone(widgetStyles, WidgetStylesService.class),
+        widgetStylesInlinePicklistNonePickListPopup(widgetStylesNone, WidgetStylesInlinePicklistPickService.class),
         widgetStylesPicklistPickListPopupNone(widgetStylesNone, WidgetStylesPicklistPickService.class);
-
 
     public static final EnumBcIdentifier.Holder<CxboxWidgetStylesController> Holder = new Holder<>(
             CxboxWidgetStylesController.class);
