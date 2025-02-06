@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
+
 @Entity
 @Getter
 @Setter
@@ -14,4 +15,5 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity3188Pick extends BaseEntity {
     @Column
     private String customField;
+
 }

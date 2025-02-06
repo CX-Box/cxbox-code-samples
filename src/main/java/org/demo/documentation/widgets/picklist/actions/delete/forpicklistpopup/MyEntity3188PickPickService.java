@@ -1,7 +1,9 @@
 package org.demo.documentation.widgets.picklist.actions.delete.forpicklistpopup;
 
 import lombok.Getter;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -34,6 +36,20 @@ public class MyEntity3188PickPickService extends VersionAwareResponseService<MyE
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
     // --8<-- [end:doUpdateEntity]
+
+    // --8<-- [start:deleteEntity]
+    @Override
+    public ActionResultDTO<MyEntity3188PickPickDTO> deleteEntity(BusinessComponent bc) {
+        ActionResultDTO<MyEntity3188PickPickDTO> contactDTOActionResultDTO;
+        try {
+            contactDTOActionResultDTO = super.deleteEntity(bc);
+            repository.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new BusinessException(e).addPopup("You are trying to delete row, that is referenced from other place in system. Deletion is not available");
+        }
+        return contactDTOActionResultDTO;
+    }
+    // --8<-- [end:deleteEntity]
 
     // --8<-- [start:getActions]
     @Override
