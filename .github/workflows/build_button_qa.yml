@@ -41,7 +41,7 @@ jobs:
             
       - name: Run some kind of Form test 
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode DrunTests=true -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.${{github.event.inputs.test-path}} test
           
         
       - name: List screenshots directory
