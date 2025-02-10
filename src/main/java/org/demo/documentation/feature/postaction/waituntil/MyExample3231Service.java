@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction;
+package org.demo.documentation.feature.postaction.waituntil;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -10,7 +10,6 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3231AnySourceOutServiceDTO;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
-import org.demo.documentation.feature.postaction.waituntil.*;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;

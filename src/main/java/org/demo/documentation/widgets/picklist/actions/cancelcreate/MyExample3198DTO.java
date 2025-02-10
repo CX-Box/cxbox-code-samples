@@ -21,6 +21,14 @@ public class MyExample3198DTO extends DataResponseDTO {
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
+    @SearchParameter(name = "customFieldPickListOnCancelEntity.customField", provider = StringValueProvider.class)
+    private String customFieldPickListOnCancel;
+    @SearchParameter(name = "customFieldPickListOnCancelEntity.id", provider = LongValueProvider.class)
+    private Long customFieldPickListOnCancelId;
+    @SearchParameter(name = "customFieldPickListPostActionEntity.customField", provider = StringValueProvider.class)
+    private String customFieldPickListPostAction;
+    @SearchParameter(name = "customFieldPickListPostActionEntity.id", provider = LongValueProvider.class)
+    private Long customFieldPickListPostActionId;
 
     public MyExample3198DTO(MyEntity3198 entity) {
         this.id = entity.getId().toString();
@@ -29,6 +37,18 @@ public class MyExample3198DTO extends DataResponseDTO {
                 .map(e -> e.getId())
                 .orElse(null);
         this.customFieldPickList = Optional.ofNullable(entity.getCustomFieldPickListEntity())
+                .map(e -> e.getCustomField())
+                .orElse(null);
+        this.customFieldPickListOnCancelId = Optional.ofNullable(entity.getCustomFieldPickListOnCancelEntity())
+                .map(e -> e.getId())
+                .orElse(null);
+        this.customFieldPickListOnCancel = Optional.ofNullable(entity.getCustomFieldPickListOnCancelEntity())
+                .map(e -> e.getCustomField())
+                .orElse(null);
+        this.customFieldPickListPostActionId = Optional.ofNullable(entity.getCustomFieldPickListPostActionEntity())
+                .map(e -> e.getId())
+                .orElse(null);
+        this.customFieldPickListPostAction = Optional.ofNullable(entity.getCustomFieldPickListPostActionEntity())
                 .map(e -> e.getCustomField())
                 .orElse(null);
     }

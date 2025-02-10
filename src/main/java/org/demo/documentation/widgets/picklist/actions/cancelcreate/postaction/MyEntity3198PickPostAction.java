@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.picklist.actions.cancelcreate.forpicklistpopup;
+package org.demo.documentation.widgets.picklist.actions.cancelcreate.postaction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3198Pick extends BaseEntity {
+public class MyEntity3198PickPostAction extends BaseEntity {
     @Column
     private String customField;
 }

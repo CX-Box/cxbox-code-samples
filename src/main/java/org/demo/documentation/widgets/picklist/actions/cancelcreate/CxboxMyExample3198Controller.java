@@ -5,7 +5,9 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.widgets.picklist.actions.cancelcreate.forpicklistpopup.MyEntity3198PickPickService;
+import org.demo.documentation.widgets.picklist.actions.cancelcreate.basic.MyEntity3198PickPickService;
+import org.demo.documentation.widgets.picklist.actions.cancelcreate.oncancel.MyEntity3198PickOnCancelPickService;
+import org.demo.documentation.widgets.picklist.actions.cancelcreate.postaction.MyEntity3198PickPostActionPickService;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -14,6 +16,8 @@ public enum CxboxMyExample3198Controller implements EnumBcIdentifier {
     // @formatter:on
 
     myexample3198(MyExample3198Service.class),
+    myEntity3198PickPostActionPick(myexample3198, MyEntity3198PickPostActionPickService.class),
+    myEntity3198PickOnCancelPick(myexample3198, MyEntity3198PickOnCancelPickService.class),
         myEntity3198PickPick(myexample3198, MyEntity3198PickPickService.class);
 
     // @formatter:on
