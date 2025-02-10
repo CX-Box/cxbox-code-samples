@@ -196,7 +196,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Dictionary enum sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Dictionary enum sorting"); // Don't work here (title - Form title at this version
+        FormWidget form = page.findFormWidgetByTitle("Form Dictionary enum sorting"); // Don't work here (title - Form title at this version
         var customField = form.dictionary("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
