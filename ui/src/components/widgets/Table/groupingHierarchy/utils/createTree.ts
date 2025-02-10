@@ -15,7 +15,7 @@ import {
 } from '@components/widgets/Table/groupingHierarchy'
 import { mergeEmptyGroupRowsWithOther } from '@components/widgets/Table/groupingHierarchy/utils/mergeEmptyGroupRowsWithOther'
 import { IAggField, IAggLevel } from '@interfaces/groupingHierarchy'
-import { countAggFieldsValues, getAggFieldKeys, getTotalRow, setAggFields } from './aggregation'
+import { countAggFieldValues, getAggFieldKeys, getTotalRow, updateAggFieldValuesPerLevel } from './aggregation'
 
 export const createTree = <T extends CustomDataItem>(
     array: T[] = [] as T[],
@@ -56,11 +56,11 @@ export const createTree = <T extends CustomDataItem>(
         // get a list of all groups to record
         const groupPaths = getGroupPaths(item, sortedGroupKeys, item?._emptyNodeLastLevel as number | undefined)
 
-        const updateAggFieldsForAllGroups = (newAggGroup: NodeType, currentGroupLevel: number) => {
+        const updateAggFieldValuesForAllGroups = (newAggGroup: NodeType, currentGroupLevel: number) => {
             for (let index = 0; index < currentGroupLevel; index++) {
                 const currentAggGroupPath = groupPaths[index]
                 const currentAggGroup = groupsDictionary[currentAggGroupPath]
-                setAggFields(currentAggGroup, newAggGroup, aggFieldKeysForCount)
+                updateAggFieldValuesPerLevel(currentAggGroup, newAggGroup, aggFieldKeysForCount)
             }
         }
 
@@ -147,7 +147,7 @@ export const createTree = <T extends CustomDataItem>(
                 currentGroup.children?.push(previousGroup)
 
                 if (groupingHierarchyModeAggregate) {
-                    updateAggFieldsForAllGroups(previousGroup, currentGroupLevel)
+                    updateAggFieldValuesForAllGroups(previousGroup, currentGroupLevel)
                 }
 
                 updateItemCountersForAllGroupsMutate(groupPaths, groupsDictionary, currentGroupLevel, previousGroup?._emptyNode ? 0 : 1)
@@ -162,7 +162,7 @@ export const createTree = <T extends CustomDataItem>(
                 currentGroup.children?.push(childNode)
 
                 if (groupingHierarchyModeAggregate) {
-                    updateAggFieldsForAllGroups(item, currentGroupLevel)
+                    updateAggFieldValuesForAllGroups(item, currentGroupLevel)
                 }
 
                 updateItemCountersForAllGroupsMutate(groupPaths, groupsDictionary, currentGroupLevel)
@@ -178,7 +178,7 @@ export const createTree = <T extends CustomDataItem>(
     if (groupingHierarchyModeAggregate) {
         if ((aggFields || aggLevels?.find(item => item.level === 0)) && array.length) {
             const totalRow = getTotalRow(sortedGroupKeys[0], aggFieldKeysForCount, array) as NodeType
-            countAggFieldsValues(totalRow, aggFieldKeysForShow, aggFields, aggLevels)
+            countAggFieldValues(totalRow, aggFieldKeysForShow, aggFields, aggLevels)
 
             totalRow._groupLevel = 1
             tree.push(totalRow)
@@ -186,7 +186,7 @@ export const createTree = <T extends CustomDataItem>(
         }
 
         Object.keys(groupsDictionary).forEach(key => {
-            countAggFieldsValues(groupsDictionary[key], aggFieldKeysForShow, aggFields, aggLevels)
+            countAggFieldValues(groupsDictionary[key], aggFieldKeysForShow, aggFields, aggLevels)
         })
     }
 

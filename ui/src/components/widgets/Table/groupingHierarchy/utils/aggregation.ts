@@ -59,6 +59,20 @@ export const getAggFieldKeys = (fieldsMeta: WidgetListField[], aggFields?: IAggF
     }
 }
 
+export const updateAggFieldValuesPerLevel = (
+    currentGroup: GroupingHierarchyCommonNode,
+    newGroup: GroupingHierarchyCommonNode,
+    aggFieldKeysForCount: string[]
+) => {
+    if (currentGroup && newGroup) {
+        aggFieldKeysForCount.forEach(aggField => {
+            const newValue = Array.isArray(newGroup[aggField]) ? newGroup[aggField] : [newGroup[aggField]]
+            const currentValue = Array.isArray(currentGroup[aggField]) ? currentGroup[aggField] : [currentGroup[aggField]]
+            currentGroup[aggField] = [...currentValue, ...newValue]
+        })
+    }
+}
+
 const getAggFunctionResult = (aggFunc: EAggFunction, values: number[]) => {
     switch (aggFunc) {
         case EAggFunction.sum:
@@ -74,25 +88,29 @@ const getAggFunctionResult = (aggFunc: EAggFunction, values: number[]) => {
     }
 }
 
-export const setAggFieldValues = (currentGroup: GroupingHierarchyCommonNode, aggField: IAggField) => {
-    let values = []
+export const setAggFieldResult = (currentGroup: GroupingHierarchyCommonNode, aggField: IAggField) => {
+    let fieldValues
 
     if (aggField?.argFieldKeys) {
+        fieldValues = []
         aggField.argFieldKeys.forEach(argField =>
-            values.push(...(Array.isArray(currentGroup[argField]) ? currentGroup[argField] : [currentGroup[argField]]))
+            Array.isArray(currentGroup[argField]) ? fieldValues.push(...currentGroup[argField]) : fieldValues.push(currentGroup[argField])
         )
     } else {
-        values = currentGroup[aggField.fieldKey]
+        fieldValues = currentGroup[aggField.fieldKey]
     }
 
-    const isValueNaN = Array.isArray(values) ? values.some(item => isNaN(Number(item))) : isNaN(Number(values))
+    const isSomeValueNaN = Array.isArray(fieldValues) ? fieldValues.some(item => isNaN(Number(item))) : isNaN(Number(fieldValues))
 
-    if (isValueNaN) {
+    if (isSomeValueNaN) {
         currentGroup[aggField.fieldKey] = 'NaN'
         console.info(`Error: Some field value for aggregate ${aggField.fieldKey} contains NaN`)
     } else {
-        if (Array.isArray(values)) {
-            currentGroup[aggField.fieldKey] = getAggFunctionResult(aggField.func, values)
+        if (Array.isArray(fieldValues)) {
+            currentGroup[aggField.fieldKey] = getAggFunctionResult(
+                aggField.func,
+                fieldValues.filter(item => item !== null && item !== '')
+            )
         }
     }
 
@@ -102,21 +120,7 @@ export const setAggFieldValues = (currentGroup: GroupingHierarchyCommonNode, agg
     }
 }
 
-export const setAggFields = (
-    currentGroup: GroupingHierarchyCommonNode,
-    newGroup: GroupingHierarchyCommonNode,
-    aggFieldKeysForCount: string[]
-) => {
-    if (currentGroup && newGroup) {
-        aggFieldKeysForCount.forEach(aggField => {
-            const newValue = Array.isArray(newGroup[aggField]) ? newGroup[aggField] : [newGroup[aggField]]
-            const currentValue = Array.isArray(currentGroup[aggField]) ? currentGroup[aggField] : [currentGroup[aggField]]
-            currentGroup[aggField] = [...currentValue, ...newValue]
-        })
-    }
-}
-
-export const countAggFieldsValues = (
+export const countAggFieldValues = (
     currentGroup: GroupingHierarchyCommonNode,
     aggFieldKeysForShow: string[],
     aggFields?: IAggField[],
@@ -129,7 +133,7 @@ export const countAggFieldsValues = (
         if (aggLevel) {
             aggLevel.aggFields.forEach(levelAggField => {
                 levelAggFieldKeysForShow.push(levelAggField.fieldKey)
-                setAggFieldValues(currentGroup, levelAggField)
+                setAggFieldResult(currentGroup, levelAggField)
             })
         }
 
@@ -139,7 +143,7 @@ export const countAggFieldsValues = (
             )
 
             if (aggField) {
-                setAggFieldValues(currentGroup, aggField)
+                setAggFieldResult(currentGroup, aggField)
             }
         })
     }
