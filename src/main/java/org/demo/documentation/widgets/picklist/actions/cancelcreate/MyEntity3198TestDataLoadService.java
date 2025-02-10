@@ -3,8 +3,8 @@ package org.demo.documentation.widgets.picklist.actions.cancelcreate;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.picklist.actions.cancelcreate.forpicklistpopup.MyEntity3198Pick;
-import org.demo.documentation.widgets.picklist.actions.cancelcreate.forpicklistpopup.MyEntity3198PickRepository;
+import org.demo.documentation.widgets.picklist.actions.cancelcreate.basic.MyEntity3198Pick;
+import org.demo.documentation.widgets.picklist.actions.cancelcreate.basic.MyEntity3198PickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

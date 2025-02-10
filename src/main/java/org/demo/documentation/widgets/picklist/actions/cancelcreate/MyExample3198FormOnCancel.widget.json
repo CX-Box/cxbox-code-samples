@@ -1,0 +1,37 @@
+{
+  "name": "MyExample3198FormOnCancel",
+  "title": "Action cancel-create OnCancel",
+  "type": "Form",
+  "bc": "myexample3198",
+  "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customFieldPickListOnCancel",
+      "type": "pickList",
+      "popupBcName": "myEntity3198PickOnCancelPick",
+      "pickMap": {
+        "customFieldPickListOnCancel": "customField",
+        "customFieldPickListOnCancelId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickListOnCancel",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

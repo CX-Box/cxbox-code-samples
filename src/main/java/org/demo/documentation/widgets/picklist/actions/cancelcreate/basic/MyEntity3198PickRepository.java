@@ -1,6 +1,5 @@
-package org.demo.documentation.widgets.picklist.actions.cancelcreate.forpicklistpopup;
+package org.demo.documentation.widgets.picklist.actions.cancelcreate.basic;
 
-import org.demo.documentation.widgets.picklist.actions.cancelcreate.MyEntity3198;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

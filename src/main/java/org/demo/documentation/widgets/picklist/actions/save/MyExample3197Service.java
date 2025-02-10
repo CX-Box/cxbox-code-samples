@@ -41,6 +41,8 @@ public class MyExample3197Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3197DTO> getActions() {
         return Actions.<MyExample3197DTO>builder()
@@ -50,7 +52,7 @@ public class MyExample3197Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
-
+    // --8<-- [end:getActions]
 
 }
 
