@@ -38,20 +38,13 @@ public class MyExample3231AsyncService {
 
         MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
         Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
-        if (entityExternal.isPresent()) {
-            myEntity3231.setCustomField(entityExternal.get().getCustomField());
-        }
-        //myEntity3231.setStatusResponse(StatusEnum.DONE);
+        entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO -> myEntity3231.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
         repository.save(myEntity3231);
     }
     // --8<-- [end:findInExternalSystem]
 
     // --8<-- [start:callService]
     public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
-        try {
-
-            //Thread.sleep(30000);
-
             Optional<String> filter = Optional.ofNullable(dto.getCustomField());
 
             String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
@@ -71,9 +64,6 @@ public class MyExample3231AsyncService {
             );
 
             return responseEntity.getBody();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
     // --8<-- [end:callService]
 

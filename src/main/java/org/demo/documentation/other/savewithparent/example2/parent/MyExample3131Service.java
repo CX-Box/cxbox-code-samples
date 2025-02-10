@@ -16,12 +16,10 @@ import java.util.Optional;
 public class MyExample3131Service extends VersionAwareResponseService<MyExample3131DTO, MyEntity3131> {
 
     private final MyEntity3131Repository repository;
-    private final MyEntity3130Repository repositoryChild;
 
-    public MyExample3131Service(MyEntity3131Repository repository, MyEntity3130Repository repositoryChild) {
+    public MyExample3131Service(MyEntity3131Repository repository) {
         super(MyExample3131DTO.class, MyEntity3131.class, null, MyExample3131Meta.class);
         this.repository = repository;
-        this.repositoryChild = repositoryChild;
     }
 
     @Override

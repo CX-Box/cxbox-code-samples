@@ -22,8 +22,6 @@ public class MyEntity3164TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity3164().setCustomField("test data"));
-        //repository.save(new MyEntity3164().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
-        //repository.save(new MyEntity3164().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE));
 
     }
 

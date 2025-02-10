@@ -24,7 +24,7 @@ public class FilesService
     }
     public static void saveFile(Resource zipFileContent, String sourceDir) throws IOException {
         try(InputStream inputStream = zipFileContent.getInputStream();
-                 FileOutputStream outputStream = new FileOutputStream(sourceDir);)
+                 FileOutputStream outputStream = new FileOutputStream(sourceDir))
         {
             byte[] buffer = new byte[1000];
             while (inputStream.available() > 0)

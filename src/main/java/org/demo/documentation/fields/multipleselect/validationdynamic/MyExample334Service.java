@@ -86,7 +86,7 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 					"Custom message about error"
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

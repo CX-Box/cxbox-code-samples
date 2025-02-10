@@ -51,7 +51,7 @@ public class MyExample3186Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("finish", "Save and Close")
                         .invoker((bc, data) -> {
-                                    MyEntity3186 myEntity = repository.getById(bc.getIdAsLong());
+                                    MyEntity3186 myEntity = repository.getReferenceById(bc.getIdAsLong());
                                     repository.save(myEntity);
                                     return new ActionResultDTO<MyExample3186DTO>().setAction(
                                             PostAction.drillDown(

@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface MyEntity3130Repository extends JpaRepository<MyEntity3130, Long>, JpaSpecificationExecutor<MyEntity3130> {
-    public Optional<List<MyEntity3130>> findByCustomFieldEntity(MyEntity3131 customFieldEntity);
+
 }

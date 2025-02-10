@@ -22,11 +22,6 @@ import static org.cxbox.api.data.dto.UniversalDTO_.fields;
 
 @Service
 public class MyExample3151Meta extends FieldMetaBuilder<MyExample3151DTO> {
-    private final ObjectMapper objectMapper;
-
-    public MyExample3151Meta(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3151DTO> fields, InnerBcDescription bcDescription,

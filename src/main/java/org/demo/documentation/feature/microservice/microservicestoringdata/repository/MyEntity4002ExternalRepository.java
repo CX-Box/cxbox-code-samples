@@ -14,7 +14,4 @@ import java.util.List;
 public interface MyEntity4002ExternalRepository extends
  JpaRepository<MyEntity4002External, Long>, JpaSpecificationExecutor<MyEntity4002External>,
         QueryLanguageRepository<MyEntity4002External, Long> {
-
-
-     public List <MyEntity4002External> findAllByCustomField(String customField);
 }

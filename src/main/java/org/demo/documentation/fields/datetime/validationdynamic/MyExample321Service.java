@@ -70,7 +70,7 @@ public class MyExample321Service extends VersionAwareResponseService<MyExample32
 					"The field 'customFieldAdditional' cannot be less than the current date"
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

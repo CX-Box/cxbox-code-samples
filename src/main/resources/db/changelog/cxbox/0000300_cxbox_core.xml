@@ -595,14 +595,6 @@
     <addPrimaryKey columnNames="ID, LANGUAGE" constraintName="DICTIONARY_ITEM_TR_PK"
       forIndexName="DICTIONARY_ITEM_TR_PK" tableName="DICTIONARY_ITEM_TR"/>
   </changeSet>
-  <changeSet author="cxbox" id="DICTIONARY_ITEM_TR INDEXES" dbms="postgresql">
-    <createIndex indexName="DICTIONARY_ITEM_IND3" tableName="DICTIONARY_ITEM_TR" unique="true">
-      <column name="ID"/>
-      <column name="LANGUAGE"/>
-    </createIndex>
-    <addPrimaryKey columnNames="ID, LANGUAGE" constraintName="DICTIONARY_ITEM_TR_PK"
-      tableName="DICTIONARY_ITEM_TR"/>
-  </changeSet>
 
   <changeSet author="cxbox" id="USERS INDEXES">
     <addUniqueConstraint columnNames="LOGIN" constraintName="UK_LOGIN_NAME" tableName="USERS"/>
@@ -676,13 +668,6 @@
         name="CASE &quot;TYPE&quot; WHEN 'BC' THEN &quot;BC_NAME&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; WHEN 'LINK' THEN &quot;BC_NAME&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; WHEN 'SECURITY' THEN &quot;ROLE_CD&quot;||&quot;NAME&quot;||&quot;SERVICE_NAME&quot; ELSE NULL END"/>
     </createIndex>
   </changeSet>
-  <changeSet author="cxbox" dbms="postgresql" id="SEARCH_SPEC INDEXES">
-    <createIndex indexName="SEARCH_SPEC_SVC_NAME_FK" tableName="SEARCH_SPEC" unique="true">
-      <column computed="true"
-        name="(CASE 'TYPE' WHEN 'BC' THEN 'BC_NAME' || 'NAME' || 'SERVICE_NAME' WHEN 'LINK' THEN 'BC_NAME' || 'NAME' || 'SERVICE_NAME' WHEN 'SECURITY' THEN 'ROLE_CD' || 'NAME' || 'SERVICE_NAME' ELSE NULL END)"/>
-    </createIndex>
-  </changeSet>
-
   <changeSet author="cxbox" id="DICTIONARY_ITEM CONSTRAINTS">
     <addForeignKeyConstraint baseColumnNames="DICTIONARY_TYPE_ID" baseTableName="DICTIONARY_ITEM"
       constraintName="CONS_DICTIONARY_TYPE_ID" deferrable="true" initiallyDeferred="true"

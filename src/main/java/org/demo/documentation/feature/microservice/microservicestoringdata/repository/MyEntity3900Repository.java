@@ -13,7 +13,4 @@ import java.util.List;
 public interface MyEntity3900Repository extends
  JpaRepository<MyEntity3900, Long>, JpaSpecificationExecutor<MyEntity3900>,
         QueryLanguageRepository<MyEntity3900, Long> {
-
-
-     public List <MyEntity3900> findAllByCustomField(String customField);
 }
