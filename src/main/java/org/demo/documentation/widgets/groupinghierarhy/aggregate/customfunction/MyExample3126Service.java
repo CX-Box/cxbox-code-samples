@@ -29,12 +29,15 @@ public class MyExample3126Service extends VersionAwareResponseService<MyExample3
     protected MyExample3126DTO entityToDto(final BusinessComponent bc, final MyEntity3126 entity) {
         final MyExample3126DTO dto = super.entityToDto(bc, entity);
         List<MyEntity3126> entityList = repository.findAllByLocationAndObject(entity.getLocation(), entity.getObject());
-
+        List<MyEntity3126> entityListLocationAll = repository.findAllByLocation(entity.getLocation());
         dto.setPercentInsuranceAmount( entity.getInsuranceValue() == null && entity.getInsuranceAmount() == null ?
                 null :
-                (float) Math.round((float)entity.getInsuranceAmount() / entityList.stream()
-                .filter(f -> f.getInsuranceAmount() != null)
-                .mapToLong(MyEntity3126::getInsuranceAmount).sum()*100)/100);
+                (float) Math.round((float)(entityList.stream()
+                        .filter(f -> f.getInsuranceAmount() != null)
+                        .mapToLong(MyEntity3126::getInsuranceAmount).sum())/entityListLocationAll.stream()
+                        .filter(f -> f.getInsuranceAmount() != null)
+                        .mapToLong(MyEntity3126::getInsuranceAmount).sum()*100)/100);
+
         return dto;
     }
 
