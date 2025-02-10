@@ -26,7 +26,7 @@
       "type": "number"
     },
     {
-      "title": "Percent Rate Calculate field",
+      "title": "Percent Insurance Amount",
       "key": "percentInsuranceAmount",
       "digits": 2,
       "type": "number"
@@ -43,11 +43,31 @@
           "level": 1,
           "aggFields": [
             {
-              "fieldKey": "insuranceValue",
+              "fieldKey": "insuranceAmount",
+              "func": "sum",
+              "argFieldKeys": [
+                "insuranceAmount"
+              ]
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "aggFields": [
+            {
+              "fieldKey": "insuranceAmount",
+              "func": "sum",
+              "argFieldKeys": [
+                "insuranceAmount"
+              ]
+            },
+            {
+              "fieldKey": "percentInsuranceAmount",
               "func": "min",
               "argFieldKeys": [
                 "percentInsuranceAmount"
-              ]
+              ],
+              "description": "%"
             }
           ]
         }

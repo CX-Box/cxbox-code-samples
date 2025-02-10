@@ -67,8 +67,32 @@
               "fieldKey": "insuranceValue",
               "func": "sum",
               "argFieldKeys": [
-                "netAnnualRate"
+                "annualPremium"
+              ],
+              "description": "sum fields `Annual Premium`"
+            },
+            {
+              "fieldKey": "annualPremium",
+              "func": "sum",
+              "argFieldKeys": [
+                "annualPremium"
               ]
+            },
+            {
+              "fieldKey": "insuranceAmount",
+              "func": "sum",
+              "argFieldKeys": [
+                "acquisition","annualPremium"
+              ],
+              "description": "sum fields `Annual Premium` and `Acquisition`"
+            },
+            {
+              "fieldKey": "acquisition",
+              "func": "sum",
+              "argFieldKeys": [
+                "acquisition"
+              ],
+              "description": "sum"
             }
           ]
         }
