@@ -1,10 +1,8 @@
 package org.demo.documentation.feature.drilldown.drilldownviewid;
 
 import jakarta.annotation.PostConstruct;
-
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.feature.drilldown.simple.MyEntity3611;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

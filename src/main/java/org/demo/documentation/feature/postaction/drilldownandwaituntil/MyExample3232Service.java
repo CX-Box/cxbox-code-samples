@@ -2,15 +2,18 @@ package org.demo.documentation.feature.postaction.drilldownandwaituntil;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.CxboxMyExample3231Controller;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3231AnySourceOutServiceDTO;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
+import org.demo.documentation.feature.postaction.waituntil.MyExample3231DTO;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -66,7 +69,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -85,7 +88,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -104,7 +107,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -126,7 +129,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -146,7 +149,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -166,7 +169,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232);
+                            findInExternalSystemAsync(myEntity3232,dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -179,16 +182,27 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                                             .timeoutMaxRequests(1).timeout(Duration.ofSeconds(1)).build());
                         })
                 )
-
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotofind", "Go to Find")
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3232DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3231/view/myexample3232form"
+                                    ));
+                        })
+                )
                 .build();
     }
 
     // --8<-- [end:getActions]
 
     // --8<-- [start:findInExternalSystem]
-    protected void findInExternalSystemAsync(MyEntity3232 myEntity3232) {
-
-        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService().get().findFirst();
+    protected void findInExternalSystemAsync(MyEntity3232 myEntity3232, MyExample3232DTO dto) {
+        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+        myEntity3232.setCustomFieldForm("");
+        myEntity3232.setCustomField("");
         entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO ->
                 myEntity3232.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
         repository.save(myEntity3232);
@@ -196,14 +210,14 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:findInExternalSystem]
 
     // --8<-- [start:callService]
-    public Page<MyEntity3231AnySourceOutServiceDTO> callService() {
+    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3232DTO dto) {
 
-        Optional<String> filter = Optional.ofNullable("custom Field 3");
+        Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
                 .queryParam("number", 1)
                 .queryParam("size", 1)
-                .queryParamIfPresent("filterCustomField", filter)
+                .queryParamIfPresent("filterEqualsCustomField", filter)
                 .encode()
                 .toUriString();
 

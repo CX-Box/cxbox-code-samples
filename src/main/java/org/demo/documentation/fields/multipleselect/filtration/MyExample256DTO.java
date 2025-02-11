@@ -10,8 +10,6 @@ import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
 import org.demo.documentation.fields.multipleselect.filtration.enums.CustomFieldEnum;
 
-import static org.cxbox.core.util.filter.provider.impl.EnumValueProvider.*;
-
 @Getter
 @Setter
 @NoArgsConstructor

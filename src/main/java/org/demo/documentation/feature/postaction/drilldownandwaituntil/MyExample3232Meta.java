@@ -14,6 +14,7 @@ public class MyExample3232Meta extends FieldMetaBuilder<MyExample3232DTO> {
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3232DTO_.customField);
         fields.setEnabled(MyExample3232DTO_.customFieldForm);
+        fields.setPlaceholder(MyExample3232DTO_.customFieldForm,"The search is performed on `customField` with an exact match.");
     }
 
     @Override

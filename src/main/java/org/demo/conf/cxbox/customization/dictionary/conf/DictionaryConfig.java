@@ -24,7 +24,6 @@ import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.dictionary.Dictionary;
 import org.cxbox.dictionary.DictionaryProvider;
-import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ActionSuggestionAdminDTO;
 import org.demo.documentation.fields.dictionary.dictionarydictionary.sorting.CustomDictionarySortingExample;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

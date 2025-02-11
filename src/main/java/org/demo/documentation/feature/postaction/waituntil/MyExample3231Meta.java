@@ -17,6 +17,8 @@ public class MyExample3231Meta extends FieldMetaBuilder<MyExample3231DTO> {
         fields.setEnumValues(MyExample3231DTO_.statusResponse, StatusEnum.values());
         fields.setEnabled(MyExample3231DTO_.statusResponse);
         fields.setEnabled(MyExample3231DTO_.customField);
+        fields.setPlaceholder(MyExample3231DTO_.customFieldForm,"The search is performed on `customField` with an exact match.");
+
     }
 
     @Override

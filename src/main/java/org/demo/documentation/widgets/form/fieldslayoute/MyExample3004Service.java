@@ -5,7 +5,6 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.form.title.MyExample3003DTO_;
 import org.springframework.stereotype.Service;
 
 

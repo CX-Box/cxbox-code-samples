@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.datetimewithseconds.placeholder;
 
-import java.time.LocalDateTime;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;

@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.statsblock.drilldown.data;
 
-import org.demo.entity.core.UserRole_;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
 import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldRegion;
 import org.springframework.data.jpa.domain.Specification;

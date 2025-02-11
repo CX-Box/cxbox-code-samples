@@ -168,6 +168,8 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
 
         MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
         Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+        myEntity3231.setCustomFieldForm("");
+        myEntity3231.setCustomField("");
         entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO -> myEntity3231.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
         repository.save(myEntity3231);
     }
@@ -176,12 +178,13 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:callService]
     public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
 
-            Optional<String> filter = Optional.ofNullable(dto.getCustomField());
+            Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
-            String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+            String urlTemplate = UriComponentsBuilder.fromHttpUrl(
+                    integrationConfig.getDataServerUrl())
                     .queryParam("number", 1)
                     .queryParam("size", 1)
-                    .queryParamIfPresent("filterCustomField", filter)
+                    .queryParamIfPresent("filterEqualsCustomField", filter)
                     .encode()
                     .toUriString();
 

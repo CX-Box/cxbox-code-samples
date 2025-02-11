@@ -7,8 +7,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DictionaryValueProvider;
 
-import org.demo.documentation.fields.dictionary.dictionarydictionary.basic.Regions;
-
 @Getter
 @Setter
 @NoArgsConstructor

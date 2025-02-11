@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.assoc.actions;
 
 import lombok.Getter;
-import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.dao.DataIntegrityViolationException;

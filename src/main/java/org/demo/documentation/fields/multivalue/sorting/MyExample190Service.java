@@ -1,7 +1,6 @@
 package org.demo.documentation.fields.multivalue.sorting;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Objects; 
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
