@@ -26,6 +26,7 @@ public class MyExample3232DTO extends DataResponseDTO {
     public MyExample3232DTO(MyEntity3232 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customFieldForm = entity.getCustomFieldForm();
         this.statusResponse = entity.getStatusResponse();
         this.statusResponseFlag = entity.getStatusResponse() == StatusEnum.DONE || entity.getStatusResponse() == StatusEnum.ERROR;
     }

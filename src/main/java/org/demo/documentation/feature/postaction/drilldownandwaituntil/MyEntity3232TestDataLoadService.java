@@ -20,6 +20,7 @@ public class MyEntity3232TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        repository.save(new MyEntity3232().setCustomField("test data"));
     }
 
 }
