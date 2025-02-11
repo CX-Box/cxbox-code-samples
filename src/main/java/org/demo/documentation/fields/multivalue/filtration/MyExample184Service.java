@@ -1,7 +1,6 @@
 package org.demo.documentation.fields.multivalue.filtration;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

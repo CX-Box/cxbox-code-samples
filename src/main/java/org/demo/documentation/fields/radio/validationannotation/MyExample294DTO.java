@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.radio.validationannotation;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;

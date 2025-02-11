@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.widget;
 
-import java.time.LocalDateTime;
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;

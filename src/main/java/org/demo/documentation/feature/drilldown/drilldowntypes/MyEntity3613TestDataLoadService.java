@@ -1,8 +1,6 @@
 package org.demo.documentation.feature.drilldown.drilldowntypes;
 
-import java.time.LocalDateTime;
 import jakarta.annotation.PostConstruct;
-
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;

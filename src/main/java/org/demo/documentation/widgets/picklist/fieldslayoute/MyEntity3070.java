@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.picklist.fieldslayoute;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;

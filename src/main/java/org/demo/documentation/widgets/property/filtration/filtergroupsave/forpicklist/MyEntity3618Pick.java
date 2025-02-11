@@ -5,12 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.property.filtration.filtergroupsave.enums.CustomFieldDictionaryEnum;
-import org.demo.documentation.widgets.property.filtration.filtergroupsave.forassoc.MyEntity3624;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Entity
 @Getter

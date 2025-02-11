@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
-import org.demo.documentation.widgets.property.pagination.nextandprevioussmart.forassoc.MyEntity3861ForAssocOutServiceDTO;
-
 import java.time.LocalDateTime;
 
 @Getter

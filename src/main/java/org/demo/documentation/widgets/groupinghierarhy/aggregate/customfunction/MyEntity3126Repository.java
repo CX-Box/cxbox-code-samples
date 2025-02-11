@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.groupinghierarhy.aggregate.customfunction;
 
-import org.demo.documentation.feature.postaction.enums.StatusEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.property.filtration.filtergroup.forassoc;
 
 import lombok.Getter;
-import org.demo.documentation.widgets.property.filtration.filtergroup.MyEntity3616Repository;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

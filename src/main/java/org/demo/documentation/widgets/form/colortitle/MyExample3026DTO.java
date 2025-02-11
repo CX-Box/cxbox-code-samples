@@ -10,7 +10,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.demo.documentation.widgets.form.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.form.colortitle.enums.CustomFieldColorRadioEnum;
-import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3033;
 import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3037;
 import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3038;
 

@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.property.defaultlimitpage.forassoc;
 
-import org.demo.documentation.widgets.property.defaultlimitpage.MyEntity359;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

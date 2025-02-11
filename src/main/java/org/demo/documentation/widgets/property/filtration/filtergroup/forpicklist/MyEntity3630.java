@@ -5,10 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.property.filtration.filtergroup.forassoc.MyEntity3623;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

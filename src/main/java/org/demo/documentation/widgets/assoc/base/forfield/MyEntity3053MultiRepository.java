@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.assoc.base.forfield;
 
-import org.demo.documentation.widgets.assoc.base.MyEntity3053;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

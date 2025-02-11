@@ -3,8 +3,6 @@ package org.demo.documentation.fields.input.filtration;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.fields.input.placeholder.InputPlaceholder;
-import org.demo.documentation.fields.input.placeholder.InputPlaceholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
