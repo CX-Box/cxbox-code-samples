@@ -19,6 +19,10 @@ jobs:
       - name: Check Files
         run: cd /mnt/c/git/cxbox-code-samples/docker/nginx/conf/ && ls && cat nginx.conf
 
+      - name: Check if nginx.conf exists
+        run: |
+            ls -la ./docker/nginx/conf/
+            cat ./docker/nginx/conf/nginx.conf
       - name: Build docker image
         run: docker compose build
 
@@ -46,28 +50,33 @@ jobs:
       - name: Load target
         run: mvn clean install -U -PUI
 
-
       - name: Stop and remove containers, networks
-        run: docker compose -f docker-compose-test.yml down --remove-orphans
+        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
 
       - name: Remove unused data
-        run: docker system prune -f
+        run: sudo docker system prune -a --volumes -f
         #Change to docker container prune -f && docker network prune -f ?
 
+      - name: List Docker images
+        run: docker images
+
       - name: Build docker-compose
-        run: docker compose -f docker-compose-test.yml build
+        run: sudo docker compose -f docker-compose-test.yml build
 
       - name: Set permissions for ./docker
-        run: chmod -R 777 ./docker
+        run: sudo chmod -R 777 ./docker
+
+      - name: Check permission
+        run: stat -c "%a %n" ./docker/nginx/conf/nginx.conf
 
       - name: Start docker-compose run
-        run: docker compose -f docker-compose-test.yml up -d
+        run: sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Wait for application to start
-        run: curl --retry 15 --retry-delay 5 --retry-connrefused http://localhost:81
+        run: sudo curl --retry 15 --retry-delay 5 --retry-connrefused http://localhost:81
 
       - name: Run tests
         run: mvn --batch-mode --update-snapshots -DrunTests=true verify
 
       - name: Stop and remove Docker compose
-        run:  docker compose -f docker-compose-test.yml down
+        run:  sudo docker compose -f docker-compose-test.yml down
