@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Check Files
-        run: cd ${{ github.workspace }}/cxbox-code-samples/docker/nginx/conf/ && ls && cat nginx.conf
+        run: cd ${{ github.workspace }}/docker/nginx/conf/ && ls && cat nginx.conf
 
       - name: Check if nginx.conf exists
         run: |
