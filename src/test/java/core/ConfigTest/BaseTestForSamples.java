@@ -42,7 +42,12 @@ public class BaseTestForSamples {
         Configuration.browserCapabilities = getChromeOptions();
         Configuration.webdriverLogsEnabled = false;
 
-        Selenide.open(System.getProperty("app.url"));
+        String url = System.getenv("APP_URL");
+        if (url == null || url.isEmpty()) {
+            url = "http://localhost:81/ui/#/";
+        }
+        System.out.println(url);
+        Selenide.open(url);
         page = new LoginPage().loginKeyCloak("demo", "demo");
     }
 
