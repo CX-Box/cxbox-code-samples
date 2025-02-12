@@ -43,15 +43,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cashe: "yarn"
           cache-dependency-path: ui
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
-      - name: Set up Maven
-        uses: stCarolas/setup-maven@v4
-        with:
-            maven-version: '3.9.6'
 
       - name: Load target
         run: mvn clean install -U -PUI
@@ -77,9 +71,6 @@ jobs:
 
       - name: Start docker-compose run
         run: sudo docker compose -f docker-compose-test.yml up -d
-
-      - name: Wait for application to start
-        run: sudo curl --retry 15 --retry-delay 5 --retry-connrefused http://localhost:81
 
       - name: Run tests
         run: mvn --batch-mode --update-snapshots -DrunTests=true verify
