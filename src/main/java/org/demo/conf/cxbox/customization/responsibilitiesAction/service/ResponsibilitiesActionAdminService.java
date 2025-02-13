@@ -7,6 +7,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -22,11 +25,17 @@ import org.cxbox.model.core.dao.JpaDao;
 import org.demo.conf.cxbox.customization.metaAdmin.MetaAdminServiceExt;
 import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO;
 import org.cxbox.meta.entity.ResponsibilitiesAction;
+import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao;
+import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Meta;
 import org.demo.util.CSVUtils;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S3252", "java:S1186", "java:S6813"})
+
+@Getter
+@RequiredArgsConstructor
 @Service
 public class ResponsibilitiesActionAdminService extends
 		VersionAwareResponseService<ResponsibilitiesActionAdminDTO, ResponsibilitiesAction> {
@@ -39,19 +48,8 @@ public class ResponsibilitiesActionAdminService extends
 
 	private final CxboxFileService cxboxFileService;
 
-	public ResponsibilitiesActionAdminService(MetaAdminServiceExt metaAdminServiceExt, JpaDao jpaDao,
-			CxboxFileService cxboxFileService) {
-		super(
-				ResponsibilitiesActionAdminDTO.class,
-				ResponsibilitiesAction.class,
-				null,
-				ResponsibilitiesActionAdminMeta.class
-		);
-		this.nameToWidget = Collections.unmodifiableMap(metaAdminServiceExt.getAllWidgets());
-		this.metaAdminServiceExt = metaAdminServiceExt;
-		this.jpaDao = jpaDao;
-		this.cxboxFileService = cxboxFileService;
-	}
+	private final Class<ResponsibilitiesActionAdminMeta> fieldMetaBuilder = ResponsibilitiesActionAdminMeta.class;
+
 
 	@Override
 	protected CreateResult<ResponsibilitiesActionAdminDTO> doCreateEntity(ResponsibilitiesAction entity,
