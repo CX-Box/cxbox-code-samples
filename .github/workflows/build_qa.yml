@@ -22,13 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Check Files
-        run: cd ${{ github.workspace }}/docker/nginx/conf/ && ls && cat nginx.conf
-
-      - name: Check if nginx.conf exists
-        run: |
-            ls -la ./docker/nginx/conf/
-            cat ./docker/nginx/conf/nginx.conf
+      
       - name: Build docker image
         run: docker compose build
 
@@ -45,7 +39,6 @@ jobs:
           node-version: '18'
           cashe: "yarn"
           cache-dependency-path: ui
-
 
       - name: Load target
         run: mvn clean install -U -PUI
@@ -66,14 +59,12 @@ jobs:
       - name: Set permissions for ./docker
         run: sudo chmod -R 777 ./docker
 
-      - name: Check permission
-        run: stat -c "%a %n" ./docker/nginx/conf/nginx.conf
-
       - name: Start docker-compose run
         run: sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode --update-snapshots -DrunTests=true verify
+        run: mvn --batch-mode -DrunTests=true test
 
       - name: Stop and remove Docker compose
+        if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
