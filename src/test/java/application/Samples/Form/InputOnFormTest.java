@@ -230,6 +230,8 @@ public class InputOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.input("custom Field");
+        customField.clear();
+        customField.setValue("td");
         assertThat(customField.getMaxInput(2)).isTrue();
     }
 
