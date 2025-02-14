@@ -37,7 +37,12 @@ public abstract class BaseIntegrationTest {
                 .pageLoadTimeout(60000)
                 .browserCapabilities(getChromeOptions());
 
-        Selenide.open(System.getProperty("app.url"));
+        String url = System.getenv("APP_URL");
+        if (url == null || url.isEmpty()) {
+            url = "http://localhost:81/ui/#/";
+        }
+
+        Selenide.open(url);
         page = new LoginPage().loginKeyCloak("demo", "demo");
     }
 

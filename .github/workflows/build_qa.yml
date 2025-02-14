@@ -1,12 +1,17 @@
-name: Test project
+name: QA project
 
 on:
   push:
     branches:
-      - main
+    - CXBOX-725
   pull_request:
     branches:
-      -main
+    - CXBOX-725
+  workflow_dispatch:
+
+env:
+  APP_URL: http://localhost:81/ui/#/
+
 
 jobs:
   build:
@@ -17,9 +22,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      
       - name: Build docker image
-        run: docker-compose build
+        run: docker compose build
 
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v3
@@ -28,23 +33,49 @@ jobs:
           distribution: 'adopt'
           cache: "maven"
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cashe: "yarn"
+          cache-dependency-path: ui
+
+      - name: Load target
+        run: mvn clean install -U -PUI
+
       - name: Stop and remove containers, networks
-        run: docker-compose -f docker-compose-test.yml down
+        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
 
       - name: Remove unused data
-        run: docker system prune -f
+        run: sudo docker system prune -a --volumes -f
+        #Change to docker container prune -f && docker network prune -f ?
+
+      - name: List Docker images
+        run: docker images
 
       - name: Build docker-compose
-        run: docker-compose -f docker-compose-test.yml build
+        run: sudo docker compose -f docker-compose-test.yml build
+
+      - name: Set permissions for ./docker
+        run: sudo chmod -R 777 ./docker
 
       - name: Start docker-compose run
-        run: docker-compose -f docker-compose-test.yml up -d
-
-      - name: Wait for application to start
-        run: curl --retry 10 --retry-delay 5 --retry-connrefused http://localhost:81
+        run: sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode --update-snapshots -DrunTests=true verify
+        run: mvn --batch-mode -DrunTests=true test
+
+      - name: List screenshots directory
+        if: always()
+        run: ls -la build/reports/tests/
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots
+          path: build/reports/tests/
 
       - name: Stop and remove Docker compose
-        run:  docker-compose -f docker-compose-test.yml down
+        if: always()
+        run:  sudo docker compose -f docker-compose-test.yml down
