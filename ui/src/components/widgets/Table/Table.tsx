@@ -13,7 +13,7 @@ import { actions } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
 import ReactDragListView, { DragListViewProps } from 'react-drag-listview'
-import { Icon, Menu, Modal, Popover, Table as AntdTable, Tooltip, Transfer } from 'antd'
+import { Icon, Menu, Modal, Table as AntdTable, Tooltip, Transfer } from 'antd'
 import DropdownSetting from './components/DropdownSetting'
 import Operations from '../../Operations/Operations'
 import FilterSettingModal from './components/FilterSettingModal'
@@ -40,8 +40,6 @@ import {
     useGroupingHierarchy
 } from '@components/widgets/Table/groupingHierarchy'
 import { rightAlignedFields } from '@constants/field'
-import { aggCellBgColorRgba, totalRowKey } from './groupingHierarchy/constants'
-import { getAggCellBgOpacity } from './groupingHierarchy/utils/aggregation'
 
 const ROW_KEY = 'id'
 
@@ -76,7 +74,6 @@ function Table<T extends CustomDataItem>({
             selectedRow: state.view.selectedRow
         }
     }, shallowEqual)
-    const groupingHierarchyModeAggregate = !!(meta.options?.groupingHierarchy?.aggFields || meta.options?.groupingHierarchy?.aggLevels)
 
     const {
         enabledGrouping,
@@ -200,7 +197,7 @@ function Table<T extends CustomDataItem>({
         (record: T) => {
             return (
                 isGroupingHierarchy &&
-                (!(
+                !(
                     fieldShowCondition(
                         resultedFields
                             ?.map(item => {
@@ -212,11 +209,10 @@ function Table<T extends CustomDataItem>({
                         sortedGroupKeys,
                         expandedRowKeys
                     ) || typeof record._groupLevel !== 'number'
-                ) ||
-                    (groupingHierarchyModeAggregate && typeof record._groupLevel === 'number'))
+                )
             )
         },
-        [expandedRowKeys, groupingHierarchyModeAggregate, isGroupingHierarchy, resultedFields, sortedGroupKeys]
+        [expandedRowKeys, isGroupingHierarchy, resultedFields, sortedGroupKeys]
     )
 
     const needHideRow = useCallback(
@@ -390,22 +386,10 @@ function Table<T extends CustomDataItem>({
                             const expanded = expandedParentRowKeys?.includes(expandRowId) ?? false
 
                             const isGroupingField = !!meta?.options?.groupingHierarchy?.fields?.includes(item.key)
-                            const aggFunction = dataItem._aggFunctions?.[item.key]
-                            const groupLevel = dataItem._groupLevel
-                            let showReadonlyField
-
-                            if (groupingHierarchyModeAggregate) {
-                                showReadonlyField = enabledGrouping
-                                    ? (groupLevel && (sortedGroupKeys[groupLevel - 1] === item.key || aggFunction)) ||
-                                      (!groupLevel && (!sortedGroupKeys.includes(item.key) || !dataItem._parentGroupPath))
+                            const showReadonlyField =
+                                isGroupingHierarchy && enabledGrouping
+                                    ? fieldShowCondition(item.key, dataItem, sortedGroupKeys, expandedParentRowKeys)
                                     : true
-                            } else {
-                                showReadonlyField =
-                                    isGroupingHierarchy && enabledGrouping
-                                        ? fieldShowCondition(item.key, dataItem, sortedGroupKeys, expandedParentRowKeys)
-                                        : true
-                            }
-
                             const showExpandIcon =
                                 isGroupingField && dataItem[item.key] && enabledGrouping && showReadonlyField && !!dataItem.children
                             const fieldGroupLevel = sortedGroupKeys.findIndex(sortedGroupKey => sortedGroupKey === item.key) + 1
@@ -416,79 +400,52 @@ function Table<T extends CustomDataItem>({
                                 fieldGroupLevel &&
                                 !editMode &&
                                 (counterMode === 'always' || (counterMode === 'collapsed' && !expanded))
-                            const showField = !!showReadonlyField || editMode
+                            const showField = showReadonlyField || editMode
                             const rightAlignment = rightAlignedFields.includes(item.type) && {
                                 justifyContent: 'flex-end'
                             }
 
-                            const field = showField && (
-                                <div
-                                    data-test="FIELD"
-                                    data-test-field-type={item.type}
-                                    data-test-field-title={item.label || item.title}
-                                    data-test-field-key={item.key}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 4,
-                                        ...rightAlignment
-                                    }}
-                                >
-                                    {showExpandIcon && (
-                                        <ExpandIcon
-                                            className={styles.parentExpandIcon}
-                                            expanded={expanded}
-                                            onClick={event => {
-                                                event.preventDefault()
-                                                onParentExpand?.(!expanded, expandRowId)
-                                            }}
-                                            openIcon="up"
-                                            openRotate={90}
-                                            closeIcon="down"
-                                        />
-                                    )}
-                                    <Field
-                                        data={dataItem as DataItem}
-                                        bcName={bcName}
-                                        cursor={dataItem.id}
-                                        widgetName={widgetName}
-                                        widgetFieldMeta={item as WidgetListField}
-                                        readonly={!editMode}
-                                        forceFocus={editMode}
-                                        className={cn(editMode ? styles.fullWidth : styles.fitContentWidth)}
-                                    />
-                                    {showCounter && `(${countOfRecords})`}
-                                </div>
-                            )
-
-                            if (groupingHierarchyModeAggregate) {
-                                const backgroundEnabled =
-                                    groupLevel &&
-                                    (!sortedGroupKeys.slice(0, groupLevel).includes(item.key) || dataItem.id === totalRowKey) &&
-                                    !!dataItem._aggFunctions
-                                const fieldElement = backgroundEnabled ? (
+                            return (
+                                showField && (
                                     <div
-                                        className={styles.aggCell}
+                                        data-test="FIELD"
+                                        data-test-field-type={item.type}
+                                        data-test-field-title={item.label || item.title}
+                                        data-test-field-key={item.key}
                                         style={{
-                                            backgroundColor: `rgba(${aggCellBgColorRgba}, ${getAggCellBgOpacity(dataItem.id, groupLevel)})`
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 4,
+                                            ...rightAlignment
                                         }}
                                     >
-                                        {field}
+                                        {showExpandIcon && (
+                                            <ExpandIcon
+                                                className={styles.parentExpandIcon}
+                                                expanded={expanded}
+                                                onClick={event => {
+                                                    event.preventDefault()
+                                                    onParentExpand?.(!expanded, expandRowId)
+                                                }}
+                                                openIcon="up"
+                                                openRotate={90}
+                                                closeIcon="down"
+                                            />
+                                        )}
+                                        <Field
+                                            data={dataItem as DataItem}
+                                            bcName={bcName}
+                                            cursor={dataItem.id}
+                                            widgetName={widgetName}
+                                            widgetFieldMeta={item as WidgetListField}
+                                            readonly={!editMode}
+                                            forceFocus={editMode}
+                                            className={cn(editMode ? styles.fullWidth : styles.fitContentWidth)}
+                                        />
+                                        {showCounter && `(${countOfRecords})`}
                                     </div>
-                                ) : (
-                                    field
                                 )
-
-                                return aggFunction ? (
-                                    <Popover content={aggFunction} trigger="hover">
-                                        {fieldElement}
-                                    </Popover>
-                                ) : (
-                                    fieldElement
-                                )
-                            }
-
-                            return field
+                            )
                         },
                         onHeaderCell: () => {
                             return {
@@ -505,7 +462,6 @@ function Table<T extends CustomDataItem>({
         bcRowMeta?.fields,
         enabledGrouping,
         expandedParentRowKeys,
-        groupingHierarchyModeAggregate,
         handleColumnClose,
         isEditMode,
         meta?.options?.groupingHierarchy?.counterMode,
