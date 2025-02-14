@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class MultiValue extends BaseField<List<String>> {
@@ -61,13 +63,15 @@ public class MultiValue extends BaseField<List<String>> {
     @Step("Clearing the field")
     public void clear() {
         ElementsCollection icons = getFieldByName()
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$("i[class=\"anticon anticon-close\"]");
+
         for (SelenideElement i : icons) {
-            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).click();
-            //waitingForTests.getWaitAllElements(i);
+            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+            waitingForTests.getWaitAllElements(i);
+            Selenide.sleep(300);
+            i.click();
             i.shouldBe(Condition.disappear, Duration.ofSeconds(waitingForTests.Timeout));
-            Selenide.sleep(20);
         }
     }
 
@@ -84,6 +88,7 @@ public class MultiValue extends BaseField<List<String>> {
     @Step("Opening a modal window")
     public void openModalWindow() {
         modalWindow().click();
+        Selenide.sleep(100);
     }
 
     @Override
@@ -101,7 +106,8 @@ public class MultiValue extends BaseField<List<String>> {
     @Attachment
     public Optional<Popup> findPopup() {
         SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+                .shouldBe(visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout));
         if (elementPopup.is(Condition.exist)) {
             return Optional.of(new Popup());
         } else {

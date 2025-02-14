@@ -28,7 +28,7 @@ public class BaseTestForSamples {
         SelenideConfig selenideConfig = new SelenideConfig();
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
-                        .includeSelenideSteps(false) // Настройка отключена для исключения из отчета подробных шагов с проверкой локаторов
+                        .includeSelenideSteps(false) 
                         .screenshots(true)
                         .savePageSource(false)
         );
@@ -44,9 +44,9 @@ public class BaseTestForSamples {
 
         String url = System.getenv("APP_URL");
         if (url == null || url.isEmpty()) {
-            url = "http://localhost:81/ui/#/";
+            url = "http://code-samples.cxbox.org/ui/#/";
         }
-        System.out.println(url);
+
         Selenide.open(url);
         page = new LoginPage().loginKeyCloak("demo", "demo");
     }
@@ -66,7 +66,7 @@ public class BaseTestForSamples {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
-        System.setProperty("chromeoptions.prefs", "credentials_enable_service=false, password_manager_enabled=false"); // Выключение Проверки пароля хромом
+        System.setProperty("chromeoptions.prefs", "credentials_enable_service=false, password_manager_enabled=false");
         return options;
     }
 
