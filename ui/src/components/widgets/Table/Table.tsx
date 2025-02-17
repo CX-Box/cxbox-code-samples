@@ -39,7 +39,7 @@ import {
     rowShowCondition,
     useGroupingHierarchy
 } from '@components/widgets/Table/groupingHierarchy'
-import { rightAlignedFields } from '@constants/field'
+import { numberFieldTypes } from '@constants/field'
 
 const ROW_KEY = 'id'
 
@@ -401,7 +401,7 @@ function Table<T extends CustomDataItem>({
                                 !editMode &&
                                 (counterMode === 'always' || (counterMode === 'collapsed' && !expanded))
                             const showField = showReadonlyField || editMode
-                            const rightAlignment = rightAlignedFields.includes(item.type) && {
+                            const rightAlignment = numberFieldTypes.includes(item.type) && {
                                 justifyContent: 'flex-end'
                             }
 
