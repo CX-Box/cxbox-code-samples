@@ -1,0 +1,42 @@
+{
+  "name": "MyExample3124AggFieldsArgFieldKeysGH",
+  "title": "GroupingHierarchy (GH) widget aggregate argFieldKeys",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3124",
+  "fields": [
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Custom Field Number",
+      "key": "customFieldNumber",
+      "type": "number"
+    },
+    {
+      "label": "Custom Field Number Other",
+      "key": "customFieldNumberOther",
+      "type": "number"
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ],
+      "aggFields": [
+        {
+          "fieldKey": "customFieldNumber",
+          "func": "max",
+          "argFieldKeys": ["customFieldNumberOther"]
+        }
+      ]
+    }
+  }
+}

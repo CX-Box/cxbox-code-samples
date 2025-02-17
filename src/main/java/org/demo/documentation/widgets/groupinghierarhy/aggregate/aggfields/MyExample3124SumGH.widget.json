@@ -1,0 +1,36 @@
+{
+  "name": "MyExample3124SumGH",
+  "title": "GroupingHierarchy (GH) widget aggregate `sum`",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3124",
+  "fields": [
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Custom Field Number",
+      "key": "customFieldNumber",
+      "type": "number"
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ],
+      "aggFields": [
+        {
+          "fieldKey": "customFieldNumber",
+          "func": "sum"
+        }
+      ]
+    }
+  }
+}

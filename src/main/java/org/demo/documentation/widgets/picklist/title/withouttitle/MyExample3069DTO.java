@@ -7,7 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample3069DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customFieldEntity.customFieldPick", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldEntity.customFieldPick")
     private String customField;
     @SearchParameter(name = "customFieldEntity.id", provider = LongValueProvider.class)
     private Long customFieldId;

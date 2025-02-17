@@ -49,7 +49,7 @@ public class MyExample3600Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3600Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3600DTO_.customFieldHint)) {
             entity.setCustomFieldHint(data.getCustomFieldHint());
@@ -61,7 +61,7 @@ public class MyExample3600Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3600Multi2.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3600DTO_.customFieldMultipleSelect)) {
             entity.setCustomFieldMultipleSelect(

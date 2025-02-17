@@ -1,6 +1,6 @@
 {
   "name": "MyExample3072List",
-  "title": "List",
+  "title": "PickListPopup widget action Inline",
   "type": "List",
   "bc": "myexample3072",
   "fields": [
@@ -13,8 +13,24 @@
         "customField": "customFieldPick",
         "customFieldId": "id"
       }
+    },
+    {
+      "title": "Custom Field Inline Picklist",
+      "key": "customFieldInlinePicklist",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3072InlinePickPickListPopup",
+      "pickMap": {
+        "customFieldInlinePicklistId": "id",
+        "customFieldInlinePicklist": "customFieldPick"
+      }
     }
-  ]
-
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    }
+  }
 }
 

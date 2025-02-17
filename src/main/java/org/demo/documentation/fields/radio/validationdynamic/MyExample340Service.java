@@ -63,7 +63,7 @@ public class MyExample340Service extends VersionAwareResponseService<MyExample34
 		if (!CustomFieldEnum.HIGH.getValue().equals(dto.getCustomFieldAdditional().getValue())) {
 			entity.addField(MyExample340DTO_.customFieldAdditional.getName(), "Custom message about error");
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

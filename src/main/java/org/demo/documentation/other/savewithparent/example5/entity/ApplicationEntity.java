@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "APPLICATION_ENTITY")
 public class ApplicationEntity extends BaseEntity {
 
 	@Column
@@ -22,8 +23,7 @@ public class ApplicationEntity extends BaseEntity {
 	@Column
 	private StatusEnum status;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-	@Column(name = "tasks_id")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "applicationEntityId")
 	private List<Task> tasksId;
 
 }

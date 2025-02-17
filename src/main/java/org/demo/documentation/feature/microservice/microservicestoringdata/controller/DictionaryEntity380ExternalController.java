@@ -1,13 +1,11 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample380ExternalDTO;
 import org.demo.documentation.feature.microservice.microservicestoringdata.mapper.MyEntity380ExternalMapper;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.MyEntity380ExternalRepository;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

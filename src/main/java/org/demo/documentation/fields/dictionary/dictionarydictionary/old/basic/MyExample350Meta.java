@@ -11,11 +11,6 @@ import static org.demo.documentation.fields.dictionary.dictionarydictionary.old.
 @Service
 public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 
-    private final MyEntity350Repository repository;
-
-    public MyExample350Meta(MyEntity350Repository repository) {
-        this.repository = repository;
-    }
 
     // --8<-- [start:buildRowDependentMeta]
     @Override

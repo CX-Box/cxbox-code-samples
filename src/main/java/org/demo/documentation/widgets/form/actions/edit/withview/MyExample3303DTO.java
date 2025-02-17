@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 @Getter
 @Setter
@@ -14,9 +14,9 @@ public class MyExample3303DTO extends DataResponseDTO {
 
     public static final String INFO_TEXT = "With Edit with view, you can edit the entity from a separate view that displays only the data entry form. Click on the \"Edit\" option." ;
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3303DTO(MyEntity3303 entity) {

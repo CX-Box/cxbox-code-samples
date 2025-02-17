@@ -10,6 +10,7 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.CxboxMyExample3166Controller;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3167Service extends VersionAwareResponseService<MyExample3167DTO, MyEntity3167> {
 
@@ -47,7 +48,7 @@ public class MyExample3167Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("finish", "Save and Close")
                         .invoker((bc, dto) -> {
-                            MyEntity3167 myEntity = repository.getById(bc.getIdAsLong());
+                            MyEntity3167 myEntity = repository.getReferenceById(bc.getIdAsLong());
                             repository.save(myEntity);
                             return new ActionResultDTO<MyExample3167DTO>().setAction(
                                     PostAction.drillDown(

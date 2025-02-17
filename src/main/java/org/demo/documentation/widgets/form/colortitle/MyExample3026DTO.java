@@ -10,7 +10,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.demo.documentation.widgets.form.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.form.colortitle.enums.CustomFieldColorRadioEnum;
-import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3033;
 import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3037;
 import org.demo.documentation.widgets.form.colortitle.forfields.MyEntity3038;
 
@@ -27,11 +26,11 @@ public class MyExample3026DTO extends DataResponseDTO {
     private String customFieldText;
     private String customFieldColor;
     private String customFieldTextColor;
-    @SearchParameter(name = "customFieldColorInlinePicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorInlinePicklistEntity.customField")
     private String customFieldColorInlinePicklist;
     @SearchParameter(name = "customFieldColorInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldColorInlinePicklistId;
-    @SearchParameter(name = "customFieldColorPicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorPicklistEntity.customField")
     private String customFieldColorPicklist;
     @SearchParameter(name = "customFieldColorPicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldColorPicklistId;
@@ -43,7 +42,7 @@ public class MyExample3026DTO extends DataResponseDTO {
     private Long customFieldColorPercent;
     @SearchParameter(name = "customFieldColorNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldColorNumber;
-    @SearchParameter(name = "customFieldColorFileUploade", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorFileUploade")
     private String customFieldColorFileUploade;
     private String customFieldColorFileUploadeId;
     @SearchParameter(name = "customFieldColorDictionary", provider = EnumValueProvider.class)
@@ -56,9 +55,9 @@ public class MyExample3026DTO extends DataResponseDTO {
     private Boolean customFieldColorCheckbox;
     @SearchParameter(name = "customFieldColorDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldColorDateTime;
-    @SearchParameter(name = "customFieldColorText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorText")
     private String customFieldColorText;
-    @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorInput")
     private String customFieldColorInput;
     @SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldColorMultivalueHover;

@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.cxbox</groupId>
         <artifactId>cxbox-starter-parent</artifactId>
-        <version>4.0.0-M12</version><!-- based on spring-boot-starter-parent 3.3.4-->
+        <version>4.0.0-M14</version><!-- based on spring-boot-starter-parent 3.3.4-->
         <relativePath/><!-- lookup parent from repository -->
     </parent>
 
@@ -197,12 +197,6 @@
             <version>3.25.3</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <version>1.18.30</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
@@ -310,6 +304,28 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>ui-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/ui</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/ui/build</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>17</source>
@@ -321,7 +337,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.3</version>
                 <configuration>
-                    <skipTests>true</skipTests> <!-- По умолчанию тесты отключены -->
+                    <skipTests>true</skipTests> 
                 </configuration>
             </plugin>
         </plugins>

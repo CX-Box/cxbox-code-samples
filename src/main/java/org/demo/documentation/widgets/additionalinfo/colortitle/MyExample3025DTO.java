@@ -26,9 +26,9 @@ public class MyExample3025DTO extends DataResponseDTO {
     private String customFieldText;
     private String customFieldColor;
     private String customFieldTextColor;
-    @SearchParameter(name = "customFieldColorInput", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorInput")
     private String customFieldColorInput;
-    @SearchParameter(name = "customFieldColorText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorText")
     private String customFieldColorText;
     @SearchParameter(name = "customFieldColorDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldColorDateTime;
@@ -40,7 +40,7 @@ public class MyExample3025DTO extends DataResponseDTO {
     private LocalDateTime customFieldColorDateTimeWithSeconds;
     @SearchParameter(name = "customFieldColorDictionary", provider = EnumValueProvider.class)
     private CustomFieldColorDictionaryEnum customFieldColorDictionary;
-    @SearchParameter(name = "customFieldColorFileUploade", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorFileUploade")
     private String customFieldColorFileUploade;
     private String customFieldColorFileUploadeId;
     @SearchParameter(name = "customFieldColorNumber", provider = BigDecimalValueProvider.class)
@@ -51,11 +51,11 @@ public class MyExample3025DTO extends DataResponseDTO {
     private Double customFieldColorMoney;
     @SearchParameter(name = "customFieldColorRadio", provider = EnumValueProvider.class)
     private CustomFieldColorRadioEnum customFieldColorRadio;
-    @SearchParameter(name = "customFieldColorPicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorPicklistEntity.customField")
     private String customFieldColorPicklist;
     @SearchParameter(name = "customFieldColorPicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldColorPicklistId;
-    @SearchParameter(name = "customFieldColorInlinePicklistEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorInlinePicklistEntity.customField")
     private String customFieldColorInlinePicklist;
     @SearchParameter(name = "customFieldColorInlinePicklistEntity.id", provider = LongValueProvider.class)
     private Long customFieldColorInlinePicklistId;

@@ -16,8 +16,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 
 @Getter
 @Service
@@ -94,7 +92,7 @@ public class MyEntity3052MultiMultivalueService extends VersionAwareResponseServ
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3052MultiMultiAssoc.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyEntity3052MultiMultivalueDTO_.customFieldColorMultivalueHover)) {
             entity.getCustomFieldColorMultivalueHoverList().clear();
@@ -103,7 +101,7 @@ public class MyEntity3052MultiMultivalueService extends VersionAwareResponseServ
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3052MultiAssoc.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         return null;
     }

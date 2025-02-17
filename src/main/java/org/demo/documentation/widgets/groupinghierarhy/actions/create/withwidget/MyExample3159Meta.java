@@ -7,6 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.widgets.groupinghierarhy.actions.create.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3159Meta extends FieldMetaBuilder<MyExample3159DTO> {
 

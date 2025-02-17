@@ -7,9 +7,10 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3861Service extends AnySourceVersionAwareResponseService<MyExample3861DTO, MyEntity3861OutServiceDTO> {
-
 
     public MyExample3861Service() {
         super(MyExample3861DTO.class, MyEntity3861OutServiceDTO.class,  MyExample3861Meta.class, MyEntity3861Dao.class);
@@ -27,7 +28,7 @@ public class MyExample3861Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3861DTO> getActions() {
         return Actions.<MyExample3861DTO>builder()

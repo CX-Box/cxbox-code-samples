@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 @Getter
 @Setter
@@ -14,7 +14,7 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample3075DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
     public MyExample3075DTO(MyEntity3075 entity) {

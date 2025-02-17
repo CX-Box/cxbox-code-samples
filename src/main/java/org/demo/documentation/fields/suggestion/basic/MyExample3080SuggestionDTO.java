@@ -15,7 +15,7 @@ public class MyExample3080SuggestionDTO extends DataResponseDTO {
     private String customFieldSuggestion;
     private LocalDateTime customFieldSuggestionDate;
     public MyExample3080SuggestionDTO(MyEntity3080OutServiceDTO entity) {
-        this.id = entity.getId().toString();
+        this.id = entity.getId();
         this.customFieldSuggestion = entity.getCustomFieldSuggestion();
         this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
     }

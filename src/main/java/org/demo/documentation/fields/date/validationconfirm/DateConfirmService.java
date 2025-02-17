@@ -8,6 +8,7 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class DateConfirmService extends VersionAwareResponseService<DateConfirmDTO, DateConfirmEntity> {
 

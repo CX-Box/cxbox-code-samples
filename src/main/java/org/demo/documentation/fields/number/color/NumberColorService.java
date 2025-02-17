@@ -28,7 +28,7 @@ public class NumberColorService extends VersionAwareResponseService<NumberColorD
 	@Override
 	protected ActionResultDTO<NumberColorDTO> doUpdateEntity(NumberColorEntity entity, NumberColorDTO data,
 			BusinessComponent bc) {
-
+		setIfChanged(data, NumberColorDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

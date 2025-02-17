@@ -5,11 +5,10 @@ import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-
 import org.demo.documentation.navigation.tab.typestandard.businessexample.CxboxMyExample3428Controller;
-
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3428Meta extends FieldMetaBuilder<MyExample3428DTO> {
 

@@ -11,6 +11,8 @@ import DebugWidgetWrapper from '../../../DebugWidgetWrapper/DebugWidgetWrapper'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { WidgetFormMeta, FieldType } from '@cxbox-ui/core'
 import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { RowSelectionType } from 'antd/es/table'
+import { getRowSelectionOffset } from '@components/widgets/Table/utils/rowSelection'
 
 type WidgetMetaField = { type: string; hidden?: boolean }
 
@@ -143,7 +145,11 @@ export function useExpandableForm<R extends CustomDataItem>(currentWidgetMeta: A
         [isActiveRecord, internalWidget, debugMode, isLoading, internalWidgetOperations]
     )
 
-    const getExpandIconColumnIndex = (controlColumns: ControlColumn<R>[], externalVisibleFields?: WidgetMetaField[]) => {
+    const getExpandIconColumnIndex = (
+        controlColumns: ControlColumn<R>[],
+        externalVisibleFields?: WidgetMetaField[],
+        rowSelectionType?: RowSelectionType
+    ) => {
         if (!internalWidget) {
             return undefined
         }
@@ -158,8 +164,9 @@ export function useExpandableForm<R extends CustomDataItem>(currentWidgetMeta: A
 
         const widgetFields = currentWidgetMeta.fields as WidgetMetaField[]
         const visibleWidgetFields = externalVisibleFields ?? widgetFields?.filter(item => item.type !== FieldType.hidden && !item.hidden)
+        const rowSelectionCount = getRowSelectionOffset(rowSelectionType)
 
-        return leftControlColumns.length + visibleWidgetFields?.length + rightControlColumns.findIndex(isExpandColumn)
+        return leftControlColumns.length + visibleWidgetFields?.length + rightControlColumns.findIndex(isExpandColumn) + rowSelectionCount
     }
 
     const expandable = !!internalWidget

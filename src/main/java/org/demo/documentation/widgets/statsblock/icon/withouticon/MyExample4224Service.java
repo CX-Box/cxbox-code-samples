@@ -9,6 +9,7 @@ import org.demo.documentation.widgets.statsblock.icon.withicon.MyExample4223Dao;
 import org.demo.documentation.widgets.statsblock.icon.withicon.MyExample4223Meta;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4224Service extends AnySourceVersionAwareResponseService<MyExample4224DTO, MyExample4224DTO> {
 

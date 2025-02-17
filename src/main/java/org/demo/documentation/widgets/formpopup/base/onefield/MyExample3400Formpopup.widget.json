@@ -5,6 +5,11 @@
   "bc": "myExampleBc3400",
   "fields": [
     {
+      "label": "Custom Field Required 2",
+      "key": "customFieldRequired2",
+      "type": "input"
+    },
+    {
       "label": "Сustom Field",
       "key": "customField",
       "type": "hint"
@@ -13,11 +18,37 @@
       "label": "Сustom Field2",
       "key": "customField2",
       "type": "input"
+    },
+    {
+      "label": "Custom Field InlinePicklist",
+      "key": "customFieldInlinePicklist",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3400InlinePicklistPick",
+      "pickMap": {
+        "customFieldInlinePicklist": "customField",
+        "customFieldInlinePicklistId": "id"
+      }
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldRequired2",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldInlinePicklist",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {

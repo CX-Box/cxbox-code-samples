@@ -7,6 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample4201Meta extends FieldMetaBuilder<MyExample4201DTO> {
 
@@ -21,7 +22,6 @@ public class MyExample4201Meta extends FieldMetaBuilder<MyExample4201DTO> {
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample4201DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableSort(MyExample4201DTO_.customField);
- ;
     }
 
 }

@@ -8,6 +8,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.enums.StatusEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3238Meta extends FieldMetaBuilder<MyExample3238DTO> {
 

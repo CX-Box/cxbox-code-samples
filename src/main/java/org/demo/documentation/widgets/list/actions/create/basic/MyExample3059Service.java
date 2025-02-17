@@ -4,13 +4,8 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.picklist.actions.createcustomsave.MyEntity3073;
-import org.demo.documentation.widgets.picklist.actions.createcustomsave.MyEntity3073Pick;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class MyExample3059Service extends VersionAwareResponseService<MyExample3059DTO, MyEntity3059> {

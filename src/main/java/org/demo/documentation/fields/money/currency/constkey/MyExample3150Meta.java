@@ -7,6 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.fields.money.currency.constkey.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3150Meta extends FieldMetaBuilder<MyExample3150DTO> {
 

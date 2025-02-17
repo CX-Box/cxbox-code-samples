@@ -2,12 +2,12 @@ package org.demo.documentation.fields.multipleselect.color;
 
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
+import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
-import org.demo.documentation.fields.multipleselect.color.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +20,10 @@ public class MyExample250Meta extends FieldMetaBuilder<MyExample250DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample250DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
-		fields.setDictionaryTypeWithCustomValues(MyExample250DTO_.customField, Arrays.stream(CustomFieldEnum.values())
-				.map(CustomFieldEnum::getValue)
-				.toArray(String[]::new));
+		fields.setConcreteValues(MyExample250DTO_.customField, Arrays.stream(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum.values())
+				.map(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum::getValue)
+				.map(e -> new SimpleDictionary(e, e))
+				.toList());
 		fields.setEnabled(MyExample250DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]

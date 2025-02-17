@@ -1,0 +1,52 @@
+{
+  "name": "MyExample3614ListForPicklist",
+  "title": "PickList widget",
+  "type": "Form",
+  "bc": "myexample3614",
+  "fields": [
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field PickList",
+      "key": "customFieldPicklist",
+      "type": "pickList",
+      "popupBcName": "myEntity3614PickPick",
+      "pickMap": {
+        "customFieldPicklist": "customField",
+        "customFieldPicklistId": "id"
+      }
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPicklist",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": []
+    },
+    "filterSetting": {
+      "enabled": true
+    }
+  }
+}
+

@@ -9,6 +9,7 @@ import org.demo.documentation.feature.meta.buildindependentmeta.addconcretevalue
 import org.demo.documentation.feature.meta.buildindependentmeta.addconcretevalue.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3152Meta extends FieldMetaBuilder<MyExample3152DTO> {
 

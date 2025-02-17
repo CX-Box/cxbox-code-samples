@@ -11,6 +11,7 @@ import org.cxbox.meta.ui.model.BcField;
 import org.cxbox.meta.ui.model.json.field.FieldMeta;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class ExtendedFieldExtractor extends BaseFieldExtractor {
 

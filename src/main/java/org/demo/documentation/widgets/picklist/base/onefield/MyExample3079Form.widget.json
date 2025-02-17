@@ -1,0 +1,55 @@
+{
+  "name": "MyExample3079Form",
+  "title": "PickListPopup widget basic Form",
+  "type": "Form",
+  "bc": "myexample3079",
+  "fields": [
+    {
+      "label": "Custom Field Inline Pick List",
+      "key": "customFieldInlinePickList",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3079PickPick0",
+      "pickMap": {
+        "customFieldInlinePickList": "customField",
+        "customFieldInlinePickListId": "id"
+      }
+    },
+    {
+      "label": "Custom Field Pick List",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity3079PickPick",
+      "pickMap": {
+        "customFieldPickListId": "id",
+        "customFieldPickList": "customField"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldInlinePickList",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

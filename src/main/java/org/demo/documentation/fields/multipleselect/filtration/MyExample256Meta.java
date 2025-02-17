@@ -22,9 +22,10 @@ public class MyExample256Meta extends FieldMetaBuilder<MyExample256DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample256DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
-		fields.setDictionaryTypeWithCustomValues(MyExample256DTO_.customField, Arrays.stream(CustomFieldEnum.values())
-				.map(CustomFieldEnum::getValue)
-				.toArray(String[]::new));
+		fields.setConcreteValues(MyExample256DTO_.customField, Arrays.stream(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum.values())
+				.map(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum::getValue)
+				.map(e -> new SimpleDictionary(e, e))
+				.toList());
 		fields.setEnabled(MyExample256DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]

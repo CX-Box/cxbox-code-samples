@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.widgets.groupinghierarhy.showcondition.byparententity.parent.enums.CustomFieldDictionaryEnum;
 
 @Getter
@@ -17,7 +17,7 @@ public class MyExample3169DTO extends DataResponseDTO {
 
     public static final String TEXT2 = "Show condition - if CustomFieldNumber  > 5 widget show.";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;

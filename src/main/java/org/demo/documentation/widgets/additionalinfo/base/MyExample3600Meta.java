@@ -57,7 +57,7 @@ public class MyExample3600Meta extends FieldMetaBuilder<MyExample3600DTO> {
         fields.enableFilter(MyExample3600DTO_.customFieldMultivalue);
         fields.setConcreteFilterValues(MyExample3600DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
-                .collect(Collectors.toList()));
+                .toList());
         fields.enableFilter(MyExample3600DTO_.customFieldMultipleSelect);
         fields.enableFilter(MyExample3600DTO_.customFieldPickList);
         fields.enableFilter(MyExample3600DTO_.customFieldInlinePickList);

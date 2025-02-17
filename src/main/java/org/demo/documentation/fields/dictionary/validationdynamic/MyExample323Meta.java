@@ -7,6 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.fields.dictionary.validationbusinessex.MyExample91DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample323Meta extends FieldMetaBuilder<MyExample323DTO> {
 

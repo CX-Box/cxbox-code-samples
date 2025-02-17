@@ -17,6 +17,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URLDecoder;
 
 import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
 
@@ -79,6 +82,7 @@ public class StoringDataEntity3137Controller {
             @Parameter(in = ParameterIn.QUERY,
                     description = "Criteria for filtering the data by field CustomField", example = "Test data1")
             @RequestParam(value = "filterCustomField", required = false) String filterCustomField,
+            @RequestParam(value = "filterEqualsCustomField", required = false) String filterEqualsCustomField,
             @RequestParam(value = "filterParentId", required = false) String filterParentId,
             @Parameter(in = ParameterIn.QUERY,
                     description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
@@ -88,11 +92,18 @@ public class StoringDataEntity3137Controller {
 
         Pageable entityPageable = getEntityPageable(numberPage, sizePage, sortCustomField);
 
-
         Specification<MyEntity3137> specification = (root, query, cb) -> cb.and();
-        if (filterCustomField != null) {
+        if (filterEqualsCustomField != null) {
             specification = (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(MyEntity3137_.customField.getName()), "%" + filterCustomField + "%");
+            criteriaBuilder.equal(
+                    criteriaBuilder.upper(root.get(MyEntity3137_.customField.getName())),
+                    URLDecoder.decode(filterEqualsCustomField).toUpperCase());
+                }
+        else if (filterCustomField != null) {
+            specification = (root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(
+                            criteriaBuilder.upper(root.get(MyEntity3137_.customField.getName())),
+                            "%"+ URLDecoder.decode(filterCustomField).toUpperCase()+"%");
         }
         if (filterParentId != null) {
             specification = (root, query, criteriaBuilder) ->

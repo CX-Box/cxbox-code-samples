@@ -42,11 +42,11 @@ public class MyExample3134DTO extends DataResponseDTO {
     private CustomFieldRadioEnum customFieldRadio;
     @SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
     private Double customFieldMoney;
-    @SearchParameter(name = "customFieldInlineEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlineEntity.customField")
     private String customFieldInline;
     @SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlineId;
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
@@ -54,7 +54,7 @@ public class MyExample3134DTO extends DataResponseDTO {
     private Long customFieldPercent;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;
-    @SearchParameter(name = "customFieldFileUpload", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUpload")
     private String customFieldFileUpload;
     private String customFieldFileUploadId;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
@@ -67,12 +67,11 @@ public class MyExample3134DTO extends DataResponseDTO {
     private Boolean customFieldCheckbox;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     private String customFieldHidden;
     @SearchParameter(name = "customFieldMoneyWithCurrencyConst", provider = BigDecimalValueProvider.class)
     private Double customFieldMoneyWithCurrencyConst;
-    @SearchParameter(name = "customFieldCurrency", provider = EnumValueProvider.class)
     private CustomFieldCurrencyDictionaryEnum customFieldCurrency;
     @SearchParameter(name = "customFieldMoneyWithCurrencyDynamic", provider = BigDecimalValueProvider.class)
     private Double customFieldMoneyWithCurrencyDynamic;

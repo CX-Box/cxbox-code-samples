@@ -2,8 +2,6 @@ package org.demo.documentation.widgets.picklist.title.calculatedtitle;
 
 import lombok.Getter;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.fields.time.base.MyExample3500DTO_;
-import org.demo.documentation.widgets.picklist.actions.create.MyExample3072DTO;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

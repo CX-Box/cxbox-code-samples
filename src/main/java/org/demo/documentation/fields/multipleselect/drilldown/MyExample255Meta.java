@@ -1,15 +1,16 @@
 package org.demo.documentation.fields.multipleselect.drilldown;
 
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
+import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
-import org.demo.documentation.fields.multipleselect.drilldown.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -21,9 +22,10 @@ public class MyExample255Meta extends FieldMetaBuilder<MyExample255DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample255DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
-		fields.setDictionaryTypeWithCustomValues(MyExample255DTO_.customField, Arrays.stream(CustomFieldEnum.values())
-				.map(CustomFieldEnum::getValue)
-				.toArray(String[]::new));
+		fields.setConcreteValues(MyExample255DTO_.customField, Arrays.stream(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum.values())
+				.map(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum::getValue)
+				.map(e -> new SimpleDictionary(e, e))
+				.toList());
 		fields.setEnabled(MyExample255DTO_.customField);
 		fields.setDrilldown(
 				MyExample255DTO_.customField,

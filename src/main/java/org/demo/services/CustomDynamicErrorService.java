@@ -8,6 +8,7 @@ import org.cxbox.core.dto.BusinessError.Entity;
 import org.cxbox.core.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class CustomDynamicErrorService {
 

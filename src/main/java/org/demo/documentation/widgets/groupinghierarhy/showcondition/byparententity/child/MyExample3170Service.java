@@ -11,6 +11,7 @@ import org.demo.documentation.widgets.form.showcondition.byparententity.child.My
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3170Service extends VersionAwareResponseService<MyExample3170DTO, MyEntity3170> {
 

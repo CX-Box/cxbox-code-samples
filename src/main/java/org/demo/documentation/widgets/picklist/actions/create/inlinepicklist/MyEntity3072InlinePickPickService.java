@@ -32,6 +32,7 @@ public class MyEntity3072InlinePickPickService extends VersionAwareResponseServi
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:getActions]
     public Actions<MyEntity3072InlinePickPickDTO> getActions() {
         return Actions.<MyEntity3072InlinePickPickDTO>builder()
                 .create(crt -> crt.text("Add"))
@@ -40,4 +41,5 @@ public class MyEntity3072InlinePickPickService extends VersionAwareResponseServi
                 .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
+    // --8<-- [end:getActions]
 }

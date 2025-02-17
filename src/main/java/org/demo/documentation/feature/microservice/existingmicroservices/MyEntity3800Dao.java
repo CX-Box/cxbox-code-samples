@@ -19,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.*;
 
 import static org.springframework.http.HttpMethod.*;
-import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @Service

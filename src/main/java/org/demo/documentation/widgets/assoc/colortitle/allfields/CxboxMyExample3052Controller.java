@@ -20,9 +20,12 @@ public enum CxboxMyExample3052Controller implements EnumBcIdentifier {
     myEntity3052MultiAssocListPopup(myexample3052, MyEntity3052MultiMultivalueService.class),
     myEntity3052MultiAssocListPopupColorConst(myexample3052, MyEntity3052MultiMultivalueService.class),
     myEntity3052PicklistAssocPickListPopup(myEntity3052MultiAssocListPopup, MyEntity3052PicklistAssocPickService.class),
+    myEntity3052PicklistAssocPickListPopupColorConst(myEntity3052MultiAssocListPopupColorConst, MyEntity3052PicklistAssocPickService.class),
+    myEntity3052PicklistPickListPopupColorConst(myEntity3052MultiAssocListPopupColorConst, MyEntity3052PicklistPickService.class),
     myEntity3052PicklistPickListPopup(myEntity3052MultiAssocListPopup, MyEntity3052PicklistPickService.class),
-    myEntity3052MultiMultiAssocAssocListPopup(myEntity3052MultiAssocListPopup, MyEntity3052MultiMultiAssocMultivalueService.class), myEntity3052MultiAssocAssocListPopup(myEntity3052MultiAssocListPopup, MyEntity3052MultiAssocMultivalueService.class);
-
+    myEntity3052MultiMultiAssocAssocListPopupColorConst(myEntity3052MultiAssocListPopup, MyEntity3052MultiMultiAssocMultivalueService.class),
+    myEntity3052MultiAssocAssocListPopup(myEntity3052MultiAssocListPopup, MyEntity3052MultiAssocMultivalueService.class),
+    myEntity3052MultiMultiAssocAssocListPopup(myEntity3052MultiAssocListPopup, MyEntity3052MultiAssocMultivalueService.class);
     
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample3052Controller> Holder = new Holder<>(

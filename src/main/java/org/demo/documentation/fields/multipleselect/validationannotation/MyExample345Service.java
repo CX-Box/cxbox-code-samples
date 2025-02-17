@@ -10,6 +10,7 @@ import org.demo.documentation.fields.multipleselect.validationannotation.enums.C
 import org.demo.services.CustomDynamicErrorService;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample345Service extends VersionAwareResponseService<MyExample345DTO, MyEntity345> {
 

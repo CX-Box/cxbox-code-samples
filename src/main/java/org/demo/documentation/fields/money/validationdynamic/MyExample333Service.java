@@ -9,6 +9,7 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample333Service extends VersionAwareResponseService<MyExample333DTO, MyEntity333> {
 
@@ -58,7 +59,7 @@ public class MyExample333Service extends VersionAwareResponseService<MyExample33
 					"The field 'customFieldAdditional' cannot be less than 100 000.00"
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

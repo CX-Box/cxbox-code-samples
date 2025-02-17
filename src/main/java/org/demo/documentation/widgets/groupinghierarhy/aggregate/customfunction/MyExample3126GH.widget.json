@@ -1,0 +1,77 @@
+{
+  "name": "MyExample3126GH",
+  "title": "GroupingHierarchy (GH) widget custom functional",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3126",
+  "fields": [
+    {
+      "title": "Location",
+      "key": "location",
+      "type": "input"
+    },
+    {
+      "title": "Object",
+      "key": "object",
+      "type": "input"
+    },
+    {
+      "title": "Insurance value",
+      "key": "insuranceValue",
+      "type": "number"
+    },
+    {
+      "title": "Insured amount",
+      "key": "insuranceAmount",
+      "digits": 2,
+      "type": "number"
+    },
+    {
+      "title": "Percent Insurance Amount",
+      "key": "percentInsuranceAmount",
+      "digits": 2,
+      "type": "number"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "location",
+        "object"
+      ],
+      "aggLevels": [
+        {
+          "level": 1,
+          "aggFields": [
+            {
+              "fieldKey": "insuranceAmount",
+              "func": "sum",
+              "argFieldKeys": [
+                "insuranceAmount"
+              ]
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "aggFields": [
+            {
+              "fieldKey": "insuranceAmount",
+              "func": "sum",
+              "argFieldKeys": [
+                "insuranceAmount"
+              ]
+            },
+            {
+              "fieldKey": "percentInsuranceAmount",
+              "func": "min",
+              "argFieldKeys": [
+                "percentInsuranceAmount"
+              ],
+              "description": "%"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

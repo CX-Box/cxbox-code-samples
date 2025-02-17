@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 
 import java.time.LocalDateTime;
 
@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class MyExample3428DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldDrilldown", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDrilldown")
     private String customFieldDrilldown;
-    @SearchParameter(name = "customFieldAdditional", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldAdditional")
     private String customFieldAdditional;
     @SearchParameter(name = "meetDate", provider = DateValueProvider.class)
     private LocalDateTime meetDate;

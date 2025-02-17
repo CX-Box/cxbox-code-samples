@@ -49,7 +49,7 @@ public class MyExample3001DTO extends DataResponseDTO {
     private Boolean customFieldCheckbox;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     @SearchParameter(name = "customFieldMultivalueHoverList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldMultivalueHover;
@@ -57,11 +57,11 @@ public class MyExample3001DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
     private MultivalueField customFieldMultivalue;
     private String customFieldMultivalueDisplayedKey;
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
-    @SearchParameter(name = "customFieldInlinePickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePickListEntity.customField")
     private String customFieldInlinePickList;
     @SearchParameter(name = "customFieldInlinePickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePickListId;

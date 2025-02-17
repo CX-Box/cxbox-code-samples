@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3610Service extends VersionAwareResponseService<MyExample3610DTO, MyEntity3610> {
 

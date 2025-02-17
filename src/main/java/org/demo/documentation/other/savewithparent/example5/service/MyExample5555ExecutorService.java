@@ -12,25 +12,17 @@ import org.demo.documentation.other.savewithparent.example5.CxboxMyExample5555Co
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO_;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
-import org.demo.documentation.other.savewithparent.example5.meta.ExecutorMeta;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample5555ExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
-
-	private static final String SUB_INFO = "/screen/autosave/view/sumInfo";
-
-	private static final String EXECUTOR_EDIT = "/screen/autosave/view/executorEdit/";
-
-	private static final String EXECUTOR = "/screen/autosave/view/executor";
-
-	public static final String NEXT = "Next";
 
 	private final ExecutorRepository repository;
 
 	public MyExample5555ExecutorService(ExecutorRepository repository) {
-		super(ExecutorDTO.class, Executor.class, null, ExecutorMeta.class);
+		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorMeta.class);
 		this.repository = repository;
 	}
 
@@ -40,7 +32,7 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 		return new CreateResult<>(entityToDto(bc, entity))
 				.setAction(PostAction.drillDown(
 						DrillDownType.INNER,
-						EXECUTOR_EDIT
+						"/screen/autosave/view/executorEdit/"
 								+ CxboxMyExample5555Controller.executor + "/"
 								+ entity.getId()
 				));
@@ -61,28 +53,28 @@ public class MyExample5555ExecutorService extends VersionAwareResponseService<Ex
 				.action(act -> act
 						.action("finish", "Save")
 						.invoker((bc, dto) -> {
-							Executor executor = repository.getById(bc.getIdAsLong());
+							Executor executor = repository.getReferenceById(bc.getIdAsLong());
 							repository.save(executor);
 							return new ActionResultDTO<ExecutorDTO>().setAction(
 									PostAction.drillDown(
 											DrillDownType.INNER,
-											EXECUTOR
+											"/screen/autosave/view/executor"
 									));
 						})
 				)
+				.save(sv -> sv.text("Save").scope(ActionScope.BC))
 				.action(act -> act
-						.action("nextSubInfo", NEXT)
+						.action("nextSubInfo", "Next")
 						.invoker((bc, dto) ->
 								new ActionResultDTO<ExecutorDTO>().setAction(
 										PostAction.drillDown(
 												DrillDownType.INNER,
-												SUB_INFO
+												"/screen/autosave/view/sumInfo"
 										))
 						)
 						.scope(ActionScope.BC)
 						.withoutAutoSaveBefore()
 				)
-				.save(sv -> sv.text("Save").scope(ActionScope.BC))
 				.delete(dlt -> dlt.text("Delete"))
 				.cancelCreate(ccr -> ccr.text("Cancel").scope(ActionScope.BC))
 				.build();

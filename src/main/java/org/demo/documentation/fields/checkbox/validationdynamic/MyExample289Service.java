@@ -67,7 +67,7 @@ public class MyExample289Service extends VersionAwareResponseService<MyExample28
 					"The field 'customFieldAdditional' can contain only 'True"
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

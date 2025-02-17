@@ -1,7 +1,6 @@
 package org.demo.documentation.fields.dictionary.icon.picklistpopup;
 
 import lombok.Getter;
-import org.demo.documentation.fields.dictionary.icon.MyExample3011DTO_;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

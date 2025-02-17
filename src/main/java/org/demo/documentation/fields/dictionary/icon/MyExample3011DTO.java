@@ -9,7 +9,7 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3011Multi;
 import org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3012Multi;
 import org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionaryEnum;
@@ -22,15 +22,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3011DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
-    @SearchParameter(name = "customFieldPickListEntity.customFieldDictionary", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customFieldDictionary")
     private CustomFieldDictionaryEnum customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
-    @SearchParameter(name = "customFieldDictionaryInlinePickListEntity.customFieldDictionary", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDictionaryInlinePickListEntity.customFieldDictionary")
     private CustomFieldDictionaryEnum customFieldDictionaryInlinePickList;
     @SearchParameter(name = "customFieldDictionaryInlinePickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldDictionaryInlinePickListId;

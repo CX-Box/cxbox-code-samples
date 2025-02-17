@@ -11,6 +11,7 @@ import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO;
 import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO_;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3118Service extends VersionAwareResponseService<MyExample3118DTO, MyEntity3118> {
 
@@ -57,7 +58,7 @@ public class MyExample3118Service extends VersionAwareResponseService<MyExample3
                     "The field 'customFieldAdditional' can contain only letters."
             );
         }
-        if (entity.getFields().size() > 0) {
+        if (!entity.getFields().isEmpty()) {
             throw new BusinessException().setEntity(entity);
         }
     }

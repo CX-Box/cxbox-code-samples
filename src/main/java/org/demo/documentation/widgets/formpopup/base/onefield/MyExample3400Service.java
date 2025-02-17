@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.formpopup.base.onefield;
 
+import jakarta.persistence.EntityManager;
 import lombok.NonNull;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -9,6 +10,8 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.action.ActionsExt;
 
+import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class MyExample3400Service extends VersionAwareResponseService<MyExample3400DTO, MyEntity3400> {
 
     private final MyEntity3400Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample3400Service(MyEntity3400Repository repository) {
         super(MyExample3400DTO.class, MyEntity3400.class, null, MyExample3400Meta.class);
@@ -30,6 +35,13 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3400DTO> doUpdateEntity(MyEntity3400 entity, MyExample3400DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3400DTO_.customFieldRequired2, entity::setCustomFieldRequired2);
+        setIfChanged(data, MyExample3400DTO_.customFieldRequired, entity::setCustomFieldRequired);
+        if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistId)) {
+            entity.setCustomFieldInlinePicklistEntity(data.getCustomFieldInlinePicklistId() != null
+                    ? entityManager.getReference(MyEntity3400InlinePicklist.class, data.getCustomFieldInlinePicklistId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3400DTO_.customField2)) {
             entity.setCustomField2(data.getCustomField2());
         }
@@ -44,7 +56,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3400Formpopup", "Done", "Cancel");
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3400DTO> getActions() {
         return Actions.<MyExample3400DTO>builder()
@@ -55,6 +67,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
                 )
                 .build();
     }
+
     private ActionResultDTO<MyExample3400DTO> withApproval() {
         return new ActionResultDTO<>();
     }

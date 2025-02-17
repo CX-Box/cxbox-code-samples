@@ -11,6 +11,7 @@ import org.demo.documentation.other.savewithparent.example3.MyEntity3422Reposito
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3423Service extends VersionAwareResponseService<MyExample3423DTO, MyEntity3423> {
 

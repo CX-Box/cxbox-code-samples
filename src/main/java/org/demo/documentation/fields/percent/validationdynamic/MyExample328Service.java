@@ -68,7 +68,7 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 					"The field  cannot be less than 5%"
 			);
 		}
-		if (entity.getFields().size() > 0) {
+		if (!entity.getFields().isEmpty()) {
 				throw new BusinessException().setEntity(entity);
 		}
 	}

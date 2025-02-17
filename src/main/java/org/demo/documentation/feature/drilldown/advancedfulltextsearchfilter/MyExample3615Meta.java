@@ -6,8 +6,6 @@ import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.feature.drilldown.advancedonebcfilter.CxboxMyExample3612Controller;
-import org.demo.documentation.feature.drilldown.advancedonebcfilter.MyExample3612DTO_;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;

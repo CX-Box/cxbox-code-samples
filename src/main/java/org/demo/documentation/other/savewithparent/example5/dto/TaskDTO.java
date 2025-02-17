@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.enums.ImportanceEnum;
@@ -19,7 +20,9 @@ import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
 public class TaskDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "applicationEntityId.name", provider = LongValueProvider.class)
-	private String applicationEntity;
+	private Long applicationEntityId;
+
+	private String applicationEntityName;
 
 	@SearchParameter
 	private String name;
@@ -48,9 +51,12 @@ public class TaskDTO extends DataResponseDTO {
 	@SearchParameter(name = "executorId.name")
 	private String executorName;
 
+	private Integer documentCount;
+
+	private Integer taskCount;
 	public TaskDTO(Task task) {
 		this.id = task.getId().toString();
-
+		this.applicationEntityName = Optional.ofNullable(task.getApplicationEntityId()).map(ApplicationEntity::getName).orElse(null);
 		this.executorName = Optional.ofNullable(task.getExecutorId())
 				.map(Executor::getName)
 				.orElse(null);
@@ -59,7 +65,6 @@ public class TaskDTO extends DataResponseDTO {
 		this.name = task.getName();
 		this.importance = task.getImportance();
 		this.status = task.getStatus();
-		this.file = task.getFile();
 		this.comment = task.getComment();
 
 		this.executorId = Optional.ofNullable(task.getExecutorId())
@@ -67,8 +72,10 @@ public class TaskDTO extends DataResponseDTO {
 				.map(String::valueOf)
 				.orElse(null);
 
-		this.applicationEntity = task.getApplicationEntityId().getName();
-		this.fileId = task.getFileId();
+		Optional.ofNullable(task.getApplicationEntityId())
+				.ifPresent(application -> this.applicationEntityId = application.getId());
+		Optional.ofNullable(task.getDocuments())
+				.ifPresent(tasks -> this.documentCount = tasks.size());
 	}
 
 }

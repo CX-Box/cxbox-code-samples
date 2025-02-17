@@ -46,7 +46,7 @@ public class MyExample3135Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3135MultiHover.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (data.isFieldChanged(MyExample3135DTO_.customFieldMultipleSelect)) {
             entity.setCustomFieldMultipleSelect(
@@ -62,7 +62,7 @@ public class MyExample3135Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3135Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         setIfChanged(data, MyExample3135DTO_.customFieldHidden, entity::setCustomFieldHidden);
         setIfChanged(data, MyExample3135DTO_.customFieldText, entity::setCustomFieldText);
@@ -98,7 +98,7 @@ public class MyExample3135Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3135Multi.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         setIfChanged(data, MyExample3135DTO_.customFieldHint, entity::setCustomFieldHint);
         if (data.isFieldChanged(MyExample3135DTO_.customFieldMultivalueHover)) {
@@ -108,7 +108,7 @@ public class MyExample3135Service extends VersionAwareResponseService<MyExample3
                     .filter(Objects::nonNull)
                     .map(Long::parseLong)
                     .map(e -> entityManager.getReference(MyEntity3135MultiHover.class, e))
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         setIfChanged(data, MyExample3135DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
         setIfChanged(data, MyExample3135DTO_.customFieldCheckBox, entity::setCustomFieldCheckBox);

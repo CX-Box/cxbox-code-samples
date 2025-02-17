@@ -12,6 +12,7 @@ import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058Re
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3057Service extends VersionAwareResponseService<MyExample3057DTO, MyEntity3057> {
 
@@ -55,7 +56,7 @@ public class MyExample3057Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("addChild", "Add")
                         .invoker((bc, dto) -> {
-                            MyEntity3058 myEntityParent = repositoryParent.getById(bc.getParentIdAsLong());
+                            MyEntity3058 myEntityParent = repositoryParent.getReferenceById(bc.getParentIdAsLong());
                             repositoryParent.save(myEntityParent);
                             return new ActionResultDTO<MyExample3057DTO>();
                         })

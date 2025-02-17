@@ -18,6 +18,8 @@ public class MyEntity3072InlinePickPickMeta extends FieldMetaBuilder<MyEntity307
         fields.setEnabled(MyEntity3072InlinePickPickDTO_.customFieldPick);
     }
    // --8<-- [end:buildRowDependentMeta]
+
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3072InlinePickPickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
@@ -26,5 +28,5 @@ public class MyEntity3072InlinePickPickMeta extends FieldMetaBuilder<MyEntity307
         fields.enableSort(MyEntity3072InlinePickPickDTO_.customFieldPick);
 
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }

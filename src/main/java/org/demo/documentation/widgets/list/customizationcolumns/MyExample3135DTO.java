@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class MyExample3135DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldInput", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInput")
     private String customFieldInput;
     @SearchParameter(name = "customFieldDate", provider = DateValueProvider.class)
     private LocalDateTime customFieldDate;
@@ -43,11 +43,11 @@ public class MyExample3135DTO extends DataResponseDTO {
     private CustomFieldRadioEnum customFieldRadio;
     @SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
     private Double customFieldMoney;
-    @SearchParameter(name = "customFieldInlineEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlineEntity.customField")
     private String customFieldInline;
     @SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlineId;
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldPickListId;
@@ -55,14 +55,14 @@ public class MyExample3135DTO extends DataResponseDTO {
     private Long customFieldPercent;
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;
-    @SearchParameter(name = "customFieldFileUpload", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUpload")
     private String customFieldFileUpload;
     private String customFieldFileUploadId;
     @SearchParameter(name = "customFieldDateTimeWithSeconds", provider = DateValueProvider.class)
     private LocalDateTime customFieldDateTimeWithSeconds;
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
     private String customFieldHidden;
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)

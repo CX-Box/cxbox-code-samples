@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.info.showcondition.byparententity.parent.MyEntity3105;
 import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100;
 
 
