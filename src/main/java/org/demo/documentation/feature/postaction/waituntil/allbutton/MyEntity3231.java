@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.drilldownandwaituntil;
+package org.demo.documentation.feature.postaction.waituntil.allbutton;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -15,7 +15,7 @@ import org.demo.documentation.feature.postaction.enums.StatusEnum;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3232 extends BaseEntity {
+public class MyEntity3231 extends BaseEntity {
     @Column
     private String customField;
 

@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.waituntil;
+package org.demo.documentation.feature.postaction.drilldownandwaituntil.basic;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -10,12 +10,11 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3231 extends BaseEntity {
+public class MyEntity3234 extends BaseEntity {
     @Column
     private String customField;
 

@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.waituntil;
+package org.demo.documentation.feature.postaction.drilldownandwaituntil.basic;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import org.demo.documentation.feature.postaction.enums.StatusEnum;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3231DTO extends DataResponseDTO {
+public class MyExample3234DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
@@ -23,11 +23,11 @@ public class MyExample3231DTO extends DataResponseDTO {
 
     private Boolean statusResponseFlag;
 
-    public MyExample3231DTO(MyEntity3231 entity) {
+    public MyExample3234DTO(MyEntity3234 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
-        this.statusResponse = entity.getStatusResponse();
         this.customFieldForm = entity.getCustomFieldForm();
+        this.statusResponse = entity.getStatusResponse();
         this.statusResponseFlag = entity.getStatusResponse() == StatusEnum.DONE || entity.getStatusResponse() == StatusEnum.ERROR;
     }
 }

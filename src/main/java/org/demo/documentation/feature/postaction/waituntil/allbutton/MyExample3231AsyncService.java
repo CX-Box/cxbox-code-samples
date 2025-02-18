@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.waituntil;
+package org.demo.documentation.feature.postaction.waituntil.allbutton;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
