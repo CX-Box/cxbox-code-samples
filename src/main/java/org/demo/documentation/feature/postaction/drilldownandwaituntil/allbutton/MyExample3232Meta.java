@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.drilldownandwaituntil;
+package org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

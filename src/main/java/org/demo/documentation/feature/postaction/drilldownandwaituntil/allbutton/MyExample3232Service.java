@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.postaction.drilldownandwaituntil;
+package org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,12 +8,10 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.CxboxMyExample3231Controller;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3231AnySourceOutServiceDTO;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
-import org.demo.documentation.feature.postaction.waituntil.MyExample3231DTO;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;

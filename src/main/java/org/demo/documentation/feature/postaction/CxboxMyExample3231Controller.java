@@ -5,14 +5,18 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.feature.postaction.drilldownandwaituntil.MyExample3232Service;
-import org.demo.documentation.feature.postaction.waituntil.MyExample3231Service;
+import org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton.MyExample3232Service;
+import org.demo.documentation.feature.postaction.drilldownandwaituntil.basic.MyExample3234Service;
+import org.demo.documentation.feature.postaction.waituntil.allbutton.MyExample3231Service;
+import org.demo.documentation.feature.postaction.waituntil.basic.MyExample3233Service;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample3231Controller implements EnumBcIdentifier {
 
     // @formatter:on
+    myexample3233(MyExample3233Service.class),
+    myexample3234(MyExample3234Service.class),
     myexample3232(MyExample3232Service.class),
     myexample3231(MyExample3231Service.class);
 
