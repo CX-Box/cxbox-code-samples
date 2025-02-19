@@ -10,6 +10,7 @@ import io.qameta.allure.Step;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.NonNull;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 @DisplayName("Setup for Samples Tests")
 public class BaseTestForSamples {
     public static WidgetPage page;
+
+    @BeforeAll
+    public static void setUpAllure(){
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true));
+    }
 
     @BeforeEach
     @Step("Launching the browser...")
