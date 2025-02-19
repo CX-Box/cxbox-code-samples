@@ -67,7 +67,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = page.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
-        assertThat(customField.getValue().getName()).isEqualTo("Шаблон_Карточки_Услуги_обработка_Заявок (1) (1).docx");
+        assertThat(customField.getValue().getName()).isEqualTo("FILE_1.txt");
     }
 
     @Test
@@ -122,7 +122,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
         var customField = info.fileUpload("Custom Field");
         File file = customField.getValue();
         assertThat(file).isFile();
-        assertThat(customField.getValueName()).isEqualTo("Шаблон_Карточки_Услуги_обработка_Заявок (1) (1).docx");
+        assertThat(customField.getValueName()).isEqualTo("FILE_1.txt");
         assertThat(file).hasContent("Test data");
     }
 
@@ -135,7 +135,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = page.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
-        assertThat(customField.getValueName()).isEqualTo("Шаблон_Карточки_Услуги_обработка_Заявок (1) (1).docx");
+        assertThat(customField.getValueName()).isEqualTo("FILE_1.txt");
     }
 
     @Test
@@ -147,7 +147,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = page.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
-        assertThat(customField.getNameFileInField()).isEqualTo("Шаблон_Карточки_Услуги_обработка_Заявок (1) (1).docx");
+        assertThat(customField.getNameFileInField()).isEqualTo("FILE_1.txt");
     }
 
     @SneakyThrows
