@@ -59,6 +59,7 @@ public class BaseTestForSamples {
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-features=InsecureDownloadWarnings");
         options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://demo.cxbox.org/");
+        options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
