@@ -14,7 +14,7 @@ public final class NotificationError extends AbstractNotification {
 	@JsonFormat(shape = Shape.NUMBER)
 	public enum Type {
 		BUSINESS_ERROR,
-		SYSTEM_ERROR
+		SYSTEM_ERROR;
 	}
 
 }
