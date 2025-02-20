@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.picklist.base.allfields.MyEntity3067MultiPickService;
 import org.demo.documentation.widgets.picklist.base.allfields.MyExample3067Service;
 import org.demo.documentation.widgets.picklist.base.allfields.forfields.MyEntity3067MultiMultiMultivalueService;
 import org.demo.documentation.widgets.picklist.base.allfields.forfields.MyEntity3067MultiMultivalueService;
@@ -23,7 +24,7 @@ public enum CxboxMyExample3067Controller implements EnumBcIdentifier {
     myexample3079(MyExample3079Service.class),
         myEntity3079PickPick0(myexample3079, MyEntity3079PickPick0Service.class),
         myEntity3079PickPick(myexample3079, MyEntity3079PickPickService.class),
-    myexample3067(MyExample3067Service.class),
+    myexample3067(MyExample3067Service.class), myEntity3067MultiPick(myexample3067, MyEntity3067MultiPickService.class),
         myEntity3067PickPick(myexample3067, MyEntity3067PickPick0Service.class),
             myEntity3067PickPickPopup(myEntity3067PickPick, MyEntity3067PickPicklistPickService.class),
         myEntity3067PickPickListPopup(myexample3067, MyEntity3067PickPick0Service.class),
