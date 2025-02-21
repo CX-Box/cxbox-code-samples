@@ -7,6 +7,7 @@ import core.widget.form.field.BaseField;
 import core.widget.modal.Calendar;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -36,6 +37,9 @@ public class Date extends BaseField<LocalDate> {
         Selenide.sleep(100);
         setFocusField();
         Calendar.clear();
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
         Calendar.setDate(value);
     }
 

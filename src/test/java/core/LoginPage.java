@@ -1,6 +1,7 @@
 package core;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -17,6 +18,7 @@ public class LoginPage {
 		enterUsername(login);
 		enterPassword(password);
 		clickSignInButton();
+		Selenide.sleep(200);
 		return new WidgetPage();
 	}
 

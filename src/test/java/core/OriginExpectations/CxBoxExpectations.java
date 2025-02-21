@@ -16,7 +16,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 @Slf4j
 @RequiredArgsConstructor
 public class CxBoxExpectations implements ExpectationPattern {
-    public final Integer Timeout = 100;
+    public final Integer Timeout = 10;
 
     public final int RetryNumber = 5;
 

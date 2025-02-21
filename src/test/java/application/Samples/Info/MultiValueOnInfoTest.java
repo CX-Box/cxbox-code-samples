@@ -15,7 +15,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the MultiValue")
+@DisplayName("Info. Checking the basic functions for the MultiValue")
 @Epic("Samples")
 @Tag("Samples")
 public class MultiValueOnInfoTest extends BaseTestForSamples {

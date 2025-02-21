@@ -13,7 +13,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the Percent")
+@DisplayName("Info. Checking the basic functions for the Percent")
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class PercentOnInfoTest extends BaseTestForSamples {

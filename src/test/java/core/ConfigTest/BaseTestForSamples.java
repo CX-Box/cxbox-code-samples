@@ -6,9 +6,11 @@ import com.codeborne.selenide.SelenideConfig;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
+import io.qameta.allure.selenide.LogType;
 import lombok.NonNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,12 +18,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.logging.Logs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
 
 
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
 public class BaseTestForSamples {
     public static WidgetPage page;
+    private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
+
 
     @BeforeAll
     public static void setUpAllure(){
@@ -32,7 +50,7 @@ public class BaseTestForSamples {
 
     @BeforeEach
     @Step("Launching the browser...")
-    public void setUp() {
+    public void setUp() throws IOException, TimeoutException {
         SelenideConfig selenideConfig = new SelenideConfig();
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
@@ -40,7 +58,6 @@ public class BaseTestForSamples {
                         .screenshots(true)
                         .savePageSource(false)
         );
-
 
         Configuration.browser = "chrome";
         Configuration.headless = false;
@@ -75,6 +92,12 @@ public class BaseTestForSamples {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
+
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER.toString(), Level.ALL);
+        logPrefs.enable(LogType.PERFORMANCE.toString(), Level.ALL);
+        options.setCapability("goog:loggingPrefs", logPrefs);
+
         System.setProperty("chromeoptions.prefs", "credentials_enable_service=false, password_manager_enabled=false");
         return options;
     }
@@ -82,6 +105,28 @@ public class BaseTestForSamples {
     @AfterEach
     @Step("...Closing the browser window")
     public void tearDown() {
+        Logs logs = getWebDriver().manage().logs();
+        printLog(logs.get(LogType.BROWSER.toString()));
         Selenide.closeWebDriver();
+    }
+
+    void printLog(LogEntries entries) {
+        logger.info("{} log entries found", entries.getAll().size());
+        for (LogEntry entry : entries) {
+            logger.info("{} {} {}",
+                    new Date(entry.getTimestamp()), entry.getLevel(), entry.getMessage()
+            );
+        }
+
+        StringBuilder logContent = new StringBuilder();
+        logContent.append("Log entries found: ").append(entries.getAll().size()).append("\n\n");
+        for (LogEntry entry : entries) {
+            logContent.append(new Date(entry.getTimestamp()))
+                    .append(" ").append(entry.getLevel())
+                    .append(" ").append(entry.getMessage())
+                    .append("\n\n");
+        }
+
+        Allure.addAttachment("Browser Logs", logContent.toString());
     }
 }

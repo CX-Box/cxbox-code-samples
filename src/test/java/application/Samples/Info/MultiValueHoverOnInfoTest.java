@@ -13,7 +13,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the MultiValueHover")
+@DisplayName("Info. Checking the basic functions for the MultiValueHover")
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class MultiValueHoverOnInfoTest extends BaseTestForSamples {

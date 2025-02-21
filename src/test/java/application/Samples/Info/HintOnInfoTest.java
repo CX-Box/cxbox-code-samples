@@ -13,7 +13,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the Hint")
+@DisplayName("Info. Checking the basic functions for the Hint")
 @Epic("Samples")
 @Tag("Samples")
 public class HintOnInfoTest extends BaseTestForSamples {

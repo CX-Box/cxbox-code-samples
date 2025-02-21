@@ -13,7 +13,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DisplayName("Checking the basic functions for the MultiplySelect")
+@DisplayName("Info. Checking the basic functions for the MultiplySelect")
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class MultipleSelectOnInfoTest extends BaseTestForSamples {
