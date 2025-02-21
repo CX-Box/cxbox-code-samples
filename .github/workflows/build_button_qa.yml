@@ -43,16 +43,12 @@ jobs:
         if: ${{inputs.choice-test == 'Package, class or test'}}
         run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.${{github.event.inputs.test-path}} test    
         
-      - name: List screenshots directory
-        if: always()
-        run: ls -la build/reports/tests/
-
-      - name: Upload screenshots
+      - name: Upload allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-screenshots
-          path: build/reports/tests/
+          name: allure-results
+          path: target/allure-results
 
       - name: Load test report history
         uses: actions/checkout@v3
@@ -68,11 +64,14 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: build/allure-results
+          allure_results: target/allure-results
+          allure_reports: allure-report
+          keep_reports: 20
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
