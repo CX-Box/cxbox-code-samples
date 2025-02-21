@@ -25,9 +25,7 @@ import org.openqa.selenium.logging.Logs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -50,7 +48,7 @@ public class BaseTestForSamples {
 
     @BeforeEach
     @Step("Launching the browser...")
-    public void setUp() throws IOException, TimeoutException {
+    public void setUp() {
         SelenideConfig selenideConfig = new SelenideConfig();
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
