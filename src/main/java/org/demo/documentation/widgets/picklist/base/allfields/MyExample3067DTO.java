@@ -3,12 +3,20 @@ package org.demo.documentation.widgets.picklist.base.allfields;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.demo.documentation.widgets.picklist.base.allfields.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.picklist.base.allfields.enums.CustomFieldRadioEnum;
+import org.demo.documentation.widgets.picklist.base.allfields.forfields.MyEntity3067Multi;
 
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -24,6 +32,16 @@ public class MyExample3067DTO extends DataResponseDTO {
     private String customFieldInlinePickList;
     @SearchParameter(name = "customFieldInlinePickListEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePickListId;
+    @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
+    private MultivalueField customFieldMultivalue;
+    private String customFieldMultivalueDisplayedKey;
+    @SearchParameter(name = "customFieldRadio", provider = EnumValueProvider.class)
+    private CustomFieldRadioEnum customFieldRadio;
+    @SearchParameter(name = "customFieldFileUploade", provider = StringValueProvider.class)
+    private String customFieldFileUploade;
+    private String customFieldFileUploadeId;
+    @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
+    private CustomFieldDictionaryEnum customFieldDictionary;
 
     public MyExample3067DTO(MyEntity3067 entity) {
         this.id = entity.getId().toString();
@@ -40,5 +58,15 @@ public class MyExample3067DTO extends DataResponseDTO {
         this.customFieldInlinePickList = Optional.ofNullable(entity.getCustomFieldInlinePickListEntity())
                 .map(e -> e.getCustomField())
                 .orElse(null);
+        this.customFieldMultivalue = entity.getCustomFieldMultivalueList().stream().collect(MultivalueField.toMultivalueField(
+                e -> String.valueOf(e.getId()),
+                e -> String.valueOf(e.getCustomField())
+        ));
+        this.customFieldMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueList().stream().map(MyEntity3067Multi::getCustomField
+        ).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+        this.customFieldRadio = entity.getCustomFieldRadio();
+        this.customFieldFileUploade = entity.getCustomFieldFileUploade();
+        this.customFieldFileUploadeId = entity.getCustomFieldFileUploadeId();
+        this.customFieldDictionary = entity.getCustomFieldDictionary();
     }
 }
