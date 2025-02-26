@@ -29,6 +29,8 @@ import org.openqa.selenium.logging.Logs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -85,6 +87,7 @@ public class BaseTestForSamples {
             devTools.addListener(Network.responseReceived(), response -> {
                 Response res = response.getResponse();
                 resContent.append(" URL: ").append(res.getUrl())
+                        .append("\n Time: ").append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")))
                         .append("\n Status: ").append(res.getStatus())
                         .append("\n Headers: ").append(res.getHeaders())
                         .append("\n Timing:").append(res.getTiming().map(e -> e.getSendEnd()).orElse(null))
