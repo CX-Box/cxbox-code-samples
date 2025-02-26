@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
+
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Slf4j
 @ExtendWith(VideoRecorderExtension.class)
 public class CheckBoxOnFormTest extends BaseTestForSamples {
+
 
     @Test
     @Tag("Positive")
