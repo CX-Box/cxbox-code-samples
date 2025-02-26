@@ -14,13 +14,14 @@ import core.widget.modal.ShowMessage;
 import core.widget.modal.picklist.FormPopup;
 import core.widget.statsBlock.StatsBlockWidget;
 import core.widget.stepper.StepsWidget;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import java.time.Duration;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class WidgetPage {
 
@@ -32,11 +33,16 @@ public class WidgetPage {
      * @param title Widget title
      * @return FormWidget
      */
-    @Step("Validation FormWidget by heading (Title) {title}")
     public FormWidget findFormWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.FORM, title);
-        return new FormWidget(title, widget);
+        return Allure.step("Validation FormWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.FORM, title);
+            return new FormWidget(title, widget);
+        });
     }
+
 
     /**
      * Searching for a widget by name and getting access to the class FormWidget
@@ -44,11 +50,15 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return FormWidget
      */
-    @Step("Validation FormWidget by name {name}")
     public FormWidget findFormWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.FORM, name);
-        String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
-        return new FormWidget(widgetAttributeTitle, widget);
+        return Allure.step("Validation FormWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Name of widget", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.FORM, name);
+            String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
+            return new FormWidget(widgetAttributeTitle, widget);
+        });
     }
 
     /**
@@ -57,10 +67,15 @@ public class WidgetPage {
      * @param title Widget title
      * @return RowsHelper
      */
-    @Step("Validation ListWidget by heading (Title) {title}")
     public RowsHelper findListWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.LIST, title);
-        return new RowsHelper(title, widget);
+        return Allure.step("Validation ListWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.LIST, title);
+            return new RowsHelper(title, widget);
+        });
+
     }
 
     /**
@@ -69,11 +84,16 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return RowsHelper
      */
-    @Step("Validation ListWidget by name {name}")
     public RowsHelper findListWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.LIST, name);
-        String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
-        return new RowsHelper(widgetAttributeTitle, widget);
+        return Allure.step("Validation ListWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Name of widget", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.LIST, name);
+            String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
+            return new RowsHelper(widgetAttributeTitle, widget);
+        });
+
     }
 
     /**
@@ -82,10 +102,15 @@ public class WidgetPage {
      * @param title Widget title
      * @return InfoWidget
      */
-    @Step("Validation InfoWidget by heading (Title) {title}")
     public InfoWidget findInfoWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.INFO, title);
-        return new InfoWidget(title, widget);
+        return Allure.step("Validation InfoWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.INFO, title);
+            return new InfoWidget(title, widget);
+        });
+
     }
 
     /**
@@ -94,11 +119,16 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return InfoWidget
      */
-    @Step("Validation InfoWidget by name {name}")
     public InfoWidget findInfoWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.INFO, name);
-        String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
-        return new InfoWidget(widgetAttributeTitle, widget);
+        return Allure.step("Validation InfoWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Name of widget", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.INFO, name);
+            String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
+            return new InfoWidget(widgetAttributeTitle, widget);
+        });
+
     }
 
     /**
@@ -107,10 +137,14 @@ public class WidgetPage {
      * @param title Widget title
      * @return StatsBlockWidget
      */
-    @Step("Validation StatsBlockoWidget by heading (Title) {title}")
     public StatsBlockWidget findStatsBlockWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.STATS_BLOCK, title);
-        return new StatsBlockWidget(title, widget);
+        return Allure.step("Validation StatsBlockoWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.STATS_BLOCK, title);
+            return new StatsBlockWidget(title, widget);
+        });
     }
 
     /**
@@ -119,11 +153,16 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return StatsBlockWidget
      */
-    @Step("Validation StatsBlockWidget by name {name}")
     public StatsBlockWidget findStatsBlockWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.STATS_BLOCK, name);
-        String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
-        return new StatsBlockWidget(widgetAttributeTitle, widget);
+        return Allure.step("Validation StatsBlockWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Widget name", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.STATS_BLOCK, name);
+            String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
+            return new StatsBlockWidget(widgetAttributeTitle, widget);
+        });
+
     }
 
     /**
@@ -132,10 +171,15 @@ public class WidgetPage {
      * @param title Widget title
      * @return AdditionalInformationWidget
      */
-    @Step("Validation AdditionalInformationWidget by heading (Title) {title}")
     public AdditionalInformationWidget findAdditionalInformationWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.ADDITIONAL_INFORMATION, title);
-        return new AdditionalInformationWidget(title, widget);
+        return Allure.step("Validation AdditionalInformationWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.ADDITIONAL_INFORMATION, title);
+            return new AdditionalInformationWidget(title, widget);
+        });
+
     }
 
     /**
@@ -144,11 +188,16 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return AdditionalInformationWidget
      */
-    @Step("Validation AdditionalInformationWidget by name {name}")
     public AdditionalInformationWidget findAdditionalInformationWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.ADDITIONAL_INFORMATION, name);
-        String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
-        return new AdditionalInformationWidget(widgetAttributeTitle, widget);
+        return Allure.step("Validation AdditionalInformationWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Widget name", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.ADDITIONAL_INFORMATION, name);
+            String widgetAttributeTitle = widget.getAttribute("data-test-widget-title");
+            return new AdditionalInformationWidget(widgetAttributeTitle, widget);
+        });
+
     }
 
     /**
@@ -157,10 +206,14 @@ public class WidgetPage {
      * @param title Widget title
      * @return StepsWidget
      */
-    @Step("Validation StepsWidget by heading (Title) {title}")
     public StepsWidget findStepsWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.STEPPER, title);
-        return new StepsWidget(widget);
+        return Allure.step("Validation StepsWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.STEPPER, title);
+            return new StepsWidget(widget);
+        });
     }
 
     /**
@@ -169,10 +222,15 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return StepsWidget
      */
-    @Step("Validation StepsWidget by name {name}")
     public StepsWidget findStepsWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.STEPPER, name);
-        return new StepsWidget(widget);
+        return Allure.step("Validation StepsWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Name of widget", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.STEPPER, name);
+            return new StepsWidget(widget);
+        });
+
     }
 
     /**
@@ -181,10 +239,15 @@ public class WidgetPage {
      * @param title Widget title
      * @return StepsWidget
      */
-    @Step("Validation GroupingHierarchyWidget by heading (Title) {title}")
     public GroupingHierarchyWidget findGroupingHierarchyWidgetByTitle(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.GROUPINGHIERARCHY, title);
-        return new GroupingHierarchyWidget(widget, title);
+        return Allure.step("Validation GroupingHierarchyWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.GROUPINGHIERARCHY, title);
+            return new GroupingHierarchyWidget(widget, title);
+        });
+
     }
 
     /**
@@ -193,10 +256,15 @@ public class WidgetPage {
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.
      * @return GroupingHierarchyWidget
      */
-    @Step("Validation GroupingHierarchyWidget by name {name}")
     public GroupingHierarchyWidget findGroupingHierarchyWidgetByName(String name) {
-        SelenideElement widget = findWidgetByTypesAndName(WidgetType.GROUPINGHIERARCHY, name);
-        return new GroupingHierarchyWidget(widget, name);
+        return Allure.step("Validation GroupingHierarchyWidget by name " + name, step -> {
+            logTime(step);
+            step.parameter("Name of widget", name);
+
+            SelenideElement widget = findWidgetByTypesAndName(WidgetType.GROUPINGHIERARCHY, name);
+            return new GroupingHierarchyWidget(widget, name);
+        });
+
     }
 
     /**
@@ -205,16 +273,19 @@ public class WidgetPage {
      *
      * @return Popup class of all modal windows
      */
-    @Step("Validation of the modal window")
     @Attachment
     public Optional<Popup> findPopup(String typePopup) {
-        SelenideElement elementPopup = $("div[data-test-" + typePopup.toLowerCase() + "-popup=\"true\"]")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
-        if (elementPopup.is(Condition.visible)) {
-            return Optional.of(new Popup());
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation of the modal window", step -> {
+            logTime(step);
+
+            SelenideElement elementPopup = $("div[data-test-" + typePopup.toLowerCase() + "-popup=\"true\"]")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+            if (elementPopup.is(Condition.visible)) {
+                return Optional.of(new Popup());
+            } else {
+                return Optional.empty();
+            }
+        });
     }
 
     private SelenideElement findWidgetByTypesAndTitle(WidgetType type, String title) {
@@ -229,15 +300,20 @@ public class WidgetPage {
      * @param title Heading
      * @return FormPopup
      */
-    @Step("Validation FormPopup by heading  {title}")
     public Optional<FormPopup> findFormPopup(String title) {
-        SelenideElement elementPopup = $("div[data-test-widget-type=\"FormPopup\"][data-test-widget-title=\"" + title + "\"")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
-        if (elementPopup.is(Condition.visible)) {
-            return Optional.of(new FormPopup(elementPopup));
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation FormPopup by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Heading", title);
+
+            SelenideElement elementPopup = $("div[data-test-widget-type=\"FormPopup\"][data-test-widget-title=\"" + title + "\"")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+            if (elementPopup.is(Condition.visible)) {
+                return Optional.of(new FormPopup(elementPopup));
+            } else {
+                return Optional.empty();
+            }
+        });
+
     }
 
     /**
@@ -245,15 +321,19 @@ public class WidgetPage {
      *
      * @return ShowMessage
      */
-    @Step("Validation PostAction message")
     public Optional<ShowMessage> findPostAction() {
-        String alert = "div[data-show=\"true\"]";
-        waitingForTests.getWaitAllElements(alert);
-        if ($(alert).is(Condition.visible)) {
-            return Optional.of(new ShowMessage($(alert)));
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation PostAction message", step -> {
+            logTime(step);
+
+            String alert = "div[data-show=\"true\"]";
+            waitingForTests.getWaitAllElements(alert);
+            if ($(alert).is(Condition.visible)) {
+                return Optional.of(new ShowMessage($(alert)));
+            } else {
+                return Optional.empty();
+            }
+        });
+
     }
 
     private SelenideElement findWidgetByTypesAndName(WidgetType type, String name) {

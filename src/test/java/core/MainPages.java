@@ -3,14 +3,16 @@ package core;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class MainPages {
+
 
     public static final SelenideElement MAIN_MENU = ContextUtils.LEFT_SIDER
             .$("ul[data-test='MAIN_MENU']");
@@ -22,15 +24,23 @@ public class MainPages {
      * Select a section in the left menu
      *
      * @param sectionName Section name
+     *
+     * @serialData DateTime
      */
-    @Step("Selecting the {section Name} section in the left menu")
+
     public static void click(String sectionName) {
-        MAIN_SECTIONS
-                .find(Condition.exactText(sectionName))
-                .shouldBe(Condition.enabled)
-                .click();
-        checkSkeleton();
+        Allure.step("Selecting the " + sectionName + " section in the left menu.", step -> {
+            step.parameter("sectionName", sectionName);
+            logTime(step);
+            MAIN_SECTIONS
+                    .find(Condition.exactText(sectionName))
+                    .shouldBe(Condition.enabled)
+                    .click();
+            checkSkeleton();
+        });
     }
+
+
 
 
     public static class FirstLevelMenu {
@@ -44,13 +54,18 @@ public class MainPages {
          *
          * @param sectionName Name of the tab
          */
-        @Step("Selecting a tab {sectionName} on a page")
         public static void click(String sectionName) {
-            FIRST_LEVEL_SECTIONS
-                    .find(Condition.exactText(sectionName))
-                    .shouldBe(Condition.enabled)
-                    .click();
-            checkSkeleton();
+            Allure.step("Selecting a tab " + sectionName + " on a page", step -> {
+                logTime(step);
+                step.parameter("Name of tab", sectionName);
+
+                FIRST_LEVEL_SECTIONS
+                        .find(Condition.exactText(sectionName))
+                        .shouldBe(Condition.enabled)
+                        .click();
+                checkSkeleton();
+            });
+
         }
 
 

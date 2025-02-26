@@ -5,13 +5,17 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.form.FormWidget;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 public abstract class BaseField<E> {
@@ -93,13 +97,15 @@ public abstract class BaseField<E> {
      *
      * @return String text/null
      */
-    @Step("Getting the Placeholder value")
     @Attachment
     public String getPlaceholder() {
-        return getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .getAttribute("placeholder");
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+            return Objects.requireNonNull(getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .getAttribute("placeholder"));
+        });
     }
 
     /**
@@ -107,10 +113,12 @@ public abstract class BaseField<E> {
      *
      * @return boolean true/false
      */
-    @Step("Checking the field for \"ReadOnly\"")
     @Attachment
     public boolean getReadOnly() {
-        return getElementDisabled(getValueTag());
+        return Allure.step("Checking the field for \"ReadOnly\"", step -> {
+            logTime(step);
+            return getElementDisabled(getValueTag());
+        });
     }
 
     /**
@@ -118,14 +126,18 @@ public abstract class BaseField<E> {
      *
      * @return String text
      */
-    @Step("Getting a value from a field RequiredMessage")
     @Attachment
     public String getRequiredMessage() {
-        Selenide.sleep(100);
-        return getFieldByName()
-                .$(REQUIRED_MESSAGE)
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting a value from a field RequiredMessage", step -> {
+            logTime(step);
+
+            Selenide.sleep(100);
+            return getFieldByName()
+                    .$(REQUIRED_MESSAGE)
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
+
     }
 
     /**
@@ -133,13 +145,16 @@ public abstract class BaseField<E> {
      *
      * @return boolean true/false
      */
-    @Step("Getting a value from a field RequiredMessage")
     @Attachment
     public boolean hasRequiredMessage() {
-        return getFieldByName()
-                .$(REQUIRED_MESSAGE)
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .is(Condition.visible);
+        return Allure.step("Getting a value from a field RequiredMessage", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$(REQUIRED_MESSAGE)
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .is(Condition.visible);
+        });
     }
 
     /**
@@ -147,25 +162,29 @@ public abstract class BaseField<E> {
      *
      * @return String/null
      */
-    @Step("Getting the field color in Hex format")
     @Attachment
     public String getHexColor() {
-        String color = getValueByAttribute(1, getValueTag(), "style");
-        Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
-        Matcher matcher = pattern.matcher(color);
+        return Allure.step("Getting the field color in Hex format", step -> {
+            logTime(step);
 
-        if (matcher.find()) {
-            String rgb = matcher.group(1);
-            String NewRGB = rgb.replaceAll(" ", "");
-            String[] strings = NewRGB.split("[,\\\\s]+");
-            int[] numbers = new int[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                numbers[i] = Integer.parseInt(strings[i]);
+            String color = getValueByAttribute(1, getValueTag(), "style");
+            Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
+            Matcher matcher = pattern.matcher(color);
+
+            if (matcher.find()) {
+                String rgb = matcher.group(1);
+                String NewRGB = rgb.replaceAll(" ", "");
+                String[] strings = NewRGB.split("[,\\\\s]+");
+                int[] numbers = new int[strings.length];
+                for (int i = 0; i < strings.length; i++) {
+                    numbers[i] = Integer.parseInt(strings[i]);
+                }
+                return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            } else {
+                return null;
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
-        } else {
-            return null;
-        }
+        });
+
     }
 
     /**
@@ -179,12 +198,15 @@ public abstract class BaseField<E> {
     /**
      * Focus on the field/A click in the field.
      */
-    @Step("Focus on the field")
     public void setFocusField() {
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.enabled , Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Focus on the field", step -> {
+            logTime(step);
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.enabled , Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
+
     }
 
     /**

@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.DownloadOptions;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -15,6 +16,7 @@ import java.time.Duration;
 import java.util.Arrays;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class FileUpload extends BaseString<File> {
     public FileUpload(InfoWidget infoWidget, String title) {
@@ -31,11 +33,13 @@ public class FileUpload extends BaseString<File> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public File getValue() {
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
 
-        return getFieldByName().$("button").download(DownloadOptions.using(FOLDER));
+            return getFieldByName().$("button").download(DownloadOptions.using(FOLDER));
+        });
     }
 
     /**
@@ -44,10 +48,14 @@ public class FileUpload extends BaseString<File> {
      * @param value File
      * @return Boolean true/false
      */
-    @Step("Comparison of the source file and the downloaded file")
     @Attachment
     public Boolean getFileComparison(File value) {
-        return compareFiles(value);
+        return Allure.step("Comparison of the source file and the downloaded file", step -> {
+            logTime(step);
+            step.parameter("File", value);
+
+            return compareFiles(value);
+        });
     }
 
     /**
@@ -98,14 +106,17 @@ public class FileUpload extends BaseString<File> {
      *
      * @return String
      */
-    @Step("Getting the name of the downloaded file")
     @Attachment
     public String getValueName() {
-        return getFieldByName()
-                .$("button")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .download(DownloadOptions.using(FOLDER))
-                .getName();
+        return Allure.step("Getting the name of the downloaded file", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("button")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .download(DownloadOptions.using(FOLDER))
+                    .getName();
+        });
     }
 
     /**
@@ -113,13 +124,16 @@ public class FileUpload extends BaseString<File> {
      *
      * @return String NameFile
      */
-    @Step("Getting the file name in the field")
     @Attachment
     public String getNameFileInField() {
-        return getFieldByName()
-                .$("button")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting the file name in the field", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("button")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
     }
 
     /**

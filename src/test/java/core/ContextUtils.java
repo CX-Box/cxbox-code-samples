@@ -18,5 +18,4 @@ public class ContextUtils {
 			.filter(Condition.not(Condition.hidden)).first()
 			.$(By.xpath(".."))
 			.$(By.cssSelector("div[class='ant-modal-content']"));
-
 }

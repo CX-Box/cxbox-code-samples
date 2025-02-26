@@ -5,13 +5,15 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class SuggestionPickList extends BaseField<String> {
     public SuggestionPickList(FormWidget formWidget, String title) {
@@ -24,13 +26,16 @@ public class SuggestionPickList extends BaseField<String> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        return getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getValue();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            return Objects.requireNonNull(getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .getValue());
+        });
     }
 
     /**
@@ -39,18 +44,21 @@ public class SuggestionPickList extends BaseField<String> {
      * @param value String
      */
     @Override
-    @Step("Setting the {value} in the field")
     public void setValue(String value) {
-        SelenideElement field = getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
-        clear();
-        field
-                .setValue(value);
-        getItems()
-                .findBy(Condition.text(value))
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Setting the " + value + " in the field", step -> {
+            logTime(step);
+            step.parameter("Suggestion Pick List", value);
+            SelenideElement field = getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+            clear();
+            field
+                    .setValue(value);
+            getItems()
+                    .findBy(Condition.text(value))
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 
     @Override
@@ -61,19 +69,21 @@ public class SuggestionPickList extends BaseField<String> {
     /**
      * Clearing the field
      */
-    @Step("Clearing the field")
     public void clear() {
-        getFieldByName().click();
-        getFieldByName().hover();
-        if (getFieldByName()
-                .$("i[class=\"anticon anticon-close-circle\"]")
-                .is(Condition.visible)) {
-            getFieldByName()
-                    .$("i[class=\"anticon anticon-close-circle\"]")
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .click();
-        }
+        Allure.step("Clearing the field", step -> {
+            logTime(step);
 
+            getFieldByName().click();
+            getFieldByName().hover();
+            if (getFieldByName()
+                    .$("i[class=\"anticon anticon-close-circle\"]")
+                    .is(Condition.visible)) {
+                getFieldByName()
+                        .$("i[class=\"anticon anticon-close-circle\"]")
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .click();
+            }
+        });
     }
 
     /**
@@ -82,13 +92,17 @@ public class SuggestionPickList extends BaseField<String> {
      * @param value Symbols, which will be searched for
      * @return List(String)
      */
-    @Step("Getting a list of matching options by symbols {value}")
     public List<String> getOptions(String value) {
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(value);
-        return getItems().texts();
+        return Allure.step("Getting a list of matching options by symbols " + value, step -> {
+            logTime(step);
+            step.parameter("Symbols", value);
+
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(value);
+            return getItems().texts();
+        });
     }
 
     private ElementsCollection getItems() {

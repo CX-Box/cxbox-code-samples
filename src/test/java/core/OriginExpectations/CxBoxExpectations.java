@@ -2,7 +2,7 @@ package core.OriginExpectations;
 
 import com.codeborne.selenide.*;
 import core.ContextUtils;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.TimeoutException;
@@ -11,6 +11,7 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 @Slf4j
@@ -44,145 +45,164 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 
     @Override
-    @Step("Waiting for all elements to be visible for the widget {title}")
     public void getWaitAllElementsWidget(String title) {
-        String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-        SelenideElement widgetElement = $(widget);
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                log.info("Ожидание виджета '{}', попытка {} из {}", title, i, getRetryNumber());
-                widgetElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                widgetElement.shouldHave(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("Виджет '{}' загружен успешно.", title);
-                return;
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания виджета '{}' превышено. Попытка {} из {}.", title, i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться видимости виджета '" + title + "' после " + getRetryNumber() + " попыток.", e);
-                }
-            }
-        }
-    }
+        Allure.step("Waiting for all elements to be visible for the widget " + title, step -> {
+            logTime(step);
 
-
-    @Override
-    @Step("Waiting for all rows to be visible for the widget {title}")
-    public void getWaitAllRowsWidget(String title) {
-        String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-        String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                SelenideElement widgetElement = $(widget).shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                ElementsCollection rowsElement = widgetElement.$$(rowSelector);
-                for (SelenideElement row : rowsElement.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-                    row.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                    row.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                    for (SelenideElement s : row.$$("td").shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-                        s.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                        s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+            String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+            SelenideElement widgetElement = $(widget);
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    log.info("Ожидание виджета '{}', попытка {} из {}", title, i, getRetryNumber());
+                    widgetElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                    widgetElement.shouldHave(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    log.info("Виджет '{}' загружен успешно.", title);
+                    return;
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания виджета '{}' превышено. Попытка {} из {}.", title, i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться видимости виджета '" + title + "' после " + getRetryNumber() + " попыток.", e);
                     }
                 }
-                log.info("Все строки виджета '{}' загружены успешно.", title);
-                return;
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания строк для виджета '{}' превышено. Попытка {} из {}.", title, i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться загрузки строк для виджета '" + title + "' после " + getRetryNumber() + " попыток.", e);
-                }
             }
-        }
+        });
+
     }
 
 
     @Override
-    @Step("Waiting for all fields on the page to be visible")
+    public void getWaitAllRowsWidget(String title) {
+        Allure.step("Waiting for all rows to be visible for the widget " + title, step -> {
+            logTime(step);
+
+            String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+            String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    SelenideElement widgetElement = $(widget).shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    ElementsCollection rowsElement = widgetElement.$$(rowSelector);
+                    for (SelenideElement row : rowsElement.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
+                        row.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                        row.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                        for (SelenideElement s : row.$$("td").shouldHave(CollectionCondition.sizeGreaterThan(0))) {
+                            s.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                            s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                        }
+                    }
+                    log.info("Все строки виджета '{}' загружены успешно.", title);
+                    return;
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания строк для виджета '{}' превышено. Попытка {} из {}.", title, i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки строк для виджета '" + title + "' после " + getRetryNumber() + " попыток.", e);
+                    }
+                }
+            }
+        });
+    }
+
+
+    @Override
     public void getWaitAllFields() {
-        String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                ElementsCollection fields = $$(fieldsSelector);
-                for (SelenideElement f : fields.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-                    f.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                    f.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                }
-                log.info("Все поля загружены успешно.");
-                return;
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания полей превышено. Попытка {} из {}.", i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться загрузки полей " + getRetryNumber() + " попыток.", e);
+        Allure.step("Waiting for all fields on the page to be visible", step -> {
+            logTime(step);
+
+            String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    ElementsCollection fields = $$(fieldsSelector);
+                    for (SelenideElement f : fields.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
+                        f.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                        f.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    }
+                    log.info("Все поля загружены успешно.");
+                    return;
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания полей превышено. Попытка {} из {}.", i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки полей " + getRetryNumber() + " попыток.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for an element to be visible by type {type} and by heading  {title}")
     public void getWaitElement(String type, String title) {
-        String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                SelenideElement element = $(elementSelector);
-                element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                log.info("Элемент c типом '{}' и названием '{}' загружены успешно.", type, title);
-                return;
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания элемента по типу превышено. Попытка {} из {}.", i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться загрузки элемента " + getRetryNumber() + " попыток.", e);
+        Allure.step("Waiting for an element to be visible by type " + type + " and by heading " + title, step -> {
+            logTime(step);
+
+            String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    SelenideElement element = $(elementSelector);
+                    element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                    log.info("Элемент c типом '{}' и названием '{}' загружены успешно.", type, title);
+                    return;
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания элемента по типу превышено. Попытка {} из {}.", i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки элемента " + getRetryNumber() + " попыток.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for all Webelement elements to be visible {webElement}")
     public void getWaitAllElements(SelenideElement webElement) {
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                webElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                webElement.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("WebElement {} \nзагружен успешно", webElement);
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания WebElement превышено. Попытка {} из {}.", i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться загрузки WebElement " + getRetryNumber() + " попыток.", e);
+        Allure.step("Waiting for all Webelement elements to be visible " + webElement , step -> {
+            logTime(step);
+
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    webElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                    webElement.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    log.info("WebElement {} \nзагружен успешно", webElement);
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания WebElement превышено. Попытка {} из {}.", i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки WebElement " + getRetryNumber() + " попыток.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for all elements to be visible by Css Selector {cssSelector}")
     public void getWaitAllElements(String cssSelector) {
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                SelenideElement element = $(cssSelector);
-                element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("элемент по {} загружен успешно", cssSelector);
-            } catch (TimeoutException e) {
-                log.warn("Время ожидания элемента превышено. Попытка {} из {}.", i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Не удалось дождаться загрузки элемента " + getRetryNumber() + " попыток.", e);
+        Allure.step("Waiting for all elements to be visible by Css Selector " + cssSelector, step -> {
+            logTime(step);
+
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    SelenideElement element = $(cssSelector);
+                    element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                    element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    log.info("элемент по {} загружен успешно", cssSelector);
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания элемента превышено. Попытка {} из {}.", i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки элемента " + getRetryNumber() + " попыток.", e);
+                    }
                 }
             }
-        }
+        });
     }
 }

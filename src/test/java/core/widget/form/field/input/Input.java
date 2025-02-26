@@ -4,14 +4,15 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
 import java.util.Objects;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 
 public class Input extends BaseField<String> {
@@ -40,13 +41,16 @@ public class Input extends BaseField<String> {
      * @return String text
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        return getFieldByName()
-                .shouldBe(Condition.exist)
-                .$(getValueTag())
-                .getValue();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            return Objects.requireNonNull(getFieldByName()
+                    .shouldBe(Condition.exist)
+                    .$(getValueTag())
+                    .getValue());
+        });
     }
 
     /**
@@ -55,9 +59,14 @@ public class Input extends BaseField<String> {
      * @param value String
      */
     @Override
-    @Step("Setting the {value} value in the field")
     public void setValue(String value) {
-        setValue(1, value);
+        Allure.step("Setting the " + value + " value in the field", step -> {
+            logTime(step);
+            step.parameter("value", value);
+
+            setValue(1, value);
+        });
+
     }
 
     private void setValue(Integer element, String value) {
@@ -84,25 +93,32 @@ public class Input extends BaseField<String> {
      * @param n number of characters
      * @return boolean true/false
      */
-    @Step("Getting the number of characters that a field accepts")
     public boolean getMaxInput(Integer n) {
-        String str = getValue();
-        return String.valueOf(str).length() == n;
+        return Allure.step("Getting the number of characters that a field accepts", step -> {
+            logTime(step);
+            step.parameter("number of characters", n);
+
+            String str = getValue();
+            return String.valueOf(str).length() == n;
+        });
     }
 
     /**
      * Clearing the field using a keyboard shortcut
      */
-    @Step("Clearing the field")
     public void clear() {
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        Allure.step("Clearing the field", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        });
     }
 
     /**
@@ -112,16 +128,19 @@ public class Input extends BaseField<String> {
      *
      * @return Boolean true/false
      */
-    @Step("Click-through when clicking on a hyperlink or a special element in a field")
     public Boolean drillDown() {
-        if(fieldType.equals("text")) {
-            super.drillDown();
-        }
-        String oldUrl = WebDriverRunner.url();
-        getFieldByName().$("i[class=\"anticon anticon-link\"]").click();
-        String newUrl = WebDriverRunner.url();
-        waitingForTests.getContextMenu();
-        return oldUrl.equals(newUrl) && $x("//body").exists();
-    }
+        return Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
+            logTime(step);
 
+            if(fieldType.equals("text")) {
+                super.drillDown();
+            }
+            String oldUrl = WebDriverRunner.url();
+            getFieldByName().$("i[class=\"anticon anticon-link\"]").click();
+            String newUrl = WebDriverRunner.url();
+            waitingForTests.getContextMenu();
+            assert oldUrl != null;
+            return oldUrl.equals(newUrl) && $x("//body").exists();
+        });
+    }
 }

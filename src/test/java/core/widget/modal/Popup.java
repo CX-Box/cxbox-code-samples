@@ -8,11 +8,13 @@ import core.widget.modal.confirm.ConfirmPopup;
 import core.widget.modal.error.ErrorPopup;
 import core.widget.modal.picklist.MultiValueModal;
 import core.widget.modal.picklist.PickListModal;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Popup {
     private final CxBoxExpectations waitingForTests = new CxBoxExpectations();
@@ -75,10 +77,15 @@ public class Popup {
      * @param title Title
      * @return RowsHelper
      */
-    @Step("Calling Picklist Popup with row editing function")
     public RowsHelper picklistPopup(String title) {
-        SelenideElement widget = findWidgetByTypesAndTitle("PickListPopup", title);
-        return new RowsHelper(title, widget);
+        return Allure.step("Calling Picklist Popup with row editing function", step -> {
+            logTime(step);
+            step.parameter("Title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle("PickListPopup", title);
+            return new RowsHelper(title, widget);
+        });
+
     }
 
     private SelenideElement findWidgetByTypesAndTitle(String type, String title) {

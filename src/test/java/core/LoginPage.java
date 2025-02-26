@@ -3,9 +3,10 @@ package core;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class LoginPage {
 
@@ -13,34 +14,50 @@ public class LoginPage {
 	public static final SelenideElement password = $x("//*[@id='password']");
 	public static final SelenideElement signInButton = $x("//*[@id='kc-login']");
 
-	@Step("Authorization via KeyCloak with login: {login} and password")
 	public WidgetPage loginKeyCloak(String login, String password) {
-		enterUsername(login);
-		enterPassword(password);
-		clickSignInButton();
-		Selenide.sleep(200);
-		return new WidgetPage();
+		return Allure.step("Authorization via KeyCloak with login: " + login + " and password", step -> {
+			logTime(step);
+			step.parameter("login", login);
+
+			enterUsername(login);
+			enterPassword(password);
+			clickSignInButton();
+			Selenide.sleep(200);
+			return new WidgetPage();
+		});
 	}
 
-	@Step("Entering a username: {login}")
 	private void enterUsername(String login) {
-		LoginPage.login
-				.shouldBe(Condition.enabled)
-				.setValue(login);
+		Allure.step("Entering a username: " + login, step -> {
+			logTime(step);
+			step.parameter("login", login);
+
+			LoginPage.login
+					.shouldBe(Condition.enabled)
+					.setValue(login);
+		});
 	}
 
-	@Step("Entering a password")
 	private void enterPassword(String password) {
-		LoginPage.password
-				.shouldBe(Condition.enabled)
-				.setValue(password);
+		Allure.step("Entering a password", step -> {
+			logTime(step);
+
+			LoginPage.password
+					.shouldBe(Condition.enabled)
+					.setValue(password);
+		});
+
 	}
 
-	@Step("Clicking on the Login button")
 	private void clickSignInButton() {
-		signInButton
-				.shouldBe(Condition.visible)
-				.click();
+		Allure.step("Clicking on the Login button", step -> {
+			logTime(step);
+
+			signInButton
+					.shouldBe(Condition.visible)
+					.click();
+		});
+
 	}
 
 

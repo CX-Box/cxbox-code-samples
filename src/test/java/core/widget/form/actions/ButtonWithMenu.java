@@ -4,11 +4,14 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
+
 
 @RequiredArgsConstructor
 public class ButtonWithMenu {
@@ -26,12 +29,14 @@ public class ButtonWithMenu {
      *
      * @param nameOption String
      */
-    @Step("Selecting the {name Option} option from the button menu")
     public void clickOption(String nameOption) {
-        getOptions()
-                .find(Condition.text(nameOption))
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Selecting the " + nameOption + " option from the button menu", step -> {
+            logTime(step);
+            step.parameter("nameOption", nameOption);
+            getOptions()
+                    .find(Condition.text(nameOption))
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
-
 }

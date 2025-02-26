@@ -5,14 +5,16 @@ import com.codeborne.selenide.Selenide;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Calendar;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 
 public class Date extends BaseField<LocalDate> {
@@ -32,15 +34,20 @@ public class Date extends BaseField<LocalDate> {
      * {@code example} LocalDate date = LocalDate.of(2024, 20, 5)
      */
     @Override
-    @Step("Setting the {value} in the field")
     public void setValue(LocalDate value) {
-        Selenide.sleep(100);
-        setFocusField();
-        Calendar.clear();
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        Calendar.setDate(value);
+        Allure.step("Setting the {value} in the field", step -> {
+            logTime(step);
+            step.parameter("LocalDate value", value);
+
+            Selenide.sleep(100);
+            setFocusField();
+            Calendar.clear();
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            Calendar.setDate(value);
+        });
+
     }
 
     /**
@@ -48,26 +55,33 @@ public class Date extends BaseField<LocalDate> {
      *
      * @return LocalDate date
      */
-    @Step("Getting a value from a field")
     @Attachment
     public LocalDate getValue() {
-        String date = getFieldByName()
-                .shouldBe(Condition.exist)
-                .$(getValueTag())
-                .getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return LocalDate.parse(Objects.requireNonNull(date), formatter);
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            String date = getFieldByName()
+                    .shouldBe(Condition.exist)
+                    .$(getValueTag())
+                    .getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            return LocalDate.parse(Objects.requireNonNull(date), formatter);
+        });
+
     }
 
     /**
      * Clearing the field through the cross icon.
      */
-    @Step("Clearing the field through the cross icon")
     public void clearIcon() {
-        getFieldByName()
-                .$("i[aria-label=\"icon: close-circle\"]")
-                .hover()
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Clearing the field through the cross icon", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$("i[aria-label=\"icon: close-circle\"]")
+                    .hover()
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 }

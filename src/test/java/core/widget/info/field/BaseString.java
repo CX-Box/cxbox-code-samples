@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.info.InfoWidget;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 public abstract class BaseString<E> {
@@ -111,14 +113,17 @@ public abstract class BaseString<E> {
      *
      * @return String text
      */
-    @Step("Getting a value from a field RequiredMessage")
     @Attachment
     public String getRequiredMessage() {
-        return getFieldByName()
-                .$(REQUIRED_MESSAGE)
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text()
-                .replace(title, "");
+        return Allure.step("Getting a value from a field RequiredMessage", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$(REQUIRED_MESSAGE)
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text()
+                    .replace(title, "");
+        });
     }
 
     /**
@@ -126,25 +131,28 @@ public abstract class BaseString<E> {
      *
      * @return String/null
      */
-    @Step("Getting the field color in Hex format")
     @Attachment
     public String getHexColor() {
-        String color = getValueByAttribute(1, getValueTag(), "style");
-        Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
-        Matcher matcher = pattern.matcher(color);
+        return Allure.step("Getting the field color in Hex format", step -> {
+            logTime(step);
 
-        if (matcher.find()) {
-            String rgb = matcher.group(1);
-            String NewRGB = rgb.replaceAll(" ", "");
-            String[] strings = NewRGB.split("[,\\\\s]+");
-            int[] numbers = new int[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                numbers[i] = Integer.parseInt(strings[i]);
+            String color = getValueByAttribute(1, getValueTag(), "style");
+            Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
+            Matcher matcher = pattern.matcher(color);
+
+            if (matcher.find()) {
+                String rgb = matcher.group(1);
+                String NewRGB = rgb.replaceAll(" ", "");
+                String[] strings = NewRGB.split("[,\\\\s]+");
+                int[] numbers = new int[strings.length];
+                for (int i = 0; i < strings.length; i++) {
+                    numbers[i] = Integer.parseInt(strings[i]);
+                }
+                return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            } else {
+                return null;
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
-        } else {
-            return null;
-        }
+        });
     }
 
     /**
@@ -152,23 +160,29 @@ public abstract class BaseString<E> {
      *
      * @return Boolean true/false
      */
-    @Step("Clicking on a hyperlink in the text or by clicking on a special element")
     public Boolean drillDown() {
-        String oldUrl = WebDriverRunner.url();
-        getFieldByName().$(getValueTag()).click();
-        String newUrl = WebDriverRunner.url();
-        return oldUrl.equals(newUrl) && $x("//body").exists();
+        return Allure.step("Clicking on a hyperlink in the text or by clicking on a special element", step -> {
+            logTime(step);
+
+            String oldUrl = WebDriverRunner.url();
+            getFieldByName().$(getValueTag()).click();
+            String newUrl = WebDriverRunner.url();
+            return oldUrl.equals(newUrl) && $x("//body").exists();
+        });
     }
 
     /**
      * Focus on the field/A click in the field.
      */
-    @Step("Focus on the field/A click in the field.")
     public void setFocusField() {
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Focus on the field/A click in the field.", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 
     /**

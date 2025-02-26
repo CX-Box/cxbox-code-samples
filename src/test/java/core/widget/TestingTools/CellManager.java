@@ -24,4 +24,6 @@ public class CellManager {
                 + ", element type: "
                 + element.$("div").getAttribute("data-test-field-type"));
     }
+
+
 }

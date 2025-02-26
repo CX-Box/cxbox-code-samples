@@ -3,11 +3,11 @@ package core.ConfigTest;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideConfig;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
@@ -17,7 +17,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v133.network.Network;
+import org.openqa.selenium.devtools.v133.network.model.Response;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -26,10 +30,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 
 @ExtendWith({AllureJunit5.class})
@@ -37,7 +42,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class BaseTestForSamples {
     public static WidgetPage page;
     private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
-
+    private DevTools devTools = null;
+    StringBuilder resContent = new StringBuilder();
 
     @BeforeAll
     public static void setUpAllure(){
@@ -47,31 +53,44 @@ public class BaseTestForSamples {
     }
 
     @BeforeEach
-    @Step("Launching the browser...")
     public void setUp() {
-        SelenideConfig selenideConfig = new SelenideConfig();
-        SelenideLogger.addListener("AllureSelenide",
-                new AllureSelenide()
-                        .includeSelenideSteps(false) 
-                        .screenshots(true)
-                        .savePageSource(false)
-        );
+        Allure.step("Launching the browser...", step -> {
+            logTime(step);
+            SelenideConfig selenideConfig = new SelenideConfig();
+            SelenideLogger.addListener("AllureSelenide",
+                    new AllureSelenide()
+                            .includeSelenideSteps(false)
+                            .screenshots(true)
+                            .savePageSource(false)
+            );
 
-        Configuration.browser = "chrome";
-        Configuration.headless = false;
-        Configuration.timeout = 10000;
-        Configuration.browserSize = "1280x800";
-        Configuration.pageLoadTimeout = 60000;
-        Configuration.browserCapabilities = getChromeOptions();
-        Configuration.webdriverLogsEnabled = false;
+            Configuration.browser = "chrome";
+            Configuration.headless = false;
+            Configuration.timeout = 10000;
+            Configuration.browserSize = "1280x800";
+            Configuration.pageLoadTimeout = 60000;
+            Configuration.browserCapabilities = getChromeOptions();
+            Configuration.webdriverLogsEnabled = false;
 
-        String url = System.getenv("APP_URL");
-        if (url == null || url.isEmpty()) {
-            url = "http://code-samples.cxbox.org/ui/#/";
-        }
 
-        Selenide.open(url);
-        page = new LoginPage().loginKeyCloak("demo", "demo");
+            Selenide.open(getEnv());
+            page = new LoginPage().loginKeyCloak("demo", "demo");
+
+            ChromeDriver driver = (ChromeDriver) WebDriverRunner.getWebDriver();
+            devTools = driver.getDevTools();
+
+            devTools.createSession();
+            devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+
+            devTools.addListener(Network.responseReceived(), response -> {
+                Response res = response.getResponse();
+                resContent.append(" URL: ").append(res.getUrl())
+                        .append("\n Status: ").append(res.getStatus())
+                        .append("\n Headers: ").append(res.getHeaders())
+                        .append("\n Timing:").append(res.getTiming().map(e -> e.getSendEnd()).orElse(null))
+                        .append("\n\n");
+            });
+        });
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
@@ -101,11 +120,20 @@ public class BaseTestForSamples {
     }
 
     @AfterEach
-    @Step("...Closing the browser window")
+    public void printLogs(){
+        Allure.step("Print browser logs and response...", step -> {
+            logTime(step);
+            Logs logs = getWebDriver().manage().logs();
+            printLog(logs.get(LogType.BROWSER.toString()));
+        });
+    }
+
+    @AfterEach
     public void tearDown() {
-        Logs logs = getWebDriver().manage().logs();
-        printLog(logs.get(LogType.BROWSER.toString()));
-        Selenide.closeWebDriver();
+        Allure.step("Closing the browser window", step -> {
+            logTime(step);
+            Selenide.closeWebDriver();
+        });
     }
 
     void printLog(LogEntries entries) {
@@ -124,7 +152,17 @@ public class BaseTestForSamples {
                     .append(" ").append(entry.getMessage())
                     .append("\n\n");
         }
-
+        Allure.addAttachment("Browser Res", resContent.toString());
         Allure.addAttachment("Browser Logs", logContent.toString());
+    }
+
+
+
+    private String getEnv() {
+        String url = System.getenv("APP_URL");
+        if (url == null || url.isEmpty()) {
+            url = "http://code-samples.cxbox.org/ui/#/";
+        }
+        return url;
     }
 }
