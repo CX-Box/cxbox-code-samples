@@ -99,6 +99,11 @@ jobs:
         if: ${{inputs.choice-test == 'All tests' }}
         run: |
           mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
+      - name: Create branch gh-pages/side-tests if it doesn't exist
+        run: |
+          git fetch origin gh-pages:gh-pages || true
+          git checkout -b gh-pages/side-tests || git checkout gh-pages/side-tests
+          git push origin gh-pages/side-tests || true
 
       - name: Upload allure results
         if: always()
@@ -112,8 +117,8 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          ref: gh-pages-side-tests
-          path: gh-pages-side-tests
+          ref: gh-pages/side-tests
+          path: gh-pages/side-tests
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -130,6 +135,6 @@ jobs:
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages-side-tests
+          PUBLISH_BRANCH: gh-pages/side-tests
           PUBLISH_DIR: allure-history
         
