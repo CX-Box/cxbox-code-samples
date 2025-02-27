@@ -99,11 +99,8 @@ jobs:
         if: ${{inputs.choice-test == 'All tests' }}
         run: |
           mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
-      - name: Create branch gh-pages/side-tests if it doesn't exist
-        run: |
-          git fetch origin gh-pages:gh-pages || true
-          git checkout -b gh-pages/side-tests || git checkout gh-pages/side-tests
-          git push origin gh-pages/side-tests || true
+      - name: Create side-test directory
+        run: mkdir -p gh-pages/side-tests
 
       - name: Upload allure results
         if: always()
@@ -112,29 +109,28 @@ jobs:
           name: allure-results
           path: target/allure-results
 
-      - name: Load test report history
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         if: always()
-        continue-on-error: true
         with:
-          ref: gh-pages/side-tests
-          path: gh-pages/side-tests
+          ref: gh-pages
+          path: gh-pages
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: target/allure-results
-          allure_reports: allure-report
+          allure_reports: gh-pages/side-tests/allure-report
           keep_reports: 20
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages/side-tests
-          PUBLISH_DIR: allure-history
+          
+      - name: Commit and push Allure report to gh-pages
+        run: |
+          cd gh-pages
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update Allure report in side-tests directory"
+          git push origin gh-pages
         
