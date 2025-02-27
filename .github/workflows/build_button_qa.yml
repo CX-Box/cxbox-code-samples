@@ -99,8 +99,6 @@ jobs:
         if: ${{inputs.choice-test == 'All tests' }}
         run: |
           mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
-      - name: Create side-test directory
-        run: mkdir -p gh-pages/side-tests
 
       - name: Upload allure results
         if: always()
@@ -115,6 +113,8 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
+      - name: Create side-test directory
+        run: mkdir -p gh-pages/side-tests     
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -124,6 +124,9 @@ jobs:
           allure_results: target/allure-results
           allure_reports: gh-pages/side-tests/allure-report
           keep_reports: 20
+      - name: Debug - List files in gh-pages/side-tests
+        run: |
+          ls -R gh-pages/side-tests    
           
       - name: Commit and push Allure report to gh-pages
         run: |
@@ -131,6 +134,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
+          git status
           git commit -m "Update Allure report in side-tests directory"
           git push origin gh-pages
         
