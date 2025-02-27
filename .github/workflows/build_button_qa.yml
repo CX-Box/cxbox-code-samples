@@ -112,8 +112,8 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          ref: gh-pages
-          path: gh-pages
+          ref: gh-pages-side-tests
+          path: gh-pages-side-tests
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -125,16 +125,11 @@ jobs:
           allure_reports: allure-report
           keep_reports: 20
 
-      - name: Prepare someone directory
-        run: |
-          mkdir -p gh-pages/someone
-          cp -r allure-report/* gh-pages/someone/
-
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
+          PUBLISH_BRANCH: gh-pages-side-tests
           PUBLISH_DIR: allure-history
         
