@@ -3,10 +3,10 @@ package core.ConfigTest;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideConfig;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
-import core.widget.TestingTools.ProxyManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -17,8 +17,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v133.network.Network;
+import org.openqa.selenium.devtools.v133.network.model.Response;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -26,7 +29,10 @@ import org.openqa.selenium.logging.Logs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -38,7 +44,6 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 public class BaseTestForSamples {
     public static WidgetPage page;
     private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
-    private ProxyManager proxyManager;
     private DevTools devTools = null;
     StringBuilder resContent = new StringBuilder();
 
@@ -61,10 +66,6 @@ public class BaseTestForSamples {
                             .savePageSource(false)
             );
 
-            proxyManager = new ProxyManager();
-            proxyManager.startProxy();
-
-
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -72,14 +73,26 @@ public class BaseTestForSamples {
             Configuration.pageLoadTimeout = 60000;
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
-            Configuration.proxyEnabled = true;
-//            Configuration.proxyHost = "localhost";
-//            Configuration.proxyPort = 9899;
+
 
             Selenide.open(getEnv());
-
             page = new LoginPage().loginKeyCloak("demo", "demo");
 
+            ChromeDriver driver = (ChromeDriver) WebDriverRunner.getWebDriver();
+            devTools = driver.getDevTools();
+
+            devTools.createSession();
+            devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+
+            devTools.addListener(Network.responseReceived(), response -> {
+                Response res = response.getResponse();
+                resContent.append(" URL: ").append(res.getUrl())
+                        .append("\n Time: ").append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")))
+                        .append("\n Status: ").append(res.getStatus())
+                        .append("\n Headers: ").append(res.getHeaders())
+                        .append("\n Timing:").append(res.getTiming().map(e -> e.getSendEnd()).orElse(null))
+                        .append("\n\n");
+            });
         });
     }
 
@@ -122,9 +135,6 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
-            if (proxyManager != null) {
-                proxyManager.stopProxy();
-            }
             Selenide.closeWebDriver();
         });
     }
