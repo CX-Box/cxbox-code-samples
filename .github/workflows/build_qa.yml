@@ -91,12 +91,12 @@ jobs:
         if: always() && github.event_name == 'pull_request'  # Only for pull_request
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: target/allure-results
           allure_report: gh-pages/side-tests/allure-report
           keep_reports: 20
 
       - name: Commit and push Allure report to gh-pages
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
         run: |
           cd gh-pages
           git config --global user.name "github-actions[bot]"
@@ -114,4 +114,4 @@ jobs:
           context: 'Test report'
           state: 'success'
           sha: ${{ github.event.pull_request.head.sha }}
-          target_url: simple-elf.github.io/github-allure-history/${{ github.run_number }}
+          target_url: https://cx-box.github.io/cxbox-code-samples/side-tests/allure-report
