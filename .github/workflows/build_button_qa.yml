@@ -123,7 +123,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_results: target/allure-results
-          allure_report: gh-pages/side-tests/allure-report
+          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
           keep_reports: 20
           
       - name: Commit and push Allure report to gh-pages
