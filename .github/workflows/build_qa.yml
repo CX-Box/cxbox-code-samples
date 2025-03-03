@@ -119,7 +119,7 @@ jobs:
           PUBLISH_DIR: allure-history
 
       - name: Post the link to the report
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request 
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{ secrets.GITHUB_TOKEN }}
