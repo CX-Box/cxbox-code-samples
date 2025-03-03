@@ -105,17 +105,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results
-
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v3
-        if: always()
-        with:
-          ref: gh-pages
-          path: gh-pages
-          
-      - name: Create side-test directory
-        run: mkdir -p gh-pages/side-tests     
+          path: target/allure-results 
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -132,5 +122,5 @@ jobs:
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          PUBLISH_DIR: gh-pages
         
