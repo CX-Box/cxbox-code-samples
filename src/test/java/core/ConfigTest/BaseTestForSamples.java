@@ -2,11 +2,9 @@ package core.ConfigTest;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideConfig;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
-import core.widget.TestingTools.ProxyManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -38,7 +36,6 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 public class BaseTestForSamples {
     public static WidgetPage page;
     private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
-    private ProxyManager proxyManager;
     private DevTools devTools = null;
     StringBuilder resContent = new StringBuilder();
 
@@ -53,7 +50,6 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-            SelenideConfig selenideConfig = new SelenideConfig();
             SelenideLogger.addListener("AllureSelenide",
                     new AllureSelenide()
                             .includeSelenideSteps(false)
@@ -61,8 +57,8 @@ public class BaseTestForSamples {
                             .savePageSource(false)
             );
 
-            proxyManager = new ProxyManager();
-            proxyManager.startProxy();
+            /*proxyManager = new ProxyManager();
+            proxyManager.startProxy();*/
 
 
             Configuration.browser = "chrome";
@@ -73,8 +69,8 @@ public class BaseTestForSamples {
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
             Configuration.proxyEnabled = true;
-//            Configuration.proxyHost = "localhost";
-//            Configuration.proxyPort = 9899;
+            //Configuration.proxyHost = "localhost";
+            //Configuration.proxyPort = 8099;
 
             Selenide.open(getEnv());
 
@@ -122,9 +118,6 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
-            if (proxyManager != null) {
-                proxyManager.stopProxy();
-            }
             Selenide.closeWebDriver();
         });
     }
