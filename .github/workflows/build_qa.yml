@@ -3,10 +3,10 @@ name: QA project
 on:
   push:
     branches:
-    - CXBOX-725
+    - CXBOX-789
   pull_request:
     branches:
-    - CXBOX-725
+    - CXBOX-789
   workflow_dispatch:
 
 env:
@@ -62,7 +62,7 @@ jobs:
         run: sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode -DrunTests=true test
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Info.InputOnInfoTest test
 
       - name: List screenshots directory
         if: always()
@@ -78,3 +78,52 @@ jobs:
       - name: Stop and remove Docker compose
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
+
+      - name: Upload allure results
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: target/allure-results
+          allure_reports: allure-report
+          keep_reports: 20
+
+      - name: Prepare someone directory
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        run: |
+          mkdir -p gh-pages/someone
+          cp -r allure-report/* gh-pages/someone/
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
+      - name: Post the link to the report
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: 'Test report'
+          state: 'success'
+          sha: ${{ github.event.pull_request.head.sha }}
+          target_url: simple-elf.github.io/github-allure-history/${{ github.run_number }}
