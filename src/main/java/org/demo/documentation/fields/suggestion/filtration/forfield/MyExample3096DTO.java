@@ -12,6 +12,7 @@ import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 @NoArgsConstructor
 public class MyExample3096DTO extends DataResponseDTO {
 
+    @SearchParameter(name = "customField")
     private String customField;
 
     public MyExample3096DTO(MyEntity3096 entity) {

@@ -21,6 +21,15 @@ public class MyEntity3096TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity3096().setCustomField("test data"));
+        repository.save(new MyEntity3096().setCustomField("test data2"));
+        repository.save(new MyEntity3096().setCustomField("test data3"));
+        repository.save(new MyEntity3096().setCustomField("test data4"));
+        repository.save(new MyEntity3096().setCustomField("test data5"));
+        repository.save(new MyEntity3096().setCustomField("test data6"));
+        repository.save(new MyEntity3096().setCustomField("test data7"));
+        repository.save(new MyEntity3096().setCustomField("test data8"));
+        repository.save(new MyEntity3096().setCustomField("test data9"));
+        repository.save(new MyEntity3096().setCustomField("test data10"));
     }
 
 }
