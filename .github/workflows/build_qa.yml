@@ -64,17 +64,6 @@ jobs:
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Info.InputOnInfoTest test
 
-      - name: List screenshots directory
-        if: always()
-        run: ls -la build/reports/tests/
-
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-screenshots
-          path: build/reports/tests/
-
       - name: Stop and remove Docker compose
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
@@ -85,14 +74,17 @@ jobs:
         with:
           name: allure-results
           path: target/allure-results
-
-      - name: Load test report history
+          
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v3
         if: always() && github.event_name == 'pull_request'  # Only for pull_request
-        continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
+          path: gh-pages     
+
+      - name: Create side-test directory
+        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        run: mkdir -p gh-pages/side-tests     
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -101,22 +93,18 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: target/allure-results
-          allure_reports: allure-report
+          allure_report: gh-pages/side-tests/allure-report
           keep_reports: 20
 
-      - name: Prepare someone directory
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+      - name: Commit and push Allure report to gh-pages
         run: |
-          mkdir -p gh-pages/someone
-          cp -r allure-report/* gh-pages/someone/
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          cd gh-pages
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git status
+          git commit -m "Update Allure report in side-tests directory"
+          git push origin gh-pages
 
       - name: Post the link to the report
         if: always() && github.event_name == 'pull_request'  # Only for pull_request 
