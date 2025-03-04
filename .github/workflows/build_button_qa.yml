@@ -139,7 +139,7 @@ jobs:
 
       - name: Generate report URL
         run: |
-          REPORT_URL="https://your-domain.com/side-tests/${{ github.run_number }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "##[set-output name=report_url;]$REPORT_URL" >> $GITHUB_OUTPUT
