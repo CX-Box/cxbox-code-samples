@@ -121,6 +121,11 @@ jobs:
           
       - name: List report directory
         run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report  
+        
+      - name: Prepare files for deployment
+        run: |
+          mkdir -p deploy/side-tests/${{ github.run_number }}
+          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
           
       - name: Deploy report to Github Pages
         if: always()
@@ -128,6 +133,7 @@ jobs:
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: gh-pages/side-tests/${{ github.run_number }}/allure-report
-          DESTINATION_DIR: side-tests/${{ github.run_number }}
+          PUBLISH_DIR: deploy
+          
+        
         
