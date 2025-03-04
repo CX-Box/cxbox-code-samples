@@ -137,15 +137,13 @@ jobs:
           destination_dir: side-tests
           keep_files: true
 
-      - name: Generate GitHub Pages URL
+      - name: Generate and add report URL to Job Summary
         run: |
-          GITHUB_PAGES_URL="https://${{ github.repository_owner }}.github.io/${{ github.repository }}/side-tests/${{ github.run_number }}"
-          echo "GitHub Pages URL: $GITHUB_PAGES_URL"
-          echo "github_pages_url=$GITHUB_PAGES_URL" >> $GITHUB_OUTPUT
-
-      - name: Use GitHub Pages URL
-        run: |
-          echo "The report is available at: ${{ steps.github_pages_url.outputs.github_pages_url }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
           
         
         
