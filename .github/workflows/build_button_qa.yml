@@ -73,7 +73,7 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-  build_someone:
+  build_manual:
     if: ${{inputs.choice-test == 'Package, class or test' }}
     runs-on: ubuntu-latest
     strategy:
@@ -113,7 +113,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_results: target/allure-results
-          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
+          allure_report: allure-report
           keep_reports: 20
           
       - name: Deploy report to Github Pages
@@ -122,5 +122,5 @@ jobs:
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: gh-pages
+          DESTINATION_DIR: side-tests/
         
