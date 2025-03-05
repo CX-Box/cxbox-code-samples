@@ -1,12 +1,9 @@
 name: QA project
 
 on:
-  push:
-    branches:
-    - CXBOX-725
   pull_request:
     branches:
-    - CXBOX-725
+    - CXBOX-789
   workflow_dispatch:
 
 env:
@@ -79,44 +76,50 @@ jobs:
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
 
+      - name: Create side-tests directory
+        run: mkdir -p gh-pages/side-tests  
+
       - name: Upload allure results
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results
-
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+          path: target/allure-results 
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+        if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: target/allure-results
-          allure_reports: allure-report
+          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
           keep_reports: 20
-
-      - name: Prepare someone directory
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+          
+      - name: List report directory
+        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report  
+        
+      - name: Prepare files for deployment
         run: |
-          mkdir -p gh-pages/someone
-          cp -r allure-report/* gh-pages/someone/
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always() && github.event_name == 'pull_request'  # Only for pull_request
+          mkdir -p deploy/side-tests/${{ github.run_number }}
+          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
+          
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          PUBLISH_DIR: deploy/side-tests
+          destination_dir: side-tests
+          keep_files: true
+
+      - name: Generate and add report URL to Job Summary
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
 
       - name: Post the link to the report
         if: always() && github.event_name == 'pull_request'  # Only for pull_request
