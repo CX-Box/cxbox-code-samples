@@ -116,9 +116,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
           target_url: simple-elf.github.io/github-allure-history/${{ github.run_number }}
      
-     - name: Stop and remove Docker compose
+      - name: Stop and remove Docker compose
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down    
-
-          
 
