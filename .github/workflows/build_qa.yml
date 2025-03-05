@@ -73,7 +73,7 @@ jobs:
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.8.0
-        if: (always)
+        if: always()
         with:
           target: 'github'
           github_token: ${{ secrets.GITHUB_TOKEN }}
