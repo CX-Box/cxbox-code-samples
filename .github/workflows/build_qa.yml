@@ -72,29 +72,14 @@ jobs:
           path: target/allure-results 
 
       - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
         if: always()
+        uses: cybersokari/allure-deployer-action@v1.8.0
         with:
-          gh_pages: gh-pages
-          allure_results: target/allure-results
-          allure_report: gh-pages/manual-side-tests/${{ github.run_number }}/allure-report
-          keep_reports: 20
-        
-      - name: Prepare files for deployment
-        if: always()
-        run: |
-          mkdir -p deploy/manual-side-tests/${{ github.run_number }}
-          cp -r gh-pages/manual-side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
-          
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: deploy/manual-side-tests
-          destination_dir: manual-side-tests
-          keep_files: true
+          target: 'github'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          allure_results_path: gh-pages/manual-side-tests/${{ github.run_number }}
+          keep: 20
+  
 
       - name: Generate and add report URL to Job Summary
         if: always()
