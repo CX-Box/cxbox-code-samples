@@ -72,12 +72,15 @@ jobs:
           path: target/allure-results 
 
       - name: Build test report
-        uses: simple-elf/allure-report-action@v1.12
-        if: always()
+        uses: cybersokari/allure-deployer-action@v1.8.0
+        if: (always)
         with:
-          allure_results: allure-results
-          allure_report: https://cx-box.github.io/cxbox-code-samples/manual-side-tests/${{ github.run_number }}
-          gh_pages: gh-pages
+          target: 'github'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_pages_branch: 'gh-pages'
+          allure_results_path: 'target/allure-results'
+          show_history: 'true'
+          custom_report_dir: '/manual-side-tests/${{ github.run_number }}'
 
       - name: Generate and add report URL to Job Summary
         if: always()
