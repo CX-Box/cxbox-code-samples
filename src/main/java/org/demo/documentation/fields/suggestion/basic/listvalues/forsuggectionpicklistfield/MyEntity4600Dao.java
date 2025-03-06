@@ -9,7 +9,7 @@ import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.services.utils.IntegrationURLBuilder;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

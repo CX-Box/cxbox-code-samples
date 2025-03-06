@@ -30,10 +30,10 @@ public class MyExample4600Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample4600DTO> getActions() {
         return Actions.<MyExample4600DTO>builder()
-                .create().text("Add").add()
-                .save().text("Save").add()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
                 .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
 

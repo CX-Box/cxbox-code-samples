@@ -12,7 +12,7 @@ public class MyExample4600DTO extends DataResponseDTO {
 
     private String customField;
     public MyExample4600DTO(MyEntity4600OutServiceDTO entity) {
-        this.id = entity.getId().toString();
+        this.id = entity.getId();
         this.customField = entity.getCustomField();
     }
 }
