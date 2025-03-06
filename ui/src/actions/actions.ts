@@ -6,7 +6,7 @@ import { LoginResponse } from '@interfaces/session'
 import { TableSettingsItem, TableSettingsList, TableSettingsMap } from '@interfaces/tableSettings'
 import { FilterGroup } from '@interfaces/filters'
 import { FileViewerPopupOptions } from '@interfaces/view'
-import { DataItem } from '@interfaces/core'
+import { DataItem } from '@cxbox-ui/core'
 
 export const SSO_AUTH = createAction('SSO_AUTH')
 
@@ -110,3 +110,14 @@ export const updateBcData = createAction<{ bcName: string; data: DataItem[] }>('
 export const forceUpdateRowMeta = createAction<{ bcName: string; cursor?: string; onSuccessAction?: AnyAction; wasForcedUpdate?: boolean }>(
     'forceUpdateRowMeta'
 )
+
+export const setCollapsedWidgets = createAction<{ viewName: string; widgetNameGroup: string[] }>('setCollapsedWidgets')
+
+export const drillDownInNewTab = createAction<{
+    widgetName: string
+    cursor: string
+    fieldKey: string
+    copyLink?: boolean
+}>('drillDownInNewTab')
+
+export const emptyAction = createAction<undefined | AnyAction>('emptyAction')
