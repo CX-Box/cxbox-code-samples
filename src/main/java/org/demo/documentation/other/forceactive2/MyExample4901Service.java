@@ -30,21 +30,21 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
     @Override
     protected ActionResultDTO<MyExample4901DTO> doUpdateEntity(MyEntity4901 entity, MyExample4901DTO data, BusinessComponent bc) {
 
-        int intPosProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.product.getName());
-        int intPosPrice = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.money.getName());
-        int intPosDescriptionProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.descriptionProduct.getName());
+        // int intPosProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.product.getName());
+        // int intPosPrice = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.money.getName());
+        // int intPosDescriptionProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.descriptionProduct.getName());
 
-        int intPosCountry = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.country.getName());
-        int intPosRegion = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.region.getName());
+        //  int intPosCountry = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.country.getName());
+        //  int intPosRegion = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.region.getName());
 
         if (data.isFieldChanged(MyExample4901DTO_.region)) {
             entity.setRegion(data.getRegion());
         }
         if (data.isFieldChanged(MyExample4901DTO_.country)) {
             entity.setCountry(data.getCountry());
-            if (intPosCountry > intPosRegion) {
+         /*   if (intPosCountry > intPosRegion) {
                 entity.setRegion(null);
-            }
+            }*/
         }
 
         if (data.isFieldChanged(MyExample4901DTO_.customField)) {
@@ -56,12 +56,12 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
 
         if (data.isFieldChanged(MyExample4901DTO_.product)) {
             entity.setProduct(data.getProduct());
-            if (intPosProduct > intPosDescriptionProduct) {
+      /*       if (intPosProduct > intPosDescriptionProduct) {
                 entity.setDescriptionProduct(null);
             }
             if (intPosProduct > intPosPrice) {
                 entity.setMoney(null);
-            }
+            }*/
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
