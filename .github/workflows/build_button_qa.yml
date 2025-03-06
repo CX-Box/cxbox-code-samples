@@ -73,6 +73,14 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
+      - name: Generate and add report URL to Job Summary 
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
+
   build_manual:
     if: ${{inputs.choice-test == 'Package, class or test' }}
     runs-on: ubuntu-latest
