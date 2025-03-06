@@ -19,7 +19,7 @@ env:
     
 jobs:
   build_main:
-    if: ${{inputs.choice-test == 'All tests' }}
+    if: ${{inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -37,7 +37,6 @@ jobs:
         run: mkdir -p build/reports/tests/
         
       - name: Run default tests
-        if: ${{inputs.choice-test == 'All tests' }} 
         run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Upload allure results
@@ -82,7 +81,7 @@ jobs:
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
   build_manual:
-    if: ${{inputs.choice-test == 'Package, class or test' }}
+    if: ${{inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main'}}
     runs-on: ubuntu-latest
     strategy:
       matrix:
