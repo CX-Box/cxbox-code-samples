@@ -3,7 +3,7 @@ package core.ConfigTest;
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.Selenide; 
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
@@ -36,6 +36,7 @@ public class BaseTestForSamples {
     private BrowserUpProxy bmp = null;
     private static StringBuilder loginBuilder = new StringBuilder();
 
+
     @BeforeAll
     public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
@@ -63,10 +64,8 @@ public class BaseTestForSamples {
             Configuration.webdriverLogsEnabled = false;
             Configuration.proxyEnabled = true;
 
-
-
             Selenide.open(getEnv());
-
+          
             bmp = WebDriverRunner.getSelenideProxy().getProxy();
 
             EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
@@ -152,7 +151,7 @@ public class BaseTestForSamples {
                     .append(x.getRequest().getUrl()).append("\n")
                     .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
                     .append(x.getResponse().getStatus()).append("\n")
-                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n");   //фильтрация. Убирать не content-type:  application/json. Добавить переменную среды для включения фильтрацию
+                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n"); 
         });
 
         bmp.getHar().getLog().getEntries().stream().filter( x ->
