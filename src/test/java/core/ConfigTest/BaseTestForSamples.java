@@ -135,7 +135,7 @@ public class BaseTestForSamples {
         }
         writer.close();
         Files.delete(Paths.get("logLoginFile"));
-        Allure.addAttachment("TestZip", "application/zip", Files.newInputStream(Paths.get("logLoginZip.zip")), ".zip");
+        Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(Paths.get("logLoginZip.zip")), ".zip");
     }
 
     void printLog() {
@@ -144,7 +144,7 @@ public class BaseTestForSamples {
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
-                        !x.getRequest().getUrl().contains("http://code-samples.cxbox.org/api/v1/login")
+                        !x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
         ).forEach(x -> {
             stringBuilder.append(x.getStartedDateTime()).append("\n")
                     .append(x.getRequest().getMethod().name()).append("\n")
@@ -157,7 +157,7 @@ public class BaseTestForSamples {
         bmp.getHar().getLog().getEntries().stream().filter( x ->
                 (x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
-                        x.getRequest().getUrl().contains("http://code-samples.cxbox.org/api/v1/login")
+                        x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
         ).forEach(x -> {
             loginBuilder.append(x.getStartedDateTime()).append("\n")
                     .append(x.getRequest().getMethod().name()).append("\n")
@@ -165,11 +165,10 @@ public class BaseTestForSamples {
                     .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
                     .append(x.getResponse().getStatus()).append("\n")
                     .append("Content").append(x.getResponse().getContent().getText()).append("\n\n");
+
         });
 
-
         Allure.addAttachment("Browser network", stringBuilder.toString());
-        Allure.addAttachment("Login network", loginBuilder.toString());
     }
 
     private String getEnv() {
