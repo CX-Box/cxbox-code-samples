@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.suggestion.basic;
+package org.demo.documentation.fields.suggestion.basic.microservice;
 
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
