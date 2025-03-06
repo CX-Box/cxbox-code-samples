@@ -77,10 +77,6 @@ public class BaseTestForSamples {
             bmp.newHar("Proxy start");
 
             page = new LoginPage().loginKeyCloak("demo", "demo");
-            System.out.println("QQQAAAWWWEEERRR");
-
-
-
         });
     }
 
