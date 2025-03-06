@@ -1,7 +1,10 @@
 package core.ConfigTest;
 
+import com.browserup.bup.BrowserUpProxy;
+import com.browserup.bup.proxy.CaptureType;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
@@ -10,24 +13,19 @@ import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
 import lombok.NonNull;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.logging.Logs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.EnumSet;
 import java.util.logging.Level;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
 
@@ -35,12 +33,11 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @DisplayName("Setup for Samples Tests")
 public class BaseTestForSamples {
     public static WidgetPage page;
-    private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
-    private DevTools devTools = null;
-    StringBuilder resContent = new StringBuilder();
+    private BrowserUpProxy bmp = null;
+    private static StringBuilder loginBuilder = new StringBuilder();
 
     @BeforeAll
-    public static void setUpAllure(){
+    public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(true)
                 .savePageSource(true));
@@ -57,10 +54,6 @@ public class BaseTestForSamples {
                             .savePageSource(false)
             );
 
-            /*proxyManager = new ProxyManager();
-            proxyManager.startProxy();*/
-
-
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -69,18 +62,29 @@ public class BaseTestForSamples {
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
             Configuration.proxyEnabled = true;
-            //Configuration.proxyHost = "localhost";
-            //Configuration.proxyPort = 8099;
+
+
 
             Selenide.open(getEnv());
 
+            bmp = WebDriverRunner.getSelenideProxy().getProxy();
+
+            EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
+            nonBinaryContentCaptureTypes.addAll(CaptureType.getHeaderCaptureTypes());
+
+            bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
+            bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
+            bmp.newHar("Proxy start");
+
             page = new LoginPage().loginKeyCloak("demo", "demo");
+            System.out.println("QQQAAAWWWEEERRR");
+
+
 
         });
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // Disable chrome window
         options.addArguments("--enable-automation");
@@ -109,8 +113,7 @@ public class BaseTestForSamples {
     public void printLogs(){
         Allure.step("Print browser logs and response...", step -> {
             logTime(step);
-            Logs logs = getWebDriver().manage().logs();
-            printLog(logs.get(LogType.BROWSER.toString()));
+            printLog();
         });
     }
 
@@ -122,27 +125,57 @@ public class BaseTestForSamples {
         });
     }
 
-    void printLog(LogEntries entries) {
-        logger.info("{} log entries found", entries.getAll().size());
-        for (LogEntry entry : entries) {
-            logger.info("{} {} {}",
-                    new Date(entry.getTimestamp()), entry.getLevel(), entry.getMessage()
-            );
-        }
+    @AfterAll
+    public static void createZipLog() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("logLoginFile"));
+        writer.write((loginBuilder.toString()));
 
-        StringBuilder logContent = new StringBuilder();
-        logContent.append("Log entries found: ").append(entries.getAll().size()).append("\n\n");
-        for (LogEntry entry : entries) {
-            logContent.append(new Date(entry.getTimestamp()))
-                    .append(" ").append(entry.getLevel())
-                    .append(" ").append(entry.getMessage())
-                    .append("\n\n");
+        try (
+                 FileOutputStream fos = new FileOutputStream("logLoginZip.zip");
+                 ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+                 ZipEntry zipEntry = new ZipEntry("logLoginFile");
+                 zipOut.putNextEntry(zipEntry);
+                 Files.copy(Paths.get("logLoginFile"), zipOut);
+                 zipOut.closeEntry();
         }
-        Allure.addAttachment("Browser Res", resContent.toString());
-        Allure.addAttachment("Browser Logs", logContent.toString());
+        writer.close();
+        Files.delete(Paths.get("logLoginFile"));
+        Allure.addAttachment("TestZip", "application/zip", Files.newInputStream(Paths.get("logLoginZip.zip")), ".zip");
     }
 
+    void printLog() {
 
+        StringBuilder stringBuilder = new StringBuilder();
+        bmp.getHar().getLog().getEntries().stream().filter(x ->
+                (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
+                        x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
+                        !x.getRequest().getUrl().contains("http://code-samples.cxbox.org/api/v1/login")
+        ).forEach(x -> {
+            stringBuilder.append(x.getStartedDateTime()).append("\n")
+                    .append(x.getRequest().getMethod().name()).append("\n")
+                    .append(x.getRequest().getUrl()).append("\n")
+                    .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
+                    .append(x.getResponse().getStatus()).append("\n")
+                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n");   //фильтрация. Убирать не content-type:  application/json. Добавить переменную среды для включения фильтрацию
+        });
+
+        bmp.getHar().getLog().getEntries().stream().filter( x ->
+                (x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
+                        x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
+                        x.getRequest().getUrl().contains("http://code-samples.cxbox.org/api/v1/login")
+        ).forEach(x -> {
+            loginBuilder.append(x.getStartedDateTime()).append("\n")
+                    .append(x.getRequest().getMethod().name()).append("\n")
+                    .append(x.getRequest().getUrl()).append("\n")
+                    .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
+                    .append(x.getResponse().getStatus()).append("\n")
+                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n");
+        });
+
+
+        Allure.addAttachment("Browser network", stringBuilder.toString());
+        Allure.addAttachment("Login network", loginBuilder.toString());
+    }
 
     private String getEnv() {
         String url = System.getenv("APP_URL");

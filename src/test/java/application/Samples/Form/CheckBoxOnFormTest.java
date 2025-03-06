@@ -1,21 +1,15 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import com.browserup.bup.BrowserUpProxy;
-import com.browserup.bup.proxy.CaptureType;
-import com.codeborne.selenide.WebDriverRunner;
 import core.ConfigTest.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
 import core.widget.modal.confirm.constantsConfirm;
-import de.sstoehr.harreader.model.Har;
-import de.sstoehr.harreader.model.HarEntry;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.Story;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -39,22 +33,11 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     @DisplayName("Test for getting the Placeholder value")
     @Description("The test gets the value from the placeholder attribute and returns it in String format")
     void placeholder() {
-        BrowserUpProxy bmp = WebDriverRunner.getSelenideProxy().getProxy();
-        // запоминать тело запросов (по умолчанию тело не запоминается, ибо может быть большим)
-        bmp.setHarCaptureTypes(CaptureType.getNonBinaryContentCaptureTypes());
-        // запоминать как запросы, так и ответы
-        bmp.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-        // начинай запись!
-        bmp.newHar("proxy example");
-
         MainPages.click("Checkbox placeholder");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getPlaceholder()).isEmpty();
-
-        Har har = bmp.getHar(); //сохранить как файл отдельно!
-        List<HarEntry> requests = har.getLog().getEntries(); //подебажить строки!
     }
 
     @Test
