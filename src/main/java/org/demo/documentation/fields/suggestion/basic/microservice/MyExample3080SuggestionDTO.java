@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.suggestion.basic;
+package org.demo.documentation.fields.suggestion.basic.microservice;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

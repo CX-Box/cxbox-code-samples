@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.suggestion.basic.forfield;
+package org.demo.documentation.fields.suggestion.basic.microservice.forfield;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

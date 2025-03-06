@@ -5,13 +5,17 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.fields.suggestion.basic.forfield.MyExample3091Service;
+import org.demo.documentation.fields.suggestion.basic.listvalues.MyExample4601Service;
+import org.demo.documentation.fields.suggestion.basic.microservice.forfield.MyExample3091Service;
+import org.demo.documentation.fields.suggestion.basic.listvalues.forsuggectionpicklistfield.MyExample4600Service;
+import org.demo.documentation.fields.suggestion.basic.microservice.MyExample3080SuggestionService;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample3080Controller implements EnumBcIdentifier {
 
-    
+    myexample4601(MyExample4601Service.class),
+    myexample4600(MyExample4600Service.class),
     myexample3091(MyExample3091Service.class),
     myexample3080(MyExample3080SuggestionService.class);
 
