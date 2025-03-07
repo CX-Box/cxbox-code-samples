@@ -32,7 +32,7 @@ public class AddFiles {
      *
      * @param file File name or path to it
      */
-    @Step("Загрузка файла {file} in the field")
+    @Step("Uploading a file {file} in the field")
     public void setValue(File file) {
         widget.$("div[class=\"ant-upload ant-upload-select ant-upload-select-text\"]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
