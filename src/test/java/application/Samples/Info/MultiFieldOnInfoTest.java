@@ -17,7 +17,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the MultiField")
+@DisplayName("Info. Checking the basic functions for the MultiField")
 @Epic("Samples")
 @Tag("Samples")
 public class MultiFieldOnInfoTest extends BaseTestForSamples {

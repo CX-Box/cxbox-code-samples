@@ -4,13 +4,14 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @Slf4j
 public class FilterGroupSettingsPopup {
@@ -24,27 +25,33 @@ public class FilterGroupSettingsPopup {
      *
      * @param name filter name
      */
-    @Step("Setting the filter name {nme}")
     public void setName(String name) {
-        SelenideElement input = POPUP.$("input").shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout));
-        if (!input.has(Condition.attribute("disabled"))) {
-            input.setValue(name);
-        } else {
-            log.error("Поле не активно. Фильтрация не выполнена.");
-        }
+        Allure.step("Setting the filter name " + name, step -> {
+            logTime(step);
+
+            SelenideElement input = POPUP.$("input").shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout));
+            if (!input.has(Condition.attribute("disabled"))) {
+                input.setValue(name);
+            } else {
+                log.error("Field inactive. Filtering is not completed");
+            }
+        });
     }
 
     /**
      * Creating a filter
      */
-    @Step("Creating a filter")
     public void clickButtonCreate() {
-        SelenideElement create = POPUP.$("button[type=\"submit\"]").shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout));
-        if (!create.has(Condition.attribute("disabled"))) {
-            create.click();
-        } else {
-            log.error("Поле не активно. Фильтрация не выполнена.");
-        }
+        Allure.step("Creating a filter", step -> {
+            logTime(step);
+
+            SelenideElement create = POPUP.$("button[type=\"submit\"]").shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout));
+            if (!create.has(Condition.attribute("disabled"))) {
+                create.click();
+            } else {
+                log.error("Field inactive. Filtering is not completed");
+            }
+        });
     }
 
     private ElementsCollection settingsFilter() {
@@ -60,21 +67,27 @@ public class FilterGroupSettingsPopup {
      *
      * @return String
      */
-    @Step("Getting a list of created filters")
     @Attachment
     public String getFilterSettings() {
-        if (settingsFilter() == null) {
-            log.info("Сохраненных фильтров нет");
-            return null;
-        }
-        return String.valueOf(settingsFilter().texts());
+        return Allure.step("Getting a list of created filters", step -> {
+            logTime(step);
+
+            if (settingsFilter() == null) {
+                log.info("Сохраненных фильтров нет");
+                return null;
+            }
+            return String.valueOf(settingsFilter().texts());
+        });
     }
 
     /**
      * Cleaning of all filters
      */
-    @Step("Cleaning of all filters")
     public void clearAllFilterSettings() {
-        settingsFilter().forEach(element -> element.$("i[aria-label=\"icon: close\"]").click());
+        Allure.step("Cleaning of all filters", step -> {
+            logTime(step);
+
+            settingsFilter().forEach(element -> element.$("i[aria-label=\"icon: close\"]").click());
+        });
     }
 }

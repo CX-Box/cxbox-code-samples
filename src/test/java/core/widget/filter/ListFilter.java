@@ -6,8 +6,8 @@ import core.OriginExpectations.CxBoxExpectations;
 import core.widget.ListHelper;
 import core.widget.filter.filter.*;
 import core.widget.modal.Popup;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 @Getter
@@ -37,9 +38,12 @@ public class ListFilter {
      *
      * @return InputFilter
      */
-    @Step("Filtering with the field type Input")
     public InputFilter inputFilter() {
-        return new InputFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Input", step -> {
+            logTime(step);
+            return new InputFilter(columnType, columnName, helper);
+        });
+
     }
 
     /**
@@ -47,9 +51,13 @@ public class ListFilter {
      *
      * @return DateFilter
      */
-    @Step("Filtering with the field type Date")
+
     public DateFilter dateFilter() {
-        return new DateFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Date", step -> {
+            logTime(step);
+            return new DateFilter(columnType, columnName, helper);
+        });
+
     }
 
     /**
@@ -57,9 +65,12 @@ public class ListFilter {
      *
      * @return DateTimeFilter
      */
-    @Step("Filtering with the field type DateTime")
     public DateTimeFilter dateTimeFilter() {
-        return new DateTimeFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type DateTime", step -> {
+            logTime(step);
+            return new DateTimeFilter(columnType, columnName, helper);
+        });
+
     }
 
     /**
@@ -67,9 +78,11 @@ public class ListFilter {
      *
      * @return DateTimeWithSecondsFilter
      */
-    @Step("Filtering with the field type DateTimeWithSeconds")
     public DateTimeWithSecondsFilter dateTimeWithSecondsFilter() {
-        return new DateTimeWithSecondsFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type DateTimeWithSeconds", step -> {
+            logTime(step);
+            return new DateTimeWithSecondsFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -77,9 +90,11 @@ public class ListFilter {
      *
      * @return MoneyFilter
      */
-    @Step("Filtering with the field type Money")
     public MoneyFilter moneyFilter() {
-        return new MoneyFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Money", step -> {
+            logTime(step);
+            return new MoneyFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -87,9 +102,11 @@ public class ListFilter {
      *
      * @return NumberFilter
      */
-    @Step("Filtering with the field type Number")
     public NumberFilter numberFilter() {
-        return new NumberFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Number", step -> {
+            logTime(step);
+            return new NumberFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -97,9 +114,11 @@ public class ListFilter {
      *
      * @return PercentFilter
      */
-    @Step("Filtering with the field type Percent")
     public PercentFilter percentFilter() {
-        return new PercentFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Percent", step -> {
+            logTime(step);
+            return new PercentFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -107,9 +126,11 @@ public class ListFilter {
      *
      * @return CheckboxFilter
      */
-    @Step("Filtering with the field type CheckBox")
     public CheckboxFilter checkboxFilter() {
-        return new CheckboxFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type CheckBox", step -> {
+            logTime(step);
+            return new CheckboxFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -117,9 +138,12 @@ public class ListFilter {
      *
      * @return RadioFilter
      */
-    @Step("Filtering with the field type Radio")
     public RadioFilter radioFilter() {
-        return new RadioFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Radio", step -> {
+            logTime(step);
+            return new RadioFilter(columnType, columnName, helper);
+        });
+
     }
 
     /**
@@ -127,9 +151,11 @@ public class ListFilter {
      *
      * @return DictionaryFilter
      */
-    @Step("Filtering with the field type Dictionary")
     public DictionaryFilter dictionaryFilter() {
-        return new DictionaryFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Dictionary", step -> {
+            logTime(step);
+            return new DictionaryFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -137,9 +163,11 @@ public class ListFilter {
      *
      * @return FileUploadFilter
      */
-    @Step("Filtering with the field type FileUpload")
     public FileUploadFilter fileUploadFilter() {
-        return new FileUploadFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type FileUpload", step -> {
+            logTime(step);
+            return new FileUploadFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -147,9 +175,11 @@ public class ListFilter {
      *
      * @return InlinePickListFilter
      */
-    @Step("Filtering with the field type InlinePickList")
     public InlinePickListFilter inlinePickListFilter() {
-        return new InlinePickListFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type InlinePickList", step -> {
+            logTime(step);
+            return new InlinePickListFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -157,27 +187,28 @@ public class ListFilter {
      *
      * @return PickListFilter
      */
-    @Step("Filtering with the field type PickList")
     @Attachment
     public Optional<Popup> pickListFilter() {
-        if ($("div[class=\"ant-popover ant-popover-placement-top\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$("button[class=\"ant-btn ant-btn-icon-only\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .is(Condition.visible)) {
-
-            $("div[class=\"ant-popover ant-popover-placement-top\"]")
+        return Allure.step("Filtering with the field type PickList", step -> {
+            logTime(step);
+            if ($("div[class=\"ant-popover ant-popover-placement-top\"]")
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                     .$("button[class=\"ant-btn ant-btn-icon-only\"]")
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).click();
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .is(Condition.visible)) {
 
-            return Optional.of(new Popup());
-        } else {
-            log.info("Новая фильтрация не поддерживается.");
-            return Optional.empty();
+                $("div[class=\"ant-popover ant-popover-placement-top\"]")
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .$("button[class=\"ant-btn ant-btn-icon-only\"]")
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).click();
 
-        }
+                return Optional.of(new Popup());
+            } else {
+                log.info("Новая фильтрация не поддерживается.");
+                return Optional.empty();
 
+            }
+        });
     }
 
     /**
@@ -185,9 +216,11 @@ public class ListFilter {
      *
      * @return MultiFieldFilter
      */
-    @Step("Filtering with the field type MultiField")
     public MultiFieldFilter multiFieldFilter() {
-        return new MultiFieldFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type MultiField", step -> {
+            logTime(step);
+            return new MultiFieldFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -195,9 +228,11 @@ public class ListFilter {
      *
      * @return MultipleSelectFilter
      */
-    @Step("Filtering with the field type MultipleSelect")
     public MultipleSelectFilter multipleSelectFilter() {
-        return new MultipleSelectFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type MultipleSelect", step -> {
+            logTime(step);
+            return new MultipleSelectFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -205,9 +240,11 @@ public class ListFilter {
      *
      * @return MultiValueFilter
      */
-    @Step("Filtering with the field type multiValue")
     public MultiValueFilter multiValueFilter() {
-        return new MultiValueFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type MultiValue", step -> {
+            logTime(step);
+            return new MultiValueFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -215,9 +252,11 @@ public class ListFilter {
      *
      * @return MultiValueHoverFilter
      */
-    @Step("Filtering with the field type MultiValueHover")
     public MultiValueHoverFilter multiValueHoverFilter() {
-        return new MultiValueHoverFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type MultiValueHover", step -> {
+            logTime(step);
+            return new MultiValueHoverFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -225,9 +264,11 @@ public class ListFilter {
      *
      * @return TextFilter
      */
-    @Step("Filtering with the field type Text")
     public TextFilter textFilter() {
-        return new TextFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Text", step -> {
+            logTime(step);
+            return new TextFilter(columnType, columnName, helper);
+        });
     }
 
     /**
@@ -235,8 +276,11 @@ public class ListFilter {
      *
      * @return HintFilter
      */
-    @Step("Filtering with the field type Hint")
+
     public HintFilter hintFilter() {
-        return new HintFilter(columnType, columnName, helper);
+        return Allure.step("Filtering with the field type Hint", step -> {
+            logTime(step);
+            return new HintFilter(columnType, columnName, helper);
+        });
     }
 }

@@ -3,15 +3,17 @@ package core.widget.statsBlock;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 public class statBlock {
@@ -21,11 +23,15 @@ public class statBlock {
     /**
      * Click on the block to apply the filter
      */
-    @Step("Click on the block to apply the filter")
     public void clickOnBlock() {
-        block
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Click on the block to apply the filter", step -> {
+            logTime(step);
+
+            block
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
+
     }
 
     /**
@@ -33,15 +39,19 @@ public class statBlock {
      *
      * @return String
      */
-    @Step("Getting text when hovering over a block")
     @Attachment
     public String getTextHover() {
-        block
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .hover();
-        return $("div[class=\"ant-tooltip ant-tooltip-placement-top\"] div[class=\"ant-tooltip-inner\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting text when hovering over a block", step -> {
+            logTime(step);
+
+            block
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .hover();
+            return $("div[class=\"ant-tooltip ant-tooltip-placement-top\"] div[class=\"ant-tooltip-inner\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
+
     }
 
     /**
@@ -49,12 +59,15 @@ public class statBlock {
      *
      * @return String
      */
-    @Step("Getting the attribute value \"data-icon\"")
     @Attachment
     public String getIcon() {
-        return block.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$("svg")
-                .getAttribute("data-icon");
+        return Allure.step("Getting the attribute value \"data-icon\"", step -> {
+            logTime(step);
+
+            return Objects.requireNonNull(block.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$("svg")
+                    .getAttribute("data-icon"));
+        });
     }
 
     /**
@@ -62,12 +75,16 @@ public class statBlock {
      *
      * @return Integer
      */
-    @Step("Getting the number from the block corresponding to the number of rows when clicking on the filter")
     @Attachment
     public int getNumberOfRows() {
-        return Integer.parseInt(block.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$("div[class*=\"StatsBlock__itemContent\"] div:nth-child(1)")
-                .getText());
+        return Allure.step("Getting the number from the block corresponding to the number of rows when clicking on the filter", step -> {
+            logTime(step);
+
+            return Integer.parseInt(block.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$("div[class*=\"StatsBlock__itemContent\"] div:nth-child(1)")
+                    .getText());
+        });
+
     }
 
     /**
@@ -75,27 +92,30 @@ public class statBlock {
      *
      * @return String
      */
-    @Step("Getting the block color in Hex format")
     @Attachment
     public String getHexColorBlock() {
-        String color = block
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$("div[class*=\"ant-list-item StatsBlock__itemContainer\"]")
-                .getAttribute("style");
-        Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
-        Matcher matcher = pattern.matcher(color);
+        return Allure.step("Getting the block color in Hex format", step -> {
+            logTime(step);
 
-        if (matcher.find()) {
-            String rgb = matcher.group(1);
-            String NewRGB = rgb.replaceAll(" ", "");
-            String[] strings = NewRGB.split("[,\\\\s]+");
-            int[] numbers = new int[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                numbers[i] = Integer.parseInt(strings[i]);
+            String color = block
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$("div[class*=\"ant-list-item StatsBlock__itemContainer\"]")
+                    .getAttribute("style");
+            Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
+            Matcher matcher = pattern.matcher(color);
+
+            if (matcher.find()) {
+                String rgb = matcher.group(1);
+                String NewRGB = rgb.replaceAll(" ", "");
+                String[] strings = NewRGB.split("[,\\\\s]+");
+                int[] numbers = new int[strings.length];
+                for (int i = 0; i < strings.length; i++) {
+                    numbers[i] = Integer.parseInt(strings[i]);
+                }
+                return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            } else {
+                return null;
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
-        } else {
-            return null;
-        }
+        });
     }
 }

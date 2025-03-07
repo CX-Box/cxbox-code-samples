@@ -4,8 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.Duration;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class FilesPopup {
 
@@ -24,13 +25,16 @@ public class FilesPopup {
      *
      * @return String
      */
-    @Step("Getting the header value")
     @Attachment
     public String getTitle() {
-        return popup
-                .$("div[class=\"ant-notification-notice-message\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getText();
+        return Allure.step("Getting the header value", step -> {
+            logTime(step);
+
+            return popup
+                    .$("div[class=\"ant-notification-notice-message\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .getText();
+        });
     }
 
     /**
@@ -38,27 +42,34 @@ public class FilesPopup {
      *
      * @return List Pair
      */
-    @Step("Getting a list of files and their status")
     @Attachment
     public List<Pair<String, String>> getFileNameAndStatusUpload() {
-        List<Pair<String, String>> pairs = new ArrayList<Pair<String, String>>();
-        for (SelenideElement file : getFilesList()) {
-            String key = file.getAttribute("data-test-file-name");
-            String value = file.getAttribute("data-test-file-status");
-            pairs.add(Pair.of(key, value));
-        }
-        return pairs;
+        return Allure.step("Getting a list of files and their status", step -> {
+            logTime(step);
+
+            List<Pair<String, String>> pairs = new ArrayList<Pair<String, String>>();
+            for (SelenideElement file : getFilesList()) {
+                String key = file.getAttribute("data-test-file-name");
+                String value = file.getAttribute("data-test-file-status");
+                pairs.add(Pair.of(key, value));
+            }
+            return pairs;
+        });
     }
 
     /**
      * Closing window
      */
-    @Step("Closing window")
     public void close() {
-        popup
-                .$("i[aria-label=\"icon: close\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Closing window", step -> {
+            logTime(step);
+
+            popup
+                    .$("i[aria-label=\"icon: close\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
+
     }
 
     private ElementsCollection getFilesList() {

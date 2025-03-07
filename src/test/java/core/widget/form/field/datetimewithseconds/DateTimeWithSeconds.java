@@ -5,13 +5,15 @@ import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Calendar;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class DateTimeWithSeconds extends BaseField<LocalDateTime> {
 
@@ -28,12 +30,15 @@ public class DateTimeWithSeconds extends BaseField<LocalDateTime> {
      *
      * @return LocalDateTime
      */
-    @Step("Getting a value from a field")
     @Attachment
     public LocalDateTime getValue() {
-        String date = getFieldByName().shouldBe(Condition.exist).$(getValueTag()).getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-        return LocalDateTime.parse(Objects.requireNonNull(date), formatter);
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            String date = getFieldByName().shouldBe(Condition.exist).$(getValueTag()).getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            return LocalDateTime.parse(Objects.requireNonNull(date), formatter);
+        });
     }
 
     /**
@@ -43,22 +48,30 @@ public class DateTimeWithSeconds extends BaseField<LocalDateTime> {
      * {@code example} LocalDateTime dateTime = LocalDateTime.of(2020, 15, 10, 10, 10, 10)
      */
     @Override
-    @Step("Setting the {value} in the field")
     public void setValue(LocalDateTime value) {
-        clearIcon();
-        setFocusField();
-        Calendar.setDateTimeWithSecond(value);
+        Allure.step("Setting the " + value + " in the field", step -> {
+            logTime(step);
+            step.parameter("LocalDateTime with Seconds", value);
+
+            clearIcon();
+            setFocusField();
+            Calendar.setDateTimeWithSecond(value);
+        });
+
     }
 
     /**
      * Clearing the field through the cross icon.
      */
-    @Step("Clearing the field through the cross icon")
     public void clearIcon() {
-        getFieldByName()
-                .$("i[aria-label=\"icon: close-circle\"]")
-                .hover()
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Clearing the field through the cross icon", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$("i[aria-label=\"icon: close-circle\"]")
+                    .hover()
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 }

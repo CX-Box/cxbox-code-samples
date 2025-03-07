@@ -29,6 +29,7 @@ import core.widget.form.field.picklist.PickList;
 import core.widget.form.field.picklist.SuggestionPickList;
 import core.widget.form.field.radio.Radio;
 import core.widget.form.field.text.Text;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.Getter;
@@ -44,6 +45,7 @@ import java.util.Optional;
 
 import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 
 @RequiredArgsConstructor
@@ -65,9 +67,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Input
      */
-    @Step("Validation of a field with the Input by heading  {title}")
     public Input input(String title) {
-        return new Input(this, title);
+        return Allure.step("Validation of a field with the Input by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Input(this, title);
+        });
     }
 
     /**
@@ -77,9 +83,14 @@ public class FormWidget {
      * @param title Field header
      * @return class Money
      */
-    @Step("Validation of a field with the Money by heading  {title}")
     public Money money(String title) {
-        return new Money(this, title);
+        return Allure.step("Validation of a field with the Money by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Money(this, title);
+        });
+
     }
 
     /**
@@ -91,7 +102,12 @@ public class FormWidget {
      */
     @Step("Validation of a field with the Date by heading  {title}")
     public Date date(String title) {
-        return new Date(this, title);
+        return Allure.step("Validation of a field with the Date by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Date(this, title);
+        });
     }
 
     /**
@@ -101,9 +117,13 @@ public class FormWidget {
      * @param title Field header
      * @return class DateTime
      */
-    @Step("Validation of a field with the DateTime by heading  {title}")
     public DateTime dateTime(String title) {
-        return new DateTime(this, title);
+        return Allure.step("Validation of a field with the DateTime by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new DateTime(this, title);
+        });
     }
 
     /**
@@ -113,9 +133,13 @@ public class FormWidget {
      * @param title Field header
      * @return class DateTimeWithSeconds
      */
-    @Step("Validation of a field with the DateTimeWithSeconds by heading  {title}")
     public DateTimeWithSeconds dateTimeWithSeconds(String title) {
-        return new DateTimeWithSeconds(this, title);
+        return Allure.step("Validation of a field with the DateTimeWithSeconds by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new DateTimeWithSeconds(this, title);
+        });
     }
 
     /**
@@ -125,9 +149,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Number
      */
-    @Step("Validation of a field with the Number by heading  {title}")
     public Number number(String title) {
-        return new Number(this, title);
+        return Allure.step("Validation of a field with the Number by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Number(this, title);
+        });
     }
 
     /**
@@ -137,9 +165,13 @@ public class FormWidget {
      * @param title Field header
      * @return class NumberDigits
      */
-    @Step("Validation of a field with the NumberDigits by heading  {title}")
     public NumberDigits numberDigits(String title) {
-        return new NumberDigits(this, title);
+        return Allure.step("Validation of a field with the NumberDigits by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new NumberDigits(this, title);
+        });
     }
 
     /**
@@ -149,9 +181,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Percent
      */
-    @Step("Validation of a field with the Percent by heading  {title}")
     public Percent percent(String title) {
-        return new Percent(this, title);
+        return Allure.step("Validation of a field with the Percent by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Percent(this, title);
+        });
     }
 
     /**
@@ -161,9 +197,13 @@ public class FormWidget {
      * @param title Field header
      * @return class PercentDigits
      */
-    @Step("Validation of a field with the PercentDigits by heading  {title}")
     public PercentDigits percentDigits(String title) {
-        return new PercentDigits(this, title);
+        return Allure.step("Validation of a field with the PercentDigits by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new PercentDigits(this, title);
+        });
     }
 
     /**
@@ -173,9 +213,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Text
      */
-    @Step("Validation of a field with the Text by heading  {title}")
     public Text text(String title) {
-        return new Text(this, title);
+        return Allure.step("Validation of a field with the Text by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Text(this, title);
+        });
     }
 
     /**
@@ -185,9 +229,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Radio
      */
-    @Step("Validation of a field with the Radio by heading  {title}")
     public Radio radio(String title) {
-        return new Radio(this, title);
+        return Allure.step("Validation of a field with the Radio by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Radio(this, title);
+        });
     }
 
     /**
@@ -197,9 +245,13 @@ public class FormWidget {
      * @param title Field header
      * @return class CheckBox
      */
-    @Step("Validation of a field with the CheckBox by heading  {title}")
     public CheckBox checkBox(String title) {
-        return new CheckBox(this, title);
+        return Allure.step("Validation of a field with the CheckBox by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new CheckBox(this, title);
+        });
     }
 
     /**
@@ -209,9 +261,14 @@ public class FormWidget {
      * @param title Field header
      * @return class Dictionary
      */
-    @Step("Validation of a field with the Dictionary by heading  {title}")
     public Dictionary dictionary(String title) {
-        return new Dictionary(this, title);
+        return Allure.step("Validation of a field with the Dictionary by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Dictionary(this, title);
+        });
+
     }
 
     /**
@@ -221,9 +278,14 @@ public class FormWidget {
      * @param title Field header
      * @return class MultipleSelect
      */
-    @Step("Validation of a field with the MultipleSelect by heading  {title}")
     public MultipleSelect multipleSelect(String title) {
-        return new MultipleSelect(this, title);
+        return Allure.step("Validation of a field with the MultipleSelect by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new MultipleSelect(this, title);
+        });
+
     }
 
     /**
@@ -233,9 +295,13 @@ public class FormWidget {
      * @param title Field header
      * @return class FileUpload
      */
-    @Step("Validation of a field with the FileUpload by heading  {title}")
     public FileUpload fileUpload(String title) {
-        return new FileUpload(this, title);
+        return Allure.step("Validation of a field with the FileUpload by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new FileUpload(this, title);
+        });
     }
 
     /**
@@ -245,9 +311,13 @@ public class FormWidget {
      * @param title Field header
      * @return class MultiValue
      */
-    @Step("Validation of a field with the MultiValue by heading  {title}")
     public MultiValue multiValue(String title) {
-        return new MultiValue(this, title);
+        return Allure.step("Validation of a field with the MultiValue by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new MultiValue(this, title);
+        });
     }
 
     /**
@@ -257,9 +327,13 @@ public class FormWidget {
      * @param title Field header
      * @return class Hint
      */
-    @Step("Validation of a field with the Hint by heading  {title}")
     public Hint hint(String title) {
-        return new Hint(this, title);
+        return Allure.step("Validation of a field with the Hint by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Hint(this, title);
+        });
     }
 
     /**
@@ -269,9 +343,13 @@ public class FormWidget {
      * @param title Field header
      * @return class MultiValueHover
      */
-    @Step("Validation of a field with the MultiValueHover by heading  {title}")
     public MultiValueHover multiValueHover(String title) {
-        return new MultiValueHover(this, title);
+        return Allure.step("Validation of a field with the MultiValueHover by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new MultiValueHover(this, title);
+        });
     }
 
     /**
@@ -281,9 +359,13 @@ public class FormWidget {
      * @param title Field header
      * @return class MultiField
      */
-    @Step("Validation of a field with the MultiField by heading  {title}")
     public MultiField multiField(String title) {
-        return new MultiField(this, title);
+        return Allure.step("Validation of a field with the MultiField by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new MultiField(this, title);
+        });
     }
 
     /**
@@ -293,9 +375,13 @@ public class FormWidget {
      * @param title Field header
      * @return class InlinePickList
      */
-    @Step("Validation of a field with the InlinePickList by heading  {title}")
     public InlinePickList inlinePickList(String title) {
-        return new InlinePickList(this, title);
+        return Allure.step("Validation of a field with the InlinePickList by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new InlinePickList(this, title);
+        });
     }
 
     /**
@@ -305,9 +391,14 @@ public class FormWidget {
      * @param title Field header
      * @return class PickList
      */
-    @Step("Validation of a field with the PickList by heading  {title}")
     public PickList pickList(String title) {
-        return new PickList(this, title);
+        return Allure.step("Validation of a field with the PickList by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new PickList(this, title);
+        });
+
     }
 
     /**
@@ -317,9 +408,13 @@ public class FormWidget {
      * @param title Field header
      * @return class SuggestionPickList
      */
-    @Step("Validation of a field with the SuggestionPickList by heading  {title}")
     public SuggestionPickList suggestionPickList(String title) {
-        return new SuggestionPickList(this, title);
+        return Allure.step("Validation of a field with the SuggestionPickList by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new SuggestionPickList(this, title);
+        });
     }
 
     /**
@@ -327,21 +422,28 @@ public class FormWidget {
      *
      * @param actionName Name button on FormWidget
      */
-    @Step("Click on the button {actionName}")
     public void clickButton(String actionName) {
-        SelenideElement button = getButton(actionName);
-        button
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Click on the button " + actionName, step -> {
+            logTime(step);
+            step.parameter("Action name", actionName);
+
+            SelenideElement button = getButton(actionName);
+            button
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 
     /**
      * Displaying a list of all buttons in a widget
      */
-    @Step("Getting a list of buttons")
     public List<String> getButtons() {
-        return getContainersActions().texts();
+        return Allure.step("Getting a list of buttons", step -> {
+            logTime(step);
+
+            return getContainersActions().texts();
+        });
     }
 
     private SelenideElement getButton(String actionName) {
@@ -366,13 +468,16 @@ public class FormWidget {
      *
      * @return class AddFiles
      */
-    @Step("Validation of the Mass File upload field")
     public Optional<AddFiles> findAddFiles() {
-        if (widget.$("button[data-test-widget-action-item=\"true\"]").$(By.linkText("Add Files")).is(Condition.visible)) {
-            return Optional.of(new AddFiles(widget));
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation of the Mass File upload field", step -> {
+            logTime(step);
+
+            if (widget.$("button[data-test-widget-action-item=\"true\"]").$(By.linkText("Add Files")).is(Condition.visible)) {
+                return Optional.of(new AddFiles(widget));
+            } else {
+                return Optional.empty();
+            }
+        });
     }
 
     /**
@@ -380,16 +485,19 @@ public class FormWidget {
      *
      * @return long
      */
-    @Step("Getting the row id when creating via Inline Form")
     @Attachment
     public long getIdInlineForm() {
-        if (widget.is(Condition.attribute("data-test-widget-list-row-type"))) {
-            long l = Long.parseLong(Objects.requireNonNull(widget.getAttribute("data-test-widget-list-row-id")));
-            log.info("Id new row is {}", l);
-            return l;
-        } else {
-            throw new UnsupportedOperationException("It's not InlineForm");
-        }
+        return Allure.step("Getting the row id when creating via Inline Form", step -> {
+            logTime(step);
+
+            if (widget.is(Condition.attribute("data-test-widget-list-row-type"))) {
+                long l = Long.parseLong(Objects.requireNonNull(widget.getAttribute("data-test-widget-list-row-id")));
+                log.info("Id new row is {}", l);
+                return l;
+            } else {
+                throw new UnsupportedOperationException("It's not InlineForm");
+            }
+        });
     }
 
     /**
@@ -397,20 +505,23 @@ public class FormWidget {
      *
      * @return class ButtonWithMenu
      */
-    @Step("Pressing the button and opening the button menu")
     public Optional<ButtonWithMenu> openMenuButton() {
-        for (SelenideElement button : getContainersActions()) {
-            if (Objects.requireNonNull(button.getAttribute("class")).matches("ant-dropdown-trigger")) {
-                button.click();
-                String cssSelector = "div[class=\"ant-dropdown ant-dropdown-placement-bottomLeft\"]";
-                if ($(cssSelector).is(Condition.visible)) {
-                    return Optional.of(new ButtonWithMenu($(cssSelector)));
-                } else {
-                    return Optional.empty();
+        return Allure.step("Pressing the button and opening the button menu", step -> {
+            logTime(step);
+
+            for (SelenideElement button : getContainersActions()) {
+                if (Objects.requireNonNull(button.getAttribute("class")).matches("ant-dropdown-trigger")) {
+                    button.click();
+                    String cssSelector = "div[class=\"ant-dropdown ant-dropdown-placement-bottomLeft\"]";
+                    if ($(cssSelector).is(Condition.visible)) {
+                        return Optional.of(new ButtonWithMenu($(cssSelector)));
+                    } else {
+                        return Optional.empty();
+                    }
                 }
             }
-        }
-        return Optional.empty();
+            return Optional.empty();
+        });
     }
 
     /**
@@ -418,15 +529,18 @@ public class FormWidget {
      *
      * @return HashMap(String, String)
      */
-    @Step("Getting a list of fields in a heading and type pair")
     @Attachment
     public HashMap<String, String> getFieldTitleAndType() {
-        HashMap<String, String> values = new HashMap<>();
-        for (SelenideElement field : widget.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).$$("div[data-test]")) {
-            String title = field.attr("data-test-field-title");
-            String type = field.attr("data-test-field-type");
-            values.put(title, type);
-        }
-        return values;
+        return Allure.step("Getting a list of fields in a heading and type pair", step -> {
+            logTime(step);
+
+            HashMap<String, String> values = new HashMap<>();
+            for (SelenideElement field : widget.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).$$("div[data-test]")) {
+                String title = field.attr("data-test-field-title");
+                String type = field.attr("data-test-field-type");
+                values.put(title, type);
+            }
+            return values;
+        });
     }
 }
