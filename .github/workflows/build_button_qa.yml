@@ -108,6 +108,7 @@ jobs:
           mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
       
       - name: Create side-tests directory
+        if: always()
         run: mkdir -p gh-pages/side-tests  
 
       - name: Upload allure results
@@ -130,6 +131,7 @@ jobs:
         run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report  
         
       - name: Prepare files for deployment
+        if: always()
         run: |
           mkdir -p deploy/side-tests/${{ github.run_number }}
           cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
@@ -145,6 +147,7 @@ jobs:
           keep_files: true
 
       - name: Generate and add report URL to Job Summary 
+        if: always()
         run: |
           REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
           echo "Report URL: $REPORT_URL"
