@@ -16,16 +16,24 @@ import lombok.NonNull;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LoggingPreferences;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.openqa.selenium.logging.Logs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
 
@@ -35,6 +43,7 @@ public class BaseTestForSamples {
     public static WidgetPage page;
     private BrowserUpProxy bmp = null;
     private static StringBuilder loginBuilder = new StringBuilder();
+    private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
 
 
     @BeforeAll
@@ -75,6 +84,8 @@ public class BaseTestForSamples {
             bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
             bmp.newHar("Proxy start");
 
+
+
             page = new LoginPage().loginKeyCloak("demo", "demo");
         });
     }
@@ -108,7 +119,9 @@ public class BaseTestForSamples {
     public void printLogs(){
         Allure.step("Print browser logs and response...", step -> {
             logTime(step);
-            printLog();
+            Logs logs = getWebDriver().manage().logs();
+            printConsoleLog(logs.get(LogType.BROWSER.toString()));
+            printNetworkLog();
         });
     }
 
@@ -138,8 +151,7 @@ public class BaseTestForSamples {
         Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(Paths.get("logLoginZip.zip")), ".zip");
     }
 
-    void printLog() {
-
+    void printNetworkLog() {
         StringBuilder stringBuilder = new StringBuilder();
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
@@ -149,9 +161,9 @@ public class BaseTestForSamples {
             stringBuilder.append(x.getStartedDateTime()).append("\n")
                     .append(x.getRequest().getMethod().name()).append("\n")
                     .append(x.getRequest().getUrl()).append("\n")
-                    .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
+                    .append("Request: ").append(x.getRequest().getPostData().getText()).append("\n")
                     .append(x.getResponse().getStatus()).append("\n")
-                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n"); 
+                    .append("Response: ").append(x.getResponse().getContent().getText()).append("\n\n");
         });
 
         bmp.getHar().getLog().getEntries().stream().filter( x ->
@@ -162,13 +174,33 @@ public class BaseTestForSamples {
             loginBuilder.append(x.getStartedDateTime()).append("\n")
                     .append(x.getRequest().getMethod().name()).append("\n")
                     .append(x.getRequest().getUrl()).append("\n")
-                    .append("Body: ").append(x.getRequest().getPostData().getText()).append("\n")
+                    .append("Request: ").append(x.getRequest().getPostData().getText()).append("\n")
                     .append(x.getResponse().getStatus()).append("\n")
-                    .append("Content").append(x.getResponse().getContent().getText()).append("\n\n");
+                    .append("Response: ").append(x.getResponse().getContent().getText()).append("\n\n");
 
         });
 
         Allure.addAttachment("Browser network", stringBuilder.toString());
+    }
+
+    void printConsoleLog(LogEntries entries) {
+        logger.info("{} log entries found", entries.getAll().size());
+        for (LogEntry entry : entries) {
+            logger.info("{} {} {}",
+                    new Date(entry.getTimestamp()), entry.getLevel(), entry.getMessage()
+            );
+        }
+
+        StringBuilder logContent = new StringBuilder();
+        logContent.append("Log entries found: ").append(entries.getAll().size()).append("\n\n");
+        for (LogEntry entry : entries) {
+            logContent.append(new Date(entry.getTimestamp()))
+                    .append(" ").append(entry.getLevel())
+                    .append(" ").append(entry.getMessage())
+                    .append("\n\n");
+        }
+
+        Allure.addAttachment("Browser Logs", logContent.toString());
     }
 
     private String getEnv() {
