@@ -1,0 +1,90 @@
+package core.widget.stepper;
+
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import core.OriginExpectations.CxBoxExpectations;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
+@Getter
+public class StepsWidget {
+    protected final SelenideElement widget;
+    private final CxBoxExpectations waitingForTests = new CxBoxExpectations();
+
+    private ElementsCollection steps() {
+        return widget
+                .should(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .$$("div[class=\"ant-steps-item-container\"]");
+    }
+
+    /**
+     * Getting the number and text of the steps
+     *
+     * @return Pair Integer, String
+     */
+    @Step("Getting the number and text of the steps")
+    @Attachment
+    public List<Pair<Integer, String>> getNumberAndTextSteps() {
+        waitingForTests.getWaitAllElements(widget);
+        List<Pair<Integer, String>> pairs = new ArrayList<>();
+        steps().forEach(step -> {
+            Integer number = Integer.valueOf(step.$("div[class=\"ant-steps-item-icon\"]")
+                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text());
+            String text = step.$("div[class=\"ant-steps-item-title\"]")
+                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+            pairs.add(Pair.of(number, text));
+
+        });
+        return pairs;
+    }
+
+    /**
+     * Getting the number and text of the selected step
+     *
+     * @param stepIndex The step number. Counting down from 1
+     * @return String
+     */
+    @Step("Getting the number and text for {stepIndex}  steps")
+    @Attachment
+    public String getStepText(int stepIndex) {
+        waitingForTests.getWaitAllElements(widget);
+        SelenideElement element = steps().get(stepIndex - 1);
+        String number = element.$("div[class=\"ant-steps-item-icon\"]")
+                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
+        String text = element.$("div[class=\"ant-steps-item-title\"]")
+                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
+        return (number + ", " + text);
+    }
+
+    /**
+     * Getting the number and text of the active/current step
+     *
+     * @return String
+     */
+    @Step("Getting the number and text of the active/current step")
+    @Attachment
+    public String getTextActiveStep() {
+        SelenideElement activeElement = widget
+                .$("div[class=\"ant-steps-item ant-steps-item-process ant-steps-item-active\"]")
+                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+        waitingForTests.getWaitAllElements(activeElement);
+        String number = activeElement.$("div[class=\"ant-steps-item-icon\"]").text();
+        String text = activeElement.$("div[class=\"ant-steps-item-title\"]").text();
+        return (number + ", " + text);
+    }
+
+}
