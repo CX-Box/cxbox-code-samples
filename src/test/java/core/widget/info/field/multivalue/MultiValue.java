@@ -3,11 +3,14 @@ package core.widget.info.field.multivalue;
 import com.codeborne.selenide.Condition;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
 import java.util.List;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class MultiValue extends BaseString<List<String>> {
 
@@ -21,14 +24,18 @@ public class MultiValue extends BaseString<List<String>> {
      * @return List String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public List<String> getValue() {
-        return getFieldByName()
-                .$("div[class*=\"InfoCell__fieldData\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$$(getValueTag())
-                .texts();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("div[class*=\"InfoCell__fieldData\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$$(getValueTag())
+                    .texts();
+        });
+
     }
 
     @Override

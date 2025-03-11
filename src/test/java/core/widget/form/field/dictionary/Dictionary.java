@@ -5,12 +5,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.util.List;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Dictionary extends BaseField<String> {
     protected final String MENU_OPTIONS = "div.ant-select-dropdown";
@@ -30,13 +32,15 @@ public class Dictionary extends BaseField<String> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        return getFieldByName()
-                .$("span")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+            return getFieldByName()
+                    .$("span")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
     }
 
     /**
@@ -45,13 +49,16 @@ public class Dictionary extends BaseField<String> {
      * @param value String
      */
     @Override
-    @Step("Setting the {value} in the field")
     public void setValue(String value) {
-        clear();
-        getFieldByName().click();
-        getOptionDictionary(value)
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Setting the " + value + " in the field", step -> {
+            logTime(step);
+            step.parameter("value", value);
+            clear();
+            getFieldByName().click();
+            getOptionDictionary(value)
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 
     /**
@@ -59,11 +66,13 @@ public class Dictionary extends BaseField<String> {
      *
      * @return List String
      */
-    @Step("Getting a list of options from a drop-down list")
     @Attachment
     public List<String> getOptions() {
-        getFieldByName().click();
-        return getOptionsDictionary().texts();
+        return Allure.step("Getting a list of options from a drop-down list", step -> {
+            logTime(step);
+            getFieldByName().click();
+            return getOptionsDictionary().texts();
+        });
     }
 
     private SelenideElement getOptionDictionary(String value) {
@@ -81,19 +90,23 @@ public class Dictionary extends BaseField<String> {
     /**
      * Clearing the field through the cross icon.
      */
-    @Step("Clearing the field through the cross icon")
     public void clear() {
-        if (getFieldByName()
-                .$("i[aria-label=\"icon: close-circle\"]")
-                .is(Condition.exist)) {
-            getFieldByName()
+        Allure.step("Clearing the field through the cross icon", step -> {
+            logTime(step);
+
+            if (getFieldByName()
                     .$("i[aria-label=\"icon: close-circle\"]")
-                    .hover();
-            getFieldByName()
-                    .$("i[aria-label=\"icon: close-circle\"]")
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .click();
-        }
+                    .is(Condition.exist)) {
+                getFieldByName()
+                        .$("i[aria-label=\"icon: close-circle\"]")
+                        .hover();
+                getFieldByName()
+                        .$("i[aria-label=\"icon: close-circle\"]")
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .click();
+            }
+        });
+
 
     }
 
@@ -102,12 +115,14 @@ public class Dictionary extends BaseField<String> {
      *
      * @return String
      */
-    @Step("Getting the Placeholder value")
     @Attachment
     public String getPlaceholder() {
-        return getFieldByName()
-                .$("div[class=\"ant-select-selection__placeholder\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+            return getFieldByName()
+                    .$("div[class=\"ant-select-selection__placeholder\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
     }
 }

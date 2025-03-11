@@ -2,13 +2,14 @@ package core.widget.modal.picklist;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.StaleElementReferenceException;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @Slf4j
 public class PickListModal extends AbstractPickList {
@@ -41,47 +42,51 @@ public class PickListModal extends AbstractPickList {
      *
      * @param value String
      */
-    @Step("Choosing a value {value}")
     public void setValue(String value) {
-        while (true) {
-            boolean valueFound = false;
-            if (!widget.is(Condition.visible)) {
-                log.warn("Widget is not visible");
-                break;
-            }
-            try {
-                waitingForTests.getWaitAllElements(widget);
-                for (SelenideElement row : helper.getListRows()) {
-                    if (row.getText().contains(value)) {
-                        row.click();
-                        valueFound = true;
-                        if (!widget.is(Condition.visible)) {
-                            log.info("Page disappeared after clicking the row with value '{}'", value);
+        Allure.step("Choosing a value " + value, step -> {
+            logTime(step);
+            step.parameter("Value", value);
+
+            while (true) {
+                boolean valueFound = false;
+                if (!widget.is(Condition.visible)) {
+                    log.warn("Widget is not visible");
+                    break;
+                }
+                try {
+                    waitingForTests.getWaitAllElements(widget);
+                    for (SelenideElement row : helper.getListRows()) {
+                        if (row.getText().contains(value)) {
+                            row.click();
+                            valueFound = true;
+                            if (!widget.is(Condition.visible)) {
+                                log.info("Page disappeared after clicking the row with value '{}'", value);
+                            }
+                            break;
+                        } else {
+                            log.info("Value '{}' doesn't match in row '{}'", value, row.getText());
                         }
+                    }
+                } catch (Exception e) {
+                    throw new StaleElementReferenceException("Exception occurred while processing rows", e);
+                }
+                if (valueFound) {
+                    break;
+                }
+                if (widget.is(Condition.visible)) {
+                    if (helper.isLastPage()) {
+                        log.info("Reached the last page without finding value '{}'", value);
                         break;
                     } else {
-                        log.info("Value '{}' doesn't match in row '{}'", value, row.getText());
+                        log.info("Navigating to the next page");
+                        helper.pressRight(1);
+                        waitingForTests.getWaitAllElements(widget);
                     }
-                }
-            } catch (Exception e) {
-                throw new StaleElementReferenceException("Exception occurred while processing rows", e);
-            }
-            if (valueFound) {
-                break;
-            }
-            if (widget.is(Condition.visible)) {
-                if (helper.isLastPage()) {
-                    log.info("Reached the last page without finding value '{}'", value);
-                    break;
                 } else {
-                    log.info("Navigating to the next page");
-                    helper.pressRight(1);
-                    waitingForTests.getWaitAllElements(widget);
+                    log.warn("Widget became invisible before navigating to the next page");
+                    break;
                 }
-            } else {
-                log.warn("Widget became invisible before navigating to the next page");
-                break;
             }
-        }
+        });
     }
 }

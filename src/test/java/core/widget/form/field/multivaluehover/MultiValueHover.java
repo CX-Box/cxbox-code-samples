@@ -3,12 +3,15 @@ package core.widget.form.field.multivaluehover;
 import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
 
+
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class MultiValueHover extends BaseField<String> {
     public MultiValueHover(FormWidget formWidget, String title) {
@@ -21,16 +24,19 @@ public class MultiValueHover extends BaseField<String> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .hover();
-        return $("div[class=\"ant-popover-inner\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .hover();
+            return $("div[class=\"ant-popover-inner\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
     }
 
     /**

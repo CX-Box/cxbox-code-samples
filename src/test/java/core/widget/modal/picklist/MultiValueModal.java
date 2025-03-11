@@ -1,8 +1,8 @@
 package core.widget.modal.picklist;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
 
@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 
 public class MultiValueModal extends AbstractPickList {
@@ -52,12 +54,18 @@ public class MultiValueModal extends AbstractPickList {
      * @param value      List String list of values
      * @param status     Boolean true/false
      */
-    @Step("Setting the list of values")
     @Override
     public void setValues(String columnName, List<String> value, Boolean status) {
-        clear();
-        setMultiValue(columnName, value, status);
-        close();
+        Allure.step("Setting the list of values", step -> {
+            logTime(step);
+            step.parameter("Table's name", columnName);
+            step.parameter("List string of values", value);
+            step.parameter("Status", status);
+
+            clear();
+            setMultiValue(columnName, value, status);
+            close();
+        });
     }
 
     /**
@@ -66,16 +74,22 @@ public class MultiValueModal extends AbstractPickList {
      * @param value  String value
      * @param status Boolean true/false
      */
-    @Step("Setting the {value} value to {status}")
     public void setValue(String value, Boolean status) {
-        while (true) {
-            getColumnName().forEach(column -> setValuesOnCurrentPage(column, Collections.singletonList(value), status));
-            if (isLastPage()) {
-                break;
+        Allure.step("Setting the " + value + " value to " + status, step -> {
+            logTime(step);
+            step.parameter("Value", value);
+            step.parameter("Status", status);
+
+            while (true) {
+                getColumnName().forEach(column -> setValuesOnCurrentPage(column, Collections.singletonList(value), status));
+                if (isLastPage()) {
+                    break;
+                }
+                pressRight(1);
             }
-            pressRight(1);
-        }
-        close();
+            close();
+        });
+
     }
 
     /**
@@ -85,17 +99,24 @@ public class MultiValueModal extends AbstractPickList {
      * @param value      List String list of values
      * @param status     Boolean true/false
      */
-    @Step("Setting multiple values, without clearing the field")
     @Override
     public void setMultiValue(String columnName, List<String> value, Boolean status) {
-        while (true) {
-            setValuesOnCurrentPage(columnName, value, status);
-            if (isLastPage()) {
-                break;
+        Allure.step("Setting multiple values, without clearing the field", step -> {
+            logTime(step);
+            step.parameter("Table's name", columnName);
+            step.parameter("Value", value);
+            step.parameter("Status", status);
+
+            while (true) {
+                setValuesOnCurrentPage(columnName, value, status);
+                if (isLastPage()) {
+                    break;
+                }
+                pressRight(1);
+                Selenide.sleep(200);
             }
-            pressRight(1);
-            Selenide.sleep(200);
-        }
+        });
+
     }
 
     private void setValuesOnCurrentPage(String columnName, List<String> values, Boolean status) {
@@ -116,23 +137,25 @@ public class MultiValueModal extends AbstractPickList {
     /**
      * Setting all values
      */
-    @Step("Setting all values")
     public void setValueAll() {
-        while (true) {
-            getCheckBoxAll().click();
+        Allure.step("Setting all values", step -> {
+            logTime(step);
 
-            if(Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-                return;
+            while (true) {
+                getCheckBoxAll().click();
+
+                if(Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                    return;
+                }
+
+                if (isLastPage()) {
+                    break;
+                }
+
+                pressRight(1);
+                Selenide.sleep(200);
             }
-
-            if (isLastPage()) {
-                break;
-            }
-
-            pressRight(1);
-            Selenide.sleep(200);
-        }
-
+        });
     }
 
     public List<String> getColumnName() {
@@ -142,19 +165,23 @@ public class MultiValueModal extends AbstractPickList {
     /**
      * Clearing the field
      */
-    @Step("Clearing the field")
     public void clear() {
-        ElementsCollection icons = this.widget
-                .$("div[class=\"ant-modal-title\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$$("i[aria-label=\"icon: close\"]");
-        List<SelenideElement> listIcons = new ArrayList<>(icons.stream().toList());
-        Collections.reverse(listIcons);
-        for (SelenideElement i : listIcons) {
-            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
-            waitingForTests.getWaitAllElements(i);
-            i.click();
-        }
+        Allure.step("Clearing the field", step -> {
+            logTime(step);
+
+            ElementsCollection icons = this.widget
+                    .$("div[class=\"ant-modal-title\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$$("i[aria-label=\"icon: close\"]");
+            List<SelenideElement> listIcons = new ArrayList<>(icons.stream().toList());
+            Collections.reverse(listIcons);
+            for (SelenideElement i : listIcons) {
+                i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+                waitingForTests.getWaitAllElements(i);
+                i.click();
+            }
+        });
+
     }
 
     /**
@@ -163,35 +190,44 @@ public class MultiValueModal extends AbstractPickList {
      * @param columnName Column's name
      * @return List Pair Boolean String статус и имя
      */
-    @Step("Getting all values from the {columnName} column with the status")
     @Attachment
     public List<Pair<Boolean, String>> getStatusValue(String columnName) {
-        List<Pair<Boolean, String>> statusAndNames = new ArrayList<>();
-        while (true) {
-            helper.getListRows()
-                    .shouldBe(CollectionCondition.sizeGreaterThan(0))
-                    .stream()
-                    .forEach(row -> {
-                        Boolean status = getSelectionRow(row).isSelected();
-                        String name = helper.getColumnByName(columnName, row).getText();
-                        statusAndNames.add(Pair.of(status, name));
-                    });
-            if (isLastPage()) {
-                System.out.println(statusAndNames);
-                break;
+        return Allure.step("Getting all values from the " + columnName + " column with the status", step -> {
+            logTime(step);
+            step.parameter("Column's name", columnName);
+
+            List<Pair<Boolean, String>> statusAndNames = new ArrayList<>();
+            while (true) {
+                helper.getListRows()
+                        .shouldBe(CollectionCondition.sizeGreaterThan(0))
+                        .stream()
+                        .forEach(row -> {
+                            Boolean status = getSelectionRow(row).isSelected();
+                            String name = helper.getColumnByName(columnName, row).getText();
+                            statusAndNames.add(Pair.of(status, name));
+                        });
+                if (isLastPage()) {
+                    System.out.println(statusAndNames);
+                    break;
+                }
+                pressRight(1);
+                Selenide.sleep(200);
             }
-            pressRight(1);
-            Selenide.sleep(200);
-        }
-        return statusAndNames;
+            return statusAndNames;
+        });
+
     }
 
     /**
      * Clicking on the button Close
      */
-    @Step("Clicking on the button Close")
     public void close() {
-        getSubmitButton()
-                .click();
+        Allure.step("Clicking on the button Close", step -> {
+            logTime(step);
+
+            getSubmitButton()
+                    .click();
+        });
+
     }
 }

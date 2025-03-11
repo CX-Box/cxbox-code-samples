@@ -3,10 +3,13 @@ package core.widget.form.field.checkbox;
 import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import java.time.Duration;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
+
 
 public class CheckBox extends BaseField<Boolean> {
     public CheckBox(FormWidget formWidget, String title) {
@@ -23,14 +26,17 @@ public class CheckBox extends BaseField<Boolean> {
      * @return Boolean true/false
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public Boolean getValue() {
-        return getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .isSelected();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+            return getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .isSelected();
+        });
     }
+
 
     /**
      * Setting the selected value
@@ -38,13 +44,17 @@ public class CheckBox extends BaseField<Boolean> {
      * @param value Boolean true/false
      */
     @Override
-    @Step("Setting the {value} in the field")
     public void setValue(Boolean value) {
-        if (value) {
-            setTrue();
-        } else {
-            setFalse();
-        }
+        Allure.step("Setting the " + value + " in the field", step -> {
+            logTime(step);
+            step.parameter("value", value);
+
+            if (value) {
+                setTrue();
+            } else {
+                setFalse();
+            }
+        });
     }
 
     private void set() {

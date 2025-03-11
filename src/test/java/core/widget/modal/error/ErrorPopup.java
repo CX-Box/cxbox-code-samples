@@ -2,10 +2,12 @@ package core.widget.modal.error;
 
 import com.codeborne.selenide.SelenideElement;
 import core.widget.modal.BasePopup;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
+
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class ErrorPopup extends BasePopup<String> {
     public ErrorPopup() {
@@ -19,20 +21,26 @@ public class ErrorPopup extends BasePopup<String> {
      * Getting the title of a modal window
      * @return String title text
      */
-    @Step("Getting the header value")
     @Attachment
     public String getTitle() {
-        return getTextElement(" header span");
+        return Allure.step("Getting the header value", step -> {
+            logTime(step);
+
+            return getTextElement(" header span");
+        });
     }
 
     /**
      * Getting the message text
      * @return String message text
      */
-    @Step("Getting the message text")
     @Attachment
     public String getMessage() {
-        return getTextElement("span[class=\"ant-form-item-children\"]");
+        return Allure.step("Getting the message text", step -> {
+            logTime(step);
+
+            return getTextElement("span[class=\"ant-form-item-children\"]");
+        });
     }
 
 }

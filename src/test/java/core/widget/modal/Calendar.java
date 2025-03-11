@@ -2,7 +2,7 @@ package core.widget.modal;
 
 import com.codeborne.selenide.*;
 import core.OriginExpectations.CxBoxExpectations;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @Slf4j
 public class Calendar {
@@ -25,25 +26,32 @@ public class Calendar {
      *
      * @param field Field
      */
-    @Step("Validating the calendar window")
     public static void findCalendar(SelenideElement field) {
-        if (PANEL_CALENDAR.is(Condition.disappear)) {
-            field
-                    .$("i[aria-label=\"icon: calendar\"]")
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .click();
-        }
+        Allure.step("Validating the calendar window", step -> {
+           logTime(step);
+           step.parameter("Field", field);
+
+           if (PANEL_CALENDAR.is(Condition.disappear)) {
+                field
+                        .$("i[aria-label=\"icon: calendar\"]")
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .click();
+           }
+        });
     }
 
     /**
      * Clearing the calendar
      */
-    @Step("Clearing the field in calendar")
     public static void clear() {
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.editable, Duration.ofSeconds(waitingForTests.Timeout))
-                .sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        Allure.step("Clearing the field in calendar", step -> {
+            logTime(step);
+
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.editable, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        });
     }
 
     /**
@@ -51,27 +59,31 @@ public class Calendar {
      *
      * @param date LocalDate
      */
-    @Step("Setting the {date} in calendar")
     public static void setDate(LocalDate date) {
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(formattedDate(date));
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldHave(Condition.value(formattedDate(date)));
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .sendKeys(Keys.ENTER);
+        Allure.step("Setting the " + date + " in calendar", step -> {
+            logTime(step);
+            step.parameter("Date", date);
+
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(formattedDate(date));
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldHave(Condition.value(formattedDate(date)));
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.ENTER);
+        });
     }
 
 
@@ -80,65 +92,78 @@ public class Calendar {
      *
      * @param dateTime LocalDateTime
      */
-    @Step("Setting the {dateTime} in calendar")
     public static void setDateTime(LocalDateTime dateTime) {
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(formattedDateTime(dateTime));
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldHave(Condition.value(formattedDateTime(dateTime)));
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .sendKeys(Keys.ENTER);
+        Allure.step("Setting the " + dateTime + " in calendar", step -> {
+            logTime(step);
+            step.parameter("DateTime", dateTime);
+
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(formattedDateTime(dateTime));
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldHave(Condition.value(formattedDateTime(dateTime)));
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.ENTER);
+        });
+
     }
     /**
      * Set date
      *
      * @param dateTimeWithSeconds LocalDateTime
      */
-    @Step("Setting the {dateTimeWithSeconds} in calendar")
     public static void setDateTimeWithSecond(LocalDateTime dateTimeWithSeconds) {
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(formattedDateTimeWithSecond(dateTimeWithSeconds));
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldHave(Condition.value(formattedDateTimeWithSecond(dateTimeWithSeconds)));
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .sendKeys(Keys.ENTER);
+        Allure.step("Setting the " + dateTimeWithSeconds + " in calendar", step -> {
+            logTime(step);
+            step.parameter("LocalDateTime with sec", dateTimeWithSeconds);
+
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(formattedDateTimeWithSecond(dateTimeWithSeconds));
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldHave(Condition.value(formattedDateTimeWithSecond(dateTimeWithSeconds)));
+            PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.ENTER);
+        });
+
     }
 
     /**
      * Set the date for today
      */
-    @Step("Set the date for today")
     public static void setToday() {
-        PANEL_CALENDAR
-                .$("a[class=\"ant-calendar-today-btn \"]")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+        Allure.step("Set the date for today", step -> {
+            logTime(step);
+
+            PANEL_CALENDAR
+                    .$("a[class=\"ant-calendar-today-btn \"]")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        });
     }
 
     private static SelenideElement getContainer() {
@@ -163,10 +188,15 @@ public class Calendar {
      *
      * @param actionName Button's name
      */
-    @Step("Clicking on the button {actionName} in calendar")
     public static void clickButton(String actionName) {
-        SelenideElement button = getButton(actionName);
-        button.shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout)).click();
+        Allure.step("Clicking on the button " + actionName + " in calendar", step -> {
+            logTime(step);
+            step.parameter("Button's name", actionName);
+
+            SelenideElement button = getButton(actionName);
+            button.shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout)).click();
+        });
+
     }
 
     private static String formattedDate(LocalDate date) {

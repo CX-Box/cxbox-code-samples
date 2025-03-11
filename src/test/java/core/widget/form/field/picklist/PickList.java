@@ -5,13 +5,16 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Popup;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class PickList extends BaseField<String> {
     public PickList(FormWidget formWidget, String title) {
@@ -24,13 +27,16 @@ public class PickList extends BaseField<String> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        return getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getValue();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+            return Objects.requireNonNull(getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .getValue());
+        });
+
     }
 
     /**
@@ -60,20 +66,27 @@ public class PickList extends BaseField<String> {
     /**
      * Opening a modal window
      */
-    @Step("Вызов Popup")
     public void openModalWindow() {
-        modalWindow().click();
+        Allure.step("Launch Popup", step -> {
+            logTime(step);
+
+            modalWindow().click();
+        });
+
     }
 
     /**
      * Clearing the field
      */
-    @Step("Clearing the field")
     public void clear() {
-        getFieldByName()
-                .$("i[data-test-field-picklist-clear=\"true\"]")
-                .shouldBe(Condition.visible,
-                        Duration.ofSeconds(waitingForTests.Timeout)).click();
+        Allure.step("Clearing the field", step -> {
+            logTime(step);
+
+            getFieldByName()
+                    .$("i[data-test-field-picklist-clear=\"true\"]")
+                    .shouldBe(Condition.visible,
+                            Duration.ofSeconds(waitingForTests.Timeout)).click();
+        });
     }
 
     /**
@@ -81,15 +94,18 @@ public class PickList extends BaseField<String> {
      *
      * @return Popup class for accessing modal windows
      */
-    @Step("Validation of the Popup window")
     @Attachment
     public Optional<Popup> findPopup() {
-        SelenideElement elementPopup = $("div[data-test-widget-type=\"PickListPopup\"]")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
-        if (elementPopup.is(Condition.exist)) {
-            return Optional.of(new Popup());
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation of the Popup window", step -> {
+            logTime(step);
+
+            SelenideElement elementPopup = $("div[data-test-widget-type=\"PickListPopup\"]")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+            if (elementPopup.is(Condition.exist)) {
+                return Optional.of(new Popup());
+            } else {
+                return Optional.empty();
+            }
+        });
     }
 }
