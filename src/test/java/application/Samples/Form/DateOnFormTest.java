@@ -1,7 +1,6 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import com.codeborne.selenide.Condition;
 import core.ConfigTest.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
@@ -13,11 +12,9 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 import java.time.LocalDate;
 
-import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +32,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test gets the value from the placeholder attribute and returns it in String format")
     void placeholder() {
         MainPages.click("Date placeholder");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -48,7 +44,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
     void color() {
         MainPages.click("Date color");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -61,7 +56,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test checks for the disabled attribute")
     void readonly() {
         MainPages.click("Date readonly");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -75,7 +69,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets the value in the field, and then checks the value in the field with what should be set")
     void edit() {
         MainPages.click("Date basic");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -91,7 +84,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("Filtering is not available for the Form widget")
     void filtration() {
         MainPages.click("Date filtration");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("Custom Field");
@@ -104,7 +96,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("Checking the url before the transition and after the transition/click on a special element")
     void drillDown() {
         MainPages.click("Date drilldown");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -118,7 +109,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
     void businessException() {
         MainPages.click("Date validation business exception");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -138,7 +128,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
     void runtimeException() {
         MainPages.click("Date validation runtime exception");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -159,7 +148,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
     void confirm() {
         MainPages.click("Date confirm");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
@@ -197,7 +185,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
     void fieldLevelValidationAnnotationAlternative() {
         MainPages.click("Date validation field level annotation");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='Custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("Custom Field");
@@ -214,7 +201,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
     void fieldLevelValidation() {
         MainPages.click("Date validation field level dynamic");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='Custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         LocalDate date = LocalDate.of(2010, 2, 5);
@@ -236,7 +222,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("Sorting is not available for the Form widget")
     void sorting() {
         MainPages.click("Date sorting");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("Custom Field");
@@ -250,7 +235,6 @@ public class DateOnFormTest extends BaseTestForSamples {
     @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
     void required() {
         MainPages.click("Date required");
-        $(By.cssSelector("th[data-test-widget-list-header-column-title='custom Field']")).shouldBe(Condition.visible);
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.date("custom Field");
