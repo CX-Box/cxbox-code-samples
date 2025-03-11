@@ -8,11 +8,13 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
+import de.sstoehr.harreader.model.HarEntry;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,16 +24,17 @@ import org.openqa.selenium.logging.LoggingPreferences;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.openqa.selenium.logging.Logs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.widget.TestingTools.CellProcessor.logTime;
@@ -39,11 +42,11 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
+@Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
     private BrowserUpProxy bmp = null;
-    private static StringBuilder loginBuilder = new StringBuilder();
-    private static final Logger logger = LoggerFactory.getLogger(BaseTestForSamples.class);
+    private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
 
 
     @BeforeAll
@@ -135,20 +138,24 @@ public class BaseTestForSamples {
 
     @AfterAll
     public static void createZipLog() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("logLoginFile"));
-        writer.write((loginBuilder.toString()));
+        Path logFile = Paths.get("logLoginFile");
+        Path zipFile = Paths.get("logLoginZip.zip");
 
-        try (
-                 FileOutputStream fos = new FileOutputStream("logLoginZip.zip");
-                 ZipOutputStream zipOut = new ZipOutputStream(fos)) {
-                 ZipEntry zipEntry = new ZipEntry("logLoginFile");
-                 zipOut.putNextEntry(zipEntry);
-                 Files.copy(Paths.get("logLoginFile"), zipOut);
-                 zipOut.closeEntry();
+        try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            writer.write(loginLog.toString());
+        } catch (IOException e) {
+            log.error("Error writing log file ", e);
+            return; // Stop execution if log file cannot be written
         }
-        writer.close();
-        Files.delete(Paths.get("logLoginFile"));
-        Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(Paths.get("logLoginZip.zip")), ".zip");
+
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile.toFile()))) {
+            zipOut.putNextEntry(new ZipEntry("logLoginFile"));
+            Files.copy(logFile, zipOut);
+            zipOut.closeEntry();
+        }
+
+        Files.delete(logFile);
+        Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(zipFile), ".zip");
     }
 
     void printNetworkLog() {
@@ -157,36 +164,21 @@ public class BaseTestForSamples {
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
                         !x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
-        ).forEach(x -> {
-            stringBuilder.append(x.getStartedDateTime()).append("\n")
-                    .append(x.getRequest().getMethod().name()).append("\n")
-                    .append(x.getRequest().getUrl()).append("\n")
-                    .append("Request: ").append(x.getRequest().getPostData().getText()).append("\n")
-                    .append(x.getResponse().getStatus()).append("\n")
-                    .append("Response: ").append(x.getResponse().getContent().getText()).append("\n\n");
-        });
+        ).forEach(x -> stringBuilder.append(printNetworkLog(x)));
 
         bmp.getHar().getLog().getEntries().stream().filter( x ->
                 (x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
                         x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
-        ).forEach(x -> {
-            loginBuilder.append(x.getStartedDateTime()).append("\n")
-                    .append(x.getRequest().getMethod().name()).append("\n")
-                    .append(x.getRequest().getUrl()).append("\n")
-                    .append("Request: ").append(x.getRequest().getPostData().getText()).append("\n")
-                    .append(x.getResponse().getStatus()).append("\n")
-                    .append("Response: ").append(x.getResponse().getContent().getText()).append("\n\n");
-
-        });
+        ).forEach(x -> loginLog.add(printNetworkLog(x)));
 
         Allure.addAttachment("Browser network", stringBuilder.toString());
     }
 
     void printConsoleLog(LogEntries entries) {
-        logger.info("{} log entries found", entries.getAll().size());
+        log.info("{} log entries found", entries.getAll().size());
         for (LogEntry entry : entries) {
-            logger.info("{} {} {}",
+            log.info("{} {} {}",
                     new Date(entry.getTimestamp()), entry.getLevel(), entry.getMessage()
             );
         }
@@ -209,5 +201,14 @@ public class BaseTestForSamples {
             url = "http://code-samples.cxbox.org/ui/#/";
         }
         return url;
+    }
+
+    private static String printNetworkLog(HarEntry entry) {
+        return entry.getStartedDateTime() + "\n" +
+                entry.getRequest().getMethod().name() + "\n" +
+                entry.getRequest().getUrl() + "\n" +
+                "Request: " + entry.getRequest().getPostData().getText() + "\n" +
+                entry.getResponse().getStatus() + "\n" +
+                "Response: " + entry.getResponse().getContent().getText() + "\n\n";
     }
 }
