@@ -4,6 +4,7 @@ import { AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { createSkipWidgetList } from '@utils/createSkipWidgetList'
 import { interfaces } from '@cxbox-ui/core'
 import Widget from '@cxboxComponents/Widget/Widget'
+import styles from './DashboardLayout.less'
 
 export interface DashboardLayoutProps {
     widgets: AppWidgetMeta[]
@@ -14,13 +15,17 @@ export interface DashboardLayoutProps {
     disableDebugMode?: boolean
 }
 
+const sidebarWidgetsTypes: string[] = [CustomWidgetTypes.AdditionalInfo, CustomWidgetTypes.AdditionalList]
+
 export function DashboardLayout(props: DashboardLayoutProps) {
     const widgetsByRow = React.useMemo(() => {
         return groupByRow(props.widgets, props.skipWidgetTypes || [])
     }, [props.widgets, props.skipWidgetTypes])
 
     const additionalInfoWidgets = useMemo(() => {
-        return props.widgets.filter(widget => widget.type === CustomWidgetTypes.AdditionalInfo)
+        const skipWidgetList = createSkipWidgetList(props.widgets)
+
+        return props.widgets.filter(widget => sidebarWidgetsTypes.includes(widget.type) && !skipWidgetList.includes(widget.name))
     }, [props.widgets])
 
     const CommonWidgets = Object.values(widgetsByRow).map((row, rowIndex) => (
@@ -43,7 +48,7 @@ export function DashboardLayout(props: DashboardLayoutProps) {
         return (
             <Row gutter={24}>
                 <Col span={18}>{CommonWidgets}</Col>
-                <Col span={6}>
+                <Col span={6} className={styles.additionalInfoContainer}>
                     {additionalInfoWidgets.map(widget => (
                         <Row key={widget.name} gutter={[8, 8]}>
                             <Col span={24}>
@@ -70,7 +75,7 @@ function groupByRow<WidgetMeta extends AppWidgetMeta>(widgets: WidgetMeta[], ski
 
     widgets
         .filter(item => {
-            return !skipWidgetTypes.includes(item.type) && !skipWidgetList.includes(item.name)
+            return !skipWidgetTypes.includes(item.type) && !skipWidgetList.includes(item.name) && !sidebarWidgetsTypes.includes(item.type)
         })
         .forEach(item => {
             if (!byRow[item.position]) {
@@ -83,7 +88,7 @@ function groupByRow<WidgetMeta extends AppWidgetMeta>(widgets: WidgetMeta[], ski
 
 const { WidgetTypes } = interfaces
 
-const popupWidgets = [WidgetTypes.AssocListPopup, WidgetTypes.PickListPopup, WidgetTypes.FlatTreePopup, CustomWidgetTypes.FormPopup]
+const popupWidgets = [WidgetTypes.AssocListPopup, WidgetTypes.PickListPopup, WidgetTypes.FlatTreePopup]
 function getColWidth(widget: AppWidgetMeta) {
     // this is necessary so that the popup widget does not affect the formation of the grid
     const needFullWidth = popupWidgets.includes(widget.type as interfaces.WidgetTypes)

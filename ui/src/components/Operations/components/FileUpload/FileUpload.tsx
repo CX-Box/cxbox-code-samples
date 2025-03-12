@@ -5,7 +5,6 @@ import { getFileUploadEndpoint } from '@utils/api'
 import { useTranslation } from 'react-i18next'
 import { UploadProps } from 'antd/es/upload/interface'
 import { OperationInfo } from '@interfaces/widget'
-import { WidgetMeta } from '@interfaces/core'
 import cn from 'classnames'
 import { useBulkUploadFiles, useFileUploadHint } from '@components/Operations/components/FileUpload/FileUpload.hooks'
 import { UploadListContainer } from '@components/Operations/components/FileUpload/UploadListContainer'
@@ -19,6 +18,7 @@ import { buildBcUrl } from '@utils/buildBcUrl'
 import { RowMetaField } from '@interfaces/rowMeta'
 import { UPLOAD_TYPE } from '@components/Operations/components/FileUpload/FileUpload.constants'
 import Upload from '@components/Upload'
+import { WidgetMeta } from '@cxbox-ui/core'
 
 interface FileUploadProps {
     widget: WidgetMeta
@@ -37,6 +37,7 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
     const rowMetaField = rowMeta?.fields.find(field => field.key === operationInfo?.fieldKey)
     const fileAccept = (rowMetaField as RowMetaField)?.fileAccept
     const disabled = !rowMetaField
+    const available = rowMeta?.actions.find(action => action.type === 'associate') !== undefined
 
     const {
         initializeNewAddedFile,
@@ -104,7 +105,7 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
             })
     }
 
-    return (
+    return available ? (
         <>
             <div onDrop={disabled ? undefined : handleDrop}>
                 {mode === 'drag' ? (
@@ -132,5 +133,5 @@ export const FileUpload = ({ mode, widget, operationInfo, children, uploadType =
                 data-test-widget-name={widget?.name}
             />
         </>
-    )
+    ) : null
 }

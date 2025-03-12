@@ -1,18 +1,22 @@
 import React, { useCallback } from 'react'
-import ColumnFilter from './ColumnFilter'
+import { Icon } from 'antd'
 import cn from 'classnames'
 import ColumnSort from './ColumnSort'
-import styles from './ColumnTitle.less'
-import { CustomFieldTypes } from '@interfaces/widget'
-import { interfaces } from '@cxbox-ui/core'
 import { TemplatedTitle } from '@cxboxComponents'
-import { Icon } from 'antd'
+import ColumnFilter from './ColumnFilter'
 import Button from '../ui/Button/Button'
+import { useAppSelector } from '@store'
+import { numberFieldTypes } from '@constants/field'
+import { interfaces } from '@cxbox-ui/core'
+import { EFeatureSettingKey } from '@interfaces/session'
+import { CustomFieldTypes } from '@interfaces/widget'
+import { RowMetaField } from '@interfaces/rowMeta'
+import styles from './ColumnTitle.less'
 
 interface ColumnTitleProps {
     widgetName: string
     widgetMeta: interfaces.WidgetListField
-    rowMeta: interfaces.RowMetaField
+    rowMeta: RowMetaField
     onClose?: (fieldKey: string) => void
     showCloseButton?: boolean
 }
@@ -28,9 +32,12 @@ export const notSortableFields: readonly (interfaces.FieldType | CustomFieldType
     FieldType.hint
 ]
 
-const rightAlignedFields: readonly (interfaces.FieldType | CustomFieldTypes)[] = [FieldType.number, FieldType.money, FieldType.percent]
-
 const ColumnTitle = ({ widgetName, widgetMeta, rowMeta, onClose, showCloseButton }: ColumnTitleProps) => {
+    const sortingSetting = useAppSelector(state =>
+        state.session.featureSettings?.find(feature => feature.key === EFeatureSettingKey.sortEnabled)
+    )
+    const isSortingEnabled = sortingSetting?.value === 'true' || rowMeta?.sortable === true
+
     const handleColumnClose = useCallback(() => {
         onClose?.(widgetMeta.key)
     }, [onClose, widgetMeta.key])
@@ -56,7 +63,7 @@ const ColumnTitle = ({ widgetName, widgetMeta, rowMeta, onClose, showCloseButton
         return (
             <div
                 className={cn({
-                    [styles.rightAlignment]: rightAlignedFields.includes(widgetMeta.type)
+                    [styles.rightAlignment]: numberFieldTypes.includes(widgetMeta.type)
                 })}
             >
                 {title}
@@ -64,14 +71,14 @@ const ColumnTitle = ({ widgetName, widgetMeta, rowMeta, onClose, showCloseButton
         )
     }
 
-    const sort = !notSortableFields.includes(widgetMeta.type) && (
+    const sort = !notSortableFields.includes(widgetMeta.type) && isSortingEnabled && (
         <ColumnSort widgetName={widgetName} fieldKey={widgetMeta.key} className={styles.sort} />
     )
 
     const filter = rowMeta.filterable && <ColumnFilter widgetName={widgetName} widgetMeta={widgetMeta} rowMeta={rowMeta} />
 
     return (
-        <div className={cn(styles.container, { [styles.rightAlignment]: rightAlignedFields.includes(widgetMeta.type) })}>
+        <div className={cn(styles.container, { [styles.rightAlignment]: numberFieldTypes.includes(widgetMeta.type) })}>
             {title}
             {filter}
             {sort}

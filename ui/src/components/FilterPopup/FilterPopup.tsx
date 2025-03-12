@@ -10,11 +10,10 @@ import { useAppSelector } from '@store'
 import { useTranslation } from 'react-i18next'
 import { FieldType, WidgetField, WidgetTypes } from '@cxbox-ui/schema'
 import { useAssociateFieldKeyForPickList } from '../ColumnTitle/ColumnFilter'
-import { BcFilter, DataValue, FilterType as CoreFilterType } from '@interfaces/core'
-import { PickListFieldMeta } from '@cxbox-ui/schema/src/interfaces/widget'
 import { useDispatch } from 'react-redux'
 import { actions } from '@actions'
 import { FilterType } from '@interfaces/filters'
+import { PickListFieldMeta, BcFilter, DataValue, FilterType as CoreFilterType } from '@cxbox-ui/core'
 
 interface FilterPopupProps {
     widgetName: string
@@ -87,7 +86,7 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
                     widgetName: widget?.name as string
                 })
             )
-        } else if (props.value === null || props.value === undefined) {
+        } else if (props.value === null || props.value === undefined || (Array.isArray(props.value) && !props.value?.length)) {
             dispatch(actions.bcRemoveFilter({ bcName: widget?.bcName as string, filter: filter as BcFilter }))
         } else {
             dispatch(actions.bcAddFilter({ bcName: widget?.bcName as string, filter: newFilter, widgetName: widget?.name as string }))

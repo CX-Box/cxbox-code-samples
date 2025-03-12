@@ -1,5 +1,5 @@
 import { actions } from '@actions'
-import { PopupData as CorePopupData } from '@interfaces/core'
+import { PopupData as CorePopupData } from '@cxbox-ui/core'
 
 export interface FileViewerPopupOptions {
     type: 'file-viewer'
@@ -12,5 +12,5 @@ export interface CustomPopupOptions {
 }
 
 export interface PopupData extends CorePopupData {
-    options?: CustomPopupOptions & Partial<FileViewerPopupOptions>
+    options?: CorePopupData['options'] & CustomPopupOptions & Partial<FileViewerPopupOptions>
 }

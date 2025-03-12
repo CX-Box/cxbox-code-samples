@@ -36,6 +36,10 @@ import SuggestionPickListField from '../../fields/SuggestionPickList/SuggestionP
 import { StatsBlock } from '@components/widgets/StatsBlock/StatsBlock'
 import FileViewerPopup from '@components/FileViewerPopup/FileViewerPopup'
 import GroupingHierarchy from '@components/widgets/GroupingHierarchy/GroupingHierarchy'
+import { AdditionalListWidget } from '@components/widgets/AdditionalListWidget/AdditionalListWidget'
+import WaitUntilPopup from '@components/WaitUntilPopup/WaitUntilPopup'
+import Pie1D from '../widgets/Pie1D/Pie1D'
+import Column2D from '../widgets/Column2D/Column2D'
 
 // TODO We need to remove PopupWidgetTypes from the core and replace imports throughout the entire project
 const { PopupWidgetTypes, FieldType } = interfaces
@@ -43,8 +47,6 @@ const { PopupWidgetTypes, FieldType } = interfaces
 const customPopupWidgetTypes: CustomWidgetTypes[] = [CustomWidgetTypes.FormPopup]
 
 const allPopupWidgetTypes: string[] = [...customPopupWidgetTypes, ...PopupWidgetTypes]
-
-const skipWidgetTypes: (WidgetTypes | CustomWidgetTypes)[] = [CustomWidgetTypes.AdditionalInfo]
 
 const customFields = {
     [FieldType.number]: Number,
@@ -72,12 +74,15 @@ const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, 
     [CustomWidgetTypes.DashboardList]: { component: DashboardList, card: DashboardCard },
     [CustomWidgetTypes.FormPopup]: { component: FormPopup, card: null },
     [CustomWidgetTypes.AdditionalInfo]: { component: AdditionalInfoWidget, card: EmptyCard },
+    [CustomWidgetTypes.AdditionalList]: { component: AdditionalListWidget, card: EmptyCard },
     [WidgetTypes.AssocListPopup]: AssocListPopup,
     [WidgetTypes.PickListPopup]: PickListPopup,
     [WidgetTypes.SecondLevelMenu]: { component: LevelMenu, card: EmptyCard },
     [WidgetTypes.ThirdLevelMenu]: { component: LevelMenu, card: EmptyCard },
     [WidgetTypes.FourthLevelMenu]: { component: LevelMenu, card: EmptyCard },
-    [CustomWidgetTypes.StatsBlock]: { component: StatsBlock, card: EmptyCard }
+    [CustomWidgetTypes.StatsBlock]: { component: StatsBlock, card: EmptyCard },
+    [CustomWidgetTypes.Pie1D]: { component: Pie1D, card: DashboardCard },
+    [CustomWidgetTypes.Column2D]: { component: Column2D, card: DashboardCard }
 }
 
 function View() {
@@ -88,11 +93,11 @@ function View() {
         <div className={styles.container}>
             {debugMode && <ViewInfoLabel />}
             <FileViewerPopup />
+            <WaitUntilPopup />
             <CxboxView
                 customWidgets={customWidgets as Record<string, interfaces.CustomWidgetDescriptor>}
                 customFields={customFields}
                 card={Card as any}
-                skipWidgetTypes={skipWidgetTypes}
                 customLayout={DashboardLayout}
                 disableDebugMode={true}
             />

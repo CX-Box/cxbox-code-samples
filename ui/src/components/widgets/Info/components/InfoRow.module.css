@@ -1,8 +1,11 @@
-.extraWidth {
-    display: flex;
-    flex-flow: row wrap;
+.rowWrapper:first-child [class*="InfoValueWrapper_rowDirection"] {
+    box-shadow: 0 1px 0 0 #d5d5d5;
 }
 
-.rowWrapper:last-child [class^="InfoValueWrapper_fieldArea"] {
-    border-bottom: 0;
+.rowWrapper:last-child [class*="InfoValueWrapper_rowDirection"] {
+    box-shadow: 0 1px 0 0 #d5d5d5 inset;
+}
+
+.rowWrapper:only-child [class*="InfoValueWrapper_rowDirection"] {
+    box-shadow: none;
 }

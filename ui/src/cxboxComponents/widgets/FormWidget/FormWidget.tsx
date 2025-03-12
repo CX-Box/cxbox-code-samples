@@ -1,20 +1,19 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { Form, Row, Col } from 'antd'
 import Field from '@cxboxComponents/Field/Field'
-import styles from './FormWidget.less'
-import cn from 'classnames'
 import TemplatedTitle from '@cxboxComponents/TemplatedTitle/TemplatedTitle'
-import { RootState } from '@store'
-import { interfaces } from '@cxbox-ui/core'
 import { useFlatFormFields } from '@hooks/useFlatFormFields'
 import { buildBcUrl } from '@utils/buildBcUrl'
-import { useTranslation } from 'react-i18next'
+import { RootState } from '@store'
+import { interfaces } from '@cxbox-ui/core'
+import styles from './FormWidget.less'
 
 const { FieldType, PendingValidationFailsFormat } = interfaces
 
 interface FormWidgetOwnProps {
-    meta: interfaces.WidgetFormMeta
+    meta: Omit<interfaces.WidgetFormMeta, 'type'>
 }
 
 interface FormWidgetProps extends FormWidgetOwnProps {
@@ -43,10 +42,10 @@ export const FormWidget: FunctionComponent<FormWidgetProps> = ({ meta, fields, m
 
     const memoizedFields = React.useMemo(() => {
         return (
-            <Row gutter={24}>
+            <Row>
                 {meta.options?.layout?.rows.map((row, index) => {
                     return (
-                        <Row key={index}>
+                        <Row gutter={24} key={index} type="flex" align="stretch">
                             {row.cols
                                 .filter(field => {
                                     const fieldMeta = fields?.find(item => item.key === field?.fieldKey)
@@ -58,8 +57,9 @@ export const FormWidget: FunctionComponent<FormWidgetProps> = ({ meta, fields, m
                                     const disabled = fields?.find(item => item.key === field?.key && item.disabled)
                                     const error = (!disabled && missingFields?.[field?.key as string]) || metaErrors?.[field?.key as string]
                                     return (
-                                        <Col key={colIndex} span={col.span} className={cn(styles.colWrapper)}>
+                                        <Col key={colIndex} span={col.span}>
                                             <Form.Item
+                                                className={styles.formItem}
                                                 data-test="FIELD"
                                                 data-test-field-type={field?.type}
                                                 data-test-field-title={field?.label || field?.title}
@@ -73,7 +73,7 @@ export const FormWidget: FunctionComponent<FormWidgetProps> = ({ meta, fields, m
                                                     cursor={cursor}
                                                     widgetName={name}
                                                     widgetFieldMeta={field as interfaces.WidgetField}
-                                                    disableHoverError={meta.options?.disableHoverError}
+                                                    disableHoverError={true}
                                                 />
                                             </Form.Item>
                                         </Col>

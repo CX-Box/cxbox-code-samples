@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { ColumnProps, TableProps as AntdTableProps } from 'antd/es/table'
 import Pagination from '../../ui/Pagination/Pagination'
-import { useExpandableForm, useExpandableGroup } from './hooks/useExpandableForm'
+import { useExpandableForm } from './hooks/useExpandableForm'
 import styles from './Table.less'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { useAppSelector } from '@store'
@@ -13,7 +13,7 @@ import { actions } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
 import ReactDragListView, { DragListViewProps } from 'react-drag-listview'
-import { Icon, Menu, Modal, Table as AntdTable, Tooltip, Transfer } from 'antd'
+import { Icon, Menu, Modal, Popover, Table as AntdTable, Tooltip, Transfer } from 'antd'
 import DropdownSetting from './components/DropdownSetting'
 import Operations from '../../Operations/Operations'
 import FilterSettingModal from './components/FilterSettingModal'
@@ -22,32 +22,39 @@ import cn from 'classnames'
 import Header from '@components/widgets/Table/components/Header'
 import { Field, RowOperationsButton } from '@cxboxComponents'
 import { useRowMenu } from '@hooks/useRowMenu'
-import { DataItem, FieldType } from '@interfaces/core'
+import { DataItem, FieldType } from '@cxbox-ui/core'
 import { TableEventListeners } from 'antd/lib/table/interface'
 import { ExpandIconProps } from 'antd/lib/table'
 import { WidgetListField } from '@cxbox-ui/schema'
-import { usePrevious } from '@hooks/usePrevious'
 import Button from '@components/ui/Button/Button'
-import { createTree, getNodesPathsToLeaf } from '@components/widgets/Table/utils/createTree'
 import { interfaces } from '@cxbox-ui/core'
 import ColumnTitle from '@components/ColumnTitle/ColumnTitle'
 import ExpandIcon from '@components/widgets/Table/components/ExpandIcon'
-import { isFullVisibleElement } from '@components/widgets/Table/utils/elements'
-
-export type ControlColumn = { column: ColumnProps<DataItem>; position: 'left' | 'right' }
+import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { GroupingHierarchyCommonNode } from '@components/widgets/Table/groupingHierarchy'
+import {
+    fieldShowCondition,
+    getGroupingHierarchyRowKey,
+    getInternalGroupPath,
+    rowShowCondition,
+    useGroupingHierarchy
+} from '@components/widgets/Table/groupingHierarchy'
+import { numberFieldTypes } from '@constants/field'
+import { aggCellBgColorRgba, totalRowKey } from './groupingHierarchy/constants'
+import { getAggCellBgOpacity } from './groupingHierarchy/utils/aggregation'
 
 const ROW_KEY = 'id'
 
-interface TableProps extends AntdTableProps<DataItem> {
+interface TableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
-    primaryColumn?: ControlColumn
+    primaryColumn?: ControlColumn<T>
     disablePagination?: boolean
     hideRowActions?: boolean
     disableCellEdit?: boolean
     isGroupingHierarchy?: boolean
 }
 
-function Table({
+function Table<T extends CustomDataItem>({
     meta,
     isGroupingHierarchy,
     primaryColumn,
@@ -56,25 +63,34 @@ function Table({
     disableCellEdit = false,
     onRow,
     ...rest
-}: TableProps) {
+}: TableProps<T>) {
     const { bcName = '', name: widgetName = '' } = meta || {}
     const bcUrl = useAppSelector(state => state.screen.bo.bc[meta.bcName] && buildBcUrl(meta.bcName, true))
     const operations = useAppSelector(state => state.view.rowMeta?.[meta.bcName]?.[bcUrl]?.actions)
-    const { bc, selectedCell, cursor } = useAppSelector(state => {
+    const { bc, selectedRow, cursor } = useAppSelector(state => {
         const bc = bcName ? state.screen.bo.bc[bcName] : undefined
 
         return {
             bc: bc,
             cursor: bc?.cursor,
-            selectedCell: state.view.selectedCell
+            selectedRow: state.view.selectedRow
         }
     }, shallowEqual)
+    const groupingHierarchyModeAggregate = !!(meta.options?.groupingHierarchy?.aggFields || meta.options?.groupingHierarchy?.aggLevels)
 
-    const groupingHierarchy = meta.options?.groupingHierarchy
-    const sortedGroupKeys = useMemo(
-        () => meta.fields.filter(field => groupingHierarchy?.fields.includes(field.key)).map(field => field.key),
-        [groupingHierarchy?.fields, meta.fields]
-    )
+    const {
+        enabledGrouping,
+        expandedParentRowKeys,
+        changeExpand: onParentExpand,
+        clearExpand: clearParentExpand,
+        sortedGroupKeys,
+        tree,
+        getGroupingHierarchyRowKeyByRecordId,
+        renderTopButton,
+        tableContainerRef,
+        hierarchyToggleButtonElement
+    } = useGroupingHierarchy(meta as AppWidgetGroupingHierarchyMeta, isGroupingHierarchy)
+
     const sortedFieldsByGroupKeys = useMemo(() => {
         if (!isGroupingHierarchy) {
             return meta.fields
@@ -87,16 +103,48 @@ function Table({
         return [...firstFields, ...meta.fields.filter(field => !sortedGroupKeys.includes(field.key))]
     }, [isGroupingHierarchy, meta.fields, sortedGroupKeys])
 
-    const { onExpand, expandable, expandIcon, expandIconColumn, getExpandIconColumnIndex, expandedRowRender, expandedRowKey } =
-        useExpandableForm(meta)
+    const { onExpand, expandable, expandIcon, expandIconColumn, getExpandIconColumnIndex, expandedRowRender, expandedRowId } =
+        useExpandableForm<T>(meta)
+
+    const controlColumns = useMemo(() => {
+        const resultColumns: Array<ControlColumn<T>> = []
+
+        if (meta.options?.primary?.enabled && primaryColumn) {
+            resultColumns.push(primaryColumn as any)
+        }
+
+        if (expandIconColumn) {
+            resultColumns.push({
+                column: !isGroupingHierarchy
+                    ? expandIconColumn
+                    : {
+                          ...expandIconColumn,
+                          title: renderTopButton
+                      },
+                position: 'right'
+            })
+        }
+
+        if (isGroupingHierarchy && !expandIconColumn) {
+            resultColumns.push({
+                column: {
+                    width: '62px',
+                    title: renderTopButton
+                },
+                position: 'right'
+            })
+        }
+
+        return [...resultColumns]
+    }, [expandIconColumn, isGroupingHierarchy, meta.options?.primary?.enabled, primaryColumn, renderTopButton])
 
     const { showColumnSettings, allFields, resultedFields, currentAdditionalFields, changeOrder, changeColumnsVisibility, resetSetting } =
-        useTableSetting(meta.name, sortedFieldsByGroupKeys, meta.options, groupingHierarchy?.fields)
+        useTableSetting(meta.name, sortedFieldsByGroupKeys, meta.options, sortedGroupKeys, rest.rowSelection?.type, controlColumns)
 
     const processedTransferFields = useMemo(() => {
         const transferFields: (WidgetListField & { disabled?: boolean })[] = [...allFields]
 
-        groupingHierarchy?.fields.forEach(groupingFieldKey => {
+        sortedGroupKeys.forEach(groupingFieldKey => {
             const groupingFieldIndex = allFields?.findIndex(field => field.key === groupingFieldKey) ?? -1
 
             if (groupingFieldIndex !== -1) {
@@ -108,7 +156,7 @@ function Table({
         })
 
         return transferFields
-    }, [allFields, groupingHierarchy?.fields])
+    }, [allFields, sortedGroupKeys])
 
     const { visibility: showCloseButton, toggleVisibility: toggleCloseButtonVisibility } = useVisibility(false)
 
@@ -142,14 +190,8 @@ function Table({
 
     const dispatch = useDispatch()
 
-    const changeCursor = (rowId: string) => {
-        if (rowId !== bc?.cursor) {
-            dispatch(actions.bcSelectRecord({ bcName: bc?.name as string, cursor: rowId }))
-        }
-    }
-
     // TODO the condition is necessary because of editable table cells inside the core, so that there would not be duplicated actions of record change
-    const needRowSelectRecord = expandable || meta.options?.readOnly
+    const needRowSelectRecord = !expandable && meta.options?.readOnly !== true && meta.options?.edit?.style !== 'none'
 
     const exportConfig = meta.options?.export
     const showExport = exportConfig?.enabled
@@ -172,196 +214,123 @@ function Table({
         }
     }
 
-    const handleRow = (record: DataItem, index: number) => {
-        const tableEventListeners = {
-            ...handleRowMenu(record),
-            onDoubleClick: needRowSelectRecord ? () => changeCursor(record.id) : undefined
-        }
-
-        const isParentRow = record.children
-        const removeRowMenu = isGroupingHierarchy && isParentRow
-        const rowType = removeRowMenu ? 'GroupingRow' : 'Row'
-
-        return {
-            ...(!removeRowMenu ? tableEventListeners : undefined),
-            ...onRow?.(record, index),
-            ...({ 'data-test-widget-list-row-id': record.id, 'data-test-widget-list-row-type': rowType } as Record<string, unknown>)
-        } as TableEventListeners
-    }
-
-    const { expandedParentRowKeys, changeExpand: onParentExpand, clearExpand: clearParentExpand } = useExpandableGroup()
+    const bcData = useAppSelector(state => state.data[meta.bcName] as T[] | undefined)
 
     const expandedRowKeys = useMemo(() => {
-        return expandedRowKey ? [expandedRowKey, ...expandedParentRowKeys] : expandedParentRowKeys
-    }, [expandedParentRowKeys, expandedRowKey])
+        if (enabledGrouping) {
+            const expandedRowKey = getGroupingHierarchyRowKeyByRecordId(expandedRowId)
 
-    const [showUp, setShowUp] = useState(false)
-
-    const bcData = useAppSelector(state => state.data[meta.bcName])
-    const [enabledGrouping, setEnabledGrouping] = useState<boolean>(false)
-
-    const dataSource = useMemo(() => {
-        return enabledGrouping ? createTree(bcData, sortedGroupKeys, meta.fields) : bcData
-    }, [enabledGrouping, bcData, meta.fields, sortedGroupKeys])
-
-    const getFirstUnallocatedRowKey = useCallback(() => {
-        return !(dataSource as Record<string, unknown | boolean>[])?.[0]?.pseudoRow ? dataSource?.[0]?.id : undefined
-    }, [dataSource])
-
-    const scrollToTop = useCallback(() => {
-        const rowKey = getFirstUnallocatedRowKey()
-        const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
-
-        setTimeout(() => {
-            element?.scrollIntoView({ block: 'center' })
-        }, 0)
-    }, [getFirstUnallocatedRowKey])
-
-    const controlColumns = useMemo(() => {
-        const resultColumns: Array<ControlColumn> = []
-        const topButton = () => {
-            return showUp ? (
-                <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button
-                        className={styles.moveToTop}
-                        type="empty"
-                        onClick={() => {
-                            scrollToTop()
-                        }}
-                        icon="arrow-up"
-                    />
-                </div>
-            ) : undefined
+            return expandedRowKey && !expandedParentRowKeys.includes(expandedRowKey)
+                ? [expandedRowKey, ...expandedParentRowKeys]
+                : expandedParentRowKeys
         }
 
-        if (meta.options?.primary?.enabled && primaryColumn) {
-            resultColumns.push(primaryColumn as any)
-        }
+        return expandedRowId ? [expandedRowId, ...expandedParentRowKeys] : expandedParentRowKeys
+    }, [enabledGrouping, expandedParentRowKeys, expandedRowId, getGroupingHierarchyRowKeyByRecordId])
 
-        if (expandIconColumn) {
-            resultColumns.push({
-                column: !isGroupingHierarchy
-                    ? expandIconColumn
-                    : {
-                          ...expandIconColumn,
-                          title: topButton
-                      },
-                position: 'right'
-            })
-        }
-
-        if (isGroupingHierarchy && !expandIconColumn) {
-            resultColumns.push({
-                column: {
-                    width: '62px',
-                    title: topButton
-                },
-                position: 'right'
-            })
-        }
-
-        return [...resultColumns]
-    }, [expandIconColumn, isGroupingHierarchy, meta.options?.primary?.enabled, primaryColumn, scrollToTop, showUp])
-
-    const resultExpandIcon = useCallback(
-        (expandIconProps: ExpandIconProps<DataItem>) => {
-            return !expandIconProps.record.children ? expandIcon?.(expandIconProps) : undefined
+    const needHideActions = useCallback(
+        (record: T) => {
+            return (
+                isGroupingHierarchy &&
+                (!(
+                    fieldShowCondition(
+                        resultedFields
+                            ?.map(item => {
+                                return item.type === FieldType.multivalue ? { ...item, type: FieldType.multivalueHover } : item
+                            })
+                            ?.filter(item => item.type !== FieldType.hidden && !item.hidden)
+                            .find(field => !sortedGroupKeys.includes(field.key))?.key as string,
+                        record,
+                        sortedGroupKeys,
+                        expandedRowKeys
+                    ) || typeof record._groupLevel !== 'number'
+                ) ||
+                    (groupingHierarchyModeAggregate && typeof record._groupLevel === 'number'))
+            )
         },
-        [expandIcon]
+        [expandedRowKeys, groupingHierarchyModeAggregate, isGroupingHierarchy, resultedFields, sortedGroupKeys]
     )
 
-    const previousCursor = usePrevious(cursor)
+    const needHideRow = useCallback(
+        (record: T) => {
+            return isGroupingHierarchy && enabledGrouping && !rowShowCondition(record, sortedGroupKeys, expandedParentRowKeys)
+        },
+        [enabledGrouping, expandedParentRowKeys, isGroupingHierarchy, sortedGroupKeys]
+    )
 
-    const openTreeToLeaf = useCallback(
-        (id: string) => {
-            const leaf: Record<string, any> | undefined = bcData?.find(item => item.id === id)
+    const handleRow = useCallback(
+        (record: T, index: number) => {
+            const rowMenuEventListeners = handleRowMenu(record as DataItem)
 
-            if (leaf) {
-                getNodesPathsToLeaf(leaf, groupingHierarchy?.fields, meta.fields)?.forEach(groupKey => {
-                    onParentExpand(true, groupKey)
+            const tableEventListeners = {
+                ...rowMenuEventListeners,
+                onClick: event => {
+                    if (event.defaultPrevented) {
+                        return
+                    }
+
+                    const selection = window.getSelection()
+                    if (selection === null || selection.type !== 'Range') {
+                        if (needRowSelectRecord) {
+                            if (record.id !== selectedRow?.rowId) {
+                                dispatch(actions.selectTableRowInit({ widgetName: meta.name, rowId: record.id }))
+                            }
+                        } else {
+                            if (record.id !== bc?.cursor) {
+                                dispatch(actions.bcSelectRecord({ bcName: bc?.name as string, cursor: record.id }))
+                            }
+                        }
+                    }
+                }
+            } as TableEventListeners
+
+            const otherProperties = {
+                'data-test-widget-list-row-id': record.id,
+                'data-test-widget-list-row-type': typeof record._groupLevel === 'number' ? 'GroupingRow' : 'Row'
+            } as Record<string, unknown>
+
+            if (needHideActions(record)) {
+                Object.keys(tableEventListeners).forEach(key => {
+                    delete tableEventListeners[key as keyof typeof tableEventListeners]
                 })
             }
+
+            if (needHideRow(record)) {
+                otherProperties.style = { display: 'none' } // more performant than components.row
+            }
+
+            return {
+                ...tableEventListeners,
+                ...onRow?.(record, index),
+                ...otherProperties
+            } as TableEventListeners
         },
-        [bcData, groupingHierarchy?.fields, meta.fields, onParentExpand]
+        [
+            bc?.cursor,
+            bc?.name,
+            dispatch,
+            handleRowMenu,
+            meta.name,
+            needHideActions,
+            needHideRow,
+            needRowSelectRecord,
+            onRow,
+            selectedRow?.rowId
+        ]
     )
 
-    const scrollToLeaf = useCallback(
-        (rowKey: string) => {
-            openTreeToLeaf(rowKey)
+    const dataSource = useMemo(() => {
+        return enabledGrouping ? (tree as T[]) : bcData
+    }, [enabledGrouping, tree, bcData])
 
-            setTimeout(() => {
-                const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
-                element?.scrollIntoView({ block: 'center' })
-            }, 0)
+    const resultExpandIcon = useCallback(
+        (expandIconProps: ExpandIconProps<T>) => {
+            return !needHideActions(expandIconProps.record) ? expandIcon?.(expandIconProps) : null
         },
-        [openTreeToLeaf]
+        [expandIcon, needHideActions]
     )
 
-    // before: Expanding a record when changing a record or changing the order
-    const previousIndex = usePrevious(bcData?.find(item => item.id === cursor))
-
-    useEffect(() => {
-        const currentIndex = bcData?.find(item => item.id === cursor)
-        const rowKey = cursor as string
-        const rowElement = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
-
-        if ((previousCursor !== cursor || previousIndex !== currentIndex) && (!rowElement || !isFullVisibleElement(rowElement))) {
-            const rowKey = cursor as string
-
-            scrollToLeaf(rowKey)
-        }
-    }, [bcData, cursor, previousCursor, previousIndex, scrollToLeaf])
     // after: Expanding a record when changing a record or changing the order
-
-    const tableContainerRef = useRef<HTMLDivElement>(null)
-
-    const intersectionObserverRef = useRef<IntersectionObserver | undefined>()
-
-    useEffect(() => {
-        intersectionObserverRef.current = enabledGrouping
-            ? new IntersectionObserver(entries => {
-                  const [entry] = entries
-
-                  setShowUp(!entry.isIntersecting)
-              })
-            : undefined
-
-        return () => {
-            intersectionObserverRef.current?.disconnect()
-        }
-    }, [enabledGrouping])
-
-    useEffect(() => {
-        if (!enabledGrouping) {
-            return
-        }
-        const rowKey = getFirstUnallocatedRowKey()
-        const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
-
-        if (element) {
-            intersectionObserverRef.current?.observe(element)
-        }
-
-        return () => {
-            if (!enabledGrouping) {
-                return
-            }
-
-            if (element) {
-                intersectionObserverRef.current?.unobserve(element)
-            }
-        }
-    }, [enabledGrouping, getFirstUnallocatedRowKey])
-
-    const bcPageLimit = useAppSelector(state => state.screen.bo.bc[meta.bcName].limit)
-    const bcCount = useAppSelector(state => state.view.bcRecordsCount[meta.bcName]?.count)
-    const correctGroupingCount = bcPageLimit != null && bcCount != null && bcPageLimit >= bcCount
-
-    useEffect(() => {
-        if (isGroupingHierarchy) {
-            setEnabledGrouping(correctGroupingCount)
-        }
-    }, [correctGroupingCount, isGroupingHierarchy])
 
     const { t } = useTranslation()
 
@@ -371,14 +340,20 @@ function Table({
         return bcUrl ? state.view.rowMeta[bcName]?.[bcUrl] : undefined
     })
 
-    const selectCell = useCallback(
-        (recordId: string, fieldKey: string) => {
-            dispatch(actions.selectTableCellInit({ widgetName, rowId: recordId, fieldKey }))
+    const isEditMode = useCallback(
+        (record: T) => {
+            return (
+                isAllowEdit &&
+                selectedRow !== null &&
+                widgetName === selectedRow.widgetName &&
+                record.id === selectedRow.rowId &&
+                cursor === selectedRow.rowId
+            )
         },
-        [dispatch, widgetName]
+        [cursor, isAllowEdit, selectedRow, widgetName]
     )
 
-    const columns: Array<ColumnProps<interfaces.DataItem>> = React.useMemo(() => {
+    const columns: Array<ColumnProps<T>> = React.useMemo(() => {
         return (
             resultedFields
                 ?.map(item => {
@@ -403,77 +378,118 @@ function Table({
                         key: item.key,
                         dataIndex: item.key,
                         width: item.width,
-                        render: (text: string, dataItem: interfaces.DataItem) => {
+                        render: (text: string, dataItem: T & GroupingHierarchyCommonNode) => {
                             const editMode =
-                                isAllowEdit &&
-                                selectedCell &&
-                                item.key === selectedCell.fieldKey &&
-                                widgetName === selectedCell.widgetName &&
-                                dataItem.id === selectedCell.rowId &&
-                                cursor === selectedCell.rowId
-                            const expanded = expandedRowKeys?.includes(dataItem.id) ?? false
+                                isGroupingHierarchy && enabledGrouping
+                                    ? isEditMode(dataItem) && !needHideActions(dataItem)
+                                    : isEditMode(dataItem)
 
-                            const isParentRow = !!dataItem.children
+                            const expandRowId = isGroupingHierarchy
+                                ? getInternalGroupPath(item.key, dataItem, sortedGroupKeys)
+                                : dataItem[ROW_KEY]
+                            const expanded = expandedParentRowKeys?.includes(expandRowId) ?? false
+
                             const isGroupingField = !!meta?.options?.groupingHierarchy?.fields?.includes(item.key)
-                            const unallocatedRecord =
-                                meta?.options?.groupingHierarchy?.fields.some(key => {
-                                    // eslint-disable-next-line eqeqeq
-                                    return dataItem?.[key] == undefined || dataItem?.[key] === ''
-                                }) ?? false
-                            const isExpandCell = isParentRow && isGroupingField && dataItem[item.key]
-                            const hideFieldForGroupingHierarchy =
-                                isGroupingHierarchy &&
-                                ((dataItem.pseudoRow && !isGroupingField) || (!dataItem.pseudoRow && isGroupingField && !editMode))
-                            const showField = !hideFieldForGroupingHierarchy || (unallocatedRecord && !isParentRow)
+                            const aggFunction = dataItem._aggFunctions?.[item.key]
+                            const groupLevel = dataItem._groupLevel
+                            let showReadonlyField
 
-                            return (
-                                showField && (
-                                    <div
-                                        data-test="FIELD"
-                                        data-test-field-type={item.type}
-                                        data-test-field-title={item.label || item.title}
-                                        data-test-field-key={item.key}
-                                        style={{ display: 'flex', alignItems: 'center', gap: 4 }}
-                                    >
-                                        {isExpandCell && (
-                                            <ExpandIcon
-                                                className={styles.parentExpandIcon}
-                                                expanded={expanded}
-                                                onClick={() => {
-                                                    onParentExpand?.(!expanded, dataItem.id)
-                                                }}
-                                                openIcon="up"
-                                                openRotate={90}
-                                                closeIcon="down"
-                                            />
-                                        )}
-                                        <Field
-                                            data={dataItem}
-                                            bcName={bcName}
-                                            cursor={dataItem.id}
-                                            widgetName={widgetName}
-                                            widgetFieldMeta={item as WidgetListField}
-                                            readonly={!editMode}
-                                            forceFocus={editMode}
-                                            className={styles.tableField}
+                            if (groupingHierarchyModeAggregate) {
+                                showReadonlyField = enabledGrouping
+                                    ? (groupLevel && (sortedGroupKeys[groupLevel - 1] === item.key || aggFunction)) ||
+                                      (!groupLevel && (!sortedGroupKeys.includes(item.key) || !dataItem._parentGroupPath))
+                                    : true
+                            } else {
+                                showReadonlyField =
+                                    isGroupingHierarchy && enabledGrouping
+                                        ? fieldShowCondition(item.key, dataItem, sortedGroupKeys, expandedParentRowKeys)
+                                        : true
+                            }
+
+                            const showExpandIcon =
+                                isGroupingField && dataItem[item.key] && enabledGrouping && showReadonlyField && !!dataItem.children
+                            const fieldGroupLevel = sortedGroupKeys.findIndex(sortedGroupKey => sortedGroupKey === item.key) + 1
+                            const countOfRecords = dataItem._countOfRecordsPerLevel?.[fieldGroupLevel] ?? 0
+                            const counterMode = meta?.options?.groupingHierarchy?.counterMode || 'none'
+                            const showCounter =
+                                showExpandIcon &&
+                                fieldGroupLevel &&
+                                !editMode &&
+                                (counterMode === 'always' || (counterMode === 'collapsed' && !expanded))
+                            const showField = !!showReadonlyField || editMode
+                            const rightAlignment = numberFieldTypes.includes(item.type) && {
+                                justifyContent: 'flex-end'
+                            }
+
+                            const field = showField && (
+                                <div
+                                    data-test="FIELD"
+                                    data-test-field-type={item.type}
+                                    data-test-field-title={item.label || item.title}
+                                    data-test-field-key={item.key}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 4,
+                                        ...rightAlignment
+                                    }}
+                                >
+                                    {showExpandIcon && (
+                                        <ExpandIcon
+                                            className={styles.parentExpandIcon}
+                                            expanded={expanded}
+                                            onClick={event => {
+                                                event.preventDefault()
+                                                onParentExpand?.(!expanded, expandRowId)
+                                            }}
+                                            openIcon="up"
+                                            openRotate={90}
+                                            closeIcon="down"
                                         />
-                                    </div>
-                                )
+                                    )}
+                                    <Field
+                                        data={dataItem as DataItem}
+                                        bcName={bcName}
+                                        cursor={dataItem.id}
+                                        widgetName={widgetName}
+                                        widgetFieldMeta={item as WidgetListField}
+                                        readonly={!editMode}
+                                        forceFocus={editMode}
+                                        className={cn(editMode ? styles.fullWidth : styles.fitContentWidth)}
+                                    />
+                                    {showCounter && `(${countOfRecords})`}
+                                </div>
                             )
-                        },
-                        onCell: isAllowEdit
-                            ? (record: interfaces.DataItem, rowIndex: number) => {
-                                  const isParentRow = !!record.children
 
-                                  return !isParentRow
-                                      ? {
-                                            onDoubleClick: (event: React.MouseEvent) => {
-                                                selectCell(record.id, item.key)
-                                            }
-                                        }
-                                      : {}
-                              }
-                            : undefined,
+                            if (groupingHierarchyModeAggregate) {
+                                const backgroundEnabled =
+                                    groupLevel &&
+                                    (!sortedGroupKeys.slice(0, groupLevel).includes(item.key) || dataItem.id === totalRowKey) &&
+                                    !!dataItem._aggFunctions
+                                const fieldElement = backgroundEnabled ? (
+                                    <div
+                                        className={styles.aggCell}
+                                        style={{
+                                            backgroundColor: `rgba(${aggCellBgColorRgba}, ${getAggCellBgOpacity(dataItem.id, groupLevel)})`
+                                        }}
+                                    >
+                                        {field}
+                                    </div>
+                                ) : (
+                                    field
+                                )
+
+                                return aggFunction ? (
+                                    <Popover content={aggFunction} trigger="hover">
+                                        {fieldElement}
+                                    </Popover>
+                                ) : (
+                                    fieldElement
+                                )
+                            }
+
+                            return field
+                        },
                         onHeaderCell: () => {
                             return {
                                 'data-test-widget-list-header-column-title': item?.title,
@@ -485,25 +501,27 @@ function Table({
                 }) ?? []
         )
     }, [
-        resultedFields,
-        bcRowMeta?.fields,
-        meta?.type,
-        meta?.options?.groupingHierarchy?.fields,
-        showCloseButton,
-        handleColumnClose,
-        widgetName,
-        isAllowEdit,
-        selectedCell,
-        cursor,
-        expandedRowKeys,
         bcName,
+        bcRowMeta?.fields,
+        enabledGrouping,
+        expandedParentRowKeys,
+        groupingHierarchyModeAggregate,
+        handleColumnClose,
+        isEditMode,
+        meta?.options?.groupingHierarchy?.counterMode,
+        meta?.options?.groupingHierarchy?.fields,
+        meta?.type,
+        needHideActions,
         onParentExpand,
-        selectCell
+        resultedFields,
+        showCloseButton,
+        sortedGroupKeys,
+        widgetName
     ])
 
     const resultColumns = React.useMemo(() => {
-        const controlColumnsLeft: Array<ColumnProps<interfaces.DataItem>> = []
-        const controlColumnsRight: Array<ColumnProps<interfaces.DataItem>> = []
+        const controlColumnsLeft: Array<ColumnProps<T>> = []
+        const controlColumnsRight: Array<ColumnProps<T>> = []
         controlColumns?.forEach(item => {
             item.position === 'left' ? controlColumnsLeft.push(item.column) : controlColumnsRight.push(item.column)
         })
@@ -517,13 +535,13 @@ function Table({
                 className={cn(styles.table, { [styles.tableWithRowMenu]: !hideRowActions })}
                 columns={resultColumns}
                 dataSource={dataSource}
-                rowKey={ROW_KEY}
+                rowKey={isGroupingHierarchy ? getGroupingHierarchyRowKey : ROW_KEY}
                 pagination={false}
                 onRow={handleRow}
                 onHeaderRow={onHeaderRow}
                 rowClassName={record => (record.id === bc?.cursor ? 'ant-table-row-selected' : '')}
                 expandedRowKeys={expandedRowKeys}
-                expandIconColumnIndex={getExpandIconColumnIndex(controlColumns, resultedFields)}
+                expandIconColumnIndex={getExpandIconColumnIndex(controlColumns, resultedFields, rest.rowSelection?.type)}
                 expandIconAsCell={false}
                 expandIcon={resultExpandIcon}
                 expandedRowRender={expandedRowRender}
@@ -566,32 +584,7 @@ function Table({
                                     </div>
                                 </Tooltip>
                             )}
-                            {isGroupingHierarchy && (
-                                <Tooltip
-                                    title={
-                                        !correctGroupingCount
-                                            ? t(
-                                                  `Worning! {{count}} rows were fetched from backend - limit for "Grouping Hierarhical" mode is {{limit}}. Only "List" mode is available`,
-                                                  { limit: bcPageLimit, count: bcCount }
-                                              )
-                                            : undefined
-                                    }
-                                    trigger="hover"
-                                >
-                                    <div style={{ display: 'inline-block' }}>
-                                        <Button
-                                            type="empty"
-                                            className={cn(styles.treeButton, { [styles.active]: enabledGrouping })}
-                                            disabled={!correctGroupingCount}
-                                            onClick={() => {
-                                                setEnabledGrouping(!enabledGrouping)
-                                            }}
-                                        >
-                                            <Icon type="apartment" />
-                                        </Button>
-                                    </div>
-                                </Tooltip>
-                            )}
+                            {hierarchyToggleButtonElement}
                             {showSettings && (
                                 <DropdownSetting
                                     buttonClassName={styles.settingButton}
@@ -661,4 +654,4 @@ function Table({
     )
 }
 
-export default React.memo(Table)
+export default React.memo(Table) as typeof Table

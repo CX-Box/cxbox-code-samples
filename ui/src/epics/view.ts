@@ -1,24 +1,24 @@
 import { RootEpic } from '@store'
-import { catchError, concat, EMPTY, filter, mergeMap, Observable, of } from 'rxjs'
+import { catchError, concat, EMPTY, filter, mergeMap, of, switchMap } from 'rxjs'
+import { isAnyOf } from '@reduxjs/toolkit'
 import {
     OperationError,
     OperationErrorEntity,
     OperationPostInvokeAny,
+    OperationPostInvokeRefreshBc,
     OperationPostInvokeType,
     OperationPreInvoke,
     OperationTypeCrud,
     PendingValidationFailsFormat,
-    utils,
-    WidgetTypes
+    utils
 } from '@cxbox-ui/core'
 import { EMPTY_ARRAY } from '@constants'
-import { actions, setBcCount } from '@actions'
+import { actions, sendOperationSuccess, setBcCount } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { AxiosError } from 'axios'
 import { postOperationRoutine } from './utils/postOperationRoutine'
-import { AppWidgetGroupingHierarchyMeta } from '@interfaces/widget'
+import { AppWidgetGroupingHierarchyMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
-import { AnyAction, nanoid } from '@reduxjs/toolkit'
 import { DataItem } from '@cxbox-ui/schema'
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
@@ -98,17 +98,23 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     const dataItem = response.record
                     // TODO: Remove in 2.0.0 in favor of postInvokeConfirm (is this todo needed?)
                     const preInvoke = response.preInvoke as OperationPreInvoke
+                    const postInvokeType = postInvoke?.type || ''
+                    const postInvokeRefreshCurrentBc =
+                        OperationPostInvokeType.refreshBC === postInvokeType && (postInvoke as OperationPostInvokeRefreshBc)?.bc === bcName
+                    const postInvokeTypesWithRefreshBc = (
+                        [OperationPostInvokeType.waitUntil, OperationPostInvokeType.drillDownAndWaitUntil] as string[]
+                    ).includes(postInvokeType)
+                    const withoutBcForceUpdate = postInvokeRefreshCurrentBc || postInvokeTypesWithRefreshBc
+
                     // defaultSaveOperation mean that executed custom autosave and postAction will be ignored
                     // drop pendingChanges and onSuccessAction execute instead
-                    const isRefreshCurrentBc = postInvoke?.type === OperationPostInvokeType.refreshBC && bcName === postInvoke?.bc
-                    const needBcForceUpdate = !isRefreshCurrentBc
                     return defaultSaveOperation
                         ? action?.payload?.onSuccessAction
                             ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
                             : EMPTY
                         : concat(
                               of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
-                              needBcForceUpdate ? of(actions.bcForceUpdate({ bcName })) : EMPTY,
+                              withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
                               ...postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName)
                           )
                 }),
@@ -175,14 +181,35 @@ export const fileUploadConfirmEpic: RootEpic = (action$, state$, { api }) =>
                 mergeMap(response => {
                     const postInvoke = response.postActions?.[0]
                     const preInvoke = response.preInvoke
-                    // Needed for local data update without additional request
-                    const newDataItems = isGroupingHierarchy ? response.records : undefined
+                    const isRefreshCurrentBc = postInvoke?.type === OperationPostInvokeType.refreshBC
+                    const needBcForceUpdate = !isRefreshCurrentBc
+                    if (isGroupingHierarchy) {
+                        // Needed for local data update without additional request
+                        const newDataItems = response.records
+                        const allData = [...newDataItems, ...(state.data[bcName as string] || {})]
+                        const oldCursor = state.screen.bo.bc[bcName as string]?.cursor
+                        const newItem = newDataItems?.length && newDataItems.find((item: DataItem) => item.id)
+                        const newCursor = newItem ? newItem.id : (getCursor(allData, oldCursor) as string)
+                        const cursorHasChange = bcName && newCursor !== oldCursor
 
-                    const isRefreshCurrentBc = postInvoke?.type === OperationPostInvokeType.refreshBC && bcName === postInvoke?.bc
-                    const needBcForceUpdate = !isRefreshCurrentBc && !isGroupingHierarchy
-
+                        return concat(
+                            of(actions.sendOperationSuccess({ bcName: bcName as string, cursor: null as any, newDataItems })),
+                            cursorHasChange
+                                ? of(
+                                      actions.bcChangeCursors({
+                                          cursorsMap: {
+                                              [bcName]: newCursor
+                                          }
+                                      })
+                                  )
+                                : EMPTY,
+                            cursorHasChange ? of(actions.bcFetchRowMeta({ widgetName, bcName })) : EMPTY,
+                            isPopup ? of(actions.closeViewPopup(null)) : EMPTY,
+                            ...postOperationRoutine(widgetName as string, postInvoke, preInvoke, OperationTypeCrud.save, bcName as string)
+                        )
+                    }
                     return concat(
-                        of(actions.sendOperationSuccess({ bcName: bcName as string, cursor: null as any, newDataItems })),
+                        of(actions.sendOperationSuccess({ bcName: bcName as string, cursor: null as any })),
                         needBcForceUpdate ? of(actions.bcForceUpdate({ bcName: bcName as string })) : EMPTY,
                         isPopup ? of(actions.closeViewPopup(null)) : EMPTY,
                         ...postOperationRoutine(widgetName as string, postInvoke, preInvoke, OperationTypeCrud.save, bcName as string)
@@ -195,6 +222,12 @@ export const fileUploadConfirmEpic: RootEpic = (action$, state$, { api }) =>
             )
         })
     )
+
+const getCursor = (data: DataItem[], prevCursor: string | null) => {
+    const newCursor = data[0]?.id
+    const cursorShouldChange = !data.some(i => i.id === prevCursor)
+    return cursorShouldChange ? newCursor : prevCursor
+}
 
 const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
@@ -226,6 +259,7 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                             isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                             of(actions.updateBcData({ bcName, data: newData })),
                             of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
+                            of(actions.bcFetchRowMeta({ widgetName, bcName })),
                             postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
                         )
                     }
@@ -241,112 +275,6 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                     return concat(of(actions.bcDeleteDataFail({ bcName })), utils.createApiErrorObservable(error, context))
                 })
             )
-        })
-    )
-
-export const getRowMetaByForceActiveEpic: RootEpic = (action$, state$, { api }) =>
-    action$.pipe(
-        filter(actions.changeDataItem.match),
-        mergeMap(action => {
-            const state = state$.value
-            const initUrl = state.view.url
-            const { bcName, cursor, disableRetry } = action.payload
-
-            const isBcHierarchy = state.view.widgets.some(widget => {
-                return (
-                    widget.bcName === bcName &&
-                    widget.type === WidgetTypes.AssocListPopup &&
-                    (widget.options?.hierarchySameBc || widget.options?.hierarchyFull)
-                )
-            })
-            if (isBcHierarchy) {
-                return EMPTY
-            }
-
-            const bcUrl = buildBcUrl(bcName, true, state)
-            const pendingChanges = state.view.pendingDataChanges[bcName]?.[cursor]
-            const handledForceActive = state.view.handledForceActive[bcName]?.[cursor] || {}
-            const currentRecordData = state.data[bcName]?.find(record => record.id === cursor)
-            const fieldsRowMeta = state.view.rowMeta[bcName]?.[bcUrl]?.fields
-            let changedFiledKey: string = null as any
-
-            // среди forceActive-полей в дельте ищем то которое изменилось по отношению к обработанным forceActive
-            // или не содержится в нем, устанавливаем флаг необходимости отправки запроса если такое поле найдено
-            const someForceActiveChanged = fieldsRowMeta
-                ?.filter(field => field.forceActive && pendingChanges[field.key] !== undefined)
-                .some(field => {
-                    const result = pendingChanges[field.key] !== handledForceActive[field.key]
-                    if (result) {
-                        changedFiledKey = field.key
-                    }
-                    return result
-                })
-            const requestId = nanoid()
-            if (someForceActiveChanged && !disableRetry) {
-                return concat(
-                    of(actions.addPendingRequest({ request: { requestId, type: 'force-active' } })),
-                    api
-                        .getRmByForceActive(state.screen.screenName, bcUrl, {
-                            ...pendingChanges,
-                            vstamp: currentRecordData?.vstamp as number
-                        })
-                        .pipe(
-                            mergeMap(data => {
-                                const result: Array<Observable<AnyAction>> = [of(actions.removePendingRequest({ requestId }))]
-                                if (state.view.url === initUrl) {
-                                    result.push(
-                                        of(
-                                            actions.forceActiveRmUpdate({
-                                                rowMeta: data,
-                                                currentRecordData: currentRecordData as DataItem,
-                                                bcName,
-                                                bcUrl,
-                                                cursor
-                                            })
-                                        )
-                                    )
-                                }
-                                return concat(...result)
-                            }),
-                            catchError((e: AxiosError) => {
-                                console.error(e)
-                                let viewError: string | undefined = null as any
-                                let entityError: OperationErrorEntity | undefined = null as any
-                                const operationError = e.response?.data as OperationError
-                                if (e.response?.data === Object(e.response?.data)) {
-                                    entityError = operationError?.error?.entity
-                                    viewError = operationError?.error?.popup?.[0]
-                                }
-                                return concat(
-                                    of(actions.removePendingRequest({ requestId })),
-                                    state.view.url === initUrl
-                                        ? concat(
-                                              of(
-                                                  actions.changeDataItem({
-                                                      bcName,
-                                                      bcUrl: buildBcUrl(bcName, true, state),
-                                                      cursor,
-                                                      dataItem: { [changedFiledKey]: currentRecordData?.[changedFiledKey] },
-                                                      disableRetry: true
-                                                  })
-                                              ),
-                                              of(
-                                                  actions.forceActiveChangeFail({
-                                                      bcName,
-                                                      bcUrl,
-                                                      viewError: viewError as string,
-                                                      entityError: entityError as OperationErrorEntity
-                                                  })
-                                              )
-                                          )
-                                        : EMPTY,
-                                    utils.createApiErrorObservable(e)
-                                )
-                            })
-                        )
-                )
-            }
-            return EMPTY
         })
     )
 
@@ -400,11 +328,30 @@ export const forceUpdateRowMeta: RootEpic = (action$, state$, { api }) =>
         })
     )
 
+const closeFormPopup: RootEpic = (action$, state$) =>
+    action$.pipe(
+        filter(isAnyOf(sendOperationSuccess, actions.bcSaveDataSuccess)),
+        switchMap(action => {
+            const state = state$.value
+            const popupWidgetName = state.view.popupData?.widgetName
+
+            const formPopupWidget =
+                popupWidgetName &&
+                state.view.widgets.find(item => item.name === popupWidgetName && item.type === CustomWidgetTypes.FormPopup)
+
+            if (formPopupWidget) {
+                return of(actions.closeViewPopup({ bcName: formPopupWidget.bcName }))
+            }
+
+            return EMPTY
+        })
+    )
+
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
     fileUploadConfirmEpic,
     bcDeleteDataEpic,
-    getRowMetaByForceActiveEpic,
-    forceUpdateRowMeta
+    forceUpdateRowMeta,
+    closeFormPopup
 }

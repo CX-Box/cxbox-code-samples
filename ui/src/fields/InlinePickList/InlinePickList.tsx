@@ -11,6 +11,7 @@ import { useAppSelector } from '@store'
 import styles from './InlinePickList.less'
 import { BaseFieldProps } from '@cxboxComponents/Field/Field'
 import { buildBcUrl } from '@utils/buildBcUrl'
+import { isPopupWidgetFamily } from '@utils/isPopupWidgetFamily'
 
 interface Props extends Omit<BaseFieldProps, 'meta'> {
     meta: InlinePickListFieldMeta
@@ -34,8 +35,8 @@ const InlinePickList: React.FunctionComponent<Props> = ({
 }) => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
-
     const widgetMeta = useAppSelector(state => state.view.widgets?.find(i => i.name === widgetName))
+    const disabledPopup = isPopupWidgetFamily(widgetMeta?.type)
     const bcName = widgetMeta?.bcName
     const { key: fieldName, popupBcName, pickMap, searchSpec } = meta
     const data = useAppSelector(state => (bcName && popupBcName && state.data[popupBcName]) || emptyData)
@@ -71,11 +72,13 @@ const InlinePickList: React.FunctionComponent<Props> = ({
     const [searchTerm, setSearchTerm] = React.useState('')
     const debouncedSearchTerm = useDebounce(searchTerm, 500)
 
+    const handleFocus = useCallback(() => onSearch(popupBcName, processedSearchSpec, ''), [onSearch, popupBcName, processedSearchSpec])
+
     React.useEffect(() => {
         if (debouncedSearchTerm && processedSearchSpec) {
-            onSearch(popupBcName, processedSearchSpec, searchTerm)
+            onSearch(popupBcName, processedSearchSpec, debouncedSearchTerm)
         }
-    }, [debouncedSearchTerm, onSearch, popupBcName, processedSearchSpec, searchTerm])
+    }, [debouncedSearchTerm, onSearch, popupBcName, processedSearchSpec])
 
     const handleClick = React.useCallback(() => {
         if (!disabled) {
@@ -111,6 +114,7 @@ const InlinePickList: React.FunctionComponent<Props> = ({
                 meta={meta}
                 className={className}
                 backgroundColor={backgroundColor}
+                cursor={cursor}
                 onDrillDown={onDrillDown}
             >
                 {value}
@@ -118,8 +122,14 @@ const InlinePickList: React.FunctionComponent<Props> = ({
         )
     }
 
+    const popupOpenButton = !disabledPopup && (
+        <span className={cn(styles.buttonContainer, { [styles.disabledButton]: disabled })} onClick={!disabled ? handleClick : undefined}>
+            <Icon data-test-field-inlinepicklist-popup={true} type="paper-clip" />
+        </span>
+    )
+
     return (
-        <span className={styles.inlinePickList}>
+        <span className={cn(styles.inlinePickList, { [styles.withoutPopupOpenButton]: disabledPopup })}>
             <Select
                 className={cn(className, styles.select)}
                 disabled={disabled}
@@ -132,6 +142,7 @@ const InlinePickList: React.FunctionComponent<Props> = ({
                 showArrow={false}
                 filterOption={false}
                 onSearch={setSearchTerm}
+                onFocus={handleFocus}
                 onChange={onChange}
                 notFoundContent={null}
             >
@@ -144,12 +155,7 @@ const InlinePickList: React.FunctionComponent<Props> = ({
                     )
                 })}
             </Select>
-            <span
-                className={cn(styles.buttonContainer, { [styles.disabledButton]: disabled })}
-                onClick={!disabled ? handleClick : undefined}
-            >
-                <Icon data-test-field-inlinepicklist-popup={true} type="paper-clip" />
-            </span>
+            {popupOpenButton}
         </span>
     )
 }

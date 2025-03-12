@@ -1,23 +1,22 @@
 import { AppWidgetMeta } from '@interfaces/widget'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { shallowEqual, useDispatch } from 'react-redux'
 import { useAppSelector } from '@store'
 import { ExpandIconProps } from 'antd/lib/table'
 import ExpandIcon from '../components/ExpandIcon'
 import ExpandedRow from '../components/ExpandedRow'
-import { ColumnProps } from 'antd/es/table'
 import { resetRecordForm, setRecordForm } from '@actions'
 import { Spin } from 'antd'
 import DebugWidgetWrapper from '../../../DebugWidgetWrapper/DebugWidgetWrapper'
 import { buildBcUrl } from '@utils/buildBcUrl'
-import { DataItem, FieldType } from '@interfaces/core'
-import { WidgetFormMeta } from '@cxbox-ui/core'
-
-type ControlColumn = { column: ColumnProps<DataItem>; position: 'left' | 'right' }
+import { WidgetFormMeta, FieldType } from '@cxbox-ui/core'
+import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { RowSelectionType } from 'antd/es/table'
+import { getRowSelectionOffset } from '@components/widgets/Table/utils/rowSelection'
 
 type WidgetMetaField = { type: string; hidden?: boolean }
 
-const EXPAND_ICON_COLUMN: ColumnProps<DataItem> = {
+const EXPAND_ICON_COLUMN = {
     title: '',
     width: '66px',
     key: '_expandIconField'
@@ -27,10 +26,30 @@ export function useInternalWidgetSelector(externalWidget: AppWidgetMeta) {
     return useAppSelector(state => {
         const widgetNameForCreate = externalWidget.options?.create?.widget
         const widgetNameForEdit = externalWidget.options?.edit?.widget
+        const isWidgetForEditIsInline = externalWidget.options?.edit?.style === 'inline'
+        const isWidgetForEditIsDisabled = externalWidget.options?.edit?.style === 'none'
+        const isWidgetForEditIsInlineForm = externalWidget.options?.edit?.style === 'inlineForm'
+        if (isWidgetForEditIsInlineForm && !widgetNameForEdit) {
+            console.error(`Widget "name": ${externalWidget.name} has meta inspection warning! 
+Inspection Description: options.edit.widget must be set for options.edit.style = "inlineForm" and must not be set in other cases
+Fallback behavior: options.edit.style = "inline", because edit widget was not set.`)
+        }
+        if (isWidgetForEditIsInline && widgetNameForEdit) {
+            console.error(`Widget "name": ${externalWidget.name} has meta inspection warning! 
+Inspection Description: options.edit.widget must be set for options.edit.style = "inlineForm" and must not be set in other cases
+Fallback behavior: options.edit.style = "inline" has higher priority than option.edit.widget`)
+        }
+        if (isWidgetForEditIsDisabled && widgetNameForEdit) {
+            console.error(`Widget "name": ${externalWidget.name} has meta inspection warning! 
+Inspection Description: options.edit.widget must be set for options.edit.style = "inlineForm" and must not be set in other cases
+Fallback behavior: options.edit.style = "none" has higher priority than option.edit.widget`)
+        }
 
         const widgetForCreate = state.view.widgets.find(widget => widgetNameForCreate === widget?.name) as WidgetFormMeta
-        const widgetForEdit = state.view.widgets.find(widget => widgetNameForEdit === widget?.name) as WidgetFormMeta
-
+        const widgetForEdit =
+            !isWidgetForEditIsInline && !isWidgetForEditIsDisabled
+                ? (state.view.widgets.find(widget => widgetNameForEdit === widget?.name) as WidgetFormMeta)
+                : undefined
         const bcName = (widgetForCreate || widgetForEdit)?.bcName as string
         const bc = bcName ? state.screen.bo.bc[bcName] : undefined
         const bcUrl = bc ? buildBcUrl(bcName, true) : ''
@@ -54,30 +73,22 @@ export function useInternalWidgetSelector(externalWidget: AppWidgetMeta) {
     }, shallowEqual)
 }
 
-function isExpandColumn(item: ControlColumn) {
+function isExpandColumn<T>(item: ControlColumn<T>) {
     return item.column.key === EXPAND_ICON_COLUMN.key
 }
 
-export function useExpandableForm(currentWidgetMeta: AppWidgetMeta) {
+export function useExpandableForm<R extends CustomDataItem>(currentWidgetMeta: AppWidgetMeta) {
     const { internalWidget, internalWidgetOperations, internalWidgetActiveCursor, isCreateStyle, isEditStyle } =
         useInternalWidgetSelector(currentWidgetMeta)
-    const currentActiveRowId = useAppSelector(state => state.view.recordForm[currentWidgetMeta.bcName])?.cursor
+    const recordForm = useAppSelector(state => state.view.recordForm[currentWidgetMeta.bcName])
+    const currentActiveRowId = recordForm?.cursor
+    const isActiveRecord = useCallback(
+        (record: R) => recordForm?.cursor === record.id && currentWidgetMeta.bcName === recordForm?.bcName,
+        [currentWidgetMeta.bcName, recordForm?.bcName, recordForm?.cursor]
+    )
     const debugMode = useAppSelector(state => state.session.debugMode || false)
 
     const dispatch = useDispatch()
-
-    const expandIcon = useCallback(({ expanded, record, onExpand }: ExpandIconProps<DataItem>) => {
-        return (
-            <ExpandIcon
-                expanded={expanded}
-                openIcon="edit"
-                closeIcon="close"
-                onClick={event => {
-                    onExpand(record, event)
-                }}
-            />
-        )
-    }, [])
 
     const handleExpand = useCallback(
         (expanded, record) => {
@@ -98,21 +109,47 @@ export function useExpandableForm(currentWidgetMeta: AppWidgetMeta) {
         [currentWidgetMeta.bcName, currentWidgetMeta.name, dispatch]
     )
 
+    const expandIcon = useCallback(
+        ({ expanded, record, onExpand }: ExpandIconProps<R>) => {
+            return (
+                <ExpandIcon
+                    expanded={isActiveRecord(record) && expanded}
+                    openIcon="edit"
+                    closeIcon="close"
+                    onClick={event => {
+                        if (!isActiveRecord(record) && expanded) {
+                            handleExpand(true, record)
+                        } else if (isActiveRecord(record) && expanded) {
+                            handleExpand(false, record)
+                        } else {
+                            onExpand(record, event)
+                        }
+                    }}
+                />
+            )
+        },
+        [handleExpand, isActiveRecord]
+    )
+
     const isLoading = internalWidget && currentActiveRowId !== internalWidgetActiveCursor
 
     const expandedRowRender = useCallback(
-        (record: DataItem) =>
-            !record.children ? (
+        (record: R) =>
+            isActiveRecord(record) && internalWidget !== undefined ? (
                 <DebugWidgetWrapper debugMode={debugMode} meta={internalWidget}>
                     <Spin spinning={isLoading}>
                         <ExpandedRow widgetMeta={internalWidget} operations={internalWidgetOperations} record={record} />
                     </Spin>
                 </DebugWidgetWrapper>
             ) : null,
-        [internalWidget, internalWidgetOperations, isLoading, debugMode]
+        [isActiveRecord, internalWidget, debugMode, isLoading, internalWidgetOperations]
     )
 
-    const getExpandIconColumnIndex = (controlColumns: ControlColumn[], externalVisibleFields?: WidgetMetaField[]) => {
+    const getExpandIconColumnIndex = (
+        controlColumns: ControlColumn<R>[],
+        externalVisibleFields?: WidgetMetaField[],
+        rowSelectionType?: RowSelectionType
+    ) => {
         if (!internalWidget) {
             return undefined
         }
@@ -127,8 +164,9 @@ export function useExpandableForm(currentWidgetMeta: AppWidgetMeta) {
 
         const widgetFields = currentWidgetMeta.fields as WidgetMetaField[]
         const visibleWidgetFields = externalVisibleFields ?? widgetFields?.filter(item => item.type !== FieldType.hidden && !item.hidden)
+        const rowSelectionCount = getRowSelectionOffset(rowSelectionType)
 
-        return leftControlColumns.length + visibleWidgetFields?.length + rightControlColumns.findIndex(isExpandColumn)
+        return leftControlColumns.length + visibleWidgetFields?.length + rightControlColumns.findIndex(isExpandColumn) + rowSelectionCount
     }
 
     const expandable = !!internalWidget
@@ -139,30 +177,9 @@ export function useExpandableForm(currentWidgetMeta: AppWidgetMeta) {
         expandIcon: expandable ? expandIcon : undefined,
         expandIconColumn: expandable ? EXPAND_ICON_COLUMN : undefined,
         expandedRowRender: expandable ? expandedRowRender : undefined,
-        expandedRowKey: expandable ? currentActiveRowId : undefined,
+        expandedRowId: expandable ? currentActiveRowId : undefined,
         onExpand: expandable ? handleExpand : undefined,
         isCreateStyle,
         isEditStyle
     }
-}
-export const useExpandableGroup = () => {
-    const [expandedParentRowKeys, setExpandedParentRowKeys] = useState<string[]>([])
-
-    const changeExpand = useCallback((expanded, id) => {
-        if (id) {
-            setExpandedParentRowKeys(prevState => {
-                if (expanded) {
-                    return prevState.includes(id) ? prevState : [...prevState, id]
-                } else {
-                    return prevState.filter(prevRecordId => prevRecordId !== id)
-                }
-            })
-        }
-    }, [])
-
-    const clearExpand = useCallback(() => {
-        setExpandedParentRowKeys(prevKeys => (prevKeys.length === 0 ? prevKeys : []))
-    }, [])
-
-    return { expandedParentRowKeys, changeExpand, clearExpand }
 }
