@@ -1,5 +1,6 @@
 package org.demo.documentation.other.forceactive2;
 
+import org.cxbox.constgen.DtoField;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -30,41 +31,24 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
     @Override
     protected ActionResultDTO<MyExample4901DTO> doUpdateEntity(MyEntity4901 entity, MyExample4901DTO data, BusinessComponent bc) {
 
-        // int intPosProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.product.getName());
-        // int intPosPrice = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.money.getName());
-        // int intPosDescriptionProduct = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.descriptionProduct.getName());
-
-        //  int intPosCountry = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.country.getName());
-        //  int intPosRegion = new ArrayList<>(data.getSequenceChangedFields()).indexOf(MyExample4901DTO_.region.getName());
-
-        if (data.isFieldChanged(MyExample4901DTO_.region)) {
-            entity.setRegion(data.getRegion());
-        }
-        if (data.isFieldChanged(MyExample4901DTO_.country)) {
+        if (data.isFieldChangedCurrentIteration(MyExample4901DTO_.country)) {
             entity.setCountry(data.getCountry());
-         /*   if (intPosCountry > intPosRegion) {
-                entity.setRegion(null);
-            }*/
+            entity.setRegion(null);
         }
 
         if (data.isFieldChanged(MyExample4901DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
 
-        setIfChanged(data, MyExample4901DTO_.product, entity::setProduct);
-        setIfChanged(data, MyExample4901DTO_.descriptionProduct, entity::setDescriptionProduct);
-
+        setIfChangedCurrentIteration(data, MyExample4901DTO_.descriptionProduct, entity::setDescriptionProduct);
+        setIfChangedCurrentIteration(data, MyExample4901DTO_.region, entity::setRegion);
         if (data.isFieldChanged(MyExample4901DTO_.product)) {
             entity.setProduct(data.getProduct());
-      /*       if (intPosProduct > intPosDescriptionProduct) {
-                entity.setDescriptionProduct(null);
-            }
-            if (intPosProduct > intPosPrice) {
-                entity.setMoney(null);
-            }*/
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
+
+
 
     @Override
     public Actions<MyExample4901DTO> getActions() {
