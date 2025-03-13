@@ -42,9 +42,13 @@ export function FormPopup(props: FormPopupProps) {
     const popupWidth = useFormPopupWidth(formPopupRef)
 
     const onClose = useCallback(() => {
-        dispatch(actions.bcCancelPendingChanges({ bcNames: [bcName] }))
+        // to prevent data clearing on the main widget
+        const needClearPendingDataForPopup = bcName !== popupData?.calleeBCName
+
+        needClearPendingDataForPopup && dispatch(actions.bcCancelPendingChanges({ bcNames: [bcName] }))
+
         dispatch(actions.closeViewPopup({ bcName }))
-    }, [bcName, dispatch])
+    }, [bcName, dispatch, popupData?.calleeBCName])
 
     const onSave = useCallback(() => {
         if (!bcLoading && popupData?.options?.operation) {
