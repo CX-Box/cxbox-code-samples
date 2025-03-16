@@ -184,6 +184,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .scope(ActionScope.RECORD)
                         .action("gotofind", "Go to Find")
+                        .withoutAutoSaveBefore()
                         .invoker((bc, dto) -> {
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDown(
