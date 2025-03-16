@@ -7,12 +7,11 @@ import { Dispatch } from 'redux'
 import { Icon } from 'antd'
 import styles from './InlinePickList.less'
 import cn from 'classnames'
-import { RootState, useAppSelector } from '@store'
+import { RootState } from '@store'
 import { actions, interfaces } from '@cxbox-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useDebounce } from '@hooks/useDebounce'
 import { buildBcUrl } from '@utils/buildBcUrl'
-import { isPopupWidgetFamily } from '@utils/isPopupWidgetFamily'
 
 const { changeDataItem, inlinePickListFetchDataRequest, showViewPopup, viewPutPickMap } = actions
 
@@ -27,7 +26,6 @@ interface InlinePickListOwnProps extends BaseFieldProps {
 }
 
 interface InlinePickListProps extends InlinePickListOwnProps {
-    widgetMeta: interfaces.WidgetMeta | undefined
     data: interfaces.DataItem[]
     onClick: (bcName: string, pickMap: interfaces.PickMap, widgetName?: string) => void
     onChange: (payload: ChangeDataItemPayload) => void
@@ -58,14 +56,12 @@ const InlinePickList: React.FunctionComponent<InlinePickListProps> = ({
     onClick,
     onChange,
     onSearch,
-    onDrillDown,
-    widgetMeta
+    onDrillDown
 }) => {
     const { t } = useTranslation()
 
     const [searchTerm, setSearchTerm] = React.useState('')
     const debouncedSearchTerm = useDebounce(searchTerm, 500)
-    const disabledPopup = isPopupWidgetFamily(widgetMeta?.type)
 
     React.useEffect(() => {
         if (debouncedSearchTerm) {
@@ -108,14 +104,8 @@ const InlinePickList: React.FunctionComponent<InlinePickListProps> = ({
         )
     }
 
-    const popupOpenButton = !disabledPopup && (
-        <span className={cn(styles.buttonContainer, { [styles.disabledButton]: disabled })} onClick={!disabled ? handleClick : undefined}>
-            <Icon data-test-field-inlinepicklist-popup={true} type="paper-clip" />
-        </span>
-    )
-
     return (
-        <span className={cn(styles.inlinePickList, { [styles.withoutPopupOpenButton]: disabledPopup })}>
+        <span className={styles.inlinePickList}>
             <Select
                 disabled={disabled}
                 value={value}
@@ -140,17 +130,20 @@ const InlinePickList: React.FunctionComponent<InlinePickListProps> = ({
                     )
                 })}
             </Select>
-            {popupOpenButton}
+            <span
+                className={cn(styles.buttonContainer, { [styles.disabledButton]: disabled })}
+                onClick={!disabled ? handleClick : undefined}
+            >
+                <Icon data-test-field-inlinepicklist-popup={true} type="paper-clip" />
+            </span>
         </span>
     )
 }
 
 const emptyData: interfaces.DataItem[] = []
-
 function mapStateToProps(state: RootState, ownProps: InlinePickListOwnProps) {
     return {
-        data: state.data[ownProps.popupBcName] || emptyData,
-        widgetMeta: state.view.widgets?.find(i => i.name === ownProps.widgetName)
+        data: state.data[ownProps.popupBcName] || emptyData
     }
 }
 

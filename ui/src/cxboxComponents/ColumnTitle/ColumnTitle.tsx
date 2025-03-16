@@ -2,10 +2,9 @@ import React, { ComponentType } from 'react'
 import cn from 'classnames'
 import ColumnFilter, { ColumnFilterOwnProps } from './ColumnFilter'
 import ColumnSort from './ColumnSort'
-import TemplatedTitle from '@cxboxComponents/TemplatedTitle/TemplatedTitle'
-import { numberFieldTypes } from '@constants/field'
-import { interfaces } from '@cxbox-ui/core'
 import styles from './ColumnTitle.less'
+import TemplatedTitle from '@cxboxComponents/TemplatedTitle/TemplatedTitle'
+import { interfaces } from '@cxbox-ui/core'
 
 export interface ColumnTitleProps {
     widgetName: string
@@ -34,6 +33,8 @@ export const notSortableFields: readonly interfaces.FieldType[] = [
     FieldType.hint
 ]
 
+const rightAlignedFields = [FieldType.number, FieldType.money, FieldType.percent]
+
 /**
  *
  * @param props
@@ -50,7 +51,7 @@ export const ColumnTitle: React.FC<ColumnTitleProps> = props => {
         return (
             <div
                 className={cn({
-                    [styles.rightAlignment]: numberFieldTypes.includes(props.widgetMeta.type)
+                    [styles.rightAlignment]: rightAlignedFields.includes(props.widgetMeta.type)
                 })}
             >
                 {title}
@@ -72,7 +73,7 @@ export const ColumnTitle: React.FC<ColumnTitleProps> = props => {
     return (
         <div
             className={cn(styles.container, props.className, {
-                [styles.rightAlignment]: numberFieldTypes.includes(props.widgetMeta.type)
+                [styles.rightAlignment]: rightAlignedFields.includes(props.widgetMeta.type)
             })}
         >
             {title}

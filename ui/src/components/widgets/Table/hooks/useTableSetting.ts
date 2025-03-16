@@ -10,16 +10,12 @@ import { CxBoxApiInstance } from '../../../../api'
 import { firstValueFrom } from 'rxjs'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { ControlColumn } from '@components/widgets/Table/Table.interfaces'
-import { getRowSelectionOffset } from '@components/widgets/Table/utils/rowSelection'
 
 export function useTableSetting(
     widgetName: string,
     widgetFields: AppWidgetMeta['fields'],
     widgetOptions?: AppWidgetMeta['options'],
-    blockedFields?: string[],
-    rowSelectionType?: string,
-    controlColumns?: ControlColumn<any>[]
+    serviceFields?: string[]
 ) {
     const view = useAppSelector(state => state.view)
     const viewName = view.name
@@ -49,16 +45,6 @@ export function useTableSetting(
     const visibleFields = useMemo(() => {
         return (widgetFields as WidgetListField[]).filter(field => !field?.hidden && field.type !== FieldType.hidden)
     }, [widgetFields])
-
-    const getColumnOffset = useCallback(
-        (type: ControlColumn<unknown>['position']) => {
-            const rowSelectionOffset = type === 'left' ? getRowSelectionOffset(rowSelectionType) : 0
-            const controlColumnsOffset = controlColumns?.filter(column => column.position === type).length ?? 0
-
-            return controlColumnsOffset + rowSelectionOffset
-        },
-        [controlColumns, rowSelectionType]
-    )
 
     const updateSetting = useCallback(
         (partialSetting: Partial<Omit<TableSettingsItem, 'view' | 'widget'>>, withoutRequest: boolean = false) => {
@@ -160,11 +146,10 @@ export function useTableSetting(
     // Changes the order of fields contained in the meta
     const changeFieldOrder = useCallback(
         (oldIndex: number, newIndex: number) => {
-            const newOrderFields = setting?.orderFields?.length ? [...setting?.orderFields] : visibleFields.map(item => item.key)
-            const leftColumnOffset = getColumnOffset('left')
+            const newOrderFields = setting?.orderFields?.length ? [...setting.orderFields] : visibleFields.map(item => item.key)
 
-            const currentItem: WidgetListField | undefined = resultedFields[oldIndex - leftColumnOffset]
-            const itemFromNewPosition: WidgetListField | undefined = resultedFields[newIndex - leftColumnOffset]
+            const currentItem: WidgetListField | undefined = resultedFields[oldIndex]
+            const itemFromNewPosition: WidgetListField | undefined = resultedFields[newIndex]
 
             const firstIndex = newOrderFields.findIndex(fieldKey => {
                 return fieldKey === currentItem?.key
@@ -174,15 +159,12 @@ export function useTableSetting(
                 return fieldKey === itemFromNewPosition?.key
             })
 
-            if (!currentItem?.key || blockedFields?.includes(currentItem.key) || firstIndex < 0) {
-                const controlColumnTitle =
-                    firstIndex < 0 ? controlColumns?.[oldIndex - getRowSelectionOffset(rowSelectionType)]?.column?.title : ''
-
-                message.error(t('Field cannot be moved', { label: currentItem?.label || currentItem?.title || controlColumnTitle }))
+            if (!currentItem?.key || serviceFields?.includes(currentItem.key)) {
+                message.error(t('Field cannot be moved', { label: currentItem?.label || currentItem?.title }))
                 return null
             }
 
-            if (!itemFromNewPosition?.key || blockedFields?.includes(itemFromNewPosition.key) || secondIndex < 0) {
+            if (!itemFromNewPosition?.key || serviceFields?.includes(itemFromNewPosition.key)) {
                 message.error(
                     t('Transfer space not available', {
                         label: currentItem?.label || currentItem?.title
@@ -195,18 +177,7 @@ export function useTableSetting(
 
             updateSetting({ orderFields: newOrderFields })
         },
-        [
-            setting?.orderFields,
-            visibleFields,
-            getColumnOffset,
-            resultedFields,
-            blockedFields,
-            changeOrderWithMutate,
-            updateSetting,
-            controlColumns,
-            rowSelectionType,
-            t
-        ]
+        [changeOrderWithMutate, resultedFields, serviceFields, setting?.orderFields, t, updateSetting, visibleFields]
     )
 
     const createVisibilitySetting = useCallback(
@@ -258,12 +229,12 @@ export function useTableSetting(
         (fieldKeys: string[], visibility: boolean) => {
             updateSetting(
                 createVisibilitySetting(
-                    fieldKeys.filter(fieldKey => !blockedFields?.includes(fieldKey)),
+                    fieldKeys.filter(fieldKey => !serviceFields?.includes(fieldKey)),
                     visibility
                 )
             )
         },
-        [createVisibilitySetting, blockedFields, updateSetting]
+        [createVisibilitySetting, serviceFields, updateSetting]
     )
 
     return {
