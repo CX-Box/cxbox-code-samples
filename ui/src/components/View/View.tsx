@@ -38,8 +38,6 @@ import FileViewerPopup from '@components/FileViewerPopup/FileViewerPopup'
 import GroupingHierarchy from '@components/widgets/GroupingHierarchy/GroupingHierarchy'
 import { AdditionalListWidget } from '@components/widgets/AdditionalListWidget/AdditionalListWidget'
 import WaitUntilPopup from '@components/WaitUntilPopup/WaitUntilPopup'
-import Pie1D from '../widgets/Pie1D/Pie1D'
-import Column2D from '../widgets/Column2D/Column2D'
 
 // TODO We need to remove PopupWidgetTypes from the core and replace imports throughout the entire project
 const { PopupWidgetTypes, FieldType } = interfaces
@@ -80,9 +78,7 @@ const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, 
     [WidgetTypes.SecondLevelMenu]: { component: LevelMenu, card: EmptyCard },
     [WidgetTypes.ThirdLevelMenu]: { component: LevelMenu, card: EmptyCard },
     [WidgetTypes.FourthLevelMenu]: { component: LevelMenu, card: EmptyCard },
-    [CustomWidgetTypes.StatsBlock]: { component: StatsBlock, card: EmptyCard },
-    [CustomWidgetTypes.Pie1D]: { component: Pie1D, card: DashboardCard },
-    [CustomWidgetTypes.Column2D]: { component: Column2D, card: DashboardCard }
+    [CustomWidgetTypes.StatsBlock]: { component: StatsBlock, card: EmptyCard }
 }
 
 function View() {

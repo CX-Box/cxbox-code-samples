@@ -40,6 +40,11 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
                 )
                 .action(act -> act
 
+                        .action("save", "Custom Save")
+                        .invoker(this::customSaveInvoker)
+                )
+                .action(act -> act
+
                         .action("customSave", "Custom Save")
                         .invoker(this::customSaveInvoker)
                 )

@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAppSelector } from '@store'
 import { AppWidgetGroupingHierarchyMeta } from '@interfaces/widget'
 import { useExpandableGroup } from '@components/widgets/Table/hooks/useExpandableGroup'
+import { usePrevious } from '@hooks/usePrevious'
+import { isFullVisibleElement } from '@components/widgets/Table/utils/elements'
 import Button from '@components/ui/Button/Button'
 import styles from '@components/widgets/Table/Table.less'
 import { Icon, Tooltip } from 'antd'
@@ -15,8 +17,6 @@ import { createTree } from '@components/widgets/Table/groupingHierarchy/utils/cr
 import { getGroupingHierarchyRowKey } from '@components/widgets/Table/groupingHierarchy/utils/getGroupingHierarchyRowKey'
 import { getGroupPaths } from '@components/widgets/Table/groupingHierarchy/utils/getGroupPaths'
 import { useGroupingHierarchyLevels } from '@components/widgets/Table/groupingHierarchy/hooks/useGroupingHierarchyLevels'
-import { useScrollToTopForTable } from '@components/widgets/Table/groupingHierarchy/hooks/useScrollToTopForTable'
-import { useAutoScrollToEditedRow } from '@components/widgets/Table/groupingHierarchy/hooks/useAutoScrollToEditedRow'
 
 export const useGroupingHierarchy = <T extends CustomDataItem>(
     meta: AppWidgetGroupingHierarchyMeta,
@@ -29,6 +29,7 @@ export const useGroupingHierarchy = <T extends CustomDataItem>(
         [groupingHierarchy?.fields, meta.fields]
     )
     const bcLoading = useAppSelector(state => state.screen.bo.bc[meta.bcName].loading)
+    const cursor = useAppSelector(state => state.screen.bo.bc[meta.bcName].cursor)
     const bcPageLimit = useAppSelector(state => state.screen.bo.bc[meta.bcName].limit)
     const sorters = useAppSelector(state => state.screen.sorters[meta.bcName])
     const filters = useAppSelector(state => state.screen.filters[meta.bcName])
@@ -36,15 +37,13 @@ export const useGroupingHierarchy = <T extends CustomDataItem>(
     const correctGroupingCount = bcPageLimit != null && bcCount != null && bcPageLimit >= bcCount
     const bcData = useAppSelector(state => state.data[meta.bcName] as T[] | undefined)
     const groupingHierarchyEmptyNodes = useGroupingHierarchyLevels(meta, sortedGroupKeys)
-    const aggFields = meta.options?.groupingHierarchy?.aggFields
-    const aggLevels = meta.options?.groupingHierarchy?.aggLevels
 
     const { tree, nodeDictionary, groupsDictionary, defaultExtendedDictionary } = useMemo(
         () =>
             isGroupingHierarchy
-                ? createTree(bcData, sortedGroupKeys, meta.fields, groupingHierarchyEmptyNodes, sorters, filters, aggFields, aggLevels)
+                ? createTree(bcData, sortedGroupKeys, groupingHierarchyEmptyNodes, sorters, filters)
                 : { tree: undefined, nodeDictionary: undefined, groupsDictionary: undefined, defaultExtendedDictionary: undefined },
-        [aggFields, aggLevels, bcData, filters, groupingHierarchyEmptyNodes, isGroupingHierarchy, meta.fields, sortedGroupKeys, sorters]
+        [bcData, filters, groupingHierarchyEmptyNodes, isGroupingHierarchy, sortedGroupKeys, sorters]
     )
     const { expandedParentRowKeys, changeExpand, clearExpand } = useExpandableGroup()
 
@@ -138,26 +137,103 @@ export const useGroupingHierarchy = <T extends CustomDataItem>(
         },
         [changeExpand, getGroupingHierarchyNodeByRecordId, sortedGroupKeys]
     )
-    const tableContainerRef = useRef<HTMLDivElement>(null)
 
-    const getRowElement = useCallback((rowKey: string | undefined): Element | null => {
-        return tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`) ?? null
+    const scrollToLeaf = useCallback((rowKey: string) => {
+        setTimeout(() => {
+            const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
+            element?.scrollIntoView({ block: 'center' })
+        }, 1)
     }, [])
 
-    const getFirstRowElement = useCallback(() => {
-        return getRowElement(getFirstRowKey())
-    }, [getFirstRowKey, getRowElement])
+    const previousCursor = usePrevious(cursor)
+    const currentIndex = bcData?.findIndex(item => item.id === cursor)
+    const previousIndex = usePrevious(currentIndex)
+    const currentItem = bcData?.[currentIndex as number] ?? null
+    const previousItem = usePrevious(currentItem)
 
-    const getRowElementByRowId = useCallback(
-        (rowId: string | null) => {
-            return getRowElement(getGroupingHierarchyRowKeyByRecordId(rowId as string))
-        },
-        [getGroupingHierarchyRowKeyByRecordId, getRowElement]
-    )
+    useEffect(() => {
+        const rowKey = getGroupingHierarchyRowKeyByRecordId(cursor as string)
 
-    const { showUp, scrollToTop } = useScrollToTopForTable(enabledGrouping, getFirstRowElement)
+        const rowElement = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
+        const rowHasChangedPosition = previousIndex !== currentIndex
+        const groupingHasBeenChanged =
+            previousItem &&
+            currentItem &&
+            formGroupPathFromRecord(previousItem, sortedGroupKeys) !== formGroupPathFromRecord(currentItem, sortedGroupKeys)
 
-    useAutoScrollToEditedRow(meta, isGroupingHierarchy, getRowElementByRowId, openTreeToLeaf)
+        if (enabledGrouping && (previousCursor !== cursor || (rowHasChangedPosition && groupingHasBeenChanged))) {
+            openTreeToLeaf(cursor)
+
+            if (currentIndex !== 0 && (!rowElement || !rowElement?.checkVisibility() || !isFullVisibleElement(rowElement))) {
+                rowKey && scrollToLeaf(rowKey)
+            }
+        }
+    }, [
+        currentIndex,
+        currentItem,
+        cursor,
+        enabledGrouping,
+        getGroupingHierarchyRowKeyByRecordId,
+        isGroupingHierarchy,
+        openTreeToLeaf,
+        previousCursor,
+        previousIndex,
+        previousItem,
+        scrollToLeaf,
+        sortedGroupKeys
+    ])
+
+    const tableContainerRef = useRef<HTMLDivElement>(null)
+
+    const intersectionObserverRef = useRef<IntersectionObserver | undefined>()
+
+    const [showUp, setShowUp] = useState(false)
+
+    const scrollToTop = useCallback(() => {
+        const rowKey = getFirstRowKey()
+        const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
+
+        setTimeout(() => {
+            element?.scrollIntoView({ block: 'center' })
+        }, 0)
+    }, [getFirstRowKey])
+
+    useEffect(() => {
+        intersectionObserverRef.current = enabledGrouping
+            ? new IntersectionObserver(entries => {
+                  const [entry] = entries
+
+                  setShowUp(!entry.isIntersecting)
+              })
+            : undefined
+
+        return () => {
+            intersectionObserverRef.current?.disconnect()
+        }
+    }, [enabledGrouping])
+
+    useEffect(() => {
+        if (!enabledGrouping) {
+            return
+        }
+
+        const rowKey = getFirstRowKey()
+        const element = tableContainerRef.current?.querySelector(`[data-row-key="${rowKey}"]`)
+
+        if (element) {
+            intersectionObserverRef.current?.observe(element)
+        }
+
+        return () => {
+            if (!enabledGrouping) {
+                return
+            }
+
+            if (element) {
+                intersectionObserverRef.current?.unobserve(element)
+            }
+        }
+    }, [enabledGrouping, getFirstRowKey])
 
     const { t } = useTranslation()
 

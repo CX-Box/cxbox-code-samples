@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from './Form.less'
 import { FormWidget } from '@cxboxComponents'
-import { WidgetFormMeta } from '@cxbox-ui/core'
+import { interfaces } from '@cxbox-ui/core'
 
 interface FormProps {
-    meta: Omit<WidgetFormMeta, 'type'>
+    meta: interfaces.WidgetFormMeta
 }
 
 function Form({ meta }: FormProps) {
