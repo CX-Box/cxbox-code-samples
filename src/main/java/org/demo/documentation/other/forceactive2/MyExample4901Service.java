@@ -7,10 +7,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 @Service
 public class MyExample4901Service extends VersionAwareResponseService<MyExample4901DTO, MyEntity4901> {
 
