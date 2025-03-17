@@ -96,13 +96,12 @@ public class BaseTestForSamples {
             bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
             bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
             bmp.newHar("Proxy start");
-
         });
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless"); // Disable chrome window
+        options.addArguments("--headless"); // Disable chrome window
         options.addArguments("--enable-automation");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-features=InsecureDownloadWarnings");

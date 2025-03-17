@@ -18,7 +18,7 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        testFailed = true; // Тест упал
+        testFailed = true;
         File videoFile = Objects.requireNonNull(new File(videoPath).listFiles())[0];
         try {
             Allure.addAttachment("Video of the dropped test.", "video/avi", Files.newInputStream(videoFile.toPath()), ".avi");

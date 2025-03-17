@@ -16,16 +16,16 @@ public class VideoRecorder {
     private ScreenRecorder screenRecorder;
 
     public void startRecording(String videoPath) throws IOException, AWTException {
-        File file = new File(videoPath);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Rectangle captureSize = new Rectangle(0, 0, screenSize.width, screenSize.height);
+       File file = new File(videoPath);
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        Rectangle captureSize = new Rectangle(0, 0, screenSize.width, screenSize.height);
 
         GraphicsConfiguration gc = GraphicsEnvironment
                 .getLocalGraphicsEnvironment()
                 .getDefaultScreenDevice()
                 .getDefaultConfiguration();
 
-        this.screenRecorder = new ScreenRecorder(gc, captureSize,
+        this.screenRecorder = new ScreenRecorder(gc, null,
                 new Format(MediaTypeKey, FormatKeys.MediaType.FILE, MimeTypeKey, MIME_AVI),
                 new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
                         CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
