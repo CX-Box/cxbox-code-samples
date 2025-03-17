@@ -181,18 +181,6 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                                             .timeoutMaxRequests(1).timeout(Duration.ofSeconds(1)).build());
                         })
                 )
-                .action(act -> act
-                        .scope(ActionScope.RECORD)
-                        .action("gotofind", "Go to Find")
-                        .withoutAutoSaveBefore()
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3231/view/myexample3232form"
-                                    ));
-                        })
-                )
                 .build();
     }
     // --8<-- [end:getActions]
