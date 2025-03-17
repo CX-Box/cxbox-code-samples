@@ -4,10 +4,9 @@ import io.qameta.allure.Allure;
 import lombok.Getter;
 import org.junit.jupiter.api.extension.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Objects;
+import java.nio.file.Path;
 
 @Getter
 public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback {
@@ -19,9 +18,9 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         testFailed = true;
-        File videoFile = Objects.requireNonNull(new File(videoPath).listFiles())[0];
+        // File videoFile = Objects.requireNonNull(new File(videoPath).listFiles())[0];
         try {
-            Allure.addAttachment("Video of the dropped test.", "video/avi", Files.newInputStream(videoFile.toPath()), ".avi");
+            Allure.addAttachment("Video of the dropped test.", "video/avi", Files.newInputStream(Path.of(videoPath)), ".avi");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,8 +35,8 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         videoPath = "target/videos/" + System.currentTimeMillis() + ".avi";
-        videoRecorder = new VideoRecorder();
-        videoRecorder.startRecording(videoPath);
+        videoRecorder = new VideoRecorder(videoPath);
+        videoRecorder.startRecording();
     }
 
     @Override

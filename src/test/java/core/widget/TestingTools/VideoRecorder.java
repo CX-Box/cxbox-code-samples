@@ -1,42 +1,49 @@
 package core.widget.TestingTools;
 
-import org.monte.media.Format;
-import org.monte.media.FormatKeys;
-import org.monte.media.math.Rational;
-import org.monte.screenrecorder.ScreenRecorder;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
-import static org.monte.media.FormatKeys.*;
-import static org.monte.media.VideoFormatKeys.*;
-
 public class VideoRecorder {
-    private ScreenRecorder screenRecorder;
 
-    public void startRecording(String videoPath) throws IOException, AWTException {
-       File file = new File(videoPath);
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        Rectangle captureSize = new Rectangle(0, 0, screenSize.width, screenSize.height);
+    private FFmpegExecutor executor;
+    private String outputFile;
 
-        GraphicsConfiguration gc = GraphicsEnvironment
-                .getLocalGraphicsEnvironment()
-                .getDefaultScreenDevice()
-                .getDefaultConfiguration();
-
-        this.screenRecorder = new ScreenRecorder(gc, null,
-                new Format(MediaTypeKey, FormatKeys.MediaType.FILE, MimeTypeKey, MIME_AVI),
-                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
-                        CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
-                        Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
-                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),
-                null, file);
-
-        this.screenRecorder.start();
+    public VideoRecorder(String outputFile) {
+        this.outputFile = outputFile;
     }
 
-    public void stopRecording() throws IOException {
-        this.screenRecorder.stop();
+    public void startRecording() throws IOException {
+        // Указываем путь к FFmpeg (если он не в PATH)
+
+        // Создаем объект FFmpeg
+        FFmpeg ffmpeg = new FFmpeg();
+
+        // Создаем билдер для настройки FFmpeg
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput("desktop") // Захват экрана (для Windows)
+                // .setInput(":0.0") // Захват экрана (для Linux)
+                // .setInput("video=Integrated Camera") // Захват с веб-камеры (Windows)
+                .overrideOutputFiles(true) // Перезаписывать выходной файл, если он существует
+                .addOutput(outputFile) // Выходной файл
+                .setFormat("mp4") // Формат видео
+                .setVideoCodec("libx264") // Кодек видео
+                .setVideoFrameRate(30) // FPS
+                .setVideoResolution(1280, 720) // Разрешение видео
+                .done();
+
+        // Создаем исполнитель и запускаем FFmpeg
+        executor = new FFmpegExecutor(ffmpeg);
+        executor.createJob(builder).run();
+    }
+
+    public void stopRecording() {
+        if (executor != null) {
+            // Останавливаем FFmpeg (завершаем процесс)
+            executor = null;
+            System.out.println("Запись видео завершена. Файл сохранен: " + outputFile);
+        }
     }
 }
