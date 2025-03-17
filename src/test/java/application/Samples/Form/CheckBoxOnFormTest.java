@@ -4,6 +4,7 @@ import application.common.Text;
 import core.ConfigTest.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
+import core.widget.TestingTools.TestStatusExtension;
 import core.widget.form.FormWidget;
 import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
@@ -13,14 +14,18 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Form. Checking the basic functions for the CheckBox")
+@ExtendWith(TestStatusExtension.class)
 @Epic("application/Samples")
 @Story("Form")
 @Tag("application/Samples")
@@ -38,6 +43,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getPlaceholder()).isEmpty();
+        $("h1").shouldHave(text("Wrong Text"));
     }
 
     @Test
