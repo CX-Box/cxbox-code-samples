@@ -3,13 +3,14 @@ package core.widget.form.field.money;
 import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.number.NumberDigits;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Money extends NumberDigits {
 
@@ -23,17 +24,20 @@ public class Money extends NumberDigits {
      * @return BigDecimal
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public BigDecimal getValue() {
-        String str = getFieldByName()
-                .shouldBe(Condition.exist)
-                .$(getValueTag())
-                .getValue();
-        assert str != null;
-        str = str.replace(" ", "").replace(",", ".");
-        double value = Double.parseDouble(str);
-        return BigDecimal.valueOf(value).setScale(getDigits(), RoundingMode.HALF_UP);
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            String str = getFieldByName()
+                    .shouldBe(Condition.exist)
+                    .$(getValueTag())
+                    .getValue();
+            assert str != null;
+            str = str.replace(" ", "").replace(",", ".");
+            double value = Double.parseDouble(str);
+            return BigDecimal.valueOf(value).setScale(getDigits(), RoundingMode.HALF_UP);
+        });
     }
 
     /**
@@ -43,19 +47,23 @@ public class Money extends NumberDigits {
      * {@code pattern} ***.XX
      */
     @Override
-    @Step("Setting the {value} value in the field")
     public void setValue(BigDecimal value) {
-        String pattern = ".*\\d.\\d{2}";
-        String str = value.toString();
-        str = str.replace(".", ",");
-        assert str.matches(pattern) : "Число не соответствует паттерну.";
-        clear();
-        getFieldByName().click();
-        getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(str);
-        $("body").click();
+        Allure.step("Setting the " + value + " value in the field", step -> {
+            logTime(step);
+            step.parameter("BigDecimal", value);
+
+            String pattern = ".*\\d.\\d{2}";
+            String str = value.toString();
+            str = str.replace(".", ",");
+            assert str.matches(pattern) : "Число не соответствует паттерну.";
+            clear();
+            getFieldByName().click();
+            getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(str);
+            $("body").click();
+        });
     }
 
 

@@ -3,10 +3,12 @@ package core.widget.info.field.input;
 import com.codeborne.selenide.Condition;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import java.time.Duration;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Input extends BaseString<String> {
     public Input(InfoWidget infoWidget, String title) {
@@ -19,21 +21,23 @@ public class Input extends BaseString<String> {
      * @return String text / null
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        if (getFieldByName()
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .$(getValueTag()).is(Condition.visible)) {
-            return getFieldByName()
-                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                    .$(getValueTag())
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .getText();
-        } else {
-            return null;
-        }
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
 
+            if (getFieldByName()
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$(getValueTag()).is(Condition.visible)) {
+                return getFieldByName()
+                        .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                        .$(getValueTag())
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .getText();
+            } else {
+                return null;
+            }
+        });
     }
 
     @Override

@@ -5,12 +5,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.form.FormWidget;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 public class FormPopup {
@@ -38,20 +40,25 @@ public class FormPopup {
      * Clicking on the button by name
      * @param nameButton The name of the button or the text in it
      */
-    @Step("Clicking on the button {nameButton}")
     public void clickButton(String nameButton) {
-        getButtons().findBy(Condition.text(nameButton)).click();
+        Allure.step("Clicking on the button " + nameButton, step -> {
+            logTime(step);
+            step.parameter("Name button", nameButton);
+
+            getButtons().findBy(Condition.text(nameButton)).click();
+        });
     }
 
     /**
      * Calling FormWidget to access the base fields
      * @return FormWidget
      */
-    @Step("Calling FormWidget to access the base fields")
     @Attachment
     public FormWidget getFieldByName() {
-        return new FormWidget(null, widget);
+        return Allure.step("Calling FormWidget to access the base fields", step -> {
+            logTime(step);
+
+            return new FormWidget(null, widget);
+        });
     }
-
-
 }

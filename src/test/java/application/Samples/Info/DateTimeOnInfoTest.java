@@ -15,7 +15,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the DateTime")
+@DisplayName("Info. Checking the basic functions for the DateTime")
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class DateTimeOnInfoTest extends BaseTestForSamples {

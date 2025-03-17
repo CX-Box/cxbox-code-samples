@@ -5,8 +5,9 @@ import com.codeborne.selenide.DownloadOptions;
 import core.widget.addfiles.FilesPopup;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
+
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -14,6 +15,7 @@ import java.io.File;
 import java.time.Duration;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @Getter
 public class FileUpload extends BaseField<File> {
@@ -35,10 +37,13 @@ public class FileUpload extends BaseField<File> {
      * @return File
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public File getValue() {
-        return getFieldByName().$("button").download(DownloadOptions.using(FOLDER));
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+            return getFieldByName().$("button").download(DownloadOptions.using(FOLDER));
+        });
+
     }
 
     @Override
@@ -53,13 +58,17 @@ public class FileUpload extends BaseField<File> {
      * {@code example} Hope.jpg
      */
 
-    @Step("Uploading a file to the {value} field")
     @SneakyThrows
     public void setValue(String value) {
-        getFieldByName().$(getValueTag()).uploadFromClasspath(value);
-        getFieldByName()
-                .$("button")
-                .shouldHave(Condition.text(value), Duration.ofSeconds(waitingForTests.Timeout));
+        Allure.step("Uploading a file to the {value} field", step -> {
+            logTime(step);
+            step.parameter("File", value);
+
+            getFieldByName().$(getValueTag()).uploadFromClasspath(value);
+            getFieldByName()
+                    .$("button")
+                    .shouldHave(Condition.text(value), Duration.ofSeconds(waitingForTests.Timeout));
+        });
     }
 
     /**
@@ -67,14 +76,17 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String
      */
-    @Step("Getting the downloaded file name")
     @Attachment
     public String getValueName() {
-        return getFieldByName()
-                .$("button")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .download(DownloadOptions.using(FOLDER))
-                .getName();
+        return Allure.step("Getting the downloaded file name", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("button")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .download(DownloadOptions.using(FOLDER))
+                    .getName();
+        });
     }
 
     /**
@@ -82,13 +94,16 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String NameFile
      */
-    @Step("Getting the file name in the field")
     @Attachment
     public String getNameFileInField() {
-        return getFieldByName()
-                .$("button")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting the file name in the field", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("button")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
     }
 
     /**
@@ -96,13 +111,17 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String text
      */
-    @Step("Getting the Placeholder value")
     @Attachment
     public String getPlaceholder() {
-        return getFieldByName()
-                .$("span[title=\"Placeholder text\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("span[title=\"Placeholder text\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+        });
+
     }
 
     /**
@@ -110,23 +129,27 @@ public class FileUpload extends BaseField<File> {
      *
      * @return Boolean true/false
      */
-    @Step("Checking the field for inactivity")
     @Attachment
     public boolean getReadOnly() {
-        return !getFieldByName().$(getValueTag()).is(Condition.exist);
+        return Allure.step("Checking the field for inactivity", step -> {
+            logTime(step);
+            return !getFieldByName().$(getValueTag()).is(Condition.exist);
+        });
     }
 
     /**
      * Clearing the field. Deleting a file.
      */
-    @Step("Clearing the field. Deleting a file.")
     public void clear() {
-        getFieldByName().$("i[title=\"Delete\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        getFieldByName()
-                .$("button")
-                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldBe(Condition.empty, Duration.ofSeconds(waitingForTests.Timeout));
+        Allure.step("Clearing the field. Deleting a file.", step -> {
+            logTime(step);
+            getFieldByName().$("i[title=\"Delete\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            getFieldByName()
+                    .$("button")
+                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldBe(Condition.empty, Duration.ofSeconds(waitingForTests.Timeout));
+        });
     }
 }
