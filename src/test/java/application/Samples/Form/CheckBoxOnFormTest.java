@@ -13,6 +13,8 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
@@ -25,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Story("Form")
 @Tag("application/Samples")
 @Tag("Form")
+@ExtendWith(VideoRecorderExtension.class)
 public class CheckBoxOnFormTest extends BaseTestForSamples {
 
 
@@ -38,6 +41,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getPlaceholder()).isEmpty();
+        assertThat(1).isEqualTo(2);
     }
 
     @Test

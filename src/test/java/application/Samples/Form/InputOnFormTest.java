@@ -13,6 +13,8 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -22,7 +24,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Input in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form")
+@Tag("Form") 
+@ExtendWith(VideoRecorderExtension.class)
 public class InputOnFormTest extends BaseTestForSamples {
 
 

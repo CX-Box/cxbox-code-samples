@@ -9,6 +9,8 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -18,7 +20,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Hint in the widget Form")
 @Epic("Samples")
 @Tag("Samples")
-@Tag("Form")
+@Tag("Form") 
+@ExtendWith(VideoRecorderExtension.class)
 public class HintOnFormTest extends BaseTestForSamples {
 
 //    @Test

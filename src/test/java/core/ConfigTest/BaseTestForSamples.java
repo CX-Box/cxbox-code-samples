@@ -8,6 +8,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
+import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
@@ -35,6 +36,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.openqa.selenium.logging.Logs;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static core.widget.TestingTools.CellProcessor.logTime;
@@ -42,6 +44,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
+@ExtendWith({VideoRecorderExtension.class, TestStatusExtension.class})
 @Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
@@ -52,6 +55,7 @@ public class BaseTestForSamples {
     @BeforeAll
     public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                        .includeSelenideSteps(false)
                 .screenshots(true)
                 .savePageSource(true));
     }
@@ -60,12 +64,6 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-            SelenideLogger.addListener("AllureSelenide",
-                    new AllureSelenide()
-                            .includeSelenideSteps(false)
-                            .screenshots(true)
-                            .savePageSource(false)
-            );
 
             Configuration.browser = "chrome";
             Configuration.headless = false;
@@ -75,6 +73,8 @@ public class BaseTestForSamples {
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
             Configuration.proxyEnabled = true;
+            Configuration.reportsFolder = "target/videos";
+
 
             Selenide.open(getEnv());
           
