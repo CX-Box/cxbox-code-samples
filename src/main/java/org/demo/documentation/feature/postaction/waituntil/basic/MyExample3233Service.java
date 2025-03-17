@@ -2,6 +2,7 @@ package org.demo.documentation.feature.postaction.waituntil.basic;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
@@ -9,6 +10,7 @@ import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3233AnySourceOutServiceDTO;
+import org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton.MyExample3232DTO;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
@@ -73,7 +75,20 @@ public class MyExample3233Service extends VersionAwareResponseService<MyExample3
                                                     StatusEnum.DONE)
                                             .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
                         })
-                ).build();
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("gotofind", "Go to Find")
+                        .withoutAutoSaveBefore()
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3233DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample3231/view/myexample3232allform"
+                                    ));
+                        })
+                )
+                .build();
     }
     // --8<-- [end:getActions]
 
