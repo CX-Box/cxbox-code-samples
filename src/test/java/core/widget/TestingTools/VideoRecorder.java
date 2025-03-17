@@ -16,22 +16,21 @@ public class VideoRecorder {
     }
 
     public void startRecording() throws IOException {
-        // Указываем путь к FFmpeg (если он не в PATH)
+        // Указываем путь к FFmpeg
+        //String ffmpegPath = "C:/ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe ";
 
         // Создаем объект FFmpeg
         FFmpeg ffmpeg = new FFmpeg();
 
         // Создаем билдер для настройки FFmpeg
         FFmpegBuilder builder = new FFmpegBuilder()
-                .setInput("desktop") // Захват экрана (для Windows)
-                // .setInput(":0.0") // Захват экрана (для Linux)
-                // .setInput("video=Integrated Camera") // Захват с веб-камеры (Windows)
+                .setInput(":0.0") // Захват экрана (для Linux)
                 .overrideOutputFiles(true) // Перезаписывать выходной файл, если он существует
                 .addOutput(outputFile) // Выходной файл
                 .setFormat("mp4") // Формат видео
-                .setVideoCodec("libx264") // Кодек видео
+                .setVideoCodec("mpeg4") // Кодек видео
                 .setVideoFrameRate(30) // FPS
-                .setVideoResolution(1280, 720) // Разрешение видео
+                .setVideoResolution(320, 240) // Разрешение видео
                 .done();
 
         // Создаем исполнитель и запускаем FFmpeg
