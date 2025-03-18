@@ -60,6 +60,7 @@ export const AdditionalListWidget: React.FC<Props> = ({ meta }) => {
                     {!readWidgetName && (
                         <div className={styles.container}>
                             <Table
+                                tableLayout="fixed"
                                 rowClassName={undefined}
                                 meta={meta as AppWidgetTableMeta}
                                 showHeader={showHeader}
