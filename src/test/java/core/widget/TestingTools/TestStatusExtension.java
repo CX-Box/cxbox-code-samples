@@ -22,11 +22,13 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         testFailed = true;
-        try {
-            int index = videoPath.indexOf("target");
-            Allure.addAttachment("Video of the dropped test.", "video/webm", Files.newInputStream(Path.of(videoPath.substring(index))), ".webm");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (getEnv()) {
+            try {
+                int index = videoPath.indexOf("target");
+                Allure.addAttachment("Video of the dropped test.", "video/webm", Files.newInputStream(Path.of(videoPath.substring(index))), ".webm");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -38,13 +40,22 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        videoRecorder = new VideoRecorder();
-        videoRecorder.start();
+        if (getEnv()) {
+            videoRecorder = new VideoRecorder();
+            videoRecorder.start();
+        }
     }
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
-        videoRecorder.finish();
-        videoPath = videoRecorder.videoUrl().get();
+        if (getEnv()) {
+            videoRecorder.finish();
+            videoPath = videoRecorder.videoUrl().get();
+        }
+    }
+
+    private boolean getEnv() {
+        String recorder = System.getenv("CXBOX_RECORDER");
+        return recorder != null && recorder.equalsIgnoreCase("true");
     }
 }

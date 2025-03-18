@@ -87,8 +87,6 @@ public class BaseTestForSamples {
             bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
             bmp.newHar("Proxy start");
 
-
-
             page = new LoginPage().loginKeyCloak("demo", "demo");
         });
     }
