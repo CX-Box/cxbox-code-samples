@@ -25,7 +25,7 @@ on:
 env:
   APP_URL: http://code-samples.cxbox.org/ui/#/
   CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
-  CXBOX_LOGGER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
+  CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
     
 jobs:
   build_main:
