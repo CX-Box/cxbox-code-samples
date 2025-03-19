@@ -76,10 +76,10 @@ public class MainPages {
      * Waiting for the page to load
      */
     private static void checkSkeleton() {
-        SelenideElement element = $(By.className("ant-skeleton-paragraph"));
+        SelenideElement element = $(By.cssSelector("div[data-test-field-title=\"Custom Field\"]"));
         System.out.println("\n\n");
-        log.info("checkSection -> ant-skeleton exists " + element.exists());
-        element.shouldNot(Condition.exist, Duration.ofSeconds(1));
+        log.info("checkSection -> row fid exists " + element.exists());
+        element.shouldBe(Condition.exist, Duration.ofSeconds(2));
         log.info("checkSkeleton -> finished. exists:" + element.exists());
         System.out.println("\n\n");
         System.out.println("\n\n");

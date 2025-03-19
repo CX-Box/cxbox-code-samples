@@ -2,7 +2,10 @@ package core.widget.TestingTools;
 
 import io.qameta.allure.Allure;
 import lombok.Getter;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestWatcher;
 import org.selenide.videorecorder.core.VideoRecorder;
 
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Getter
-public class TestStatusExtension implements TestWatcher, BeforeAllCallback, AfterAllCallback {
+public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback {
 
     private boolean testFailed = false;
     private String videoPath;
@@ -36,7 +39,7 @@ public class TestStatusExtension implements TestWatcher, BeforeAllCallback, Afte
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) throws Exception {
         if (getEnv()) {
             videoRecorder = new VideoRecorder();
             videoRecorder.start();
@@ -44,7 +47,7 @@ public class TestStatusExtension implements TestWatcher, BeforeAllCallback, Afte
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) throws Exception {
         if (getEnv()) {
             videoRecorder.finish();
             videoPath = videoRecorder.videoUrl().get();
