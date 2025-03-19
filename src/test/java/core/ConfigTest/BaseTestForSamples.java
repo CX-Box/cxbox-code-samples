@@ -8,7 +8,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
-//import core.widget.TestingTools.TestStatusExtension;
+import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
@@ -44,7 +44,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
-@ExtendWith({VideoRecorderExtension.class})
+@ExtendWith({VideoRecorderExtension.class, TestStatusExtension.class})
 @Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
@@ -78,7 +78,7 @@ public class BaseTestForSamples {
             Configuration.reportsFolder = "target/videos";
 
 
-
+            log.info(getUrlEnv());
             Selenide.open(getUrlEnv());
 
             if (getLogEnv()) {

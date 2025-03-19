@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -11,6 +12,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
+@Slf4j
 public class MainPages {
 
 
@@ -75,6 +77,11 @@ public class MainPages {
      */
     private static void checkSkeleton() {
         SelenideElement element = $(By.className("ant-skeleton-paragraph"));
+        System.out.println("\n\n");
+        log.info("checkSection -> ant-skeleton exists " + element.exists());
         element.shouldNot(Condition.exist, Duration.ofSeconds(1));
+        log.info("checkSkeleton -> finished. exists:" + element.exists());
+        System.out.println("\n\n");
+        System.out.println("\n\n");
     }
 }
