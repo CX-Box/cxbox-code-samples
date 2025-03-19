@@ -74,7 +74,7 @@ public class MainPages {
      * Waiting for the page to load
      */
     private static void checkSkeleton() {
-        SelenideElement element = $(By.className("ant-skeleton"));
+        SelenideElement element = $(By.className("ant-skeleton-paragraph"));
         element.shouldNot(Condition.exist, Duration.ofSeconds(1));
     }
 }
