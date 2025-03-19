@@ -75,5 +75,7 @@ Otherwise, there will be a unique allure report.
 ```
 
 ## Environment variables
+
 * APP_URL - the url where the tests will be run (default - http://code-samples.cxbox.org/ui/#/)
 * CXBOX_RECORDER - true/false indicates whether video will be recorded for dropped tests.
+* CXBOX_LOGGER - true/false added logs.

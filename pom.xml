@@ -49,7 +49,7 @@
         <junit.version>5.9.2</junit.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <allure.version>2.27.0</allure.version>
+        <allure.version>2.28.0</allure.version>
         <allure-maven.version>2.12.0</allure-maven.version>
         <selenide.version>7.7.0</selenide.version>
         <aspectj.version>1.9.22.1</aspectj.version>
@@ -203,43 +203,35 @@
             <version>${selenide.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-selenide</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit-platform</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -251,6 +243,7 @@
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-proxy</artifactId>
             <version>${selenide.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

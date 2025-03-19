@@ -13,14 +13,19 @@ on:
        description: include PATH
        type: string
        required: false
-     tags:
+     video_tags:
        description: "Record failed video"
+       required: false
+       type: boolean
+     log_tags:
+       description: "Logging network"
        required: false
        type: boolean
 
 env:
   APP_URL: http://code-samples.cxbox.org/ui/#/
-  CXBOX_RECORDER:  ${{ github.event.inputs.tags == 'true' && 'true' || 'false' }}
+  CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
+  CXBOX_LOGGER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
     
 jobs:
   build_main:

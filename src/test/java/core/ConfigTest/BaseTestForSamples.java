@@ -8,7 +8,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
-import core.widget.TestingTools.TestStatusExtension;
+//import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
@@ -44,7 +44,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
-@ExtendWith({VideoRecorderExtension.class, TestStatusExtension.class})
+@ExtendWith({VideoRecorderExtension.class})
 @Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
@@ -72,20 +72,25 @@ public class BaseTestForSamples {
             Configuration.pageLoadTimeout = 60000;
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
-            Configuration.proxyEnabled = true;
+            if (getLogEnv()) {
+                Configuration.proxyEnabled = true;
+            }
             Configuration.reportsFolder = "target/videos";
 
 
-            Selenide.open(getEnv());
-          
-            bmp = WebDriverRunner.getSelenideProxy().getProxy();
 
-            EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
-            nonBinaryContentCaptureTypes.addAll(CaptureType.getHeaderCaptureTypes());
+            Selenide.open(getUrlEnv());
 
-            bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
-            bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
-            bmp.newHar("Proxy start");
+            if (getLogEnv()) {
+                bmp = WebDriverRunner.getSelenideProxy().getProxy();
+
+                EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
+                nonBinaryContentCaptureTypes.addAll(CaptureType.getHeaderCaptureTypes());
+
+                bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
+                bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
+                bmp.newHar("Proxy start");
+            }
 
             page = new LoginPage().loginKeyCloak("demo", "demo");
         });
@@ -107,10 +112,13 @@ public class BaseTestForSamples {
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
 
-        LoggingPreferences logPrefs = new LoggingPreferences();
-        logPrefs.enable(LogType.BROWSER.toString(), Level.ALL);
-        logPrefs.enable(LogType.PERFORMANCE.toString(), Level.ALL);
-        options.setCapability("goog:loggingPrefs", logPrefs);
+        if (getLogEnv()) {
+            LoggingPreferences logPrefs = new LoggingPreferences();
+            logPrefs.enable(LogType.BROWSER.toString(), Level.ALL);
+            logPrefs.enable(LogType.PERFORMANCE.toString(), Level.ALL);
+            options.setCapability("goog:loggingPrefs", logPrefs);
+        }
+
 
         System.setProperty("chromeoptions.prefs", "credentials_enable_service=false, password_manager_enabled=false");
         return options;
@@ -118,12 +126,14 @@ public class BaseTestForSamples {
 
     @AfterEach
     public void printLogs(){
-        Allure.step("Print browser logs and response...", step -> {
-            logTime(step);
-            Logs logs = getWebDriver().manage().logs();
-            printConsoleLog(logs.get(LogType.BROWSER.toString()));
-            printNetworkLog();
-        });
+        if (getLogEnv()) {
+            Allure.step("Print browser logs and response...", step -> {
+                logTime(step);
+                Logs logs = getWebDriver().manage().logs();
+                printConsoleLog(logs.get(LogType.BROWSER.toString()));
+                printNetworkLog();
+            });
+        }
     }
 
     @AfterEach
@@ -136,24 +146,26 @@ public class BaseTestForSamples {
 
     @AfterAll
     public static void createZipLog() throws IOException {
-        Path logFile = Paths.get("logLoginFile");
-        Path zipFile = Paths.get("logLoginZip.zip");
+        if (getLogEnv()) {
+            Path logFile = Paths.get("logLoginFile");
+            Path zipFile = Paths.get("logLoginZip.zip");
 
-        try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-            writer.write(loginLog.toString());
-        } catch (IOException e) {
-            log.error("Error writing log file ", e);
-            return; // Stop execution if log file cannot be written
+            try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+                writer.write(loginLog.toString());
+            } catch (IOException e) {
+                log.error("Error writing log file ", e);
+                return; // Stop execution if log file cannot be written
+            }
+
+            try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile.toFile()))) {
+                zipOut.putNextEntry(new ZipEntry("logLoginFile"));
+                Files.copy(logFile, zipOut);
+                zipOut.closeEntry();
+            }
+
+            Files.delete(logFile);
+            Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(zipFile), ".zip");
         }
-
-        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile.toFile()))) {
-            zipOut.putNextEntry(new ZipEntry("logLoginFile"));
-            Files.copy(logFile, zipOut);
-            zipOut.closeEntry();
-        }
-
-        Files.delete(logFile);
-        Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(zipFile), ".zip");
     }
 
     void printNetworkLog() {
@@ -161,13 +173,13 @@ public class BaseTestForSamples {
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
-                        !x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
+                        !x.getRequest().getUrl().contains(getUrlEnv().replace("/ui/#/", "")+"/api/v1/login")
         ).forEach(x -> stringBuilder.append(printNetworkLog(x)));
 
         bmp.getHar().getLog().getEntries().stream().filter( x ->
                 (x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&
-                        x.getRequest().getUrl().contains(getEnv().replace("/ui/#/", "")+"/api/v1/login")
+                        x.getRequest().getUrl().contains(getUrlEnv().replace("/ui/#/", "")+"/api/v1/login")
         ).forEach(x -> loginLog.add(printNetworkLog(x)));
 
         Allure.addAttachment("Browser network", stringBuilder.toString());
@@ -193,12 +205,17 @@ public class BaseTestForSamples {
         Allure.addAttachment("Browser Logs", logContent.toString());
     }
 
-    private String getEnv() {
+    private String getUrlEnv() {
         String url = System.getenv("APP_URL");
         if (url == null || url.isEmpty()) {
             url = "http://code-samples.cxbox.org/ui/#/";
         }
         return url;
+    }
+
+    private static boolean getLogEnv() {
+        String recorder = System.getenv("CXBOX_LOGGER");
+        return recorder != null && recorder.equalsIgnoreCase("true");
     }
 
     private static String printNetworkLog(HarEntry entry) {
