@@ -15,8 +15,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.core.Video;
 import org.selenide.videorecorder.junit5.VideoRecorderExtension;
-
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -32,11 +32,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith(VideoRecorderExtension.class)
 public class CheckBoxOnFormTest extends BaseTestForSamples {
 
-
     @Test
     @Tag("Positive")
     @DisplayName("Test for getting the Placeholder value")
     @Description("The test gets the value from the placeholder attribute and returns it in String format")
+    @Video
     void placeholder() {
         MainPages.click("Checkbox placeholder");
         MainPages.FirstLevelMenu.click("Form");
@@ -49,6 +49,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test to get the field color value in Hex format")
     @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @Video
     void color() {
         MainPages.click("Checkbox color");
         MainPages.FirstLevelMenu.click("Form");
