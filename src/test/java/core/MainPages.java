@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 
 import java.time.Duration;
 
@@ -38,7 +37,7 @@ public class MainPages {
                     .find(Condition.exactText(sectionName))
                     .shouldBe(Condition.enabled)
                     .click();
-            checkSkeleton();
+            checkPagesLoad();
         });
     }
 
@@ -65,7 +64,7 @@ public class MainPages {
                         .find(Condition.exactText(sectionName))
                         .shouldBe(Condition.enabled)
                         .click();
-                checkSkeleton();
+                checkPagesLoad();
             });
 
         }
@@ -75,13 +74,10 @@ public class MainPages {
     /**
      * Waiting for the page to load
      */
-    private static void checkSkeleton() {
-        SelenideElement element = $(By.cssSelector("div[data-test-field-title=\"Custom Field\"]"));
-        System.out.println("\n\n");
-        log.info("checkSection -> row fid exists " + element.exists());
-        element.shouldBe(Condition.exist, Duration.ofSeconds(2));
-        log.info("checkSkeleton -> finished. exists:" + element.exists());
-        System.out.println("\n\n");
-        System.out.println("\n\n");
+    private static void checkPagesLoad() {
+        SelenideElement element = $("div[data-test-loading=\"true\"]");
+        log.info("data-test-loading=true check -> started. exists:  " + element.exists());
+        element.shouldNotBe(Condition.exist, Duration.ofSeconds(2));
+        log.info("data-test-loading=true check -> finished. exists: " + element.exists());
     }
 }
