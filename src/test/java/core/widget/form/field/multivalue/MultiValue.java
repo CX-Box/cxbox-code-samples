@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Popup;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class MultiValue extends BaseField<List<String>> {
 
@@ -32,25 +34,27 @@ public class MultiValue extends BaseField<List<String>> {
      * @return List String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public List<String> getValue() {
+        return Allure.step("Getting a value from a field", step ->{
+                    logTime(step);
 
-        List<String> strings =  getFieldByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$$(By.tagName("span"))
-                .texts();
-        Collections.reverse(strings);
-        return strings;
+                    List<String> strings =  getFieldByName()
+                            .$(getValueTag())
+                            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                            .$$(By.tagName("span"))
+                            .texts();
+                    Collections.reverse(strings);
+                    return strings;
+        });
     }
 
-    /**
-     * This method is not available for MultiValue.
-     * Data entry takes place via findPopup.
-     *
-     * @param value UnsupportedOperationException
-     */
+        /**
+         * This method is not available for MultiValue.
+         * Data entry takes place via findPopup.
+         *
+         * @param value UnsupportedOperationException
+         */
     @Override
     @Step("Setting the value in the field is not available")
     public void setValue(List<String> value) {
@@ -60,20 +64,23 @@ public class MultiValue extends BaseField<List<String>> {
     /**
      * Clearing the field
      */
-    @Step("Clearing the field")
     public void clear() {
-        ElementsCollection icons = getFieldByName()
-                .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .$$("i[class=\"anticon anticon-close\"]");
+        Allure.step("Clearing the field", step -> {
+            logTime(step);
+            ElementsCollection icons = getFieldByName()
+                    .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$$("i[class=\"anticon anticon-close\"]");
 
-        for (SelenideElement i : icons) {
-            i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
-            waitingForTests.getWaitAllElements(i);
-            Selenide.sleep(300);
-            i.click();
-            i.shouldBe(Condition.disappear, Duration.ofSeconds(waitingForTests.Timeout));
-        }
+            for (SelenideElement i : icons) {
+                i.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+                waitingForTests.getWaitAllElements(i);
+                Selenide.sleep(300);
+                i.click();
+                i.shouldBe(Condition.disappear, Duration.ofSeconds(waitingForTests.Timeout));
+            }
+        });
     }
+
 
     private SelenideElement modalWindow() {
         return getFieldByName()
@@ -85,10 +92,13 @@ public class MultiValue extends BaseField<List<String>> {
     /**
      * Opening a modal window
      */
-    @Step("Opening a modal window")
     public void openModalWindow() {
-        modalWindow().click();
-        Selenide.sleep(100);
+        Allure.step("Opening a modal window", step -> {
+            logTime(step);
+
+            modalWindow().click();
+            Selenide.sleep(100);
+        });
     }
 
     @Override
@@ -102,17 +112,20 @@ public class MultiValue extends BaseField<List<String>> {
      *
      * @return Popup class of all modal windows
      */
-    @Step("Validation of the modal window")
     @Attachment
     public Optional<Popup> findPopup() {
-        SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
-                .shouldBe(visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout));
-        if (elementPopup.is(Condition.exist)) {
-            return Optional.of(new Popup());
-        } else {
-            return Optional.empty();
-        }
+        return Allure.step("Validation of the modal window", step -> {
+            logTime(step);
+            SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
+                    .shouldBe(visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldBe(exist, Duration.ofSeconds(waitingForTests.Timeout));
+            if (elementPopup.is(Condition.exist)) {
+                return Optional.of(new Popup());
+            } else {
+                return Optional.empty();
+            }
+        });
+
     }
 
     /**
@@ -120,14 +133,16 @@ public class MultiValue extends BaseField<List<String>> {
      *
      * @return String
      */
-    @Step("Getting the Placeholder value")
     @Attachment
     public String getPlaceholder() {
-        String str = getValueByAttribute(1, "span[class=\"ant-form-item-children\"] div div", "data-text");
-        if (str.isEmpty()) {
-            return null;
-        } else {
-            return str;
-        }
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+            String str = getValueByAttribute(1, "span[class=\"ant-form-item-children\"] div div", "data-text");
+            if (str.isEmpty()) {
+                return null;
+            } else {
+                return str;
+            }
+        });
     }
 }

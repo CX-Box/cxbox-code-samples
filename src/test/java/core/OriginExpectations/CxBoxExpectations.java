@@ -2,7 +2,7 @@ package core.OriginExpectations;
 
 import com.codeborne.selenide.*;
 import core.ContextUtils;
-import io.qameta.allure.Step;
+import io.qameta.allure.Allure;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.TimeoutException;
@@ -11,12 +11,13 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 @Slf4j
 @RequiredArgsConstructor
 public class CxBoxExpectations implements ExpectationPattern {
-    public final Integer Timeout = 100;
+    public final Integer Timeout = 10;
 
     public final int RetryNumber = 5;
 
@@ -44,9 +45,12 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 
     @Override
-    @Step("Waiting for all elements to be visible for the widget {title}")
     public void getWaitAllElementsWidget(String title) {
-        String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+
+        Allure.step("Waiting for all elements to be visible for the widget " + title, step -> {
+            logTime(step);
+
+            String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
         SelenideElement widgetElement = $(widget);
         for (int i = 1; i <= getRetryNumber(); i++) {
             try {
@@ -62,28 +66,32 @@ public class CxBoxExpectations implements ExpectationPattern {
                 } else {
                     throw new RuntimeException("Couldn't wait for the widget to be visible '" + title + "' after " + getRetryNumber() + " attempts.", e);
                 }
+                }
             }
-        }
+        });
+
     }
 
 
     @Override
-    @Step("Waiting for all rows to be visible for the widget {title}")
     public void getWaitAllRowsWidget(String title) {
-        String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-        String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
-        for (int i = 1; i <= getRetryNumber(); i++) {
-            try {
-                SelenideElement widgetElement = $(widget).shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                ElementsCollection rowsElement = widgetElement.$$(rowSelector);
-                for (SelenideElement row : rowsElement.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-                    row.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                    row.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                    for (SelenideElement s : row.$$("td").shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-                        s.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                        s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                    }
-                }
+        Allure.step("Waiting for all rows to be visible for the widget " + title, step -> {
+            logTime(step);
+
+            String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+            String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
+            for (int i = 1; i <= getRetryNumber(); i++) {
+                try {
+                    SelenideElement widgetElement = $(widget).shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                    ElementsCollection rowsElement = widgetElement.$$(rowSelector);
+                    for (SelenideElement row : rowsElement.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
+                        row.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                        row.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                        for (SelenideElement s : row.$$("td").shouldHave(CollectionCondition.sizeGreaterThan(0))) {
+                            s.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
+                            s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
+                        }
+                                    }
                 log.info("All lines of the widget '{}' loaded successfully.", title);
                 return;
             } catch (TimeoutException e) {
@@ -92,16 +100,19 @@ public class CxBoxExpectations implements ExpectationPattern {
                     Selenide.sleep(getTimeoutMilliseconds());
                 } else {
                     throw new RuntimeException("Couldn't wait for the widget lines to load '" + title + "' after " + getRetryNumber() + " attempts.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for all fields on the page to be visible")
     public void getWaitAllFields() {
-        String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
+        Allure.step("Waiting for all fields on the page to be visible", step -> {
+            logTime(step);
+
+            String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
         for (int i = 1; i <= getRetryNumber(); i++) {
             try {
                 ElementsCollection fields = $$(fieldsSelector);
@@ -118,15 +129,18 @@ public class CxBoxExpectations implements ExpectationPattern {
                 } else {
                     throw new RuntimeException("Couldn't wait for fields to load " + getRetryNumber() + " attempts.", e);
                 }
+                }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for an element to be visible by type {type} and by heading  {title}")
     public void getWaitElement(String type, String title) {
-        String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+        Allure.step("Waiting for an element to be visible by type " + type + " and by heading " + title, step -> {
+            logTime(step);
+
+            String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
         for (int i = 1; i <= getRetryNumber(); i++) {
             try {
                 SelenideElement element = $(elementSelector);
@@ -140,16 +154,20 @@ public class CxBoxExpectations implements ExpectationPattern {
                     Selenide.sleep(getTimeoutMilliseconds());
                 } else {
                     throw new RuntimeException("Couldn't wait for the item to load " + getRetryNumber() + " attempts.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for all Webelement elements to be visible {webElement}")
     public void getWaitAllElements(SelenideElement webElement) {
-        for (int i = 1; i <= getRetryNumber(); i++) {
+
+        Allure.step("Waiting for all Webelement elements to be visible " + webElement , step -> {
+            logTime(step);
+
+             for (int i = 1; i <= getRetryNumber(); i++) {
             try {
                 webElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
                 webElement.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
@@ -160,16 +178,19 @@ public class CxBoxExpectations implements ExpectationPattern {
                     Selenide.sleep(getTimeoutMilliseconds());
                 } else {
                     throw new RuntimeException("Couldn't wait for WebElement to load " + getRetryNumber() + " attempts.", e);
+                    }
                 }
             }
-        }
+        });
     }
 
 
     @Override
-    @Step("Waiting for all elements to be visible by Css Selector {cssSelector}")
     public void getWaitAllElements(String cssSelector) {
-        for (int i = 1; i <= getRetryNumber(); i++) {
+        Allure.step("Waiting for all elements to be visible by Css Selector " + cssSelector, step -> {
+            logTime(step);
+
+            for (int i = 1; i <= getRetryNumber(); i++) {
             try {
                 SelenideElement element = $(cssSelector);
                 element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
@@ -182,7 +203,8 @@ public class CxBoxExpectations implements ExpectationPattern {
                 } else {
                     throw new RuntimeException("Couldn't wait for the item to load " + getRetryNumber() + " attempts.", e);
                 }
+                }
             }
-        }
+        });
     }
 }

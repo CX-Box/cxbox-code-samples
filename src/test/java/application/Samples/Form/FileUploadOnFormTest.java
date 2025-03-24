@@ -15,6 +15,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.io.File;
 import java.net.URL;
@@ -28,7 +30,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the FileUpload in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form")
+@Tag("Form") 
+@ExtendWith(VideoRecorderExtension.class)
 public class FileUploadOnFormTest extends BaseTestForSamples {
 
     @Test

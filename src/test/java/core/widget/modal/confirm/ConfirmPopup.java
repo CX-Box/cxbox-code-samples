@@ -2,10 +2,11 @@ package core.widget.modal.confirm;
 
 import com.codeborne.selenide.SelenideElement;
 import core.widget.modal.BasePopup;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class ConfirmPopup extends BasePopup<String> {
 
@@ -18,10 +19,14 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-    @Step("Getting the header value")
     @Attachment
     public String getTitle() {
-        return getTextElement("div[class=\"ant-modal-title\"]");
+        return Allure.step("Getting the header value", step -> {
+            logTime(step);
+
+            return getTextElement("div[class=\"ant-modal-title\"]");
+        });
+
     }
 
     /**
@@ -29,10 +34,13 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-    @Step("Getting the message text")
     @Attachment
     public String getMessage() {
-        return getTextElement("p");
+        return Allure.step("Getting the message text", step -> {
+            logTime(step);
+
+            return getTextElement("p");
+        });
     }
 
     @Override

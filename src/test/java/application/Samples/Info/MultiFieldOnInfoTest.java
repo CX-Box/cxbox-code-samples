@@ -9,6 +9,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,10 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the MultiField")
+@DisplayName("Info. Checking the basic functions for the MultiField")
 @Epic("Samples")
 @Tag("Samples")
+@ExtendWith(VideoRecorderExtension.class)
 public class MultiFieldOnInfoTest extends BaseTestForSamples {
 
     @Test

@@ -10,9 +10,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.Story;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -24,6 +27,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Story("Form")
 @Tag("application/Samples")
 @Tag("Form")
+@Slf4j
+@ExtendWith(VideoRecorderExtension.class)
 public class CheckBoxOnFormTest extends BaseTestForSamples {
 
     @Test

@@ -3,14 +3,17 @@ package core;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
-import org.openqa.selenium.By;
+import io.qameta.allure.Allure;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
+import static core.widget.TestingTools.CellProcessor.logTime;
 
+@Slf4j
 public class MainPages {
+
 
     public static final SelenideElement MAIN_MENU = ContextUtils.LEFT_SIDER
             .$("ul[data-test='MAIN_MENU']");
@@ -22,15 +25,23 @@ public class MainPages {
      * Select a section in the left menu
      *
      * @param sectionName Section name
+     *
+     * @serialData DateTime
      */
-    @Step("Selecting the {section Name} section in the left menu")
+
     public static void click(String sectionName) {
-        MAIN_SECTIONS
-                .find(Condition.exactText(sectionName))
-                .shouldBe(Condition.enabled)
-                .click();
-        checkSkeleton();
+        Allure.step("Selecting the " + sectionName + " section in the left menu.", step -> {
+            step.parameter("sectionName", sectionName);
+            logTime(step);
+            MAIN_SECTIONS
+                    .find(Condition.exactText(sectionName))
+                    .shouldBe(Condition.enabled)
+                    .click();
+            checkPagesLoad();
+        });
     }
+
+
 
 
     public static class FirstLevelMenu {
@@ -44,13 +55,18 @@ public class MainPages {
          *
          * @param sectionName Name of the tab
          */
-        @Step("Selecting a tab {sectionName} on a page")
         public static void click(String sectionName) {
-            FIRST_LEVEL_SECTIONS
-                    .find(Condition.exactText(sectionName))
-                    .shouldBe(Condition.enabled)
-                    .click();
-            checkSkeleton();
+            Allure.step("Selecting a tab " + sectionName + " on a page", step -> {
+                logTime(step);
+                step.parameter("Name of tab", sectionName);
+
+                FIRST_LEVEL_SECTIONS
+                        .find(Condition.exactText(sectionName))
+                        .shouldBe(Condition.enabled)
+                        .click();
+                checkPagesLoad();
+            });
+
         }
 
 
@@ -58,8 +74,10 @@ public class MainPages {
     /**
      * Waiting for the page to load
      */
-    private static void checkSkeleton() {
-        SelenideElement element = $(By.className("ant-skeleton"));
-        element.shouldNot(Condition.exist, Duration.ofSeconds(1));
+    private static void checkPagesLoad() {
+        SelenideElement element = $("div[data-test-loading=\"true\"]");
+        log.info("data-test-loading=true check -> started. exists:  " + element.exists());
+        element.shouldNotBe(Condition.exist, Duration.ofSeconds(2));
+        log.info("data-test-loading=true check -> finished. exists: " + element.exists());
     }
 }

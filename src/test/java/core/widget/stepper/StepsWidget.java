@@ -4,8 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +13,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
 @Getter
@@ -32,22 +34,26 @@ public class StepsWidget {
      *
      * @return Pair Integer, String
      */
-    @Step("Getting the number and text of the steps")
     @Attachment
     public List<Pair<Integer, String>> getNumberAndTextSteps() {
-        waitingForTests.getWaitAllElements(widget);
-        List<Pair<Integer, String>> pairs = new ArrayList<>();
-        steps().forEach(step -> {
-            Integer number = Integer.valueOf(step.$("div[class=\"ant-steps-item-icon\"]")
-                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .text());
-            String text = step.$("div[class=\"ant-steps-item-title\"]")
-                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .text();
-            pairs.add(Pair.of(number, text));
+        return Allure.step("Getting the number and text of the steps", step -> {
+            logTime(step);
 
+            waitingForTests.getWaitAllElements(widget);
+            List<Pair<Integer, String>> pairs = new ArrayList<>();
+            steps().forEach(stepSE -> {
+                Integer number = Integer.valueOf(stepSE.$("div[class=\"ant-steps-item-icon\"]")
+                        .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .text());
+                String text = stepSE.$("div[class=\"ant-steps-item-title\"]")
+                        .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .text();
+                pairs.add(Pair.of(number, text));
+
+            });
+            return pairs;
         });
-        return pairs;
+
     }
 
     /**
@@ -56,18 +62,23 @@ public class StepsWidget {
      * @param stepIndex The step number. Counting down from 1
      * @return String
      */
-    @Step("Getting the number and text for {stepIndex}  steps")
     @Attachment
     public String getStepText(int stepIndex) {
-        waitingForTests.getWaitAllElements(widget);
-        SelenideElement element = steps().get(stepIndex - 1);
-        String number = element.$("div[class=\"ant-steps-item-icon\"]")
-                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
-        String text = element.$("div[class=\"ant-steps-item-title\"]")
-                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
-        return (number + ", " + text);
+        return Allure.step("Getting the number and text for " + stepIndex + "  steps", step -> {
+            logTime(step);
+            step.parameter("Step number", stepIndex);
+
+            waitingForTests.getWaitAllElements(widget);
+            SelenideElement element = steps().get(stepIndex - 1);
+            String number = element.$("div[class=\"ant-steps-item-icon\"]")
+                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+            String text = element.$("div[class=\"ant-steps-item-title\"]")
+                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .text();
+            return (number + ", " + text);
+        });
+
     }
 
     /**
@@ -75,16 +86,18 @@ public class StepsWidget {
      *
      * @return String
      */
-    @Step("Getting the number and text of the active/current step")
     @Attachment
     public String getTextActiveStep() {
-        SelenideElement activeElement = widget
-                .$("div[class=\"ant-steps-item ant-steps-item-process ant-steps-item-active\"]")
-                .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
-        waitingForTests.getWaitAllElements(activeElement);
-        String number = activeElement.$("div[class=\"ant-steps-item-icon\"]").text();
-        String text = activeElement.$("div[class=\"ant-steps-item-title\"]").text();
-        return (number + ", " + text);
-    }
+        return Allure.step("Getting the number and text of the active/current step", step -> {
+            logTime(step);
 
+            SelenideElement activeElement = widget
+                    .$("div[class=\"ant-steps-item ant-steps-item-process ant-steps-item-active\"]")
+                    .should(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+            waitingForTests.getWaitAllElements(activeElement);
+            String number = activeElement.$("div[class=\"ant-steps-item-icon\"]").text();
+            String text = activeElement.$("div[class=\"ant-steps-item-title\"]").text();
+            return (number + ", " + text);
+        });
+    }
 }

@@ -8,14 +8,17 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DisplayName("Checking the basic functions for the MultiplySelect")
+@DisplayName("Info. Checking the basic functions for the MultiplySelect")
 @Epic("application/Samples")
 @Tag("application/Samples")
+@ExtendWith(VideoRecorderExtension.class)
 public class MultipleSelectOnInfoTest extends BaseTestForSamples {
 
     @Test

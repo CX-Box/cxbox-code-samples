@@ -9,6 +9,8 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.io.File;
 import java.net.URL;
@@ -18,9 +20,10 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the FileUp")
+@DisplayName("Info. Checking the basic functions for the FileUp")
 @Epic("application/Samples")
 @Tag("application/Samples")
+@ExtendWith(VideoRecorderExtension.class)
 public class FileUploadOnInfoTest extends BaseTestForSamples {
 
     @Test

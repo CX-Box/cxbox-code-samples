@@ -8,14 +8,17 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Checking the basic functions for the Hint")
+@DisplayName("Info. Checking the basic functions for the Hint")
 @Epic("Samples")
 @Tag("Samples")
+@ExtendWith(VideoRecorderExtension.class)
 public class HintOnInfoTest extends BaseTestForSamples {
 
     @Test

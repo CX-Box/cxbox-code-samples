@@ -6,13 +6,15 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
+
+import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Radio extends BaseField<String> {
     public Radio(FormWidget formWidget, String title) {
@@ -29,16 +31,19 @@ public class Radio extends BaseField<String> {
      * @return String
      */
     @Override
-    @Step("Getting a value from a field")
     @Attachment
     public String getValue() {
-        int size = getContainersActions().size();
-        for (int i = 0; i < size; i++) {
-            if (getContainersActions().get(i).$(getValueTag()).isSelected()) {
-                return getContainersActions().get(i).text();
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            int size = getContainersActions().size();
+            for (int i = 0; i < size; i++) {
+                if (getContainersActions().get(i).$(getValueTag()).isSelected()) {
+                    return getContainersActions().get(i).text();
+                }
             }
-        }
-        return null;
+            return null;
+        });
     }
 
     /**
@@ -47,13 +52,17 @@ public class Radio extends BaseField<String> {
      * @param nameRadio String
      */
     @Override
-    @Step("Setting the {nameRadio} in the field")
     public void setValue(String nameRadio) {
-        getRadio(nameRadio)
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        getRadio(nameRadio)
-                .isSelected();
+        Allure.step("Setting the " + nameRadio + " in the field", step -> {
+            logTime(step);
+            step.parameter("Radio name", nameRadio);
+
+            getRadio(nameRadio)
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            getRadio(nameRadio)
+                    .isSelected();
+        });
     }
 
     /**
@@ -61,17 +70,20 @@ public class Radio extends BaseField<String> {
      *
      * @return HashMap(String, Boolean)
      */
-    @Step("Getting a value from a field")
     @Attachment
     public HashMap<String, Boolean> getValues() {
-        HashMap<String, Boolean> values = new HashMap<>();
-        List<String> list = getContainersActions().texts();
-        for (int i = 0; i < list.size(); i++) {
-            String text = getContainersActions().get(i).text();
-            boolean isSelected = getContainersActions().get(i).$(getValueTag()).isSelected();
-            values.put(text, isSelected);
-        }
-        return values;
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            HashMap<String, Boolean> values = new HashMap<>();
+            List<String> list = getContainersActions().texts();
+            for (int i = 0; i < list.size(); i++) {
+                String text = getContainersActions().get(i).text();
+                boolean isSelected = getContainersActions().get(i).$(getValueTag()).isSelected();
+                values.put(text, isSelected);
+            }
+            return values;
+        });
     }
 
     private SelenideElement getRadio(String nameRadio) {
