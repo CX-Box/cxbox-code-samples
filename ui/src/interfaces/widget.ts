@@ -1,3 +1,4 @@
+import { EAggFunction } from '@constants/aggregation'
 import {
     DictionaryFieldMeta,
     NumberFieldMeta,
@@ -12,6 +13,7 @@ import {
 } from '@cxbox-ui/core'
 import { FileUploadFieldMeta as CoreFileUploadFieldMeta, WidgetField as CoreWidgetField } from '@cxbox-ui/schema'
 import { TableSettingsItem } from '@interfaces/tableSettings'
+import { IAggField, IAggLevel } from '@interfaces/groupingHierarchy'
 
 export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect',
@@ -29,13 +31,16 @@ export enum CustomWidgetTypes {
     AdditionalList = 'AdditionalList',
     SuggestionPickList = 'SuggestionPickList',
     StatsBlock = 'StatsBlock',
-    GroupingHierarchy = 'GroupingHierarchy'
+    GroupingHierarchy = 'GroupingHierarchy',
+    Pie1D = 'Pie1D',
+    Column2D = 'Column2D'
 }
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
     WidgetTypes.List,
     CustomWidgetTypes.GroupingHierarchy,
-    WidgetTypes.PickListPopup
+    WidgetTypes.PickListPopup,
+    WidgetTypes.AssocListPopup
 ]
 
 export interface StepsWidgetMeta extends WidgetMeta {
@@ -129,6 +134,8 @@ export interface AppWidgetMeta extends WidgetMeta {
         groupingHierarchy?: {
             counterMode?: 'none' | 'always' | 'collapsed'
             fields: string[]
+            aggFields?: IAggField[]
+            aggLevels?: IAggLevel[]
         }
         read?: {
             widget: string
@@ -221,3 +228,46 @@ export interface AdditionalInfoWidgetMeta extends Omit<WidgetInfoMeta, 'type'> {
 }
 
 export interface AdditionalListWidgetMeta extends AppWidgetMeta {}
+
+export interface Chart1DConfig {
+    valueFieldKey: string
+    valuePosition?: 'inner' | 'outer'
+    titleFieldKey?: string
+    iconFieldKey?: string
+    descriptionFieldKey?: string[]
+    total?: {
+        value?: string
+        innerSpace?: number
+        func?: EAggFunction
+        argFieldKeys?: string[]
+        description?: string
+    }
+}
+
+export interface Pie1DWidgetMeta extends Omit<AppWidgetTableMeta, 'type'> {
+    type: CustomWidgetTypes.Pie1D
+    options: AppWidgetMeta['options'] & {
+        chart1D: Chart1DConfig
+    }
+}
+
+export interface Chart2DConfig {
+    xValueFieldKey: string
+    xMax?: number
+    xMin?: number
+    xStep?: number
+    yValueFieldKey: string
+    yMax?: number
+    yMin?: number
+    yStep?: number
+    groupFieldKey?: string
+    stack?: boolean
+    descriptionFieldKey?: string[]
+}
+
+export interface Column2DWidgetMeta extends Omit<AppWidgetTableMeta, 'type'> {
+    type: CustomWidgetTypes.Column2D
+    options: AppWidgetMeta['options'] & {
+        chart2D: Chart2DConfig
+    }
+}

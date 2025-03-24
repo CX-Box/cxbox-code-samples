@@ -6,7 +6,10 @@ import java.util.List;
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.cxbox.core.file.dto.CxboxResponseDTO;
+import org.cxbox.core.file.dto.FileUploadDto;
 import org.demo.documentation.widgets.picklist.base.allfields.MyEntity3067;
 import org.demo.documentation.widgets.picklist.base.allfields.MyEntity3067Repository;
 import org.demo.documentation.widgets.picklist.base.allfields.forfields.*;
@@ -18,10 +21,12 @@ import org.demo.documentation.widgets.picklist.base.onefield.MyEntity3079;
 import org.demo.documentation.widgets.picklist.base.onefield.MyEntity3079Repository;
 import org.demo.documentation.widgets.picklist.base.onefield.picklistpopup.MyEntity3079Pick;
 import org.demo.documentation.widgets.picklist.base.onefield.picklistpopup.MyEntity3079PickRepository;
+import org.demo.services.CustomFileUploadServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class MyEntity3067TestDataLoadService {
 
     @Autowired
@@ -45,11 +50,14 @@ public class MyEntity3067TestDataLoadService {
     @Autowired
     InternalAuthorizationService authzService;
 
+    private final CustomFileUploadServices customFileUploadServices;
+
     @Transactional
     @PostConstruct
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
         MyEntity3067Multi myEntity1 = new MyEntity3067Multi().setCustomField(
                 "Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
         MyEntity3067Multi myEntity2 = new MyEntity3067Multi().setCustomField(
@@ -69,7 +77,7 @@ public class MyEntity3067TestDataLoadService {
         list.add(myEntity4);
         MyEntity3067Pick myEntity3067new = new MyEntity3067Pick()
                 .setCustomField("Test data")
-                .setCustomFieldPick("Test data")
+                .setCustomFieldPick("Test data Pick")
                 .setCustomFieldCheckbox(true)
                 .setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH)
                 .setCustomFieldDateTime(LocalDateTime.now())
@@ -82,6 +90,8 @@ public class MyEntity3067TestDataLoadService {
                 .setCustomFieldRadio(CustomFieldRadioEnum.LOW)
                 .setCustomFieldPicklistEntity(myEntityPick)
                 .setCustomFieldInput("Test data")
+                .setCustomFieldFileUploade(file.getData().getName())
+                .setCustomFieldFileUploadeId(file.getData().getId())
                 .setCustomFieldInlinePicklistEntity(myEntityPick2);
         repository2.save(myEntity3067new.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
         repository.save(new MyEntity3067().setCustomFieldEntity(myEntity3067new));

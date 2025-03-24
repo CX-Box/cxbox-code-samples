@@ -34,8 +34,6 @@ public class MyEntity3088Dao extends AbstractAnySourceBaseDAO<MyEntity3088OutSer
 
     private final RestTemplate restTemplate;
 
-    private final IntegrationURLBuilder integrationURLBuilder;
-
     @Override
     public String getId(final MyEntity3088OutServiceDTO entity) {
         return entity.getId();
