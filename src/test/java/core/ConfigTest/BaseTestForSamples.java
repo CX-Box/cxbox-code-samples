@@ -64,7 +64,7 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-
+            System.setProperty("webdriver.chrome.driver", "C:/driver/chromedriver/chromedriver.exe");
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -107,7 +107,7 @@ public class BaseTestForSamples {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-debugging-port=9222");
+        //options.addArguments("--remote-debugging-port=9222");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
@@ -129,9 +129,19 @@ public class BaseTestForSamples {
         if (getLogEnv()) {
             Allure.step("Print browser logs and response...", step -> {
                 logTime(step);
+                Path logFile = Paths.get("logLoginFile");
+
                 Logs logs = getWebDriver().manage().logs();
                 printConsoleLog(logs.get(LogType.BROWSER.toString()));
                 printNetworkLog();
+
+                try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+                    writer.write(loginLog.toString());
+                    loginLog.clear();
+                } catch (IOException e) {
+                    log.error("Error writing log file ", e);
+                    return; // Stop execution if log file cannot be written
+                }
             });
         }
     }
@@ -150,12 +160,6 @@ public class BaseTestForSamples {
             Path logFile = Paths.get("logLoginFile");
             Path zipFile = Paths.get("logLoginZip.zip");
 
-            try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                writer.write(loginLog.toString());
-            } catch (IOException e) {
-                log.error("Error writing log file ", e);
-                return; // Stop execution if log file cannot be written
-            }
 
             try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile.toFile()))) {
                 zipOut.putNextEntry(new ZipEntry("logLoginFile"));
@@ -215,7 +219,7 @@ public class BaseTestForSamples {
 
     private static boolean getLogEnv() {
         String recorder = System.getenv("CXBOX_LOGGER");
-        return recorder != null && recorder.equalsIgnoreCase("true");
+        return true;
     }
 
     private static String printNetworkLog(HarEntry entry) {
