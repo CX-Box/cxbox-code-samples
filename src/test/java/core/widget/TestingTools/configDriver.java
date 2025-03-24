@@ -16,8 +16,8 @@ public class configDriver {
      * @return Long id
      */
     public static Long getRowIdFromUrl() {
-        var waiting123 = new CxBoxExpectations();
-        waiting123.getContextMenu();
+        var waiting = new CxBoxExpectations();
+        waiting.getContextMenu();
         String url = WebDriverRunner.currentFrameUrl();
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(url);

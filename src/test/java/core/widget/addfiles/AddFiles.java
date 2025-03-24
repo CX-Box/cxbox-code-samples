@@ -35,7 +35,7 @@ public class AddFiles {
      * @param file File name or path to it
      */
     public void setValue(File file) {
-        Allure.step("Загрузка файла " + file + " in the field", step -> {
+        Allure.step("Uploading a file " + file + " in the field", step -> {
             logTime(step);
             step.parameter("file", file);
 

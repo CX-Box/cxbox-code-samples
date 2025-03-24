@@ -5,7 +5,6 @@ import Select from '@cxboxComponents/ui/Select/Select'
 import { WidgetMeta } from '@cxbox-ui/core'
 import { ActionLink } from '@cxboxComponents'
 import { useTableShowAllRecords, useFilterGroups } from '../hooks/hooks'
-import { useAppSelector } from '@store'
 
 export interface HeaderProps {
     meta: WidgetMeta
@@ -16,10 +15,7 @@ function Header({ meta }: HeaderProps) {
     const { filterGroups, appliedFilterGroup, appliedFiltersCount, showFilterGroups, applyFilterGroup, showClearButton, clearAllFilters } =
         useFilterGroups(meta)
     const { showAllRecords, showAllRecordsButton } = useTableShowAllRecords(meta.bcName)
-    const bc = useAppSelector(state => {
-        return state.screen.bo.bc[meta.bcName]
-    })
-    console.log('meta', meta.name, filterGroups, bc)
+
     return (
         <div className={styles.filtersContainer}>
             {showFilterGroups && (
