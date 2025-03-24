@@ -3,7 +3,7 @@ name: QA project
 on:
   pull_request:
     branches:
-    - CXBOX-789
+    - main
   workflow_dispatch:
 
 env:
@@ -59,7 +59,7 @@ jobs:
         run: sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Info.InputOnInfoTest test
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.** test
 
       - name: Create manual-side-tests directory
         run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
