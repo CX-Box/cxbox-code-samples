@@ -64,7 +64,6 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-            System.setProperty("webdriver.chrome.driver", "C:/driver/chromedriver/chromedriver.exe");
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -219,7 +218,7 @@ public class BaseTestForSamples {
 
     private static boolean getLogEnv() {
         String recorder = System.getenv("CXBOX_LOGGER");
-        return true;
+        return recorder != null && recorder.equalsIgnoreCase("true");
     }
 
     private static String printNetworkLog(HarEntry entry) {

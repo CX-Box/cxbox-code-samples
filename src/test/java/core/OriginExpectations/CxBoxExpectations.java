@@ -128,7 +128,7 @@ public class CxBoxExpectations implements ExpectationPattern {
                     Selenide.sleep(getTimeoutMilliseconds());
                 } else {
                     throw new RuntimeException("Couldn't wait for fields to load " + getRetryNumber() + " attempts.", e);
-
+                }
                 }
             }
         });
@@ -155,8 +155,6 @@ public class CxBoxExpectations implements ExpectationPattern {
                 } else {
                     throw new RuntimeException("Couldn't wait for the item to load " + getRetryNumber() + " attempts.", e);
                     }
-
-      
                 }
             }
         });
