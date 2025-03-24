@@ -18,7 +18,7 @@ import static org.demo.documentation.fields.money.currency.fieldkey.enums.Custom
 @NoArgsConstructor
 public class MyExample3151DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customFieldCurrency", provider = EnumValueProvider.class)
+    @SearchParameter(name = "CustomFieldCurrencyDictionaryEnum", provider = EnumValueProvider.class)
     private CustomFieldCurrencyDictionaryEnum customFieldCurrency;
 
     @SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)

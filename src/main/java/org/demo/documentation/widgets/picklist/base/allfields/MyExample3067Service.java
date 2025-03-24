@@ -3,12 +3,17 @@ package org.demo.documentation.widgets.picklist.base.allfields;
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.picklist.base.allfields.forfields.MyEntity3067Multi;
 import org.demo.documentation.widgets.picklist.base.allfields.forfields.picklistpopup.MyEntity3067Pick;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class MyExample3067Service extends VersionAwareResponseService<MyExample3067DTO, MyEntity3067> {
@@ -30,6 +35,19 @@ public class MyExample3067Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3067DTO> doUpdateEntity(MyEntity3067 entity, MyExample3067DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3067DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+        setIfChanged(data, MyExample3067DTO_.customFieldFileUploadeId, entity::setCustomFieldFileUploadeId);
+        setIfChanged(data, MyExample3067DTO_.customFieldFileUploade, entity::setCustomFieldFileUploade);
+        setIfChanged(data, MyExample3067DTO_.customFieldRadio, entity::setCustomFieldRadio);
+        if (data.isFieldChanged(MyExample3067DTO_.customFieldMultivalue)) {
+            entity.getCustomFieldMultivalueList().clear();
+            entity.getCustomFieldMultivalueList().addAll(data.getCustomFieldMultivalue().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntity3067Multi.class, e))
+                    .collect(Collectors.toList()));
+        }
         if (data.isFieldChanged(org.demo.documentation.widgets.picklist.base.allfields.MyExample3067DTO_.customFieldInlinePickListId)) {
             entity.setCustomFieldInlinePickListEntity(data.getCustomFieldInlinePickListId() != null
                     ? entityManager.getReference(MyEntity3067Pick.class, data.getCustomFieldInlinePickListId())

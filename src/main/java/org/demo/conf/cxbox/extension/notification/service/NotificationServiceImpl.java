@@ -1,5 +1,11 @@
 package org.demo.conf.cxbox.extension.notification.service;
 
+import static java.time.ZoneOffset.UTC;
+import static java.util.Optional.ofNullable;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.IUser;
 import org.cxbox.core.dto.DrillDownType;
@@ -15,13 +21,6 @@ import org.demo.repository.core.notification.NotificationRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.List;
-
-import static java.time.ZoneOffset.UTC;
-import static java.util.Optional.ofNullable;
 
 @Service
 @RequiredArgsConstructor

@@ -4,8 +4,8 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.model.dictionary.entity.DictionaryTypeDesc;
+import org.cxbox.core.util.filter.SearchParameter;
 
 @Getter
 @Setter
