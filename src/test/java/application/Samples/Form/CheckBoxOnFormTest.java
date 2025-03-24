@@ -41,7 +41,6 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         FormWidget form = page.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getPlaceholder()).isEmpty();
-        assertThat(1).isEqualTo(2);
     }
 
     @Test

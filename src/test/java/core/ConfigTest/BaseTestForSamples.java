@@ -2,9 +2,7 @@ package core.ConfigTest;
 
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide; 
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
@@ -72,11 +70,11 @@ public class BaseTestForSamples {
             Configuration.pageLoadTimeout = 60000;
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
-            if (getLogEnv()) {
-                Configuration.proxyEnabled = true;
+
+            if (getLogEnv()){
+                Configuration.proxyEnabled = false;
             }
             Configuration.reportsFolder = "target/videos";
-
 
             log.info(getUrlEnv());
             Selenide.open(getUrlEnv());
@@ -107,7 +105,6 @@ public class BaseTestForSamples {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-debugging-port=9222");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");

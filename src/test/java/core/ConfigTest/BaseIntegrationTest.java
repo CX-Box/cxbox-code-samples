@@ -39,7 +39,7 @@ public abstract class BaseIntegrationTest {
 
         String url = System.getenv("APP_URL");
         if (url == null || url.isEmpty()) {
-            url = "http://localhost:81/ui/#/";
+            url = "http://code-samples.cxbox.org/ui/#/";
         }
 
         Selenide.open(url);
