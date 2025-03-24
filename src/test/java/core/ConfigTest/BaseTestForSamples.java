@@ -62,7 +62,6 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -72,7 +71,7 @@ public class BaseTestForSamples {
             Configuration.webdriverLogsEnabled = false;
 
             if (getLogEnv()){
-                Configuration.proxyEnabled = false;
+                Configuration.proxyEnabled = true;
             }
             Configuration.reportsFolder = "target/videos";
 
@@ -108,6 +107,7 @@ public class BaseTestForSamples {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
+
 
         if (getLogEnv()) {
             LoggingPreferences logPrefs = new LoggingPreferences();

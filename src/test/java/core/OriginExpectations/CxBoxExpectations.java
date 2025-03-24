@@ -90,17 +90,17 @@ public class CxBoxExpectations implements ExpectationPattern {
                             s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
                         }
                     }
-                    }
-                log.info("All lines of the widget '{}' loaded successfully.", title);
-                return;
-            } catch (TimeoutException e) {
-                log.warn("The waiting time for rows for the widget '{}' has been exceeded. An attempt {} from {}.", title, i, getRetryNumber());
-                if (i < getRetryNumber()) {
-                    Selenide.sleep(getTimeoutMilliseconds());
-                } else {
-                    throw new RuntimeException("Couldn't wait for the widget lines to load '" + title + "' after " + getRetryNumber() + " attempts.", e);
+                    log.info("Все строки виджета '{}' загружены успешно.", title);
+                    return;
+                } catch (TimeoutException e) {
+                    log.warn("Время ожидания строк для виджета '{}' превышено. Попытка {} из {}.", title, i, getRetryNumber());
+                    if (i < getRetryNumber()) {
+                        Selenide.sleep(getTimeoutMilliseconds());
+                    } else {
+                        throw new RuntimeException("Не удалось дождаться загрузки строк для виджета '" + title + "' после " + getRetryNumber() + " попыток.", e);
                     }
                 }
+            }
         });
     }
 
