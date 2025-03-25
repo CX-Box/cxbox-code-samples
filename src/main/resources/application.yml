@@ -50,6 +50,12 @@ cxbox:
     path: /ui
     multi-role-enabled: false
     drill-down-tooltip: newAndCopy
+    use-servlet-context-path: false
+    side-bar-word-break: none
+    notification-mode: stack
+    app-info-env: ${APP_INFO_ENV:Local}
+    app-info-description: ${APP_INFO_DESCRIPTION:v2.0.12}
+    app-info-color: ${APP_INFO_COLOR:#3a6e49}
 
 server:
   port: 8080
@@ -111,11 +117,10 @@ spring:
           batch_size: 100
         hbm2ddl:
           auto: ${HIBERNATE_DDL_AUTO:update} #value ${HIBERNATE_DDL_AUTO:none} from demo.cxbox.org changed due code samples use tables auto creation by hibernate which is enough for demonstration purposes
-    org:
-      cxbox:
-        dictionary:
-          enable_types_contributor: true
-    hibernate:
+      org:
+        cxbox:
+          dictionary:
+            enable_types_contributor: true
       naming:
         physical-strategy: org.cxbox.model.core.hbn.ImprovedPhysicalNamingStrategy
 

@@ -1,9 +1,9 @@
 package org.demo.conf.cxbox.extension.fulltextsearch;
 
+import java.util.Optional;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
