@@ -1,22 +1,25 @@
 package org.demo.documentation.fields.date.required;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
 @Service
+@RequiredArgsConstructor
 public class DateRequiredService extends VersionAwareResponseService<DateRequiredDTO, DateRequiredEntity> {
 
 	private final DateRequiredEntityRepository repository;
 
-	public DateRequiredService(DateRequiredEntityRepository repository) {
-		super(DateRequiredDTO.class, DateRequiredEntity.class, null, DateRequiredMeta.class);
-		this.repository = repository;
-	}
+	@Getter(onMethod_ = @Override)
+	private final Class<? extends FieldMetaBuilder<DateRequiredDTO>> meta = DateRequiredMeta.class;
+
 
 	@Override
 	protected CreateResult<DateRequiredDTO> doCreateEntity(DateRequiredEntity entity, BusinessComponent bc) {
@@ -39,9 +42,9 @@ public class DateRequiredService extends VersionAwareResponseService<DateRequire
 	@Override
 	public Actions<DateRequiredDTO> getActions() {
 		return Actions.<DateRequiredDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+				.action(act -> act
+						.action("save", "save")
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
