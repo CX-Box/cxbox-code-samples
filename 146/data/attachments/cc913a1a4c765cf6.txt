@@ -1,0 +1,93 @@
+Tue Mar 25 11:11:52 UTC 2025
+GET
+http://code-samples.cxbox.org/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Tue Mar 25 11:11:56 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Tue Mar 25 11:11:56 UTC 2025
+GET
+http://code-samples.cxbox.org/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Tue Mar 25 11:11:57 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDI5MDE0MTcsImlhdCI6MTc0MjkwMTExNywiYXV0aF90aW1lIjoxNzQyOTAxMTE0LCJqdGkiOiJmZmYzZDAwNS1hYmI2LTQxNmEtODBhMC1kNWY5MjhkY2Y1ZWYiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMjhhNWZhYTEtMjRmMy00NmZhLWFmZmYtMTI5MTQ3YTQxYjA0Iiwic2Vzc2lvbl9zdGF0ZSI6ImU0Mzc3NzRjLTQ2ZjQtNDI4NC04ZDM4LTQwMmYwNDQyMmRkYyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.FyiNQTWR_RJcnzgtyEV0DSCRNIYuzNe5T4ruUMFvN2SrxEnLZzqkzEz-G0XG4dsiRfoWQ2sDGyhkdGhWFk26ytjQJ-3HA_yWa6YPg87wSFXPEE4_PwYFusj8dKaTjL0oT0OVw6qqaVeryW2l5PJhVCFWjNzBGWhsSNdDR2UJTeyBIzmGtfWhVEs5PPXZGJLN4Db6ataiOhVk6ciBiJ21kOvTZLGqpmsM64ZrCELQMCM6BV37ioIU9WOdnj3TAjMoN3UEM4BBkgrpl7ZxQsMx3HPSeldisFaguwA583jOIvMZWjzSiMN0_1xHptHPqYnON1Uw132t99U3jucdO4vYGg","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDI5MDI5MTcsImlhdCI6MTc0MjkwMTExNywianRpIjoiNmE2N2E4MGMtMTcyMC00ZDUwLTg2MTgtMDY5YTgzM2EyN2M3IiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMjhhNWZhYTEtMjRmMy00NmZhLWFmZmYtMTI5MTQ3YTQxYjA0Iiwic2Vzc2lvbl9zdGF0ZSI6ImU0Mzc3NzRjLTQ2ZjQtNDI4NC04ZDM4LTQwMmYwNDQyMmRkYyIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.NDRbkM2ibcDA3vGhUbqxBFtW0gSLK1WtRo4IjANFc4s","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDI5MDE0MTcsImlhdCI6MTc0MjkwMTExNywiYXV0aF90aW1lIjoxNzQyOTAxMTE0LCJqdGkiOiJiNzYwYjQ1My1kM2MzLTRjYTItYWM2Zi1iOGRkM2NkYTc3MGUiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMjhhNWZhYTEtMjRmMy00NmZhLWFmZmYtMTI5MTQ3YTQxYjA0Iiwic2Vzc2lvbl9zdGF0ZSI6ImU0Mzc3NzRjLTQ2ZjQtNDI4NC04ZDM4LTQwMmYwNDQyMmRkYyIsImF0X2hhc2giOiJBVnlKZU05eU1ya0FSQ2VLNjA0UlRRIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.HF2klMvwj-YNwu9dmlfBheI8dJ_a3QFEshwmCylxiXLbaGTtbNQHvHkn35iSZf8RNalKiEQunFdk3i_-yP6IUaSyY0XUU64bb_PJO2Vfeh6mEuxLqx-3w3W9aKeMiwY6AV-jvvN3w_WuEwfZZkaRXDBmitkx5djdhrRTO8CnY1gMItSvZXLwLMSJCe7llzxYGhcTmVVGM7Vqxu_scMOSXUkc49xgbo8PLpQpgd2i2wO2lyO3LuTEO0yvVHtS3tA5F5ffQrFFJd66T_0rT8ty3nt_-Sr5rIxwleGwzQlNyyY0RscWOhq9PgIDzmljlhp-ICZuxXjdbTE0Pti8qinNCg","not-before-policy":0,"session_state":"e437774c-46f4-4284-8d38-402f04422ddc","scope":"openid email profile"}
+
+Tue Mar 25 11:11:58 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":2,"customField":"test data2"}],"hasNext":false}
+
+Tue Mar 25 11:11:58 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Tue Mar 25 11:11:59 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Tue Mar 25 11:11:59 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/InputFiltration/InputFiltration?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101708","vstamp":0,"customField":"Test data7","brand":null},{"id":"1101707","vstamp":0,"customField":"Test data6","brand":null},{"id":"1101706","vstamp":1,"customField":"Test data5","brand":"1"},{"id":"1101705","vstamp":1,"customField":"Test data4","brand":"1"},{"id":"1101704","vstamp":1,"customField":"Test data3","brand":"2"}],"hasNext":true}
+
+Tue Mar 25 11:11:59 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/InputFiltration/InputFiltration?
+Request: null
+200
+Response: {"success":true,"data":7}
+
