@@ -2,22 +2,24 @@ package core.widget.TestingTools;
 
 import io.qameta.allure.Allure;
 import lombok.Getter;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestWatcher;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.extension.*;
 import org.selenide.videorecorder.core.VideoRecorder;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
-public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback {
-
+@Slf4j
+public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
+    private static final int FAILED_TESTS_COUNT = 2;
     private boolean testFailed = false;
     private String videoPath;
     private VideoRecorder videoRecorder = new VideoRecorder();
+    private final Set<String> failedTestsSet = new HashSet<>();
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
@@ -35,11 +37,13 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     @Override
     public void testSuccessful(ExtensionContext context) {
         testFailed = false; // Тест выполнен успешно
-        System.out.println("Test passed: " + context.getDisplayName());
+        log.info("Test passed: " + context.getDisplayName());
+        failedTestsSet.remove(context.getDisplayName());
+
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         if (getEnv()) {
             videoRecorder = new VideoRecorder();
             videoRecorder.start();
@@ -47,7 +51,7 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     }
 
     @Override
-    public void afterEach(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) {
         if (getEnv()) {
             videoRecorder.finish();
             videoPath = videoRecorder.videoUrl().get();
@@ -57,5 +61,16 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
     private boolean getEnv() {
         String recorder = System.getenv("CXBOX_RECORDER");
         return recorder != null && recorder.equalsIgnoreCase("true");
+    }
+
+    @Override
+    public void afterTestExecution(ExtensionContext extensionContext) {
+        failedTestsSet.add(extensionContext.getDisplayName());
+        log.info("Test " + extensionContext.getDisplayName() + " failed, count of dropped test: " + failedTestsSet.size());
+
+        if (failedTestsSet.size() >= FAILED_TESTS_COUNT) {
+            log.info("Count of failed test > " + FAILED_TESTS_COUNT + " skip remaining tests");
+            System.exit(1);
+        }
     }
 }
