@@ -151,7 +151,6 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
-            bmp.stop();
             Selenide.closeWebDriver();
         });
     }
@@ -217,6 +216,7 @@ public class BaseTestForSamples {
         if (url == null || url.isEmpty()) {
             url = "http://code-samples.cxbox.org/ui/#/";
         }
+        url = "http://localhost:81/ui/#/";
         return url;
     }
 
