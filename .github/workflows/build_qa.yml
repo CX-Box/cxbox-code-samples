@@ -1,16 +1,21 @@
 name: QA project
 
 on:
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
      branches:
-      - CXBOX-725
-    workflow_dispatch:
+      - main
+  workflow_dispatch:
 
 env:
   APP_URL: http://localhost:81/ui/#/
+  CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
 
 jobs:
-  build:
+  build-pull-request:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -84,5 +89,101 @@ jobs:
 
       - name: Stop and remove Docker compose
         if: always()
-        run:  sudo docker compose -f docker-compose-test.yml down    
+        run:  sudo docker compose -f docker-compose-test.yml down
 
+  build-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker compose build
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cashe: "yarn"
+          cache-dependency-path: ui
+
+      - name: Load target
+        run: mvn clean install -U -PUI
+
+      - name: Stop and remove containers, networks
+        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
+
+      - name: Remove unused data
+        run: sudo docker system prune -a --volumes -f
+        #Change to docker container prune -f && docker network prune -f ?
+
+      - name: List Docker images
+        run: docker images
+
+      - name: Build docker-compose
+        run: sudo docker compose -f docker-compose-test.yml build
+
+      - name: Set permissions for ./docker
+        run: sudo chmod -R 777 ./docker
+
+      - name: Start docker-compose run
+        run: sudo docker compose -f docker-compose-test.yml up -d
+
+      - name: Run tests
+        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Info.InputOnInfoTest test
+
+      - name: Upload allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: target/allure-results
+          allure_reports: allure-report
+          keep_reports: 20
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
+      - name: Generate and add report URL to Job Summary
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
+
+      - name: Stop and remove Docker compose
+        if: always()
+        run:  sudo docker compose -f docker-compose-test.yml down

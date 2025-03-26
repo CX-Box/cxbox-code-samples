@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Slf4j
 public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
-    private static final int FAILED_TESTS_COUNT = 15;
+    private static final int FAILED_TESTS_COUNT = 10;
     private boolean testFailed = false;
     private String videoPath;
     private VideoRecorder videoRecorder = new VideoRecorder();
