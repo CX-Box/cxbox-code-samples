@@ -189,7 +189,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.3</version>
-            <!--<scope>test</scope> TODO>>iborisenko>>why not test scope?-->
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -243,7 +242,7 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
             <version>1.79</version>
-            <!--<scope>test</scope> TODO>>iborisenko>>why not test scope?-->
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -450,9 +449,9 @@
                     <plugin>
                         <groupId>io.qameta.allure</groupId>
                         <artifactId>allure-maven</artifactId>
-                        <version>2.15.2</version> <!-- Актуальная версия Allure Maven -->
+                        <version>2.15.2</version>
                         <configuration>
-                            <reportVersion>2.27.0</reportVersion> <!-- или новее -->
+                            <reportVersion>2.27.0</reportVersion>
                             <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                         </configuration>
                     </plugin>
