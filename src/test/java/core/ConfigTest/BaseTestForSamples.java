@@ -216,7 +216,6 @@ public class BaseTestForSamples {
         if (url == null || url.isEmpty()) {
             url = "http://code-samples.cxbox.org/ui/#/";
         }
-        url = "http://localhost:81/ui/#/";
         return url;
     }
 
