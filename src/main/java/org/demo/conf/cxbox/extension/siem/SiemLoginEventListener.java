@@ -1,7 +1,7 @@
 package org.demo.conf.cxbox.extension.siem;
 
-import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
 import static org.demo.conf.cxbox.extension.siem.SecurityLogger.writeErrorAsString;
+import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;

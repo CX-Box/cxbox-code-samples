@@ -26,7 +26,7 @@ env:
   APP_URL: http://code-samples.cxbox.org/ui/#/
   CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
-    
+
 jobs:
   build_main:
     if: ${{inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main' }}
@@ -82,7 +82,7 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
-      - name: Generate and add report URL to Job Summary 
+      - name: Generate and add report URL to Job Summary
         run: |
           REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
           echo "Report URL: $REPORT_URL"
@@ -116,17 +116,17 @@ jobs:
         if: ${{inputs.choice-test == 'All tests' }}
         run: |
           mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
-      
+
       - name: Create side-tests directory
         if: always()
-        run: mkdir -p gh-pages/side-tests  
+        run: mkdir -p gh-pages/side-tests
 
       - name: Upload allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results 
+          path: target/allure-results
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -136,16 +136,16 @@ jobs:
           allure_results: target/allure-results
           allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
           keep_reports: 20
-          
+
       - name: List report directory
-        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report  
-        
+        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
+
       - name: Prepare files for deployment
         if: always()
         run: |
           mkdir -p deploy/side-tests/${{ github.run_number }}
           cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
-          
+
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
@@ -156,7 +156,7 @@ jobs:
           destination_dir: side-tests
           keep_files: true
 
-      - name: Generate and add report URL to Job Summary 
+      - name: Generate and add report URL to Job Summary
         if: always()
         run: |
           REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"

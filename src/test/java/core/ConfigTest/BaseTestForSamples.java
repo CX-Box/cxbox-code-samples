@@ -1,7 +1,6 @@
 package core.ConfigTest;
 
 import com.browserup.bup.BrowserUpProxy;
-import com.browserup.bup.BrowserUpProxyServer;
 import com.browserup.bup.proxy.CaptureType;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -49,7 +48,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
-    private BrowserUpProxy bmp = new BrowserUpProxyServer();
+    private BrowserUpProxy bmp = null;
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
 
 
@@ -96,6 +95,7 @@ public class BaseTestForSamples {
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // Disable chrome window
         options.addArguments("--enable-automation");
@@ -222,7 +222,6 @@ public class BaseTestForSamples {
 
     private static boolean getLogEnv() {
         String recorder = System.getenv("CXBOX_LOGGER");
-        recorder = "true";
         return recorder != null && recorder.equalsIgnoreCase("true");
     }
 

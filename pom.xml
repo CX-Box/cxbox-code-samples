@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.cxbox</groupId>
         <artifactId>cxbox-starter-parent</artifactId>
-        <version>4.0.0-M16</version><!-- based on spring-boot-starter-parent 3.3.4-->
+        <version>4.0.0-M16</version><!-- based on spring-boot-starter-parent 3.3.8-->
         <relativePath/><!-- lookup parent from repository -->
     </parent>
 
@@ -24,30 +24,32 @@
     </repositories>
 
     <properties>
+        <!-- same dependencies as in demo -->
         <checktyle.config>src/main/resources/checkstyle-checker.xml</checktyle.config>
         <java.version>17</java.version>
 
         <!-- override org.springframework.boot/spring-boot-dependencies properties here-->
         <hibernate.version>6.4.10.Final</hibernate.version> <!--Do not change. BaseEntity redesign needed due to 6.5.* annotation checks changes -->
-        <tomcat.version>10.1.31</tomcat.version> <!--Oct 09, 2024. due to CVE-2024-52317 in 10.1.30 from spring-boot-starter-parent 3.3.4 -->
-        <xmlunit2.version>2.10.0</xmlunit2.version> <!--Apr 28, 2024. due to GHSA-chfm-68vv-pvw5 in 2.9.1 from spring-boot-starter-parent 3.3.4 -->
-        <netty.version>4.1.114.Final</netty.version><!--Oct 01, 2024. due to CVE-2024-47535 in 4.1.113.Final from spring-boot-starter-parent 3.3.4 -->
 
-        <!--
-        <spring-framework.version>6.1.14</spring-framework.version> Oct 17, 2024. due to CVE-2024-38820 in 6.1.14 from spring-boot-starter-parent 3.3.4
-        <spring-security.version>6.3.4</spring-security.version> Oct 21, 2024. due to GHSA-c4q5-6c82-3qpw in 6.3.3 from spring-boot-starter-parent 3.3.4
-        -->
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <zip4j.version>2.11.5</zip4j.version>
+        <xmlunit2.version>2.10.0</xmlunit2.version> <!--Apr 28, 2024. due to GHSA-chfm-68vv-pvw5 in 2.9.1 from spring-boot-starter-parent 3.3.8 -->
+
         <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
 
         <!-- dependencies versions -->
-        <minio.version>8.5.12</minio.version>
-        <postgresql.version>42.7.4</postgresql.version>
+        <jobrunr-spring-boot-3-starter.version>7.3.2</jobrunr-spring-boot-3-starter.version> <!--based on spring-boot 3.3.8, e.g. synced to cxbox-starter-parent-->
+        <minio.version>8.5.17</minio.version>
+        <postgresql.version>42.7.5</postgresql.version>
+
+        <!-- code samples specific dependencies -->
+        <zip4j.version>2.11.5</zip4j.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+
+        <!-- test dependencies -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <!--TODO>>iborisenko>>where are project.build and maven.compiler props used in tests?-->
         <allure.version>2.28.0</allure.version>
         <allure-maven.version>2.12.0</allure-maven.version>
         <selenide.version>7.7.0</selenide.version>
@@ -102,7 +104,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-reactor-netty</artifactId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,7 +112,28 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-reactor-netty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!--third party starter's-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 
         <!--managed by org.springframework.boot/spring-boot-dependencies dependencies-->
@@ -135,6 +158,11 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+            <version>${zip4j.version}</version>
+        </dependency>
 
         <!--cxbox dependencies-->
         <dependency>
@@ -150,30 +178,8 @@
             <artifactId>cxbox-dictionary-all</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>net.lingala.zip4j</groupId>
-            <artifactId>zip4j</artifactId>
-            <version>${zip4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
 
         <!--test dependencies-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -183,6 +189,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.3</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -208,7 +215,6 @@
             <version>${poi.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
@@ -237,6 +243,7 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
             <version>1.79</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -443,9 +450,9 @@
                     <plugin>
                         <groupId>io.qameta.allure</groupId>
                         <artifactId>allure-maven</artifactId>
-                        <version>2.15.2</version> <!-- Актуальная версия Allure Maven -->
+                        <version>2.15.2</version>
                         <configuration>
-                            <reportVersion>2.27.0</reportVersion> <!-- или новее -->
+                            <reportVersion>2.27.0</reportVersion>
                             <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                         </configuration>
                     </plugin>

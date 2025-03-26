@@ -36,7 +36,7 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        testFailed = false; // Тест выполнен успешно
+        testFailed = false;
         String completedTest = context.getTestClass().get().getName()+"#"+context.getTestMethod().get().getName();
         log.info("Test passed: " + completedTest);
         failedTestsSet.remove(completedTest);

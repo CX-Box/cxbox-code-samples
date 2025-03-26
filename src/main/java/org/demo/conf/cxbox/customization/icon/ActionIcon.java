@@ -1,8 +1,8 @@
 package org.demo.conf.cxbox.customization.icon;
 
+import org.cxbox.core.service.action.ActionIconSpecifier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.cxbox.core.service.action.ActionIconSpecifier;
 
 @Getter
 @AllArgsConstructor
