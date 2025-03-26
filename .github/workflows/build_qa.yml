@@ -11,7 +11,7 @@ on:
 
 env:
   APP_URL: http://localhost:81/ui/#/
-  CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
+  CXBOX_LOGGER:  true
 
 jobs:
   build-pull-request:
