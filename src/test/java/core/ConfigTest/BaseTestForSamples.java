@@ -50,7 +50,7 @@ public class BaseTestForSamples {
     public static WidgetPage page;
     private BrowserUpProxy bmp = null;
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
-
+ 
 
     @BeforeAll
     public static void setUpAllure() {
