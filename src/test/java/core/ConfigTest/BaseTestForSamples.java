@@ -1,9 +1,10 @@
 package core.ConfigTest;
 
 import com.browserup.bup.BrowserUpProxy;
+import com.browserup.bup.BrowserUpProxyServer;
 import com.browserup.bup.proxy.CaptureType;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide; 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
@@ -48,7 +49,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @Slf4j
 public class BaseTestForSamples {
     public static WidgetPage page;
-    private BrowserUpProxy bmp = null;
+    private BrowserUpProxy bmp = new BrowserUpProxyServer();
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
 
 
@@ -71,11 +72,8 @@ public class BaseTestForSamples {
             Configuration.pageLoadTimeout = 60000;
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
-            if (getLogEnv()) {
-                Configuration.proxyEnabled = true;
-            }
             Configuration.reportsFolder = "target/videos";
-
+            Configuration.proxyEnabled = true;
 
             log.info(getUrlEnv());
             Selenide.open(getUrlEnv());
@@ -83,11 +81,13 @@ public class BaseTestForSamples {
             if (getLogEnv()) {
                 bmp = WebDriverRunner.getSelenideProxy().getProxy();
 
+
                 EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
                 nonBinaryContentCaptureTypes.addAll(CaptureType.getHeaderCaptureTypes());
 
                 bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
                 bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
+                Selenide.sleep(2000);
                 bmp.newHar("Proxy start");
             }
 
@@ -110,6 +110,7 @@ public class BaseTestForSamples {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
+        options.setAcceptInsecureCerts(true);
 
         if (getLogEnv()) {
             LoggingPreferences logPrefs = new LoggingPreferences();
@@ -128,18 +129,19 @@ public class BaseTestForSamples {
         if (getLogEnv()) {
             Allure.step("Print browser logs and response...", step -> {
                 logTime(step);
-                Path logFile = Paths.get("logLoginFile");
 
                 Logs logs = getWebDriver().manage().logs();
                 printConsoleLog(logs.get(LogType.BROWSER.toString()));
                 printNetworkLog();
 
+                Path logFile = Paths.get("logLoginFile");
+
                 try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                    writer.write(loginLog.toString());
+                    writer.append(loginLog.toString());
+                    createZipLog();
                     loginLog.clear();
                 } catch (IOException e) {
                     log.error("Error writing log file ", e);
-                    return; // Stop execution if log file cannot be written
                 }
             });
         }
@@ -149,12 +151,13 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
+            bmp.stop();
             Selenide.closeWebDriver();
         });
     }
 
-    @AfterAll
-    public static void createZipLog() throws IOException {
+
+    public void createZipLog() throws IOException {
         if (getLogEnv()) {
             Path logFile = Paths.get("logLoginFile");
             Path zipFile = Paths.get("logLoginZip.zip");
@@ -168,6 +171,7 @@ public class BaseTestForSamples {
 
             Files.delete(logFile);
             Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(zipFile), ".zip");
+            Files.delete(zipFile);
         }
     }
 
@@ -218,6 +222,7 @@ public class BaseTestForSamples {
 
     private static boolean getLogEnv() {
         String recorder = System.getenv("CXBOX_LOGGER");
+        recorder = "true";
         return recorder != null && recorder.equalsIgnoreCase("true");
     }
 
