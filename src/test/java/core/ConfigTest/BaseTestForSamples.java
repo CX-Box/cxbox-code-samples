@@ -49,7 +49,6 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @DisplayName("Setup for Samples Tests")
 @ExtendWith({VideoRecorderExtension.class, TestStatusExtension.class})
 @Slf4j
-@Execution(ExecutionMode.CONCURRENT)
 public class BaseTestForSamples {
     public static WidgetPage page;
     private BrowserUpProxy bmp = null;
