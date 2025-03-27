@@ -35,10 +35,10 @@ public class Date extends BaseField<LocalDate> {
      */
     @Override
     public void setValue(LocalDate value) {
-        Allure.step("Setting the {value} in the field", step -> {
+        Allure.step("Setting the " + value + " in the field", step -> {
             logTime(step);
             step.parameter("LocalDate value", value);
-
+            clearIcon();
             Selenide.sleep(100);
             setFocusField();
             Calendar.clear();

@@ -1,9 +1,6 @@
 package core.widget.form;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.addfiles.AddFiles;
 import core.widget.form.actions.ButtonWithMenu;
