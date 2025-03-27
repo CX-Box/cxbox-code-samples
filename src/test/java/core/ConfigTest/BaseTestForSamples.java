@@ -67,8 +67,6 @@ public class BaseTestForSamples {
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
-            System.out.println("Запущен тест");
-            System.setProperty("webdriver.chrome.driver", "C:/driver/chromedriver/chromedriver.exe");
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
