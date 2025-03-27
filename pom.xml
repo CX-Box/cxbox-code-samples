@@ -461,12 +461,13 @@
                         <version>3.2.3</version>
                         <configuration>
                             <skipTests>false</skipTests>
+                            <rerunFailingTestsCount>3</rerunFailingTestsCount>
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                             </argLine>
-                            <rerunFailingTestsCount>3</rerunFailingTestsCount>
                             <systemPropertyVariables>
                                 <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                                <allure.async>false</allure.async>
                             </systemPropertyVariables>
                         </configuration>
                         <dependencies>

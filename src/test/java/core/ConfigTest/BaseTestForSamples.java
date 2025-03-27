@@ -18,6 +18,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -46,11 +48,11 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @DisplayName("Setup for Samples Tests")
 @ExtendWith({VideoRecorderExtension.class, TestStatusExtension.class})
 @Slf4j
+@Execution(ExecutionMode.CONCURRENT)
 public class BaseTestForSamples {
     public static WidgetPage page;
     private BrowserUpProxy bmp = null;
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
-
 
     @BeforeAll
     public static void setUpAllure() {
@@ -58,12 +60,15 @@ public class BaseTestForSamples {
                         .includeSelenideSteps(false)
                 .screenshots(true)
                 .savePageSource(true));
+
     }
 
     @BeforeEach
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
+            System.out.println("Запущен тест");
+            System.setProperty("webdriver.chrome.driver", "C:/driver/chromedriver/chromedriver.exe");
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -72,7 +77,9 @@ public class BaseTestForSamples {
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
             Configuration.reportsFolder = "target/videos";
-            Configuration.proxyEnabled = true;
+            if (getLogEnv()) {
+                Configuration.proxyEnabled = true;
+            }
 
             log.info(getUrlEnv());
             Selenide.open(getUrlEnv());
