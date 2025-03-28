@@ -1,0 +1,106 @@
+Fri Mar 28 13:56:24 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Fri Mar 28 13:56:24 UTC 2025
+GET
+http://code-samples.cxbox.org/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Fri Mar 28 13:56:25 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDMxNzA0ODUsImlhdCI6MTc0MzE3MDE4NSwiYXV0aF90aW1lIjoxNzQzMTcwMTgzLCJqdGkiOiI2YzA3OTFmYi1mNDMwLTRiNzctOWQ2ZC02OGFhMDhiMWQ5YmMiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiNjBiYTVmNjMtOTA5ZS00N2UwLTg0YTQtMTE4OTgxMTY3YTUzIiwic2Vzc2lvbl9zdGF0ZSI6IjlmOGJhOTE4LWI5OGItNGI2My05NjczLWE0MmRmMTE3N2M4YiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.W2HXh0A8W49-aEZVpVjV3qliqEd3bbE_F53gQ29QK9_YWyKFrJXA4PaNXNca0q9SQff6SEowW_CVi3wnJTO8uENtDjWKo3cHxGB7MBm9M1pMbEnpsxeQ6HU8iE2LmgG9tFOpntIq_s2fYFmo92rbGV_IMf4BHA16FZz_96XQH-Rvlx9Qe6wRDtb2lPJKOcpdiVywkz74u_YnaB1j0lgMtk9htBTU73U843J7CF9NmNSJ2QtW0F7vK-NaTrAYcvbob_5buagyU7fQ5os6Td8I1eHcj7rDH2Q6pPbO6EfBwJ7hijrOGx-TUhKvRNRtubnAlPYln3OZ-ER7MREptdqZzg","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDMxNzE5ODUsImlhdCI6MTc0MzE3MDE4NSwianRpIjoiODdkMzY5ZDktMGJkNy00ZTU4LWI5ZTAtNzg0MDJmMDRlNjQyIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiNjBiYTVmNjMtOTA5ZS00N2UwLTg0YTQtMTE4OTgxMTY3YTUzIiwic2Vzc2lvbl9zdGF0ZSI6IjlmOGJhOTE4LWI5OGItNGI2My05NjczLWE0MmRmMTE3N2M4YiIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.ls-YPVyZd4Hsgtnul3uJO0MuhqzM4Usb_p4i8RpJUak","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDMxNzA0ODUsImlhdCI6MTc0MzE3MDE4NSwiYXV0aF90aW1lIjoxNzQzMTcwMTgzLCJqdGkiOiI5NDZlZjZmNC1jZmM3LTQ3MTItOGZiMC1hYjcyZWNmNDg2YTkiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiNjBiYTVmNjMtOTA5ZS00N2UwLTg0YTQtMTE4OTgxMTY3YTUzIiwic2Vzc2lvbl9zdGF0ZSI6IjlmOGJhOTE4LWI5OGItNGI2My05NjczLWE0MmRmMTE3N2M4YiIsImF0X2hhc2giOiIyb2lGT2hGVmRiQ1dMWkNuLTJkVFlBIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.Nl4QiOvFIR7ARr4kmQk2Wy3ffwstzyHYpzjY-uRzqsuk5zZwCQFQKqbSUojcQ2UaE90s4zdYQRjJJvL8_WK1jC-csCkCCUpFJsLZ4e22ZoYFvz4GuFQmLGEw0bLlH2fQJOqHBn_9NaRGH1vma3uRliH8n0jjPS9l4lgGhV7Jba4ZR_9n-OG5wtXQ1EkgCJtmM-p27zgI4ZSdBFKlJjq6XEuz1thxTRSmAXjb9uLWRoS6PwQmWf2PjT8u5kvZIokwPkbHRzX_6GwJPPT8S23koRUxJyu8b_5jcBTdsPK3YoFjK8yg4awFfpHOwCg9jkRp-DIE6zlQ42cvpgYHjD-uhQ","not-before-policy":0,"session_state":"9f8ba918-b98b-4b63-9673-a42df1177c8b","scope":"openid email profile"}
+
+Fri Mar 28 13:56:26 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Fri Mar 28 13:56:26 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Fri Mar 28 13:56:27 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Fri Mar 28 13:56:27 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Fri Mar 28 13:56:29 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/myexample51/myExampleBc51?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1102033","vstamp":0,"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included."}],"hasNext":false}
+
+Fri Mar 28 13:56:29 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/row-meta/myexample51/myExampleBc51/1102033
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1102033","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":false,"currentValue":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Fri Mar 28 13:56:29 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/myexample51/myExampleBc51?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Fri Mar 28 13:56:30 UTC 2025
+POST
+http://code-samples.cxbox.org/api/v1/row-meta/myexample51/myExampleBc51/1102033
+Request: {"data":{"customField":null,"vstamp":0}}
+500
+Response: {"success":false,"data":null,"errorMessage":"An unexpected error has occurred.","error":null}
+
+Fri Mar 28 13:56:31 UTC 2025
+POST
+http://code-samples.cxbox.org/api/v1/row-meta/myexample51/myExampleBc51/1102033
+Request: {"data":{"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.","vstamp":0}}
+500
+Response: {"success":false,"data":null,"errorMessage":"An unexpected error has occurred.","error":null}
+
+Fri Mar 28 13:56:31 UTC 2025
+POST
+http://code-samples.cxbox.org/api/v1/row-meta/myexample51/myExampleBc51/1102033
+Request: {"data":{"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.","vstamp":0}}
+500
+Response: {"success":false,"data":null,"errorMessage":"An unexpected error has occurred.","error":null}
+
