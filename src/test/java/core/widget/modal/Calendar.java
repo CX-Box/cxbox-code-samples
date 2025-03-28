@@ -72,6 +72,7 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDate(date));
+            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
@@ -108,6 +109,7 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDateTime(dateTime));
+            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
@@ -143,6 +145,7 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDateTimeWithSecond(dateTimeWithSeconds));
+            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
