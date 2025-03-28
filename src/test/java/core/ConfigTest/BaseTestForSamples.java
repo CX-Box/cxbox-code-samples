@@ -10,6 +10,7 @@ import core.LoginPage;
 import core.WidgetPage;
 import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -18,6 +19,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -51,19 +54,20 @@ public class BaseTestForSamples {
     private BrowserUpProxy bmp = null;
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
 
-
     @BeforeAll
     public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                         .includeSelenideSteps(false)
                 .screenshots(true)
                 .savePageSource(true));
+
     }
 
     @BeforeEach
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
+            WebDriverManager.chromedriver().setup();
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -72,7 +76,9 @@ public class BaseTestForSamples {
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
             Configuration.reportsFolder = "target/videos";
-            Configuration.proxyEnabled = true;
+            if (getLogEnv()) {
+                Configuration.proxyEnabled = true;
+            }
 
             log.info(getUrlEnv());
             Selenide.open(getUrlEnv());
@@ -105,7 +111,7 @@ public class BaseTestForSamples {
         options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-dev-shm-usage", "--disable-software-rasterizer");
         //options.addArguments("--remote-debugging-port=9222");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");

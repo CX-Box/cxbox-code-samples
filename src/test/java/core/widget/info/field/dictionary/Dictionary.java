@@ -19,7 +19,7 @@ public class Dictionary extends BaseString<String> {
     @Override
     public String getValueTag() {
         //TODO Rename
-        return "div[class*=\"Dictionary_root__Que7U\"]";
+        return "div[data-test-field-value=\"true\"]";
     }
 
     /**
