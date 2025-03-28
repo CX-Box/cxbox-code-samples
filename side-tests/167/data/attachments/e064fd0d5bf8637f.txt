@@ -1,0 +1,85 @@
+Fri Mar 28 10:51:16 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Fri Mar 28 10:51:16 UTC 2025
+GET
+http://code-samples.cxbox.org/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Fri Mar 28 10:51:16 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDMxNTkzNzYsImlhdCI6MTc0MzE1OTA3NiwiYXV0aF90aW1lIjoxNzQzMTU5MDc0LCJqdGkiOiJmYjJlYTUyYS02ZTg5LTRkZmMtYTlhZS01MDJmMTBmY2IxOTEiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZTY2NjdmMTMtZTQ3Zi00NjFmLThmZmUtOWJmYjQ3ZThmYmY2Iiwic2Vzc2lvbl9zdGF0ZSI6IjliODc0NzAwLWFiZDMtNDkxMy04YTk3LWFhN2EyMDdjNTZlOSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.i8ZLp_6ACOjtK-oHnAD1rDElrM2Wd_xSnbopgyFBJcz_0LHOUpzbitxRWY4-2fhS4RCIaOec5b3USWjMhIIdTAwOCM5zzEre2qJBeX8BRUvx7gOTh3NDe4C9dl20ff94H69EMZa6Dmst_8j9MeaRCv-ZRY6FAKgs6HoLQwj8IiRKFk2OQiXUYMvtFhsJyvOwxZ41MkJSPvXG8OPasWn5cahSZuPAVtKh3kZYE8Dlx0dxBE6qbakQIs4olQzS2E5o9EjzCgtfG2A1avn_q0jP9UJ88ricdVbEniMQ3y4Dwtpz_JmVWX1XPjsLQPBfdhJddhIAJS8Zi76l_hFNzjuzSA","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDMxNjA4NzYsImlhdCI6MTc0MzE1OTA3NiwianRpIjoiM2VjZWZiMDYtMDM5OS00ODU4LTg2NjItMjc4YWE2ZTc0YmRjIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZTY2NjdmMTMtZTQ3Zi00NjFmLThmZmUtOWJmYjQ3ZThmYmY2Iiwic2Vzc2lvbl9zdGF0ZSI6IjliODc0NzAwLWFiZDMtNDkxMy04YTk3LWFhN2EyMDdjNTZlOSIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.jKb1H5X-HowBce6-3tqYehLUrhEL2hp72rB9-2IxdaI","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDMxNTkzNzYsImlhdCI6MTc0MzE1OTA3NiwiYXV0aF90aW1lIjoxNzQzMTU5MDc0LCJqdGkiOiJhZmM4Y2U1MC0zZGQxLTQxMTAtOGM3Zi0wMTlkZjJiN2MzNWUiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZTY2NjdmMTMtZTQ3Zi00NjFmLThmZmUtOWJmYjQ3ZThmYmY2Iiwic2Vzc2lvbl9zdGF0ZSI6IjliODc0NzAwLWFiZDMtNDkxMy04YTk3LWFhN2EyMDdjNTZlOSIsImF0X2hhc2giOiJXNFJZMGI2RDJDY2ptUzF6bVpJdXF3IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.JtRWAFBvXUp50QJqSyUgfTd2UHJdd_8PDTJrmFugw8C7UkUTzGNL5x5LnbRsu0u2Te6cGcpHo-PRnOCnc40IubZIFXOtB7ry-Y95bqLY1Dz4C7riynZRVAuvzTvpsN-vuX2y5q2qMheQK9QV6OMrNsz6c9l8bAxOb7UKrLpjNHKl7NmZH20rIXhGlFhVyYYBczSD6Ts8DlgmXeg3yMLEWTWnAUJjx2bL5fQqzdGUMoCdisyeK7BjUv-5FGP9vTIwF_hWkw1x-lxQTNGTyeHKnPiEUagLYk7Rvhdqy1scxrcjkSCfu9ygsazOphmdrhziAvIiWB7iqbDdqFL2Cxjpng","not-before-policy":0,"session_state":"9b874700-abd3-4913-8a97-aa7a207c56e9","scope":"openid email profile"}
+
+Fri Mar 28 10:51:18 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Fri Mar 28 10:51:18 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Fri Mar 28 10:51:18 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Fri Mar 28 10:51:18 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Fri Mar 28 10:51:20 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/data/myexample45/myExampleBc45?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1102022","vstamp":0,"customField":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. "},{"id":"1102021","vstamp":0,"customField":"Some metal type characters required in typesetting, such as dashes, spaces and line-height spacers, were not part of a specific font, but were generic pieces that could be used with any font"},{"id":"1102020","vstamp":0,"customField":"The rest of the characters would be provided in quantities appropriate for the distribution of letters in that language."},{"id":"1102019","vstamp":0,"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included."}],"hasNext":false}
+
+Fri Mar 28 10:51:21 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/count/myexample45/myExampleBc45?
+Request: null
+200
+Response: {"success":true,"data":4}
+
+Fri Mar 28 10:51:21 UTC 2025
+GET
+http://code-samples.cxbox.org/api/v1/row-meta/myexample45/myExampleBc45/1102022
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1102022","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":true,"currentValue":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. ","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
