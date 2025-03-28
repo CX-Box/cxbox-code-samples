@@ -14,8 +14,8 @@ import java.util.Set;
 
 @Getter
 @Slf4j
-public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
-    private static final int FAILED_TESTS_COUNT = 10;
+public class TestStatusExtension implements TestWatcher, BeforeEachCallback, AfterEachCallback {
+    private static final int FAILED_TESTS_COUNT = 3;
     private boolean testFailed = false;
     private String videoPath;
     private VideoRecorder videoRecorder = new VideoRecorder();
@@ -31,6 +31,15 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        String failedTest = context.getTestClass().get().getName()+"#"+context.getTestMethod().get().getName();
+        failedTestsSet.add(failedTest);
+        log.info("Test " + failedTest + " failed, count of dropped test: " + failedTestsSet.size());
+
+        if (failedTestsSet.size() >= FAILED_TESTS_COUNT) {
+            log.info("Count of failed test > " + FAILED_TESTS_COUNT + " skip remaining tests");
+            System.exit(1);
         }
     }
 
@@ -63,15 +72,4 @@ public class TestStatusExtension implements TestWatcher, BeforeEachCallback, Aft
         return recorder != null && recorder.equalsIgnoreCase("true");
     }
 
-    @Override
-    public void afterTestExecution(ExtensionContext extensionContext) {
-        String failedTest = extensionContext.getTestClass().get().getName()+"#"+extensionContext.getTestMethod().get().getName();
-        failedTestsSet.add(failedTest);
-        log.info("Test " + failedTest + " failed, count of dropped test: " + failedTestsSet.size());
-
-        if (failedTestsSet.size() >= FAILED_TESTS_COUNT) {
-            log.info("Count of failed test > " + FAILED_TESTS_COUNT + " skip remaining tests");
-            System.exit(1);
-        }
-    }
 }
