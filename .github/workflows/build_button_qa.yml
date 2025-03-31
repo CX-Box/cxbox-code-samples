@@ -113,7 +113,7 @@ jobs:
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
   build_manual:
-    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == "http://code-samples.cxbox.org/"
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -215,7 +215,7 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
   build_local:
-    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == "Branch in docker"
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
       APP_URL: http://localhost:81/ui/#/
     runs-on: ubuntu-latest
