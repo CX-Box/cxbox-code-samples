@@ -475,6 +475,7 @@
                             <forkCount>${surefire.forkCount}</forkCount>
                             <threadCount>${surefire.threadCount}</threadCount>
                             <reuseForks>${surefire.reuseForks}</reuseForks>
+                            <argLine>-Xmx256m -XX:MaxPermSize=256m</argLine>
                             <rerunFailingTestsCount>3</rerunFailingTestsCount>
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
