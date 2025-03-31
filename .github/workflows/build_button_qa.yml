@@ -17,7 +17,7 @@ on:
        type: choice
        description: Run at
        options:
-         - http://code-samples.cxbox.org/
+         - 'http://code-samples.cxbox.org/'
          - Branch in docker
      video_tags:
        description: "Record failed video"
@@ -45,7 +45,7 @@ env:
 
 jobs:
   build_main:
-    if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == "http://code-samples.cxbox.org/"
+    if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
