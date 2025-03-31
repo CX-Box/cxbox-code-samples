@@ -19,8 +19,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -157,6 +155,7 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
+            Selenide.closeWindow();
             Selenide.closeWebDriver();
         });
     }
@@ -182,6 +181,7 @@ public class BaseTestForSamples {
 
     void printNetworkLog() {
         StringBuilder stringBuilder = new StringBuilder();
+
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&

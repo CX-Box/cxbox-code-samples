@@ -13,6 +13,12 @@ on:
        description: include PATH
        type: string
        required: false
+     docker_run:
+       type: choice
+       description: Run at
+       options:
+         - 'http://code-samples.cxbox.org/'
+         - Branch in docker
      video_tags:
        description: "Record failed video"
        required: false
@@ -22,6 +28,16 @@ on:
        default: true
        required: false
        type: boolean
+     parallel_tags:
+       description: "Launch in parallel"
+       required: false
+       default: true
+       type: boolean
+     fork_count:
+       description: "How much fork to use"
+       type: number
+       default: 10
+       required: false
 
 env:
   APP_URL: http://code-samples.cxbox.org/ui/#/
@@ -30,11 +46,11 @@ env:
 
 jobs:
   build_main:
-    if: ${{inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main' }}
+    if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['17']
+        java: [ '17' ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK ${{ matrix.java }}
@@ -46,9 +62,14 @@ jobs:
 
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
-        
+
       - name: Run default tests
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        if: ${{ inputs.parallel_tags == false }}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+
+      - name: Run default tests in parallel
+        if: ${{ inputs.parallel_tags == true }}
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Upload allure results
         if: always()
@@ -93,7 +114,7 @@ jobs:
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
   build_manual:
-    if: ${{inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main'}}
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -110,14 +131,42 @@ jobs:
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
 
-      - name: Run some kind of test 
+      - name: Convert test-path format
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: |
+          TEST_PATH="${{ github.event.inputs.test-path }}"
+          CONVERTED_PATH=""
+
+          for path in ${TEST_PATH//,/ }; do
+            LAST_DOT_INDEX=${path%.*}
+            LAST_PART=${path##*.}
+            CONVERTED_PATH+="${LAST_DOT_INDEX}#${LAST_PART},"
+          done
+
+          # Remove trailing comma
+          CONVERTED_PATH="${CONVERTED_PATH%,}"
+
+          echo "Converted path: $CONVERTED_PATH"
+          echo "TEST_PATH=$CONVERTED_PATH" >> $GITHUB_ENV
+
+      - name: Run tests
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.parallel_tags == false}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=$TEST_PATH test
+
+      - name: Run tests in parallel
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.parallel_tags == true}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=$TEST_PATH test
+
 
       - name: Run default tests
-        if: ${{inputs.choice-test == 'All tests' }}
+        if: ${{inputs.choice-test == 'All tests' && inputs.parallel_tags == false }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
+
+      - name: Run default tests in parallel
+        if: ${{inputs.choice-test == 'All tests' && inputs.parallel_tags == true }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
       - name: Create side-tests directory
         if: always()
@@ -166,6 +215,98 @@ jobs:
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
-          
-        
-        
+  build_local:
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
+    env:
+      APP_URL: http://localhost:81/ui/#/
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker compose build
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cashe: "yarn"
+          cache-dependency-path: ui
+
+      - name: Load target
+        run: mvn clean install -U -PUI
+
+      - name: Stop and remove containers, networks
+        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
+
+      - name: Remove unused data
+        run: sudo docker system prune -a --volumes -f
+        #Change to docker container prune -f && docker network prune -f ?
+
+      - name: List Docker images
+        run: docker images
+
+      - name: Build docker-compose
+        run: sudo docker compose -f docker-compose-test.yml build
+
+      - name: Set permissions for ./docker
+        run: sudo chmod -R 777 ./docker
+
+      - name: Start docker-compose run
+        run: sudo docker compose -f docker-compose-test.yml up -d
+
+      - name: Wait for services to stabilize
+        run: sleep 180
+
+      - name: Run some kind of test
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.parallel_tags == false}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+
+      - name: Run some kind of test in parallel
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.parallel_tags == true}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+
+      - name: Run default tests in parallel
+        if: ${{inputs.choice-test == 'All tests' && inputs.parallel_tags == true }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test   
+
+      - name: Run default tests
+        if: ${{inputs.choice-test == 'All tests' && inputs.parallel_tags == false }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
+
+      - name: Create manual-side-tests directory
+        run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
+
+      - name: Upload allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Build test report
+        uses: cybersokari/allure-deployer-action@v1.8.0
+        if: always()
+        with:
+          target: 'github'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_pages_branch: 'gh-pages'
+          allure_results_path: 'target/allure-results'
+          show_history: 'true'
+          custom_report_dir: 'manual-side-tests/${{ github.run_number }}'
+
+      - name: Stop and remove Docker compose
+        if: always()
+        run: sudo docker compose -f docker-compose-test.yml down
