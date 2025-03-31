@@ -1,0 +1,85 @@
+Mon Mar 31 14:12:56 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Mon Mar 31 14:12:56 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Mon Mar 31 14:12:57 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM0MzA2NzcsImlhdCI6MTc0MzQzMDM3NywiYXV0aF90aW1lIjoxNzQzNDMwMzc0LCJqdGkiOiI1ZGNiMThkMy0xZWRlLTRjY2QtYTEwYy1jYzY3NDFjNGJiYzMiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMTYzMTFhOWQtMWY0MS00Yzk1LWI2ZjktZDA1NTlhY2VlZjkxIiwic2Vzc2lvbl9zdGF0ZSI6IjBkMzdhNGY2LTY4YjItNDdjYi04YzMxLTRmNzkxNGRkZjk5NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.ODsY9XHB7GSzIfuMMDmga05eUfGGtRU_qwYakH1A4n3X17xcbKkxRKrczYdg8Z9KNbhB85e8cJYnoZFNtrdBFFftaSST3TnLtcOiEa4rGHZfgFW6tNtfTUhH3IR7jks6nrTJ3Q1JWO89GrBe11XS4LEOEjm6-XFERXM_QePLRsiNWtHeBjv4xbfwlIssPhBAVpaAoRuPrRPJHiMwp24OVnwfGNdmpFiTqe_85fcr08-g6qcWolr2tCAFNC5qs9M2puf-IlBdZgY5fuI7hbwAMzqAp8OvhkTA6zy-RPJtOldO5q3d5wOyAM_HqvE963Y8l6d8cQDJ3P6P6LHtA-9fcA","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM0MzIxNzcsImlhdCI6MTc0MzQzMDM3NywianRpIjoiODc1ZTgzYWEtMWQwYy00YmIyLTkzZDktN2EyOGY0MjdjMTExIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMTYzMTFhOWQtMWY0MS00Yzk1LWI2ZjktZDA1NTlhY2VlZjkxIiwic2Vzc2lvbl9zdGF0ZSI6IjBkMzdhNGY2LTY4YjItNDdjYi04YzMxLTRmNzkxNGRkZjk5NiIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.iPiAnweTihrwyr9G1t7qUu6aUYhYJ3x1nsm_ePtAB88","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM0MzA2NzcsImlhdCI6MTc0MzQzMDM3NywiYXV0aF90aW1lIjoxNzQzNDMwMzc0LCJqdGkiOiI4N2I1NTZkZi1mY2M0LTRhYjctOTdjZS04NTQ5ODAyZjMxMDYiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMTYzMTFhOWQtMWY0MS00Yzk1LWI2ZjktZDA1NTlhY2VlZjkxIiwic2Vzc2lvbl9zdGF0ZSI6IjBkMzdhNGY2LTY4YjItNDdjYi04YzMxLTRmNzkxNGRkZjk5NiIsImF0X2hhc2giOiIzWVplSmg2WG5zUTJCdzlDa1VjOFd3IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.BliZB6X_HapvnNDwHpbhYp25BJGS9rBWItT-nuzb9cGe_nbsuSx4mhYb3Io24ci0ldjQmicgx7CE5R6vY6-w0MdexgpNFmwnaFntAekf4yZqhu5RA7nM3quy5bPbQPIS9s-HTLZ9xchxpD4DRGgjKi25DsdOnVwM2ce_KxQJEj_AqD-NbxF_xAYud2hQTs1mqdzf3irdLv7gM1FqUGuRcPufLzl5k2JA9i2joUvTeBiddsNFtco6VPBo4S3T4AraoKK08_gZHtO-3OODuDmLSVlCnXbNibHcNsv_hBb7X-J4_eDvGGcynRdu8hxbhNquuE7YJrnNVCkxsj93xVRorg","not-before-policy":0,"session_state":"0d37a4f6-68b2-47cb-8c31-4f7914ddf996","scope":"openid email profile"}
+
+Mon Mar 31 14:13:04 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Mon Mar 31 14:13:04 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Mon Mar 31 14:13:04 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Mon Mar 31 14:13:04 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Mon Mar 31 14:13:25 UTC 2025
+GET
+http://localhost:81/api/v1/data/myexample233/myExampleBc233?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101655","vstamp":0,"customField":[{"id":"1101656","value":"Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.","options":{}}],"customFieldCalc":"Despite c..."},{"id":"1101653","vstamp":0,"customField":[{"id":"1101654","value":"Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium","options":{}}],"customFieldCalc":"Saturn's ..."}],"hasNext":false}
+
+Mon Mar 31 14:13:26 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/myexample233/myExampleBc233/1101655
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"customFieldCalc","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"Despite c...","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101655","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":true,"currentValue":[{"id":"1101656","value":"Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.","options":{}}],"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Mon Mar 31 14:13:26 UTC 2025
+GET
+http://localhost:81/api/v1/count/myexample233/myExampleBc233?
+Request: null
+200
+Response: {"success":true,"data":2}
+
