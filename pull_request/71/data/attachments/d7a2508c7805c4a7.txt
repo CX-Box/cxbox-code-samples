@@ -1,0 +1,85 @@
+Tue Apr 01 16:19:23 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Tue Apr 01 16:19:23 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Tue Apr 01 16:19:23 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1MjQ2NjQsImlhdCI6MTc0MzUyNDM2NCwiYXV0aF90aW1lIjoxNzQzNTI0MzYzLCJqdGkiOiIyNjBhYjZjYy1jZDg5LTRkZDktYmE1ZC1jZjEzYTQ0ZWI0NDQiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOWZiMmQ0ZWEtZTI1NC00ZTVlLTkwMGQtNzY5OTM4YzVlYTBlIiwic2Vzc2lvbl9zdGF0ZSI6ImVkZmYyM2EzLWU4YjYtNDI1NC1iNTc4LTI2OTg3YWE3ODBjNSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.bPooQK091lZpdCUHWEZUuemfpwTji5BJe4QemXNyAHrcGKkeJQFuzmGedgFqzSu1v0_6XwWVu8yoJZ4fLBttQl6AZCty8JUVWIxmUuxzPLLxS8CbwKzmSaa6GL-BYtxxgFBn1Dm6SxKEi2_4jrBs3jXdvSECAL8_BnByXmdceLlGdQmOCj2TSFkrRI9xoZcKPS_w_KTUVPd8n1UT5i3zNbXjmrqOkNA3uXE6IKmk5E6qDjzzyk0ZPpc2Aqo1nFa3yfEO95nUQtYma9gPUZqCByzf9vjISEqNvleFlY54j78N1e6R3sn_gQr9g3bwPNzz9nl33dLGX6tfLPUDre6GHA","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM1MjYxNjQsImlhdCI6MTc0MzUyNDM2NCwianRpIjoiODgzYTc5NjQtMDRhOS00YTEwLWJhNTctNzE1ODM0MzUwYzA4IiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOWZiMmQ0ZWEtZTI1NC00ZTVlLTkwMGQtNzY5OTM4YzVlYTBlIiwic2Vzc2lvbl9zdGF0ZSI6ImVkZmYyM2EzLWU4YjYtNDI1NC1iNTc4LTI2OTg3YWE3ODBjNSIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.q6B2cM_HeNLw6tCFDHp8bnnO_idJpsOP9JOlxXt_VXw","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1MjQ2NjQsImlhdCI6MTc0MzUyNDM2NCwiYXV0aF90aW1lIjoxNzQzNTI0MzYzLCJqdGkiOiI3OGIyNDhlMS05Nzc0LTQ5NGQtODc2Yy0xMGExNTA0NzFkNjgiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOWZiMmQ0ZWEtZTI1NC00ZTVlLTkwMGQtNzY5OTM4YzVlYTBlIiwic2Vzc2lvbl9zdGF0ZSI6ImVkZmYyM2EzLWU4YjYtNDI1NC1iNTc4LTI2OTg3YWE3ODBjNSIsImF0X2hhc2giOiJHcGNOaFBweG1GMTB1bnVSZXg4UWpBIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.Ps_VSBy7Wga8r7_fBCJVJ6DrzOxIVn3MUGeRRbwt37oDNtGv9u4sMO-RKJ0_69C_kJ753e_LMD2w-fAEq1OFyjjV_GAMcgj2L9zLDdSmWmJqWAry0SWDmaA-H7iGzhMBo-dk1a3bswg1x0USiBpKBeLfiIYqDymUpQDSM7_3l9mk0YrxfBPm2XDv6zAPWB_ijBfhGrKiI45k69HiV3tmierL27ywYxAPfPo6Ce0k9vW4gXc_RzP1IKFjjrjlONC9e1rN27g1-H8Y18iOouKVc3G3bAfzKePJNAeCN15XuU4m8DSdn6D-cJHU_Oajzd5UfC8bfx-gMKnfewNieaM2Bw","not-before-policy":0,"session_state":"edff23a3-e8b6-4254-b578-26987aa780c5","scope":"openid email profile"}
+
+Tue Apr 01 16:19:24 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Tue Apr 01 16:19:24 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Tue Apr 01 16:19:24 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Tue Apr 01 16:19:24 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Tue Apr 01 16:19:26 UTC 2025
+GET
+http://localhost:81/api/v1/data/myexample174/myExampleBc174?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101964","vstamp":0,"customField":[{"id":"1101965","value":"Test data","options":{}},{"id":"1101966","value":"Abs data","options":{}}],"customFieldColor":"#eda6a6","customFieldCalc":"Test data..."}],"hasNext":false}
+
+Tue Apr 01 16:19:26 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/myexample174/myExampleBc174/1101964
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"customFieldColor","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"#eda6a6","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customFieldCalc","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"Test data...","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101964","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":true,"currentValue":[{"id":"1101965","value":"Test data","options":{}},{"id":"1101966","value":"Abs data","options":{}}],"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Tue Apr 01 16:19:26 UTC 2025
+GET
+http://localhost:81/api/v1/count/myexample174/myExampleBc174?
+Request: null
+200
+Response: {"success":true,"data":1}
+
