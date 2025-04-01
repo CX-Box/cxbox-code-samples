@@ -112,7 +112,7 @@ jobs:
 
       - name: Run some kind of test 
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' }}

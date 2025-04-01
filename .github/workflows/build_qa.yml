@@ -121,18 +121,14 @@ jobs:
       - name: Load target
         run: mvn clean install -U -PUI
 
-      - name: Stop and remove containers, networks
-        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
-
-      - name: Remove unused data
-        run: sudo docker system prune -a --volumes -f
-        #Change to docker container prune -f && docker network prune -f ?
+      #      - name: Stop and remove containers, networks
+      #        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
 
       - name: List Docker images
         run: docker images
 
-      - name: Build docker-compose
-        run: sudo docker compose -f docker-compose-test.yml build
+      #      - name: Build docker-compose
+      #        run: sudo docker compose -f docker-compose-test.yml build
 
       - name: Set permissions for ./docker
         run: sudo chmod -R 777 ./docker
@@ -188,3 +184,8 @@ jobs:
       - name: Stop and remove Docker compose
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
+
+      - name: Remove unused data
+        if: always()
+        run: sudo docker system prune -a --volumes -f
+        #Change to docker container prune -f && docker network prune -f ?
