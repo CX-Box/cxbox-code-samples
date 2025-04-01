@@ -8,7 +8,7 @@ public class CustomAllureListener implements TestLifecycleListener {
     public void beforeTestStop(TestResult result) {
         String name = result.getFullName();
         if (name.contains(".")) {
-            name = name.replaceFirst("\\.([^.]+)$", "#$1"); // Заменяет последнюю точку на #
+            name = name.replaceFirst("\\.([^.]+)$", "#$1");
             result.setFullName(name);
         }
     }
