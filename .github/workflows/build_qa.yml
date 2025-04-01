@@ -116,7 +116,7 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: deploy/pull_request
           destination_dir: pull_request
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()

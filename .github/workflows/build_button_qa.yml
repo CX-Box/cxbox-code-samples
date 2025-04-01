@@ -173,6 +173,7 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: deploy/side-tests
           destination_dir: side-tests
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
