@@ -44,18 +44,14 @@ jobs:
       - name: Load target
         run: mvn clean install -U -PUI
 
-      - name: Stop and remove containers, networks
-        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
-
-      - name: Remove unused data
-        run: sudo docker system prune -a --volumes -f
-        #Change to docker container prune -f && docker network prune -f ?
+#      - name: Stop and remove containers, networks
+#        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
 
       - name: List Docker images
         run: docker images
 
-      - name: Build docker-compose
-        run: sudo docker compose -f docker-compose-test.yml build
+#      - name: Build docker-compose
+#        run: sudo docker compose -f docker-compose-test.yml build
 
       - name: Set permissions for ./docker
         run: sudo chmod -R 777 ./docker
@@ -66,8 +62,9 @@ jobs:
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.** test
 
-      - name: Create manual-side-tests directory
-        run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
+      - name: Create pull_request directory
+        if: always()
+        run: mkdir -p gh-pages/pull_request
 
       - name: Upload allure results
         if: always()
@@ -77,19 +74,49 @@ jobs:
           path: target/allure-results
 
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.8.0
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          target: 'github'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          custom_report_dir: 'manual-side-tests/${{ github.run_number }}'
+          gh_pages: gh-pages
+          allure_results: target/allure-results
+          allure_report: gh-pages/pull_request/${{ github.run_number }}/allure-report
+          keep_reports: 20
+
+      - name: List report directory
+        run: ls -R gh-pages/pull_request/${{ github.run_number }}/allure-report
+
+      - name: Prepare files for deployment
+        if: always()
+        run: |
+          mkdir -p deploy/pull_request/${{ github.run_number }}
+          cp -r gh-pages/pull_request/${{ github.run_number }}/allure-report/* deploy/pull_request/${{ github.run_number }}/        
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: deploy/pull_request
+          destination_dir: pull_request
+          keep_files: false
+
+      - name: Generate and add report URL to Job Summary
+        if: always()
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/pull_request/${{ github.run_number }}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
 
       - name: Stop and remove Docker compose
         if: always()
         run:  sudo docker compose -f docker-compose-test.yml down
+
+      - name: Remove unused data
+        run: sudo docker system prune -a --volumes -f
+        #Change to docker container prune -f && docker network prune -f ?
 
   build-push:
     if: github.event_name == 'push'
