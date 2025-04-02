@@ -113,23 +113,6 @@ jobs:
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
 
-      - name: Convert test-path format
-        if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: |
-          TEST_PATH="${{ github.event.inputs.test-path }}"
-          CONVERTED_PATH=""
-
-          for path in ${TEST_PATH//,/ }; do
-            LAST_DOT_INDEX=${path%.*}
-            LAST_PART=${path##*.}
-            CONVERTED_PATH+="${LAST_DOT_INDEX}#${LAST_PART},"
-          done
-
-          # Remove trailing comma
-          CONVERTED_PATH="${CONVERTED_PATH%,}"
-
-          echo "Converted path: $CONVERTED_PATH"
-          echo "TEST_PATH=$CONVERTED_PATH" >> $GITHUB_ENV
 
       - name: Run tests
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
