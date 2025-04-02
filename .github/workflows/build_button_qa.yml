@@ -40,7 +40,7 @@ env:
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
 
 jobs:
-  build_main:
+  build-qa_main:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
@@ -108,7 +108,7 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
-  build_manual:
+  build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
@@ -126,31 +126,13 @@ jobs:
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
 
-      - name: Convert test-path format
-        if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: |
-          TEST_PATH="${{ github.event.inputs.test-path }}"
-          CONVERTED_PATH=""
-
-          for path in ${TEST_PATH//,/ }; do
-            LAST_DOT_INDEX=${path%.*}
-            LAST_PART=${path##*.}
-            CONVERTED_PATH+="${LAST_DOT_INDEX}#${LAST_PART},"
-          done
-
-          # Remove trailing comma
-          CONVERTED_PATH="${CONVERTED_PATH%,}"
-
-          echo "Converted path: $CONVERTED_PATH"
-          echo "TEST_PATH=$CONVERTED_PATH" >> $GITHUB_ENV
-
       - name: Run tests
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=$TEST_PATH test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run tests in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=$TEST_PATH test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
 
 
       - name: Run default tests
@@ -211,7 +193,7 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
 
-  build_local:
+  build-qa_local:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
       APP_URL: http://localhost:81/ui/#/
@@ -259,11 +241,11 @@ jobs:
 
       - name: Run some kind of test
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run some kind of test in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
