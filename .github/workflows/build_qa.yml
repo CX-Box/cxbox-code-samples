@@ -125,6 +125,22 @@ jobs:
           destination_dir: pull_request
           keep_files: true
 
+      - name: Post test summary to PR
+        if: always()
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/pull_request/${{ github.run_number }}"
+
+          PASSED=$(jq '.statistic.passed' target/allure-results/widgets/summary.json)
+          BROKEN=$(jq '.statistic.broken' target/allure-results/widgets/summary.json)
+          FAILED=$(jq '.statistic.failed' target/allure-results/widgets/summary.json)
+          SKIPPED=$(jq '.statistic.skipped' target/allure-results/widgets/summary.json)
+          UNKNOWN=$(jq '.statistic.unknown' target/allure-results/widgets/summary.json)
+
+          echo "### 📊 Test Report: [View Report]($REPORT_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ Passed | ⚠️ Broken | ❌ Failed | ⏭ Skipped | ❓ Unknown |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|---------|--------|---------|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| $PASSED  | $BROKEN | $FAILED | $SKIPPED | $UNKNOWN |" >> $GITHUB_STEP_SUMMARY
+
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
