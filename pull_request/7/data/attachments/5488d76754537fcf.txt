@@ -1,0 +1,85 @@
+Wed Apr 02 11:39:22 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Wed Apr 02 11:39:22 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Wed Apr 02 11:39:24 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1OTQyNjUsImlhdCI6MTc0MzU5Mzk2NSwiYXV0aF90aW1lIjoxNzQzNTkzOTU5LCJqdGkiOiI4NTdlYzYwYy1jNTI0LTRmY2MtOTM1MC1kYzY2NjIxZjQxZTYiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZGZlZGM4NWEtYzZkOC00ZmY3LWFlNGUtMDEzYTRlZGFlNGU0Iiwic2Vzc2lvbl9zdGF0ZSI6ImNiOGExZjBkLTgyZjctNDM1NS1hZjUxLTYxNWU0NjI3MjJkYiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.AruSgnJsyERQS16bD-ayV9c7f_sc_aj2lUwWQsHZoHV3Qd9Ob8bjz1JWFgF2g-KP-em-u6MoRBqW2jMQwdj6wJwNEbRMLfbL5oesETUb8QLftXimSW6WN8DFxIsNkN18mGQEPayVUjUOWr9Z3AB3ihNIBtQx1DRGaQ81jHrDGavouwihBvBMLzZYViRqKkNb10yloyc2_oULhP4VYla1e4M-kGNwOSP-PpfMtcLwEewgo8uiz1tfq13ltJb-Dp-K3xoCrCsT4QD5eeKEIv82SHdgaLIgKYlQe4n0ILVmRiXbmEcVoeXnzaqVUYXEpKpsub67rw3vFiLtt0G9gxXV9g","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM1OTU3NjUsImlhdCI6MTc0MzU5Mzk2NSwianRpIjoiNmJmMDg1MzMtMDMwYy00OTNkLWI3MDItZWVhMzVkNDY5YmRhIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZGZlZGM4NWEtYzZkOC00ZmY3LWFlNGUtMDEzYTRlZGFlNGU0Iiwic2Vzc2lvbl9zdGF0ZSI6ImNiOGExZjBkLTgyZjctNDM1NS1hZjUxLTYxNWU0NjI3MjJkYiIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.vUuxix1n-kxEyypy3rc2ElCBXVdhKnxAdIj1HK44e4A","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1OTQyNjUsImlhdCI6MTc0MzU5Mzk2NSwiYXV0aF90aW1lIjoxNzQzNTkzOTU5LCJqdGkiOiJiYzdhN2I4NC0xMDg5LTRkYTctOGIxZS00OTA1NGU3YTM3NmEiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiZGZlZGM4NWEtYzZkOC00ZmY3LWFlNGUtMDEzYTRlZGFlNGU0Iiwic2Vzc2lvbl9zdGF0ZSI6ImNiOGExZjBkLTgyZjctNDM1NS1hZjUxLTYxNWU0NjI3MjJkYiIsImF0X2hhc2giOiJtLWd4bU5STHNYN1E3Uk5HVlFNUU13IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.PQSjWe6zMQtpOF9-kS9peUVuHkE18IYFOOM5pvDzUIE-eoPZfjvxdzGn1yd9gavomcDWpHZWR8tGf3l9TLDIakk04U_GeG_Kz3Vq1OvPminzIwyRagAXIEnp0lA1wFJlLJluhrPLBYehYcvLSVoUH50x2GuVUEU2KGmXl2ItvMLD-bMjvpy9cVeGbWAGYvW94rFs8Q5G0b8mK__nqr0zGDZdz4uJptDlo6ySCv5uM-IUPGmYQyv8WrapFysyutJO_Lymyl7rQkK83Yv84DgNyZ0ARFDa8Rm1gcgf4-DPcpNe9emNDziQgza8tY-DsW-nQiG0om-EbNAkv1lAhDYldw","not-before-policy":0,"session_state":"cb8a1f0d-82f7-4355-af51-615e462722db","scope":"openid email profile"}
+
+Wed Apr 02 11:39:32 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Wed Apr 02 11:39:32 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Wed Apr 02 11:39:33 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Wed Apr 02 11:39:33 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Wed Apr 02 11:39:49 UTC 2025
+GET
+http://localhost:81/api/v1/data/myexample48/myExampleBc48?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1102029","vstamp":0,"customField":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. "},{"id":"1102028","vstamp":0,"customField":"Some metal type characters required in typesetting, such as dashes, spaces and line-height spacers, were not part of a specific font, but were generic pieces that could be used with any font"},{"id":"1102027","vstamp":0,"customField":"The rest of the characters would be provided in quantities appropriate for the distribution of letters in that language."},{"id":"1102026","vstamp":0,"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included."}],"hasNext":false}
+
+Wed Apr 02 11:39:49 UTC 2025
+GET
+http://localhost:81/api/v1/count/myexample48/myExampleBc48?
+Request: null
+200
+Response: {"success":true,"data":4}
+
+Wed Apr 02 11:39:49 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/myexample48/myExampleBc48/1102029
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1102029","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":true,"currentValue":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. ","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
