@@ -116,11 +116,11 @@ jobs:
 
       - name: Run tests
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=$TEST_PATH test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run tests in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=$TEST_PATH test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
 
 
       - name: Run default tests
@@ -211,11 +211,11 @@ jobs:
 
       - name: Run some kind of test
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run some kind of test in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}

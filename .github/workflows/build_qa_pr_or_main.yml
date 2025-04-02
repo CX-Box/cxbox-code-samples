@@ -58,6 +58,7 @@ jobs:
         uses: cybersokari/allure-deployer-action@v1.8.0
         if: always()
         with:
+          pr_comment: 'true'
           target: 'github'
           prefix: 'pull_request'
           github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
