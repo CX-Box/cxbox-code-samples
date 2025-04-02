@@ -73,40 +73,27 @@ jobs:
           name: allure-results
           path: target/allure-results
 
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
       - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+        uses: cybersokari/allure-deployer-action@v1.8.0
         if: always()
         with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: target/allure-results
-          allure_report: allure-report
-          keep_reports: 20
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
-          keep_files: true
+          target: 'github'
+          prefix: 'main'
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
+          github_pages_branch: 'gh-pages'
+          allure_results_path: 'target/allure-results'
+          show_history: 'true'
+          keep: 10
 
       - name: Generate and add report URL to Job Summary
+        if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY  
 
   build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
@@ -163,10 +150,6 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Create side-tests directory
-        if: always()
-        run: mkdir -p gh-pages/side-tests
-
       - name: Upload allure results
         if: always()
         uses: actions/upload-artifact@v4
@@ -175,41 +158,27 @@ jobs:
           path: target/allure-results
 
       - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+        uses: cybersokari/allure-deployer-action@v1.8.0
         if: always()
         with:
-          gh_pages: gh-pages
-          allure_results: target/allure-results
-          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
-          keep_reports: 20
-
-      - name: List report directory
-        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
-
-      - name: Prepare files for deployment
-        if: always()
-        run: |
-          mkdir -p deploy/side-tests/${{ github.run_number }}
-          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: deploy/side-tests
-          destination_dir: side-tests
-          keep_files: true
+          target: 'github'
+          prefix: 'manual'
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
+          github_pages_branch: 'gh-pages'
+          allure_results_path: 'target/allure-results'
+          show_history: 'true'
+          keep: 10
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+
 
   build-qa_local:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
@@ -283,61 +252,22 @@ jobs:
           path: target/allure-results
 
       - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+        uses: cybersokari/allure-deployer-action@v1.8.0
         if: always()
         with:
-          gh_pages: gh-pages
-          allure_results: target/allure-results
-          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
-          keep_reports: 20
-
-      - name: List report directory
-        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
-
-      - name: Prepare files for deployment
-        if: always()
-        run: |
-          mkdir -p deploy/side-tests/${{ github.run_number }}
-          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/      
-
-      - name: Clean old side-tests reports
-        if: always()
-        run: |
-            REPORTS_DIR="gh-pages/side-tests"
-            MAX_REPORTS=20
-            
-            if [ -d "$REPORTS_DIR" ]; then
-              REPORT_COUNT=$(ls -1 "$REPORTS_DIR" | wc -l)
-            
-              if [ "$REPORT_COUNT" -gt "$MAX_REPORTS" ]; then
-                echo "::notice::Too many reports ($REPORT_COUNT), cleaning up..."
-            
-                OLDEST_REPORT=$(git ls-tree -r --name-only HEAD "$REPORTS_DIR" | xargs -I {} git log --format="%at %f" -1 -- {} | sort | awk '{print $2}' | head -n 1)
-            
-                if [ -n "$OLDEST_REPORT" ]; then
-                  echo "::notice::Removing oldest report: $OLDEST_REPORT"
-                  rm -rf "$REPORTS_DIR/$OLDEST_REPORT"
-                  git add "$REPORTS_DIR"
-                  git commit -m "Cleanup old report: $OLDEST_REPORT"
-                  git push origin gh-pages
-                fi
-              fi
-            fi    
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: deploy/side-tests
-          destination_dir: side-tests
-          keep_files: true
+          target: 'github'
+          prefix: 'manual'
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
+          github_pages_branch: 'gh-pages'
+          allure_results_path: 'target/allure-results'
+          show_history: 'true'
+          keep: 10
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
