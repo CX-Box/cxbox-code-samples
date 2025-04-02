@@ -473,7 +473,7 @@
                             <reuseForks>${surefire.reuseForks}</reuseForks>
                             <rerunFailingTestsCount>3</rerunFailingTestsCount>
                             <argLine>
-                                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -Xmx256m -XX:MaxPermSize=256m
+                                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -Xmx256m -XX:MaxMetaspaceSize=256m
                             </argLine>
                             <systemPropertyVariables>
                                 <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
