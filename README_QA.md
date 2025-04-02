@@ -25,8 +25,16 @@ mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.** test
 You can combine tests:
 mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.**,application.Samples.{anotherTestPacage}.{testClass} test
 ```
+* To debug concrete tests on local docker
+```
+1. Go to src/test/java/application/Samples
+2. Select Type of test (Form/Info)
+3. Select test Class and method
+4. Run by button
+```
+![QA_On_pr_example.png](src/test/resources/QA_Launch_concrete.png)
 
-* To run tests on the local build
+* To run tests on docker local
 1. Set env
 ```
 Add the url of the default page to the env in cmd (for Windows)

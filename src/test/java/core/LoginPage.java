@@ -27,6 +27,7 @@ public class LoginPage {
 		});
 	}
 
+
 	private void enterUsername(String login) {
 		Allure.step("Entering a username: " + login, step -> {
 			logTime(step);
