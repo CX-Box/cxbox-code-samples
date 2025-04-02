@@ -1,0 +1,92 @@
+Wed Apr 02 09:19:07 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Wed Apr 02 09:19:07 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Wed Apr 02 09:19:07 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1ODU4NDgsImlhdCI6MTc0MzU4NTU0OCwiYXV0aF90aW1lIjoxNzQzNTg1NTQ3LCJqdGkiOiI5Y2FmZTViZS04Y2Y5LTQyMGQtYmFkMS05Y2MwY2YyMmJlOWYiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzZiMGJjNzAtZTkzYi00N2Q0LWE3ODUtYjViNjVkNGEzMDFmIiwic2Vzc2lvbl9zdGF0ZSI6IjJmMzc3OTE4LWUwZjctNDJkMi05MTk0LWQzZjYzYmFmMTk4MiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.ho_oq2CC4OU7oapL9rh4sfpZLdNxQXp3bXm7mjU60Akqt4aC0wJsYK7_iISJiGkKbMqw8Etkt9o0h4VEveoq4ehHyHEtGkhU2nD5VFF0Gh-oMz4oPUw--xLRTu4E0R_0Wmj0rh1uC3pGtjfmRznTc4-bmN35w0j-33oAAOumCSdVylR3NWCFS8LFx1PawNwlNGbMbdx4sNW7A5kNtsnlq7-VP_nrgehhOFwhgqs2QC2vTzEVA9ba3kX9cPy2Vf0c2WCXDTdXbIozXR7wteFJxF6-7GizkIqa_xroAUB6B9932byg_qQd6XkVyYwzGkLcGJez2yXH0jA9dwnqA9HZuA","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM1ODczNDgsImlhdCI6MTc0MzU4NTU0OCwianRpIjoiNGM2OTVkMmMtNzIxMC00NmFkLTgyOWYtYTYyZDI1NzcwN2NjIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzZiMGJjNzAtZTkzYi00N2Q0LWE3ODUtYjViNjVkNGEzMDFmIiwic2Vzc2lvbl9zdGF0ZSI6IjJmMzc3OTE4LWUwZjctNDJkMi05MTk0LWQzZjYzYmFmMTk4MiIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.M7tngblXr2jSrfuemaMDdO_lc14CwZd4t2K2Bn5MWNA","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1ODU4NDgsImlhdCI6MTc0MzU4NTU0OCwiYXV0aF90aW1lIjoxNzQzNTg1NTQ3LCJqdGkiOiJkYTE2N2UwMC1iMTFlLTQ5MzUtOTYyMC0wZTYyMmZlMTYzMjIiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzZiMGJjNzAtZTkzYi00N2Q0LWE3ODUtYjViNjVkNGEzMDFmIiwic2Vzc2lvbl9zdGF0ZSI6IjJmMzc3OTE4LWUwZjctNDJkMi05MTk0LWQzZjYzYmFmMTk4MiIsImF0X2hhc2giOiJybzdPWGc2cGR3VUM1dVpzWnp0cTdnIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.SDGMjRxSthb7rJZ011yQyTTQ3ML32F5JyRVawxmHYJ2Co-AOhOlQ8A0QfAdQt9awHA5_LZ3yMmtKRIg1_xId7o1t09jXXqQ6DGJw1E_poicykqynOTa_1AWVSncf97HfkVaBJOwXF11K20tIR5d_-gI91J6ZJVP0oW2KYOHs6QBIrvHE0CgNeVdql6u17SAi3fTlbIEpY03iYelyiPdM6lAna6qZMltmdELiWgF5Rsrb00P6xrbWGCwXuYBq9qwVu8XdvSWDVtZR8TuUf9nTmtOXgJxYwr_m6WLi8SXFGpFah36_RVlyfDnRxsaNz9KJWxOToh1Lvfnfx2zL6JlC-Q","not-before-policy":0,"session_state":"2f377918-e0f7-42d2-9194-d3f63baf1982","scope":"openid email profile"}
+
+Wed Apr 02 09:19:08 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101712","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Wed Apr 02 09:19:08 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Wed Apr 02 09:19:08 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101712
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101712","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Wed Apr 02 09:19:08 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Wed Apr 02 09:19:10 UTC 2025
+GET
+http://localhost:81/api/v1/data/NumberDrillDown/numberDrillDown?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101914","vstamp":0,"customField":234567}],"hasNext":false}
+
+Wed Apr 02 09:19:10 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/NumberDrillDown/numberDrillDown/1101914
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101914","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":true,"filterable":false,"sortable":false,"drillDown":"/screen/NumberDrillDown/view/NumberDrillDownform/numberDrillDown/1101914","drillDownType":"inner","currentValue":234567,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Wed Apr 02 09:19:10 UTC 2025
+GET
+http://localhost:81/api/v1/count/NumberDrillDown/numberDrillDown?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Wed Apr 02 09:19:10 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/NumberDrillDown/numberDrillDown/1101914
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101914","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":true,"filterable":false,"sortable":false,"drillDown":"/screen/NumberDrillDown/view/NumberDrillDownform/numberDrillDown/1101914","drillDownType":"inner","currentValue":234567,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
