@@ -210,6 +210,7 @@ jobs:
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
+
   build_local:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
@@ -278,43 +279,45 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-         name: allure-results
-         path: target/allure-results
-
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+          name: allure-results
+          path: target/allure-results
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: target/allure-results
-          allure_report: allure-report
+          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
           keep_reports: 20
 
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+      - name: List report directory
+        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
+
+      - name: Prepare files for deployment
         if: always()
+        run: |
+          mkdir -p deploy/side-tests/${{ github.run_number }}
+          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
         with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         PUBLISH_BRANCH: gh-pages
-         PUBLISH_DIR: allure-history
-         keep_files: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: deploy/side-tests
+          destination_dir: side-tests
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
+        if: always()
         run: |
-                REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
-                echo "Report URL: $REPORT_URL"
-                echo "::notice::Report URL: $REPORT_URL"
-                echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-                echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
       - name: Stop and remove Docker compose
         if: always()
