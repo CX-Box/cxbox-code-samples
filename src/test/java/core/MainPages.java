@@ -14,7 +14,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @Slf4j
 public class MainPages {
 
-
+            //TODO Remove Main_Menu
     public static final SelenideElement MAIN_MENU = ContextUtils.LEFT_SIDER
             .$("ul[data-test='MAIN_MENU']");
 
