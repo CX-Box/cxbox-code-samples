@@ -8,6 +8,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
+import core.widget.TestingTools.PreDockerHealthCheck;
 import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -29,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -79,6 +81,9 @@ public class BaseTestForSamples {
             }
 
             log.info(getUrlEnv());
+
+            PreDockerHealthCheck.waitAppLoginPageReady(getUrlEnv(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+
             Selenide.open(getUrlEnv());
 
             if (getLogEnv()) {
@@ -155,6 +160,7 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
+            Selenide.closeWindow();
             Selenide.closeWebDriver();
         });
     }
@@ -180,6 +186,7 @@ public class BaseTestForSamples {
 
     void printNetworkLog() {
         StringBuilder stringBuilder = new StringBuilder();
+
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&

@@ -225,6 +225,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
+
     @Test
     @Severity(MINOR)
     @Tag("Positive")

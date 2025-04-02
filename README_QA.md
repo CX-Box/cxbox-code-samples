@@ -43,6 +43,20 @@ You can combine tests:
 mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.**,application.Samples.{anotherTestPacage}.{testClass} test
 ```
 
+* To run tests on the local build
+1. Set env
+```
+Add the url of the default page to the env in cmd (for Windows)
+  setx APP_URL http://localhost:81/ui/#/
+```
+2. Open Docker desktop
+3. Build project 
+```
+mvn clean install -PUI
+```
+4. Launch [docker-compose-test.yml](docker-compose-test.yml)
+5. When docker starts, you will be able to run tests as on the website.
+
 ### GitHub Actions
 
 * Launch at pull request
