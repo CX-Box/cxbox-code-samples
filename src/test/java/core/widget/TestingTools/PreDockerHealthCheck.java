@@ -40,7 +40,7 @@ public class PreDockerHealthCheck {
         }
         if (!success) {
             log.error("Application has not been started!!");
-//			throw new IllegalStateException();
+ 			throw new IllegalStateException();
         }
     }
 

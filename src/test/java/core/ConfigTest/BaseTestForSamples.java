@@ -81,7 +81,9 @@ public class BaseTestForSamples {
             }
 
             log.info(getUrlEnv());
-            PreDockerHealthCheck.waitAppLoginPageReady(getUrlEnv(), Duration.ofMinutes(5), Duration.ofSeconds(10));
+
+            PreDockerHealthCheck.waitAppLoginPageReady(getUrlEnv(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+
             Selenide.open(getUrlEnv());
 
             if (getLogEnv()) {
