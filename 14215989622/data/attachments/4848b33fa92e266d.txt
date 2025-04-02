@@ -1,0 +1,85 @@
+Wed Apr 02 09:49:39 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Wed Apr 02 09:49:39 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Wed Apr 02 09:49:40 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1ODc2ODAsImlhdCI6MTc0MzU4NzM4MCwiYXV0aF90aW1lIjoxNzQzNTg3Mzc4LCJqdGkiOiIyNjhkNTA0ZS0xMWNmLTQ5MzQtYTRmMS0xZDhmOGM5YzU3MTUiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOTgxMDIwYjItOWJkZi00M2QzLThhODgtMWQwNjgxZGVjMmUwIiwic2Vzc2lvbl9zdGF0ZSI6IjA0ODgzZWYwLTllOGItNGNiMC04N2U2LTMyNDE4YmEwZjA3NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.MQQ7rteJcUtYFmDZjNv1f1Hb9aWcsG_QTJ9pOoCwnyQPp39uFWNzLijwfudc9oqr8zaZa4M-QvB8ugkaRn-3b3dWqBCaMcHpdQO61oCQKApaA3qB6yZlbIZoGKrkBJu_RGLvR596ReHaWQ_c5PV9OAc7NdoS3dYa-HLD9688eF9mARRhlfWpJzkSVkcBPAJbYHEc0EhPYCxvDA1Gw0GC9FvTf1f2z4MYLV7XhhLgeqSrvXqwwS2K4HUNtty-JosNnrsQOpdXtNAKmY1Jalv9FNVfYG4mwLusodhiedRICRjMIXSY_F8Oz1R4F5-5sCWbLu2m2oCJDc9AeRhfLt4vxQ","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM1ODkxODAsImlhdCI6MTc0MzU4NzM4MCwianRpIjoiODkzZTJlMzgtZjAzNy00ZTM3LTllNzUtOWQ5NWEwMjYxNGE4IiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOTgxMDIwYjItOWJkZi00M2QzLThhODgtMWQwNjgxZGVjMmUwIiwic2Vzc2lvbl9zdGF0ZSI6IjA0ODgzZWYwLTllOGItNGNiMC04N2U2LTMyNDE4YmEwZjA3NCIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.6Jnwfaor5lfHacuMboqJOSV-LybN0wrpibHdTLwofjw","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM1ODc2ODAsImlhdCI6MTc0MzU4NzM4MCwiYXV0aF90aW1lIjoxNzQzNTg3Mzc4LCJqdGkiOiIxMDNlZWE2Ny00YmNmLTRmN2QtYmU1YS00NDM4ZTBjYzIwNzIiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiOTgxMDIwYjItOWJkZi00M2QzLThhODgtMWQwNjgxZGVjMmUwIiwic2Vzc2lvbl9zdGF0ZSI6IjA0ODgzZWYwLTllOGItNGNiMC04N2U2LTMyNDE4YmEwZjA3NCIsImF0X2hhc2giOiJfMnFXcXZMUVZFelhZejhWc0ZPZFdBIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.Iq7aePVXKw6Sh6WJ7JkBBUDQ5SRoBWf550lqcwj4NS77Jwm-WZu9VRunhbz4qhRV7DeIaEYfpcjWVgsqPV9iUDkqVAi1dVwltupglSZ9hdcMc7iTmixaLqR4OM1AT6ourDHRI8p9yavWyPmWw7EB0n7TMUIKDWh3iWp_EGAeOE_BQrCVIkjwgZPIL-cJ6IN4fYeq_nhV9Ji5vuDFTKp-VeO675-Kb2-jaWyvWqTIyPSgUli-6r7WE6PxedBr4RNyRQqofpl2kiw9P1IHud5M2Qju0KqQAGx4Q2YsTr0vyeaVa95h6IBckeda1T3Wdv95evzNOhTJDYFEA77sr7HXvA","not-before-policy":0,"session_state":"04883ef0-9e8b-4cb0-87e6-32418ba0f074","scope":"openid email profile"}
+
+Wed Apr 02 09:49:42 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Wed Apr 02 09:49:42 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Wed Apr 02 09:49:42 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Wed Apr 02 09:49:42 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Wed Apr 02 09:49:49 UTC 2025
+GET
+http://localhost:81/api/v1/data/myexample45/myExampleBc45?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1102022","vstamp":0,"customField":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. "},{"id":"1102021","vstamp":0,"customField":"Some metal type characters required in typesetting, such as dashes, spaces and line-height spacers, were not part of a specific font, but were generic pieces that could be used with any font"},{"id":"1102020","vstamp":0,"customField":"The rest of the characters would be provided in quantities appropriate for the distribution of letters in that language."},{"id":"1102019","vstamp":0,"customField":"Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included."}],"hasNext":false}
+
+Wed Apr 02 09:49:49 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/myexample45/myExampleBc45/1102022
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1102022","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":true,"currentValue":"A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen. ","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Wed Apr 02 09:49:49 UTC 2025
+GET
+http://localhost:81/api/v1/count/myexample45/myExampleBc45?
+Request: null
+200
+Response: {"success":true,"data":4}
+
