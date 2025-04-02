@@ -33,6 +33,7 @@ public class MainPages {
         Allure.step("Selecting the " + sectionName + " section in the left menu.", step -> {
             step.parameter("sectionName", sectionName);
             logTime(step);
+            MAIN_MENU.shouldBe(Condition.visible, Duration.ofSeconds(20));
             MAIN_SECTIONS
                     .find(Condition.exactText(sectionName))
                     .shouldBe(Condition.enabled)
