@@ -40,7 +40,7 @@ env:
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
 
 jobs:
-  build_main:
+  build-qa_main:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
@@ -108,7 +108,7 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
-  build_manual:
+  build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
@@ -211,7 +211,7 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
 
-  build_local:
+  build-qa_local:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
       APP_URL: http://localhost:81/ui/#/
