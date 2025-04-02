@@ -81,8 +81,8 @@ public class BaseTestForSamples {
             }
 
             log.info(getUrlEnv());
-            Selenide.open(getUrlEnv());
             PreDockerHealthCheck.waitAppLoginPageReady(getUrlEnv(), Duration.ofMinutes(5), Duration.ofSeconds(10));
+            Selenide.open(getUrlEnv());
 
             if (getLogEnv()) {
                 bmp = WebDriverRunner.getSelenideProxy().getProxy();
