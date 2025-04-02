@@ -18,7 +18,8 @@ public class Dictionary extends BaseString<String> {
 
     @Override
     public String getValueTag() {
-        return "div[class*=\"Dictionary_coloredValue\"]";
+        //TODO Rename
+        return "div[data-test-field-value=\"true\"]";
     }
 
     /**

@@ -1,10 +1,11 @@
 package org.demo.conf.cxbox.extension.siem;
 
-import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
 import static org.demo.conf.cxbox.extension.siem.SecurityLogger.writeErrorAsString;
+import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

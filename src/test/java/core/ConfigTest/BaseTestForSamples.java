@@ -3,13 +3,15 @@ package core.ConfigTest;
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide; 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import core.LoginPage;
 import core.WidgetPage;
+import core.widget.TestingTools.PreDockerHealthCheck;
 import core.widget.TestingTools.TestStatusExtension;
 import de.sstoehr.harreader.model.HarEntry;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -28,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -51,19 +54,20 @@ public class BaseTestForSamples {
     private BrowserUpProxy bmp = null;
     private static final ConcurrentLinkedQueue<String>  loginLog = new ConcurrentLinkedQueue<>();
 
-
     @BeforeAll
     public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                         .includeSelenideSteps(false)
                 .screenshots(true)
                 .savePageSource(true));
+
     }
 
     @BeforeEach
     public void setUp() {
         Allure.step("Launching the browser...", step -> {
             logTime(step);
+            WebDriverManager.chromedriver().setup();
             Configuration.browser = "chrome";
             Configuration.headless = false;
             Configuration.timeout = 10000;
@@ -71,23 +75,27 @@ public class BaseTestForSamples {
             Configuration.pageLoadTimeout = 60000;
             Configuration.browserCapabilities = getChromeOptions();
             Configuration.webdriverLogsEnabled = false;
+            Configuration.reportsFolder = "target/videos";
             if (getLogEnv()) {
                 Configuration.proxyEnabled = true;
             }
-            Configuration.reportsFolder = "target/videos";
-
 
             log.info(getUrlEnv());
+
+            PreDockerHealthCheck.waitAppLoginPageReady(getUrlEnv(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+
             Selenide.open(getUrlEnv());
 
             if (getLogEnv()) {
                 bmp = WebDriverRunner.getSelenideProxy().getProxy();
+
 
                 EnumSet<CaptureType> nonBinaryContentCaptureTypes = CaptureType.getNonBinaryContentCaptureTypes();
                 nonBinaryContentCaptureTypes.addAll(CaptureType.getHeaderCaptureTypes());
 
                 bmp.setHarCaptureTypes(nonBinaryContentCaptureTypes);
                 bmp.enableHarCaptureTypes(nonBinaryContentCaptureTypes);
+                Selenide.sleep(2000);
                 bmp.newHar("Proxy start");
             }
 
@@ -96,6 +104,7 @@ public class BaseTestForSamples {
     }
 
     private static @NonNull ChromeOptions getChromeOptions() {
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); // Disable chrome window
         options.addArguments("--enable-automation");
@@ -105,11 +114,12 @@ public class BaseTestForSamples {
         options.addArguments("--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-dev-shm-usage", "--disable-software-rasterizer");
         //options.addArguments("--remote-debugging-port=9222");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-web-security");
         options.addArguments("--disable-notifications");
+        options.setAcceptInsecureCerts(true);
 
         if (getLogEnv()) {
             LoggingPreferences logPrefs = new LoggingPreferences();
@@ -128,18 +138,19 @@ public class BaseTestForSamples {
         if (getLogEnv()) {
             Allure.step("Print browser logs and response...", step -> {
                 logTime(step);
-                Path logFile = Paths.get("logLoginFile");
 
                 Logs logs = getWebDriver().manage().logs();
                 printConsoleLog(logs.get(LogType.BROWSER.toString()));
                 printNetworkLog();
 
+                Path logFile = Paths.get("logLoginFile");
+
                 try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                    writer.write(loginLog.toString());
+                    writer.append(loginLog.toString());
+                    createZipLog();
                     loginLog.clear();
                 } catch (IOException e) {
                     log.error("Error writing log file ", e);
-                    return; // Stop execution if log file cannot be written
                 }
             });
         }
@@ -149,12 +160,13 @@ public class BaseTestForSamples {
     public void tearDown() {
         Allure.step("Closing the browser window", step -> {
             logTime(step);
+            Selenide.closeWindow();
             Selenide.closeWebDriver();
         });
     }
 
-    @AfterAll
-    public static void createZipLog() throws IOException {
+
+    public void createZipLog() throws IOException {
         if (getLogEnv()) {
             Path logFile = Paths.get("logLoginFile");
             Path zipFile = Paths.get("logLoginZip.zip");
@@ -168,11 +180,13 @@ public class BaseTestForSamples {
 
             Files.delete(logFile);
             Allure.addAttachment("Login network logs", "application/zip", Files.newInputStream(zipFile), ".zip");
+            Files.delete(zipFile);
         }
     }
 
     void printNetworkLog() {
         StringBuilder stringBuilder = new StringBuilder();
+
         bmp.getHar().getLog().getEntries().stream().filter(x ->
                 (  x.getResponse().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ||
                         x.getRequest().getHeaders().stream().anyMatch( y -> ("application/json").equals(y.getValue())) ) &&

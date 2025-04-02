@@ -11,7 +11,6 @@ import org.cxbox.meta.ui.model.BcField;
 import org.cxbox.meta.ui.model.json.field.FieldMeta;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class ExtendedFieldExtractor extends BaseFieldExtractor {
 
@@ -38,7 +37,11 @@ public class ExtendedFieldExtractor extends BaseFieldExtractor {
 				"RingProgress",
 				"DashboardList",
 				"FormPopup",
-				"GroupingHierarchy"
+				"GroupingHierarchy",
+				"Pie1D",
+				"Column2D",
+				"Line2D",
+				"DualAxes2D"
 		);
 	}
 

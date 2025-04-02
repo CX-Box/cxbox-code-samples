@@ -13,27 +13,39 @@ on:
        description: include PATH
        type: string
        required: false
+     docker_run:
+       type: choice
+       description: Run at
+       options:
+         - 'http://code-samples.cxbox.org/'
+         - Branch in docker
      video_tags:
        description: "Record failed video"
        required: false
        type: boolean
      log_tags:
        description: "Logging network"
+       default: true
        required: false
        type: boolean
+     fork_count:
+       description: "Run parallel"
+       type: number
+       default: 5
+       required: false
 
 env:
   APP_URL: http://code-samples.cxbox.org/ui/#/
   CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
-    
+
 jobs:
-  build_main:
-    if: ${{inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main' }}
+  build-qa_main:
+    if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['17']
+        java: [ '17' ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK ${{ matrix.java }}
@@ -45,9 +57,14 @@ jobs:
 
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
-        
+
       - name: Run default tests
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        if: ${{ inputs.fork_count == 0 }}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+
+      - name: Run default tests in parallel
+        if: ${{ inputs.fork_count != 0 }}
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Upload allure results
         if: always()
@@ -71,7 +88,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: target/allure-results
-          allure_reports: allure-report
+          allure_report: allure-report
           keep_reports: 20
 
       - name: Publish test report
@@ -81,8 +98,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
+          keep_files: true
 
-      - name: Generate and add report URL to Job Summary 
+      - name: Generate and add report URL to Job Summary
         run: |
           REPORT_URL="https://cx-box.github.io/cxbox-code-samples/"
           echo "Report URL: $REPORT_URL"
@@ -90,8 +108,8 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY   
 
-  build_manual:
-    if: ${{inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main'}}
+  build-qa_manual:
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -108,25 +126,53 @@ jobs:
       - name: Create reports directory
         run: mkdir -p build/reports/tests/
 
-      - name: Run some kind of test 
+      - name: Convert test-path format
         if: ${{inputs.choice-test == 'Package, class or test'}}
-        run: mvn --batch-mode -DrunTests=true -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+        run: |
+          TEST_PATH="${{ github.event.inputs.test-path }}"
+          CONVERTED_PATH=""
+
+          for path in ${TEST_PATH//,/ }; do
+            LAST_DOT_INDEX=${path%.*}
+            LAST_PART=${path##*.}
+            CONVERTED_PATH+="${LAST_DOT_INDEX}#${LAST_PART},"
+          done
+
+          # Remove trailing comma
+          CONVERTED_PATH="${CONVERTED_PATH%,}"
+
+          echo "Converted path: $CONVERTED_PATH"
+          echo "TEST_PATH=$CONVERTED_PATH" >> $GITHUB_ENV
+
+      - name: Run tests
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=$TEST_PATH test
+
+      - name: Run tests in parallel
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=$TEST_PATH test
+
 
       - name: Run default tests
-        if: ${{inputs.choice-test == 'All tests' }}
+        if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
-      
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test    
+
+      - name: Run default tests in parallel
+        if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
+
       - name: Create side-tests directory
         if: always()
-        run: mkdir -p gh-pages/side-tests  
+        run: mkdir -p gh-pages/side-tests
 
       - name: Upload allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results 
+          path: target/allure-results
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -136,16 +182,16 @@ jobs:
           allure_results: target/allure-results
           allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
           keep_reports: 20
-          
+
       - name: List report directory
-        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report  
-        
+        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
+
       - name: Prepare files for deployment
         if: always()
         run: |
           mkdir -p deploy/side-tests/${{ github.run_number }}
           cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
-          
+
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
@@ -156,7 +202,7 @@ jobs:
           destination_dir: side-tests
           keep_files: true
 
-      - name: Generate and add report URL to Job Summary 
+      - name: Generate and add report URL to Job Summary
         if: always()
         run: |
           REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
@@ -164,6 +210,120 @@ jobs:
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
-          
-        
-        
+
+  build-qa_local:
+    if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
+    env:
+      APP_URL: http://localhost:81/ui/#/
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker compose build
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cashe: "yarn"
+          cache-dependency-path: ui
+
+      - name: Load target
+        run: mvn clean install -U -PUI
+
+#      - name: Stop and remove containers, networks
+#        run: sudo docker compose -f docker-compose-test.yml down --remove-orphans
+
+      - name: List Docker images
+        run: docker images
+
+#      - name: Build docker-compose
+#        run: sudo docker compose -f docker-compose-test.yml build
+
+      - name: Set permissions for ./docker
+        run: sudo chmod -R 777 ./docker
+
+      - name: Start docker-compose run
+        run: sudo docker compose -f docker-compose-test.yml up -d
+
+      - name: Run some kind of test
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count == 0}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+
+      - name: Run some kind of test in parallel
+        if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.${{github.event.inputs.test-path}} test
+
+      - name: Run default tests in parallel
+        if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test   
+
+      - name: Run default tests
+        if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
+        run: |
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
+
+      - name: Upload allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_results: target/allure-results
+          allure_report: gh-pages/side-tests/${{ github.run_number }}/allure-report
+          keep_reports: 20
+
+      - name: List report directory
+        run: ls -R gh-pages/side-tests/${{ github.run_number }}/allure-report
+
+      - name: Prepare files for deployment
+        if: always()
+        run: |
+          mkdir -p deploy/side-tests/${{ github.run_number }}
+          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/  
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: deploy/side-tests
+          destination_dir: side-tests
+          keep_files: true
+
+      - name: Generate and add report URL to Job Summary
+        if: always()
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples/side-tests/${{ github.run_number }}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+
+      - name: Stop and remove Docker compose
+        if: always()
+        run: sudo docker compose -f docker-compose-test.yml down
+
+      - name: Remove unused data
+        if: always()
+        run: sudo docker system prune -a --volumes -f
+              #Change to docker container prune -f && docker network prune -f ?
