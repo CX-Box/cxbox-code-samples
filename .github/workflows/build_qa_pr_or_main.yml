@@ -110,30 +110,29 @@ jobs:
           destination_dir: pull_request
           keep_files: true
 
-      - name: Post test summary to PR
+      - name: Fetch and Post Allure Test Summary
         if: always()
         run: |
             REPORT_URL="https://cx-box.github.io/cxbox-code-samples/pull_request/${{ github.run_number }}"
             SUMMARY_URL="$REPORT_URL/widgets/summary.json"
             
-            # Проверяем, доступен ли файл
             if curl --output /dev/null --silent --head --fail "$SUMMARY_URL"; then
-            echo "::notice::Fetching test results from $SUMMARY_URL"
+              echo "::notice::Fetching test results from $SUMMARY_URL"
             
-            PASSED=$(curl -s "$SUMMARY_URL" | jq '.statistic.passed')
-            BROKEN=$(curl -s "$SUMMARY_URL" | jq '.statistic.broken')
-            FAILED=$(curl -s "$SUMMARY_URL" | jq '.statistic.failed')
-            SKIPPED=$(curl -s "$SUMMARY_URL" | jq '.statistic.skipped')
-            UNKNOWN=$(curl -s "$SUMMARY_URL" | jq '.statistic.unknown')
-          
-          echo "### 📊 Test Report: [View Report]($REPORT_URL)" >> $GITHUB_STEP_SUMMARY
-            echo "| ✅ Passed | ⚠️ Broken | ❌ Failed | ⏭ Skipped | ❓ Unknown |" >> $GITHUB_STEP_SUMMARY
-            echo "|----------|---------|--------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            echo "| $PASSED  | $BROKEN | $FAILED | $SKIPPED | $UNKNOWN |" >> $GITHUB_STEP_SUMMARY
+              PASSED=$(curl -s "$SUMMARY_URL" | jq '.statistic.passed')
+              BROKEN=$(curl -s "$SUMMARY_URL" | jq '.statistic.broken')
+              FAILED=$(curl -s "$SUMMARY_URL" | jq '.statistic.failed')
+              SKIPPED=$(curl -s "$SUMMARY_URL" | jq '.statistic.skipped')
+              UNKNOWN=$(curl -s "$SUMMARY_URL" | jq '.statistic.unknown')
+            
+              echo "### 📊 Test Report: [View Report]($REPORT_URL)" >> $GITHUB_STEP_SUMMARY
+              echo "| ✅ Passed | ⚠️ Broken | ❌ Failed | ⏭ Skipped | ❓ Unknown |" >> $GITHUB_STEP_SUMMARY
+              echo "|----------|---------|--------|---------|---------|" >> $GITHUB_STEP_SUMMARY
+              echo "| $PASSED  | $BROKEN | $FAILED | $SKIPPED | $UNKNOWN |" >> $GITHUB_STEP_SUMMARY
             
             else
-            echo "::error::Failed to fetch test summary from $SUMMARY_URL"
-            exit 1
+              echo "::error::Failed to fetch test summary from $SUMMARY_URL"
+              exit 1
             fi
 
       - name: Generate and add report URL to Job Summary
