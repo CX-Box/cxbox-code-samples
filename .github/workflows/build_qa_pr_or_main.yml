@@ -55,13 +55,13 @@ jobs:
           path: target/allure-results
 
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.8.0
+        uses: cybersokari/allure-deployer-action@v1.9.6
         if: always()
         with:
           pr_comment: 'true'
           target: 'github'
           prefix: 'pull_request'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
@@ -123,12 +123,12 @@ jobs:
           path: target/allure-results
 
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.8.0
+        uses: cybersokari/allure-deployer-action@v1.9.6
         if: always()
         with:
           target: 'github'
           prefix: 'main'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          github_token: ${{ secrets.GITHUB_TOKEN  }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
