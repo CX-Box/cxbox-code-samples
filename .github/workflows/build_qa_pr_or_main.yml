@@ -61,7 +61,7 @@ jobs:
           pr_comment: 'true'
           target: 'github'
           prefix: 'pull_request'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
@@ -128,7 +128,7 @@ jobs:
         with:
           target: 'github'
           prefix: 'main'
-          github_token: ${{ secrets.GITHUB_TOKEN  }}
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
