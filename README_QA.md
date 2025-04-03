@@ -5,11 +5,28 @@
 ## Ways to run tests:
 ### Local
 
-* To run tests on the website
+* To debug concrete tests on local docker
+```
+1. Go to src/test/java/application/Samples
+2. Select Type of test (Form/Info)
+3. Select test Class and method
+4. Run by button
+```
+![QA_On_pr_example.png](src/test/resources/QA_Launch_concrete.png)
+
+* To run tests on docker local
+1. Set env
 ```
 Add the url of the default page to the env in cmd (for Windows)
-  setx APP_URL http://code-samples.cxbox.org/ui/#/
+  setx APP_URL http://localhost:81/ui/#/
 ```
+2. Open Docker desktop
+3. Build project
+```
+mvn clean install -PUI
+```
+4. Launch [docker-compose-test.yml](docker-compose-test.yml)
+5. When docker starts, you will be able to run tests with mvn
 ```
 Run the tests using mvn
 
@@ -25,16 +42,8 @@ mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.** test
 You can combine tests:
 mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.**,application.Samples.{anotherTestPacage}.{testClass} test
 ```
-* To debug concrete tests on local docker
-```
-1. Go to src/test/java/application/Samples
-2. Select Type of test (Form/Info)
-3. Select test Class and method
-4. Run by button
-```
-![QA_On_pr_example.png](src/test/resources/QA_Launch_concrete.png)
 
-* To run tests on docker local
+* To run tests on the local build
 1. Set env
 ```
 Add the url of the default page to the env in cmd (for Windows)
