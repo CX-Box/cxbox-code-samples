@@ -6,11 +6,16 @@ import io.qameta.allure.model.TestResult;
 public class CustomAllureListener implements TestLifecycleListener {
 
     /**
-     * The method transforms the standard allure (application.Samples.Form.HintOnFormTest.filtration)
-     * in a convenient mvn form (application.Samples.Form.HintOnFormTest#filtration)
-     * The method takes the result {result},
-     * extracts the full name of the path to the test from it,
-     * and changes the last one . on #
+     * Converts an Allure test path to a Maven-style (java method FQN) identifier by replacing the last '.' with '#'.
+     * <br>
+     * Example: {@code application.Samples.Form.HintOnFormTest.filtration → application.Samples.Form.HintOnFormTest#filtration}
+     * <br>
+     * To use this llistener add file {@code io.qameta.allure.listener.TestLifecycleListener}
+     * to folder {@code src/test/resources/META-INF/services/} and fill it with this listener
+     * FQN: {@code core.widget.TestingTools.CustomAllureListener}.
+     * <br>
+     * @param result the test path
+     * @return the transformed identifier
      */
     @Override
     public void beforeTestStop(TestResult result) {
