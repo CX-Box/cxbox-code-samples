@@ -7,7 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -31,7 +31,7 @@ public class Radio extends BaseField<String> {
      * @return String
      */
     @Override
-    @Attachment
+
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -70,7 +70,7 @@ public class Radio extends BaseField<String> {
      *
      * @return HashMap(String, Boolean)
      */
-    @Attachment
+
     public HashMap<String, Boolean> getValues() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

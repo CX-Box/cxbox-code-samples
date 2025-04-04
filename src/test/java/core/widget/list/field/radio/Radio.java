@@ -7,7 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -43,7 +43,6 @@ public class Radio extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public String getValue() {
         setFocusField();
         int size = getContainersActions().size();
@@ -66,7 +65,7 @@ public class Radio extends BaseRow<String> {
      * @return HashMap(String, Boolean)
      */
     @Step("Getting a value from a field")
-    @Attachment
+
     public HashMap<String, Boolean> getValues() {
         setFocusField();
         HashMap<String, Boolean> values = new HashMap<>();

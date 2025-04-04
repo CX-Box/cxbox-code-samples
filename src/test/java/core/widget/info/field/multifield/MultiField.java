@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.Duration;
@@ -26,7 +26,6 @@ public class MultiField extends BaseString<List<Pair<String, String>>> {
      * @return List Pair(String, String)
      */
     @Override
-    @Attachment
     public List<Pair<String, String>> getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

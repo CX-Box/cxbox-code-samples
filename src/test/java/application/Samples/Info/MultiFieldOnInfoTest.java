@@ -31,7 +31,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("MultiField basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom multifield hint");
         List<Pair<String, String>> expectedPairs = new ArrayList<>();
         expectedPairs.add(Pair.of("input", "Test data"));
@@ -47,7 +47,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("MultiField filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -61,7 +61,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("MultiField filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

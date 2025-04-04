@@ -7,7 +7,7 @@ import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -42,7 +42,6 @@ public class MultiValue extends BaseRow<List<String>> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public List<String> getValue() {
         return getRowByName()
                 .$(getValueTag())
@@ -93,7 +92,7 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return Popup class of all modal windows
      */
     @Step("Validation of the modal window")
-    @Attachment
+
     public Optional<Popup> findPopup() {
         SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
@@ -110,7 +109,7 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-    @Attachment
+
     public String getPlaceholder() {
         String str = getValueByAttribute(1, "span[class=\"ant-form-item-children\"] div div", "data-text");
         if (str.isEmpty()) {

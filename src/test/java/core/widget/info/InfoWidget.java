@@ -24,7 +24,7 @@ import core.widget.info.field.picklist.PickListField;
 import core.widget.info.field.radio.Radio;
 import core.widget.info.field.text.Text;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -369,7 +369,6 @@ public class InfoWidget {
      *
      * @return HashMap(String, String)
      */
-    @Attachment
     public HashMap<String, String> getFieldTitleAndType() {
         return Allure.step("Getting a list of fields in a heading and type pair", step -> {
             logTime(step);

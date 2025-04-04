@@ -54,10 +54,10 @@ public class CxBoxExpectations implements ExpectationPattern {
         SelenideElement widgetElement = $(widget);
         for (int i = 1; i <= getRetryNumber(); i++) {
             try {
-                log.info("Waiting for the widget '{}', trying {} from {}", title, i, getRetryNumber());
+                log.debug("Waiting for the widget '{}', trying {} from {}", title, i, getRetryNumber());
                 widgetElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
                 widgetElement.shouldHave(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("Widget '{}' loaded successfully.\"", title);
+                log.debug("Widget '{}' loaded successfully.\"", title);
                 return;
             } catch (TimeoutException e) {
                 log.warn("The waiting time for the widget '{}' has been exceeded. An attempt {} from {}.", title, i, getRetryNumber());
@@ -92,7 +92,7 @@ public class CxBoxExpectations implements ExpectationPattern {
                             s.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
                         }
                                     }
-                log.info("All lines of the widget '{}' loaded successfully.", title);
+                log.debug("All lines of the widget '{}' loaded successfully.", title);
                 return;
             } catch (TimeoutException e) {
                 log.warn("The waiting time for rows for the widget '{}' has been exceeded. An attempt {} from {}.", title, i, getRetryNumber());
@@ -120,7 +120,7 @@ public class CxBoxExpectations implements ExpectationPattern {
                     f.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
                     f.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
                 }
-                log.info("All fields have been uploaded successfully.");
+                log.debug("All fields have been uploaded successfully.");
                 return;
             } catch (TimeoutException e) {
                 log.warn("The waiting time for fields has been exceeded. An attempt {} from {}.", i, getRetryNumber());
@@ -146,7 +146,7 @@ public class CxBoxExpectations implements ExpectationPattern {
                 SelenideElement element = $(elementSelector);
                 element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
                 element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
-                log.info("The element with the type '{}' and the name '{}' loaded successfully.", type, title);
+                log.debug("The element with the type '{}' and the name '{}' loaded successfully.", type, title);
                 return;
             } catch (TimeoutException e) {
                 log.warn("The waiting time for the item type has been exceeded. An attempt {} from {}.", i, getRetryNumber());
@@ -171,7 +171,7 @@ public class CxBoxExpectations implements ExpectationPattern {
             try {
                 webElement.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
                 webElement.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("WebElement {} \n uploaded successfully", webElement);
+                log.debug("WebElement {} \n uploaded successfully", webElement);
             } catch (TimeoutException e) {
                 log.warn("The waiting time for WebElement has been exceeded. Attempt {} from {}.", i, getRetryNumber());
                 if (i < getRetryNumber()) {
@@ -195,7 +195,7 @@ public class CxBoxExpectations implements ExpectationPattern {
                 SelenideElement element = $(cssSelector);
                 element.shouldBe(Condition.exist, Duration.ofSeconds(getTimeout()));
                 element.shouldBe(Condition.visible, Duration.ofSeconds(getTimeout()));
-                log.info("элемент по {} загружен успешно", cssSelector);
+                log.debug("элемент по {} загружен успешно", cssSelector);
             } catch (TimeoutException e) {
                 log.warn("The waiting time for WebElement has been exceeded. Attempt {} from {}.", i, getRetryNumber());
                 if (i < getRetryNumber()) {

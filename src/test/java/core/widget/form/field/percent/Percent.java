@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.number.Number;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 
@@ -68,7 +68,6 @@ public class Percent extends Number {
      *
      * @return Integer
      */
-    @Attachment
     public Integer getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

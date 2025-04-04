@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.Duration;
 
@@ -26,7 +26,7 @@ public class CheckBox extends BaseField<Boolean> {
      * @return Boolean true/false
      */
     @Override
-    @Attachment
+
     public Boolean getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

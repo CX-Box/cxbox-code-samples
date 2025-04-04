@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
@@ -85,7 +85,6 @@ public class PercentDigits extends BaseField<BigDecimal> {
      *
      * @return BigDecimal
      */
-    @Attachment
     @SneakyThrows
     public BigDecimal getValue() {
         return Allure.step("Getting a value from a field", step -> {
@@ -136,7 +135,6 @@ public class PercentDigits extends BaseField<BigDecimal> {
      *
      * @return Integer
      */
-    @Attachment
     public Integer getDigits() {
         return Allure.step("Getting the number of digits after the decimal point", step -> {
             logTime(step);
@@ -150,8 +148,6 @@ public class PercentDigits extends BaseField<BigDecimal> {
         });
     }
 
-
-    @Attachment
     private boolean checkDigits(BigDecimal number) {
         return Allure.step("Checking the fractional part of the number and the number of digits entered after the dot in the field", step -> {
             logTime(step);

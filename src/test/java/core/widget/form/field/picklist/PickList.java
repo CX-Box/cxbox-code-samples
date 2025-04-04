@@ -6,7 +6,7 @@ import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Popup;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -27,7 +27,6 @@ public class PickList extends BaseField<String> {
      * @return String
      */
     @Override
-    @Attachment
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -94,7 +93,6 @@ public class PickList extends BaseField<String> {
      *
      * @return Popup class for accessing modal windows
      */
-    @Attachment
     public Optional<Popup> findPopup() {
         return Allure.step("Validation of the Popup window", step -> {
             logTime(step);

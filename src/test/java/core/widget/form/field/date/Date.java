@@ -6,7 +6,7 @@ import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Calendar;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -55,7 +55,7 @@ public class Date extends BaseField<LocalDate> {
      *
      * @return LocalDate date
      */
-    @Attachment
+
     public LocalDate getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
