@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MyEntity3910Mapper {
 
-	MyExample3910DTO toDto(final MyEntity3910 myEntity3910);
+	MyExample3910DTO toDto(final MyEntity3910 entity);
 
 }

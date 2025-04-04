@@ -8,11 +8,11 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface MyEntity3137Mapper {
 
-	MyExample3137DTO toDto(final MyEntity3137 myEntity3137);
+	MyExample3137DTO toDto(final MyEntity3137 entity);
 
 	MyEntity3137 newEntityByDto(final String id, final MyExample3137DTO request);
 
 
-	MyEntity3137 updateEntityByDto(@MappingTarget final MyEntity3137 myEntity, final MyExample3137DTO request);
+	MyEntity3137 updateEntityByDto(@MappingTarget final MyEntity3137 entity, final MyExample3137DTO request);
 
 }
