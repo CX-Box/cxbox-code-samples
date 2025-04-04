@@ -106,7 +106,7 @@ public class BaseTestForSamples {
     private static @NonNull ChromeOptions getChromeOptions() {
 
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless"); // Disable chrome window
+        options.addArguments("--headless"); // Disable chrome window
         options.addArguments("--enable-automation");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-features=InsecureDownloadWarnings");
@@ -227,7 +227,6 @@ public class BaseTestForSamples {
         if (url == null || url.isEmpty()) {
             url = "http://code-samples.cxbox.org/ui/#/";
         }
-        url = "http://localhost:81/ui/#/";
         return url;
     }
 
