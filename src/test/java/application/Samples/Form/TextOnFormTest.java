@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -34,7 +34,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Text placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -46,7 +46,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Text color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -58,7 +58,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Text readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -71,7 +71,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Text basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("Text");
         assertThat(customField.getValue()).isEqualTo("Text");
@@ -85,7 +85,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Text filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -97,7 +97,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Text drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -110,10 +110,10 @@ public class TextOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Text validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("1234");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -128,10 +128,10 @@ public class TextOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Text validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("Test");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -146,11 +146,11 @@ public class TextOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Text validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("Test");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -167,7 +167,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Text validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("123");
         form.clickButton("save");
@@ -182,7 +182,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Text validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         var customField2 = form.text("Custom FieldAdditional");
         customField.setValue("123");
@@ -200,7 +200,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Text sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -213,7 +213,7 @@ public class TextOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Text required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.clear();
         form.clickButton("save");

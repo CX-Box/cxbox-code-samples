@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -30,7 +30,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("DateTimeWithSeconds placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +42,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("DateTimeWithSeconds color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +54,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("DateTimeWithSeconds readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +65,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("DateTimeWithSeconds basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.getValue().toLocalDate()).isBeforeOrEqualTo(LocalDate.now());
     }
@@ -78,7 +78,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -90,7 +90,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("DateTimeWithSeconds drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -103,7 +103,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

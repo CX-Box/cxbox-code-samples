@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -28,7 +28,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Picklist placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +40,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Picklist color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -52,7 +52,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Picklist readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +63,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Picklist basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThat(customField.getValue()).isEqualTo("New data");
     }
@@ -76,7 +76,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Picklist filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +88,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Picklist drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -101,7 +101,7 @@ public class PickListOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Picklist filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.pickListField("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

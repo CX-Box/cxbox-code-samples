@@ -13,7 +13,7 @@ import core.widget.filter.ListFilter;
 import core.widget.form.FormWidget;
 import core.widget.list.ListWidget;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -46,7 +46,7 @@ public class GroupingHierarchyWidget {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getListRows() {
         return Allure.step("Getting all the values of strings with the type Row", step -> {
             logTime(step);
@@ -77,7 +77,7 @@ public class GroupingHierarchyWidget {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getListGroupingRows() {
         return Allure.step("Getting all the values of strings with the type GroupingRow", step -> {
             logTime(step);
@@ -108,7 +108,7 @@ public class GroupingHierarchyWidget {
      * @param value Segment's value
      * @return Long Id
      */
-    @Attachment
+
     public Long findRowId(String value) {
         return Allure.step("Getting a Row Id by the " + value + " value from any segment", step -> {
             logTime(step);
@@ -140,7 +140,7 @@ public class GroupingHierarchyWidget {
      * @param id         long
      * @return ListWidget with access to all fields
      */
-    @Attachment
+
     public ListWidget findRowById(String columnName, long id) {
         return Allure.step("Searching for a row by column name " + columnName + " and lines id " + id, step -> {
             logTime(step);
@@ -230,7 +230,7 @@ public class GroupingHierarchyWidget {
      * @param numberLevel Integer
      * @return List String
      */
-    @Attachment
+
     public List<String> getListRowLevel(Integer numberLevel) {
         return Allure.step("Getting the term value by level " + numberLevel, step -> {
             logTime(step);
@@ -258,7 +258,7 @@ public class GroupingHierarchyWidget {
      *
      * @return class AddFiles
      */
-    @Attachment
+
     public Optional<AddFiles> findAddFiles() {
         return Allure.step("Validation of the mass upload field", step -> {
             logTime(step);
@@ -298,7 +298,7 @@ public class GroupingHierarchyWidget {
     /**
      * Displaying a list of all buttons in a widget
      */
-    @Attachment
+
     public List<String> getButtons() {
         return Allure.step("Getting a list of buttons", step -> {
             logTime(step);
@@ -330,7 +330,7 @@ public class GroupingHierarchyWidget {
      * @param column Column's name
      * @return Boolean true/false
      */
-    @Attachment
+
     public Boolean checkSorting(String column) {
         return Allure.step("Checking the sorting option for a column " + column, step -> {
             logTime(step);
@@ -357,7 +357,7 @@ public class GroupingHierarchyWidget {
      * @param column Column's name
      * @return Boolean true/false
      */
-    @Attachment
+
     public Boolean checkFilterColumn(String column) {
         return Allure.step("Checking the filtering option for a column " + column, step -> {
             logTime(step);
@@ -383,7 +383,7 @@ public class GroupingHierarchyWidget {
      * @param column Column's name
      * @return String
      */
-    @Attachment
+
     public String getTypeColumn(String column) {
         return Allure.step("Getting the column type " + column, step -> {
             logTime(step);
@@ -480,7 +480,7 @@ public class GroupingHierarchyWidget {
      * @param columnName Column's name
      * @return String
      */
-    @Attachment
+
     public List<String> getNoFocusValues(String columnName) {
         return Allure.step("Getting the values of the " + columnName + " column without field focus", step -> {
             logTime(step);
@@ -511,7 +511,7 @@ public class GroupingHierarchyWidget {
      * @param columnName Column's name
      * @return List Boolean true/false
      */
-    @Attachment
+
     public List<Boolean> getNoFocusStatusValues(String columnName) {
         return Allure.step("Getting the status of the " + columnName + " column without field focus", step -> {
             logTime(step);
@@ -543,7 +543,7 @@ public class GroupingHierarchyWidget {
      *
      * @return FormWidget
      */
-    @Attachment
+
     public Optional<FormWidget> openAndFindInlineFormForCreate() {
         return Allure.step("Opening the InlineForm for editing", step -> {
             logTime(step);
@@ -567,7 +567,7 @@ public class GroupingHierarchyWidget {
      * @return DragAndDropFileZone
      */
 
-    @Attachment
+
     public Optional<DragAndDropFileZone> findDragAndDropFileZone() {
         return Allure.step("Validation of the file upload zone", step -> {
             logTime(step);
@@ -587,7 +587,7 @@ public class GroupingHierarchyWidget {
      *
      * @return HashMap(String, String)
      */
-    @Attachment
+
     public HashMap<String, String> getFieldTitleAndType() {
         return Allure.step("Getting a list of fields in a heading and type pair", step -> {
             logTime(step);

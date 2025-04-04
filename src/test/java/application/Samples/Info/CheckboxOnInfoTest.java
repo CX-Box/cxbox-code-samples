@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -28,7 +28,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Checkbox placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +40,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Checkbox color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("Custom Field");
         assertThatThrownBy(customField::getHexColor).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -52,7 +52,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Checkbox readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +63,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Checkbox basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("Custom Field");
         assertThat(customField.getValue()).isTrue();
     }
@@ -76,7 +76,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Checkbox filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +88,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Checkbox drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("customField");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -101,7 +101,7 @@ public class CheckboxOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Checkbox filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.checkBox("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

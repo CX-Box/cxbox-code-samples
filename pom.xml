@@ -56,7 +56,10 @@
         <aspectj.version>1.9.22.1</aspectj.version>
         <poi.version>5.2.5</poi.version>
         <surefire.version>2.22.2</surefire.version>
-        <surefire.rerunFailingTestsCount>3</surefire.rerunFailingTestsCount>
+        <surefire.parallel>true</surefire.parallel>
+        <surefire.forkCount>3</surefire.forkCount>
+        <surefire.threadCount>1</surefire.threadCount>
+        <surefire.reuseForks>true</surefire.reuseForks>
     </properties>
 
     <dependencyManagement>
@@ -186,26 +189,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.25.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-video-recorder</artifactId>
             <version>${selenide.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v134</artifactId>
+            <version>4.30.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -467,14 +464,11 @@
                         <version>3.2.3</version>
                         <configuration>
                             <skipTests>false</skipTests>
-<!--                            <parallel>classes</parallel>-->
-<!--                            <forkCount>10</forkCount>-->
-<!--                            <threadCount>1</threadCount>-->
-<!--                            <reuseForks>false</reuseForks>-->
                             <parallel>${surefire.parallel}</parallel>
                             <forkCount>${surefire.forkCount}</forkCount>
                             <threadCount>${surefire.threadCount}</threadCount>
                             <reuseForks>${surefire.reuseForks}</reuseForks>
+                            <trimStackTrace>false</trimStackTrace>
                             <rerunFailingTestsCount>3</rerunFailingTestsCount>
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -Xmx256m -XX:MaxMetaspaceSize=256m

@@ -3,13 +3,14 @@ version: '2.1'
 services:
 
   cxbox-code-samples-postgres:
-    image: postgres:12.0
+    image: postgres:17.4
     environment:
       - POSTGRES_PASSWORD=postgres
     expose:
       - 5432
     ports:
       - "5432:5432"
+    command: postgres -c 'max_connections=200'
   cxbox-code-samples-keycloak:
     image: maxird/keycloak:12.0.4
     command:

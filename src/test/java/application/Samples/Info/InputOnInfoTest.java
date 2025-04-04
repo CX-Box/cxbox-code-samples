@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -28,7 +28,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Input placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +40,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Input color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -52,7 +52,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Input readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +63,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Input basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.getValue()).isEqualTo("test data");
     }
@@ -76,7 +76,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Input filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +88,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Input drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -101,7 +101,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Input filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

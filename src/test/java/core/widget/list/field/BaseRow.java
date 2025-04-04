@@ -8,7 +8,7 @@ import core.OriginExpectations.CxBoxExpectations;
 import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +69,6 @@ public abstract class BaseRow<E> {
      * @return String text
      */
     @Step("Получение значения атрибута {attribute}")
-    @Attachment
     public String getValueByAttribute(Integer element, String value_tag,
                                       String attribute) {
         return listWidget.getWidget().$$("div[data-test-field-type='"
@@ -102,7 +101,7 @@ public abstract class BaseRow<E> {
      * @return String text/null
      */
     @Step("Getting the Placeholder value")
-    @Attachment
+
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -117,7 +116,7 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Checking the field for \"ReadOnly\"")
-    @Attachment
+
     public boolean getReadOnly() {
         setFocusField();
         return getElementDisabled(getValueTag());
@@ -129,7 +128,7 @@ public abstract class BaseRow<E> {
      * @return String text
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
+
     public String getRequiredMessage() {
         setFocusField();
         Selenide.actions()
@@ -152,7 +151,7 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
+
     public boolean hasRequiredMessage(int index) {
         String str = getRowByName()
                 .$(REQUIRED_MESSAGE)
@@ -167,7 +166,7 @@ public abstract class BaseRow<E> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    @Attachment
+
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, getValueTag(), "style");
@@ -194,7 +193,7 @@ public abstract class BaseRow<E> {
      * @return Boolean true/false
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-    @Attachment
+
     public Boolean drillDown() {
         String oldUrl = WebDriverRunner.url();
         getRowByName().$("span a").click();

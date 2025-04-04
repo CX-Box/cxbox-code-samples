@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -26,7 +26,6 @@ public class InlinePickList extends BaseField<String> {
      * @return String
      */
     @Override
-    @Attachment
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -85,7 +84,6 @@ public class InlinePickList extends BaseField<String> {
      * @param value String Symbol
      * @return List String Match results
      */
-    @Attachment
     public List<String> getValueInList(String value) {
         return Allure.step("Getting a list of options via a character match", step -> {
             logTime(step);
@@ -127,7 +125,6 @@ public class InlinePickList extends BaseField<String> {
      *
      * @return String
      */
-    @Attachment
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);

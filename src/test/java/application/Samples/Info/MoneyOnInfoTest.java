@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -30,7 +30,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Money placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,8 +42,8 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Money color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
-        var customField = info.money("Custom Field");
+        var info = $box.findInfoWidgetByTitle("Info title");
+        var customField = info.money("Custom 1 Field"); //ERROR TO TEST REPORT GENERATION
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
 
@@ -54,7 +54,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Money readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +65,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Money basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         BigDecimal number = new BigDecimal("27000.78");
         assertThat(customField.getValue()).isEqualTo(number);
@@ -79,7 +79,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Money filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -91,7 +91,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Money drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -104,7 +104,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Money filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

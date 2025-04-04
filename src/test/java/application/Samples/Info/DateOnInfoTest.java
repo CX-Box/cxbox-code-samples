@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -30,7 +30,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Date placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +42,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Date color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +54,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Date readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +65,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Date basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.getValue()).isBeforeOrEqualTo(LocalDate.now());
     }
@@ -78,7 +78,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Date filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -90,7 +90,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Date drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -103,7 +103,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Date filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

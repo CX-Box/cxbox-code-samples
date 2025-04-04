@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -36,7 +36,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Radio placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThat(customField.getPlaceholder()).isBlank();
     }
@@ -48,7 +48,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Radio color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -60,7 +60,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Radio readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -73,7 +73,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Radio basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         customField.setValue("Middle");
         assertThat(customField.getValue()).isEqualTo("Middle");
@@ -87,7 +87,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Radio filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -99,7 +99,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Radio drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -112,10 +112,10 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Radio validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.radio("Custom Field");
         customField.setValue("Low");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Text.textRadioContains("High"));
@@ -130,10 +130,10 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Radio validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         customField.setValue("Low");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -148,11 +148,11 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Radio validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         customField.setValue("Low");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -169,7 +169,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Radio validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         var customField2 = form.radio("Custom Field Additional");
         customField.setValue("Low");
@@ -187,7 +187,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Radio sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -200,7 +200,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Radio required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         form.clickButton("save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
@@ -214,7 +214,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
     void getValues() {
         MainPages.click("Radio basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
         customField.setValue("Low");
         assertThat(customField.getValues()).isEqualTo(Map.of("High", false, "Low", true, "Middle", false));

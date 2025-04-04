@@ -8,7 +8,7 @@ import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Popup;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -34,7 +34,6 @@ public class MultiValue extends BaseField<List<String>> {
      * @return List String
      */
     @Override
-    @Attachment
     public List<String> getValue() {
         return Allure.step("Getting a value from a field", step ->{
                     logTime(step);
@@ -112,7 +111,6 @@ public class MultiValue extends BaseField<List<String>> {
      *
      * @return Popup class of all modal windows
      */
-    @Attachment
     public Optional<Popup> findPopup() {
         return Allure.step("Validation of the modal window", step -> {
             logTime(step);
@@ -133,7 +131,6 @@ public class MultiValue extends BaseField<List<String>> {
      *
      * @return String
      */
-    @Attachment
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);

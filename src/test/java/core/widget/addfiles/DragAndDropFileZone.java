@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import org.openqa.selenium.By;
 
@@ -51,7 +51,7 @@ public class DragAndDropFileZone {
      *
      * @return String attribute values
      */
-    @Attachment
+
     public String getIconZone() {
         return Allure.step("Getting a used icon in the download area", step -> {
             logTime(step);
@@ -68,7 +68,7 @@ public class DragAndDropFileZone {
      * @return String
      */
 
-    @Attachment
+
     public String getImitationButtonZone() {
         return Allure.step("Getting the button text in the download area", step -> {
             logTime(step);
@@ -83,7 +83,7 @@ public class DragAndDropFileZone {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getTextZone() {
         return Allure.step("Getting the main text of the download area", step -> {
             logTime(step);
@@ -98,7 +98,7 @@ public class DragAndDropFileZone {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getHintText() {
         return Allure.step("Getting HintText from the download area", step -> {
             logTime(step);

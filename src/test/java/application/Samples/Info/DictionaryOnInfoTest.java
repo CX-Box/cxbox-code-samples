@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -28,7 +28,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Dictionary enum placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +40,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Dictionary enum color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -52,7 +52,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Dictionary enum readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +63,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Dictionary enum basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThat(customField.getValue()).isEqualTo("Kostroma region");
     }
@@ -76,7 +76,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Dictionary enum filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +88,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Dictionary enum drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -101,7 +101,7 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Dictionary enum filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dictionary("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

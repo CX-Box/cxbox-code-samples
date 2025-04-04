@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -38,7 +38,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Picklist placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -50,7 +50,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Picklist color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -64,7 +64,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Picklist basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> popup = customField.findPopup();
@@ -82,7 +82,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void getColumnName() {
         MainPages.click("Picklist basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> fieldPopup = customField.findPopup();
@@ -100,7 +100,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void edit_2() {
         MainPages.click("Picklist basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> popup = customField.findPopup();
@@ -118,7 +118,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Picklist filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -131,7 +131,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Picklist drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -144,14 +144,14 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Picklist validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> fieldPopup = customField.findPopup();
         assertThat(fieldPopup).isPresent();
         var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
         popupPickList.setValue("1234");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -166,14 +166,14 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Picklist runtime");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> fieldPopup = customField.findPopup();
         assertThat(fieldPopup).isPresent();
         var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
         popupPickList.setValue("Test data");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -188,7 +188,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Picklist validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.openModalWindow();
         Optional<Popup> fieldPopup = customField.findPopup();
@@ -196,7 +196,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
         var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
         popupPickList.setValue("Test data");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -213,7 +213,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Picklist validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         var customField2 = form.pickList("Custom Field Additional");
         form.clickButton("save");
@@ -229,7 +229,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Picklist sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -242,7 +242,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Picklist required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.clear();
         form.clickButton("save");

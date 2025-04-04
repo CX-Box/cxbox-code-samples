@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.addfiles.FilesPopup;
@@ -41,7 +41,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("FileUpload placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -53,7 +53,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("FileUpload color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -65,7 +65,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("FileUpload readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -78,7 +78,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("FileUpload basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
@@ -96,7 +96,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("FileUpload filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -108,7 +108,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("FileUpload drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -121,13 +121,13 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("FileUpload validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         try {
             customField.setValue("FILE_1.txt");
         } catch (Exception e) {
-            var popup = page.findPopup("error");
+            var popup = $box.findPopup("error");
             assertThat(popup).isPresent();
             assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
             assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -143,11 +143,11 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("FileUpload validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -163,12 +163,12 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("FileUpload validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -184,7 +184,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("FileUpload validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
@@ -200,7 +200,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("FileUpload validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         var customField2 = form.fileUpload("Custom Field Additional");
         customField.setValue("FILE_1.txt");
@@ -218,7 +218,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("FileUpload sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -231,7 +231,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("FileUpload required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         customField.clear();
         form.clickButton("save");
@@ -245,7 +245,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void clear() {
         MainPages.click("FileUpload basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
@@ -262,7 +262,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     void compare() {
         MainPages.click("FileUpload basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         File expected =  getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");

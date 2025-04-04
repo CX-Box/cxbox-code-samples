@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -38,7 +38,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("MultiValue placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -50,7 +50,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("MultiValue color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -64,7 +64,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         customField.openModalWindow();
@@ -83,7 +83,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("MultiValue filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -96,7 +96,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("MultiValue drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -109,12 +109,12 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("MultiValue validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         popupAssocListPopup.clear();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -130,13 +130,13 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("MultiValue validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.setValueAll();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -151,7 +151,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("MultiValue validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
@@ -159,7 +159,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         popupAssocListPopup.setValueAll();
         popupAssocListPopup.close();
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -175,7 +175,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("MultiValue validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         form.clickButton("save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
@@ -189,7 +189,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("MultiValue validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         var customField2 = form.multiValue("Custom Field Additional");
         form.clickButton("save");
@@ -205,7 +205,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("MultiValue sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -218,7 +218,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("MultiValue required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         form.clickButton("save");
@@ -233,7 +233,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void required_2() {
         MainPages.click("MultiValue required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.openModalWindow();
         var popupAssocListPopup = customField.findPopup().get().multiValueModal("myEntityAssocListPopup title");
@@ -253,7 +253,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void test_set_all() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         customField.openModalWindow();
@@ -283,7 +283,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void test_set() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         customField.openModalWindow();
@@ -300,7 +300,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void test_status() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         customField.openModalWindow();
@@ -332,7 +332,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     void test_once() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
         customField.openModalWindow();

@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -38,7 +38,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("MultipleSelect placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -50,7 +50,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("MultipleSelect color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -62,7 +62,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("MultipleSelect readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
 
@@ -76,7 +76,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
         customField.addValue(Set.of("Low"));
@@ -92,7 +92,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("MultipleSelect filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -104,7 +104,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("MultipleSelect drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -117,10 +117,10 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("MultipleSelect business error");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo("The field  can contain 'High'");
@@ -135,10 +135,10 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("MultipleSelect runtime error");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -153,11 +153,11 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("MultipleSelect validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -173,7 +173,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("MultipleSelect validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.clear();
         form.clickButton("save");
@@ -188,7 +188,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("MultipleSelect validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         var customField2 = form.multipleSelect("Custom Field Additional");
         form.clickButton("save");
@@ -204,7 +204,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("MultipleSelect sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -217,7 +217,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("MultipleSelect required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Low", "Middle"));
         customField.clear();
@@ -234,7 +234,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void getListOptions() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
         assertThat(customField.getValue()).isEqualTo(Set.of("Middle"));
@@ -249,7 +249,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void statusOption() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Low"));
         assertThat(customField.getStatusOption("Low")).isTrue();
@@ -263,7 +263,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void statusOptions() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Middle"));
         List<Pair<String, Boolean>> expectedPairs = new ArrayList<>();
@@ -282,7 +282,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
     void setValue() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.setValue(Set.of("Middle"));
         form.clickButton("save");

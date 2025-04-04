@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Description;
@@ -43,7 +43,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Hint color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::getHexColor).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -55,7 +55,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Hint readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -68,7 +68,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Hint basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThat(customField.getValue()).isEqualTo("Information data");
     }
@@ -81,7 +81,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Hint filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -94,7 +94,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Hint drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("customField2");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }

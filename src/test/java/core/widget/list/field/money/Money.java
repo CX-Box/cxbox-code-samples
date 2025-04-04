@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
@@ -57,7 +57,6 @@ public class Money extends BaseRow<BigDecimal> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public BigDecimal getValue() {
         setFocusField();
         String str = getRowByName()

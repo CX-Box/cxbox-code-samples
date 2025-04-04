@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
 
@@ -97,7 +97,7 @@ public abstract class BaseField<E> {
      *
      * @return String text/null
      */
-    @Attachment
+
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);
@@ -113,7 +113,7 @@ public abstract class BaseField<E> {
      *
      * @return boolean true/false
      */
-    @Attachment
+
     public boolean getReadOnly() {
         return Allure.step("Checking the field for \"ReadOnly\"", step -> {
             logTime(step);
@@ -126,7 +126,7 @@ public abstract class BaseField<E> {
      *
      * @return String text
      */
-    @Attachment
+
     public String getRequiredMessage() {
         return Allure.step("Getting a value from a field RequiredMessage", step -> {
             logTime(step);
@@ -145,7 +145,7 @@ public abstract class BaseField<E> {
      *
      * @return boolean true/false
      */
-    @Attachment
+
     public boolean hasRequiredMessage() {
         return Allure.step("Getting a value from a field RequiredMessage", step -> {
             logTime(step);
@@ -162,7 +162,7 @@ public abstract class BaseField<E> {
      *
      * @return String/null
      */
-    @Attachment
+
     public String getHexColor() {
         return Allure.step("Getting the field color in Hex format", step -> {
             logTime(step);

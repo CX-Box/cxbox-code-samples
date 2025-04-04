@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -36,7 +36,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Percent placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("17");
     }
@@ -48,7 +48,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Percent color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("Custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -60,7 +60,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Percent readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -73,7 +73,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Percent basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.setValue(57);
         assertThat(customField.getValue()).isEqualTo(57);
@@ -87,7 +87,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Percent filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -99,7 +99,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Percent drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -112,11 +112,11 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Percent validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.setValue(3);
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.MoreThatPercent);
@@ -131,11 +131,11 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Percent validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.clear();
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -150,11 +150,11 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Percent validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.setValue(57);
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -170,7 +170,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Percent validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("Custom Field");
         customField.setValue(3);
         form.clickButton("save");
@@ -185,7 +185,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Percent validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("Custom Field");
         var customField2 = form.percent("Custom Field Additional");
         customField.setValue(3);
@@ -204,7 +204,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Percent sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -218,7 +218,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Percent required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.clear();
         form.clickButton("save");
@@ -233,7 +233,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void digits() {
         MainPages.click("Percent digits");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percentDigits("Custom Field");
 
         BigDecimal number = new BigDecimal("131343.00");
@@ -249,7 +249,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
     void nullable() {
         MainPages.click("Percent nullable");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("Custom Field");
         customField.setValue(123);
         assertThat(customField.getValue()).isEqualTo(123);

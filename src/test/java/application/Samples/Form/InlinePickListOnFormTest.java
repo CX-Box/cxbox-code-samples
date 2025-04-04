@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -35,7 +35,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("InlinePickList placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -47,7 +47,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("InlinePickList color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -59,7 +59,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("InlinePickList readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -72,7 +72,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("InlinePickList basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue("39 Test data new information");
         assertThat(customField.getValue()).isEqualTo("39 Test data new information");
@@ -86,7 +86,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("InlinePickList filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -98,7 +98,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("InlinePickList drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -111,10 +111,10 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("InlinePickList validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue("Test data");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -129,10 +129,10 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("InlinePickList validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.clear();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -147,11 +147,11 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("InlinePickList validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue("Test data");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -167,7 +167,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("InlinePickList validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue("Test123 data");
         form.clickButton("save");
@@ -182,7 +182,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("InlinePickList validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         var customField2 = form.inlinePickList("Custom Field Additional");
         customField.setValue("Test data 123");
@@ -200,7 +200,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("InlinePickList sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -213,7 +213,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("InlinePickList required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.clear();
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
@@ -228,7 +228,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
     void valuesInList() {
         MainPages.click("InlinePickList basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue(" ");
         assertThat(customField.getValueInList("1").get(0)).isEqualTo("49 Test data new information");

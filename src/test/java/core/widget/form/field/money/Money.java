@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.form.FormWidget;
 import core.widget.form.field.number.NumberDigits;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
@@ -24,7 +24,7 @@ public class Money extends NumberDigits {
      * @return BigDecimal
      */
     @Override
-    @Attachment
+
     public BigDecimal getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

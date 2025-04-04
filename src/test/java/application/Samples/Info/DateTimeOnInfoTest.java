@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -30,7 +30,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("DateTime placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +42,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("DateTime color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +54,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("DateTime readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +65,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("DateTime basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("custom Field");
         assertThat(customField.getValue().toLocalDate()).isBeforeOrEqualTo(LocalDate.now());
     }
@@ -78,7 +78,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("DateTime filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -90,7 +90,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("DateTime drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -103,7 +103,7 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("DateTime filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTime("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

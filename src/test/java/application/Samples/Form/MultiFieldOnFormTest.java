@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Epic;
@@ -31,7 +31,7 @@ public class MultiFieldOnFormTest extends BaseTestForSamples {
     void getValues() {
         MainPages.click("Multifield basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiField("Custom multifield hint");
         assertThat(customField.getValue()).isEqualTo(List.of(Pair.of("input", "Test data"), Pair.of("hint", "Information data")));
     }
@@ -42,7 +42,7 @@ public class MultiFieldOnFormTest extends BaseTestForSamples {
     void getValues2() {
         MainPages.click("Multifield basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiField("Custom multifield");
         assertThat(customField.getValue()).isEqualTo(List.of(Pair.of("input", "Additional data multi"), Pair.of("input", "Data multi")));
     }

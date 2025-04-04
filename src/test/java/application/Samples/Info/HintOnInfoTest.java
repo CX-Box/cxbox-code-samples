@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import core.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -28,7 +28,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Hint color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThatThrownBy(customField::getHexColor).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +40,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Hint readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -51,7 +51,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Hint basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThat(customField.getValue()).isEqualTo("Information data");
     }
@@ -64,7 +64,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Hint filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -76,7 +76,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Hint drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -89,7 +89,7 @@ public class HintOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Hint filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.hint("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

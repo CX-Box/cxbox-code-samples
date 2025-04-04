@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
@@ -33,7 +33,7 @@ public class FileViewerPopup {
      *
      * @return String
      */
-    @Attachment
+
     public String getTitle() {
         return Allure.step("Getting the header", step -> {
             logTime(step);
@@ -75,7 +75,7 @@ public class FileViewerPopup {
      * @return File
      */
     @SneakyThrows
-    @Attachment
+
     public File getValueFile() {
         return Allure.step("Getting a file from a field in File format", step -> {
             logTime(step);
@@ -130,7 +130,7 @@ public class FileViewerPopup {
      *
      * @return 1 of 3
      */
-    @Attachment
+
     public String getPagePagination() {
         return Allure.step("Getting the current page", step -> {
            logTime(step);
