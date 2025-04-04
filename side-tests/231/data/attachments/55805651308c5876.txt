@@ -1,0 +1,85 @@
+Fri Apr 04 09:02:43 UTC 2025
+GET
+http://localhost:81/api/v1/auth/oidc.json
+Request: null
+200
+Response: {"realm":"cxbox","auth-server-url":"http://code-samples.cxbox.org/auth","ssl-require":"none","resource":"cxbox-oidc-client","public-client":true,"cors":true}
+
+Fri Apr 04 09:02:43 UTC 2025
+GET
+http://localhost:81/ui/manifest.json
+Request: null
+200
+Response: {
+  "short_name": "CXBox Demo",
+  "name": "CXBox Demo",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+
+Fri Apr 04 09:02:44 UTC 2025
+POST
+http://code-samples.cxbox.org/auth/realms/cxbox/protocol/openid-connect/token
+Request: null
+200
+Response: {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM3NTc2NjQsImlhdCI6MTc0Mzc1NzM2NCwiYXV0aF90aW1lIjoxNzQzNzU3MzYzLCJqdGkiOiI3MWRmOWQwYS1jYWEyLTQyNmUtOTExYi0xZWJmOTI3MDgyYzMiLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmNjgxMGMzZC1iMDI3LTQwN2EtOTJiMy01MGRkNDc5YjZiYjciLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzcxNGE4ZjYtZDE3NC00M2Q0LTg1MDEtNDU2MTM1MGEyNWQ3Iiwic2Vzc2lvbl9zdGF0ZSI6IjRmZGVhYTM1LWVkNzUtNDJjMS05OWJiLTQ5ODFlODk0ZGVmOSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImN4Ym94LW9pZGMtY2xpZW50Ijp7InJvbGVzIjpbIkNYQk9YX1VTRVIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJKb2huIFNub3ciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZW1vIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IlNub3ciLCJlbWFpbCI6ImRlbW9AbG9jYWwuY29tIn0.meOd8-axPFTgdFxS1nu-IAKYTZ9EPYy4ETOI1zK5P4D8SZjAJCwkuG1M82HwMPqxPddF98w_YYbe4OglDFrK79U08y606pZJ7EenLFGM-GXX2wysfv2jj0errRr_z4-KYuDlDziqmgFmNNxD6qQ6V5cKalDAX67i9FBFNnB2AreMLR6BL0yB55cOfzPNp6auWcys6_Z1RTj4CqxAPXSO-Pkft9wjQww0___dEY1pNg4IGGD-Kt5-HyBu_DdyU_58KoluEkMOvE1Ws_Agw2pG5Lk95T1_Md0uG42QN78x_M5aE5cJi9-kcAQVTJERd1dwfIcxeEdsXT-3FCQ7mncyDQ","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjNmFjMTc2Yi02ODI0LTRhOGQtOTk3MS1mOTliNWI0YTBiMGMifQ.eyJleHAiOjE3NDM3NTkxNjQsImlhdCI6MTc0Mzc1NzM2NCwianRpIjoiYTQ4ZTZmMmEtYzkyMy00NDM2LWIwOTYtNjZjNjQ5ZTZlNjAyIiwiaXNzIjoiaHR0cDovL2NvZGUtc2FtcGxlcy5jeGJveC5vcmcvYXV0aC9yZWFsbXMvY3hib3giLCJhdWQiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsInN1YiI6ImY2ODEwYzNkLWIwMjctNDA3YS05MmIzLTUwZGQ0NzliNmJiNyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzcxNGE4ZjYtZDE3NC00M2Q0LTg1MDEtNDU2MTM1MGEyNWQ3Iiwic2Vzc2lvbl9zdGF0ZSI6IjRmZGVhYTM1LWVkNzUtNDJjMS05OWJiLTQ5ODFlODk0ZGVmOSIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.U-Spx-wQJenQ-5q4rpZxLij_HdwfIx6ff2vFmXcuzzE","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLLWh6SGo5NkNhMVkzaFNPZmpPQjFQVGVNZXhZbGRIclc3czJha3ZqNnpjIn0.eyJleHAiOjE3NDM3NTc2NjQsImlhdCI6MTc0Mzc1NzM2NCwiYXV0aF90aW1lIjoxNzQzNzU3MzYzLCJqdGkiOiJmNjYxZGZlNy1lMGVmLTQxMTAtOWQzNC0xODgyOTE2YjcxZTciLCJpc3MiOiJodHRwOi8vY29kZS1zYW1wbGVzLmN4Ym94Lm9yZy9hdXRoL3JlYWxtcy9jeGJveCIsImF1ZCI6ImN4Ym94LW9pZGMtY2xpZW50Iiwic3ViIjoiZjY4MTBjM2QtYjAyNy00MDdhLTkyYjMtNTBkZDQ3OWI2YmI3IiwidHlwIjoiSUQiLCJhenAiOiJjeGJveC1vaWRjLWNsaWVudCIsIm5vbmNlIjoiMzcxNGE4ZjYtZDE3NC00M2Q0LTg1MDEtNDU2MTM1MGEyNWQ3Iiwic2Vzc2lvbl9zdGF0ZSI6IjRmZGVhYTM1LWVkNzUtNDJjMS05OWJiLTQ5ODFlODk0ZGVmOSIsImF0X2hhc2giOiJGSzFsNUJ1N2pOQ1hFbDMzdllRMkNRIiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkpvaG4gU25vdyIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW8iLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiU25vdyIsImVtYWlsIjoiZGVtb0Bsb2NhbC5jb20ifQ.aQXhZKXffHtYPM2NCHyKqpoT7XJ43w5vICvbN6fbtyIV4MxHbxxyi8Tpw83wJ-IRV2yh872qGWrEsGuP3nSzfjPT1Ub1JdrjoAIJpSqUhN-1Fq4nN9-li3pEkja-UL1LNfRhkc7zSpaoaDOB2dsqTlZ9owep2OIPQvoj_p4MIRDljxhpQc1PW8DFBAd5_5_n_sXO4l7oM3_d1vRL03SpLzPMpUYjyqK0Ng_7sI70LIRCT0VJIP7U1JEadwqncN_c1cGFv-e3q8XmUuKx6GQHRxi6r_KSyvSbx58crQ0ckS-gJSpqtYlnmOOIFRQqkAEzbCNZ6SF9FautolCLZYcUUg","not-before-policy":0,"session_state":"4fdeaa35-ed75-42c1-99bb-4981e894def9","scope":"openid email profile"}
+
+Fri Apr 04 09:02:45 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputBasic/InputBasic?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101711","vstamp":0,"customField":"test data"}],"hasNext":false}
+
+Fri Apr 04 09:02:45 UTC 2025
+GET
+http://localhost:81/api/v1/notification/check-new-notification
+Request: null
+200
+Response: {"success":true,"data":0}
+
+Fri Apr 04 09:02:45 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputBasic/InputBasic/1101711
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101711","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"test data","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Fri Apr 04 09:02:45 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputBasic/InputBasic?
+Request: null
+200
+Response: {"success":true,"data":1}
+
+Fri Apr 04 09:02:46 UTC 2025
+GET
+http://localhost:81/api/v1/data/InputFiltration/InputFiltration?_page=1&_limit=5
+Request: null
+200
+Response: {"success":true,"data":[{"id":"1101708","vstamp":0,"customField":"Test data7","brand":null},{"id":"1101707","vstamp":0,"customField":"Test data6","brand":null},{"id":"1101706","vstamp":0,"customField":"Test data5","brand":null},{"id":"1101705","vstamp":0,"customField":"Test data4","brand":null},{"id":"1101704","vstamp":0,"customField":"Test data3","brand":null}],"hasNext":true}
+
+Fri Apr 04 09:02:46 UTC 2025
+GET
+http://localhost:81/api/v1/row-meta/InputFiltration/InputFiltration/1101708
+Request: null
+200
+Response: {"success":true,"data":{"row":{"actions":[{"type":"save","text":"save","showOnlyIcon":false,"scope":"record","autoSaveBefore":true}],"fields":[{"key":"vstamp","disabled":true,"forceActive":false,"ephemeral":true,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":0,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"id","disabled":true,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":false,"sortable":false,"currentValue":"1101708","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"brand","disabled":false,"forceActive":false,"ephemeral":false,"hidden":false,"required":false,"filterable":true,"sortable":false,"currentValue":null,"values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null},{"key":"customField","disabled":false,"forceActive":true,"ephemeral":false,"hidden":false,"required":true,"filterable":true,"sortable":false,"currentValue":"Test data7","values":[],"filterValues":[],"allValues":[],"options":{},"defaultGroupingHierarchy":null}]}}}
+
+Fri Apr 04 09:02:46 UTC 2025
+GET
+http://localhost:81/api/v1/count/InputFiltration/InputFiltration?
+Request: null
+200
+Response: {"success":true,"data":7}
+
