@@ -1,4 +1,4 @@
-package org.demo.documentation.other.forceactive;
+package org.demo.documentation.other.forceactive.example2;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -12,11 +12,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3204 extends BaseEntity {
+public class MyEntity3205 extends BaseEntity {
     @Column
     private String customField;
     @Column
-    private String customFieldFA;
-    @Column
-    private String customFieldDrillDown;
+    private Boolean customFieldCheckBox = false;
 }
