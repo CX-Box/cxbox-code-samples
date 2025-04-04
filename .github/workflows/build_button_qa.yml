@@ -73,6 +73,12 @@ jobs:
           name: allure-results
           path: target/allure-results
 
+      - name: Create executions.json
+        run: |
+          mkdir -p target/allure-results/history
+          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
+      
+
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
         if: always()
@@ -139,6 +145,11 @@ jobs:
         with:
           name: allure-results
           path: target/allure-results
+
+      - name: Create executions.json
+        run: |
+          mkdir -p target/allure-results/history
+          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -233,6 +244,11 @@ jobs:
         with:
           name: allure-results
           path: target/allure-results
+
+      - name: Create executions.json
+        run: |
+          mkdir -p target/allure-results/history
+          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
