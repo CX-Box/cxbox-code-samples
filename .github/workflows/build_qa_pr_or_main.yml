@@ -47,6 +47,9 @@ jobs:
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
+      - name: Create manual-side-tests directory
+        run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
+
       - name: Upload allure results
         if: always()
         uses: actions/upload-artifact@v4
