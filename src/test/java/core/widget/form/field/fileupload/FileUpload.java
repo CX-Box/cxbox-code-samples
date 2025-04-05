@@ -6,7 +6,7 @@ import core.widget.addfiles.FilesPopup;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -37,7 +37,7 @@ public class FileUpload extends BaseField<File> {
      * @return File
      */
     @Override
-    @Attachment
+
     public File getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -76,7 +76,7 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String
      */
-    @Attachment
+
     public String getValueName() {
         return Allure.step("Getting the downloaded file name", step -> {
             logTime(step);
@@ -94,7 +94,7 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String NameFile
      */
-    @Attachment
+
     public String getNameFileInField() {
         return Allure.step("Getting the file name in the field", step -> {
             logTime(step);
@@ -111,7 +111,7 @@ public class FileUpload extends BaseField<File> {
      *
      * @return String text
      */
-    @Attachment
+
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);
@@ -129,7 +129,7 @@ public class FileUpload extends BaseField<File> {
      *
      * @return Boolean true/false
      */
-    @Attachment
+
     public boolean getReadOnly() {
         return Allure.step("Checking the field for inactivity", step -> {
             logTime(step);

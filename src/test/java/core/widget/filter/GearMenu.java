@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -33,7 +33,7 @@ public class GearMenu {
      *
      * @return List(String)
      */
-    @Attachment
+
     public List<String> getOptions() {
         return Allure.step("Getting a list of options menu", step -> {
             logTime(step);
@@ -47,7 +47,7 @@ public class GearMenu {
      *
      * @param option The name of the option. Use a separate method for exporting
      */
-    @Attachment
+
     public void setOption(String option) {
         Allure.step("Selecting an option " + option + " in the menu", step -> {
             logTime(step);
@@ -64,7 +64,7 @@ public class GearMenu {
      *
      * @return File table in Excel
      */
-    @Attachment
+
     @SneakyThrows
     public File getExportFile() {
         return Allure.step("Exporting a file", step -> {

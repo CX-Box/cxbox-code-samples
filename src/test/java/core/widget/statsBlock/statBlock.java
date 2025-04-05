@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
@@ -39,7 +39,7 @@ public class statBlock {
      *
      * @return String
      */
-    @Attachment
+
     public String getTextHover() {
         return Allure.step("Getting text when hovering over a block", step -> {
             logTime(step);
@@ -59,7 +59,7 @@ public class statBlock {
      *
      * @return String
      */
-    @Attachment
+
     public String getIcon() {
         return Allure.step("Getting the attribute value \"data-icon\"", step -> {
             logTime(step);
@@ -75,7 +75,7 @@ public class statBlock {
      *
      * @return Integer
      */
-    @Attachment
+
     public int getNumberOfRows() {
         return Allure.step("Getting the number from the block corresponding to the number of rows when clicking on the filter", step -> {
             logTime(step);
@@ -92,7 +92,7 @@ public class statBlock {
      *
      * @return String
      */
-    @Attachment
+
     public String getHexColorBlock() {
         return Allure.step("Getting the block color in Hex format", step -> {
             logTime(step);

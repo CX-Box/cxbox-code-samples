@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 
@@ -53,7 +53,7 @@ public class FormPopup {
      * Calling FormWidget to access the base fields
      * @return FormWidget
      */
-    @Attachment
+
     public FormWidget getFieldByName() {
         return Allure.step("Calling FormWidget to access the base fields", step -> {
             logTime(step);

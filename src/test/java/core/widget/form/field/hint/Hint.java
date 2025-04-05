@@ -3,7 +3,7 @@ package core.widget.form.field.hint;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 
 import static core.widget.TestingTools.CellProcessor.logTime;
@@ -23,7 +23,7 @@ public class Hint extends BaseField<String> {
      *
      * @return String
      */
-    @Attachment
+
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

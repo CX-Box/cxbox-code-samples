@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +28,6 @@ public class DateTime extends BaseString<LocalDateTime> {
      * @return LocalDateTime
      * @example LocalDateTime.of(2020, 10, 10, 10, 10)
      */
-    @Attachment
     public LocalDateTime getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

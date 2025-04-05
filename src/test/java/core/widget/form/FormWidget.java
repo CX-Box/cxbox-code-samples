@@ -27,7 +27,7 @@ import core.widget.form.field.picklist.SuggestionPickList;
 import core.widget.form.field.radio.Radio;
 import core.widget.form.field.text.Text;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -482,7 +482,7 @@ public class FormWidget {
      *
      * @return long
      */
-    @Attachment
+
     public long getIdInlineForm() {
         return Allure.step("Getting the row id when creating via Inline Form", step -> {
             logTime(step);
@@ -526,7 +526,7 @@ public class FormWidget {
      *
      * @return HashMap(String, String)
      */
-    @Attachment
+
     public HashMap<String, String> getFieldTitleAndType() {
         return Allure.step("Getting a list of fields in a heading and type pair", step -> {
             logTime(step);

@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ public class AdditionalInformationWidget {
      *
      * @return HashMap  Title - Value
      */
-    @Attachment
+
     public HashMap<String , String> getValue() {
         return Allure.step("Getting all values from fields", step -> {
             logTime(step);

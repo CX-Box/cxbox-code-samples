@@ -6,7 +6,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.info.InfoWidget;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +30,6 @@ public abstract class BaseString<E> {
     protected final CxBoxExpectations waitingForTests = new CxBoxExpectations();
 
     @Step("Getting a value from a field")
-    @Attachment
     public abstract E getValue();
 
     /**
@@ -113,7 +112,6 @@ public abstract class BaseString<E> {
      *
      * @return String text
      */
-    @Attachment
     public String getRequiredMessage() {
         return Allure.step("Getting a value from a field RequiredMessage", step -> {
             logTime(step);
@@ -131,7 +129,6 @@ public abstract class BaseString<E> {
      *
      * @return String/null
      */
-    @Attachment
     public String getHexColor() {
         return Allure.step("Getting the field color in Hex format", step -> {
             logTime(step);

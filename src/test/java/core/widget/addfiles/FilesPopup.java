@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.time.Duration;
@@ -25,7 +25,7 @@ public class FilesPopup {
      *
      * @return String
      */
-    @Attachment
+
     public String getTitle() {
         return Allure.step("Getting the header value", step -> {
             logTime(step);
@@ -42,7 +42,7 @@ public class FilesPopup {
      *
      * @return List Pair
      */
-    @Attachment
+
     public List<Pair<String, String>> getFileNameAndStatusUpload() {
         return Allure.step("Getting a list of files and their status", step -> {
             logTime(step);

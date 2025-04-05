@@ -15,15 +15,17 @@ import core.widget.modal.picklist.FormPopup;
 import core.widget.statsBlock.StatsBlockWidget;
 import core.widget.stepper.StepsWidget;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.Duration;
 import java.util.Optional;
+import net.jcip.annotations.ThreadSafe;
 
 import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
-public class WidgetPage {
+@ThreadSafe //Will be used as singleton. Must NOT have any state - for simplicity must NOT have fields!
+public class TestApplicationContext {
 
     private final CxBoxExpectations waitingForTests = new CxBoxExpectations();
 
@@ -273,7 +275,6 @@ public class WidgetPage {
      *
      * @return Popup class of all modal windows
      */
-    @Attachment
     public Optional<Popup> findPopup(String typePopup) {
         return Allure.step("Validation of the modal window", step -> {
             logTime(step);

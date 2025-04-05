@@ -5,7 +5,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -41,7 +41,7 @@ public class Input extends BaseField<String> {
      * @return String text
      */
     @Override
-    @Attachment
+
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

@@ -3,7 +3,7 @@ package core.widget.list.field.hint;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 
 public class Hint extends BaseRow<String> {
@@ -28,7 +28,6 @@ public class Hint extends BaseRow<String> {
      * @return String
      */
     @Step("Getting a value from a field")
-    @Attachment
     public String getValue() {
         throw new UnsupportedOperationException("getValue not supported for Hint");
     }

@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -27,7 +27,7 @@ public class MultiField extends BaseField<List<Pair<String, String>>> {
      * @return List Pair(String, String)
      */
     @Override
-    @Attachment
+
     public List<Pair<String, String>> getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

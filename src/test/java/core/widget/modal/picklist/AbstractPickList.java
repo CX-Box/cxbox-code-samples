@@ -8,7 +8,7 @@ import core.OriginExpectations.CxBoxExpectations;
 import core.widget.ListHelper;
 import core.widget.filter.ListFilter;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -91,7 +91,7 @@ public abstract class AbstractPickList {
      *
      * @return int Number of pages
      */
-    @Attachment
+
     public int getPages() {
         return Allure.step("Getting the number of pages in a pagination", step -> {
             logTime(step);
@@ -203,7 +203,7 @@ public abstract class AbstractPickList {
      * @param column Column's name
      * @return String
      */
-    @Attachment
+
     public String getTypeColumn(String column) {
         return Allure.step("Getting the column type " + column, step -> {
             logTime(step);
@@ -231,7 +231,7 @@ public abstract class AbstractPickList {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getColumnName() {
         return Allure.step("Getting a list of Column Names", step -> {
             logTime(step);
@@ -247,7 +247,7 @@ public abstract class AbstractPickList {
      * @param column Column's name
      * @return Filter Sheet
      */
-    @Attachment
+
     public ListFilter findFilterColumn(String column) {
         return Allure.step("Filtering search for the selected column", step -> {
             logTime(step);
@@ -298,7 +298,7 @@ public abstract class AbstractPickList {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getListRowsTexts() {
         return Allure.step("Getting a list of lines from all pages", step -> {
             logTime(step);

@@ -68,11 +68,12 @@ services:
       - 9080
 
   cxbox-code-samples-postgres:
-    image: postgres:12.0
+    image: postgres:17.4
     environment:
       - POSTGRES_PASSWORD=postgres
     expose:
       - 5432
+    command: postgres -c 'max_connections=200'
 
   cxbox-code-samples-minio:
     image: bitnami/minio:2022.2.12
