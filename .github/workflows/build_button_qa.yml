@@ -69,12 +69,6 @@ jobs:
         if: ${{ inputs.fork_count != 0 }}
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -139,13 +133,6 @@ jobs:
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
-
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
 
       - name: Build test report
@@ -239,12 +226,6 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
