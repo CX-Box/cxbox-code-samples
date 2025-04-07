@@ -43,6 +43,9 @@ jobs:
   build-qa_main:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -82,7 +85,7 @@ jobs:
           github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
+          allure_results_path: 'allure-results'
           show_history: 'true'
           custom_report_dir: 'main/${{ github.run_number }}'
           keep: 10
@@ -99,6 +102,9 @@ jobs:
   build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -171,6 +177,9 @@ jobs:
     env:
       APP_URL: http://localhost:81/ui/#/
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]

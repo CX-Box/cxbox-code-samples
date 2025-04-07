@@ -17,6 +17,9 @@ jobs:
   build-qa-pr-and-check-autotests:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v3
@@ -90,6 +93,9 @@ jobs:
   build-qa-main-and-check-autotests:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v3
 
