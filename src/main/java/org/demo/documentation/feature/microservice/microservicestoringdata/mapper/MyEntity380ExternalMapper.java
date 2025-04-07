@@ -8,6 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MyEntity380ExternalMapper {
 
-	MyExample380ExternalDTO toDto(final MyEntity380External myEntity380External);
+	MyExample380ExternalDTO toDto(final MyEntity380External entity);
 
 }
