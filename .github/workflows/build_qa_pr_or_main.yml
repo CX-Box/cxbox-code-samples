@@ -17,6 +17,9 @@ jobs:
   build-qa-pr-and-check-autotests:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v3
@@ -50,17 +53,7 @@ jobs:
       - name: Create manual-side-tests directory
         run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -74,6 +67,7 @@ jobs:
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
           show_history: 'true'
+          custom_report_dir: 'pull_request/${{ github.run_number }}'
           keep: 10
 
       - name: Generate and add report URL to Job Summary
@@ -94,6 +88,9 @@ jobs:
   build-qa-main-and-check-autotests:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v3
 
@@ -123,17 +120,7 @@ jobs:
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -146,6 +133,7 @@ jobs:
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
           show_history: 'true'
+          custom_report_dir: 'main/${{ github.run_number }}'
           keep: 10
 
       - name: Generate and add report URL to Job Summary

@@ -43,6 +43,9 @@ jobs:
   build-qa_main:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -66,18 +69,6 @@ jobs:
         if: ${{ inputs.fork_count != 0 }}
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
-
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
-      
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -88,8 +79,9 @@ jobs:
           github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
           github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
           github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
+          allure_results_path: 'allure-results'
           show_history: 'true'
+          custom_report_dir: 'main/${{ github.run_number }}'
           keep: 10
 
       - name: Generate and add report URL to Job Summary
@@ -104,6 +96,9 @@ jobs:
   build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -139,30 +134,35 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          submodules: false
 
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          target: 'github'
-          prefix: 'manual'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          keep: 10
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          destination_dir: manuals
+          publish_dir: ./manual
 
       - name: Generate and add report URL to Job Summary
         if: always()
@@ -179,6 +179,9 @@ jobs:
     env:
       APP_URL: http://localhost:81/ui/#/
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -238,17 +241,6 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Upload allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
-
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -261,7 +253,9 @@ jobs:
           github_pages_branch: 'gh-pages'
           allure_results_path: 'target/allure-results'
           show_history: 'true'
+          custom_report_dir: 'manual/${{ github.run_number }}'
           keep: 10
+
 
       - name: Generate and add report URL to Job Summary
         if: always()

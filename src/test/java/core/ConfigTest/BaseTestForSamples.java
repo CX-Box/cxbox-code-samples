@@ -57,7 +57,7 @@ public class BaseTestForSamples {
     @BeforeAll
     public static void setUpAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                        .includeSelenideSteps(false)
+                        .includeSelenideSteps(true)
                 .screenshots(true)
                 .savePageSource(true));
 
