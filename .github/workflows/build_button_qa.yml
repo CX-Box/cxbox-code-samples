@@ -161,7 +161,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: manuals
+          publish_dir: manuals/${{ github.run_number }}
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
