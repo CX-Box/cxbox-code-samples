@@ -140,7 +140,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: build/manual_results
+          allure_results: build/allure_results
           allure_report: manual_report
 
       - name: Publish test report
@@ -150,7 +150,7 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: build/manual_results
+          publish_dir: allure-history
           destination_dir: manual/${{ github.run_number }}
           keep_reports: 20
 
