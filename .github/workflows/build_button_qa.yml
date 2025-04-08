@@ -135,19 +135,42 @@ jobs:
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
 
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+
+      - name: Copy previous history (if exists)
+        if: always()
+        run: |
+            mkdir -p allure-history
+            HISTORY_PATH=gh-pages/manual/history
+            if [ -d "$HISTORY_PATH" ]; then
+              cp -r "$HISTORY_PATH" allure-history/
+            fi    
+
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          target: 'github'
-          prefix: 'manual'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          custom_report_dir: 'manual/${{ github.run_number }}'
-          keep: 10
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          destination_dir: manual
+          publish_dir: allure-history
 
       - name: Generate and add report URL to Job Summary
         if: always()
