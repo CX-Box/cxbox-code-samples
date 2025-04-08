@@ -167,7 +167,7 @@ jobs:
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
           destination_dir: manual
           publish_dir: allure-history
