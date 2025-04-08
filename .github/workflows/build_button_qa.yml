@@ -141,6 +141,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: build/allure-results
+          allure_report: manual_report
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -149,14 +150,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
-
-      - name: Move report into manual folder with run number
-        run: |
-          RUN_NUMBER=${{ github.run_number }}
-          TARGET_DIR="allure-history/manual/${RUN_NUMBER}"
-          mkdir -p "$TARGET_DIR"
-          cp -r allure-history/* "$TARGET_DIR"    
+          publish_dir: manual_report
+          destination_dir: manual/${{ github.run_number }}
 
       - name: Generate and add report URL to Job Summary
         if: always()
