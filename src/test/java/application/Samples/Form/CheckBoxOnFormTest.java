@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.config.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -28,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Tag("application/Samples")
 @Tag("Form")
 @Slf4j
-@ExtendWith(VideoRecorderExtension.class)
+
 public class CheckBoxOnFormTest extends BaseTestForSamples {
 
     @Test

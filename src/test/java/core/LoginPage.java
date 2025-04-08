@@ -1,9 +1,7 @@
 package core;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import core.widget.TestingTools.AppChecks;
 import io.qameta.allure.Allure;
 import java.net.URI;
 

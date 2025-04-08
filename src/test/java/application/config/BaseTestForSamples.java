@@ -1,25 +1,29 @@
-package core.config;
+package application.config;
 
+import application.config.props.Env;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.logevents.LogEvent;
-import com.codeborne.selenide.logevents.LogEvent.EventStatus;
-import com.codeborne.selenide.logevents.LogEventListener;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import com.codeborne.selenide.proxy.SelenideProxyServerFactory;
+import com.google.auto.service.AutoService;
 import core.TestApplicationContext;
 import core.LoginPage;
-import core.config.junit.JvmStatsConfig;
-import core.config.junit.LogPerTestConfig;
-import core.util.FileUtil;
+import core.config.allure.AbstractAllureDescAppender;
+import core.config.junit.AllurePerTestLog;
+import core.config.selenide.AbstractLoggingProxyServer;
+import core.config.selenide.AllureVideoRecorder;
 import core.widget.TestingTools.AppChecks;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
+import io.qameta.allure.listener.TestLifecycleListener;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
+import java.util.Map;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LoggingPreferences;
 
@@ -27,14 +31,17 @@ import java.time.Duration;
 import java.util.logging.Level;
 
 import org.selenide.videorecorder.core.RecordingMode;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
+import org.selenide.videorecorder.core.VideoSaveMode;
 
 import static core.widget.TestingTools.CellProcessor.logTime;
 
+/**
+ * Use @ExtendWith({JvmStatsPerTest.class.class}) to see CPU/RAM after each test. Turn off after debugging
+ */
+@Slf4j
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
-@ExtendWith({VideoRecorderExtension.class, LogPerTestConfig.class, JvmStatsConfig.class})
-@Slf4j
+@ExtendWith({AllureVideoRecorder.class})
 public abstract class BaseTestForSamples {
 
 	/**
@@ -42,75 +49,44 @@ public abstract class BaseTestForSamples {
 	 */
 	public static final TestApplicationContext $box = new TestApplicationContext();
 
+	@RegisterExtension
+	private static final AllurePerTestLog apiLogNoLogin = new AllurePerTestLog(
+			"Network logs (except login)",
+			"API_NO_LOGIN_LOGGER"
+	);
 
 	@BeforeAll
 	public static void setUpAllure() {
+		Configuration.browser = "chrome";
+		Configuration.headless = false;
+		Configuration.timeout = 10000;
+		Configuration.browserSize = "1280x800";
+		Configuration.pageLoadTimeout = 60000;
+		Configuration.webdriverLogsEnabled = false;
+		Configuration.reportsFolder = "target/videos";
+		if (Env.logEnabled()) {
+			Configuration.proxyEnabled = true;
+		}
+		if (Env.videoEnabled()) {
+			System.setProperty("selenide.video.enabled", String.valueOf(true));
+			System.setProperty("selenide.video.save.mode", VideoSaveMode.FAILED_ONLY.name());
+			System.setProperty("selenide.video.directory", "target/videos");
+			System.setProperty("selenide.video.mode", RecordingMode.ALL.name());
+			System.setProperty("selenide.video.fps", String.valueOf(10));
+			//0 (lossless) to 51 (the lowest quality)
+			System.setProperty("selenide.video.crf", String.valueOf(0));
+		}
+		Configuration.browserCapabilities = getChromeOptions();
+
 		SelenideLogger.addListener(
-				"AllureSelenide",
+				AllureSelenide.class.getName(),
 				new AllureSelenide()
 						.enableLogs(LogType.BROWSER, Env.logEnabled() ? Level.ALL : Level.OFF)
 						.includeSelenideSteps(false)
 						.screenshots(true)
 						.savePageSource(true)
 		);
-		SelenideLogger.addListener(
-				"AllureSelenideExt", new LogEventListener() {
-
-					@Override
-					public void beforeEvent(@NonNull LogEvent currentLog) {
-					}
-
-					@Override
-					public void afterEvent(@NonNull LogEvent event) {
-						var lifecycle = Allure.getLifecycle();
-						if (event.getStatus().equals(EventStatus.FAIL)) {
-							lifecycle.getCurrentTestCaseOrStep().ifPresent(parentUuid -> {
-								if (Env.videoEnabled()) {
-									VideoRecorderExtension.getRecordedVideo().ifPresent(video -> Allure.addAttachment(
-											"Video",
-											"video/webm",
-											FileUtil.newInputStreamSneaky(video),
-											".webm"
-									));
-								}
-							});
-						}
-					}
-				}
-		);
-		Allure.step(
-				"Configuring the browser...", step -> {
-					logTime(step);
-					Configuration.browser = "chrome";
-					Configuration.headless = false;
-					Configuration.timeout = 10000;
-					Configuration.browserSize = "1280x800";
-					Configuration.pageLoadTimeout = 60000;
-					Configuration.webdriverLogsEnabled = false;
-					Configuration.reportsFolder = "target/videos";
-					if (Env.logEnabled()) {
-						Configuration.proxyEnabled = true;
-					}
-					if (Env.videoEnabled()) {
-						System.setProperty("selenide.video.directory", "target/videos");
-						System.setProperty("selenide.video.enabled", String.valueOf(true));
-						System.setProperty("selenide.video.mode", RecordingMode.ALL.name());
-						System.setProperty("selenide.video.fps", String.valueOf(10));
-						//CRF operates on a scale from 0 (lossless) to 51 (the lowest quality)
-						System.setProperty("selenide.video.crf", String.valueOf(25));
-					}
-					Configuration.browserCapabilities = getChromeOptions();
-				}
-		);
 		AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
-		Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
-		LoginPage.keycloakLogin("demo", "demo", Env.uri());
-	}
-
-	@AfterAll
-	public static void afterAll() {
-		SelenideLogger.removeListener("AllureSelenide");
-		SelenideLogger.removeListener("AllureSelenideExt");
 	}
 
 	@NonNull
@@ -158,6 +134,35 @@ public abstract class BaseTestForSamples {
 					LoginPage.keycloakLogin("demo", "demo", Env.uri());
 				}
 		);
+	}
+
+	@SuppressWarnings("unused")
+	@AutoService(SelenideProxyServerFactory.class)
+	public static class LoggingProxyServer extends AbstractLoggingProxyServer {
+
+		public LoggingProxyServer() {
+			super(Map.of(
+					"1", new ProxyLogFilter(
+							url -> url.contains("api/v1/") && !url.contains("api/v1/login"),
+							apiLogNoLogin.getPerTestLogger()::trace
+					)
+			));
+		}
+
+	}
+
+	@SuppressWarnings("unused")
+	@AutoService(TestLifecycleListener.class)
+	public static class AllureDescAppender extends AbstractAllureDescAppender {
+
+		public AllureDescAppender() {
+			super("""
+					into <a href="https://github.com/CX-Box/cxbox-code-samples/actions/workflows/build_button_qa.yml" target="_blank">GitHub Actions</a> 
+					→ <strong>Run Workflow</strong> 
+					→ <strong>include PATH</strong>
+					""");
+		}
+
 	}
 
 }

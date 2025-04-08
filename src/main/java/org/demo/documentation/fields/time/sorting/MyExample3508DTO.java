@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
-import org.demo.documentation.fields.time.base.MyEntity3500;
 
 import java.time.LocalDateTime;
 

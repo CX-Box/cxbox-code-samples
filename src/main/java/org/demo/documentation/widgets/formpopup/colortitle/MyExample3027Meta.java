@@ -1,11 +1,9 @@
 package org.demo.documentation.widgets.formpopup.colortitle;
 
-import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.widgets.formpopup.colortitle.enums.CustomFieldColorDictionaryEnum;
 import org.demo.documentation.widgets.formpopup.colortitle.enums.CustomFieldColorRadioEnum;
 import org.springframework.stereotype.Service;

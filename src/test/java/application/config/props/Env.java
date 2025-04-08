@@ -1,4 +1,4 @@
-package core.config;
+package application.config.props;
 
 import java.net.URI;
 import java.net.URL;
@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Env {
 
-	public boolean videoEnabled() {
+	public static boolean videoEnabled() {
 		return "true".equalsIgnoreCase(System.getenv("CXBOX_RECORDER"));
 	}
 
@@ -21,7 +21,7 @@ public class Env {
 	@NonNull
 	@SneakyThrows
 	public static URI uri() {
-		var url = System.getenv("APP_URL"); //local app run - "http://localhost:8080/ui/#/";
+		var url = System.getenv("APP_URL");
 		if (!isValidURL(url)) {
 			return new URI("http://code-samples.cxbox.org/ui/#/");
 		}

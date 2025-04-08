@@ -11,7 +11,6 @@ import org.demo.documentation.other.alltypes.enums.RadioTypeEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Service
 public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {

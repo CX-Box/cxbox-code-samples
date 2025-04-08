@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 import lombok.SneakyThrows;
+import net.jcip.annotations.ThreadSafe;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -19,16 +20,61 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//TODO>>refacor draft. add java doc
-public class LogPerTestConfig implements BeforeEachCallback, AfterEachCallback {
+/**
+ * JUnit 5 extension for per-test logging with Allure report integration.
+ * <p>
+ * This extension creates a unique log file for each test execution using Logback,
+ * and automatically attaches the log to the Allure report if the test fails.
+ * </p>
+ *
+ * <h3>Usage Example:</h3>
+ * <pre>{@code
+ *
+ * class SomeTest {
+ *
+ *     @RegisterExtension
+ *     private static final AllurePerTestLog networkLogger =
+ *         new AllurePerTestLog("Network log", "network_log");
+ *
+ *     @Test
+ *     void testNetworkCall() {
+ *         networkLogger.getPerTestLogger().info("Executing network request...");
+ *         // test logic
+ *     }
+ * }
+ * }</pre>
+ *
+ * <h3>Logback Configuration (logback-test.xml):</h3>
+ * <pre>{@code
+ * <configuration>
+ *
+ *<!-- This logger matches the name passed to AllurePerTestLog. MUST BE in logback-test.xml -->
+ *  <logger name="network_log" level="TRACE" additivity="false"/>
+ *
+ * </configuration>
+ * }</pre>
+ *
+ * <p><strong>Note:</strong> Requires Allure to be configured in your project for attachments to be visible.</p>
+ */
+//TODO>>refactor. just draft
+@ThreadSafe
+public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 
-	public static final String API_NO_LOGIN_LOGGER = "API_NO_LOGIN_LOGGER";
+	private final String allureAttachmentName;
 
-	public static final Logger log_api_no_login = LoggerFactory.getLogger(API_NO_LOGIN_LOGGER);
+	private final String loggerName;
 
-	private static final String API_LOGIN_ONLY_LOGGER = "API_LOGIN_ONLY_LOGGER";
+	private final Logger logger;
 
-	public static final Logger log_api_login_only = LoggerFactory.getLogger(API_LOGIN_ONLY_LOGGER);
+	public AllurePerTestLog(String allureAttachmentName, String loggerName) {
+		this.allureAttachmentName = allureAttachmentName;
+		this.loggerName = loggerName;
+		this.logger = LoggerFactory.getLogger(loggerName);
+	}
+
+	public Logger getPerTestLogger() {
+		return logger;
+	}
 
 	private static String sanitizeFileName(String input) {
 		return input.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
@@ -43,7 +89,7 @@ public class LogPerTestConfig implements BeforeEachCallback, AfterEachCallback {
 		// Create encoder
 		var encoder = new PatternLayoutEncoder();
 		encoder.setContext(context);
-		encoder.setPattern("%date [%thread] %-5level %logger{36} - %msg%n " + logFile.getName());
+		encoder.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n");
 		encoder.start();
 
 		// Create file appender
@@ -58,17 +104,14 @@ public class LogPerTestConfig implements BeforeEachCallback, AfterEachCallback {
 	}
 
 	@NotNull
-	private static String getPerTestUniqueAppenderName(ExtensionContext context) {
-		return API_NO_LOGIN_LOGGER + sanitizeFileName(format(
-				"-%s",
-				context.getUniqueId()
-		));
+	private String getPerTestUniqueAppenderName(ExtensionContext context) {
+		return loggerName + sanitizeFileName(format("-%s", context.getUniqueId()));
 	}
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
 		var perTestFileName = getPerTestUniqueAppenderName(context);
-		var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(API_NO_LOGIN_LOGGER);
+		var logger = (ch.qos.logback.classic.Logger) this.logger;
 		var fileAppender = getILoggingEventFileAppender(perTestFileName);
 		var appender = logger.getAppender(perTestFileName);
 		if (appender == null) {
@@ -76,18 +119,16 @@ public class LogPerTestConfig implements BeforeEachCallback, AfterEachCallback {
 			fileAppender.start();
 		}
 
-		log_api_no_login.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
-		log_api_login_only.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
+		logger.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
 	}
 
 	@Override
 	@SneakyThrows
 	public void afterEach(ExtensionContext context) {
 		var perTestFileName = getPerTestUniqueAppenderName(context);
-		log_api_no_login.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
-		log_api_login_only.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
+		logger.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
 
-		var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(API_NO_LOGIN_LOGGER);
+		var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(loggerName);
 		var appender = logger.getAppender(perTestFileName);
 
 		if (appender != null) {
@@ -96,7 +137,7 @@ public class LogPerTestConfig implements BeforeEachCallback, AfterEachCallback {
 			var file = ((FileAppender<?>) appender).getFile();
 			var logFile = Path.of(file);
 			if (context.getExecutionException().isPresent()) {
-				Allure.addAttachment("Network logs (except login)", Files.newInputStream(logFile));
+				Allure.addAttachment(allureAttachmentName, Files.newInputStream(logFile));
 			}
 		}
 

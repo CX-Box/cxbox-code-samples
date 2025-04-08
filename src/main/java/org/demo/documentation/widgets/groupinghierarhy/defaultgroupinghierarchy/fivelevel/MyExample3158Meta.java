@@ -9,7 +9,6 @@ import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MyExample3158Meta extends FieldMetaBuilder<MyExample3158DTO> {

@@ -1,7 +1,5 @@
 package org.demo.documentation.widgets.groupinghierarhy.bulkupload;
 
-import io.minio.MinioClient;
-import io.minio.StatObjectArgs;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,7 +11,6 @@ import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

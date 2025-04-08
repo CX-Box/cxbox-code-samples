@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.demo.documentation.widgets.list.showcondition.byparententity.parent.MyEntity3100;
 
 @Getter
 @Setter

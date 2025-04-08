@@ -8,8 +8,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.groupinghierarhy.actions.create.CxboxMyExample3148Controller;
-import org.demo.documentation.widgets.groupinghierarhy.actions.edit.newview.MyEntity3167;
-import org.demo.documentation.widgets.groupinghierarhy.actions.edit.newview.MyExample3167DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")

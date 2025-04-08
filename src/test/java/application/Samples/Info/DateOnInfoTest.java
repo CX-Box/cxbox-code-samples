@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.config.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.time.LocalDate;
 
@@ -20,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Date")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class DateOnInfoTest extends BaseTestForSamples {
 
     @Test

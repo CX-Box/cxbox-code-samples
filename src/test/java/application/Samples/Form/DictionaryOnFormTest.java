@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.config.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -12,8 +12,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Dictionary in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class DictionaryOnFormTest extends BaseTestForSamples {
 
     @Test

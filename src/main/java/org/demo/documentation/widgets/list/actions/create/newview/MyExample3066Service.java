@@ -8,7 +8,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 
-import org.demo.documentation.widgets.list.actions.edit.newview.MyEntity3075;
 import org.springframework.stereotype.Service;
 
 

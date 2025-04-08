@@ -7,7 +7,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO;
 import org.demo.documentation.fields.text.validationdynamic.MyExample332DTO_;
 import org.springframework.stereotype.Service;
 

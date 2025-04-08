@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.config.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Description;
@@ -9,8 +9,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -21,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 public class HintOnFormTest extends BaseTestForSamples {
 
 //    @Test

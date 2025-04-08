@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
-import org.demo.documentation.fields.suggestion.drilldown.MyEntity3084OutServiceDTO;
 
 import java.time.LocalDateTime;
 

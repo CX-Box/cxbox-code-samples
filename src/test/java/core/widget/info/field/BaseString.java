@@ -1,7 +1,9 @@
 package core.widget.info.field;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverConditions;
 import com.codeborne.selenide.WebDriverRunner;
 import core.OriginExpectations.CxBoxExpectations;
 import core.widget.info.InfoWidget;

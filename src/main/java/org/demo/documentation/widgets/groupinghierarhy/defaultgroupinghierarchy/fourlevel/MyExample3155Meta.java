@@ -10,8 +10,6 @@ import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.
 import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.fourlevel.enums.CustomFieldDictionaryLevelTwoEnum;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-
 @Service
 public class MyExample3155Meta extends FieldMetaBuilder<MyExample3155DTO> {
 

@@ -7,7 +7,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
