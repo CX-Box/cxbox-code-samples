@@ -154,12 +154,6 @@ jobs:
           allure_history: allure-history
           allure_results: build/allure-results
 
-      - name: Prepare files for deployment
-        if: always()
-        run: |
-          mkdir -p deploy/side-tests/${{ github.run_number }}
-          cp -r gh-pages/side-tests/${{ github.run_number }}/allure-report/* deploy/side-tests/${{ github.run_number }}/      
-
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -167,8 +161,7 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          destination_dir: manuals
-          publish_dir: deploy/manuals
+          publish_dir: manuals
 
       - name: Generate and add report URL to Job Summary
         if: always()
