@@ -148,18 +148,19 @@ jobs:
       - name: Copy previous history (if exists)
         if: always()
         run: |
-            mkdir -p allure-history
-            HISTORY_PATH=gh-pages/manual/history
-            if [ -d "$HISTORY_PATH" ]; then
-              cp -r "$HISTORY_PATH" allure-history/
-            fi    
+          mkdir -p allure-history-manual
+          HISTORY_PATH=gh-pages/manual/history
+          if [ -d "$HISTORY_PATH" ]; then
+            cp -r "$HISTORY_PATH" allure-history-manual/
+          fi
+
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history
+          allure_history: allure-history-manual
           allure_results: build/allure-results
 
       - name: Publish test report
@@ -170,7 +171,7 @@ jobs:
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
           destination_dir: manual
-          publish_dir: allure-history
+          publish_dir: allure-history-manual
 
       - name: Generate and add report URL to Job Summary
         if: always()
