@@ -146,7 +146,6 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           submodules: false
 
-
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
@@ -162,7 +161,7 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          destination_dir: manuals
+          destination_dir: manuals/${{ github.run_number }}
           publish_dir: allure-history
 
       - name: Generate and add report URL to Job Summary
