@@ -153,6 +153,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: build/allure-results
+          allure_report: gh-pages/manual/${{ github.run_number }}/
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -161,7 +162,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          destination_dir: manual
+          publish_dir: deploy/manual
 
       - name: Generate and add report URL to Job Summary
         if: always()
