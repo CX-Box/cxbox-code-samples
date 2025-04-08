@@ -43,9 +43,6 @@ jobs:
   build-qa_main:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -69,6 +66,12 @@ jobs:
         if: ${{ inputs.fork_count != 0 }}
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
+      - name: Upload allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
@@ -96,9 +99,6 @@ jobs:
   build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -180,9 +180,6 @@ jobs:
     env:
       APP_URL: http://localhost:81/ui/#/
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
     strategy:
       matrix:
         java: [ '17' ]
@@ -242,6 +239,17 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
+      - name: Upload allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Create executions.json
+        run: |
+          mkdir -p target/allure-results/history
+          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
 
       - name: Build test report
         uses: cybersokari/allure-deployer-action@v1.9.6
