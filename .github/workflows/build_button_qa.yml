@@ -145,15 +145,6 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
-      - name: Copy previous history (if exists)
-        if: always()
-        run: |
-          mkdir -p allure-history-manual
-          HISTORY_PATH=gh-pages/manual/history
-          if [ -d "$HISTORY_PATH" ]; then
-            cp -r "$HISTORY_PATH" allure-history-manual/
-          fi
-
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
