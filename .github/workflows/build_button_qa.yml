@@ -41,7 +41,7 @@ env:
 
 jobs:
   build-qa_main:
-    if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
+    if: (inputs.choice-test == 'All tests' ) &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
