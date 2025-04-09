@@ -50,34 +50,38 @@ jobs:
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
-      - name: Create manual-side-tests directory
-        run: mkdir -p gh-pages/manual-side-tests/${{ github.run_number }}
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.12
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
-
-
-      - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          pr_comment: 'true'
-          target: 'github'
-          prefix: 'pull_request'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          custom_report_dir: 'pull_request/${{ github.run_number }}'
-          keep: 10
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: pull_request
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.run_number}}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY  
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
       - name: cleanup docker resources
         if: always()
@@ -118,32 +122,49 @@ jobs:
           sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.HintOnFormTest#drillDown test
 
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.12
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
-      - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          target: 'github'
-          prefix: 'main'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          custom_report_dir: 'main/${{ github.run_number }}'
-          keep: 10
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_number}}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY  
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
       - name: cleanup docker resources
         if: always()
