@@ -1,6 +1,6 @@
 name: Run tests by button
 
-on: 
+on:
   workflow_dispatch:
    inputs:
      choice-test:
@@ -134,18 +134,31 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: target/allure_results
+      - name: Generate Allure report (via Maven)
+        run: mvn allure:report
 
-      - name: Check Allure results
+      - name: Copy report to publish dir
         run: |
-          echo "Contents of target/allure_results:"
-          ls -l target/allure_results    
+          mkdir -p allure-history
+          cp -r target/site/allure-maven-plugin/* allure-history/
+
+      - name: Upload Allure report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-history
+
+      - name: Upload Allure report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+         name: allure-report
+         path: allure-history
+
+      - name: Download Allure report artifact
+        uses: actions/download-artifact@v4
+        with:
+            name: allure-report
+            path: allure-history
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
