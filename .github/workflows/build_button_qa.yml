@@ -77,7 +77,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@1.12
+        uses: simple-elf/allure-report-action@v1.12
         if: always()
         id: allure-report
         with:
