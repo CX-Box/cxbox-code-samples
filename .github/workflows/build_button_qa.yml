@@ -60,41 +60,47 @@ jobs:
 
       - name: Run default tests
         if: ${{ inputs.fork_count == 0 }}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.HintOnFormTest#drillDown test
 
       - name: Run default tests in parallel
         if: ${{ inputs.fork_count != 0 }}
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
-      - name: Upload allure results
+      - name: Load test report history
+        uses: actions/checkout@v3
         if: always()
-        uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
-          name: allure-results
-          path: target/allure-results
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
 
       - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          target: 'github'
-          prefix: 'main'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'allure-results'
-          show_history: 'true'
-          custom_report_dir: 'main/${{ github.run_number }}'
-          keep: 10
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          keep_reports: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/manual/${{ github.run_number}}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY  
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
   build-qa_manual:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'http://code-samples.cxbox.org/'
@@ -239,37 +245,41 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
-      - name: Upload allure results
-        if: always()
+      - name: Generate Allure report (via Maven)
+        run: mvn -DrunTests=true allure:report
+
+      - name: Copy report to publish dir
+        run: |
+          mkdir -p allure-history
+          cp -r target/site/allure-maven-plugin/* allure-history/
+
+      - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
-          path: target/allure-results
+          name: allure-report
+          path: allure-history
 
-      - name: Create executions.json
-        run: |
-          mkdir -p target/allure-results/history
-          echo '[{ "uid": "'$(uuidgen)'", "reportName": "GitHub CI Run", "time": '$(date +%s)'000 }]' > target/allure-results/history/executions.json
+      - name: Download Allure report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report
+          path: allure-history
 
-      - name: Build test report
-        uses: cybersokari/allure-deployer-action@v1.9.6
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
-          target: 'github'
-          prefix: 'manual'
-          github_token: ${{ secrets.CODE_SAMPLES_ALLURE  }}
-          github_pages_repo: 'CX-Box/cxbox-code-samples-allure'
-          github_pages_branch: 'gh-pages'
-          allure_results_path: 'target/allure-results'
-          show_history: 'true'
-          custom_report_dir: 'manual/${{ github.run_number }}'
-          keep: 10
-
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: manual/${{github.run_number}}
+          keep_reports: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/${{ github.run_id }}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/manual/${{ github.run_number}}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
