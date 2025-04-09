@@ -135,7 +135,7 @@ jobs:
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
       - name: Generate Allure report (via Maven)
-        run: mvn allure:report
+        run: mvn -DrunTests=true allure:report
 
       - name: Copy report to publish dir
         run: |
