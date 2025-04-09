@@ -76,7 +76,6 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
-
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.12
         if: always()
@@ -98,6 +97,7 @@ jobs:
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
           publish_dir: allure-history
+          destination_dir: manual
           keep_files: true
 
       - name: Generate and add report URL to Job Summary
@@ -147,6 +147,15 @@ jobs:
         run: |
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.12
@@ -154,12 +163,13 @@ jobs:
         id: allure-report
         with:
           allure_results: target/allure-results
-          gh_pages: gh-pages
+          gh_pages: gh-pages/manual
           allure_report: allure-report
           allure_history: allure-history
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          subfolder: manual
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
