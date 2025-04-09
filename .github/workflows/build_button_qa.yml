@@ -168,6 +168,7 @@ jobs:
           allure_history: allure-history
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/manual
           keep_reports: 20
 
 
@@ -280,15 +281,6 @@ jobs:
           subdirectory: manual
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/manual
           keep_reports: 20
-
-      - name: Fix Allure links
-        run: |
-          find allure-history -name index.html -exec sed -i 's|<head>|<head><base href="/cxbox-code-samples-allure/manual/">|g' {} \;
-
-          find allure-history -type f \( -name '*.json' -o -name '*.js' \) \
-            -exec sed -i 's|"/|"/cxbox-code-samples-allure/manual/|g' {} \;
-
-          find allure-history -name '*.html' -exec sed -i 's|href="\.\./|href="/cxbox-code-samples-allure/manual/|g' {} \;    
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
