@@ -76,6 +76,10 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
+      - name: Generate Allure results
+        run: |
+          cp -r target/allure-results/* build/allure-results/
+
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.12
         if: always()
@@ -88,6 +92,7 @@ jobs:
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          subdirectory: main
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -96,8 +101,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
-          keep_reports: true
+          publish_dir: allure-history/main
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
