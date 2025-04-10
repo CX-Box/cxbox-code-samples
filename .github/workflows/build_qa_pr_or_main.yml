@@ -95,11 +95,21 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
+      - name: Post link to PR
+        if: always()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Status: ${{ steps.status.outputs.status }}  
+            Allure: [Open](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+
       - name: cleanup docker resources
         if: always()
         run: |
-          sudo docker compose -f docker-compose-test.yml down --remove-orphans
-          sudo docker system prune -a --volumes -f
+             sudo docker compose -f docker-compose-test.yml down --remove-orphans
+              sudo docker system prune -a --volumes -f
 
   build-qa-main-and-check-autotests:
     if: github.event_name == 'push'
