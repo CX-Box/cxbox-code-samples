@@ -11,9 +11,6 @@ import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.CxboxMyExample3238Controller;
 import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.MyEntity3238;
 import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.MyEntity3238Repository;
-import org.demo.documentation.widgets.list.actions.create.newview.CxboxMyExample3066Controller;
-import org.demo.documentation.widgets.list.actions.create.newview.MyEntity3066;
-import org.demo.documentation.widgets.list.actions.create.newview.MyExample3066DTO;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

@@ -4,9 +4,6 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210DTO;
-import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao;
-import org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Meta;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")

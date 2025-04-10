@@ -1,6 +1,5 @@
 package org.demo.documentation.other.widgetEditStyles.colortitle;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.time.LocalDate;
 
@@ -20,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Date")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class DateOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -30,7 +28,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Date placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +40,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Date color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +52,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Date readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +63,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Date basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.getValue()).isBeforeOrEqualTo(LocalDate.now());
     }
@@ -78,7 +76,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Date filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -90,7 +88,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Date drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -103,7 +101,7 @@ public class DateOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Date filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.date("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

@@ -1,4 +1,23 @@
 <configuration>
-    <logger name="org.littleshoot.proxy.impl.ProxyToServerConnection" level="OFF"/>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
+    </encoder>
+  </appender>
+
+  <!--This logger matches the name passed to new AllurePerTestLog("Network logs (except login)", "API_NO_LOGIN_LOGGER");'
+    MUST BE in logback-test.xml-->
+  <logger name="API_NO_LOGIN_LOGGER" level="TRACE" additivity="false" desc =""/>
+
+  <logger name="org.littleshoot.proxy.impl.ClientToProxyConnection" level="OFF"/>
+  <logger name="org.littleshoot.proxy.impl.ProxyToServerConnection" level="OFF"/>
+  <logger name="com.browserup.bup.filters.HarCaptureFilter" level="WARN"/>
+  <logger name="io.github.bonigarcia.wdm.WebDriverManager" level="WARN"/>
+  <logger name="com.codeborne.selenide.WebDriverThreadLocalContainer" level="WARN"/>
+  <logger name="org.openqa.selenium.devtools.CdpVersionFinder" level="ERROR"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
 
 </configuration>

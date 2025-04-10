@@ -7,7 +7,6 @@ import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.fields.suggestion.ro.MyEntity3088OutServiceDTO;
-import org.demo.services.utils.IntegrationURLBuilder;
 import org.demo.services.utils.RestResponsePage;
 
 import org.springframework.core.ParameterizedTypeReference;

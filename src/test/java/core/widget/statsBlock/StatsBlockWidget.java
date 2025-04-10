@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class StatsBlockWidget {
      * @param title Title
      * @return statBlock
      */
-    @Attachment
+
     public Optional<statBlock> findStatBlock(String title) {
         return Allure.step("Block validation " + title, step -> {
             logTime(step);
@@ -55,7 +55,7 @@ public class StatsBlockWidget {
      *
      * @return List(String)
      */
-    @Attachment
+
     public List<String> getTitleBlocks() {
         return Allure.step("Getting all block headers", step -> {
             logTime(step);

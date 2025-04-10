@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.math.BigDecimal;
 
@@ -20,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Money")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class MoneyOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -30,7 +28,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Money placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +40,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Money color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +52,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Money readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +63,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Money basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         BigDecimal number = new BigDecimal("27000.78");
         assertThat(customField.getValue()).isEqualTo(number);
@@ -79,7 +77,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Money filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -91,7 +89,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Money drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -104,7 +102,7 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Money filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

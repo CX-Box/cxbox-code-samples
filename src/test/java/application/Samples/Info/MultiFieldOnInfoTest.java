@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -9,8 +9,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the MultiField")
 @Epic("Samples")
 @Tag("Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class MultiFieldOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -31,7 +29,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("MultiField basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom multifield hint");
         List<Pair<String, String>> expectedPairs = new ArrayList<>();
         expectedPairs.add(Pair.of("input", "Test data"));
@@ -47,7 +45,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("MultiField filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -61,7 +59,7 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("MultiField filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multiField("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.time.LocalDate;
 
@@ -20,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the DateTimeWithSeconds")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
 public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -30,7 +27,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("DateTimeWithSeconds placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -42,7 +39,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("DateTimeWithSeconds color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -54,7 +51,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("DateTimeWithSeconds readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -65,7 +62,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("DateTimeWithSeconds basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.getValue().toLocalDate()).isBeforeOrEqualTo(LocalDate.now());
     }
@@ -78,7 +75,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -90,7 +87,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("DateTimeWithSeconds drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -103,7 +100,7 @@ public class DateTimeWithSecondsOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.dateTimeWithSeconds("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

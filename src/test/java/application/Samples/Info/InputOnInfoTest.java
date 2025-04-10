@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Input")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class InputOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -28,7 +26,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Input placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +38,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Input color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -52,7 +50,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Input readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +61,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Input basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.getValue()).isEqualTo("test data");
     }
@@ -76,7 +74,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Input filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +86,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Input drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -101,7 +99,7 @@ public class InputOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Input filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info");
+        var info = $box.findInfoWidgetByTitle("Info");
         var customField = info.input("customField");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

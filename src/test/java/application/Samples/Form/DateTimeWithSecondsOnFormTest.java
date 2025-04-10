@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -12,8 +12,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
 
 
@@ -37,7 +35,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("DateTimeWithSeconds placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("29.05.2023 11:25:58");
     }
@@ -49,7 +47,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("DateTimeWithSeconds color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -61,7 +59,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("DateTimeWithSeconds readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -74,7 +72,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("DateTimeWithSeconds basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 11, 10, 10, 10, 10);
         customField.setValue(dateTime);
@@ -89,7 +87,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -101,7 +99,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("DateTimeWithSeconds drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -114,12 +112,12 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("DateTimeWithSeconds validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("Custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 9, 10, 10, 10, 10);
         customField.setValue(dateTime);
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.MoreThatCurrentDate);
@@ -134,11 +132,11 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("DateTimeWithSeconds validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 9, 10, 10, 10, 10);
         customField.clearIcon();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -153,12 +151,12 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("DateTimeWithSeconds validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 9, 10, 10, 10, 10);
         customField.setValue(dateTime);
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -174,7 +172,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("DateTimeWithSeconds validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("Custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 11, 10, 10, 10, 10);
         customField.setValue(dateTime);
@@ -190,7 +188,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("DateTimeWithSeconds validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("Custom Field");
         var customField2 = form.dateTimeWithSeconds("Custom Field Additional");
         LocalDateTime dateTime = LocalDateTime.of(1999, 11, 10, 10, 10, 10);
@@ -209,7 +207,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("DateTimeWithSeconds sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -222,7 +220,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("DateTimeWithSeconds required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dateTimeWithSeconds("custom Field");
         customField.clearIcon();
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);

@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.demo.documentation.widgets.groupinghierarhy.title.enums.CustomFieldDictionaryEnum;
 

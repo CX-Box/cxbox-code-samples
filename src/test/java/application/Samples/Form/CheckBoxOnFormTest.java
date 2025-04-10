@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -28,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Tag("application/Samples")
 @Tag("Form")
 @Slf4j
-@ExtendWith(VideoRecorderExtension.class)
+
 public class CheckBoxOnFormTest extends BaseTestForSamples {
 
     @Test
@@ -38,7 +36,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Checkbox placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getPlaceholder()).isEmpty();
     }
@@ -50,7 +48,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Checkbox color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -62,7 +60,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Checkbox readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -75,7 +73,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Checkbox basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setValue(false);
         assertThat(customField.getValue()).isFalse();
@@ -89,7 +87,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Checkbox filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -102,7 +100,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Checkbox drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -115,10 +113,10 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Checkbox validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setValue(false);
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Text.textOnly("'True'"));
@@ -133,10 +131,10 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Checkbox validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setTrueWithError();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -153,11 +151,11 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         MainPages.click("Checkbox validation confirm");
 
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setValue(true);
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -173,7 +171,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Checkbox validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setValue(false);
         form.clickButton("save");
@@ -188,7 +186,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Checkbox validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         var customField2 = form.checkBox("Custom Field Additional");
         customField.setValue(false);
@@ -206,7 +204,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Checkbox sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -219,7 +217,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Checkbox required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         form.clickButton("save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);

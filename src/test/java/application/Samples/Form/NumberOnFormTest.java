@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -12,8 +12,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -24,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 @Tag("NumberForm")
 public class NumberOnFormTest extends BaseTestForSamples {
 
@@ -35,7 +33,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Number placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("123456");
     }
@@ -47,7 +45,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Number color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -59,7 +57,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Number readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -72,7 +70,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Number basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         Integer number = 1234;
         customField.setValue(number);
@@ -87,7 +85,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Number filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -99,7 +97,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Number drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -112,10 +110,10 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Number validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.setValue(1234);
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.MoreThatNumber);
@@ -130,11 +128,11 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Number validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.clear();
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -149,11 +147,11 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Number validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.setValue(500);
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -169,7 +167,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Number validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("Customer Field");
         customField.setValue(123);
         form.clickButton("save");
@@ -184,7 +182,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Number validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("Custom Field");
         var customField2 = form.number("Custom Field Additional");
         customField.setValue(123);
@@ -203,7 +201,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Number sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -216,7 +214,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Number required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.clear();
         form.clickButton("save");

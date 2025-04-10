@@ -64,7 +64,7 @@ jobs:
 
       - name: Run default tests in parallel
         if: ${{ inputs.fork_count != 0 }}
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Upload allure results
         if: always()
@@ -120,7 +120,7 @@ jobs:
 
       - name: Run tests in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=${{github.event.inputs.test-path}} test
 
 
       - name: Run default tests
@@ -131,7 +131,7 @@ jobs:
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test       
 
       - name: Upload allure results
         if: always()
@@ -188,8 +188,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cashe: "yarn"
-          cache-dependency-path: ui
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
 
       - name: Load target
         run: mvn clean install -U -PUI
@@ -215,12 +215,12 @@ jobs:
 
       - name: Run some kind of test in parallel
         if: ${{inputs.choice-test == 'Package, class or test' && inputs.fork_count != 0}}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=${{github.event.inputs.test-path}} test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=${{github.event.inputs.test-path}} test
 
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test   
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test   
 
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}

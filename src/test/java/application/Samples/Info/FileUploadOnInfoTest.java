@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -9,8 +9,6 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.io.File;
 import java.net.URL;
@@ -23,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the FileUp")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class FileUploadOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -33,7 +31,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Fileupload placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -45,7 +43,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Fileupload color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::getHexColor).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -57,7 +55,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Fileupload readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -68,7 +66,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Fileupload basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThat(customField.getValue().getName()).isEqualTo("FILE_1.txt");
     }
@@ -81,7 +79,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Fileupload filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -93,7 +91,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Fileupload drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -106,7 +104,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Fileupload filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -121,7 +119,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 
         MainPages.click("Fileupload basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         File file = customField.getValue();
         assertThat(file).isFile();
@@ -136,7 +134,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void getFileName() {
         MainPages.click("Fileupload basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThat(customField.getValueName()).isEqualTo("FILE_1.txt");
     }
@@ -148,7 +146,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
     void readNameFileInField() {
         MainPages.click("Fileupload basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.fileUpload("Custom Field");
         assertThat(customField.getNameFileInField()).isEqualTo("FILE_1.txt");
     }

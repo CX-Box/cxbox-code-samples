@@ -1,7 +1,5 @@
 package org.demo.documentation.feature.bulkupload;
 
-import io.minio.MinioClient;
-import io.minio.StatObjectArgs;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;

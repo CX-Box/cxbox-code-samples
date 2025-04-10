@@ -6,8 +6,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.widgets.form.showcondition.byparententity.child.MyEntity3006;
-import org.demo.documentation.widgets.form.showcondition.byparententity.child.MyEntity3006_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.NonNull;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
@@ -33,7 +33,7 @@ public class MultipleSelect extends BaseField<Set<String>> {
      * @return List String [e1,e2,...en]
      */
     @Override
-    @Attachment
+
     public Set<String> getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -112,7 +112,6 @@ public class MultipleSelect extends BaseField<Set<String>> {
      *
      * @return List String
      */
-    @Attachment
     public List<String> getOptions() {
         return Allure.step("Getting a list of options", step -> {
             logTime(step);
@@ -150,7 +149,6 @@ public class MultipleSelect extends BaseField<Set<String>> {
      *
      * @return Pair (String, Boolean)
      */
-    @Attachment
     public List<Pair<String, Boolean>> getStatusOptions() {
         return Allure.step("Getting a list of options and status", step -> {
             logTime(step);
@@ -175,7 +173,6 @@ public class MultipleSelect extends BaseField<Set<String>> {
      *
      * @return String
      */
-    @Attachment
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);

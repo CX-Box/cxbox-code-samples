@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -32,7 +32,7 @@ public class Dictionary extends BaseField<String> {
      * @return String
      */
     @Override
-    @Attachment
+    
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -66,7 +66,7 @@ public class Dictionary extends BaseField<String> {
      *
      * @return List String
      */
-    @Attachment
+
     public List<String> getOptions() {
         return Allure.step("Getting a list of options from a drop-down list", step -> {
             logTime(step);
@@ -115,7 +115,7 @@ public class Dictionary extends BaseField<String> {
      *
      * @return String
      */
-    @Attachment
+
     public String getPlaceholder() {
         return Allure.step("Getting the Placeholder value", step -> {
             logTime(step);

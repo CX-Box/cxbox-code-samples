@@ -1,6 +1,6 @@
 package application.Samples.Form;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Description;
@@ -9,8 +9,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -21,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 public class HintOnFormTest extends BaseTestForSamples {
 
 //    @Test
@@ -43,7 +41,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Hint color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::getHexColor).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -55,7 +53,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Hint readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -68,7 +66,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Hint basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThat(customField.getValue()).isEqualTo("Information data");
     }
@@ -81,7 +79,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Hint filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -94,7 +92,7 @@ public class HintOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Hint drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.hint("customField2");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }

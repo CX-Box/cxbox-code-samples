@@ -76,8 +76,8 @@ public class MainPages {
      */
     private static void checkPagesLoad() {
         SelenideElement element = $("div[data-test-loading=\"true\"]");
-        log.info("data-test-loading=true check -> started. exists:  " + element.exists());
+        log.debug("data-test-loading=true check -> started. exists:  " + element.exists());
         element.shouldNotBe(Condition.exist, Duration.ofSeconds(2));
-        log.info("data-test-loading=true check -> finished. exists: " + element.exists());
+        log.debug("data-test-loading=true check -> finished. exists: " + element.exists());
     }
 }

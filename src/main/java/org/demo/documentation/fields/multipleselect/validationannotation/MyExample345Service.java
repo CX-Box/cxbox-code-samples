@@ -7,7 +7,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.fields.multipleselect.validationannotation.enums.CustomFieldEnum;
-import org.demo.services.CustomDynamicErrorService;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
