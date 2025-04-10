@@ -72,29 +72,6 @@ jobs:
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
           keep_reports: 20
 
-      - name: Determine test result from Allure report
-        id: test_status_message
-        if: always()
-        run: |
-              SUMMARY_FILE="allure-report/widgets/summary.json"
-              
-              if [ ! -f "$SUMMARY_FILE" ]; then
-                echo "⚠️ Allure summary not found"
-                echo "result=⚠️ Report Missing" >> $GITHUB_OUTPUT
-                exit 0
-              fi
-              
-              FAILED=$(jq '.statistic.failed' "$SUMMARY_FILE")
-              BROKEN=$(jq '.statistic.broken' "$SUMMARY_FILE")
-              
-              if [ "$FAILED" -eq 0 ] && [ "$BROKEN" -eq 0 ]; then
-                echo "✅ Tests Passed"
-                echo "result=✅ Tests Passed" >> $GITHUB_OUTPUT
-              else
-                echo "❌ Some tests failed or broken"
-                echo "result=❌ Tests Failed" >> $GITHUB_OUTPUT
-              fi
-
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -122,16 +99,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### ${{ steps.test_status_message.outputs.result}}. [🧾 Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
-
-      - name: Post link to PR 2
-        if: always()
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }} [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
       - name: cleanup docker resources
         if: always()
