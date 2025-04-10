@@ -1,5 +1,7 @@
 package org.demo.documentation.other.savewithparent.example2.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,16 +12,15 @@ import org.demo.documentation.other.savewithparent.examle0.child.MyEntity3057;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3130Service extends VersionAwareResponseService<MyExample3130DTO, MyEntity3130> {
 
     private final MyEntity3130Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3130Meta> meta = MyExample3130Meta.class;
 
-    public MyExample3130Service(MyEntity3130Repository repository) {
-        super(MyExample3130DTO.class, MyEntity3130.class, null, MyExample3130Meta.class);
-        this.repository = repository;
-    }
     @Override
     protected Specification<MyEntity3130> getParentSpecification(BusinessComponent bc) {
         return (root, cq, cb) -> cb.and(
@@ -27,6 +28,7 @@ public class MyExample3130Service extends VersionAwareResponseService<MyExample3
                 cb.equal(root.get(MyEntity3130_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
+
     @Override
     protected CreateResult<MyExample3130DTO> doCreateEntity(MyEntity3130 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -41,7 +43,7 @@ public class MyExample3130Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3130DTO> getActions() {
         return Actions.<MyExample3130DTO>builder()

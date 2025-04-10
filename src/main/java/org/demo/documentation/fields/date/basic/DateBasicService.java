@@ -5,13 +5,14 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class DateBasicService extends VersionAwareResponseService<DateBasicDTO, DateBasic> {
-
-	private final DateBasicRepository repository;
+     @Autowired
+	 DateBasicRepository repository;
 
 	public DateBasicService(DateBasicRepository repository) {
 		super(DateBasicDTO.class, DateBasic.class, null, DateBasicMeta.class);

@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.assoc.base;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -20,21 +22,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3053Service extends VersionAwareResponseService<MyExample3053DTO, MyEntity3053> {
 
     private final MyEntity3053Repository repository;
 
     private final MyEntity3053MultiRepository repositoryMulti;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3053Meta> meta = MyExample3053Meta.class;
 
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3053Service(MyEntity3053Repository repository, MyEntity3053MultiRepository repositoryMulti) {
-        super(MyExample3053DTO.class, MyEntity3053.class, null, MyExample3053Meta.class);
-        this.repository = repository;
-        this.repositoryMulti = repositoryMulti;
-    }
 
     @Override
     protected CreateResult<MyExample3053DTO> doCreateEntity(MyEntity3053 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.other.example5.parent;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,16 +12,14 @@ import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Co
 import org.demo.documentation.navigation.tab.other.example5.child3.MyExample3163DTO;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3161Service extends VersionAwareResponseService<MyExample3161DTO, MyEntity3161> {
 
     private final MyEntity3161Repository repository;
-
-    public MyExample3161Service(MyEntity3161Repository repository) {
-        super(MyExample3161DTO.class, MyEntity3161.class, null, MyExample3161Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3161Meta> meta = MyExample3161Meta.class;
 
     @Override
     protected CreateResult<MyExample3161DTO> doCreateEntity(MyEntity3161 entity, BusinessComponent bc) {
@@ -35,7 +35,7 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3161DTO> getActions() {
         return Actions.<MyExample3161DTO>builder()
@@ -53,8 +53,8 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:customSaveInvoker]
     private ActionResultDTO<MyExample3161DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3161DTO dto) {
         MyEntity3161 entity = repository.findById(bc.getParentIdAsLong()).orElse(null);
-        entity.setCustomField("Test data" +  Math.random());
-         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
+        entity.setCustomField("Test data" + Math.random());
+        return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
     }
     // --8<-- [end:customSaveInvoker]
 

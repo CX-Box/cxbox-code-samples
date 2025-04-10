@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,13 +11,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3085SuggestionService extends AnySourceVersionAwareResponseService<MyExample3085SuggestionDTO, MyEntity3085OutServiceDTO> {
 
 
-    public MyExample3085SuggestionService() {
-        super(MyExample3085SuggestionDTO.class, MyEntity3085OutServiceDTO.class, MyExample3085SuggestionMeta.class, MyEntity3085Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3085SuggestionMeta> meta = MyExample3085SuggestionMeta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3085Dao> dao = MyEntity3085Dao.class;
 
 
     @Override
@@ -28,7 +33,7 @@ public class MyExample3085SuggestionService extends AnySourceVersionAwareRespons
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3085SuggestionDTO> getActions() {
         return Actions.<MyExample3085SuggestionDTO>builder()
@@ -38,5 +43,5 @@ public class MyExample3085SuggestionService extends AnySourceVersionAwareRespons
                 .build();
     }
 
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

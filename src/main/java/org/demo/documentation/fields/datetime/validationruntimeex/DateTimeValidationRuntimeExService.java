@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.validationruntimeex;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,55 +10,49 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeValidationRuntimeExService extends
-		VersionAwareResponseService<DateTimeValidationRuntimeExDTO, DateTimeValidationRuntimeEx> {
+        VersionAwareResponseService<DateTimeValidationRuntimeExDTO, DateTimeValidationRuntimeEx> {
 
-	private final DateTimeValidationRuntimeExRepository repository;
+    private final DateTimeValidationRuntimeExRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeValidationRuntimeExMeta> meta = DateTimeValidationRuntimeExMeta.class;
 
-	public DateTimeValidationRuntimeExService(DateTimeValidationRuntimeExRepository repository) {
-		super(
-				DateTimeValidationRuntimeExDTO.class,
-				DateTimeValidationRuntimeEx.class,
-				null,
-				DateTimeValidationRuntimeExMeta.class
-		);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<DateTimeValidationRuntimeExDTO> doCreateEntity(DateTimeValidationRuntimeEx entity,
+                                                                          BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<DateTimeValidationRuntimeExDTO> doCreateEntity(DateTimeValidationRuntimeEx entity,
-			BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<DateTimeValidationRuntimeExDTO> doUpdateEntity(DateTimeValidationRuntimeEx entity,
+                                                                             DateTimeValidationRuntimeExDTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(DateTimeValidationRuntimeExDTO_.customField)) {
+            try {
+                //call custom function
+                throw new Exception("Error");
+            } catch (Exception e) {
+                throw new RuntimeException("An unexpected error has occurred.");
+            }
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<DateTimeValidationRuntimeExDTO> doUpdateEntity(DateTimeValidationRuntimeEx entity,
-			DateTimeValidationRuntimeExDTO data, BusinessComponent bc) {
-		if (data.isFieldChanged(DateTimeValidationRuntimeExDTO_.customField)) {
-			try {
-				//call custom function
-				throw new Exception("Error");
-			} catch (Exception e) {
-				throw new RuntimeException("An unexpected error has occurred.");
-			}
-		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<DateTimeValidationRuntimeExDTO> getActions() {
-		return Actions.<DateTimeValidationRuntimeExDTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<DateTimeValidationRuntimeExDTO> getActions() {
+        return Actions.<DateTimeValidationRuntimeExDTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 
 }

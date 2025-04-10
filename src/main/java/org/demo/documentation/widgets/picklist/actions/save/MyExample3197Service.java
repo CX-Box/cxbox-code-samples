@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.picklist.actions.save;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,17 +12,16 @@ import org.demo.documentation.widgets.picklist.actions.save.forpicklistpopup.MyE
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3197Service extends VersionAwareResponseService<MyExample3197DTO, MyEntity3197> {
 
     private final MyEntity3197Repository repository;
-  @Autowired
-  private EntityManager entityManager;
-
-  public MyExample3197Service(MyEntity3197Repository repository) {
-        super(MyExample3197DTO.class, MyEntity3197.class, null, MyExample3197Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3197Meta> meta = MyExample3197Meta.class;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     protected CreateResult<MyExample3197DTO> doCreateEntity(MyEntity3197 entity, BusinessComponent bc) {
@@ -30,12 +31,12 @@ public class MyExample3197Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3197DTO> doUpdateEntity(MyEntity3197 entity, MyExample3197DTO data, BusinessComponent bc) {
-      if (data.isFieldChanged(MyExample3197DTO_.customFieldPickListId)) {
-        entity.setCustomFieldPickListEntity(data.getCustomFieldPickListId() != null
-                ? entityManager.getReference(MyEntity3197Pick.class, data.getCustomFieldPickListId())
-                : null);
-      }
-      if (data.isFieldChanged(MyExample3197DTO_.customField)) {
+        if (data.isFieldChanged(MyExample3197DTO_.customFieldPickListId)) {
+            entity.setCustomFieldPickListEntity(data.getCustomFieldPickListId() != null
+                    ? entityManager.getReference(MyEntity3197Pick.class, data.getCustomFieldPickListId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample3197DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));

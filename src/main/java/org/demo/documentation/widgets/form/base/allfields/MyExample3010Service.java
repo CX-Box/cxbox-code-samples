@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.form.base.allfields;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -17,17 +19,16 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3010Service extends VersionAwareResponseService<MyExample3010DTO, MyEntity3010> {
 
     private final MyEntity3010Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3010Meta> meta = MyExample3010Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3010Service(MyEntity3010Repository repository) {
-        super(MyExample3010DTO.class, MyEntity3010.class, null, MyExample3010Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3010DTO> doCreateEntity(MyEntity3010 entity, BusinessComponent bc) {

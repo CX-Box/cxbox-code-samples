@@ -2,6 +2,8 @@ package org.demo.documentation.fields.multivalue.basic;
 
 import java.util.Objects;
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -12,55 +14,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample176Service extends VersionAwareResponseService<MyExample176DTO, MyEntity176> {
 
-	private final MyEntity176Repository repository;
+    private final MyEntity176Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample176Meta> meta = MyExample176Meta.class;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	public MyExample176Service(MyEntity176Repository repository) {
-		super(MyExample176DTO.class, MyEntity176.class, null, MyExample176Meta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<MyExample176DTO> doCreateEntity(MyEntity176 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<MyExample176DTO> doCreateEntity(MyEntity176 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample176DTO> doUpdateEntity(MyEntity176 entity, MyExample176DTO data,
+                                                              BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample176DTO_.customFieldAdditional)) {
+            entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
+        }
+        if (data.isFieldChanged(MyExample176DTO_.customField)) {
+            entity.getCustomFieldList().clear();
+            entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntityMultivalue177.class, e))
+                    .toList());
+        }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample176DTO> doUpdateEntity(MyEntity176 entity, MyExample176DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample176DTO_.customFieldAdditional)) {
-			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
-		}
-		if (data.isFieldChanged(MyExample176DTO_.customField)) {
-			entity.getCustomFieldList().clear();
-			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
-					.map(MultivalueFieldSingleValue::getId)
-					.filter(Objects::nonNull)
-					.map(Long::parseLong)
-					.map(e -> entityManager.getReference(MyEntityMultivalue177.class, e))
-					.toList());
-		}
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample176DTO> getActions() {
-		return Actions.<MyExample176DTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample176DTO> getActions() {
+        return Actions.<MyExample176DTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }

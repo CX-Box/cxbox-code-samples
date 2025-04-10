@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.inlinepicklist.validationruntimeex;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,51 +12,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample154Service extends VersionAwareResponseService<MyExample154DTO, MyEntity154> {
 
-	private final MyEntity154Repository repository;
+    private final MyEntity154Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample154Meta> meta = MyExample154Meta.class;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	public MyExample154Service(MyEntity154Repository repository) {
-		super(MyExample154DTO.class, MyEntity154.class, null, MyExample154Meta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<MyExample154DTO> doCreateEntity(MyEntity154 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<MyExample154DTO> doCreateEntity(MyEntity154 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample154DTO> doUpdateEntity(MyEntity154 entity, MyExample154DTO data,
+                                                              BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample154DTO_.customFieldId)) {
+            try {
+                //call custom function
+                throw new Exception("Error");
+            } catch (Exception e) {
+                throw new RuntimeException("An unexpected error has occurred.");
+            }
+        }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample154DTO> doUpdateEntity(MyEntity154 entity, MyExample154DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample154DTO_.customFieldId)) {
-			try {
-				//call custom function
-				throw new Exception("Error");
-			} catch (Exception e) {
-				throw new RuntimeException("An unexpected error has occurred.");
-			}
-		}
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample154DTO> getActions() {
-		return Actions.<MyExample154DTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample154DTO> getActions() {
+        return Actions.<MyExample154DTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }

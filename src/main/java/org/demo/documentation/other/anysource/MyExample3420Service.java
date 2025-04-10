@@ -1,5 +1,7 @@
 package org.demo.documentation.other.anysource;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -15,13 +17,16 @@ import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_DATE;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3420Service extends AnySourceVersionAwareResponseService<MyExample3420DTO, MyEntity3420OutServiceDTO> {
 
 
-    public MyExample3420Service() {
-        super(MyExample3420DTO.class, MyEntity3420OutServiceDTO.class, MyExample3420Meta.class, MyEntity3420Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3420Meta> meta = MyExample3420Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3420Dao> dao = MyEntity3420Dao.class;
 
 
     @Override
@@ -50,7 +55,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3420DTO> getActions() {
         return Actions.<MyExample3420DTO>builder()
@@ -62,5 +67,5 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
                 .build();
     }
 
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

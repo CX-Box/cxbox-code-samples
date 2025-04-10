@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.picklist;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.MyEntity3092Pick;
 import org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.MyEntity3092PickRepository;
@@ -11,15 +12,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3092PickPickService extends VersionAwareResponseService<MyEntity3092PickPickDTO, MyEntity3092Pick> {
     private final MyEntity3092PickRepository repository;
-
-    public MyEntity3092PickPickService(MyEntity3092PickRepository repository) {
-        super(MyEntity3092PickPickDTO.class, MyEntity3092Pick.class, null, MyEntity3092PickPickMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3092PickPickMeta> meta = MyEntity3092PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3092PickPickDTO> doCreateEntity(MyEntity3092Pick entity, BusinessComponent bc) {

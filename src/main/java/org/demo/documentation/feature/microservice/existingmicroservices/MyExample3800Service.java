@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.microservice.existingmicroservices;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,12 +10,15 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3800Service extends AnySourceVersionAwareResponseService<MyExample3800DTO, MyEntity3800OutServiceDTO> {
 
-    public MyExample3800Service() {
-        super(MyExample3800DTO.class, MyEntity3800OutServiceDTO.class, MyExample3800Meta.class, MyEntity3800Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3800Meta> meta = MyExample3800Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3800Dao> dao = MyEntity3800Dao.class;
 
     @Override
     protected CreateResult<MyExample3800DTO> doCreateEntity(MyEntity3800OutServiceDTO entity, BusinessComponent bc) {
@@ -29,7 +34,7 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3800DTO> getActions() {
         return Actions.<MyExample3800DTO>builder()

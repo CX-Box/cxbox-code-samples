@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.typestandard.businessexample.task;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,16 +10,14 @@ import org.cxbox.core.service.action.Actions;
 
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3428Service extends VersionAwareResponseService<MyExample3428DTO, MyEntity3428> {
 
     private final MyEntity3428Repository repository;
-
-    public MyExample3428Service(MyEntity3428Repository repository) {
-        super(MyExample3428DTO.class, MyEntity3428.class, null, MyExample3428Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3428Meta> meta = MyExample3428Meta.class;
 
     @Override
     protected CreateResult<MyExample3428DTO> doCreateEntity(MyEntity3428 entity, BusinessComponent bc) {
@@ -36,7 +36,7 @@ public class MyExample3428Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3428DTO> getActions() {
         return Actions.<MyExample3428DTO>builder()
@@ -45,5 +45,5 @@ public class MyExample3428Service extends VersionAwareResponseService<MyExample3
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

@@ -1,5 +1,7 @@
 package org.demo.documentation.other.savewithparent.example3.relatedobject;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -11,18 +13,16 @@ import org.demo.documentation.other.savewithparent.example3.MyEntity3422Reposito
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3423Service extends VersionAwareResponseService<MyExample3423DTO, MyEntity3423> {
 
     private final MyEntity3423Repository repository;
     private final MyEntity3422Repository repositoryParent;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3423Meta> meta = MyExample3423Meta.class;
 
-    public MyExample3423Service(MyEntity3423Repository repository, MyEntity3422Repository repositoryParent) {
-        super(MyExample3423DTO.class, MyEntity3423.class, null, MyExample3423Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
     @Override
     protected Specification<MyEntity3423> getParentSpecification(BusinessComponent bc) {
         return (root, cq, cb) -> cb.and(
@@ -30,6 +30,7 @@ public class MyExample3423Service extends VersionAwareResponseService<MyExample3
                 cb.equal(root.get(MyEntity3423_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
+
     @Override
     protected CreateResult<MyExample3423DTO> doCreateEntity(MyEntity3423 entity, BusinessComponent bc) {
         MyEntity3422 myEntity3422 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
@@ -46,7 +47,7 @@ public class MyExample3423Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3423DTO> getActions() {
         return Actions.<MyExample3423DTO>builder()
@@ -57,5 +58,5 @@ public class MyExample3423Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

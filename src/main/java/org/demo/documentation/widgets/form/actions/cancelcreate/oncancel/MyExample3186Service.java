@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.actions.cancelcreate.oncancel;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -9,16 +11,14 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3186Service extends VersionAwareResponseService<MyExample3186DTO, MyEntity3186> {
 
     private final MyEntity3186Repository repository;
-
-    public MyExample3186Service(MyEntity3186Repository repository) {
-        super(MyExample3186DTO.class, MyEntity3186.class, null, MyExample3186Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3186Meta> meta = MyExample3186Meta.class;
 
     @Override
     protected CreateResult<MyExample3186DTO> doCreateEntity(MyEntity3186 entity, BusinessComponent bc) {
@@ -33,14 +33,14 @@ public class MyExample3186Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3186DTO> doUpdateEntity(MyEntity3186 entity, MyExample3186DTO data, BusinessComponent bc) {
-      setIfChanged(data, MyExample3186DTO_.customFieldText, entity::setCustomFieldText);
-      if (data.isFieldChanged(MyExample3186DTO_.customField)) {
+        setIfChanged(data, MyExample3186DTO_.customFieldText, entity::setCustomFieldText);
+        if (data.isFieldChanged(MyExample3186DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-  // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3186DTO> getActions() {
         return Actions.<MyExample3186DTO>builder()
@@ -62,16 +62,16 @@ public class MyExample3186Service extends VersionAwareResponseService<MyExample3
                         ))
                 .build();
     }
-  // --8<-- [end:getActions]
+    // --8<-- [end:getActions]
 
-  // --8<-- [start:onCancel]
-  @Override
-  public ActionResultDTO onCancel(BusinessComponent bc) {
-    return new ActionResultDTO<>().setAction(PostAction.drillDown(
-            DrillDownType.INNER,
-            "/screen/myexample3186/"
-    ));
-  }
-  // --8<-- [end:onCancel]
+    // --8<-- [start:onCancel]
+    @Override
+    public ActionResultDTO onCancel(BusinessComponent bc) {
+        return new ActionResultDTO<>().setAction(PostAction.drillDown(
+                DrillDownType.INNER,
+                "/screen/myexample3186/"
+        ));
+    }
+    // --8<-- [end:onCancel]
 }
 

@@ -1,20 +1,27 @@
 package org.demo.documentation.getstarted.microservice.document;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.demo.documentation.getstarted.microservice.MyEntity4001OutServiceDTO;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample4003Service extends AnySourceVersionAwareResponseService<MyExample4003DTO, MyEntity4001OutServiceDTO> {
 
-    public MyExample4003Service() {
-        super(MyExample4003DTO.class, MyEntity4001OutServiceDTO.class, null, MyEntity4003Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity4003Dao> dao = MyEntity4003Dao.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<? extends AnySourceFieldMetaBuilder<MyExample4003DTO>> meta = MyExample4003Meta.class;
+
 
     @Override
     protected CreateResult<MyExample4003DTO> doCreateEntity(MyEntity4001OutServiceDTO entity, BusinessComponent bc) {
@@ -26,7 +33,7 @@ public class MyExample4003Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4003DTO> getActions() {
         return Actions.<MyExample4003DTO>builder()
@@ -35,5 +42,5 @@ public class MyExample4003Service extends AnySourceVersionAwareResponseService<M
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

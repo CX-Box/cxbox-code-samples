@@ -2,6 +2,7 @@ package org.demo.documentation.widgets.assoc.colortitle.allfields;
 
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 
 import org.demo.documentation.widgets.assoc.colortitle.allfields.forfields.MyEntity3052MultiAssoc;
@@ -17,16 +18,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 
 import java.util.Objects;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3052MultiMultivalueService extends VersionAwareResponseService<MyEntity3052MultiMultivalueDTO, MyEntity3052Multi> {
 
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3052MultiMultivalueMeta> meta = MyEntity3052MultiMultivalueMeta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyEntity3052MultiMultivalueService() {
-        super(MyEntity3052MultiMultivalueDTO.class, MyEntity3052Multi.class, null, MyEntity3052MultiMultivalueMeta.class);
-    }
 
     @Override
     protected CreateResult<MyEntity3052MultiMultivalueDTO> doCreateEntity(MyEntity3052Multi entity, BusinessComponent bc) {

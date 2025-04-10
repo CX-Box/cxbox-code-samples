@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.date.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,44 +9,42 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class DateFiltrationService extends VersionAwareResponseService<DateFiltrationDTO, dateFiltrationEntity> {
 
-	private final dateFiltrationEntityRepository repository;
+    private final dateFiltrationEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateFiltrationMeta> meta = DateFiltrationMeta.class;
 
-	public DateFiltrationService(dateFiltrationEntityRepository repository) {
-		super(DateFiltrationDTO.class, dateFiltrationEntity.class, null, DateFiltrationMeta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<DateFiltrationDTO> doCreateEntity(dateFiltrationEntity entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<DateFiltrationDTO> doCreateEntity(dateFiltrationEntity entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<DateFiltrationDTO> doUpdateEntity(dateFiltrationEntity entity, DateFiltrationDTO data,
+                                                                BusinessComponent bc) {
+        if (data.isFieldChanged(DateFiltrationDTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<DateFiltrationDTO> doUpdateEntity(dateFiltrationEntity entity, DateFiltrationDTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(DateFiltrationDTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
-		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<DateFiltrationDTO> getActions() {
-		return Actions.<DateFiltrationDTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<DateFiltrationDTO> getActions() {
+        return Actions.<DateFiltrationDTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 
 }

@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.other.example5;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -17,19 +19,17 @@ import org.demo.documentation.other.savewithparent.example443.child.MyExample307
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3160Service extends VersionAwareResponseService<MyExample3160DTO, MyEntity3160> {
 
     private final MyEntity3160Repository repository;
 
     private final MyEntity3161Repository repositoryParent;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3160Meta> meta = MyExample3160Meta.class;
 
-    public MyExample3160Service(MyEntity3160Repository repository, MyEntity3161Repository repositoryParent) {
-        super(MyExample3160DTO.class, MyEntity3160.class, null, MyExample3160Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
     @Override
     protected Specification<MyEntity3160> getParentSpecification(BusinessComponent bc) {
         return (root, cq, cb) -> cb.and(
@@ -37,6 +37,7 @@ public class MyExample3160Service extends VersionAwareResponseService<MyExample3
                 cb.equal(root.get(MyEntity3160_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
+
     @Override
     protected CreateResult<MyExample3160DTO> doCreateEntity(MyEntity3160 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -51,7 +52,7 @@ public class MyExample3160Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3160DTO> getActions() {
         return Actions.<MyExample3160DTO>builder()
@@ -65,9 +66,9 @@ public class MyExample3160Service extends VersionAwareResponseService<MyExample3
 
     private ActionResultDTO<MyExample3160DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3160DTO dto) {
         MyEntity3161 parentEntity = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
-        parentEntity.setCustomField("Test data" +  Math.random());
+        parentEntity.setCustomField("Test data" + Math.random());
         repositoryParent.save(parentEntity);
-         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
+        return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
     }
 
 }

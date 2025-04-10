@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.drilldown;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +10,14 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputDrilldownService extends VersionAwareResponseService<InputDrilldownDTO, InputDrilldown> {
 
     private final InputDrilldownRepository repository;
-
-    public InputDrilldownService(InputDrilldownRepository repository) {
-        super(InputDrilldownDTO.class, InputDrilldown.class, null, InputDrilldownMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<InputDrilldownMeta> meta = InputDrilldownMeta.class;
 
     @Override
     protected CreateResult<InputDrilldownDTO> doCreateEntity(InputDrilldown entity, BusinessComponent bc) {
