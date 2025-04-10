@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.property.excel.inner.forfields;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,13 +9,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3134PickPickService extends VersionAwareResponseService<MyEntity3134PickPickDTO, MyEntity3134Pick> {
 
-    public MyEntity3134PickPickService() {
-        super(MyEntity3134PickPickDTO.class, MyEntity3134Pick.class, null, MyEntity3134PickPickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3134PickPickMeta> meta = MyEntity3134PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3134PickPickDTO> doCreateEntity(MyEntity3134Pick entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -24,6 +26,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.time.Duration;
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3232Service extends VersionAwareResponseService<MyExample3232DTO, MyEntity3232> {
 
@@ -32,13 +36,8 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
     private final RestTemplate restTemplate;
 
     private final MyEntity3232Repository repository;
-
-    public MyExample3232Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate, MyEntity3232Repository repository) {
-        super(MyExample3232DTO.class, MyEntity3232.class, null, MyExample3232Meta.class);
-        this.integrationConfig = integrationConfig;
-        this.restTemplate = restTemplate;
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3232Meta> meta = MyExample3232Meta.class;
 
     @Override
     protected CreateResult<MyExample3232DTO> doCreateEntity(MyEntity3232 entity, BusinessComponent bc) {
@@ -68,7 +67,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -87,7 +86,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -106,7 +105,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -128,7 +127,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -148,7 +147,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +
@@ -168,7 +167,7 @@ public class MyExample3232Service extends VersionAwareResponseService<MyExample3
                             MyEntity3232 myEntity3232 = new MyEntity3232();
                             myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
+                            findInExternalSystemAsync(myEntity3232, dto);
                             return new ActionResultDTO<MyExample3232DTO>().setAction(
                                     PostAction.drillDownAndWaitUntil(
                                                     "/screen/myexample3231/view/myexample3232resultform/" +

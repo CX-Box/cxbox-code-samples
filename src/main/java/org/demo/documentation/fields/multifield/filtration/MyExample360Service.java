@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.multifield.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,16 +11,15 @@ import org.demo.services.CustomDynamicErrorService;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample360Service extends VersionAwareResponseService<MyExample360DTO, MyEntity360> {
 
     private final MyEntity360Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample360Meta> meta = MyExample360Meta.class;
 
-
-    public MyExample360Service(MyEntity360Repository repository) {
-        super(MyExample360DTO.class, MyEntity360.class, null, MyExample360Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample360DTO> doCreateEntity(MyEntity360 entity, BusinessComponent bc) {
@@ -47,7 +48,7 @@ public class MyExample360Service extends VersionAwareResponseService<MyExample36
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample360DTO> getActions() {
         return Actions.<MyExample360DTO>builder()
@@ -56,5 +57,5 @@ public class MyExample360Service extends VersionAwareResponseService<MyExample36
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

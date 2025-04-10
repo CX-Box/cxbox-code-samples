@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.formpopup.widgetsize;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,16 +12,14 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.action.ActionsExt;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3402Service extends VersionAwareResponseService<MyExample3402DTO, MyEntity3402> {
 
     private final MyEntity3402Repository repository;
-
-    public MyExample3402Service(MyEntity3402Repository repository) {
-        super(MyExample3402DTO.class, MyEntity3402.class, null, MyExample3402Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3402Meta> meta = MyExample3402Meta.class;
 
     @Override
     protected CreateResult<MyExample3402DTO> doCreateEntity(MyEntity3402 entity, BusinessComponent bc) {
@@ -42,8 +42,9 @@ public class MyExample3402Service extends VersionAwareResponseService<MyExample3
     private static PreAction formPopup12(@NonNull String actionText) {
         return ActionsExt.confirmWithCustomWidget(actionText, "MyExample3402Formpopup12", "Done", "Cancel");
     }
+
     private static PreAction formPopup24(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText , "MyExample3402Formpopup24", "Done", "Cancel");
+        return ActionsExt.confirmWithCustomWidget(actionText, "MyExample3402Formpopup24", "Done", "Cancel");
     }
 
     @Override

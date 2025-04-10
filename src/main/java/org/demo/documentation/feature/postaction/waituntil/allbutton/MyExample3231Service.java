@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.postaction.waituntil.allbutton;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -22,6 +24,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.time.Duration;
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3231Service extends VersionAwareResponseService<MyExample3231DTO, MyEntity3231> {
 
@@ -30,13 +34,8 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     private final RestTemplate restTemplate;
 
     private final MyEntity3231Repository repository;
-
-    public MyExample3231Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate, MyEntity3231Repository repository) {
-        super(MyExample3231DTO.class, MyEntity3231.class, null, MyExample3231Meta.class);
-        this.integrationConfig = integrationConfig;
-        this.restTemplate = restTemplate;
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3231Meta> meta = MyExample3231Meta.class;
 
     @Override
     protected CreateResult<MyExample3231DTO> doCreateEntity(MyEntity3231 entity, BusinessComponent bc) {
@@ -100,10 +99,10 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
                             myEntity3231.setStatusResponse(StatusEnum.IN_PROGRESS);
                             repository.save(myEntity3231);
                             findInExternalSystemAsync(bc, dto);
-                               return new ActionResultDTO<MyExample3231DTO>().setAction(
+                            return new ActionResultDTO<MyExample3231DTO>().setAction(
                                     PostAction.waitUntil(
-                                            MyExample3231DTO_.statusResponse,
-                                            StatusEnum.DONE)
+                                                    MyExample3231DTO_.statusResponse,
+                                                    StatusEnum.DONE)
                                             .timeoutMessage("`Timeout` custom message")
                                             .inProgressMessage("`In Progress` custom message")
                                             .successMessage("`Success` custom message")
@@ -164,7 +163,7 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     // --8<-- [end:getActions]
 
     // --8<-- [start:findInExternalSystem]
-    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3231DTO dto){
+    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3231DTO dto) {
 
         MyEntity3231 myEntity3231 = repository.findById(bc.getIdAsLong()).orElseThrow();
         Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
@@ -178,26 +177,26 @@ public class MyExample3231Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:callService]
     public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
 
-            Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
+        Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
-            String urlTemplate = UriComponentsBuilder.fromHttpUrl(
-                    integrationConfig.getDataServerUrl())
-                    .queryParam("number", 1)
-                    .queryParam("size", 1)
-                    .queryParamIfPresent("filterEqualsCustomField", filter)
-                    .encode()
-                    .toUriString();
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(
+                        integrationConfig.getDataServerUrl())
+                .queryParam("number", 1)
+                .queryParam("size", 1)
+                .queryParamIfPresent("filterEqualsCustomField", filter)
+                .encode()
+                .toUriString();
 
-            ResponseEntity<RestResponsePage<MyEntity3231AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
-                    urlTemplate,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<>() {
-                    },
-                    filter
-            );
+        ResponseEntity<RestResponsePage<MyEntity3231AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
+                urlTemplate,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                },
+                filter
+        );
 
-            return responseEntity.getBody();
+        return responseEntity.getBody();
 
     }
     // --8<-- [end:callService]

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetimewithseconds.placeholder;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,48 +10,42 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeWithSecondsPlaceholderService extends
-		VersionAwareResponseService<DateTimeWithSecondsPlaceholderDTO, DateTimeWithSecondsPlaceholderEntity> {
+        VersionAwareResponseService<DateTimeWithSecondsPlaceholderDTO, DateTimeWithSecondsPlaceholderEntity> {
 
-	private final DateTimeWithSecondsPlaceholderEntityRepository repository;
+    private final DateTimeWithSecondsPlaceholderEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeWithSecondsPlaceholderMeta> meta = DateTimeWithSecondsPlaceholderMeta.class;
 
-	public DateTimeWithSecondsPlaceholderService(DateTimeWithSecondsPlaceholderEntityRepository repository) {
-		super(
-				DateTimeWithSecondsPlaceholderDTO.class,
-				DateTimeWithSecondsPlaceholderEntity.class,
-				null,
-				DateTimeWithSecondsPlaceholderMeta.class
-		);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<DateTimeWithSecondsPlaceholderDTO> doCreateEntity(DateTimeWithSecondsPlaceholderEntity entity,
+                                                                             BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<DateTimeWithSecondsPlaceholderDTO> doCreateEntity(DateTimeWithSecondsPlaceholderEntity entity,
-			BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<DateTimeWithSecondsPlaceholderDTO> doUpdateEntity(
+            DateTimeWithSecondsPlaceholderEntity entity, DateTimeWithSecondsPlaceholderDTO data, BusinessComponent bc) {
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<DateTimeWithSecondsPlaceholderDTO> doUpdateEntity(
-			DateTimeWithSecondsPlaceholderEntity entity, DateTimeWithSecondsPlaceholderDTO data, BusinessComponent bc) {
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<DateTimeWithSecondsPlaceholderDTO> getActions() {
-		return Actions.<DateTimeWithSecondsPlaceholderDTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<DateTimeWithSecondsPlaceholderDTO> getActions() {
+        return Actions.<DateTimeWithSecondsPlaceholderDTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 
 }

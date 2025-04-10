@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.radio.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,43 +10,42 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample23Service extends VersionAwareResponseService<MyExample23DTO, MyEntity23> {
 
-	private final MyEntity23Repository repository;
+    private final MyEntity23Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample23Meta> meta = MyExample23Meta.class;
 
-	public MyExample23Service(MyEntity23Repository repository) {
-		super(MyExample23DTO.class, MyEntity23.class, null, MyExample23Meta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<MyExample23DTO> doCreateEntity(MyEntity23 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<MyExample23DTO> doCreateEntity(MyEntity23 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample23DTO> doUpdateEntity(MyEntity23 entity, MyExample23DTO data,
+                                                             BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample23DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample23DTO> doUpdateEntity(MyEntity23 entity, MyExample23DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample23DTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
-		}
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample23DTO> getActions() {
-		return Actions.<MyExample23DTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample23DTO> getActions() {
+        return Actions.<MyExample23DTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }

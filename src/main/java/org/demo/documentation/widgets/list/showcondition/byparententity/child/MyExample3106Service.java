@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.list.showcondition.byparententity.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -13,19 +15,16 @@ import org.demo.documentation.widgets.list.showcondition.byparententity.parent.M
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3106Service extends VersionAwareResponseService<MyExample3106DTO, MyEntity3106> {
 
     private final MyEntity3106Repository repository;
 
     private final MyEntity3100Repository repositoryParent;
-
-    public MyExample3106Service(MyEntity3106Repository repository, MyEntity3100Repository repositoryParent) {
-        super(MyExample3106DTO.class, MyEntity3106.class, null, MyExample3106Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3106Meta> meta = MyExample3106Meta.class;
 
     @Override
     protected Specification<MyEntity3106> getParentSpecification(BusinessComponent bc) {
@@ -35,6 +34,7 @@ public class MyExample3106Service extends VersionAwareResponseService<MyExample3
                 cb.equal(root.get(MyEntity3106_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
+
     @Override
     protected CreateResult<MyExample3106DTO> doCreateEntity(MyEntity3106 entity, BusinessComponent bc) {
         MyEntity3100 myEntity3100 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
@@ -62,9 +62,9 @@ public class MyExample3106Service extends VersionAwareResponseService<MyExample3
                                     PostAction.refreshBc(PlatformMyExample3100Controller.myexample3100
                                     ));
                         }))
-                        .create(crt -> crt)
-                        .delete(dlt -> dlt)
-                        .build();
+                .create(crt -> crt)
+                .delete(dlt -> dlt)
+                .build();
     }
     // --8<-- [end:getActions]
 }

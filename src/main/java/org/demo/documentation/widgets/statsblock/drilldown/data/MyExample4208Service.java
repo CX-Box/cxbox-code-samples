@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.statsblock.drilldown.data;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +10,14 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample4208Service extends VersionAwareResponseService<MyExample4208DTO, MyEntity4208> {
 
     private final MyEntity4208Repository repository;
-
-    public MyExample4208Service(MyEntity4208Repository repository) {
-        super(MyExample4208DTO.class, MyEntity4208.class, null, MyExample4208Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4208Meta> meta = MyExample4208Meta.class;
 
     @Override
     protected CreateResult<MyExample4208DTO> doCreateEntity(MyEntity4208 entity, BusinessComponent bc) {
@@ -33,7 +34,7 @@ public class MyExample4208Service extends VersionAwareResponseService<MyExample4
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4208DTO> getActions() {
         return Actions.<MyExample4208DTO>builder()
@@ -42,5 +43,5 @@ public class MyExample4208Service extends VersionAwareResponseService<MyExample4
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

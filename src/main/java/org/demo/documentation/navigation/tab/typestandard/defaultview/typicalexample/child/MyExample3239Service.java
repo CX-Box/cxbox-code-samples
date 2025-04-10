@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -17,19 +19,16 @@ import org.demo.documentation.widgets.list.actions.create.newview.MyExample3066D
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3239Service extends VersionAwareResponseService<MyExample3239DTO, MyEntity3239> {
 
     private final MyEntity3239Repository repository;
 
     private final MyEntity3238Repository repositoryParent;
-
-    public MyExample3239Service(MyEntity3239Repository repository, MyEntity3238Repository repositoryParent) {
-        super(MyExample3239DTO.class, MyEntity3239.class, null, MyExample3239Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3239Meta> meta = MyExample3239Meta.class;
 
     @Override
     protected Specification<MyEntity3239> getParentSpecification(BusinessComponent bc) {
@@ -49,7 +48,7 @@ public class MyExample3239Service extends VersionAwareResponseService<MyExample3
                         DrillDownType.INNER,
                         "/screen/myexample3238/view/myexample3239form/"
                                 + CxboxMyExample3238Controller.myexample3238 + "/"
-                                + entity.getCustomFieldEntity().getId()+ "/"
+                                + entity.getCustomFieldEntity().getId() + "/"
                                 + CxboxMyExample3238Controller.myexample3239 + "/"
                                 + entity.getId()));
     }
@@ -74,7 +73,7 @@ public class MyExample3239Service extends VersionAwareResponseService<MyExample3
                             return new ActionResultDTO<MyExample3239DTO>().setAction(
                                     PostAction.drillDown(
                                             DrillDownType.INNER,
-                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/"+  bc.getParentId()
+                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" + bc.getParentId()
                                     ));
                         })
                 )
@@ -85,7 +84,7 @@ public class MyExample3239Service extends VersionAwareResponseService<MyExample3
                             return new ActionResultDTO<MyExample3239DTO>().setAction(
                                     PostAction.drillDown(
                                             DrillDownType.INNER,
-                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" +  bc.getParentId()
+                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" + bc.getParentId()
                                     ));
                         })
                 )

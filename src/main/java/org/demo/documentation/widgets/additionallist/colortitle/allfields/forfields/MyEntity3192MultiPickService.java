@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.additionallist.colortitle.allfields.forfields;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,13 +9,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3192MultiPickService extends VersionAwareResponseService<MyEntity3192MultiPickDTO, MyEntity3192Multi> {
 
-    public MyEntity3192MultiPickService() {
-        super(MyEntity3192MultiPickDTO.class, MyEntity3192Multi.class, null, MyEntity3192MultiPickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3192MultiPickMeta> meta = MyEntity3192MultiPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3192MultiPickDTO> doCreateEntity(MyEntity3192Multi entity, BusinessComponent bc) {

@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.picklist.title.calculatedtitle;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -9,13 +10,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3071PickPickService extends VersionAwareResponseService<MyEntity3071PickPickDTO, MyEntity3071Pick> {
 
-    public MyEntity3071PickPickService() {
-        super(MyEntity3071PickPickDTO.class, MyEntity3071Pick.class, null, MyEntity3071PickPickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3071PickPickMeta> meta = MyEntity3071PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3071PickPickDTO> doCreateEntity(MyEntity3071Pick entity, BusinessComponent bc) {
@@ -29,7 +31,7 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyEntity3071PickPickDTO> getActions() {
         return Actions.<MyEntity3071PickPickDTO>builder()
@@ -38,5 +40,5 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

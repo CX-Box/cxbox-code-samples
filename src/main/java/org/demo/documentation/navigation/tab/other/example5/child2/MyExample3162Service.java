@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.other.example5.child2;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -12,18 +14,15 @@ import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161Repository;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"EmptyMethod", "java:S1170"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3162Service extends VersionAwareResponseService<MyExample3162DTO, MyEntity3162> {
 
     private final MyEntity3162Repository repository;
     private final MyEntity3161Repository repositoryParent;
-
-    public MyExample3162Service(MyEntity3162Repository repository, MyEntity3161Repository repositoryParent) {
-        super(MyExample3162DTO.class, MyEntity3162.class, null, MyExample3162Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3162Meta> meta = MyExample3162Meta.class;
 
     @Override
     protected CreateResult<MyExample3162DTO> doCreateEntity(MyEntity3162 entity, BusinessComponent bc) {
@@ -39,7 +38,7 @@ public class MyExample3162Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3162DTO> getActions() {
         return Actions.<MyExample3162DTO>builder()
@@ -55,7 +54,7 @@ public class MyExample3162Service extends VersionAwareResponseService<MyExample3
 
     private ActionResultDTO<MyExample3162DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3162DTO dto) {
         MyEntity3161 parentEntity = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
-        parentEntity.setCustomField("Test data" +  Math.random());
+        parentEntity.setCustomField("Test data" + Math.random());
         repositoryParent.save(parentEntity);
         return new ActionResultDTO<>(dto).setAction(PostAction.refreshBc(CxboxMyExample3160Controller.myexample3161));
     }

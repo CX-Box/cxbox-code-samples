@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.multipleselect.validationruntimeex;
 
 import java.util.stream.Collectors;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,53 +13,52 @@ import org.demo.documentation.fields.multipleselect.validationruntimeex.enums.Cu
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample249Service extends VersionAwareResponseService<MyExample249DTO, MyEntity249> {
 
-	private final MyEntity249Repository repository;
+    private final MyEntity249Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample249Meta> meta = MyExample249Meta.class;
 
-	public MyExample249Service(MyEntity249Repository repository) {
-		super(MyExample249DTO.class, MyEntity249.class, null, MyExample249Meta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<MyExample249DTO> doCreateEntity(MyEntity249 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<MyExample249DTO> doCreateEntity(MyEntity249 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample249DTO> doUpdateEntity(MyEntity249 entity, MyExample249DTO data,
+                                                              BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample249DTO_.customField)) {
+            entity.setCustomField(
+                    data.getCustomField().getValues()
+                            .stream()
+                            .map(v -> CustomFieldEnum.getByValue(v.getValue()))
+                            .collect(Collectors.toSet()));
+            try {
+                //call custom function
+                throw new Exception("Error");
+            } catch (Exception e) {
+                throw new RuntimeException("An unexpected error has occurred.");
+            }
+        }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample249DTO> doUpdateEntity(MyEntity249 entity, MyExample249DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample249DTO_.customField)) {
-			entity.setCustomField(
-					data.getCustomField().getValues()
-							.stream()
-							.map(v -> CustomFieldEnum.getByValue(v.getValue()))
-							.collect(Collectors.toSet()));
-			try {
-				//call custom function
-				throw new Exception("Error");
-			} catch (Exception e) {
-				throw new RuntimeException("An unexpected error has occurred.");
-			}
-		}
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample249DTO> getActions() {
-		return Actions.<MyExample249DTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample249DTO> getActions() {
+        return Actions.<MyExample249DTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }

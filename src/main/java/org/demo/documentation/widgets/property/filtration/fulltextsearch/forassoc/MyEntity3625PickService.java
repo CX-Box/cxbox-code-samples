@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,16 +14,15 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3625PickService extends VersionAwareResponseService<MyEntity3625PickDTO, org.demo.documentation.widgets.property.filtration.fulltextsearch.forassoc.MyEntity3625> {
 
     private final MyEntity3625Repository repository;
-
-    public MyEntity3625PickService(MyEntity3625Repository repository) {
-        super(MyEntity3625PickDTO.class, MyEntity3625.class, null, MyEntity3625PickMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3625PickMeta> meta = MyEntity3625PickMeta.class;
 
     // --8<-- [start:getSpecification]
     @Override

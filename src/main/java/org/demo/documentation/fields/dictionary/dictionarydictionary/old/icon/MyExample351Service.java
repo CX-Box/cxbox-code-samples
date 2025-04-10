@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.old.icon;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -10,15 +12,14 @@ import org.springframework.stereotype.Service;
 
 import static org.demo.documentation.fields.dictionary.dictionarydictionary.old.AdministeredDictionaryTypeOld.REGIONS;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample351Service extends VersionAwareResponseService<MyExample351DTO, MyEntity351> {
 
     private final MyEntity351Repository repository;
-
-    public MyExample351Service(MyEntity351Repository repository) {
-        super(MyExample351DTO.class, MyEntity351.class, null, MyExample351Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample351Meta> meta = MyExample351Meta.class;
 
     @Override
     protected CreateResult<MyExample351DTO> doCreateEntity(MyEntity351 entity, BusinessComponent bc) {

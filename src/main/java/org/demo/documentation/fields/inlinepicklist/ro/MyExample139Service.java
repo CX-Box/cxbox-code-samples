@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.inlinepicklist.ro;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -11,48 +13,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample139Service extends VersionAwareResponseService<MyExample139DTO, MyEntity139> {
 
-	private final MyEntity139Repository repository;
+    private final MyEntity139Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample139Meta> meta = MyExample139Meta.class;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	public MyExample139Service(MyEntity139Repository repository) {
-		super(MyExample139DTO.class, MyEntity139.class, null, MyExample139Meta.class);
-		this.repository = repository;
-	}
+    @Override
+    protected CreateResult<MyExample139DTO> doCreateEntity(MyEntity139 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	@Override
-	protected CreateResult<MyExample139DTO> doCreateEntity(MyEntity139 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample139DTO> doUpdateEntity(MyEntity139 entity, MyExample139DTO data,
+                                                              BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample139DTO_.customFieldId)) {
+            entity.setCustomFieldEntity(data.getCustomFieldId() != null
+                    ? entityManager.getReference(MyEntity138.class, data.getCustomFieldId())
+                    : null);
+        }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample139DTO> doUpdateEntity(MyEntity139 entity, MyExample139DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample139DTO_.customFieldId)) {
-			entity.setCustomFieldEntity(data.getCustomFieldId() != null
-					? entityManager.getReference(MyEntity138.class, data.getCustomFieldId())
-					: null);
-		}
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
-
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample139DTO> getActions() {
-		return Actions.<MyExample139DTO>builder()
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample139DTO> getActions() {
+        return Actions.<MyExample139DTO>builder()
                 .action(act -> act
                         .action("save", "save")
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }

@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.list.colortitle;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -16,17 +18,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3050Service extends VersionAwareResponseService<MyExample3050DTO, MyEntity3050> {
 
     private final MyEntity3050Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3050Meta> meta = MyExample3050Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3050Service(MyEntity3050Repository repository) {
-        super(MyExample3050DTO.class, MyEntity3050.class, null, MyExample3050Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3050DTO> doCreateEntity(MyEntity3050 entity, BusinessComponent bc) {
@@ -109,7 +110,7 @@ public class MyExample3050Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3050DTO> getActions() {
         return Actions.<MyExample3050DTO>builder()
@@ -120,5 +121,5 @@ public class MyExample3050Service extends VersionAwareResponseService<MyExample3
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
