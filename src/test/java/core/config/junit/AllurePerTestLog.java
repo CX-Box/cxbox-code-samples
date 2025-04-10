@@ -111,15 +111,15 @@ public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 	@Override
 	public void beforeEach(ExtensionContext context) {
 		var perTestFileName = getPerTestUniqueAppenderName(context);
-		var logger = (ch.qos.logback.classic.Logger) this.logger;
+		var logback = (ch.qos.logback.classic.Logger) this.logger;
 		var fileAppender = getILoggingEventFileAppender(perTestFileName);
-		var appender = logger.getAppender(perTestFileName);
+		var appender = logback.getAppender(perTestFileName);
 		if (appender == null) {
-			logger.addAppender(fileAppender);
+			logback.addAppender(fileAppender);
 			fileAppender.start();
 		}
 
-		logger.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
+		logback.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
 	}
 
 	@Override
@@ -128,11 +128,11 @@ public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 		var perTestFileName = getPerTestUniqueAppenderName(context);
 		logger.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
 
-		var logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(loggerName);
-		var appender = logger.getAppender(perTestFileName);
+		var logback = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(loggerName);
+		var appender = logback.getAppender(perTestFileName);
 
 		if (appender != null) {
-			logger.detachAppender(perTestFileName);
+			logback.detachAppender(perTestFileName);
 			appender.stop();
 			var file = ((FileAppender<?>) appender).getFile();
 			var logFile = Path.of(file);
