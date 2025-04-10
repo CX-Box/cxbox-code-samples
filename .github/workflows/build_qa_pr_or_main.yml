@@ -44,7 +44,7 @@ jobs:
           sudo docker images
           sudo docker compose -f docker-compose-test.yml up -d
 
-      - name: Run tests
+      - name: run_tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Get Allure history
@@ -99,7 +99,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### Test Results Status: ${{ steps.Run_tests.outcome == 'success' && '✅ Passed' || '❌ Failed' }} [Allure Report:](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+            ### Test Results Status: ${{ steps.run_tests.outcome == 'success' && '✅ Passed' || '❌ Failed' }} [Allure Report:](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
       - name: cleanup docker resources
         if: always()
