@@ -99,9 +99,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### Test Results
-            Status: ${{ steps.Run_tests.outcome == 'success' && '✅ Passed' || '❌ Failed' }}  
-            Allure Report: [Open report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+            ### Test Results Status: ${{ steps.Run_tests.outcome == 'success' && '✅ Passed' || '❌ Failed' }} [Allure Report:](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
       - name: cleanup docker resources
         if: always()
