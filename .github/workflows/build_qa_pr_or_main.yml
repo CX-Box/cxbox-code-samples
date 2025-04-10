@@ -71,6 +71,20 @@ jobs:
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
           keep_reports: 20
 
+      - name: Check test results
+        id: check_results
+        if: always()
+        run: |
+          if [ -f "target/allure-results/widgets/summary.json" ]; then
+            failed=$(jq -r '.statistic.failed' target/allure-results/widgets/summary.json)
+            if [ "$failed" -gt 0 ]; then
+              echo "status=❌ Test Failed" >> $GITHUB_OUTPUT
+            else
+              echo "status=✅ Tested" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "status=⚠️ No test results" >> $GITHUB_OUTPUT
+          fi     
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -90,7 +104,7 @@ jobs:
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY      
 
       - name: Post link to PR
         if: always()
@@ -99,7 +113,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }} [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+            ### ${{ steps.check_results.outputs.status }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
       - name: cleanup docker resources
         if: always()
