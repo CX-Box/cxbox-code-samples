@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -42,7 +42,6 @@ public class DateTime extends BaseRow<LocalDateTime> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public LocalDateTime getValue() {
         setFocusField();
         String date = getRowByName()
@@ -78,7 +77,6 @@ public class DateTime extends BaseRow<LocalDateTime> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    @Attachment
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "span", "style");

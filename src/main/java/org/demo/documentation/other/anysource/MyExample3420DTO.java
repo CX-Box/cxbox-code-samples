@@ -1,21 +1,16 @@
 package org.demo.documentation.other.anysource;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
-import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 
 import java.time.LocalDateTime;
 
 import static org.demo.documentation.fields.main.TextError.LESS_100000;
-import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 
 @Getter
 @Setter

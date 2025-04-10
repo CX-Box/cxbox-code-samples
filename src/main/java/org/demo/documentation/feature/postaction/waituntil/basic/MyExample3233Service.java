@@ -10,7 +10,6 @@ import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3233AnySourceOutServiceDTO;
-import org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton.MyExample3232DTO;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;

@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,7 +34,7 @@ public class StepsWidget {
      *
      * @return Pair Integer, String
      */
-    @Attachment
+
     public List<Pair<Integer, String>> getNumberAndTextSteps() {
         return Allure.step("Getting the number and text of the steps", step -> {
             logTime(step);
@@ -62,7 +62,7 @@ public class StepsWidget {
      * @param stepIndex The step number. Counting down from 1
      * @return String
      */
-    @Attachment
+
     public String getStepText(int stepIndex) {
         return Allure.step("Getting the number and text for " + stepIndex + "  steps", step -> {
             logTime(step);
@@ -86,7 +86,7 @@ public class StepsWidget {
      *
      * @return String
      */
-    @Attachment
+
     public String getTextActiveStep() {
         return Allure.step("Getting the number and text of the active/current step", step -> {
             logTime(step);

@@ -2,7 +2,6 @@ package org.demo.documentation.navigation.tab.other.example5;
 
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
-import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
@@ -10,10 +9,6 @@ import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161Repository;
-import org.demo.documentation.other.savewithparent.examle0.parent.MyEntity3058;
-import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130;
-import org.demo.documentation.other.savewithparent.example2.child.MyEntity3130_;
-import org.demo.documentation.other.savewithparent.example443.child.MyExample3077DTO;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

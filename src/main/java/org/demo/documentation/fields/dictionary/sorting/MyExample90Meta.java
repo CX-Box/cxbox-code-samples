@@ -6,13 +6,9 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
-import org.demo.documentation.fields.date.sorting.DateSortingDTO_;
 import org.demo.documentation.fields.dictionary.sorting.enums.CustomFieldDictionaryCustomOrderEnum;
 import org.demo.documentation.fields.dictionary.sorting.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor

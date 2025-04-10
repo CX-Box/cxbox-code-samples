@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -13,8 +13,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -25,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 public class InputOnFormTest extends BaseTestForSamples {
 
 
@@ -37,7 +35,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void placeholder() throws InterruptedException {
         MainPages.click("Input placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -49,7 +47,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Input color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -61,7 +59,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Input readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -74,7 +72,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Input basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         customField.setValue("5700");
         assertThat(customField.getValue()).isEqualTo("5700");
@@ -88,7 +86,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Input filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -101,7 +99,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Input drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField2");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -114,10 +112,10 @@ public class InputOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Input validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         customField.setValue("5700");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
@@ -132,10 +130,10 @@ public class InputOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Input validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         customField.setValue("1234");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -150,11 +148,11 @@ public class InputOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Input validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         customField.setValue("5700");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -170,7 +168,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Input validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.input("Custom Field");
         customField.setValue("123");
         form.clickButton("save");
@@ -185,7 +183,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Input validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.input("Custom Field");
         var customField2 = form.input("Custom Field Additional");
         customField.setValue("123");
@@ -203,7 +201,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Input sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -216,7 +214,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Input required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         customField.clear();
         form.clickButton("Save");
@@ -231,7 +229,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void maxInput() {
         MainPages.click("Input maxInput");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.input("custom Field");
         customField.clear();
         customField.setValue("td");
@@ -246,7 +244,7 @@ public class InputOnFormTest extends BaseTestForSamples {
     void getButtons() {
         MainPages.click("Input basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField");
         form.getButtons();
         assertThat(customField.getValue()).isEqualTo("test data");

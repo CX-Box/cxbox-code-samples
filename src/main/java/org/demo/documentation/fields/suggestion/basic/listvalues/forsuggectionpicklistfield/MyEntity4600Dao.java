@@ -17,6 +17,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,14 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
     @Override
     public Page<MyEntity4600OutServiceDTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
         try {
-            return new PageImpl<>(getData());
+            String filterCustomField = getFilterFieldName(queryParameters);
+            if (filterCustomField == null) {
+                return new PageImpl<>(getData());
+            }
+            return new PageImpl<>(getData().stream()
+                    .filter(f -> f.getCustomField().toUpperCase().contains(filterCustomField.toUpperCase()))
+                    .toList());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +98,7 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
     @NonNull
     private List<MyEntity4600OutServiceDTO> getData() throws IOException {
 
-        String filePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "db","data","custom","product.csv").toString();
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "db", "data", "custom", "product.csv").toString();
         return Files.readAllLines(Paths.get(filePath))
                 .stream()
                 .map(line -> line.split(DELIMITER)) // Разделяем строку по разделителю
@@ -103,4 +111,11 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
                 .collect(Collectors.toList()); // Собираем результат в список
     }
 
+    private String getFilterFieldName(QueryParameters queryParameters) {
+        return queryParameters.getParameters().entrySet().stream()
+                .filter(e -> e.getKey().contains("query"))
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(null);
+    }
 }

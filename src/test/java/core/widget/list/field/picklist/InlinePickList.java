@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -56,7 +56,6 @@ public class InlinePickList extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public String getValue() {
         setFocusField();
         return getRowByName()
@@ -83,7 +82,6 @@ public class InlinePickList extends BaseRow<String> {
      * @return List String Match results
      */
     @Step("Getting a list of options via a character match")
-    @Attachment
     public List<String> getValueInList(String value) {
         setFocusField();
         getRowByName()
@@ -120,7 +118,7 @@ public class InlinePickList extends BaseRow<String> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-    @Attachment
+
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()

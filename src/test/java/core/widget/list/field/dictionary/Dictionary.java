@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -48,7 +48,6 @@ public class Dictionary extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public String getValue() {
         setFocusField();
         return getRowByName()
@@ -68,7 +67,7 @@ public class Dictionary extends BaseRow<String> {
      * @return List(String)
      */
     @Step("Getting a list of options from a drop-down list")
-    @Attachment
+
     public List<String> getOptions() {
         setFocusField();
         getRowByName().click();
@@ -106,7 +105,7 @@ public class Dictionary extends BaseRow<String> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-    @Attachment
+
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -121,7 +120,7 @@ public class Dictionary extends BaseRow<String> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    @Attachment
+
     public String getHexColor() {
         String color = getValueByAttribute(1, "div", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
@@ -148,7 +147,7 @@ public class Dictionary extends BaseRow<String> {
      * @return UnsupportedOperationException
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-    @Attachment
+
     public Boolean drillDown() {
         throw new UnsupportedOperationException("DrillDown not supported on Dictionary");
     }

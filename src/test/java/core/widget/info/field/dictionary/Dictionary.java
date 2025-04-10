@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.Duration;
 
@@ -28,7 +28,6 @@ public class Dictionary extends BaseString<String> {
      * @return String
      */
     @Override
-    @Attachment
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

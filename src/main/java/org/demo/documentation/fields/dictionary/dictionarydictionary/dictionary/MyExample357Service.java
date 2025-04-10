@@ -3,12 +3,14 @@ package org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary
 import jakarta.persistence.EntityManager;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dictionary.DictionaryCache;
+import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.api.service.LocaleService;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.exception.BusinessException;
@@ -90,6 +92,12 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
         validate(bc, result);
         return result;
     }
+
+    @Override
+    protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {
+        return super.doAssociate(data, bc);
+    }
+
     // --8<-- [end:updateEntity]
 
     // --8<-- [start:getActions]

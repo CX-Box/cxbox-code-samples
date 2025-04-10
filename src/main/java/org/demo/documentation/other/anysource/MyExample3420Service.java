@@ -6,12 +6,10 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.microservice.existingmicroservices.MyExample3800DTO_;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_DATE;
 
 

@@ -10,12 +10,12 @@ import org.mapstruct.MappingTarget;
 public interface MyEntity3900Mapper {
 
 
-	MyExample3900DTO toDto(final MyEntity3900 myEntity3900);
+	MyExample3900DTO toDto(final MyEntity3900 entity);
 
 
 	MyEntity3900 newEntityByDto(final String id, final MyExample3900DTO request);
 
 
-	MyEntity3900 updateEntityByDto(@MappingTarget final MyEntity3900 myEntity3900, final MyExample3900DTO request);
+	MyEntity3900 updateEntityByDto(@MappingTarget final MyEntity3900 entity, final MyExample3900DTO request);
 
 }

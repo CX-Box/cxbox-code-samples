@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +37,6 @@ public class Checkbox extends BaseRow<Boolean> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public Boolean getValue() {
         setFocusField();
         return getRowByName()

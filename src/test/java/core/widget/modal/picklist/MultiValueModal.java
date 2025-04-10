@@ -2,7 +2,7 @@ package core.widget.modal.picklist;
 
 import com.codeborne.selenide.*;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
 
@@ -190,7 +190,7 @@ public class MultiValueModal extends AbstractPickList {
      * @param columnName Column's name
      * @return List Pair Boolean String статус и имя
      */
-    @Attachment
+
     public List<Pair<Boolean, String>> getStatusValue(String columnName) {
         return Allure.step("Getting all values from the " + columnName + " column with the status", step -> {
             logTime(step);

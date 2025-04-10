@@ -71,7 +71,7 @@ public class MyEntity3083Dao extends AbstractAnySourceBaseDAO<MyEntity3083OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = getFilterFieldName(queryParameters,"customFieldSuggestion", "contains");
+        List<String> filterCustomField = getFilterFieldName(queryParameters);
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
@@ -110,9 +110,9 @@ public class MyEntity3083Dao extends AbstractAnySourceBaseDAO<MyEntity3083OutSer
                 ).toList();
     }
 
-    private List<String> getFilterFieldName(QueryParameters queryParameters, String fieldName, String searchSpec) {
+    private List<String> getFilterFieldName(QueryParameters queryParameters) {
         return queryParameters.getParameters().entrySet().stream()
-                .filter(f -> f.getKey().contains(fieldName + "." + searchSpec))
+                .filter(f -> f.getKey().contains("query"))
                 .map(Map.Entry::getValue)
                 .toList();
     }

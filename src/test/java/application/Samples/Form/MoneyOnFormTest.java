@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -12,8 +12,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.math.BigDecimal;
 
@@ -26,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form") 
-@ExtendWith(VideoRecorderExtension.class)
+
 public class MoneyOnFormTest extends BaseTestForSamples {
 
     @Test
@@ -36,7 +34,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Money placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("100000.00");
     }
@@ -48,7 +46,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Money color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -60,7 +58,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Money readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -73,7 +71,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Money Basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         BigDecimal number = new BigDecimal("131343.23");
         customField.setValue(number);
@@ -88,7 +86,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Money filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -100,7 +98,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Money drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -113,11 +111,11 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Money validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.InvalidNumberDigits);
@@ -132,11 +130,11 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Money validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
         form.clickButton("save");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -151,12 +149,12 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Money validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         BigDecimal number = new BigDecimal("131343.23");
         customField.setValue(number);
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -172,7 +170,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Money validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         BigDecimal number = new BigDecimal("1343.23");
         customField.setValue(number);
@@ -188,7 +186,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Money validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         var customField2 = form.money("Custom Field Additional");
         BigDecimal number = new BigDecimal("1343.23");
@@ -207,7 +205,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Money sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -221,7 +219,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Money required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
         form.clickButton("save");

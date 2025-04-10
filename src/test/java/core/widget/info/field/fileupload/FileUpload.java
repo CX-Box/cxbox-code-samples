@@ -5,7 +5,7 @@ import com.codeborne.selenide.DownloadOptions;
 import core.widget.info.InfoWidget;
 import core.widget.info.field.BaseString;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 
@@ -33,7 +33,6 @@ public class FileUpload extends BaseString<File> {
      * @return String
      */
     @Override
-    @Attachment
     public File getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
@@ -48,7 +47,6 @@ public class FileUpload extends BaseString<File> {
      * @param value File
      * @return Boolean true/false
      */
-    @Attachment
     public Boolean getFileComparison(File value) {
         return Allure.step("Comparison of the source file and the downloaded file", step -> {
             logTime(step);
@@ -106,7 +104,6 @@ public class FileUpload extends BaseString<File> {
      *
      * @return String
      */
-    @Attachment
     public String getValueName() {
         return Allure.step("Getting the name of the downloaded file", step -> {
             logTime(step);
@@ -124,7 +121,7 @@ public class FileUpload extends BaseString<File> {
      *
      * @return String NameFile
      */
-    @Attachment
+
     public String getNameFileInField() {
         return Allure.step("Getting the file name in the field", step -> {
             logTime(step);

@@ -42,9 +42,9 @@ public class MyExample5555TaskExecutorService extends VersionAwareResponseServic
 	@Override
 	public Actions<ExecutorDTO> getActions() {
 		return Actions.<ExecutorDTO>builder()
-				.create(crt -> crt.text("Add").scope(ActionScope.BC))
-				.delete(del -> del.text("Delete").scope(ActionScope.BC))
-				.save(save -> save.text("Save").scope(ActionScope.BC))
+				.create(crt -> crt.text("Add"))
+				.delete(del -> del.text("Delete"))
+				.save(sv -> sv.text("Save"))
 				.action(act -> act
 						.action("nextExecutor", "Next")
 						.invoker((bc, dto) ->

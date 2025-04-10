@@ -7,7 +7,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.navigation.tab.other.example5.CxboxMyExample3160Controller;
-import org.demo.documentation.navigation.tab.other.example5.child3.MyExample3163DTO;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161Repository;
 import org.springframework.stereotype.Service;

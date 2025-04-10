@@ -1,7 +1,7 @@
 package application.Samples.Form;
 
 import application.common.Text;
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
@@ -12,8 +12,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Dictionary in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class DictionaryOnFormTest extends BaseTestForSamples {
 
     @Test
@@ -35,7 +33,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Dictionary enum placeholder");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
     }
@@ -47,7 +45,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Dictionary enum color");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThat(customField.getHexColor()).isNull();
     }
@@ -59,7 +57,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Dictionary enum readonly");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThat(customField.getReadOnly()).isTrue();
     }
@@ -72,7 +70,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Dictionary enum basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         customField.setValue("Tver region");
         assertThat(customField.getValue()).isEqualTo("Tver region");
@@ -86,7 +84,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Dictionary enum filtration");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -98,7 +96,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Dictionary enum drilldown");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -111,10 +109,10 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void businessException() {
         MainPages.click("Dictionary enum validation business exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         customField.setValue("Middle");
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Text.textOnly("'High'"));
@@ -129,10 +127,10 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void runtimeException() {
         MainPages.click("Dictionary enum validation runtime exception");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         customField.clear();
-        var popup = page.findPopup("error");
+        var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
@@ -148,11 +146,11 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void confirm() {
         MainPages.click("Dictionary enum validation confirm");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         customField.setValue("Low");
         form.clickButton("save");
-        var popup = page.findPopup("confirm");
+        var popup = $box.findPopup("confirm");
         assertThat(popup).isPresent();
         popup.get().confirmPopup().getButtons();
         assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
@@ -168,7 +166,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void fieldLevelValidationAnnotation() {
         MainPages.click("Dictionary enum validation field level annotation");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         form.clickButton("save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
@@ -182,7 +180,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void fieldLevelValidation() {
         MainPages.click("Dictionary enum validation field level dynamic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         var customField2 = form.dictionary("Custom Field Additional");
         form.clickButton("save");
@@ -198,7 +196,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Dictionary enum sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form Dictionary enum sorting"); // Don't work here (title - Form title at this version
+        FormWidget form = $box.findFormWidgetByTitle("Form Dictionary enum sorting"); // Don't work here (title - Form title at this version
         var customField = form.dictionary("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -211,7 +209,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void required() {
         MainPages.click("Dictionary enum required");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         customField.clear();
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
@@ -224,7 +222,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void options() {
         MainPages.click("Dictionary enum basic");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = page.findFormWidgetByTitle("Form title");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         assertThat(customField.getOptions()).isEqualTo(List.of("Belgorod region",
                 "Bryansk region",

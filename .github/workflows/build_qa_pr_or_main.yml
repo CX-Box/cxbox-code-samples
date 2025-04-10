@@ -17,9 +17,6 @@ jobs:
   build-qa-pr-and-check-autotests:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
 
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +33,7 @@ jobs:
         with:
           node-version: '18'
           cache: "yarn"
-          cache-dependency-path: ui
+          cache-dependency-path: ui/yarn.lock
 
       - name: Load target
         run: mvn clean install -U -PUI
@@ -47,8 +44,8 @@ jobs:
           sudo docker images
           sudo docker compose -f docker-compose-test.yml up -d
 
-      - name: Run_tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+      - name: Run tests
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -133,7 +130,7 @@ jobs:
         with:
           node-version: '18'
           cache: "yarn"
-          cache-dependency-path: ui
+          cache-dependency-path: ui/yarn.lock
 
       - name: Load target
         run: mvn clean install -U -PUI
@@ -145,7 +142,7 @@ jobs:
           sudo docker compose -f docker-compose-test.yml up -d
 
       - name: Run tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=false -Dtest=application.Samples.Form.**,application.Samples.Info.** test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.** test
 
       - name: Get Allure history
         uses: actions/checkout@v3

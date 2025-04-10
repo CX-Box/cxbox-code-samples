@@ -18,6 +18,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+
 import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
 
 @Transactional
@@ -78,10 +80,10 @@ public class SuggestionMicroserviceStoringDataController {
             @RequestParam("size") String sizePage,
             @Parameter(in = ParameterIn.QUERY,
                     description = "Criteria for filtering the data by field CustomField", example = "Test data1")
-            @RequestParam(value = "filterCustomField", required = false) String filterCustomField,
+            @RequestParam(value = "filterCustomFieldSuggestion", required = false) String filterCustomField,
             @Parameter(in = ParameterIn.QUERY,
                     description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
-            @RequestParam(value = "sortCustomField", required = false) String sortCustomField
+            @RequestParam(value = "sortCustomFieldSuggestion", required = false) String sortCustomField
     ) {
         authzService.loginAs(authzService.createAuthentication(VANILLA));
 
@@ -91,7 +93,9 @@ public class SuggestionMicroserviceStoringDataController {
         Specification<MyEntity3081> specification = (root, query, cb) -> cb.and();
         if (filterCustomField != null) {
             specification = (root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(MyEntity3081_.customFieldSuggestion.getName()), "%" + filterCustomField + "%");
+                    criteriaBuilder.like(
+                            criteriaBuilder.upper(root.get(MyEntity3081_.customFieldSuggestion.getName())),
+                            "%" + URLDecoder.decode(filterCustomField).toUpperCase() + "%");
         }
 
         return ResponseEntity.ok().body(data3081Repository.findAll(specification, entityPageable).map(mapper::toDto));

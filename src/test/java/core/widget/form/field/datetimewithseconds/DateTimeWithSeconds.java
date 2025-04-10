@@ -6,7 +6,7 @@ import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import core.widget.modal.Calendar;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ public class DateTimeWithSeconds extends BaseField<LocalDateTime> {
      *
      * @return LocalDateTime
      */
-    @Attachment
+
     public LocalDateTime getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

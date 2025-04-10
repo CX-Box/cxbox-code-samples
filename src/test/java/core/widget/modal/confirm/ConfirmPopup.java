@@ -3,7 +3,7 @@ package core.widget.modal.confirm;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.modal.BasePopup;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
@@ -19,7 +19,7 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-    @Attachment
+
     public String getTitle() {
         return Allure.step("Getting the header value", step -> {
             logTime(step);
@@ -34,7 +34,7 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-    @Attachment
+
     public String getMessage() {
         return Allure.step("Getting the message text", step -> {
             logTime(step);

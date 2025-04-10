@@ -7,9 +7,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.other.savewithparent.example443.child.MyExample3077DTO;
-import org.demo.documentation.other.savewithparent.example443.child.MyExample3077DTO_;
-import org.demo.documentation.widgets.list.actions.create.newview.CxboxMyExample3066Controller;
 import org.springframework.stereotype.Service;
 
 

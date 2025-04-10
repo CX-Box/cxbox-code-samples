@@ -1,6 +1,6 @@
 package application.Samples.Info;
 
-import core.ConfigTest.BaseTestForSamples;
+import application.config.BaseTestForSamples;
 import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -8,8 +8,6 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Text")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@ExtendWith(VideoRecorderExtension.class)
+
 public class TextOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -28,7 +26,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void placeholder() {
         MainPages.click("Text placeholder");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -40,7 +38,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void color() {
         MainPages.click("Text color");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
     }
@@ -52,7 +50,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void readonly() {
         MainPages.click("Text readonly");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -63,7 +61,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void read() {
         MainPages.click("Text basic");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThat(customField.getValue()).isEqualTo("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
     }
@@ -76,7 +74,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void filtration() {
         MainPages.click("Text filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
@@ -88,7 +86,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void drillDown() {
         MainPages.click("Text drilldown");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThat(customField.drillDown()).isTrue();
     }
@@ -101,7 +99,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Text filtration");
         MainPages.FirstLevelMenu.click("Info");
-        var info = page.findInfoWidgetByTitle("Info title");
+        var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

@@ -9,11 +9,11 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface MyEntity4002Mapper {
 
-	MyExample4002ExternalDTO toDto(final MyEntity4002External myEntity);
+	MyExample4002ExternalDTO toDto(final MyEntity4002External entity);
 
 	MyEntity4002External newEntityByDto(final String id, final MyExample4002ExternalDTO request);
 
 
-	MyEntity4002External updateEntityByDto(@MappingTarget final MyEntity4002External myEntity, final MyExample4002ExternalDTO request);
+	MyEntity4002External updateEntityByDto(@MappingTarget final MyEntity4002External entity, final MyExample4002ExternalDTO request);
 
 }

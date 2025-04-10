@@ -7,7 +7,6 @@ import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.fields.suggestion.ro.MyEntity3088OutServiceDTO;
-import org.demo.services.utils.IntegrationURLBuilder;
 import org.demo.services.utils.RestResponsePage;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -69,7 +68,7 @@ public class MyEntity3088Dao extends AbstractAnySourceBaseDAO<MyEntity3088OutSer
         String limit = bc.getParameters().getParameter("_limit");
 
         //Filter
-        List<String> filterCustomField = getFilterFieldName(queryParameters, "customFieldSuggestion", "contains");
+        List<String> filterCustomField = getFilterFieldName(queryParameters);
         Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
 
         //Sorting
@@ -108,9 +107,9 @@ public class MyEntity3088Dao extends AbstractAnySourceBaseDAO<MyEntity3088OutSer
                 ).toList();
     }
 
-    private List<String> getFilterFieldName(QueryParameters queryParameters, String fieldName, String searchSpec) {
+    private List<String> getFilterFieldName(QueryParameters queryParameters) {
         return queryParameters.getParameters().entrySet().stream()
-                .filter(f -> f.getKey().contains(fieldName + "." + searchSpec))
+                .filter(f -> f.getKey().contains("query"))
                 .map(Map.Entry::getValue)
                 .toList();
     }

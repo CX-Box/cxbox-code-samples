@@ -6,8 +6,6 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 
 @Service
 public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DTO> {
