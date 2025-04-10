@@ -99,7 +99,7 @@ jobs:
         if: always()
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Status: ${{ steps.status.outputs.status }}  
