@@ -30,4 +30,6 @@ public class MyEntity4901 extends BaseEntity {
     private String descriptionProduct;
     @Column
     private Long money;
+    @Column
+    private String street;
 }
