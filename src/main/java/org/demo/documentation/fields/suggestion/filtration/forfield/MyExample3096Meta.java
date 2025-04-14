@@ -17,9 +17,12 @@ public class MyExample3096Meta extends FieldMetaBuilder<MyExample3096DTO> {
         fields.setEnabled(MyExample3096DTO_.customField);
     }
    // --8<-- [end:buildRowDependentMeta]
+
+
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3096DTO> fields, InnerBcDescription bcDescription, Long parentId) {
         fields.enableFilter(MyExample3096DTO_.customField);
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }
