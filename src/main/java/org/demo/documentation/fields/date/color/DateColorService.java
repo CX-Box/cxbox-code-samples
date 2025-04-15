@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.date.color;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateColorService extends VersionAwareResponseService<DateColorDTO, dateColor> {
 
 	private final dateColorRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateColorMeta> meta = DateColorMeta.class;
 
-	public DateColorService(dateColorRepository repository) {
-		super(DateColorDTO.class, dateColor.class, null, DateColorMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateColorDTO> doCreateEntity(dateColor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

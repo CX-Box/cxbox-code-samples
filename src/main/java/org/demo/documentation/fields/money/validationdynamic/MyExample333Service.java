@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.money.validationdynamic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -9,19 +11,17 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample333Service extends VersionAwareResponseService<MyExample333DTO, MyEntity333> {
 
 	private final MyEntity333Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample333Meta> meta = MyExample333Meta.class;
 
 
-	public MyExample333Service(MyEntity333Repository repository) {
-		super(MyExample333DTO.class, MyEntity333.class, null, MyExample333Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample333DTO> doCreateEntity(MyEntity333 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

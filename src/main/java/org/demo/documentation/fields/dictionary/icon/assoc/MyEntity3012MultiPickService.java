@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.dictionary.icon.assoc;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,13 +9,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3012MultiPickService extends VersionAwareResponseService<MyEntity3012MultiPickDTO, org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3012Multi> {
 
-    public MyEntity3012MultiPickService() {
-        super(MyEntity3012MultiPickDTO.class, org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3012Multi.class, null, MyEntity3012MultiPickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3012MultiPickMeta> meta = MyEntity3012MultiPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3012MultiPickDTO> doCreateEntity(org.demo.documentation.fields.dictionary.icon.assoc.MyEntity3012Multi entity, BusinessComponent bc) {

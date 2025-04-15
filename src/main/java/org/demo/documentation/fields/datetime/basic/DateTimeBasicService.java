@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeBasicService extends VersionAwareResponseService<DateTimeBasicDTO, DateTimeBasic> {
 
 	private final DateTimeBasicRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeBasicMeta> meta = DateTimeBasicMeta.class;
 
-	public DateTimeBasicService(DateTimeBasicRepository repository) {
-		super(DateTimeBasicDTO.class, DateTimeBasic.class, null, DateTimeBasicMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeBasicDTO> doCreateEntity(DateTimeBasic entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.drilldown;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeDrilldownService extends VersionAwareResponseService<DateTimeDrilldownDTO, DateTimeDrilldown> {
 
 	private final DateTimeDrilldownRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeDrilldownMeta> meta = DateTimeDrilldownMeta.class;
 
-	public DateTimeDrilldownService(DateTimeDrilldownRepository repository) {
-		super(DateTimeDrilldownDTO.class, DateTimeDrilldown.class, null, DateTimeDrilldownMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeDrilldownDTO> doCreateEntity(DateTimeDrilldown entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

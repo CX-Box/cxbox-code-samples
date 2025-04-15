@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.validationruntimeex;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,23 +10,17 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeValidationRuntimeExService extends
 		VersionAwareResponseService<DateTimeValidationRuntimeExDTO, DateTimeValidationRuntimeEx> {
 
 	private final DateTimeValidationRuntimeExRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeValidationRuntimeExMeta> meta = DateTimeValidationRuntimeExMeta.class;
 
-	public DateTimeValidationRuntimeExService(DateTimeValidationRuntimeExRepository repository) {
-		super(
-				DateTimeValidationRuntimeExDTO.class,
-				DateTimeValidationRuntimeEx.class,
-				null,
-				DateTimeValidationRuntimeExMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeValidationRuntimeExDTO> doCreateEntity(DateTimeValidationRuntimeEx entity,
 			BusinessComponent bc) {
 		repository.save(entity);

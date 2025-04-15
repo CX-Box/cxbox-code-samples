@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.statsblock.drilldown;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,13 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample4210Service extends AnySourceVersionAwareResponseService<MyExample4210DTO, MyExample4210DTO> {
 
 
-    public MyExample4210Service( ) {
-        super(MyExample4210DTO.class, MyExample4210DTO.class,  MyExample4210Meta.class, MyExample4210Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4210Meta> meta = MyExample4210Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4210Dao> dao = MyExample4210Dao.class;
 
     @Override
     protected CreateResult<MyExample4210DTO> doCreateEntity(MyExample4210DTO entity, BusinessComponent bc) {

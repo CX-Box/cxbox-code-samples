@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.assoc.actions.other.buttonassoc;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -15,20 +17,18 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3062Service extends VersionAwareResponseService<MyExample3062DTO, MyEntity3062> {
 
     private final MyEntity3062Repository repository;
 
     private final MyEntity3062MultiRepository repositoryMulti;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3062Meta> meta = MyExample3062Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3062Service(MyEntity3062Repository repository, MyEntity3062MultiRepository repositoryMulti) {
-        super(MyExample3062DTO.class, MyEntity3062.class, null, MyExample3062Meta.class);
-        this.repository = repository;
-        this.repositoryMulti = repositoryMulti;
-    }
 
     @Override
     protected CreateResult<MyExample3062DTO> doCreateEntity(MyEntity3062 entity, BusinessComponent bc) {

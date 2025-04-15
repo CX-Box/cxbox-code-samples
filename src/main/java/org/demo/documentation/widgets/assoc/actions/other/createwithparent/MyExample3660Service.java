@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.assoc.actions.other.createwithparent;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -18,20 +20,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3660Service extends VersionAwareResponseService<MyExample3660DTO, MyEntity3660> {
 
     private final MyEntity3660Repository repository;
     private final MyEntity3661Repository repositoryParent;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3660Meta> meta = MyExample3660Meta.class;
 
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3660Service(MyEntity3660Repository repository, MyEntity3661Repository repositoryParent) {
-        super(MyExample3660DTO.class, MyEntity3660.class, null, MyExample3660Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
 
     @Override
     protected Specification<MyEntity3660> getParentSpecification(BusinessComponent bc) {

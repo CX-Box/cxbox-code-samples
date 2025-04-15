@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.additionallist.title;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3195Service extends VersionAwareResponseService<MyExample3195DTO, MyEntity3195> {
 
     private final MyEntity3195Repository repository;
-
-    public MyExample3195Service(MyEntity3195Repository repository) {
-        super(MyExample3195DTO.class, MyEntity3195.class, null, MyExample3195Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3195Meta> meta = MyExample3195Meta.class;
 
     @Override
     protected CreateResult<MyExample3195DTO> doCreateEntity(MyEntity3195 entity, BusinessComponent bc) {

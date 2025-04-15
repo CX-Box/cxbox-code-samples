@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetimewithseconds.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,24 +9,17 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeWithSecondsFiltrationService extends
 		VersionAwareResponseService<DateTimeWithSecondsFiltrationDTO, DateTimeWithSecondsFiltrationEntity> {
 
 	private final DateTimeWithSecondsFiltrationEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeWithSecondsFiltrationMeta> meta = DateTimeWithSecondsFiltrationMeta.class;
 
-	public DateTimeWithSecondsFiltrationService(DateTimeWithSecondsFiltrationEntityRepository repository) {
-		super(
-				DateTimeWithSecondsFiltrationDTO.class,
-				DateTimeWithSecondsFiltrationEntity.class,
-				null,
-				DateTimeWithSecondsFiltrationMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeWithSecondsFiltrationDTO> doCreateEntity(DateTimeWithSecondsFiltrationEntity entity,
 			BusinessComponent bc) {
 		repository.save(entity);

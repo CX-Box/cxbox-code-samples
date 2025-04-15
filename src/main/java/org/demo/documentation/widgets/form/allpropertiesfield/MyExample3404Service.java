@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.allpropertiesfield;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,15 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3404Service extends VersionAwareResponseService<MyExample3404DTO, MyEntity3404> {
 
     private final MyEntity3404Repository repository;
-
-    public MyExample3404Service(MyEntity3404Repository repository) {
-        super(MyExample3404DTO.class, MyEntity3404.class, null, MyExample3404Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3404Meta> meta = MyExample3404Meta.class;
 
     @Override
     protected CreateResult<MyExample3404DTO> doCreateEntity(MyEntity3404 entity, BusinessComponent bc) {

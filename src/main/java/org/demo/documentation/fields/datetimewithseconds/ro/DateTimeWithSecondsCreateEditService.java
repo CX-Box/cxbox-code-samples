@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetimewithseconds.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,24 +9,17 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeWithSecondsCreateEditService extends
 		VersionAwareResponseService<DateTimeWithSecondsCreateEditDTO, DateTimeWithSecondsCreateEditEntity> {
 
 	private final DateTimeWithSecondsCreateEditEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeWithSecondsCreateEditMeta> meta = DateTimeWithSecondsCreateEditMeta.class;
 
-	public DateTimeWithSecondsCreateEditService(DateTimeWithSecondsCreateEditEntityRepository repository) {
-		super(
-				DateTimeWithSecondsCreateEditDTO.class,
-				DateTimeWithSecondsCreateEditEntity.class,
-				null,
-				DateTimeWithSecondsCreateEditMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeWithSecondsCreateEditDTO> doCreateEntity(DateTimeWithSecondsCreateEditEntity entity,
 			BusinessComponent bc) {
 		repository.save(entity);

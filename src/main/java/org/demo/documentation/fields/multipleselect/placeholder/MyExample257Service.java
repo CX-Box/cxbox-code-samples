@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.multipleselect.placeholder;
 
 import java.util.stream.Collectors;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,17 +13,16 @@ import org.demo.documentation.fields.multipleselect.placeholder.enums.CustomFiel
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample257Service extends VersionAwareResponseService<MyExample257DTO, MyEntity257> {
 
 	private final MyEntity257Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample257Meta> meta = MyExample257Meta.class;
 
-	public MyExample257Service(MyEntity257Repository repository) {
-		super(MyExample257DTO.class, MyEntity257.class, null, MyExample257Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample257DTO> doCreateEntity(MyEntity257 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

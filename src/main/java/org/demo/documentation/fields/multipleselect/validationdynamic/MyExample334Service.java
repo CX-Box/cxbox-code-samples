@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.multipleselect.validationdynamic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -13,17 +15,16 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample334Service extends VersionAwareResponseService<MyExample334DTO, MyEntity334> {
 
 	private final MyEntity334Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample334Meta> meta = MyExample334Meta.class;
 
-	public MyExample334Service(MyEntity334Repository repository) {
-		super(MyExample334DTO.class, MyEntity334.class, null, MyExample334Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample334DTO> doCreateEntity(MyEntity334 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

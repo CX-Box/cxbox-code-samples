@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.multivaluehover.basic;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity259MultivalueService extends VersionAwareResponseService<MyEntity259MultivalueDTO, MyEntity259> {
 
-	public MyEntity259MultivalueService() {
-		super(MyEntity259MultivalueDTO.class, MyEntity259.class, null, MyEntity259MultivalueMeta.class);
-	}
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity259MultivalueMeta> meta = MyEntity259MultivalueMeta.class;
 
-	@Override
+    @Override
 	protected CreateResult<MyEntity259MultivalueDTO> doCreateEntity(MyEntity259 entity, BusinessComponent bc) {
 		return null;
 	}

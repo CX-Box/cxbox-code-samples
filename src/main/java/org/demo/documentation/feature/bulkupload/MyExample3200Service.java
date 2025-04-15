@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.bulkupload;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -19,17 +21,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3200Service extends VersionAwareResponseService<MyExample3200DTO, MyEntity3200> {
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3200Meta> meta = MyExample3200Meta.class;
     @Autowired
     private CxboxFileService cxboxFileService;
 
     private final MyEntity3200Repository repository;
-
-    public MyExample3200Service(MyEntity3200Repository repository) {
-        super(MyExample3200DTO.class, MyEntity3200.class, null, MyExample3200Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3200DTO> doCreateEntity(MyEntity3200 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.radio.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample23Service extends VersionAwareResponseService<MyExample23DTO, MyEntity23> {
 
 	private final MyEntity23Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample23Meta> meta = MyExample23Meta.class;
 
-	public MyExample23Service(MyEntity23Repository repository) {
-		super(MyExample23DTO.class, MyEntity23.class, null, MyExample23Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample23DTO> doCreateEntity(MyEntity23 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

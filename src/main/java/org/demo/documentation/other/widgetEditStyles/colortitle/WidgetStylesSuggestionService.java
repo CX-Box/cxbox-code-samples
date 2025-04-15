@@ -1,5 +1,7 @@
 package org.demo.documentation.other.widgetEditStyles.colortitle;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,13 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class WidgetStylesSuggestionService extends AnySourceVersionAwareResponseService<WidgetStylesSuggestionDTO, WidgetStylesOutServiceDTO> {
 
 
-    public WidgetStylesSuggestionService() {
-        super(WidgetStylesSuggestionDTO.class, WidgetStylesOutServiceDTO.class, WidgetStylesSuggestionMeta.class, WidgetStylesDao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<WidgetStylesSuggestionMeta> meta = WidgetStylesSuggestionMeta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<WidgetStylesDao> dao = WidgetStylesDao.class;
 
 
     @Override

@@ -1,6 +1,7 @@
 package org.demo.documentation.other.alltypes;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,13 +9,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity424MultivalueService extends VersionAwareResponseService<MyEntity424MultivalueDTO, MyEntity424> {
 
-    public MyEntity424MultivalueService() {
-        super(MyEntity424MultivalueDTO.class, MyEntity424.class, null, MyEntity424MultivalueMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity424MultivalueMeta> meta = MyEntity424MultivalueMeta.class;
 
     @Override
     protected CreateResult<MyEntity424MultivalueDTO> doCreateEntity(MyEntity424 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.property.excel.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3138Service extends VersionAwareResponseService<MyExample3138DTO, MyEntity3138> {
 
     private final MyEntity3138Repository repository;
-
-    public MyExample3138Service(MyEntity3138Repository repository) {
-        super(MyExample3138DTO.class, MyEntity3138.class, null, MyExample3138Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3138Meta> meta = MyExample3138Meta.class;
 
     @Override
     protected CreateResult<MyExample3138DTO> doCreateEntity(MyEntity3138 entity, BusinessComponent bc) {

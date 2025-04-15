@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.time.color;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +10,14 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3501Service extends VersionAwareResponseService<MyExample3501DTO, MyEntity3501> {
 
     private final MyEntity3501Repository repository;
-
-    public MyExample3501Service(MyEntity3501Repository repository) {
-        super(MyExample3501DTO.class, MyEntity3501.class, null, MyExample3501Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3501Meta> meta = MyExample3501Meta.class;
 
     @Override
     protected CreateResult<MyExample3501DTO> doCreateEntity(MyEntity3501 entity, BusinessComponent bc) {

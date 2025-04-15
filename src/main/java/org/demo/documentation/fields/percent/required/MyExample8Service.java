@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.percent.required;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample8Service extends VersionAwareResponseService<MyExample8DTO, MyEntity8> {
 
 	private final MyEntity8Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample8Meta> meta = MyExample8Meta.class;
 
-	public MyExample8Service(MyEntity8Repository repository) {
-		super(MyExample8DTO.class, MyEntity8.class, null, MyExample8Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample8DTO> doCreateEntity(MyEntity8 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

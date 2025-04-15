@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.date.sorting;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,18 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateSortingService extends VersionAwareResponseService<DateSortingDTO, DateSortingEntity> {
 
 	private final DateSortingEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateSortingMeta> meta = DateSortingMeta.class;
 
-	public DateSortingService(DateSortingEntityRepository repository) {
-		super(DateSortingDTO.class, DateSortingEntity.class, null, DateSortingMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateSortingDTO> doCreateEntity(DateSortingEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

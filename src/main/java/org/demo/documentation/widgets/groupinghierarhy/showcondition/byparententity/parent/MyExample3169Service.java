@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.groupinghierarhy.showcondition.byparententity.parent;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3169Service extends VersionAwareResponseService<MyExample3169DTO, MyEntity3169> {
 
     private final MyEntity3169Repository repository;
-
-    public MyExample3169Service(MyEntity3169Repository repository) {
-        super(MyExample3169DTO.class, MyEntity3169.class, null, MyExample3169Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3169Meta> meta = MyExample3169Meta.class;
 
     @Override
     protected CreateResult<MyExample3169DTO> doCreateEntity(MyEntity3169 entity, BusinessComponent bc) {

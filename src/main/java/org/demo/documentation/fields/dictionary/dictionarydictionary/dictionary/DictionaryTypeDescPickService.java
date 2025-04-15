@@ -1,5 +1,6 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.dictionary.entity.DictionaryTypeDesc;
 import org.springframework.stereotype.Service;
@@ -9,18 +10,17 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class DictionaryTypeDescPickService extends VersionAwareResponseService<DictionaryTypeDescPickDTO, DictionaryTypeDesc> {
 
 	private final DictoryTypeRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DictionaryTypeDescPickMeta> meta = DictionaryTypeDescPickMeta.class;
 
-	public DictionaryTypeDescPickService(DictoryTypeRepository repository) {
-		super(DictionaryTypeDescPickDTO.class, DictionaryTypeDesc.class, null, DictionaryTypeDescPickMeta.class);
-        this.repository = repository;
-    }
-
-	@Override
+    @Override
 	protected CreateResult<DictionaryTypeDescPickDTO> doCreateEntity(DictionaryTypeDesc entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

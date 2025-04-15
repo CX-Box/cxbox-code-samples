@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.multivalue.sorting;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity191MultivalueService extends VersionAwareResponseService<MyEntity191MultivalueDTO, MyEntity191> {
 
-	public MyEntity191MultivalueService() {
-		super(MyEntity191MultivalueDTO.class, MyEntity191.class, null, MyEntity191MultivalueMeta.class);
-	}
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity191MultivalueMeta> meta = MyEntity191MultivalueMeta.class;
 
-	@Override
+    @Override
 	protected CreateResult<MyEntity191MultivalueDTO> doCreateEntity(MyEntity191 entity, BusinessComponent bc) {
 		return null;
 	}

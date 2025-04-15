@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.multivaluehover.placeholder;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample235Service extends VersionAwareResponseService<MyExample235DTO, MyEntity235> {
 
 	private final MyEntity235Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample235Meta> meta = MyExample235Meta.class;
 
-	public MyExample235Service(MyEntity235Repository repository) {
-		super(MyExample235DTO.class, MyEntity235.class, null, MyExample235Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample235DTO> doCreateEntity(MyEntity235 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

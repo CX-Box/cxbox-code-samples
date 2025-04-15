@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.validationconfirm;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,18 +10,16 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeValidationService extends VersionAwareResponseService<DateTimeValidationDTO, DateTimeValidation> {
 
 	private final DateTimeValidationRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeValidationMeta> meta = DateTimeValidationMeta.class;
 
-	public DateTimeValidationService(DateTimeValidationRepository repository) {
-		super(DateTimeValidationDTO.class, DateTimeValidation.class, null, DateTimeValidationMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeValidationDTO> doCreateEntity(DateTimeValidation entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

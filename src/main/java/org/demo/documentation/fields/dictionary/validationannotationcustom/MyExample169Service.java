@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.dictionary.validationannotationcustom;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample169Service extends VersionAwareResponseService<MyExample169DTO, MyEntity169> {
 
 	private final MyEntity169Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample169Meta> meta = MyExample169Meta.class;
 
-	public MyExample169Service(MyEntity169Repository repository) {
-		super(MyExample169DTO.class, MyEntity169.class, null, MyExample169Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample169DTO> doCreateEntity(MyEntity169 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

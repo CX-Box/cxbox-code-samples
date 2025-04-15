@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.checkbox.colorconst;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample54Service extends VersionAwareResponseService<MyExample54DTO, MyEntity54> {
 
 	private final MyEntity54Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample54Meta> meta = MyExample54Meta.class;
 
-	public MyExample54Service(MyEntity54Repository repository) {
-		super(MyExample54DTO.class, MyEntity54.class, null, MyExample54Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample54DTO> doCreateEntity(MyEntity54 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

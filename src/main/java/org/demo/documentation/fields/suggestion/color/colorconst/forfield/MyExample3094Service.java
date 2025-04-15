@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.color.colorconst.forfield;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3094Service extends VersionAwareResponseService<MyExample3094DTO, MyEntity3094> {
 
     private final MyEntity3094Repository repository;
-
-    public MyExample3094Service(MyEntity3094Repository repository) {
-        super(MyExample3094DTO.class, MyEntity3094.class, null, MyExample3094Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3094Meta> meta = MyExample3094Meta.class;
 
     @Override
     protected CreateResult<MyExample3094DTO> doCreateEntity(MyEntity3094 entity, BusinessComponent bc) {

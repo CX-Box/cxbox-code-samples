@@ -1,5 +1,7 @@
 package org.demo.documentation.other.alltypes;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -15,17 +17,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample421Service extends VersionAwareResponseService<MyExample421DTO, MyEntity421> {
 
     private final MyEntity421Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample421Meta> meta = MyExample421Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample421Service(MyEntity421Repository repository) {
-        super(MyExample421DTO.class, MyEntity421.class, null, MyExample421Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample421DTO> doCreateEntity(MyEntity421 entity, BusinessComponent bc) {

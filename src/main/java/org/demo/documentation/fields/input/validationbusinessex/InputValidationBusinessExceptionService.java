@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.validationbusinessex;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -12,22 +14,17 @@ import org.springframework.stereotype.Service;
 import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputValidationBusinessExceptionService extends
 		VersionAwareResponseService<InputValidationBusinessExceptionDTO, InputValidationBusinessExc> {
 
 	private final InputValidationBusinessExceptionRepository repository;
-	public InputValidationBusinessExceptionService(InputValidationBusinessExceptionRepository repository) {
-		super(
-				InputValidationBusinessExceptionDTO.class,
-				InputValidationBusinessExc.class,
-				null,
-				InputValidationBusinessExceptionMeta.class
-		);
-		this.repository = repository;
-	}
+    @Getter(onMethod_ = @Override)
+    private final Class<InputValidationBusinessExceptionMeta> meta = InputValidationBusinessExceptionMeta.class;
 
-	@Override
+    @Override
 	protected CreateResult<InputValidationBusinessExceptionDTO> doCreateEntity(InputValidationBusinessExc entity,
 			BusinessComponent bc) {
 		repository.save(entity);

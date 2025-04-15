@@ -2,6 +2,7 @@ package org.demo.documentation.widgets.picklist.colortitle;
 
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.demo.documentation.widgets.picklist.colortitle.forfields.MyEntity3061Multi;
 import org.demo.documentation.widgets.picklist.colortitle.forfields.MyEntity3061MultiMulti;
@@ -16,16 +17,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 
 import java.util.Objects;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3061PickService extends VersionAwareResponseService<MyEntity3061PickDTO, MyEntity3061> {
 
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3061PickMeta> meta = MyEntity3061PickMeta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyEntity3061PickService() {
-        super(MyEntity3061PickDTO.class, MyEntity3061.class, null, MyEntity3061PickMeta.class);
-    }
 
     @Override
     protected CreateResult<MyEntity3061PickDTO> doCreateEntity(MyEntity3061 entity, BusinessComponent bc) {

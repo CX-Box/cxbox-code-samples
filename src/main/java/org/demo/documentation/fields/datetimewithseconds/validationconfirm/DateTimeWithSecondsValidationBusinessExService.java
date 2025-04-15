@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetimewithseconds.validationconfirm;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,25 +10,17 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeWithSecondsValidationBusinessExService extends
 		VersionAwareResponseService<DateTimeWithSecondsValidationBusinessExDTO, DateTimeWithSecondsValidationBusinessExEntity> {
 
 	private final DateTimeWithSecondsValidationBusinessExEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeWithSecondsValidationBusinessExMeta> meta = DateTimeWithSecondsValidationBusinessExMeta.class;
 
-	public DateTimeWithSecondsValidationBusinessExService(
-			DateTimeWithSecondsValidationBusinessExEntityRepository repository) {
-		super(
-				DateTimeWithSecondsValidationBusinessExDTO.class,
-				DateTimeWithSecondsValidationBusinessExEntity.class,
-				null,
-				DateTimeWithSecondsValidationBusinessExMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeWithSecondsValidationBusinessExDTO> doCreateEntity(
 			DateTimeWithSecondsValidationBusinessExEntity entity, BusinessComponent bc) {
 		repository.save(entity);

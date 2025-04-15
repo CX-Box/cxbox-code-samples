@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.color.colorcalc;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,13 +11,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3082SuggestionService extends AnySourceVersionAwareResponseService<MyExample3082SuggestionDTO, MyEntity3082OutServiceDTO> {
 
 
-    public MyExample3082SuggestionService() {
-        super(MyExample3082SuggestionDTO.class, MyEntity3082OutServiceDTO.class, MyExample3082Meta.class, MyEntity3082Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3082Meta> meta = MyExample3082Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3082Dao> dao = MyEntity3082Dao.class;
 
 
     @Override

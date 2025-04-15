@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.datetimewithseconds.validationdynamic;
 
 import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -11,19 +14,17 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample322Service extends VersionAwareResponseService<MyExample322DTO, MyEntity322> {
 
 	private final MyEntity322Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample322Meta> meta = MyExample322Meta.class;
 
 
-	public MyExample322Service(MyEntity322Repository repository) {
-		super(MyExample322DTO.class, MyEntity322.class, null, MyExample322Meta.class);
-		this.repository = repository;
-
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample322DTO> doCreateEntity(MyEntity322 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.inlinepicklist.colorconst;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -11,20 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample136Service extends VersionAwareResponseService<MyExample136DTO, MyEntity136> {
 
 	private final MyEntity136Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample136Meta> meta = MyExample136Meta.class;
 
-	@Autowired
+    @Autowired
 	private EntityManager entityManager;
 
-	public MyExample136Service(MyEntity136Repository repository) {
-		super(MyExample136DTO.class, MyEntity136.class, null, MyExample136Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample136DTO> doCreateEntity(MyEntity136 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

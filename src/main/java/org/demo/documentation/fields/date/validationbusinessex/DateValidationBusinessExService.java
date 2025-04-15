@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.date.validationbusinessex;
 
 import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -11,23 +14,17 @@ import org.springframework.stereotype.Service;
 
 import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateValidationBusinessExService extends
 		VersionAwareResponseService<DateValidationBusinessExDTO, DateValidationBusinessExEntity> {
 
 	private final DateValidationBusinessExEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateValidationBusinessExMeta> meta = DateValidationBusinessExMeta.class;
 
-	public DateValidationBusinessExService(DateValidationBusinessExEntityRepository repository) {
-		super(
-				DateValidationBusinessExDTO.class,
-				DateValidationBusinessExEntity.class,
-				null,
-				DateValidationBusinessExMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateValidationBusinessExDTO> doCreateEntity(DateValidationBusinessExEntity entity,
 			BusinessComponent bc) {
 		repository.save(entity);

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.money.withoutdigits;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample305Service extends VersionAwareResponseService<MyExample305DTO, MyEntity305> {
 
 	private final MyEntity305Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample305Meta> meta = MyExample305Meta.class;
 
-	public MyExample305Service(MyEntity305Repository repository) {
-		super(MyExample305DTO.class, MyEntity305.class, null, MyExample305Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample305DTO> doCreateEntity(MyEntity305 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

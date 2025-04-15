@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dto.AssociateDTO;
@@ -34,9 +36,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample357Service extends VersionAwareResponseService<DictionaryItemDTO, DictionaryItem> {
 
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample357Meta> meta = MyExample357Meta.class;
     @Autowired
     private DictionaryCache dictionaryCache;
 
@@ -49,11 +55,6 @@ public class MyExample357Service extends VersionAwareResponseService<DictionaryI
 
     @Autowired
     private CxboxFileService cxboxFileService;
-
-    public MyExample357Service(MyEntity357Repository repository) {
-        super(DictionaryItemDTO.class, DictionaryItem.class, null, MyExample357Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<DictionaryItemDTO> doCreateEntity(DictionaryItem entity, BusinessComponent bc) {

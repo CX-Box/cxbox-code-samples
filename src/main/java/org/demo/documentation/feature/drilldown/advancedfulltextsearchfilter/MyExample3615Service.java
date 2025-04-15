@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.drilldown.advancedfulltextsearchfilter;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,15 +12,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3615Service extends VersionAwareResponseService<MyExample3615DTO, MyEntity3615> {
 
     private final MyEntity3615Repository repository;
-
-    public MyExample3615Service(MyEntity3615Repository repository) {
-        super(MyExample3615DTO.class, MyEntity3615.class, null, MyExample3615Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3615Meta> meta = MyExample3615Meta.class;
 
     @Override
     protected CreateResult<MyExample3615DTO> doCreateEntity(MyEntity3615 entity, BusinessComponent bc) {

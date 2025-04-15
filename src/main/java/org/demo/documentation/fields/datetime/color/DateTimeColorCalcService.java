@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.color;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,18 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeColorCalcService extends VersionAwareResponseService<DateTimeColorCalcDTO, DateTimeColorCalc> {
 
 	private final DateTimeColorCalcRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeColorCalcMeta> meta = DateTimeColorCalcMeta.class;
 
-	public DateTimeColorCalcService(DateTimeColorCalcRepository repository) {
-		super(DateTimeColorCalcDTO.class, DateTimeColorCalc.class, null, DateTimeColorCalcMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeColorCalcDTO> doCreateEntity(DateTimeColorCalc entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.required;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputRequiredService extends VersionAwareResponseService<InputRequiredDTO, InputRequired> {
 
 	private final InputRequiredRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<InputRequiredMeta> meta = InputRequiredMeta.class;
 
-	public InputRequiredService(InputRequiredRepository repository) {
-		super(InputRequiredDTO.class, InputRequired.class, null, InputRequiredMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<InputRequiredDTO> doCreateEntity(InputRequired entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

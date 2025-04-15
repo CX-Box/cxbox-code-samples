@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.property.pagination.nextandprevioussmart;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,14 +10,15 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "java:S2387", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3861Service extends AnySourceVersionAwareResponseService<MyExample3861DTO, MyEntity3861OutServiceDTO> {
 
-    public MyExample3861Service() {
-        super(MyExample3861DTO.class, MyEntity3861OutServiceDTO.class,  MyExample3861Meta.class, MyEntity3861Dao.class);
-
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3861Meta> meta = MyExample3861Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3861Dao> dao = MyEntity3861Dao.class;
 
     @Override
     protected CreateResult<MyExample3861DTO> doCreateEntity(MyEntity3861OutServiceDTO entity, BusinessComponent bc) {

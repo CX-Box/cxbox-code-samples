@@ -1,6 +1,8 @@
 package org.demo.documentation.other.widgetEditStyles.colortitle;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -19,19 +21,18 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class WidgetStylesService extends VersionAwareResponseService<WidgetStylesDTO, WidgetStyles> {
 
 	private final WidgetStylesRepository repository;
-	@Autowired
+    @Getter(onMethod_ = @Override)
+    private final Class<WidgetStylesMeta> meta = WidgetStylesMeta.class;
+    @Autowired
 	private EntityManager entityManager;
 
-	public WidgetStylesService(WidgetStylesRepository repository) {
-		super(WidgetStylesDTO.class, WidgetStyles.class, null, WidgetStylesMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<WidgetStylesDTO> doCreateEntity(WidgetStyles entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
