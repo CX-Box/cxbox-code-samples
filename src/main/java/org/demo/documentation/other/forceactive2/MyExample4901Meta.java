@@ -32,22 +32,33 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             if (fields.getCurrentValue(MyExample4901DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample4901DTO_.region, null);
                 fields.setCurrentValue(MyExample4901DTO_.street, null);
+                fields.setCurrentValue(MyExample4901DTO_.customField, null);
             } else if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.BELARUS)) {
                 fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.BREST, RegionEnum.GOMEL, RegionEnum.MINSK);
                 fields.setCurrentValue(MyExample4901DTO_.region, RegionEnum.MINSK);
+                fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti");
+                fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
             } else if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
                 fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
                 fields.setCurrentValue(MyExample4901DTO_.region, RegionEnum.MOSCOWSKAYA);
+                fields.setCurrentValue(MyExample4901DTO_.street, "Tverskaya street");
+                fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
             }
         }
 
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.region)) {
             if (fields.getCurrentValue(MyExample4901DTO_.region).isEmpty()) {
                 fields.setCurrentValue(MyExample4901DTO_.street, null);
+                fields.setCurrentValue(MyExample4901DTO_.customField, null);
             } else if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MINSK))) {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti");
+                fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
+            } else if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.GOMEL))) {
+                fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti 2");
+                fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
             } else if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MOSCOWSKAYA))) {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Tverskaya street");
+                fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
             }
         }
 
