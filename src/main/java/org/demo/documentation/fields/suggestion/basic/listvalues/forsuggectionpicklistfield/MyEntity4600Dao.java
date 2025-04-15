@@ -13,13 +13,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,11 +44,7 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
     // --8<-- [start:getByIdIgnoringFirstLevelCache]
     @Override
     public MyEntity4600OutServiceDTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
-        try {
-            return getData().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return getData().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
     }
 
     // --8<-- [end:getByIdIgnoringFirstLevelCache]
@@ -57,18 +52,14 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
     // --8<-- [start:getList]
     @Override
     public Page<MyEntity4600OutServiceDTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
-        try {
-            String filterCustomField = getFilterFieldName(queryParameters);
-            if (filterCustomField == null) {
-                return new PageImpl<>(getData());
-            }
-            return new PageImpl<>(getData().stream()
-                    .filter(f -> f.getCustomField().toUpperCase().contains(filterCustomField.toUpperCase()))
-                    .toList());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        String filterCustomField = getFilterFieldName(queryParameters);
+        if (filterCustomField == null) {
+            return new PageImpl<>(getData());
         }
+        return new PageImpl<>(getData().stream()
+                .filter(f -> f.getCustomField().toUpperCase().contains(filterCustomField.toUpperCase()))
+                .toList());
+
     }
     // --8<-- [end:getList]
 
@@ -96,20 +87,25 @@ public class MyEntity4600Dao extends AbstractAnySourceBaseDAO<MyEntity4600OutSer
     }
 
     @NonNull
-    private List<MyEntity4600OutServiceDTO> getData() throws IOException {
-
-        String filePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "db", "data", "custom", "product.csv").toString();
-        return Files.readAllLines(Paths.get(filePath))
-                .stream()
-                .map(line -> line.split(DELIMITER)) // Разделяем строку по разделителю
-                .map(parts -> {
-                    MyEntity4600OutServiceDTO dto = new MyEntity4600OutServiceDTO();
-                    dto.setId(parts[0]);
-                    dto.setCustomField(parts[1]);
-                    return dto;
-                })
-                .collect(Collectors.toList()); // Собираем результат в список
+    private List<MyEntity4600OutServiceDTO> getData() {
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            Path pathUri = Paths.get(classLoader.getResource("db/data/custom/product.csv").toURI());
+            return Files.readAllLines(pathUri)
+                    .stream()
+                    .map(line -> line.split(DELIMITER))
+                    .map(parts -> {
+                        MyEntity4600OutServiceDTO dto = new MyEntity4600OutServiceDTO();
+                        dto.setId(parts[0]);
+                        dto.setCustomField(parts[1]);
+                        return dto;
+                    })
+                    .toList();
+        } catch (Exception e) {
+            return List.of();
+        }
     }
+
 
     private String getFilterFieldName(QueryParameters queryParameters) {
         return queryParameters.getParameters().entrySet().stream()
