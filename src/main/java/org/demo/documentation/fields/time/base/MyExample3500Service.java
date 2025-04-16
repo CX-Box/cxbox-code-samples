@@ -27,6 +27,7 @@ public class MyExample3500Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3500DTO> doUpdateEntity(MyEntity3500 entity, MyExample3500DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3500DTO_.customFieldhA, entity::setCustomFieldhA);
 
         setIfChanged(data, MyExample3500DTO_.customField, entity::setCustomField);
         setIfChanged(data, MyExample3500DTO_.customFieldh, entity::setCustomFieldh);
@@ -40,7 +41,7 @@ public class MyExample3500Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3500DTO> getActions() {
         return Actions.<MyExample3500DTO>builder()
@@ -49,5 +50,5 @@ public class MyExample3500Service extends VersionAwareResponseService<MyExample3
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
