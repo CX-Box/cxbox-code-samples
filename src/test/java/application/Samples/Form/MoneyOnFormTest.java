@@ -75,7 +75,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         var customField = form.money("Custom Field");
         BigDecimal number = new BigDecimal("131343.23");
         customField.setValue(number);
-        assertThat(customField.getValue()).isEqualTo(number); // учитывать пробел в ответе
+        assertThat(customField.getValue()).isEqualTo(number);
     }
 
     @Test
