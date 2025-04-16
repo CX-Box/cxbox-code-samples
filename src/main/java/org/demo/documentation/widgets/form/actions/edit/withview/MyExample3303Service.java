@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.actions.edit.withview;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -10,16 +12,14 @@ import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3303Service extends VersionAwareResponseService<MyExample3303DTO, MyEntity3303> {
 
     private final MyEntity3303Repository repository;
-
-    public MyExample3303Service(MyEntity3303Repository repository) {
-        super(MyExample3303DTO.class, MyEntity3303.class, null, MyExample3303Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3303Meta> meta = MyExample3303Meta.class;
 
     // --8<-- [start:doCreateEntity]
     @Override

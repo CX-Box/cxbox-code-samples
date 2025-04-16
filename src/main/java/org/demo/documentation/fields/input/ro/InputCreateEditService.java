@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputCreateEditService extends VersionAwareResponseService<InputCreateEditDTO, InputCreateEdit> {
 
 	private final InputCreateEditRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<InputCreateEditMeta> meta = InputCreateEditMeta.class;
 
-	public InputCreateEditService(InputCreateEditRepository repository) {
-		super(InputCreateEditDTO.class, InputCreateEdit.class, null, InputCreateEditMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<InputCreateEditDTO> doCreateEntity(InputCreateEdit entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

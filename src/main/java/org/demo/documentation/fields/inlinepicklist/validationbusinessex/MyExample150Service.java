@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.inlinepicklist.validationbusinessex;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -15,20 +17,19 @@ import org.springframework.stereotype.Service;
 import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample150Service extends VersionAwareResponseService<MyExample150DTO, MyEntity150> {
 
 	private final MyEntity150Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample150Meta> meta = MyExample150Meta.class;
 
-	@Autowired
+    @Autowired
 	private EntityManager entityManager;
 
-	public MyExample150Service(MyEntity150Repository repository) {
-		super(MyExample150DTO.class, MyEntity150.class, null, MyExample150Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample150DTO> doCreateEntity(MyEntity150 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

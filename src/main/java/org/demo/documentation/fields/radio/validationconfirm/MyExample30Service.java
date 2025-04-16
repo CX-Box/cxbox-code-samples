@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.radio.validationconfirm;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,17 +11,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample30Service extends VersionAwareResponseService<MyExample30DTO, MyEntity30> {
 
 	private final MyEntity30Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample30Meta> meta = MyExample30Meta.class;
 
-	public MyExample30Service(MyEntity30Repository repository) {
-		super(MyExample30DTO.class, MyEntity30.class, null, MyExample30Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample30DTO> doCreateEntity(MyEntity30 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

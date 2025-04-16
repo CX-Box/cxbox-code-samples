@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.property.excel.any;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,13 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3136Service extends AnySourceVersionAwareResponseService<MyExample3136DTO, MyEntity3136OutServiceDTO> {
 
 
-    public MyExample3136Service() {
-        super(MyExample3136DTO.class, MyEntity3136OutServiceDTO.class, MyExample3136Meta.class, MyEntity3136Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3136Meta> meta = MyExample3136Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3136Dao> dao = MyEntity3136Dao.class;
 
 
     @Override

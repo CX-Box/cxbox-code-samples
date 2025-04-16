@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.multivalue.validationruntimeex;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,15 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity197MultivalueService extends VersionAwareResponseService<MyEntity197MultivalueDTO, MyEntity197> {
 
-	public MyEntity197MultivalueService() {
-		super(MyEntity197MultivalueDTO.class, MyEntity197.class, null, MyEntity197MultivalueMeta.class);
-	}
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity197MultivalueMeta> meta = MyEntity197MultivalueMeta.class;
 
-	@Override
+    @Override
 	protected CreateResult<MyEntity197MultivalueDTO> doCreateEntity(MyEntity197 entity, BusinessComponent bc) {
 		return null;
 	}

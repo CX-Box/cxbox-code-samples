@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetimewithseconds.sorting;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,24 +9,17 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateTimeWithSecondsSortingService extends
 		VersionAwareResponseService<DateTimeWithSecondsSortingDTO, DateTimeWithSecondsSortingEntity> {
 
 	private final DateTimeWithSecondsSortingEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeWithSecondsSortingMeta> meta = DateTimeWithSecondsSortingMeta.class;
 
-	public DateTimeWithSecondsSortingService(DateTimeWithSecondsSortingEntityRepository repository) {
-		super(
-				DateTimeWithSecondsSortingDTO.class,
-				DateTimeWithSecondsSortingEntity.class,
-				null,
-				DateTimeWithSecondsSortingMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeWithSecondsSortingDTO> doCreateEntity(DateTimeWithSecondsSortingEntity entity,
 			BusinessComponent bc) {
 		repository.save(entity);

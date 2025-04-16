@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.property.pagination.nextandprevioussmart.forpicklist.innersource;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,15 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3869Service extends VersionAwareResponseService<MyExample3869DTO, MyEntity3869> {
 
     private final MyEntity3869Repository repository;
-
-    public MyExample3869Service(MyEntity3869Repository repository) {
-        super(MyExample3869DTO.class, MyEntity3869.class, null, MyExample3869Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3869Meta> meta = MyExample3869Meta.class;
 
     @Override
     protected CreateResult<MyExample3869DTO> doCreateEntity(MyEntity3869 entity, BusinessComponent bc) {

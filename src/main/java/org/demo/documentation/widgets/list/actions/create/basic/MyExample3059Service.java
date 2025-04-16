@@ -1,20 +1,21 @@
 package org.demo.documentation.widgets.list.actions.create.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3059Service extends VersionAwareResponseService<MyExample3059DTO, MyEntity3059> {
 
     private final MyEntity3059Repository repository;
-
-    public MyExample3059Service(MyEntity3059Repository repository) {
-        super(MyExample3059DTO.class, MyEntity3059.class, null, MyExample3059Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3059Meta> meta = MyExample3059Meta.class;
 
     @Override
     protected CreateResult<MyExample3059DTO> doCreateEntity(MyEntity3059 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexample.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -14,19 +16,16 @@ import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexa
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3239Service extends VersionAwareResponseService<MyExample3239DTO, MyEntity3239> {
 
     private final MyEntity3239Repository repository;
 
     private final MyEntity3238Repository repositoryParent;
-
-    public MyExample3239Service(MyEntity3239Repository repository, MyEntity3238Repository repositoryParent) {
-        super(MyExample3239DTO.class, MyEntity3239.class, null, MyExample3239Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3239Meta> meta = MyExample3239Meta.class;
 
     @Override
     protected Specification<MyEntity3239> getParentSpecification(BusinessComponent bc) {

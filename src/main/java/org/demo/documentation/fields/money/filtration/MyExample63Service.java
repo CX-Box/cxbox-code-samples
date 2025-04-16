@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.money.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample63Service extends VersionAwareResponseService<MyExample63DTO, MyEntity63> {
 
 	private final MyEntity63Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample63Meta> meta = MyExample63Meta.class;
 
-	public MyExample63Service(MyEntity63Repository repository) {
-		super(MyExample63DTO.class, MyEntity63.class, null, MyExample63Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample63DTO> doCreateEntity(MyEntity63 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

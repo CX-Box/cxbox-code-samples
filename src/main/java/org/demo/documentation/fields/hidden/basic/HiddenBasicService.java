@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.hidden.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicDTO, HiddenBasic> {
 
 	private final HiddenBasicRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<HiddenBasicMeta> meta = HiddenBasicMeta.class;
 
-	public HiddenBasicService(HiddenBasicRepository repository) {
-		super(HiddenBasicDTO.class, HiddenBasic.class, null, HiddenBasicMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<HiddenBasicDTO> doCreateEntity(HiddenBasic entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

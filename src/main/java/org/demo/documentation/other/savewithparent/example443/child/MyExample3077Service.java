@@ -1,5 +1,7 @@
 package org.demo.documentation.other.savewithparent.example443.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -11,13 +13,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3077Service extends AnySourceVersionAwareResponseService<MyExample3077DTO, MyEntity3077OutServiceDTO> {
 
 
-    public MyExample3077Service() {
-        super(MyExample3077DTO.class, MyEntity3077OutServiceDTO.class, MyExample3077Meta.class, MyEntity3077Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3077Meta> meta = MyExample3077Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3077Dao> dao = MyEntity3077Dao.class;
 
     @Override
     protected CreateResult<MyExample3077DTO> doCreateEntity(MyEntity3077OutServiceDTO entity, BusinessComponent bc) {

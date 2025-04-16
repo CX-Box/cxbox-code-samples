@@ -2,6 +2,8 @@ package org.demo.documentation.fields.multivalue.validationannotation;
 
 import java.util.Objects;
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -12,20 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample198Service extends VersionAwareResponseService<MyExample198DTO, MyEntity198> {
 
 	private final MyEntity198Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample198Meta> meta = MyExample198Meta.class;
 
-	@Autowired
+    @Autowired
 	private EntityManager entityManager;
 
-	public MyExample198Service(MyEntity198Repository repository) {
-		super(MyExample198DTO.class, MyEntity198.class, null, MyExample198Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample198DTO> doCreateEntity(MyEntity198 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

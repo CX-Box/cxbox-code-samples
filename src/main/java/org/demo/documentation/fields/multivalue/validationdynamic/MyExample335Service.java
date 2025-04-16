@@ -1,6 +1,8 @@
 package org.demo.documentation.fields.multivalue.validationdynamic;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -10,19 +12,17 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample335Service extends VersionAwareResponseService<MyExample335DTO, MyEntity335> {
 
 	private final MyEntity335Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample335Meta> meta = MyExample335Meta.class;
 
 
-	public MyExample335Service(MyEntity335Repository repository) {
-		super(MyExample335DTO.class, MyEntity335.class, null, MyExample335Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample335DTO> doCreateEntity(MyEntity335 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

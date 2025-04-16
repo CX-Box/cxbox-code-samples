@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.validationconfirm.forfield;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,16 +10,14 @@ import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3116Service extends VersionAwareResponseService<MyExample3116DTO, MyEntity3116> {
 
     private final MyEntity3116Repository repository;
-
-    public MyExample3116Service(MyEntity3116Repository repository) {
-        super(MyExample3116DTO.class, MyEntity3116.class, null, MyExample3116Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3116Meta> meta = MyExample3116Meta.class;
 
     @Override
     protected CreateResult<MyExample3116DTO> doCreateEntity(MyEntity3116 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.validationruntimeex;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,23 +10,17 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputValidationRuntimeExceptionService extends
 		VersionAwareResponseService<InputValidationRuntimeExceptionDTO, InputValidationRuntimeException> {
 
 	private final InputValidationRuntimeExceptionRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<InputValidationRuntimeExceptionMeta> meta = InputValidationRuntimeExceptionMeta.class;
 
-	public InputValidationRuntimeExceptionService(InputValidationRuntimeExceptionRepository repository) {
-		super(
-				InputValidationRuntimeExceptionDTO.class,
-				InputValidationRuntimeException.class,
-				null,
-				InputValidationRuntimeExceptionMeta.class
-		);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<InputValidationRuntimeExceptionDTO> doCreateEntity(InputValidationRuntimeException entity,
 			BusinessComponent bc) {
 		repository.save(entity);

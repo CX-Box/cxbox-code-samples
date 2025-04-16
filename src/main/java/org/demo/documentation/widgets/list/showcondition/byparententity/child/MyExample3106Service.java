@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.list.showcondition.byparententity.child;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -13,19 +15,16 @@ import org.demo.documentation.widgets.list.showcondition.byparententity.parent.M
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3106Service extends VersionAwareResponseService<MyExample3106DTO, MyEntity3106> {
 
     private final MyEntity3106Repository repository;
 
     private final MyEntity3100Repository repositoryParent;
-
-    public MyExample3106Service(MyEntity3106Repository repository, MyEntity3100Repository repositoryParent) {
-        super(MyExample3106DTO.class, MyEntity3106.class, null, MyExample3106Meta.class);
-        this.repository = repository;
-        this.repositoryParent = repositoryParent;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3106Meta> meta = MyExample3106Meta.class;
 
     @Override
     protected Specification<MyEntity3106> getParentSpecification(BusinessComponent bc) {

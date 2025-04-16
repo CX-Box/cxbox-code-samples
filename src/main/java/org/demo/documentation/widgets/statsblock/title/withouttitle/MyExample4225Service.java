@@ -1,19 +1,23 @@
 package org.demo.documentation.widgets.statsblock.title.withouttitle;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "java:S2387", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample4225Service extends AnySourceVersionAwareResponseService<MyExample4225DTO, MyExample4225DTO> {
 
 
-    public MyExample4225Service() {
-        super(MyExample4225DTO.class, MyExample4225DTO.class, MyExample4225Meta.class, MyExample4225Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4225Meta> meta = MyExample4225Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4225Dao> dao = MyExample4225Dao.class;
 
     @Override
     protected CreateResult<MyExample4225DTO> doCreateEntity(MyExample4225DTO entity, BusinessComponent bc) {

@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,17 +11,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3074Service extends VersionAwareResponseService<MyExample3074DTO, MyEntity3074> {
 
     private final MyEntity3074Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3074Meta> meta = MyExample3074Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3074Service(MyEntity3074Repository repository) {
-        super(MyExample3074DTO.class, MyEntity3074.class, null, MyExample3074Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3074DTO> doCreateEntity(MyEntity3074 entity, BusinessComponent bc) {

@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.assoc.actions.other.customsave;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,15 +12,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3063MultiMultivalueService extends VersionAwareResponseService<MyEntity3063MultiMultivalueDTO, MyEntity3063Multi> {
     private final MyEntity3063MultiRepository repository;
-
-    public MyEntity3063MultiMultivalueService(MyEntity3063MultiRepository repository) {
-        super(MyEntity3063MultiMultivalueDTO.class, MyEntity3063Multi.class, null, MyEntity3063MultiMultivalueMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3063MultiMultivalueMeta> meta = MyEntity3063MultiMultivalueMeta.class;
 
     @Override
     protected CreateResult<MyEntity3063MultiMultivalueDTO> doCreateEntity(MyEntity3063Multi entity, BusinessComponent bc) {

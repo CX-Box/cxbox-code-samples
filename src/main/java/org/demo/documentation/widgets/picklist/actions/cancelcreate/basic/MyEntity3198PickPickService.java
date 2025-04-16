@@ -2,6 +2,7 @@ package org.demo.documentation.widgets.picklist.actions.cancelcreate.basic;
 
 import lombok.Getter;
 
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -10,15 +11,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3198PickPickService extends VersionAwareResponseService<MyEntity3198PickPickDTO, MyEntity3198Pick> {
     private final MyEntity3198PickRepository repository;
-
-    public MyEntity3198PickPickService(MyEntity3198PickRepository repository) {
-        super(MyEntity3198PickPickDTO.class, MyEntity3198Pick.class, null, MyEntity3198PickPickMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3198PickPickMeta> meta = MyEntity3198PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3198PickPickDTO> doCreateEntity(MyEntity3198Pick entity, BusinessComponent bc) {

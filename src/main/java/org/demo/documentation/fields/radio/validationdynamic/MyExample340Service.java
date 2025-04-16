@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.radio.validationdynamic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.BusinessError;
@@ -11,17 +13,16 @@ import org.demo.documentation.fields.radio.basic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample340Service extends VersionAwareResponseService<MyExample340DTO, MyEntity340> {
 
 	private final MyEntity340Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample340Meta> meta = MyExample340Meta.class;
 
-	public MyExample340Service(MyEntity340Repository repository) {
-		super(MyExample340DTO.class, MyEntity340.class, null, MyExample340Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample340DTO> doCreateEntity(MyEntity340 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

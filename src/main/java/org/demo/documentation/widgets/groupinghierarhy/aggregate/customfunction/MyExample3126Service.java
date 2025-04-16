@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.groupinghierarhy.aggregate.customfunction;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,15 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3126Service extends VersionAwareResponseService<MyExample3126DTO, MyEntity3126> {
 
     private final MyEntity3126Repository repository;
-
-    public MyExample3126Service(MyEntity3126Repository repository) {
-        super(MyExample3126DTO.class, MyEntity3126.class, null, MyExample3126Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3126Meta> meta = MyExample3126Meta.class;
 
     @Override
     protected CreateResult<MyExample3126DTO> doCreateEntity(MyEntity3126 entity, BusinessComponent bc) {

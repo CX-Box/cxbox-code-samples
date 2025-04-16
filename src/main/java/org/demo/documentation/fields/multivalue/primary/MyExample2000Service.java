@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.multivalue.primary;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -16,20 +18,19 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample2000Service extends VersionAwareResponseService<MyExample2000DTO, MyEntity2000> {
 
 	private final MyEntity2000Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample2000Meta> meta = MyExample2000Meta.class;
 
-	@Autowired
+    @Autowired
 	private EntityManager entityManager;
 
-	public MyExample2000Service(MyEntity2000Repository repository) {
-		super(MyExample2000DTO.class, MyEntity2000.class, null, MyExample2000Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample2000DTO> doCreateEntity(MyEntity2000 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

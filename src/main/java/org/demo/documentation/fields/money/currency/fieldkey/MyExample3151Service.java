@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.money.currency.fieldkey;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3151Service extends VersionAwareResponseService<MyExample3151DTO, MyEntity3151> {
 
     private final MyEntity3151Repository repository;
-
-    public MyExample3151Service(MyEntity3151Repository repository) {
-        super(MyExample3151DTO.class, MyEntity3151.class, null, MyExample3151Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3151Meta> meta = MyExample3151Meta.class;
 
     @Override
     protected CreateResult<MyExample3151DTO> doCreateEntity(MyEntity3151 entity, BusinessComponent bc) {

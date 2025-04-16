@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.picklist.actions.delete;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,17 +12,16 @@ import org.demo.documentation.widgets.picklist.actions.delete.forpicklistpopup.M
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3188Service extends VersionAwareResponseService<MyExample3188DTO, MyEntity3188> {
 
     private final MyEntity3188Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3188Meta> meta = MyExample3188Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3188Service(MyEntity3188Repository repository) {
-        super(MyExample3188DTO.class, MyEntity3188.class, null, MyExample3188Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3188DTO> doCreateEntity(MyEntity3188 entity, BusinessComponent bc) {

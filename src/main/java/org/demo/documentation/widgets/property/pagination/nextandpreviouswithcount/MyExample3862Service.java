@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -14,18 +16,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3862Service extends VersionAwareResponseService<MyExample3862DTO, MyEntity3862> {
 
     private final MyEntity3862Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3862Meta> meta = MyExample3862Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3862Service(MyEntity3862Repository repository) {
-        super(MyExample3862DTO.class, MyEntity3862.class, null, MyExample3862Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample3862DTO> doCreateEntity(MyEntity3862 entity, BusinessComponent bc) {

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.api.data.dto.AssociateDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -29,28 +32,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample5555TaskDocumentService extends VersionAwareResponseService<TaskDocumentDTO, TaskDocument> {
 
 	private final TaskRepository taskRepository;
 
 	private final TaskDocumentRepository documentRepository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample5555TaskDocumentMeta> meta = MyExample5555TaskDocumentMeta.class;
 
-	@Autowired
+    @Autowired
 	private MinioClient minioClient;
 
 	@Value("${minio.bucket.name}")
 	private String defaultBucketName;
 
-	public MyExample5555TaskDocumentService(TaskRepository taskRepository,
-			TaskDocumentRepository documentRepository) {
-		super(TaskDocumentDTO.class, TaskDocument.class, null, MyExample5555TaskDocumentMeta.class);
-		this.taskRepository = taskRepository;
-		this.documentRepository = documentRepository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<TaskDocumentDTO> doCreateEntity(TaskDocument entity, BusinessComponent bc) {
 		Task task = taskRepository.getReferenceById(bc.getParentIdAsLong());
 		entity.setTask(task);

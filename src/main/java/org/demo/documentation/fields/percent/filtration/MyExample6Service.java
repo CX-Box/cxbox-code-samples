@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.percent.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample6Service extends VersionAwareResponseService<MyExample6DTO, MyEntity6> {
 
 	private final MyEntity6Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample6Meta> meta = MyExample6Meta.class;
 
-	public MyExample6Service(MyEntity6Repository repository) {
-		super(MyExample6DTO.class, MyEntity6.class, null, MyExample6Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample6DTO> doCreateEntity(MyEntity6 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.validationconfirm;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,13 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3114SuggestionService extends AnySourceVersionAwareResponseService<MyExample3114SuggestionDTO, MyEntity3114OutServiceDTO> {
 
 
-    public MyExample3114SuggestionService() {
-        super(MyExample3114SuggestionDTO.class, MyEntity3114OutServiceDTO.class, MyExample3114SuggestionMeta.class, MyEntity3114Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3114SuggestionMeta> meta = MyExample3114SuggestionMeta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3114Dao> dao = MyEntity3114Dao.class;
 
 
     @Override

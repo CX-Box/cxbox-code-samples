@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.picklist.actions.other.createwithparent;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,16 +12,15 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3074PickPickService extends VersionAwareResponseService<MyEntity3074PickPickDTO, MyEntity3074Pick> {
 
     private final MyEntity3074PickRepository repository;
-
-    public MyEntity3074PickPickService(MyEntity3074PickRepository repository) {
-        super(MyEntity3074PickPickDTO.class, MyEntity3074Pick.class, null, MyEntity3074PickPickMeta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3074PickPickMeta> meta = MyEntity3074PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity3074PickPickDTO> doCreateEntity(MyEntity3074Pick entity, BusinessComponent bc) {

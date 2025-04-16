@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.multipleselect.filtration;
 
 import java.util.stream.Collectors;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,17 +13,16 @@ import org.demo.documentation.fields.multipleselect.filtration.enums.CustomField
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample256Service extends VersionAwareResponseService<MyExample256DTO, MyEntity256> {
 
 	private final MyEntity256Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample256Meta> meta = MyExample256Meta.class;
 
-	public MyExample256Service(MyEntity256Repository repository) {
-		super(MyExample256DTO.class, MyEntity256.class, null, MyExample256Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample256DTO> doCreateEntity(MyEntity256 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.fileupload.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample99Service extends VersionAwareResponseService<MyExample99DTO, MyEntity99> {
 
 	private final MyEntity99Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample99Meta> meta = MyExample99Meta.class;
 
-	public MyExample99Service(MyEntity99Repository repository) {
-		super(MyExample99DTO.class, MyEntity99.class, null, MyExample99Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample99DTO> doCreateEntity(MyEntity99 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

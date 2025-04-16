@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.date.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,18 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class DateCreateEditService extends VersionAwareResponseService<DateCreateEditDTO, DateCreateEditEntity> {
 
 	private final DateCreateEditEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateCreateEditMeta> meta = DateCreateEditMeta.class;
 
-	public DateCreateEditService(DateCreateEditEntityRepository repository) {
-		super(DateCreateEditDTO.class, DateCreateEditEntity.class, null, DateCreateEditMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateCreateEditDTO> doCreateEntity(DateCreateEditEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

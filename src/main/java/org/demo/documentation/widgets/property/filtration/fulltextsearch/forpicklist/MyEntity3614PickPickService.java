@@ -1,6 +1,7 @@
 package org.demo.documentation.widgets.property.filtration.fulltextsearch.forpicklist;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,11 +14,15 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity3614PickPickService extends VersionAwareResponseService<MyEntity3614PickPickDTO, MyEntity3614Pick> {
 
     private final MyEntity3614PickRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3614PickPickMeta> meta = MyEntity3614PickPickMeta.class;
 
     // --8<-- [start:getSpecification]
     @Override
@@ -27,11 +32,6 @@ public class MyEntity3614PickPickService extends VersionAwareResponseService<MyE
         return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
     }
     // --8<-- [end:getSpecification]
-
-    public MyEntity3614PickPickService(MyEntity3614PickRepository repository) {
-        super(MyEntity3614PickPickDTO.class, MyEntity3614Pick.class, null, MyEntity3614PickPickMeta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyEntity3614PickPickDTO> doCreateEntity(MyEntity3614Pick entity, BusinessComponent bc) {

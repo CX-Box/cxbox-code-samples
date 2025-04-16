@@ -2,6 +2,8 @@ package org.demo.documentation.fields.multivalue.sorting;
 
 import java.util.Objects; 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
@@ -12,20 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample190Service extends VersionAwareResponseService<MyExample190DTO, MyEntity190> {
 
 	private final MyEntity190Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample190Meta> meta = MyExample190Meta.class;
 
-	@Autowired
+    @Autowired
 	private EntityManager entityManager;
 
-	public MyExample190Service(MyEntity190Repository repository) {
-		super(MyExample190DTO.class, MyEntity190.class, null, MyExample190Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample190DTO> doCreateEntity(MyEntity190 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

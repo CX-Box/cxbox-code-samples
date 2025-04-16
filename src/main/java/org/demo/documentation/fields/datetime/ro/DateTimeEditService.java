@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.datetime.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class DateTimeEditService extends VersionAwareResponseService<DateTimeEditDTO, DateTimeEdit> {
 
 	private final DateTimeEditRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<DateTimeEditMeta> meta = DateTimeEditMeta.class;
 
-	public DateTimeEditService(DateTimeEditRepository repository) {
-		super(DateTimeEditDTO.class, DateTimeEdit.class, null, DateTimeEditMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<DateTimeEditDTO> doCreateEntity(DateTimeEdit entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

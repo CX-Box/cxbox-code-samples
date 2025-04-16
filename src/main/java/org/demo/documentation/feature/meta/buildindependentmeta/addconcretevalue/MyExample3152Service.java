@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.meta.buildindependentmeta.addconcretevalue;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,16 +10,14 @@ import org.cxbox.core.service.action.Actions;
 
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3152Service extends VersionAwareResponseService<MyExample3152DTO, MyEntity3152> {
 
     private final MyEntity3152Repository repository;
-
-    public MyExample3152Service(MyEntity3152Repository repository) {
-        super(MyExample3152DTO.class, MyEntity3152.class, null, MyExample3152Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3152Meta> meta = MyExample3152Meta.class;
 
     @Override
     protected CreateResult<MyExample3152DTO> doCreateEntity(MyEntity3152 entity, BusinessComponent bc) {

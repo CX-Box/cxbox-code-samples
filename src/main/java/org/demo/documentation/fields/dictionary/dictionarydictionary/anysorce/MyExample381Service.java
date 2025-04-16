@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample381Service extends VersionAwareResponseService<MyExample381DTO, MyEntity381> {
 
     private final MyEntity381Repository repository;
-
-    public MyExample381Service(MyEntity381Repository repository) {
-        super(MyExample381DTO.class, MyEntity381.class, null, MyExample381Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample381Meta> meta = MyExample381Meta.class;
 
     @Override
     protected CreateResult<MyExample381DTO> doCreateEntity(MyEntity381 entity, BusinessComponent bc) {

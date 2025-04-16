@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.drilldown.goingbackafterdrilldown;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -11,15 +13,14 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3620Service extends VersionAwareResponseService<MyExample3620DTO, MyEntity3620> {
 
     private final MyEntity3620Repository repository;
-
-    public MyExample3620Service(MyEntity3620Repository repository) {
-        super(MyExample3620DTO.class, MyEntity3620.class, null, MyExample3620Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3620Meta> meta = MyExample3620Meta.class;
 
     @Override
     protected CreateResult<MyExample3620DTO> doCreateEntity(MyEntity3620 entity, BusinessComponent bc) {

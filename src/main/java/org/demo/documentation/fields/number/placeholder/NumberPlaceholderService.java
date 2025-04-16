@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.number.placeholder;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,18 +10,17 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class NumberPlaceholderService extends
 		VersionAwareResponseService<NumberPlaceholderDTO, NumberPlaceholderEntity> {
 
 	private final NumberPlaceholderEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<NumberPlaceholderMeta> meta = NumberPlaceholderMeta.class;
 
-	public NumberPlaceholderService(NumberPlaceholderEntityRepository repository) {
-		super(NumberPlaceholderDTO.class, NumberPlaceholderEntity.class, null, NumberPlaceholderMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<NumberPlaceholderDTO> doCreateEntity(NumberPlaceholderEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

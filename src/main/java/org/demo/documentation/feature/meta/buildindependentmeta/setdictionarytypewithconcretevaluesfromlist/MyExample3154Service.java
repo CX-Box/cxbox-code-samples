@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.meta.buildindependentmeta.setdictionarytypewithconcretevaluesfromlist;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3154Service extends VersionAwareResponseService<MyExample3154DTO, MyEntity3154> {
 
     private final MyEntity3154Repository repository;
-
-    public MyExample3154Service(MyEntity3154Repository repository) {
-        super(MyExample3154DTO.class, MyEntity3154.class, null, MyExample3154Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3154Meta> meta = MyExample3154Meta.class;
 
     @Override
     protected CreateResult<MyExample3154DTO> doCreateEntity(MyEntity3154 entity, BusinessComponent bc) {

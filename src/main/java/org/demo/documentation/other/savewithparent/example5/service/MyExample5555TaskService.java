@@ -1,6 +1,8 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -25,7 +27,8 @@ import org.demo.documentation.other.savewithparent.example5.repositories.TaskRep
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample5555TaskService extends VersionAwareResponseService<TaskDTO, Task> {
 
@@ -40,17 +43,10 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 	private final ApplicationRepository applicationRepository;
 
 	private final ExecutorRepository executorRepository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample5555TaskMeta> meta = MyExample5555TaskMeta.class;
 
-	public MyExample5555TaskService(TaskRepository repository,
-			ApplicationRepository applicationRepository,
-			ExecutorRepository executorRepository) {
-		super(TaskDTO.class, Task.class, null, MyExample5555TaskMeta.class);
-		this.repository = repository;
-		this.applicationRepository = applicationRepository;
-		this.executorRepository = executorRepository;
-	}
-
-	@Override
+    @Override
 	protected Specification<Task> getParentSpecification(BusinessComponent bc) {
 		return (root, cq, cb) -> cb.and(
 				super.getParentSpecification(bc).toPredicate(root, cq, cb),

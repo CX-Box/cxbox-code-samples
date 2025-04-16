@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.inlinepicklist.drilldown;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,21 +9,17 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity141PickPickListService extends
 		VersionAwareResponseService<MyEntity141PickDTO, org.demo.documentation.fields.inlinepicklist.drilldown.picklist.MyEntity141> {
 
-	public MyEntity141PickPickListService() {
-		super(
-				MyEntity141PickDTO.class,
-				org.demo.documentation.fields.inlinepicklist.drilldown.picklist.MyEntity141.class,
-				null,
-				MyEntity141PickPickListMeta.class
-		);
-	}
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity141PickPickListMeta> meta = MyEntity141PickPickListMeta.class;
 
-	@Override
+    @Override
 	protected CreateResult<MyEntity141PickDTO> doCreateEntity(
 			org.demo.documentation.fields.inlinepicklist.drilldown.picklist.MyEntity141 entity, BusinessComponent bc) {
 		return null;

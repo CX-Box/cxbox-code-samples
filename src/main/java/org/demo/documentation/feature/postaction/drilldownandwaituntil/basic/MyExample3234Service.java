@@ -1,5 +1,7 @@
 package org.demo.documentation.feature.postaction.drilldownandwaituntil.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -25,19 +27,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.time.Duration;
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3234Service extends VersionAwareResponseService<MyExample3234DTO, MyEntity3234> {
     private final IntegrationConfiguration integrationConfig;
 
     private final RestTemplate restTemplate;
     private final MyEntity3234Repository repository;
-
-    public MyExample3234Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate, MyEntity3234Repository repository) {
-        super(MyExample3234DTO.class, MyEntity3234.class, null, MyExample3234Meta.class);
-        this.integrationConfig = integrationConfig;
-        this.restTemplate = restTemplate;
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3234Meta> meta = MyExample3234Meta.class;
 
     @Override
     protected CreateResult<MyExample3234DTO> doCreateEntity(MyEntity3234 entity, BusinessComponent bc) {

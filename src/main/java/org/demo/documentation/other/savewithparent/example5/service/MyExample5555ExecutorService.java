@@ -1,5 +1,7 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -15,18 +17,16 @@ import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.repositories.ExecutorRepository;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample5555ExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
 	private final ExecutorRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample5555ExecutorMeta> meta = MyExample5555ExecutorMeta.class;
 
-	public MyExample5555ExecutorService(ExecutorRepository repository) {
-		super(ExecutorDTO.class, Executor.class, null, MyExample5555ExecutorMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<ExecutorDTO> doCreateEntity(Executor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity))

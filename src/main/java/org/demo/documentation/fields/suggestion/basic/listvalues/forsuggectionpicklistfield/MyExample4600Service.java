@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.suggestion.basic.listvalues.forsuggectionpicklistfield;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,13 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample4600Service extends AnySourceVersionAwareResponseService<MyExample4600DTO, MyEntity4600OutServiceDTO> {
 
 
-    public MyExample4600Service() {
-        super(MyExample4600DTO.class, MyEntity4600OutServiceDTO.class, MyExample4600Meta.class, MyEntity4600Dao.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4600Meta> meta = MyExample4600Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity4600Dao> dao = MyEntity4600Dao.class;
 
 
     @Override

@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary.example;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,16 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample356Service extends VersionAwareResponseService<MyExample356DTO, MyEntity356> {
 
     private final MyEntity356Repository repository;
-
-    public MyExample356Service(MyEntity356Repository repository) {
-        super(MyExample356DTO.class, MyEntity356.class, null, MyExample356Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample356Meta> meta = MyExample356Meta.class;
 
     @Override
     protected CreateResult<MyExample356DTO> doCreateEntity(MyEntity356 entity, BusinessComponent bc) {

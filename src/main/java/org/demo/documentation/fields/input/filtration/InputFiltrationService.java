@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.input.filtration;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class InputFiltrationService extends VersionAwareResponseService<InputFiltrationDTO, InputFiltration> {
 
 	private final InputFiltrationRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<InputFiltrationMeta> meta = InputFiltrationMeta.class;
 
-	public InputFiltrationService(InputFiltrationRepository repository) {
-		super(InputFiltrationDTO.class, InputFiltration.class, null, InputFiltrationMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<InputFiltrationDTO> doCreateEntity(InputFiltration entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

@@ -1,6 +1,8 @@
 package org.demo.documentation.widgets.picklist.actions.other.createcustomsave;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -12,21 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3073Service extends VersionAwareResponseService<MyExample3073DTO, MyEntity3073> {
 
     private final MyEntity3073Repository repository;
 
     private final MyEntity3073PickRepository repositoryPick;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3073Meta> meta = MyExample3073Meta.class;
 
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample3073Service(MyEntity3073Repository repository, MyEntity3073PickRepository repositoryPick) {
-        super(MyExample3073DTO.class, MyEntity3073.class, null, MyExample3073Meta.class);
-        this.repository = repository;
-        this.repositoryPick = repositoryPick;
-    }
 
     @Override
     protected CreateResult<MyExample3073DTO> doCreateEntity(MyEntity3073 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.actions.cancelcreate.postaction;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -9,16 +11,14 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3187Service extends VersionAwareResponseService<MyExample3187DTO, MyEntity3187> {
 
     private final MyEntity3187Repository repository;
-
-    public MyExample3187Service(MyEntity3187Repository repository) {
-        super(MyExample3187DTO.class, MyEntity3187.class, null, MyExample3187Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3187Meta> meta = MyExample3187Meta.class;
 
     @Override
     protected CreateResult<MyExample3187DTO> doCreateEntity(MyEntity3187 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.actions.cancelcreate.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,16 +10,14 @@ import org.cxbox.core.service.action.Actions;
 
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3182Service extends VersionAwareResponseService<MyExample3182DTO, MyEntity3182> {
 
     private final MyEntity3182Repository repository;
-
-    public MyExample3182Service(MyEntity3182Repository repository) {
-        super(MyExample3182DTO.class, MyEntity3182.class, null, MyExample3182Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3182Meta> meta = MyExample3182Meta.class;
 
     @Override
     protected CreateResult<MyExample3182DTO> doCreateEntity(MyEntity3182 entity, BusinessComponent bc) {

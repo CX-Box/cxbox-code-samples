@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.checkbox.validationruntimeex;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -8,17 +10,16 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample80Service extends VersionAwareResponseService<MyExample80DTO, MyEntity80> {
 
 	private final MyEntity80Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample80Meta> meta = MyExample80Meta.class;
 
-	public MyExample80Service(MyEntity80Repository repository) {
-		super(MyExample80DTO.class, MyEntity80.class, null, MyExample80Meta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample80DTO> doCreateEntity(MyEntity80 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

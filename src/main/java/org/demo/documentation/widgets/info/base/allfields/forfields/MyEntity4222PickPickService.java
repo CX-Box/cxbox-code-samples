@@ -2,6 +2,7 @@ package org.demo.documentation.widgets.info.base.allfields.forfields;
 
 import lombok.Getter;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -9,13 +10,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity4222PickPickService extends VersionAwareResponseService<MyEntity4222PickPickDTO, MyEntity4222Pick> {
 
-    public MyEntity4222PickPickService() {
-        super(MyEntity4222PickPickDTO.class, MyEntity4222Pick.class, null, MyEntity4222PickPickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity4222PickPickMeta> meta = MyEntity4222PickPickMeta.class;
 
     @Override
     protected CreateResult<MyEntity4222PickPickDTO> doCreateEntity(MyEntity4222Pick entity, BusinessComponent bc) {

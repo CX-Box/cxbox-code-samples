@@ -1,6 +1,9 @@
 package org.demo.documentation.fields.multipleselect.validationannotation;
 
 import java.util.stream.Collectors;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -9,19 +12,16 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.fields.multipleselect.validationannotation.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class MyExample345Service extends VersionAwareResponseService<MyExample345DTO, MyEntity345> {
 
 	private final MyEntity345Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample345Meta> meta = MyExample345Meta.class;
 
-	public MyExample345Service(MyEntity345Repository repository) {
-		super(MyExample345DTO.class, MyEntity345.class, null, MyExample345Meta.class);
-		this.repository = repository;
-
-	}
-
-	@Override
+    @Override
 	protected CreateResult<MyExample345DTO> doCreateEntity(MyEntity345 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

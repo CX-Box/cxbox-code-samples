@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.number.ro;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,18 +9,16 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
+@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@RequiredArgsConstructor
 @Service
 public class NumberCreateEditService extends VersionAwareResponseService<NumberCreateEditDTO, NumberCreateEditEntity> {
 
 	private final NumberCreateEditEntityRepository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<NumberCreateEditMeta> meta = NumberCreateEditMeta.class;
 
-	public NumberCreateEditService(NumberCreateEditEntityRepository repository) {
-		super(NumberCreateEditDTO.class, NumberCreateEditEntity.class, null, NumberCreateEditMeta.class);
-		this.repository = repository;
-	}
-
-	@Override
+    @Override
 	protected CreateResult<NumberCreateEditDTO> doCreateEntity(NumberCreateEditEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
