@@ -5,45 +5,87 @@
   "bc": "myExampleBc3500",
   "fields": [
     {
-      "label": "Custom Field h:mm:ss",
+      "label": "Custom Field HH:mm:ss",
       "key": "customField",
       "type": "time",
-      "format": "HH:MM:SS"
-    } ,
+      "format": "HH:mm:ss"
+    },
     {
-      "label": "Custom Field h:mm",
+      "label": "Custom Field HH:mm",
       "key": "customFieldhmm",
       "type": "time",
-      "format": "HH:MM"
+      "format": "HH:mm"
     },
     {
-      "label": "Custom Fieldh",
+      "label": "Custom Field HH",
       "key": "customFieldh",
       "type": "time",
-      "format": "HH:MM"
+      "format": "HH"
     },
     {
-      "label": "Custom Field h:mm:ss A",
+      "label": "Custom Field hh:mm:ss A",
       "key": "customFieldhmmssA",
       "type": "time",
-      "format": "H:MM:SS A"
+      "format": "hh:mm:ss A"
     },
     {
-      "label": "Custom Field h:mm A",
+      "label": "Custom Field hh:mm A",
       "key": "customFieldhmmA",
       "type": "time",
-      "format": "H:MM A"
+      "format": "hh:mm A"
     },
     {
-      "label": "Custom Fieldh",
+      "label": "Custom Field hh A",
       "key": "customFieldhA",
+      "type": "date",
+      "format": "hh A"
+    },
+    {
+      "label": "Custom Field mm",
+      "key": "customFieldmm",
       "type": "time",
-      "format": "HH:MM A"
+      "format": "mm"
+    },
+    {
+      "label": "Custom Field mm:ss",
+      "key": "customFieldmmss",
+      "type": "time",
+      "format": "mm:ss"
+    },
+    {
+      "label": "Custom Field ss",
+      "key": "customFieldss",
+      "type": "time",
+      "format": "ss"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldss",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldmmss",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldmm",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
