@@ -88,7 +88,7 @@ public class RadioOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.radio("Custom Field");
-        assertThat(customField.drillDown()).isTrue();
+        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

@@ -76,6 +76,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
+        customField.clear();
         customField.addValue(Set.of("Middle"));
         customField.addValue(Set.of("Low"));
         form.clickButton("save");
@@ -234,7 +235,9 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
+        customField.clear();
         customField.addValue(Set.of("Middle"));
+        form.clickButton("save");
         assertThat(customField.getValue()).isEqualTo(Set.of("Middle"));
         assertThat(customField.getOptions()).isEqualTo(List.of("High", "Middle", "Low"));
     }

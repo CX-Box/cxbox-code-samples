@@ -11,12 +11,14 @@ import io.qameta.allure.Allure;
 
 import io.qameta.allure.Step;
 import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.Wait;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
 @RequiredArgsConstructor
@@ -164,9 +166,10 @@ public abstract class BaseString<E> {
             logTime(step);
 
             String oldUrl = WebDriverRunner.url();
-            getFieldByName().$(getValueTag()).click();
+            getFieldByName().$(getValueTag()).getWrappedElement().findElement(By.cssSelector("span:has(a)")).click();
+            Wait().until(webDriver -> !webDriver.getCurrentUrl().contains(oldUrl));
             String newUrl = WebDriverRunner.url();
-            return oldUrl.equals(newUrl) && $x("//body").exists();
+            return !oldUrl.equals(newUrl) && $x("//body").exists();
         });
     }
 
