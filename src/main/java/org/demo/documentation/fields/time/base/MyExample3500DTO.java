@@ -30,6 +30,9 @@ public class MyExample3500DTO extends DataResponseDTO {
     private LocalDateTime customFieldmmss;
     @SearchParameter(name = "customFieldss", provider = DateValueProvider.class)
     private LocalDateTime customFieldss;
+    @SearchParameter(name = "customFieldhA", provider = DateValueProvider.class)
+    private LocalDateTime customFieldhA;
+
     public MyExample3500DTO(MyEntity3500 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
@@ -40,5 +43,6 @@ public class MyExample3500DTO extends DataResponseDTO {
         this.customFieldmm = entity.getCustomFieldmm();
         this.customFieldmmss = entity.getCustomFieldmmss();
         this.customFieldss = entity.getCustomFieldss();
+        this.customFieldhA = entity.getCustomFieldhA();
     }
 }

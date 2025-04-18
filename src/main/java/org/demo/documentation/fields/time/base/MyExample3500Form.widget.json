@@ -5,34 +5,40 @@
   "bc": "myExampleBc3500",
   "fields": [
     {
-      "label": "Custom Field h:mm:ss",
+      "label": "Custom Field HH:mm:ss",
       "key": "customField",
       "type": "time",
-      "format": "h:mm:ss"
+      "format": "HH:mm:ss"
     },
     {
-      "label": "Custom Field h:mm",
+      "label": "Custom Field HH:mm",
       "key": "customFieldhmm",
       "type": "time",
-      "format": "h:mm"
+      "format": "HH:mm"
     },
     {
-      "label": "Custom Field h",
+      "label": "Custom Field HH",
       "key": "customFieldh",
       "type": "time",
-      "format": "h"
+      "format": "HH"
     },
     {
-      "label": "Custom Field h:mm A",
-      "key": "customFieldhmmA",
-      "type": "time",
-      "format": "h:mm A"
-    },
-    {
-      "label": "Custom Field h:mm:ss A",
+      "label": "Custom Field hh:mm:ss A",
       "key": "customFieldhmmssA",
       "type": "time",
-      "format": "h:mm:ss A"
+      "format": "hh:mm:ss A"
+    },
+    {
+      "label": "Custom Field hh:mm A",
+      "key": "customFieldhmmA",
+      "type": "time",
+      "format": "hh:mm A"
+    },
+    {
+      "label": "Custom Field hh A",
+      "key": "customFieldhA",
+      "type": "date",
+      "format": "hh A"
     },
     {
       "label": "Custom Field mm",
@@ -56,6 +62,14 @@
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldhA",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
