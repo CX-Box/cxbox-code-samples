@@ -10,6 +10,7 @@ import { Checkbox } from 'antd'
 import { interfaces } from '@cxbox-ui/core'
 import { ColumnFilterControlProps } from '@cxboxComponents/ui/FilterField/FilterField'
 import { NumberInput, FilterField as CoreFilterField } from '@cxboxComponents'
+import TimeRangePicker from '@components/ColumnTitle/TimeRangePicker'
 
 interface FilterFieldProps extends ColumnFilterControlProps {
     visible?: boolean
@@ -90,6 +91,9 @@ function FilterField({ visible, filterByRangeEnabled, ...props }: FilterFieldPro
                     open={visible}
                 />
             )
+        }
+        case CustomFieldTypes.Time: {
+            return <TimeRangePicker value={value as interfaces.DataValue[]} onChange={onChange} format={''} open={visible} />
         }
 
         default: {
