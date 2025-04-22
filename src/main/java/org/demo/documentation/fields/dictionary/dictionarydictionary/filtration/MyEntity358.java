@@ -16,4 +16,6 @@ public class MyEntity358 extends BaseEntity {
     private String customField;
     @Column
     private CustomDictionaryFiltration customFieldDictionary;
+    @Column
+    private CustomDictionaryNewFiltration customFieldNewDictionary;
 }

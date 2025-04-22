@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.radio.filtration.enums.CustomFieldEnum;
+import org.demo.documentation.fields.radio.filtration.enums.CustomFieldNewEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class MyEntity25TestDataLoadService {
 		repository.save(new MyEntity25().setCustomField(CustomFieldEnum.HIGH));
 		repository.save(new MyEntity25().setCustomField(CustomFieldEnum.LOW));
 		repository.save(new MyEntity25().setCustomField(CustomFieldEnum.MIDDLE));
+		repository.save(new MyEntity25().setCustomFieldNew(CustomFieldNewEnum.A).setCustomField(CustomFieldEnum.LOW));
+		repository.save(new MyEntity25().setCustomFieldNew(CustomFieldNewEnum.B).setCustomField(CustomFieldEnum.HIGH));
+		repository.save(new MyEntity25().setCustomFieldNew(CustomFieldNewEnum.C).setCustomField(CustomFieldEnum.HIGH));
+		repository.save(new MyEntity25().setCustomFieldNew(CustomFieldNewEnum.A));
 	}
 
 }

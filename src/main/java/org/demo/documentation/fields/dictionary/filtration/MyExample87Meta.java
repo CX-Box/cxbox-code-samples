@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldEnum;
+import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldNewEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,19 +21,24 @@ public class MyExample87Meta extends FieldMetaBuilder<MyExample87DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample87DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample87DTO_.customField);
+		fields.setEnabled(MyExample87DTO_.customFieldNew);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample87DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-		if (configuration.getForceActiveEnabled()) {
+		if (Boolean.TRUE.equals(configuration.getForceActiveEnabled())) {
 			fields.setForceActive(MyExample87DTO_.customField);
 		}
 		fields.setEnumValues(MyExample87DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumFilterValues(fields, MyExample87DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample87DTO_.customField);
 		fields.enableSort(MyExample87DTO_.customField);
+
+		fields.setEnumValues(MyExample87DTO_.customFieldNew, CustomFieldNewEnum.values());
+		fields.setEnumFilterValues(fields, MyExample87DTO_.customFieldNew, CustomFieldNewEnum.values());
+		fields.enableFilter(MyExample87DTO_.customFieldNew);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

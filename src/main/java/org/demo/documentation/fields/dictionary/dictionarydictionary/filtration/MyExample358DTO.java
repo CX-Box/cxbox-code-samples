@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DictionaryValueProvider;
+import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 
 
 @Getter
@@ -18,9 +19,13 @@ public class MyExample358DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customFieldDictionary", provider = DictionaryValueProvider.class)
     private CustomDictionaryFiltration customFieldDictionary;
+    @SearchParameter(name = "customFieldNewDictionary", provider = EnumValueProvider.class)
+    private CustomDictionaryNewFiltration customFieldNewDictionary;
 
     public MyExample358DTO(MyEntity358 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.customFieldDictionary = entity.getCustomFieldDictionary();
+        this.customFieldNewDictionary = entity.getCustomFieldNewDictionary();
     }
 }

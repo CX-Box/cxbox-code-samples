@@ -20,7 +20,14 @@ public class MyEntity358TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity358().setCustomField("test data").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH));
+        repository.save(new MyEntity358().setCustomField("test data1").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH).setCustomFieldNewDictionary(CustomDictionaryNewFiltration.A));
+        repository.save(new MyEntity358().setCustomField("test data2").setCustomFieldDictionary(CustomDictionaryFiltration.LOW));
+        repository.save(new MyEntity358().setCustomField("test data3").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH));
+        repository.save(new MyEntity358().setCustomField("test data4").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH));
+        repository.save(new MyEntity358().setCustomField("test data5").setCustomFieldDictionary(CustomDictionaryFiltration.LOW));
+        repository.save(new MyEntity358().setCustomField("test data6").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH));
+        repository.save(new MyEntity358().setCustomField("test data7"));
+        repository.save(new MyEntity358().setCustomField("test data8").setCustomFieldDictionary(CustomDictionaryFiltration.HIGH));
     }
 
 }
