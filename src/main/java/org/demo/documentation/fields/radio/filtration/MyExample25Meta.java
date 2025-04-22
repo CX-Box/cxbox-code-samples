@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.radio.filtration.enums.CustomFieldEnum;
+import org.demo.documentation.fields.radio.filtration.enums.CustomFieldNewEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,12 +28,16 @@ public class MyExample25Meta extends FieldMetaBuilder<MyExample25DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample25DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-		if (configuration.getForceActiveEnabled()) {
+		if (Boolean.TRUE.equals(configuration.getForceActiveEnabled())) {
 			fields.setForceActive(MyExample25DTO_.customField);
 		}
 		fields.setEnumFilterValues(fields, MyExample25DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample25DTO_.customField);
 		fields.enableSort(MyExample25DTO_.customField);
+
+		fields.setEnumFilterValues(fields, MyExample25DTO_.customFieldNew, CustomFieldNewEnum.values());
+		fields.enableFilter(MyExample25DTO_.customFieldNew);
+		fields.enableSort(MyExample25DTO_.customFieldNew);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }
