@@ -3,7 +3,26 @@
   "title": "Form title",
   "type": "Form",
   "bc": "myExampleBc4103",
-  "fields": [],
+  "fields": [
+    {
+      "label": "Custom Field h:mm:ss",
+      "key": "customField",
+      "type": "time",
+      "format": "HH:mm:ss"
+    }
+  ],
   "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
   }
 }
