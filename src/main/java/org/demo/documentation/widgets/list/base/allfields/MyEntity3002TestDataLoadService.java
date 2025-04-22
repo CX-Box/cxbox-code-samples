@@ -66,7 +66,9 @@ public class MyEntity3002TestDataLoadService {
 				.setCustomFieldPickListEntity(myEntityPick2)
 				.setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
 				.setCustomFieldInlineEntity(myEntityPick);
+		MyEntity3002 myEntity3002new2 = new MyEntity3002();
 		repository.save(myEntity3002new.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
+		repository.save(myEntity3002new2);
 	}
 
 

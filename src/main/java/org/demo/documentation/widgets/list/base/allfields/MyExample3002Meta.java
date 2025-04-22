@@ -25,33 +25,58 @@ public class MyExample3002Meta extends FieldMetaBuilder<MyExample3002DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3002DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample3002DTO_.customFieldMultivalueHover);
-        fields.setEnabled(MyExample3002DTO_.customFieldHint);
-        fields.setEnabled(MyExample3002DTO_.customFieldMultivalue);
         fields.setDictionaryTypeWithCustomValues(MyExample3002DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
                 .toArray(String[]::new));
-        fields.setEnabled(MyExample3002DTO_.customFieldMultipleSelect);
-        fields.setEnabled(MyExample3002DTO_.customFieldInlineId);
-        fields.setEnabled(MyExample3002DTO_.customFieldInline);
-        fields.setEnabled(MyExample3002DTO_.customFieldPickListId);
-        fields.setEnabled(MyExample3002DTO_.customFieldPickList);
+
         fields.setEnumValues(MyExample3002DTO_.customFieldRadio, CustomFieldRadioEnum.values());
-        fields.setEnabled(MyExample3002DTO_.customFieldRadio);
-        fields.setEnabled(MyExample3002DTO_.customFieldMoney);
-        fields.setEnabled(MyExample3002DTO_.customFieldPercent);
-        fields.setEnabled(MyExample3002DTO_.customFieldNumber);
-        fields.setEnabled(MyExample3002DTO_.customFieldFileUploadId);
-        fields.setEnabled(MyExample3002DTO_.customFieldFileUpload);
+
         fields.setEnumValues(MyExample3002DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.setEnabled(MyExample3002DTO_.customFieldDictionary);
-        fields.setEnabled(MyExample3002DTO_.customFieldDateTimeWithSeconds);
-        fields.setEnabled(MyExample3002DTO_.customFieldDate);
-        fields.setEnabled(MyExample3002DTO_.customFieldCheckbox);
-        fields.setEnabled(MyExample3002DTO_.customFieldDateTime);
-        fields.setEnabled(MyExample3002DTO_.customFieldText);
-        fields.setEnabled(MyExample3002DTO_.customFieldHidden);
-        fields.setEnabled(MyExample3002DTO_.customField);
+        fields.setEnabled(MyExample3002DTO_.customFieldMultivalueHover,
+                MyExample3002DTO_.customFieldHint,
+                MyExample3002DTO_.customFieldMultivalue,
+                MyExample3002DTO_.customFieldMultipleSelect,
+                MyExample3002DTO_.customFieldInlineId,
+                MyExample3002DTO_.customFieldInline,
+                MyExample3002DTO_.customFieldPickListId,
+                MyExample3002DTO_.customFieldPickList,
+                MyExample3002DTO_.customFieldRadio,
+                MyExample3002DTO_.customFieldMoney,
+                MyExample3002DTO_.customFieldPercent,
+                MyExample3002DTO_.customFieldNumber,
+                MyExample3002DTO_.customFieldFileUploadId,
+                MyExample3002DTO_.customFieldFileUpload,
+                MyExample3002DTO_.customFieldDictionary,
+                MyExample3002DTO_.customFieldDateTimeWithSeconds,
+                MyExample3002DTO_.customFieldDate,
+                MyExample3002DTO_.customFieldCheckbox,
+                MyExample3002DTO_.customFieldDateTime,
+                MyExample3002DTO_.customFieldText,
+                MyExample3002DTO_.customFieldHidden,
+                MyExample3002DTO_.customField);
+
+        fields.setRequired(MyExample3002DTO_.customFieldMultivalueHover,
+                MyExample3002DTO_.customFieldHint,
+                MyExample3002DTO_.customFieldMultivalue,
+                MyExample3002DTO_.customFieldMultipleSelect,
+                MyExample3002DTO_.customFieldInlineId,
+                MyExample3002DTO_.customFieldInline,
+                MyExample3002DTO_.customFieldPickListId,
+                MyExample3002DTO_.customFieldPickList,
+                MyExample3002DTO_.customFieldRadio,
+                MyExample3002DTO_.customFieldMoney,
+                MyExample3002DTO_.customFieldPercent,
+                MyExample3002DTO_.customFieldNumber,
+                MyExample3002DTO_.customFieldFileUploadId,
+                MyExample3002DTO_.customFieldFileUpload,
+                MyExample3002DTO_.customFieldDictionary,
+                MyExample3002DTO_.customFieldDateTimeWithSeconds,
+                MyExample3002DTO_.customFieldDate,
+                MyExample3002DTO_.customFieldCheckbox,
+                MyExample3002DTO_.customFieldDateTime,
+                MyExample3002DTO_.customFieldText,
+                MyExample3002DTO_.customFieldHidden,
+                MyExample3002DTO_.customField);
     }
     // --8<-- [end:buildRowDependentMeta]
 
@@ -83,6 +108,7 @@ public class MyExample3002Meta extends FieldMetaBuilder<MyExample3002DTO> {
             fields.setForceActive(MyExample3002DTO_.customField);
         }
         fields.enableFilter(MyExample3002DTO_.customField);
+
     }
     // --8<-- [end:buildIndependentMeta]
 
