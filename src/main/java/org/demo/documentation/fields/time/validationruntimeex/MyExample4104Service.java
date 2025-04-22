@@ -6,8 +6,14 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.fields.datetime.validationbusinessex.DateTimeValidationBusinessExDTO_;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 
 
 @SuppressWarnings("java:S1170")
@@ -28,10 +34,18 @@ public class MyExample4104Service extends VersionAwareResponseService<MyExample4
     @Override
     protected ActionResultDTO<MyExample4104DTO> doUpdateEntity(MyEntity4104 entity, MyExample4104DTO data, BusinessComponent bc) {
 
+        if (data.isFieldChanged(MyExample4104DTO_.customField)) {
+            try {
+                //call custom function
+                throw new Exception("Error");
+            } catch (Exception e) {
+                throw new RuntimeException("An unexpected error has occurred.");
+            }
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4104DTO> getActions() {
         return Actions.<MyExample4104DTO>builder()
@@ -40,5 +54,5 @@ public class MyExample4104Service extends VersionAwareResponseService<MyExample4
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
