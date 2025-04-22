@@ -1,4 +1,4 @@
-package org.demo.documentation.other.forceactive;
+package org.demo.documentation.other.forceactive.example2.child;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -7,16 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity3204 extends BaseEntity {
+public class MyEntity3206 extends BaseEntity {
     @Column
     private String customField;
-    @Column
-    private String customFieldFA;
-    @Column
-    private String customFieldDrillDown;
 }
