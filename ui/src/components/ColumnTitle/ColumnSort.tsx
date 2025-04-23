@@ -35,15 +35,15 @@ export const ColumnSort: FunctionComponent<ColumnSortProps> = ({ widgetName, fie
 export default ColumnSort
 
 export function useSorter(widgetName: string, fieldKey: string) {
-    const { bcName, sorters, page, infinitePagination, permanentSorterFields } = useAppSelector(state => {
+    const { bcName, sorters, page, infinitePagination, permanentSorterFields, defaultSort } = useAppSelector(state => {
         const widget = state.view.widgets.find(item => item.name === widgetName) as AppWidgetTableMeta | undefined
         const bcName = widget?.bcName as string
         const sorters = state.screen.sorters[bcName] as BcSorter[] | undefined
         const page = state.screen.bo.bc[bcName]?.page
         const infinitePagination = !!state.view.infiniteWidgets?.includes(widgetName)
         const permanentSorterFields = widget?.options?.groupingHierarchy?.fields
-
-        return { bcName, infinitePagination, sorters, page, permanentSorterFields }
+        const defaultSort = state.screen.bo.bc[bcName]?.defaultSort
+        return { bcName, infinitePagination, sorters, page, permanentSorterFields, defaultSort }
     }, shallowEqual)
 
     const fieldSorter = sorters?.find(item => item.fieldName === fieldKey)
@@ -74,39 +74,68 @@ export function useSorter(widgetName: string, fieldKey: string) {
     )
 
     const toggleSort = useCallback(() => {
-        const newSorters = sorters?.filter(sorter => sorter.fieldName === fieldKey || permanentSorterFields?.includes(sorter.fieldName))
-
-        if (!permanentSorterFields || !newSorters) {
-            setSort({
-                fieldName: fieldKey,
-                direction: !fieldSorter ? 'desc' : fieldSorter.direction === 'asc' ? 'desc' : 'asc'
-            })
-
-            return
-        }
-
-        if (permanentSorterFields && newSorters) {
-            const currentFieldSorterIndex = newSorters?.findIndex(item => item.fieldName === fieldKey) ?? -1
-
-            if (currentFieldSorterIndex !== -1) {
-                const oldFieldSorter = newSorters?.[currentFieldSorterIndex]
-
-                newSorters[currentFieldSorterIndex] = {
-                    ...oldFieldSorter,
-                    direction: oldFieldSorter?.direction === 'asc' ? 'desc' : 'asc'
+        const isPermanent = permanentSorterFields?.includes(fieldKey)
+        if (fieldSorter) {
+            if (fieldSorter.direction === 'desc') {
+                const updatedSorter: BcSorter = {
+                    ...fieldSorter,
+                    direction: 'asc' as const
                 }
-            } else {
-                newSorters?.push({
-                    fieldName: fieldKey,
-                    direction: !fieldSorter ? 'desc' : fieldSorter.direction === 'asc' ? 'desc' : 'asc'
-                })
+
+                const newSorters = sorters?.map(s => (s.fieldName === fieldKey ? updatedSorter : s))
+
+                setSort(newSorters ?? updatedSorter)
+                return
             }
 
-            setSort(newSorters)
+            if (fieldSorter.direction === 'asc') {
+                if (!isPermanent) {
+                    const newSorters = sorters?.filter(s => s.fieldName !== fieldKey)
+                    if (newSorters && newSorters.length > 0) {
+                        setSort(newSorters)
+                        return
+                    }
+                    if (defaultSort && defaultSort?.indexOf(fieldKey) !== -1) {
+                        const direction = () => {
+                            if (defaultSort.indexOf('asc') !== -1) {
+                                return 'asc'
+                            }
+                            if (defaultSort.indexOf('desc') === -1) {
+                                return 'desc'
+                            }
+                            return 'desc'
+                        }
+                        setSort({
+                            fieldName: fieldKey,
+                            direction: direction()
+                        })
+                        return
+                    }
+                    setSort([])
+                    return
+                }
 
-            return
+                const updatedSorter: BcSorter = {
+                    ...fieldSorter,
+                    direction: 'desc' as const
+                }
+
+                const newSorters = sorters?.map(s => (s.fieldName === fieldKey ? updatedSorter : s))
+
+                setSort(newSorters ?? updatedSorter)
+                return
+            }
         }
-    }, [sorters, permanentSorterFields, fieldKey, setSort, fieldSorter])
+
+        const newSorter: BcSorter = {
+            fieldName: fieldKey,
+            direction: 'desc' as const
+        }
+
+        const newSorters = permanentSorterFields ? [...(sorters ?? []), newSorter] : newSorter
+
+        setSort(newSorters)
+    }, [permanentSorterFields, fieldKey, fieldSorter, sorters, setSort, defaultSort])
 
     return {
         sorter: fieldSorter,
