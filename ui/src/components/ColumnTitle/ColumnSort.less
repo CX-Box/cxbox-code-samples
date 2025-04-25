@@ -1,20 +1,50 @@
-:global(.anticon).icon {
-    width: 16px;
-    height: 16px;
-    align-self: center;
-    cursor: pointer;
-    margin-left: 8px;
-    color: rgb(187, 187, 187);
-
-    :hover {
-        color: rgb(128, 128, 128);
-    }
-}
-
 .active {
     color: rgb(85, 85, 85);
 }
 
-.forceShow {
-    visibility: visible !important;
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2px;
+    &>i:last-child {
+        margin-top: -6px;
+    }
+    &>:global(.anticon){
+        width: 16px;
+        height: 16px;
+        align-self: center;
+        cursor: pointer;
+        color: rgb(187, 187, 187);
+    }
+    &.off {
+        &:hover {
+            &>:global(.anticon):last-child{
+                color: rgb(128, 128, 128);
+            }
+        }
+    }
+    &.desc {
+        &>:global(.anticon):last-child {
+            color: rgb(128, 128, 128);
+        }
+        &:hover {
+            &>:global(.anticon):first-child {
+                color: rgb(128, 128, 128);
+            }
+            &>:global(.anticon):last-child {
+                color: rgb(187, 187, 187);
+            }
+        }
+    }
+    &.asc {
+        &>:global(.anticon):first-child {
+            color: rgb(128, 128, 128);
+        }
+        &:hover {
+            &>:global(.anticon) {
+                color: rgb(187, 187, 187) !important;
+            }
+        }
+    }
 }
+

@@ -20,15 +20,19 @@ export const ColumnSort: FunctionComponent<ColumnSortProps> = ({ widgetName, fie
         return null
     }
 
-    const icon = sorter?.direction === 'asc' ? 'caret-up' : 'caret-down'
-
     return (
-        <Icon
-            className={cn(styles.icon, className, { [styles.forceShow]: sorter })}
-            type={icon}
-            data-test-widget-list-header-column-sort={true}
+        <div
+            className={cn(styles.container, className, {
+                [styles.off]: sorter === undefined,
+                [styles.desc]: sorter?.direction === 'desc',
+                [styles.asc]: sorter?.direction === 'asc'
+            })}
             onClick={toggleSort}
-        />
+            data-test-widget-list-header-column-sort={true}
+        >
+            <Icon type={'caret-up'} />
+            <Icon type={'caret-down'} />
+        </div>
     )
 }
 
