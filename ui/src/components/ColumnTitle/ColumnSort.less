@@ -16,35 +16,18 @@
         cursor: pointer;
         color: rgb(187, 187, 187);
     }
-    &.off {
-        &:hover {
-            &>:global(.anticon):last-child{
-                color: rgb(128, 128, 128);
-            }
-        }
-    }
     &.desc {
         &>:global(.anticon):last-child {
             color: rgb(128, 128, 128);
-        }
-        &:hover {
-            &>:global(.anticon):first-child {
-                color: rgb(128, 128, 128);
-            }
-            &>:global(.anticon):last-child {
-                color: rgb(187, 187, 187);
-            }
         }
     }
     &.asc {
         &>:global(.anticon):first-child {
             color: rgb(128, 128, 128);
         }
-        &:hover {
-            &>:global(.anticon) {
-                color: rgb(187, 187, 187) !important;
-            }
-        }
     }
 }
 
+.forceShow {
+    visibility: visible !important;
+}

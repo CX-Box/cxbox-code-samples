@@ -23,7 +23,7 @@ export const ColumnSort: FunctionComponent<ColumnSortProps> = ({ widgetName, fie
     return (
         <div
             className={cn(styles.container, className, {
-                [styles.off]: sorter === undefined,
+                [styles.forceShow]: sorter,
                 [styles.desc]: sorter?.direction === 'desc',
                 [styles.asc]: sorter?.direction === 'asc'
             })}
@@ -78,68 +78,71 @@ export function useSorter(widgetName: string, fieldKey: string) {
     )
 
     const toggleSort = useCallback(() => {
-        const isPermanent = permanentSorterFields?.includes(fieldKey)
-        if (fieldSorter) {
-            if (fieldSorter.direction === 'desc') {
-                const updatedSorter: BcSorter = {
-                    ...fieldSorter,
-                    direction: 'asc' as const
-                }
-
-                const newSorters = sorters?.map(s => (s.fieldName === fieldKey ? updatedSorter : s))
-
-                setSort(newSorters ?? updatedSorter)
-                return
+        const newSorters = sorters?.filter(sorter => sorter.fieldName === fieldKey || permanentSorterFields?.includes(sorter.fieldName))
+        if (!permanentSorterFields || !newSorters) {
+            let direction: 'desc' | 'asc' = 'desc'
+            if (fieldSorter?.direction === 'desc') {
+                direction = 'asc'
             }
-
-            if (fieldSorter.direction === 'asc') {
-                if (!isPermanent) {
-                    const newSorters = sorters?.filter(s => s.fieldName !== fieldKey)
-                    if (newSorters && newSorters.length > 0) {
-                        setSort(newSorters)
-                        return
+            if (fieldSorter?.direction === 'asc') {
+                if (defaultSort) {
+                    const sortParams = Array.from(new URLSearchParams(defaultSort))
+                    const [sorter, fieldName] = sortParams[0]
+                    if (sorter.includes('asc')) {
+                        direction = 'asc'
                     }
-                    if (defaultSort && defaultSort?.indexOf(fieldKey) !== -1) {
-                        const direction = () => {
-                            if (defaultSort.indexOf('asc') !== -1) {
-                                return 'asc'
-                            }
-                            if (defaultSort.indexOf('desc') === -1) {
-                                return 'desc'
-                            }
-                            return 'desc'
-                        }
-                        setSort({
-                            fieldName: fieldKey,
-                            direction: direction()
-                        })
-                        return
-                    }
+                    setSort({
+                        fieldName: fieldName,
+                        direction: direction
+                    })
+                } else {
                     setSort([])
-                    return
                 }
-
-                const updatedSorter: BcSorter = {
-                    ...fieldSorter,
-                    direction: 'desc' as const
-                }
-
-                const newSorters = sorters?.map(s => (s.fieldName === fieldKey ? updatedSorter : s))
-
-                setSort(newSorters ?? updatedSorter)
                 return
             }
+            setSort({
+                fieldName: fieldKey,
+                direction: direction
+            })
+            return
         }
 
-        const newSorter: BcSorter = {
-            fieldName: fieldKey,
-            direction: 'desc' as const
+        if (permanentSorterFields && newSorters) {
+            const currentFieldSorterIndex = newSorters?.findIndex(item => item.fieldName === fieldKey) ?? -1
+
+            if (currentFieldSorterIndex !== -1) {
+                const oldFieldSorter = newSorters?.[currentFieldSorterIndex]
+                if (oldFieldSorter.direction === 'desc') {
+                    newSorters[currentFieldSorterIndex] = {
+                        ...oldFieldSorter,
+                        direction: 'asc'
+                    }
+                }
+                if (oldFieldSorter.direction === 'asc') {
+                    const disableRemoveSorter = Array.from(new URLSearchParams(defaultSort)).findIndex(
+                        ([_, fieldName]) => fieldName === fieldKey
+                    )
+                    if (disableRemoveSorter !== -1) {
+                        newSorters[currentFieldSorterIndex] = {
+                            ...oldFieldSorter,
+                            direction: 'desc'
+                        }
+                    } else {
+                        newSorters.splice(currentFieldSorterIndex, 1)
+                    }
+                }
+            } else {
+                newSorters?.push({
+                    fieldName: fieldKey,
+                    direction: !fieldSorter ? 'desc' : fieldSorter.direction === 'asc' ? 'desc' : 'asc'
+                })
+            }
+
+            setSort(newSorters)
+
+            return
         }
-
-        const newSorters = permanentSorterFields ? [...(sorters ?? []), newSorter] : newSorter
-
-        setSort(newSorters)
-    }, [permanentSorterFields, fieldKey, fieldSorter, sorters, setSort, defaultSort])
+    }, [sorters, permanentSorterFields, fieldKey, fieldSorter, setSort, defaultSort])
 
     return {
         sorter: fieldSorter,
