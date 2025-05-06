@@ -41,9 +41,10 @@ public class MyExample294Service extends VersionAwareResponseService<MyExample29
 	@Override
 	public Actions<MyExample294DTO> getActions() {
 		return Actions.<MyExample294DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+				.create(crt -> crt.text("Create"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel"))
+				.delete(dlt -> dlt.text("Delete"))
 				.build();
 	}
 	// --8<-- [end:getActions]

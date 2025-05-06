@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
+import org.cxbox.core.util.filter.provider.impl.TimeValueProvider;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3503DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = DateValueProvider.class)
+    @SearchParameter(name = "customField", provider = TimeValueProvider.class)
     private LocalDateTime customField;
 
     public MyExample3503DTO(MyEntity3503 entity) {

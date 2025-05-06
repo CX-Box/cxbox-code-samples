@@ -30,6 +30,10 @@ public class MyExample3400DTO extends DataResponseDTO {
     private String customFieldRequired;
     @SearchParameter(name = "customFieldRequired2", provider = StringValueProvider.class)
     private String customFieldRequired2;
+    @SearchParameter(name = "customFieldFA", provider = StringValueProvider.class)
+    private String customFieldFA;
+    @SearchParameter(name = "customFieldFA2", provider = StringValueProvider.class)
+    private String customFieldFA2;
 
     public MyExample3400DTO(MyEntity3400 entity) {
         this.id = entity.getId().toString();
@@ -43,5 +47,7 @@ public class MyExample3400DTO extends DataResponseDTO {
                 .orElse(null);
         this.customFieldRequired = entity.getCustomFieldRequired();
         this.customFieldRequired2 = entity.getCustomFieldRequired2();
+        this.customFieldFA = entity.getCustomFieldFA();
+        this.customFieldFA2 = entity.getCustomFieldFA2();
     }
 }
