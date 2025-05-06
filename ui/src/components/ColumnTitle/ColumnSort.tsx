@@ -89,7 +89,7 @@ export function useSorter(widgetName: string, fieldKey: string) {
                     const sortParams = Array.from(new URLSearchParams(defaultSort))
                     const [sorter, fieldName] = sortParams[0]
                     if (sorter.includes('asc')) {
-                        direction = 'asc'
+                        direction = 'desc'
                     }
                     setSort({
                         fieldName: fieldName,
