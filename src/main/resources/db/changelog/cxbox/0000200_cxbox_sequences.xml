@@ -14,13 +14,19 @@
                         incrementBy="100"/>
     </changeSet>
 
-    <changeSet author="developer" id="2025-04-15-01">
+    <changeSet author="cxbox" id="CREATE_INDX_FOR_TIME_MY_ENTITY_3504">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgres"/>
         </preConditions>
         <comment>Create functional index on created_date. Always add it if you use TIMESTAMP field as filterable/sortable 'time' widget field with TimeValueProvider, because it will generate 'where cast(created_date as time) > ?' condition using this index</comment>
         <sql>
-            CREATE INDEX idx_apple_created_date_time2 ON apple ((created_date::time));
+            CREATE INDEX idx_apple_created_date_time_sort_desc ON my_entity3504 (cast(custom_field as time(6)) desc,id desc);
+        </sql>
+        <sql>
+            CREATE INDEX idx_apple_created_date_time_sort_asc ON my_entity3504 (cast(custom_field as time(6)) asc,id desc);
+        </sql>
+        <sql>
+            CREATE INDEX idx_apple_created_date_time_filtr ON my_entity3504 (cast(custom_field as time(6)));
         </sql>
     </changeSet>
     <changeSet author="oracle" id="2025-04-15-01">
