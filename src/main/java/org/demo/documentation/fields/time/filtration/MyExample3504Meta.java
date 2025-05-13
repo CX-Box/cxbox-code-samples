@@ -13,8 +13,15 @@ public class MyExample3504Meta extends FieldMetaBuilder<MyExample3504DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3504DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample3504DTO_.customFieldhA);
         fields.setEnabled(MyExample3504DTO_.customField);
+        fields.setEnabled(MyExample3504DTO_.customFieldhA);
+        fields.setEnabled(MyExample3504DTO_.customFieldh);
+        fields.setEnabled(MyExample3504DTO_.customFieldmm);
+        fields.setEnabled(MyExample3504DTO_.customFieldhmm);
+        fields.setEnabled(MyExample3504DTO_.customFieldhmmA);
+        fields.setEnabled(MyExample3504DTO_.customFieldhmmssA);
+        fields.setEnabled(MyExample3504DTO_.customFieldss);
+        fields.setEnabled(MyExample3504DTO_.customFieldmmss);
     }
     // --8<-- [end:buildRowDependentMeta]
 
