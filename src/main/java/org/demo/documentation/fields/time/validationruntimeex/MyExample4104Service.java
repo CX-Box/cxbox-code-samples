@@ -6,14 +6,8 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.fields.datetime.validationbusinessex.DateTimeValidationBusinessExDTO_;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 
 
 @SuppressWarnings("java:S1170")

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
