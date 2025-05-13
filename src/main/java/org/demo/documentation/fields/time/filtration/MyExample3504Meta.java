@@ -37,7 +37,9 @@ public class MyExample3504Meta extends FieldMetaBuilder<MyExample3504DTO> {
         fields.enableFilter(MyExample3504DTO_.customFieldhmmssA);
         fields.enableFilter(MyExample3504DTO_.customFieldss);
         fields.enableFilter(MyExample3504DTO_.customFieldmmss);
+
         fields.enableSort(MyExample3504DTO_.customField);
+        fields.enableSort(MyExample3504DTO_.customFieldhA);
         fields.enableSort(MyExample3504DTO_.customFieldh);
         fields.enableSort(MyExample3504DTO_.customFieldmm);
         fields.enableSort(MyExample3504DTO_.customFieldhmm);
