@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.cxbox.api.ScreenResponsibilityService;
+import org.cxbox.api.config.CxboxBeanProperties;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.service.session.CoreSessionService;
 import org.cxbox.api.service.session.IUser;
@@ -51,133 +52,140 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-	private final SessionService sessionService;
+    private final SessionService sessionService;
 
-	private final CoreSessionService coreSessionService;
+    private final CoreSessionService coreSessionService;
 
-	private final UserRoleService userRoleService;
+    private final UserRoleService userRoleService;
 
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	private final ScreenResponsibilityService screenResponsibilityService;
+    private final ScreenResponsibilityService screenResponsibilityService;
 
-	private final MetaConfigurationProperties metaConfigurationProperties;
+    private final MetaConfigurationProperties metaConfigurationProperties;
 
-	private final WidgetFieldsIdResolverProperties widgetFieldsIdResolverProperties;
+    private final WidgetFieldsIdResolverProperties widgetFieldsIdResolverProperties;
 
-	private final UIProperties uiProperties;
+    private final UIProperties uiProperties;
 
-	private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher eventPublisher;
 
-	/**
-	 * Build info for active session user for specific role
-	 *
-	 * @param role Requested role
-	 * @return LoggedUser User info with settings, supported features, locale and time zone
-	 */
-	@Override
-	@SneakyThrows
-	public LoggedUser getLoggedUser(@Nullable String role) {
-		LoggedUser result = null;
-		Exception exception = null;
-		try {
-			IUser<Long> user = sessionService.getSessionUser();
-			if (role != null) {
-				setSessionUserInternalRole(Set.of(role));
-			} else if (uiProperties.isMultiRoleEnabled()) {
-				setSessionUserInternalRole(userRoleService.getUserRoles(userRepository.getReferenceById(user.getId()))
-						.stream()
-						.map(SimpleDictionary::getKey)
-						.collect(Collectors.toSet()));
-			} else {
-				setSessionUserInternalRole(Set.of());
-			}
+    private final CxboxBeanProperties cxboxBeanProperties;
 
-			User userEntity = userRepository.findById(user.getId()).orElseThrow();
-			var activeUserRole = sessionService.getSessionUserRoles();
-			result = LoggedUser.builder()
-					.sessionId(sessionService.getSessionId())
-					.userId(userEntity.getId())
-					.activeRole(activeUserRole.size() == 1 ? activeUserRole.stream().findFirst().orElse(null) : null)
-					.roles(userRoleService.getUserRoles(userEntity))
-					.screens(screenResponsibilityService.getScreens(user, activeUserRole))
-					.userSettingsVersion(null)
-					.lastName(userEntity.getLastName())
-					.firstName(userEntity.getFirstName())
-					.fullName(userEntity.getFullName())
-					.featureSettings(this.getFeatureSettings())
-					.systemUrl(uiProperties.getSystemUrl())
-					.language(LocaleContextHolder.getLocale().getLanguage())
-					.timezone(LocaleContextHolder.getTimeZone().getID())
-					.devPanelEnabled(metaConfigurationProperties.isDevPanelEnabled())
-					.build();
-			return result;
-		} catch (Exception ex) {
-			exception = ex;
-			throw ex;
-		} finally {
-			eventPublisher.publishEvent(new LoginEvent<>(this, result, exception));
-		}
-	}
+    /**
+     * Build info for active session user for specific role
+     *
+     * @param role Requested role
+     * @return LoggedUser User info with settings, supported features, locale and time zone
+     */
+    @Override
+    @SneakyThrows
+    public LoggedUser getLoggedUser(@Nullable String role) {
+        LoggedUser result = null;
+        Exception exception = null;
+        try {
+            IUser<Long> user = sessionService.getSessionUser();
+            if (role != null) {
+                setSessionUserInternalRole(Set.of(role));
+            } else if (uiProperties.isMultiRoleEnabled()) {
+                setSessionUserInternalRole(userRoleService.getUserRoles(userRepository.getReferenceById(user.getId()))
+                        .stream()
+                        .map(SimpleDictionary::getKey)
+                        .collect(Collectors.toSet()));
+            } else {
+                setSessionUserInternalRole(Set.of());
+            }
 
-	public void setSessionUserInternalRole(Set<String> roles) {
-		var userDetails = coreSessionService.getSessionUserDetails(true);
-		if (roles == null || roles.isEmpty() || userDetails == null) {
-			return;
-		}
-		User user = userRepository.getById(userDetails.getId());
-		userDetails.setUserRoles(roles);
-		userRoleService.updateMainUserRole(user, roles.size() == 1 ? roles.stream().findFirst().orElse(null) : null);
-	}
+            User userEntity = userRepository.findById(user.getId()).orElseThrow();
+            var activeUserRole = sessionService.getSessionUserRoles();
+            result = LoggedUser.builder()
+                    .sessionId(sessionService.getSessionId())
+                    .userId(userEntity.getId())
+                    .activeRole(activeUserRole.size() == 1 ? activeUserRole.stream().findFirst().orElse(null) : null)
+                    .roles(userRoleService.getUserRoles(userEntity))
+                    .screens(screenResponsibilityService.getScreens(user, activeUserRole))
+                    .userSettingsVersion(null)
+                    .lastName(userEntity.getLastName())
+                    .firstName(userEntity.getFirstName())
+                    .fullName(userEntity.getFullName())
+                    .featureSettings(this.getFeatureSettings())
+                    .systemUrl(uiProperties.getSystemUrl())
+                    .language(LocaleContextHolder.getLocale().getLanguage())
+                    .timezone(LocaleContextHolder.getTimeZone().getID())
+                    .devPanelEnabled(metaConfigurationProperties.isDevPanelEnabled())
+                    .build();
+            return result;
+        } catch (Exception ex) {
+            exception = ex;
+            throw ex;
+        } finally {
+            eventPublisher.publishEvent(new LoginEvent<>(this, result, exception));
+        }
+    }
 
-	/**
-	 * Get available application features, e.g., comments/notification polling or suppression of system errors
-	 * Cxbox UI provides No implementation by default, so for now it is considered as a customization joint.
-	 *
-	 * @return Dictionary of string key and value (boolean)
-	 * Following keys were supported historically: FEATURE_COMMENTS, FEATURE_NOTIFICATIONS, FEATURE_HIDE_SYSTEM_ERRORS
-	 */
-	public Collection<SimpleDictionary> getFeatureSettings() {
-		return Stream.of(
-						feature(
-								WidgetFieldsIdResolverProperties.SORT_ENABLED_DEFAULT_PARAM_NAME,
-								widgetFieldsIdResolverProperties.isSortEnabledDefault()
-						),
-						feature(
-								WidgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME,
-								widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()
-						),
-						feature(
-								UIProperties.MULTI_ROLE_ENABLED,
-								uiProperties.isMultiRoleEnabled()
-						),
-						feature(
-								UIProperties.DRILL_DOWN_TOOLTIP_NAME,
-								uiProperties.getDrillDownTooltip()
-						),
-						feature(
-								UIProperties.SIDE_BAR_WORD_BREAK,
-								uiProperties.getSideBarWordBreak()
-						),
-						feature(
-								UIProperties.NOTIFICATION_MODE,
-								uiProperties.getNotificationMode()
-						),
-						feature(
-								UIProperties.APP_INFO_ENV,
-								uiProperties.getAppInfoEnv()
-						),
-						feature(
-								UIProperties.APP_INFO_COLOR,
-								uiProperties.getAppInfoColor()
-						),
-						feature(
-								UIProperties.APP_INFO_DESCRIPTION,
-								uiProperties.getAppInfoDescription()
-						)
-				)
-				.filter(Objects::nonNull)
-				.toList();
-	}
+    public void setSessionUserInternalRole(Set<String> roles) {
+        var userDetails = coreSessionService.getSessionUserDetails(true);
+        if (roles == null || roles.isEmpty() || userDetails == null) {
+            return;
+        }
+        User user = userRepository.getById(userDetails.getId());
+        userDetails.setUserRoles(roles);
+        userRoleService.updateMainUserRole(user, roles.size() == 1 ? roles.stream().findFirst().orElse(null) : null);
+    }
+
+    /**
+     * Get available application features, e.g., comments/notification polling or suppression of system errors
+     * Cxbox UI provides No implementation by default, so for now it is considered as a customization joint.
+     *
+     * @return Dictionary of string key and value (boolean)
+     * Following keys were supported historically: FEATURE_COMMENTS, FEATURE_NOTIFICATIONS, FEATURE_HIDE_SYSTEM_ERRORS
+     */
+    public Collection<SimpleDictionary> getFeatureSettings() {
+        return Stream.of(
+                        feature(
+                                WidgetFieldsIdResolverProperties.SORT_ENABLED_DEFAULT_PARAM_NAME,
+                                widgetFieldsIdResolverProperties.isSortEnabledDefault()
+                        ),
+                        feature(
+                                WidgetFieldsIdResolverProperties.FILTER_BY_RANGE_ENABLED_DEFAULT_PARAM_NAME,
+                                widgetFieldsIdResolverProperties.isFilterByRangeEnabledDefault()
+                        ),
+                        feature(
+                                UIProperties.MULTI_ROLE_ENABLED,
+                                uiProperties.isMultiRoleEnabled()
+                        ),
+                        feature(
+                                UIProperties.DRILL_DOWN_TOOLTIP_NAME,
+                                uiProperties.getDrillDownTooltip()
+                        ),
+                        feature(
+                                UIProperties.SIDE_BAR_WORD_BREAK,
+                                uiProperties.getSideBarWordBreak()
+                        ),
+                        feature(
+                                UIProperties.NOTIFICATION_MODE,
+                                uiProperties.getNotificationMode()
+                        ),
+                        feature(
+                                UIProperties.APP_INFO_ENV,
+                                uiProperties.getAppInfoEnv()
+                        ),
+                        feature(
+                                UIProperties.APP_INFO_COLOR,
+                                uiProperties.getAppInfoColor()
+                        ),
+                        feature(
+                                UIProperties.APP_INFO_DESCRIPTION,
+                                uiProperties.getAppInfoDescription()
+                        ),
+                        feature(
+                                CxboxBeanProperties.DEFAULT_DATE,
+                                cxboxBeanProperties.getDefaultDate()
+                        )
+
+                )
+                .filter(Objects::nonNull)
+                .toList();
+    }
 
 }

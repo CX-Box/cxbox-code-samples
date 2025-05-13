@@ -7,6 +7,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
 import java.time.LocalDateTime;
 
 
@@ -32,4 +33,6 @@ public class MyEntity3508 extends BaseEntity {
     private LocalDateTime customFieldmmss;
     @Column
     private LocalDateTime customFieldss;
+    @Column
+    private LocalDateTime customFieldhA;
 }

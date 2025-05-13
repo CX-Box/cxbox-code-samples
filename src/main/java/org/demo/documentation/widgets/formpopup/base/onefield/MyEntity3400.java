@@ -29,4 +29,8 @@ public class MyEntity3400 extends BaseEntity {
     private String customFieldRequired;
     @Column
     private String customFieldRequired2;
+    @Column
+    private String customFieldFA;
+    @Column
+    private String customFieldFA2;
 }

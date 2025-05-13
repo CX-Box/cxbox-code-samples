@@ -28,10 +28,18 @@ public class MyExample4104Service extends VersionAwareResponseService<MyExample4
     @Override
     protected ActionResultDTO<MyExample4104DTO> doUpdateEntity(MyEntity4104 entity, MyExample4104DTO data, BusinessComponent bc) {
 
+        if (data.isFieldChanged(MyExample4104DTO_.customField)) {
+            try {
+                //call custom function
+                throw new Exception("Error");
+            } catch (Exception e) {
+                throw new RuntimeException("An unexpected error has occurred.");
+            }
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4104DTO> getActions() {
         return Actions.<MyExample4104DTO>builder()
@@ -40,5 +48,5 @@ public class MyExample4104Service extends VersionAwareResponseService<MyExample4
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
