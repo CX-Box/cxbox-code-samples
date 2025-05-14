@@ -10,7 +10,10 @@ export enum EFeatureSettingKey {
     appInfoEnv = 'appInfoEnv',
     appInfoColor = 'appInfoColor',
     appInfoDescription = 'appInfoDescription',
-    defaultDate = 'defaultDate'
+    sideBarWordBreak = 'sideBarWordBreak',
+    sideBarSearchEnabled = 'sideBarSearchEnabled',
+    defaultDate = 'defaultDate',
+    appExportExcelLimit = 'appExportExcelLimit'
 }
 
 export type FeatureSetting = {
