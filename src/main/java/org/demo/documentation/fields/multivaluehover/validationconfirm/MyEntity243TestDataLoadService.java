@@ -6,6 +6,9 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MyEntity243TestDataLoadService {
 
@@ -23,8 +26,14 @@ public class MyEntity243TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository244.save(new MyEntity244().setCustomField("Test data"));
-		repository.save(new MyEntity243());
+		MyEntity244 myEntity1 = new MyEntity244().setCustomField(
+				"Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
+		MyEntity244 myEntity2 = new MyEntity244().setCustomField(
+				"Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.");
+		List<MyEntity244> list = new ArrayList<>();
+		list.add(myEntity1);
+		list.add(myEntity2);
+		repository.save(new MyEntity243().setCustomFieldMultiHoverList(list));
 	}
 
 }

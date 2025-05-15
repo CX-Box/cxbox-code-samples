@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.multivaluehover.validationdynamic;
+package org.demo.documentation.fields.multivaluehover.placeholder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,8 +11,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity339 extends BaseEntity {
+public class MyEntityMulti235 extends BaseEntity {
 
-    @Column
-    private String customField;
+	@Column
+	private Double customField;
+
 }

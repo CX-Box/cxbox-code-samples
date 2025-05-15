@@ -17,14 +17,16 @@ public class MyExample243Meta extends FieldMetaBuilder<MyExample243DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample243DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample243DTO_.customFieldMultiHover);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample243DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
+		fields.enableFilter(MyExample243DTO_.customFieldMultiHover);
 
 	}
 
