@@ -17,15 +17,18 @@ public class MyExample235Meta extends FieldMetaBuilder<MyExample235DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample235DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample235DTO_.customFieldMultivalueHover);
 		fields.setEnabled(MyExample235DTO_.customField);
+		fields.setPlaceholder(MyExample235DTO_.customField, "Text placeholder");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample235DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
+		fields.enableFilter(MyExample235DTO_.customFieldMultivalueHover);
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample235DTO_.customField);
 		}

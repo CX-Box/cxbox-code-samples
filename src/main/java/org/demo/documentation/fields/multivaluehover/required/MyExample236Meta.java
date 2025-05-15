@@ -12,20 +12,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MyExample236Meta extends FieldMetaBuilder<MyExample236DTO> {
 
-	private final DocumentConfig configuration;
+    private final DocumentConfig configuration;
 
-	// --8<-- [start:buildRowDependentMeta]
-	@Override
-	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample236DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
-	}
-	// --8<-- [end:buildRowDependentMeta]
+    // --8<-- [start:buildRowDependentMeta]
+    @Override
+    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample236DTO> fields, InnerBcDescription bcDescription,
+                                      Long id, Long parentId) {
+        fields.setEnabled(MyExample236DTO_.customFieldMultiHover);
+    }
+    // --8<-- [end:buildRowDependentMeta]
 
-	// --8<-- [start:buildIndependentMeta]
-	@Override
-	public void buildIndependentMeta(FieldsMeta<MyExample236DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+    // --8<-- [start:buildIndependentMeta]
+    @Override
+    public void buildIndependentMeta(FieldsMeta<MyExample236DTO> fields, InnerBcDescription bcDescription,
+                                     Long parentId) {
+        fields.enableFilter(MyExample236DTO_.customFieldMultiHover);
 
-	}
+    }
 
 }
