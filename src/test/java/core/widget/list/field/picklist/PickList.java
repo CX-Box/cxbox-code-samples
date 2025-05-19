@@ -3,11 +3,10 @@ package core.widget.list.field.picklist;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
-import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -41,12 +40,13 @@ public class PickList extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$("div[class=\"ant-select-selection-selected-value\"]")
+                .$(getValueTag())
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getText();
+                .getValue();
     }
 
     @Override
@@ -83,25 +83,12 @@ public class PickList extends BaseRow<String> {
     }
 
     /**
-     * Getting the placeholder text
-     *
-     * @return String
-     */
-    @Step("Getting the Placeholder value")
-    public String getPlaceholder() {
-        setFocusField();
-        return getRowByName()
-                .$("div[class=\"ant-select-selection__placeholder\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
-    }
-
-    /**
      * Initialization of the modal window
      *
      * @return Popup class for accessing modal windows
      */
     @Step("Validation of the Popup window")
+    @Attachment
     public Optional<Popup> findPopup() {
         setFocusField();
         SelenideElement elementPopup = $("div[data-test-widget-type=\"PickListPopup\"]")
@@ -119,6 +106,7 @@ public class PickList extends BaseRow<String> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
+    @Attachment
     public String getHexColor() {
         String color = getValueByAttribute(1, "span", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
@@ -132,33 +120,9 @@ public class PickList extends BaseRow<String> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
+            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }
-    }
-
-    /**
-     * Checking an item for inactivity, ReadOnly
-     *
-     * @return boolean true/false
-     */
-    @Override
-    @Step("Checking the field for \"ReadOnly\"")
-    public boolean getReadOnly() {
-        setFocusField();
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.exist));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.editable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disappear));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.readonly));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.clickable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.interactable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.focused));
-
-
-
-        return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }

@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -91,6 +91,7 @@ public class Pagination {
      * @return Integer или null
      */
     @Step("Getting the active page number")
+    @Attachment
     public Integer getActivePages() {
         for (SelenideElement button : paginationButtons()) {
             if (Objects.requireNonNull(button.getAttribute("class")).contains("ant-pagination-item-active")) {

@@ -9,7 +9,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -75,7 +74,6 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
-    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("MultipleSelect basic");
         MainPages.FirstLevelMenu.click("List");
@@ -255,9 +253,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).multipleSelect();
-        customField.clear();
-        customField.addValue(Set.of("Low", "Middle"));
-
+        customField.addValue(Set.of("Middle"));
         assertThat(customField.getValue()).isEqualTo(Set.of("Low", "Middle"));
         assertThat(customField.getOptions()).isEqualTo(List.of("High", "Middle", "Low"));
     }
@@ -288,12 +284,11 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).multipleSelect();
-        customField.clear();
         customField.addValue(Set.of("Middle"));
         List<Pair<String, Boolean>> expectedPairs = new ArrayList<>();
         expectedPairs.add(Pair.of("High", false));
         expectedPairs.add(Pair.of("Middle", true));
-        expectedPairs.add(Pair.of("Low", false));
+        expectedPairs.add(Pair.of("Low", true));
         assertThat(customField.getStatusOption("Middle")).isTrue();
         assertThat(customField.getStatusOptions()).isEqualTo(expectedPairs);
     }

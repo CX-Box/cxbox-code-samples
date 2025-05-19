@@ -36,8 +36,7 @@ import core.widget.list.field.picklist.InlinePickListCell;
 import core.widget.list.field.picklist.PickListCell;
 import core.widget.list.field.radio.RadioCell;
 import core.widget.list.field.text.TextCell;
-import io.qameta.allure.Allure;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.NonNull;
@@ -47,7 +46,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 
@@ -90,6 +88,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of Column Headings")
+    @Attachment
     public List<String> getColumnNames() {
         return helper.getColumnNames();
     }
@@ -100,6 +99,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of lines from the current page")
+    @Attachment
     public List<String> getListRows() {
         waitingForTests.getWaitAllElements(widget);
         return helper.getListRows().texts().stream()
@@ -116,6 +116,7 @@ public class RowsHelper {
      * @return List Long
      */
     @Step("Getting a list of lines from the current page")
+    @Attachment
     public List<Long> getListRowsId() {
         waitingForTests.getWaitAllElements(widget);
         List<Long> list = new ArrayList<>();
@@ -132,6 +133,7 @@ public class RowsHelper {
      * @return Integer
      */
     @Step("Getting the number of lines from the current page")
+    @Attachment
     public Integer getSizeList() {
         waitingForTests.getWaitAllElements(widget);
         return helper.getListRows().size();
@@ -143,6 +145,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of lines from all pages")
+    @Attachment
     public List<String> getListRowsTexts() {
         List<String> rowTexts = new ArrayList<>();
         waitingForTests.getWaitAllElements(widget);
@@ -172,8 +175,8 @@ public class RowsHelper {
      * @return int
      */
     @Step("Getting the column/column index {columnName}")
+    @Attachment
     public int getColumnIndex(String columnName) {
-        Allure.addAttachment("ColumnName", columnName);
         ElementsCollection columns = this.widget.$$(By.xpath("div//div[contains(@class,'ColumnTitle')]"))
                 .shouldBe(CollectionCondition.sizeNotEqual(0));
         int columnIndex = -1;
@@ -205,9 +208,8 @@ public class RowsHelper {
      * @return ListWidget a class with access to fields
      */
     @Step("Cell search by column name {columnName} and the meaning in it {columnValue}")
+    @Attachment
     public ListWidget findRowSegmentByValue(String columnName, String columnValue) {
-        Allure.addAttachment("ColumnName", columnName);
-        Allure.addAttachment("columnValue", columnValue);
         waitingForTests.getWaitAllElements(widget);
         long id = findRowId(columnName, columnValue);
         return new ListWidget(columnName, widget, String.valueOf(id), this.helper, checkSorting(columnName), checkFilterColumn(columnName));
@@ -221,9 +223,8 @@ public class RowsHelper {
      * @return ListWidget a class with access to fields
      */
     @Step("Cell search by column name {columnName} and a Unique row number {id}")
+    @Attachment
     public ListWidget findRowSegmentById(String columnName, long id) {
-        Allure.addAttachment("ColumnName", columnName);
-        Allure.addAttachment("Id", String.valueOf(id));
         waitingForTests.getWaitAllElements(widget);
         return new ListWidget(columnName, widget, String.valueOf(id), this.helper, checkSorting(columnName), checkFilterColumn(columnName));
     }
@@ -237,8 +238,8 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting the values of the {columnName} column without field focus")
+    @Attachment
     public List<String> getNoFocusValues(String columnName) {
-        Allure.addAttachment("ColumnName", columnName);
         List<String> list = new ArrayList<>();
         while (true) {
             waitingForTests.getWaitAllElements(widget);
@@ -248,12 +249,12 @@ public class RowsHelper {
                         try {
                             String ColumnText = helper.getColumnByName(columnName, row).getText();
                             list.add(ColumnText);
-                            log.info("Adding the result to the list: {}", ColumnText);
+                            log.info("Добавление результата в список: {}", ColumnText);
                         } catch (StaleElementReferenceException ex) {
                             waitingForTests.getWaitAllElements(row);
                             String ColumnText = helper.getColumnByName(columnName, row).getText();
                             list.add(ColumnText);
-                            log.info("Adding a result to the list via exceptions");
+                            log.info("Добавление результата в список через исключении");
                         }
                     });
             if (helper.isLastPage()) {
@@ -272,8 +273,8 @@ public class RowsHelper {
      * @return List Boolean true/false
      */
     @Step("Getting the status of the {columnName} column without field focus")
+    @Attachment
     public List<Boolean> getNoFocusStatusValues(String columnName) {
-        Allure.addAttachment("ColumnName", columnName);
         List<Boolean> list = new ArrayList<>();
         while (true) {
             waitingForTests.getWaitAllElements(widget);
@@ -301,7 +302,7 @@ public class RowsHelper {
                 return c;
             }
         }
-        throw new RuntimeException("Column  " + columnName + " not found");
+        throw new RuntimeException("Столбец " + columnName + " не найден");
     }
 
     /**
@@ -311,8 +312,8 @@ public class RowsHelper {
      * @return String
      */
     @Step("Getting the column type {column}")
+    @Attachment
     public String getTypeColumn(String column) {
-        Allure.addAttachment("ColumnName", column);
         return getColumn(column).getAttribute("data-test-widget-list-header-column-type");
     }
 
@@ -323,8 +324,8 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Checking the filtering option for a column {column}")
+    @Attachment
     public Boolean checkFilterColumn(String column) {
-        Allure.addAttachment("ColumnName", column);
         if (getColumn(column)
                 .$("div[data-test-widget-list-header-column-filter=\"true\"]")
                 .is(Condition.exist)) {
@@ -345,13 +346,13 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Checking the sorting option for a column {column}")
+    @Attachment
     public Boolean checkSorting(String column) {
-        Allure.addAttachment("ColumnName", column);
         Selenide.sleep(200);
         if (getColumn(column)
-                .$("div[data-test-widget-list-header-column-sort=\"true\"] i.anticon-caret-up").is(Condition.exist)) {
+                .$("i.anticon.anticon-caret-up").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
             return getColumn(column)
-                    .$("div[data-test-widget-list-header-column-sort=\"true\"] i.anticon-caret-up")
+                    .$("i.anticon.anticon-caret-up")
                     .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                     .hover()
                     .is(Condition.visible);
@@ -377,7 +378,7 @@ public class RowsHelper {
             waitingForTests.getWaitAllElements(widget);
         } else {
             log.error("Ошибка при установке сортировки для столбца {}", column);
-            throw new RuntimeException("The sorting for the column " + column + " was not found. Or unavailable.");
+            throw new RuntimeException("Сортировка для столбца " + column + " не найдена. Или недоступна.");
         }
     }
 
@@ -388,8 +389,8 @@ public class RowsHelper {
      * @return Filter Sheet
      */
     @Step("Checking the filtering of the {column} column and returning the class with Filters")
+    @Attachment
     public ListFilter findFilterColumn(String column) {
-        Allure.addAttachment("ColumnName", column);
         if (checkFilterColumn(column)) {
             getColumn(column)
                     .$("div[data-test-widget-list-header-column-filter=\"true\"]")
@@ -397,7 +398,7 @@ public class RowsHelper {
                     .click();
             return new ListFilter(getTypeColumn(column), column, helper, widget);
         } else {
-            throw new RuntimeException("The filter for the column " + column + " was not found.");
+            throw new RuntimeException("Фильтр для столбца " + column + " не найден.");
         }
 
     }
@@ -462,6 +463,7 @@ public class RowsHelper {
      * @return GearMenu
      */
     @Step("Opening the gear menu")
+    @Attachment
     public Optional<GearMenu> findGearMenu() {
         SelenideElement gear = widget
                 .$("button[class*=\"ant-btn Button__root___FpVWX ant-dropdown-trigger\"]")
@@ -508,6 +510,7 @@ public class RowsHelper {
      * @return File .xlsx
      */
     @Step("Parsing a spreadsheet in Excel")
+    @Attachment
     public File parseTableListWidget() {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Мой лист");
@@ -605,6 +608,7 @@ public class RowsHelper {
      * @return class AddFiles
      */
     @Step("Validation of the mass upload field")
+    @Attachment
     public Optional<AddFiles> findAddFiles() {
         if (widget
                 .$("div[class=\"ant-upload ant-upload-select ant-upload-select-text\"]")
@@ -651,6 +655,7 @@ public class RowsHelper {
      * Displaying a list of all buttons in a widget
      */
     @Step("Getting a list of buttons")
+    @Attachment
     public List<String> getButtons() {
         return getContainersActions().texts();
     }
@@ -680,10 +685,9 @@ public class RowsHelper {
      * @return List(String) List of differences
      */
     @Step("Comparing two files in the format .xlsx . The first file is {given}. Second file: {expected}.")
+    @Attachment
     @SneakyThrows
     public List<String> FileExcelComparator(File given, File expected) {
-        Allure.addAttachment("FileName given", given.getName());
-        Allure.addAttachment("FileName expected", expected.getName());
         Workbook wb1 = WorkbookFactory.create(new File(given.getPath()));
         Workbook wb2 = WorkbookFactory.create(new File(expected.getPath()));
         return ExcelComparator.compare(wb1, wb2);
@@ -695,6 +699,7 @@ public class RowsHelper {
      * @return Pagination
      */
     @Step("Validating the pagination menu and gaining access to the class")
+    @Attachment
     public Optional<Pagination> findPaginationMenu() {
         if (widget.$("div[data-test-widget-list-pagination=\"true\"]")
                 .scrollIntoView("{block: \"center\"}")
@@ -712,8 +717,8 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Search for a row by id on the current page")
+    @Attachment
     public Boolean checkRowById(@NonNull Long id) {
-        Allure.addAttachment("Id", id.toString());
         ElementsCollection rows = helper.getListRows();
         return rows.stream()
                 .anyMatch(row -> id.equals(Long.parseLong(Objects.requireNonNull(row.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).getAttribute("data-test-widget-list-row-id")))));
@@ -725,6 +730,7 @@ public class RowsHelper {
      * @return FormWidget with access to all fields
      */
     @Step("Opening an InlineForm to create a new line")
+    @Attachment
     public Optional<FormWidget> openAndFindInlineForm() {
         String inlineForm = "div[data-test-widget-list-row-type=\"InlineForm\"]";
         clickButton("Add");
@@ -745,6 +751,7 @@ public class RowsHelper {
      * @return HashMap(String, String)
      */
     @Step("Getting a list of fields in a heading and type pair")
+    @Attachment
     public HashMap<String, String> getFieldTitleAndType() {
         HashMap<String, String> values = new HashMap<>();
         for (SelenideElement field : widget.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).$$("div[data-test]")) {

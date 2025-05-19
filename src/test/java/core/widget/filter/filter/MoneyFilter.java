@@ -1,6 +1,5 @@
 package core.widget.filter.filter;
 
-import application.config.props.ConstantSetter;
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import org.openqa.selenium.Keys;
@@ -18,7 +17,7 @@ public class MoneyFilter extends AbstractFilter<BigDecimal>{
         String pattern = ".*\\d.\\d{2}";
         String str = value.toString();
         str = str.replace(".", ",");
-        assert str.matches(pattern) : ConstantSetter.MoneyFilterMissPatternMessage;
+        assert str.matches(pattern) : "The number does not match the pattern.";
 
         clearOne();
         formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")

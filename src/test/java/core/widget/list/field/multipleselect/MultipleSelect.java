@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +50,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public Set<String> getValue() {
         setFocusField();
         List<String> list = getRowByName()
@@ -103,6 +104,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * Вывод в консоль списка опций из списка
      */
     @Step("Getting a list of options")
+    @Attachment
     public List<String> getOptions() {
         setFocusField();
         getRowByName().click();
@@ -136,6 +138,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * @return Pair(String, Boolean)
      */
     @Step("Getting a list of options and status")
+    @Attachment
     public List<Pair<String, Boolean>> getStatusOptions() {
         List<String> list = getOptionsMultipleSelect().texts();
         List<Pair<String, Boolean>> pairs = new ArrayList<Pair<String, Boolean>>();
@@ -157,6 +160,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * @return String
      */
     @Step("Getting the Placeholder value")
+    @Attachment
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -186,7 +190,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
                     .parent()
                     .click();
         } else {
-            log.error("Focus on the field didn't work out");
+            log.error("Focus on the field не получился");
         }
     }
 
