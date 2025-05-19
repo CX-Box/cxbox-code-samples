@@ -87,7 +87,6 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
     @Tag("Negative")
     @DisplayName("Filtering test")
     @Description("Filtering by the specified column.")
-    @Disabled("Исправить календарь")
     void filtration() {
         MainPages.click("DateTimeWithSeconds filtration");
         MainPages.FirstLevelMenu.click("List");

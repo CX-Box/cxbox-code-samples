@@ -250,8 +250,8 @@ public class PickListOnListTest extends BaseTestForSamples {
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");
-        assertThat(row.pickListField().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
-        assertThat(row2.pickListField().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
+        assertThat(row.pickListField().getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
+        assertThat(row2.pickListField().getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
 
     @Test

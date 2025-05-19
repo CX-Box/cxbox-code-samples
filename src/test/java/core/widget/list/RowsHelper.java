@@ -249,12 +249,12 @@ public class RowsHelper {
                         try {
                             String ColumnText = helper.getColumnByName(columnName, row).getText();
                             list.add(ColumnText);
-                            log.info("Добавление результата в список: {}", ColumnText);
+                            log.info("Adding the result to the list: {}", ColumnText);
                         } catch (StaleElementReferenceException ex) {
                             waitingForTests.getWaitAllElements(row);
                             String ColumnText = helper.getColumnByName(columnName, row).getText();
                             list.add(ColumnText);
-                            log.info("Добавление результата в список через исключении");
+                            log.info("Adding a result to the list via exceptions");
                         }
                     });
             if (helper.isLastPage()) {
@@ -302,7 +302,7 @@ public class RowsHelper {
                 return c;
             }
         }
-        throw new RuntimeException("Столбец " + columnName + " не найден");
+        throw new RuntimeException("Column  " + columnName + " not found");
     }
 
     /**
@@ -378,7 +378,7 @@ public class RowsHelper {
             waitingForTests.getWaitAllElements(widget);
         } else {
             log.error("Ошибка при установке сортировки для столбца {}", column);
-            throw new RuntimeException("Сортировка для столбца " + column + " не найдена. Или недоступна.");
+            throw new RuntimeException("The sorting for the column " + column + " was not found. Or unavailable.");
         }
     }
 
@@ -398,7 +398,7 @@ public class RowsHelper {
                     .click();
             return new ListFilter(getTypeColumn(column), column, helper, widget);
         } else {
-            throw new RuntimeException("Фильтр для столбца " + column + " не найден.");
+            throw new RuntimeException("The filter for the column " + column + " was not found.");
         }
 
     }
