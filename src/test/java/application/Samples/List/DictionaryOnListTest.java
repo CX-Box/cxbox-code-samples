@@ -9,7 +9,6 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -72,7 +71,6 @@ public class DictionaryOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
-    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("Dictionary enum basic");
         MainPages.FirstLevelMenu.click("List");
@@ -196,7 +194,6 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
-        row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");
@@ -216,7 +213,6 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         List<String> listRows2 = list.getNoFocusValues("Custom Field Additional");
         var row2 = list.findRowSegmentByValue("Custom Field Additional", listRows2.get(0));
-        row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");

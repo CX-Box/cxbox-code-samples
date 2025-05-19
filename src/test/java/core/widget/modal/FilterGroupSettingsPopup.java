@@ -5,7 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-
+import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
@@ -67,6 +67,7 @@ public class FilterGroupSettingsPopup {
      *
      * @return String
      */
+    @Attachment
     public String getFilterSettings() {
         return Allure.step("Getting a list of created filters", step -> {
             logTime(step);

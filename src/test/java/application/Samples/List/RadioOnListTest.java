@@ -9,7 +9,9 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +70,6 @@ public class RadioOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
-    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("Radio basic");
         MainPages.FirstLevelMenu.click("List");
@@ -89,8 +90,8 @@ public class RadioOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).radio();
-        customField.setValue("Middle");
-        assertThat(customField.getValue()).isEqualTo("Middle");
+        customField.setValue("Low");
+        assertThat(customField.getValue()).isEqualTo("Low");
     }
 
     @Test
@@ -266,10 +267,10 @@ public class RadioOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
-        row.radio().setValue("Middle");
+        row.radio().setValue("Low");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("save");
-        assertThat(row.radio().getValue()).isEqualTo("Middle");
+        assertThat(row.radio().getValue()).isEqualTo("Low");
     }
 }

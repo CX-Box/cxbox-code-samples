@@ -10,7 +10,6 @@ import core.widget.modal.error.constantsError;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("List")
+//@Disabled("В самплах использован другой тип поля")
 public class MultiValueOnListTest extends BaseTestForSamples {
 
     @Test
@@ -74,7 +74,6 @@ public class MultiValueOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
-    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("MultiValue basic");
         MainPages.FirstLevelMenu.click("List");

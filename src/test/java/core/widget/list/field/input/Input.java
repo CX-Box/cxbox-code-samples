@@ -3,10 +3,9 @@ package core.widget.list.field.input;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
-import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
@@ -39,6 +38,7 @@ public class Input extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public String getValue() {
         setFocusField();
         return getRowByName()
@@ -84,6 +84,7 @@ public class Input extends BaseRow<String> {
     }
 
     @Step("Getting the field color in Hex format")
+    @Attachment
     public String getHexColor() {
         SelenideElement span = $("[data-test='FIELD'] span");
         String color = span.getAttribute("style");
@@ -98,7 +99,7 @@ public class Input extends BaseRow<String> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
+            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

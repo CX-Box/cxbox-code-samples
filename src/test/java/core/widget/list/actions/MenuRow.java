@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -31,7 +31,7 @@ public class MenuRow {
      * @return List String
      */
     @Step("Getting a list of options from the line menu")
-
+    @Attachment
     public List<String> getListOptionsMenuRow() {
         return optionsMenuRow().texts();
 

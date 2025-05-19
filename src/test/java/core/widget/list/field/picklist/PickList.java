@@ -44,9 +44,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$("div[class=\"ant-select-selection-selected-value\"]")
+                .$(getValueTag())
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getText();
+                .getValue();
     }
 
     @Override

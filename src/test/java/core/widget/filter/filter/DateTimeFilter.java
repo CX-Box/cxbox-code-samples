@@ -1,6 +1,5 @@
 package core.widget.filter.filter;
 
-import application.config.props.ConstantSetter;
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.modal.Calendar;
@@ -19,7 +18,7 @@ public class DateTimeFilter extends AbstractFilter<LocalDateTime> {
 
     @Override
     public void setFilter(LocalDateTime value) {
-        $(ConstantSetter.DateFilterSelector)
+        $("input.ant-calendar-picker-input.ant-input[placeholder=\"End date\"]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                 .click();
         Calendar.setDateTime(value);
