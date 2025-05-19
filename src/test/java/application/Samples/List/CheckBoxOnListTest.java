@@ -23,6 +23,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+
 @DisplayName("List. Checking the basic functions for the CheckBox")
 @Epic("Samples")
 @Story("List")
