@@ -8,6 +8,7 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,7 @@ public class NumberOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
+    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("Number basic");
         MainPages.FirstLevelMenu.click("List");
@@ -170,7 +172,8 @@ public class NumberOnListTest extends BaseTestForSamples {
         MainPages.click("Number validation confirm");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        var row = list.findRowSegmentByValue("custom Field", "123 456");
+        List<String> values = list.getNoFocusValues("custom Field");
+        var row = list.findRowSegmentByValue("custom Field", values.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("save");
