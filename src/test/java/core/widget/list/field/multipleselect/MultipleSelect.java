@@ -190,7 +190,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
                     .parent()
                     .click();
         } else {
-            log.error("Focus on the field не получился");
+            log.error("Focus on the field didn't work out");
         }
     }
 

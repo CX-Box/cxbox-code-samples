@@ -68,6 +68,9 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .click();
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
@@ -83,6 +86,7 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .sendKeys(Keys.ENTER);
+
         });
     }
 
@@ -101,6 +105,9 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .click();
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
@@ -133,6 +140,9 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .click();
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))

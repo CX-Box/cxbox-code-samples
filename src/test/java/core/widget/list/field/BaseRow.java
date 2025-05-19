@@ -212,7 +212,7 @@ public abstract class BaseRow<E> {
                     .parent()
                     .doubleClick();
         } else {
-            log.error("Focus on the field не получился");
+            log.error("Focus on the field didn't work out");
         }
     }
 

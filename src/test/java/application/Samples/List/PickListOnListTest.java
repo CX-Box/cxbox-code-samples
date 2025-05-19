@@ -71,6 +71,7 @@ public class PickListOnListTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test for checking a value in a field")
     @Description("The test gets the value in the field, and then checks the value in the field with what should be.")
+    @Disabled("Checked at filtration and sorting")
     void read() {
         MainPages.click("Picklist basic");
         MainPages.FirstLevelMenu.click("List");
@@ -240,7 +241,6 @@ public class PickListOnListTest extends BaseTestForSamples {
     }
 
     @Test
-    @Disabled("Неверное название проверки в боковом меню")
     void fieldLevelValidation() {
         MainPages.click("Picklist validation field level dynamic");
         MainPages.FirstLevelMenu.click("List");
@@ -252,8 +252,8 @@ public class PickListOnListTest extends BaseTestForSamples {
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("save");
-        assertThat(row.pickListField().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
-        assertThat(row2.pickListField().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
+        assertThat(row.pickListField().getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
+        assertThat(row2.pickListField().getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
 
     @Test
