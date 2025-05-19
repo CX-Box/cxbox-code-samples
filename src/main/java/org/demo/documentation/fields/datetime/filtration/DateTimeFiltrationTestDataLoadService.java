@@ -21,19 +21,16 @@ public class DateTimeFiltrationTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now()));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusMinutes(3)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusMinutes(30)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusHours(2)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusDays(1).minusHours(2)
-				.minusMinutes(3)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusDays(2).minusMinutes(15)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusYears(1).minusHours(4)
-				.minusMinutes(15)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().minusYears(2)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().plusMonths(1).minusHours(3)
-				.minusMinutes(15)));
-		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.now().plusMonths(2)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 15, 8, 50)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 15, 8, 53)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 15, 9, 20)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 15, 6, 50)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 14, 6, 17)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 5, 15, 9, 5)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2024, 5, 15, 5, 5)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2023, 5, 15, 8, 50)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 6, 15, 6, 5)));
+		repository.save(new DateTimeFiltration().setCustomField(LocalDateTime.of(2025, 7, 15, 9, 15)));
 
 	}
 

@@ -72,7 +72,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDate(date));
-            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
@@ -80,9 +79,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .shouldHave(Condition.value(formattedDate(date)));
-            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-                return;
-            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
@@ -109,7 +105,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDateTime(dateTime));
-            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
@@ -117,9 +112,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .shouldHave(Condition.value(formattedDateTime(dateTime)));
-            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-                return;
-            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
@@ -145,7 +137,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(formattedDateTimeWithSecond(dateTimeWithSeconds));
-            Selenide.sleep(250);
             if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                 return;
             }
@@ -153,9 +144,6 @@ public class Calendar {
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .shouldHave(Condition.value(formattedDateTimeWithSecond(dateTimeWithSeconds)));
-            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-                return;
-            }
             PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))

@@ -1,9 +1,6 @@
 package core.widget.list;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import core.OriginExpectations.CxBoxExpectations;
 import core.OriginExpectations.ExpectationPattern;
 import core.OriginExpectations.ExpectationsFactoryProvider;
@@ -39,7 +36,7 @@ import core.widget.list.field.picklist.InlinePickListCell;
 import core.widget.list.field.picklist.PickListCell;
 import core.widget.list.field.radio.RadioCell;
 import core.widget.list.field.text.TextCell;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.NonNull;
@@ -91,6 +88,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of Column Headings")
+    @Attachment
     public List<String> getColumnNames() {
         return helper.getColumnNames();
     }
@@ -101,7 +99,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of lines from the current page")
-
+    @Attachment
     public List<String> getListRows() {
         waitingForTests.getWaitAllElements(widget);
         return helper.getListRows().texts().stream()
@@ -118,7 +116,7 @@ public class RowsHelper {
      * @return List Long
      */
     @Step("Getting a list of lines from the current page")
-
+    @Attachment
     public List<Long> getListRowsId() {
         waitingForTests.getWaitAllElements(widget);
         List<Long> list = new ArrayList<>();
@@ -135,7 +133,7 @@ public class RowsHelper {
      * @return Integer
      */
     @Step("Getting the number of lines from the current page")
-
+    @Attachment
     public Integer getSizeList() {
         waitingForTests.getWaitAllElements(widget);
         return helper.getListRows().size();
@@ -147,7 +145,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting a list of lines from all pages")
-
+    @Attachment
     public List<String> getListRowsTexts() {
         List<String> rowTexts = new ArrayList<>();
         waitingForTests.getWaitAllElements(widget);
@@ -177,7 +175,7 @@ public class RowsHelper {
      * @return int
      */
     @Step("Getting the column/column index {columnName}")
-
+    @Attachment
     public int getColumnIndex(String columnName) {
         ElementsCollection columns = this.widget.$$(By.xpath("div//div[contains(@class,'ColumnTitle')]"))
                 .shouldBe(CollectionCondition.sizeNotEqual(0));
@@ -210,7 +208,7 @@ public class RowsHelper {
      * @return ListWidget a class with access to fields
      */
     @Step("Cell search by column name {columnName} and the meaning in it {columnValue}")
-
+    @Attachment
     public ListWidget findRowSegmentByValue(String columnName, String columnValue) {
         waitingForTests.getWaitAllElements(widget);
         long id = findRowId(columnName, columnValue);
@@ -225,7 +223,7 @@ public class RowsHelper {
      * @return ListWidget a class with access to fields
      */
     @Step("Cell search by column name {columnName} and a Unique row number {id}")
-
+    @Attachment
     public ListWidget findRowSegmentById(String columnName, long id) {
         waitingForTests.getWaitAllElements(widget);
         return new ListWidget(columnName, widget, String.valueOf(id), this.helper, checkSorting(columnName), checkFilterColumn(columnName));
@@ -240,7 +238,7 @@ public class RowsHelper {
      * @return List String
      */
     @Step("Getting the values of the {columnName} column without field focus")
-
+    @Attachment
     public List<String> getNoFocusValues(String columnName) {
         List<String> list = new ArrayList<>();
         while (true) {
@@ -275,7 +273,7 @@ public class RowsHelper {
      * @return List Boolean true/false
      */
     @Step("Getting the status of the {columnName} column without field focus")
-
+    @Attachment
     public List<Boolean> getNoFocusStatusValues(String columnName) {
         List<Boolean> list = new ArrayList<>();
         while (true) {
@@ -299,7 +297,8 @@ public class RowsHelper {
 
     private SelenideElement getColumn(String columnName) {
         for (SelenideElement c : helper.getColumns()) {
-            if (c.getText().equals(columnName)) {
+
+            if (Objects.equals(c.getAttribute("data-test-widget-list-header-column-title"), columnName)) {
                 return c;
             }
         }
@@ -313,7 +312,7 @@ public class RowsHelper {
      * @return String
      */
     @Step("Getting the column type {column}")
-
+    @Attachment
     public String getTypeColumn(String column) {
         return getColumn(column).getAttribute("data-test-widget-list-header-column-type");
     }
@@ -325,7 +324,7 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Checking the filtering option for a column {column}")
-
+    @Attachment
     public Boolean checkFilterColumn(String column) {
         if (getColumn(column)
                 .$("div[data-test-widget-list-header-column-filter=\"true\"]")
@@ -347,12 +346,13 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Checking the sorting option for a column {column}")
-
+    @Attachment
     public Boolean checkSorting(String column) {
+        Selenide.sleep(200);
         if (getColumn(column)
-                .$("i[data-test-widget-list-header-column-sort=\"true\"]").is(Condition.exist)) {
+                .$("i.anticon.anticon-caret-up").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
             return getColumn(column)
-                    .$("i[data-test-widget-list-header-column-sort=\"true\"]")
+                    .$("i.anticon.anticon-caret-up")
                     .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                     .hover()
                     .is(Condition.visible);
@@ -362,6 +362,8 @@ public class RowsHelper {
         }
 
     }
+
+
 
     /**
      * Sorting. If the column has a sorting function.
@@ -387,7 +389,7 @@ public class RowsHelper {
      * @return Filter Sheet
      */
     @Step("Checking the filtering of the {column} column and returning the class with Filters")
-
+    @Attachment
     public ListFilter findFilterColumn(String column) {
         if (checkFilterColumn(column)) {
             getColumn(column)
@@ -461,7 +463,7 @@ public class RowsHelper {
      * @return GearMenu
      */
     @Step("Opening the gear menu")
-
+    @Attachment
     public Optional<GearMenu> findGearMenu() {
         SelenideElement gear = widget
                 .$("button[class*=\"ant-btn Button__root___FpVWX ant-dropdown-trigger\"]")
@@ -508,7 +510,7 @@ public class RowsHelper {
      * @return File .xlsx
      */
     @Step("Parsing a spreadsheet in Excel")
-
+    @Attachment
     public File parseTableListWidget() {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Мой лист");
@@ -538,7 +540,7 @@ public class RowsHelper {
                                 cell.setCellStyle(style);
                             }
                         } catch (StaleElementReferenceException e) {
-                            log.error("Ошибка: ссылка на элемент устарела.");
+                            log.error("Error: The link to the element is outdated.");
                         }
 
                     }
@@ -554,14 +556,14 @@ public class RowsHelper {
             File file = File.createTempFile("HeavenAndHell" + LocalDate.now(), ".xlsx", directory);
             try (FileOutputStream fileOut = new FileOutputStream(file)) {
                 workbook.write(fileOut);
-                log.info("Файл успешно создан. {}", file);
+                log.info("The file was created successfully. {}", file);
                 return file;
             } catch (IOException ex) {
-                log.error("Файл не создан: {}", ex);
+                log.error("The file has not been created: {}", ex);
             }
 
         } catch (IOException e) {
-            log.error("Ошибка при создании книги: {}", e);
+            log.error("Error when creating a book: {}", e);
         }
         return null;
     }
@@ -606,7 +608,7 @@ public class RowsHelper {
      * @return class AddFiles
      */
     @Step("Validation of the mass upload field")
-
+    @Attachment
     public Optional<AddFiles> findAddFiles() {
         if (widget
                 .$("div[class=\"ant-upload ant-upload-select ant-upload-select-text\"]")
@@ -653,7 +655,7 @@ public class RowsHelper {
      * Displaying a list of all buttons in a widget
      */
     @Step("Getting a list of buttons")
-
+    @Attachment
     public List<String> getButtons() {
         return getContainersActions().texts();
     }
@@ -683,7 +685,7 @@ public class RowsHelper {
      * @return List(String) List of differences
      */
     @Step("Comparing two files in the format .xlsx . The first file is {given}. Second file: {expected}.")
-
+    @Attachment
     @SneakyThrows
     public List<String> FileExcelComparator(File given, File expected) {
         Workbook wb1 = WorkbookFactory.create(new File(given.getPath()));
@@ -697,7 +699,7 @@ public class RowsHelper {
      * @return Pagination
      */
     @Step("Validating the pagination menu and gaining access to the class")
-
+    @Attachment
     public Optional<Pagination> findPaginationMenu() {
         if (widget.$("div[data-test-widget-list-pagination=\"true\"]")
                 .scrollIntoView("{block: \"center\"}")
@@ -715,7 +717,7 @@ public class RowsHelper {
      * @return Boolean true/false
      */
     @Step("Search for a row by id on the current page")
-
+    @Attachment
     public Boolean checkRowById(@NonNull Long id) {
         ElementsCollection rows = helper.getListRows();
         return rows.stream()
@@ -728,7 +730,7 @@ public class RowsHelper {
      * @return FormWidget with access to all fields
      */
     @Step("Opening an InlineForm to create a new line")
-
+    @Attachment
     public Optional<FormWidget> openAndFindInlineForm() {
         String inlineForm = "div[data-test-widget-list-row-type=\"InlineForm\"]";
         clickButton("Add");
@@ -749,7 +751,7 @@ public class RowsHelper {
      * @return HashMap(String, String)
      */
     @Step("Getting a list of fields in a heading and type pair")
-
+    @Attachment
     public HashMap<String, String> getFieldTitleAndType() {
         HashMap<String, String> values = new HashMap<>();
         for (SelenideElement field : widget.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).$$("div[data-test]")) {

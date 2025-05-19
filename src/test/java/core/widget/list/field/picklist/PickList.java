@@ -6,7 +6,7 @@ import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -40,6 +40,7 @@ public class PickList extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public String getValue() {
         setFocusField();
         return getRowByName()
@@ -87,7 +88,7 @@ public class PickList extends BaseRow<String> {
      * @return Popup class for accessing modal windows
      */
     @Step("Validation of the Popup window")
-
+    @Attachment
     public Optional<Popup> findPopup() {
         setFocusField();
         SelenideElement elementPopup = $("div[data-test-widget-type=\"PickListPopup\"]")
@@ -105,7 +106,7 @@ public class PickList extends BaseRow<String> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-
+    @Attachment
     public String getHexColor() {
         String color = getValueByAttribute(1, "span", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");

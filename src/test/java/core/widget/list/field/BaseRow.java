@@ -8,7 +8,7 @@ import core.OriginExpectations.CxBoxExpectations;
 import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,6 @@ public abstract class BaseRow<E> {
         return $("tr[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"Row\"]")
                 .$$("div[data-test-field-type='" + fieldType + "'][data-test-field-title='" + title + "']")
                 .get(element - 1)
-                .scrollIntoView("{block: \"center\"}")
                 .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout));
     }
 
@@ -69,6 +68,7 @@ public abstract class BaseRow<E> {
      * @return String text
      */
     @Step("Получение значения атрибута {attribute}")
+    @Attachment
     public String getValueByAttribute(Integer element, String value_tag,
                                       String attribute) {
         return listWidget.getWidget().$$("div[data-test-field-type='"
@@ -101,7 +101,7 @@ public abstract class BaseRow<E> {
      * @return String text/null
      */
     @Step("Getting the Placeholder value")
-
+    @Attachment
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -116,7 +116,7 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Checking the field for \"ReadOnly\"")
-
+    @Attachment
     public boolean getReadOnly() {
         setFocusField();
         return getElementDisabled(getValueTag());
@@ -128,7 +128,7 @@ public abstract class BaseRow<E> {
      * @return String text
      */
     @Step("Getting a value from a field RequiredMessage")
-
+    @Attachment
     public String getRequiredMessage() {
         setFocusField();
         Selenide.actions()
@@ -136,7 +136,7 @@ public abstract class BaseRow<E> {
                 .perform();
         getRowByName()
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .$("div[class=\"ant-row ant-form-item\"]")
+                .$("div.ant-row.ant-form-item")
                 .hover();
         return getRowByName()
                 .$(REQUIRED_MESSAGE)
@@ -151,7 +151,7 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Getting a value from a field RequiredMessage")
-
+    @Attachment
     public boolean hasRequiredMessage(int index) {
         String str = getRowByName()
                 .$(REQUIRED_MESSAGE)
@@ -166,7 +166,7 @@ public abstract class BaseRow<E> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-
+    @Attachment
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, getValueTag(), "style");
@@ -193,7 +193,7 @@ public abstract class BaseRow<E> {
      * @return Boolean true/false
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-
+    @Attachment
     public Boolean drillDown() {
         String oldUrl = WebDriverRunner.url();
         getRowByName().$("span a").click();
@@ -204,9 +204,9 @@ public abstract class BaseRow<E> {
     /**
      * Focus on the field/A click in the field..
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
-        if (getRowByName().$("span[class*=\"ReadOnlyField\"]").is(Condition.exist)) {
+        if (getRowByName().$("span[class*=\"ReadOnlyField\"]").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
             log.info("Focus on the field");
             getRowByName()
                     .parent()
@@ -233,6 +233,11 @@ public abstract class BaseRow<E> {
     @Step("Filtering")
     public void setFiltration() {
         throw new UnsupportedOperationException("Filtration not supported for inputs on List");
+    }
+
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("span").text().equals(row);
     }
 
 

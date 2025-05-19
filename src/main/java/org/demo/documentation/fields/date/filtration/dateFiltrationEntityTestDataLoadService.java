@@ -21,15 +21,15 @@ public class dateFiltrationEntityTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now()));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusDays(30)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusYears(3).minusDays(2)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusYears(2).minusDays(1)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusDays(2)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusYears(1)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().minusYears(2)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().plusMonths(1)));
-		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.now().plusMonths(2)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2025, 5, 15, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2025, 4, 15, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2022, 5, 13, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2023, 5, 14, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2025, 5, 13, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2024, 5, 15, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2023, 5, 15, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2025, 6, 15, 1,1)));
+		repository.save(new dateFiltrationEntity().setCustomField(LocalDateTime.of(2025, 7, 15, 1,1)));
 	}
 
 }

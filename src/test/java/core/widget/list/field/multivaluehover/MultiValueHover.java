@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -37,6 +37,7 @@ public class MultiValueHover extends BaseRow<String> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public String getValue() {
         setFocusField();
         getRowByName()
@@ -82,7 +83,7 @@ public class MultiValueHover extends BaseRow<String> {
     /**
      * Focus on the field
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         getRowByName()
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
@@ -95,7 +96,7 @@ public class MultiValueHover extends BaseRow<String> {
      * @return String
      */
     @Step("Getting the field color in Hex format")
-
+    @Attachment
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "p", "style");
@@ -114,5 +115,11 @@ public class MultiValueHover extends BaseRow<String> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("p").text().equals(row);
     }
 }

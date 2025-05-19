@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
@@ -35,7 +35,7 @@ public class Percent extends BaseRow<Integer> {
         getRowByName()
                 .$(getValueTag())
                 .sendKeys(Keys.TAB);
-        if (getRowByName().$(getValueTag()).getValue().isEmpty()) {
+        if (Objects.requireNonNull(getRowByName().$(getValueTag()).getValue()).isEmpty()) {
             log.info("Autofill field is not enabled");
         } else {
             log.info("Autofill field is enabled");
@@ -65,6 +65,7 @@ public class Percent extends BaseRow<Integer> {
      * @return Integer
      */
     @Step("Getting a value from a field")
+    @Attachment
     public Integer getValue() {
         setFocusField();
         String str = getRowByName()
@@ -94,5 +95,11 @@ public class Percent extends BaseRow<Integer> {
                 .$(getValueTag())
                 .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                 .sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("div span").text().equals(row);
     }
 }

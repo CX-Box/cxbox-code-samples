@@ -1,14 +1,16 @@
 package core.widget.list.field.checkbox;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.util.Objects;
 
 @Slf4j
 public class Checkbox extends BaseRow<Boolean> {
@@ -37,6 +39,7 @@ public class Checkbox extends BaseRow<Boolean> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public Boolean getValue() {
         setFocusField();
         return getRowByName()
@@ -74,7 +77,7 @@ public class Checkbox extends BaseRow<Boolean> {
     /**
      * Focus on the field/A click in the field..
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         try {
             if (getElementDisabled("input")) {
@@ -94,5 +97,12 @@ public class Checkbox extends BaseRow<Boolean> {
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
     public Boolean drillDown() {
         throw new UnsupportedOperationException("drilldown not supported for inputs on Forms");
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        SelenideElement checkbox = getRowByName().$("label");
+        return !Objects.equals(checkbox.getAttribute("class"), "ant-checkbox-wrapper ant-checkbox-wrapper-disabled");
     }
 }

@@ -107,12 +107,17 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     @DisplayName("Business Exception Validation Test")
     @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
     void businessException() {
+        //Переход на страницу
         MainPages.click("Dictionary enum validation business exception");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
+        //Поиск поля
         var customField = form.dictionary("Custom Field");
+        //Установка значения в поле, ожидается ошибка
         customField.setValue("Middle");
+        //Поиск всплывающего окна
         var popup = $box.findPopup("error");
+        //Проверки данных
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
         assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Text.textOnly("'High'"));
@@ -196,7 +201,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
     void sorting() {
         MainPages.click("Dictionary enum sorting");
         MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form Dictionary enum sorting"); // Don't work here (title - Form title at this version
+        FormWidget form = $box.findFormWidgetByTitle("Form Dictionary enum sorting");
         var customField = form.dictionary("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }

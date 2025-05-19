@@ -1,17 +1,26 @@
 package core.widget.filter.filter;
 
+import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.modal.Calendar;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+
+import static com.codeborne.selenide.Selenide.$;
 
 public class DateTimeFilter extends AbstractFilter<LocalDateTime> {
     public DateTimeFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }
 
+
+
     @Override
     public void setFilter(LocalDateTime value) {
+        $("input.ant-calendar-picker-input.ant-input[placeholder=\"End date\"]")
+                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
+                .click();
         Calendar.setDateTime(value);
         setApply();
     }

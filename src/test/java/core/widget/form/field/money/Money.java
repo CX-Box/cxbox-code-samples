@@ -55,7 +55,7 @@ public class Money extends NumberDigits {
             String pattern = ".*\\d.\\d{2}";
             String str = value.toString();
             str = str.replace(".", ",");
-            assert str.matches(pattern) : "Число не соответствует паттерну.";
+            assert str.matches(pattern) : "The number does not match the pattern.";
             clear();
             getFieldByName().click();
             getFieldByName()

@@ -6,7 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +50,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      */
     @Override
     @Step("Getting a value from a field")
+    @Attachment
     public Set<String> getValue() {
         setFocusField();
         List<String> list = getRowByName()
@@ -103,7 +104,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * Вывод в консоль списка опций из списка
      */
     @Step("Getting a list of options")
-
+    @Attachment
     public List<String> getOptions() {
         setFocusField();
         getRowByName().click();
@@ -118,7 +119,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
         setFocusField();
         ElementsCollection closeX = getRowByName()
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                .$$("i[aria-label=\"icon: close\"]");
+                .$$("i[aria-label=\"icon: close\"][data-test-field-multipleselect-item-clear=\"true\"]");
         for (int i = 0; i <= closeX.size(); i++) {
             if (closeX.get(i).is(Condition.exist)) {
                 closeX.get(i).click();
@@ -137,7 +138,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * @return Pair(String, Boolean)
      */
     @Step("Getting a list of options and status")
-
+    @Attachment
     public List<Pair<String, Boolean>> getStatusOptions() {
         List<String> list = getOptionsMultipleSelect().texts();
         List<Pair<String, Boolean>> pairs = new ArrayList<Pair<String, Boolean>>();
@@ -159,7 +160,7 @@ public class MultipleSelect extends BaseRow<Set<String>> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-
+    @Attachment
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -181,15 +182,21 @@ public class MultipleSelect extends BaseRow<Set<String>> {
     /**
      * Focus on the field/A click in the field..
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         if (getRowByName().$("div[class*=\"MultipleSelectField__readOnly\"]").is(Condition.exist)) {
             log.info("Focus on the field");
             getRowByName()
                     .parent()
-                    .doubleClick();
+                    .click();
         } else {
             log.error("Focus on the field не получился");
         }
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("div").text().equals(row);
     }
 }

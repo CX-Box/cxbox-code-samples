@@ -12,6 +12,13 @@ public class DateTimeWithSecondsFilter extends AbstractFilter<LocalDateTime> {
     }
 
     @Override
+    public void setFilter(LocalDateTime value, LocalDateTime value2) {
+        Calendar.setDateTimeWithSecond(value);
+        Calendar.setDateTimeWithSecond(value2);
+        setApply();
+    }
+
+    @Override
     public void setFilter(LocalDateTime value) {
         Calendar.setDateTimeWithSecond(value);
         setApply();
