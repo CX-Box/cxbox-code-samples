@@ -196,6 +196,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
+        row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");
@@ -215,6 +216,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         List<String> listRows2 = list.getNoFocusValues("Custom Field Additional");
         var row2 = list.findRowSegmentByValue("Custom Field Additional", listRows2.get(0));
+        row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");
