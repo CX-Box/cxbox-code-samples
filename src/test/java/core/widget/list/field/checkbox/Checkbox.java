@@ -56,6 +56,9 @@ public class Checkbox extends BaseRow<Boolean> {
     }
 
     private void set() {
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
         getRowByName()
                 .$(getValueTag())
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
@@ -64,6 +67,7 @@ public class Checkbox extends BaseRow<Boolean> {
 
     private void setTrue() {
         set();
+        Selenide.sleep(100);
         if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
             return;
         }
@@ -74,6 +78,7 @@ public class Checkbox extends BaseRow<Boolean> {
 
     private void setFalse() {
         set();
+        Selenide.sleep(100);
         if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
             return;
         }
