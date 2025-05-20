@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 
 import java.time.Duration;
 import java.util.Objects;
@@ -23,7 +23,6 @@ public class ShowMessage {
      * Getting the icon test
      * @return String
      */
-    @Attachment
     public String getIcon() {
         return Allure.step("Getting the icon test", step -> {
             logTime(step);
@@ -39,7 +38,6 @@ public class ShowMessage {
      * Getting the message text
      * @return String
      */
-    @Attachment
     public String getAlertMessage() {
         return Allure.step("Getting the message text", step -> {
             logTime(step);
@@ -55,7 +53,6 @@ public class ShowMessage {
      * Getting the Message Description
      * @return String
      */
-    @Attachment
     public String getAlertDescription() {
         return Allure.step("Getting the Message Description", step -> {
             logTime(step);

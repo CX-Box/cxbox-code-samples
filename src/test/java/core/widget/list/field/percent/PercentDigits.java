@@ -4,7 +4,8 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+import io.qameta.allure.Allure;
+
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +80,6 @@ public class PercentDigits extends BaseRow<BigDecimal> {
      * @return BigDecimal
      */
     @Step("Getting a value from a field")
-    @Attachment
     @SneakyThrows
     public BigDecimal getValue() {
         setFocusField();
@@ -131,7 +131,6 @@ public class PercentDigits extends BaseRow<BigDecimal> {
      * @return Integer
      */
     @Step("Getting the number of digits after the decimal point")
-    @Attachment
     public Integer getDigits() {
         if (getRowByName().$(getValueTag()).has(Condition.attribute("digits"))) {
             String digits = getRowByName().$(getValueTag()).getAttribute("digits");
@@ -142,8 +141,8 @@ public class PercentDigits extends BaseRow<BigDecimal> {
     }
 
     @Step("Checking the fractional part of the number and the number of digits entered after the dot in the field")
-    @Attachment
     private boolean checkDigits(BigDecimal number) {
+        Allure.addAttachment("Number", number.toString());
         return number.scale() == getDigits();
     }
 

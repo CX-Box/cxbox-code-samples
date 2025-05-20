@@ -28,7 +28,7 @@ import core.widget.list.field.picklist.PickList;
 import core.widget.list.field.picklist.SuggestionPickList;
 import core.widget.list.field.radio.Radio;
 import core.widget.list.field.text.Text;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -305,7 +305,6 @@ public class ListWidget {
      * @return class MenuRow
      */
     @Step("Search and access the line menu(three dots)")
-    @Attachment
     public Optional<MenuRow> findMenuRow() {
         SelenideElement row = $("tr[data-test-widget-list-row-id=\"" + id + "\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
@@ -337,7 +336,6 @@ public class ListWidget {
      * @return class FormWidget with access to all fields
      */
     @Step("Validation и Opening the InlineForm for editing строки")
-    @Attachment
     public Optional<FormWidget> openInlineFormRowForEdit() {
         String inlineForm = "div[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"InlineForm\"]";
         SelenideElement iconEdit = $("tr[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"Row\"]")

@@ -9,6 +9,7 @@ import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import io.qameta.allure.Allure;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

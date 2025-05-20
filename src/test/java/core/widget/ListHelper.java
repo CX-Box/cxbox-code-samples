@@ -92,7 +92,7 @@ public class ListHelper {
     public void setSorting(String column) {
         for (SelenideElement c : getColumns()) {
             if (c.getText().equals(column)) {
-                SelenideElement sortIcon = c.$("i.anticon.anticon-caret-up");
+                SelenideElement sortIcon = c.$("div[data-test-widget-list-header-column-sort=\"true\"] i.anticon-caret-up");
                 sortIcon.shouldBe(Condition.exist, Duration.ofSeconds(waitingForTest.Timeout))
                         .hover();
                 sortIcon.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))
