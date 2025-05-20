@@ -58,6 +58,7 @@ public abstract class BaseTestForSamples {
 
 	@BeforeAll
 	public static void setUpAllure() {
+		WebDriverManager.chromedriver().setup();
 		Configuration.browser = "chrome";
 		Configuration.headless = false;
 		Configuration.timeout = 10000;
