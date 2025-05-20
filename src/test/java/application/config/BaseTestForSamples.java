@@ -94,7 +94,7 @@ public abstract class BaseTestForSamples {
 	@NonNull
 	private static ChromeOptions getChromeOptions() {
 		var options = new ChromeOptions().addArguments(
-				"--headless",
+				//"--headless",
 				"--enable-automation",
 				"--remote-allow-origins=*",
 				"--disable-features=InsecureDownloadWarnings",
