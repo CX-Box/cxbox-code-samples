@@ -4,10 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
@@ -44,7 +45,6 @@ public class MultiValue extends BaseRow<List<String>> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public List<String> getValue() {
         return getRowByName()
                 .$$(By.tagName("span"))
@@ -93,7 +93,6 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return Popup class of all modal windows
      */
     @Step("Validation of the modal window")
-    @Attachment
     public Optional<Popup> findPopup() {
         SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
@@ -110,7 +109,6 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-    @Attachment
     public String getPlaceholder() {
         openInlineRedactor();
         SelenideElement element = $(By.cssSelector("div[data-test='FIELD'][data-test-field-type='multivalue'] div[data-text]"));
@@ -141,7 +139,7 @@ public class MultiValue extends BaseRow<List<String>> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

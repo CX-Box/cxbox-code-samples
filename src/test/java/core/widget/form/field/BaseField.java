@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Allure;
 
@@ -179,7 +180,7 @@ public abstract class BaseField<E> {
                 for (int i = 0; i < strings.length; i++) {
                     numbers[i] = Integer.parseInt(strings[i]);
                 }
-                return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+                return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
             } else {
                 return null;
             }

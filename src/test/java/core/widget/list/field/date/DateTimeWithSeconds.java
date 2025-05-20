@@ -2,10 +2,11 @@ package core.widget.list.field.date;
 
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -41,7 +42,6 @@ public class DateTimeWithSeconds extends BaseRow<LocalDateTime> {
      */
     @Override
     @Step("Getting a value from a field")
-    @Attachment
     public LocalDateTime getValue() {
         setFocusField();
         String date = getRowByName().shouldBe(Condition.exist).$(getValueTag()).getValue();
@@ -73,7 +73,6 @@ public class DateTimeWithSeconds extends BaseRow<LocalDateTime> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    @Attachment
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "span", "style");
@@ -88,7 +87,7 @@ public class DateTimeWithSeconds extends BaseRow<LocalDateTime> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

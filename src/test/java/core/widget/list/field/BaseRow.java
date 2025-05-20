@@ -8,7 +8,8 @@ import core.OriginExpectations.CxBoxExpectations;
 import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
-import io.qameta.allure.Attachment;
+import io.qameta.allure.Allure;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -67,10 +68,12 @@ public abstract class BaseRow<E> {
      * @param attribute Required descendant attribute
      * @return String text
      */
-    @Step("Получение значения атрибута {attribute}")
-    @Attachment
+    @Step("Getting the attribute value {attribute}")
     public String getValueByAttribute(Integer element, String value_tag,
                                       String attribute) {
+        Allure.addAttachment("Elenent", element.toString());
+        Allure.addAttachment("Value tag", value_tag);
+        Allure.addAttachment("Attribute", attribute);
         return listWidget.getWidget().$$("div[data-test-field-type='"
                         + fieldType
                         + "'][data-test-field-title='"
@@ -101,7 +104,6 @@ public abstract class BaseRow<E> {
      * @return String text/null
      */
     @Step("Getting the Placeholder value")
-    @Attachment
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -116,7 +118,6 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Checking the field for \"ReadOnly\"")
-    @Attachment
     public boolean getReadOnly() {
         setFocusField();
         return getElementDisabled(getValueTag());
@@ -128,7 +129,6 @@ public abstract class BaseRow<E> {
      * @return String text
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
     public String getRequiredMessage() {
         setFocusField();
         Selenide.sleep(100);
@@ -152,8 +152,8 @@ public abstract class BaseRow<E> {
      * @return boolean true/false
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
     public boolean hasRequiredMessage(int index) {
+        Allure.addAttachment("Index", String.valueOf(index));
         String str = getRowByName()
                 .$(REQUIRED_MESSAGE)
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
@@ -167,7 +167,6 @@ public abstract class BaseRow<E> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    @Attachment
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, getValueTag(), "style");
@@ -182,7 +181,7 @@ public abstract class BaseRow<E> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }
@@ -194,7 +193,6 @@ public abstract class BaseRow<E> {
      * @return Boolean true/false
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-    @Attachment
     public Boolean drillDown() {
         String oldUrl = WebDriverRunner.url();
         getRowByName().$("span a").click();
