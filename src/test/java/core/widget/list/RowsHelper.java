@@ -350,7 +350,7 @@ public class RowsHelper {
     public Boolean checkSorting(String column) {
         Selenide.sleep(200);
         if (getColumn(column)
-                .$("i.anticon.anticon-caret-up").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
+                .$("i.anticon.anticon-caret-up").is(Condition.exist)) {
             return getColumn(column)
                     .$("i.anticon.anticon-caret-up")
                     .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
