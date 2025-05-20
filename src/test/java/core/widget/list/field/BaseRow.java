@@ -131,6 +131,7 @@ public abstract class BaseRow<E> {
     @Attachment
     public String getRequiredMessage() {
         setFocusField();
+        Selenide.sleep(100);
         Selenide.actions()
                 .moveToElement($("body"))
                 .perform();
