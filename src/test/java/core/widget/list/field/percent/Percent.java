@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
-import io.qameta.allure.Attachment;
+
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
@@ -65,7 +65,6 @@ public class Percent extends BaseRow<Integer> {
      * @return Integer
      */
     @Step("Getting a value from a field")
-    @Attachment
     public Integer getValue() {
         setFocusField();
         String str = getRowByName()

@@ -7,7 +7,7 @@ import core.widget.ListHelper;
 import core.widget.filter.filter.*;
 import core.widget.modal.Popup;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -188,7 +188,6 @@ public class ListFilter {
      *
      * @return PickListFilter
      */
-    @Attachment
     public Optional<Popup> pickListFilter() {
         return Allure.step("Filtering with the field type PickList", step -> {
             logTime(step);

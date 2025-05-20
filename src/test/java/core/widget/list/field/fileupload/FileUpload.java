@@ -7,7 +7,8 @@ import core.widget.addfiles.FilesPopup;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.FileViewerPopup;
-import io.qameta.allure.Attachment;
+import io.qameta.allure.Allure;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -57,7 +58,6 @@ public class FileUpload extends BaseRow<File> {
      */
     @Override
     @Step("Getting the downloaded file")
-    @Attachment
     public File getValue() {
         setFocusField();
         return getRowByName().$("button").download(DownloadOptions.using(FileDownloadMode.FOLDER));
@@ -75,8 +75,8 @@ public class FileUpload extends BaseRow<File> {
      * @return Boolean true/false
      */
     @Step("Comparison of the source file and the downloaded file")
-    @Attachment
     public Boolean getFileComparison(File value) {
+        Allure.addAttachment("FileName", value.getName());
         return compareFiles(value);
     }
 
@@ -110,7 +110,6 @@ public class FileUpload extends BaseRow<File> {
      * @return String
      */
     @Step("Getting a file from a field in File format")
-    @Attachment
     @SneakyThrows
     public String getValueName() {
         setFocusField();
@@ -139,7 +138,6 @@ public class FileUpload extends BaseRow<File> {
      * @return String NameFile
      */
     @Step("Getting the file name in the field")
-    @Attachment
     public String getNameFileInField() {
         setFocusField();
         return getRowByName()
@@ -154,7 +152,6 @@ public class FileUpload extends BaseRow<File> {
      * @return String text
      */
     @Step("Getting the Placeholder value")
-    @Attachment
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -170,7 +167,6 @@ public class FileUpload extends BaseRow<File> {
      * @return Boolean true/false
      */
     @Step("Checking the field for \"ReadOnly\"")
-    @Attachment
     public boolean getReadOnly() {
         setFocusField();
         return !getRowByName().$(getValueTag()).is(Condition.exist);
@@ -220,7 +216,6 @@ public class FileUpload extends BaseRow<File> {
      * @return File Viewer Pop up window for viewing files
      */
     @Step("Validation and access to FileViewerPopup")
-    @Attachment
     public Optional<FileViewerPopup> findFileViewerPopup() {
         getRowByName()
                 .$("span[class*=\"FileIcon__root\"]")
@@ -242,7 +237,6 @@ public class FileUpload extends BaseRow<File> {
      * @return String text
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
     public String getRequiredMessage() {
         setFocusField();
 
@@ -266,8 +260,8 @@ public class FileUpload extends BaseRow<File> {
      * @return boolean true/false
      */
     @Step("Getting a value from a field RequiredMessage")
-    @Attachment
     public boolean hasRequiredMessage(int index) {
+        Allure.addAttachment("Index", String.valueOf(index));
         String str = getRowByName()
                 .$(getREQUIRED_MESSAGE())
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
