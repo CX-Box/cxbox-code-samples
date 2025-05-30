@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Checkbox, Empty, Input } from 'antd'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import cn from 'classnames'
+import { getIconByParams } from '@cxboxComponents/ui/Dictionary/Dictionary'
 import { useListHeight, useListSearch } from '@hooks/checkboxFilter'
 import { checkboxFilterMaxVisibleItems } from '@constants/filter'
 import { interfaces } from '@cxbox-ui/core'
@@ -11,19 +12,27 @@ import styles from './CheckboxFilter.less'
 export interface CheckboxFilterProps {
     title: string
     value: interfaces.DataValue[]
-    filterValues: Array<{ value: string }>
+    filterValues?: Array<{ value: string; icon?: string }>
     visible?: boolean
     onChange?: (values: interfaces.DataValue[]) => void
 }
 
 const emptyValue: interfaces.DataValue[] = []
 
-export const CheckboxFilter: React.FC<CheckboxFilterProps> = ({ value, filterValues, title, visible, onChange }) => {
+/**
+ *
+ * @param props
+ * @category Components
+ */
+export const CheckboxFilter: React.FC<CheckboxFilterProps> = props => {
     const { t } = useTranslation()
+
+    const { filterValues = [] } = props
+
     const listRef = useRef<HTMLUListElement>(null)
 
     const filterValuesLength = filterValues.length
-    const { searchText, filteredValues, handleSearch } = useListSearch(filterValues, visible)
+    const { searchText, filteredValues, handleSearch } = useListSearch(filterValues, props.visible)
     const listHeight = useListHeight(listRef, filterValuesLength)
 
     const visibleFilteredValues = useMemo(() => {
@@ -31,14 +40,14 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = ({ value, filterVal
     }, [filteredValues, listHeight])
 
     const handleCheckbox = (e: CheckboxChangeEvent) => {
-        const prevValues = value || emptyValue
+        const prevValues = props.value || emptyValue
         const newValues = e.target.checked ? [...prevValues, e.target.value] : prevValues.filter(item => item !== e.target.value)
-        onChange?.(newValues.length ? newValues : (null as any))
+        props.onChange?.(newValues.length ? newValues : [])
     }
 
     const handleAll = (e: CheckboxChangeEvent) => {
-        const newValues = e.target.checked ? filterValues.map(item => item.value) : null
-        onChange?.(newValues as any)
+        const newValues = e.target.checked ? filterValues.map(item => item.value) : []
+        props.onChange?.(newValues)
     }
 
     return (
@@ -57,17 +66,18 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = ({ value, filterVal
                 <Checkbox
                     className={styles.checkbox}
                     data-test-filter-popup-select-all={true}
-                    indeterminate={value?.length > 0 && value.length < filterValuesLength}
-                    checked={value?.length === filterValuesLength}
+                    indeterminate={props.value?.length > 0 && props.value.length < filterValuesLength}
+                    checked={props.value?.length === filterValuesLength}
                     onChange={handleAll}
                 />
-                {title ?? t('All')}
+                {props.title ?? t('Select all')}
             </li>
 
             <ul ref={listRef} className={styles.list} style={listHeight ? { height: listHeight } : undefined}>
                 {visibleFilteredValues.length ? (
                     visibleFilteredValues.map((item, index) => {
-                        const checked = value?.some(filterValue => item.value === filterValue)
+                        const checked = props.value?.some(filterValue => item.value === filterValue)
+                        const icon = getIconByParams(item.icon)
 
                         return (
                             <li className={styles.listItem} key={index}>
@@ -78,6 +88,7 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = ({ value, filterVal
                                     value={item.value}
                                     onChange={handleCheckbox}
                                 />
+                                {icon && <span className={styles.listItemIcon}>{icon}</span>}
                                 {item.value}
                             </li>
                         )
@@ -90,4 +101,9 @@ export const CheckboxFilter: React.FC<CheckboxFilterProps> = ({ value, filterVal
     )
 }
 
-export default React.memo(CheckboxFilter)
+/**
+ * @category Components
+ */
+export const MemoizedCheckboxFilter = React.memo(CheckboxFilter)
+
+export default MemoizedCheckboxFilter
