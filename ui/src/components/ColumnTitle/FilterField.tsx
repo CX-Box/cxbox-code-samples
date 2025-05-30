@@ -1,25 +1,28 @@
 import React from 'react'
+import { Checkbox } from 'antd'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
+import { NumberInput, FilterField as CoreFilterField } from '@cxboxComponents'
 import { CheckboxFilter } from './CheckboxFilter/CheckboxFilter'
-import { AppNumberFieldMeta, CustomFieldTypes } from '@interfaces/widget'
-import { getFormat } from '@utils/date'
 import RangePicker from './RangePicker'
 import DatePicker from './DatePicker'
-import { DateFieldTypes } from '@interfaces/date'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { Checkbox } from 'antd'
-import { interfaces } from '@cxbox-ui/core'
+import NumberRangeFilter from './components/NumberRangeFilter/NumberRangeFilter'
+import { getFormat } from '@utils/date'
 import { ColumnFilterControlProps } from '@cxboxComponents/ui/FilterField/FilterField'
-import { NumberInput, FilterField as CoreFilterField } from '@cxboxComponents'
+import { NumberTypes } from '@cxboxComponents/ui/NumberInput/formaters'
+import { interfaces } from '@cxbox-ui/core'
+import { DateFieldTypes } from '@interfaces/date'
+import { AppNumberFieldMeta, CustomFieldTypes } from '@interfaces/widget'
+import TimeRangePicker from '@components/ColumnTitle/TimeRangePicker'
+import { ITimePickerFieldMeta } from '../../fields/TimePicker/TimePickerField'
 
 interface FilterFieldProps extends ColumnFilterControlProps {
-    visible?: boolean
     filterByRangeEnabled?: boolean
 }
 
 const { FieldType } = interfaces
 
-function FilterField({ visible, filterByRangeEnabled, ...props }: FilterFieldProps) {
-    const { widgetFieldMeta, value, onChange, rowFieldMeta } = props
+function FilterField({ filterByRangeEnabled, ...props }: FilterFieldProps) {
+    const { widgetFieldMeta, value, onChange, rowFieldMeta, visible } = props
     const fieldType = widgetFieldMeta.type as string
 
     switch (fieldType) {
@@ -40,6 +43,20 @@ function FilterField({ visible, filterByRangeEnabled, ...props }: FilterFieldPro
         case FieldType.money:
         case FieldType.percent:
             const fieldMeta = widgetFieldMeta as AppNumberFieldMeta
+
+            if (filterByRangeEnabled) {
+                return (
+                    <NumberRangeFilter
+                        value={value as interfaces.DataValue[]}
+                        type={widgetFieldMeta.type as unknown as NumberTypes}
+                        onChange={onChange}
+                        digits={fieldMeta.digits}
+                        currency={fieldMeta.currency}
+                        nullable={true}
+                    />
+                )
+            }
+
             return (
                 <NumberInput
                     data-test-filter-popup-value={true}
@@ -58,6 +75,7 @@ function FilterField({ visible, filterByRangeEnabled, ...props }: FilterFieldPro
                 <CheckboxFilter
                     title={widgetFieldMeta.title}
                     value={value as interfaces.DataValue[]}
+                    visible={visible}
                     filterValues={rowFieldMeta.filterValues ? rowFieldMeta.filterValues : []}
                     onChange={onChange}
                 />
@@ -88,6 +106,21 @@ function FilterField({ visible, filterByRangeEnabled, ...props }: FilterFieldPro
                     value={value as interfaces.DataValue[]}
                     format={getFormat()}
                     open={visible}
+                />
+            )
+        }
+        case CustomFieldTypes.Time: {
+            const widgetFieldMeta = props.widgetFieldMeta as ITimePickerFieldMeta
+            const use12Hours = widgetFieldMeta.format?.includes('A') || widgetFieldMeta.format?.includes('a')
+            return (
+                <TimeRangePicker
+                    value={value as interfaces.DataValue[]}
+                    onChange={onChange}
+                    use12Hours={use12Hours}
+                    format={widgetFieldMeta.format}
+                    hourStep={widgetFieldMeta.hourStep}
+                    minuteStep={widgetFieldMeta.minuteStep}
+                    secondStep={widgetFieldMeta.secondStep}
                 />
             )
         }

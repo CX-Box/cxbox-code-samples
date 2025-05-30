@@ -1,4 +1,4 @@
-import { RootEpic } from '@store'
+import { RootEpic, RootState } from '@store'
 import { catchError, concat, EMPTY, filter, mergeMap, of, switchMap } from 'rxjs'
 import { isAnyOf, nanoid } from '@reduxjs/toolkit'
 import {
@@ -17,9 +17,52 @@ import { actions, sendOperationSuccess, setBcCount } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { AxiosError } from 'axios'
 import { postOperationRoutine } from './utils/postOperationRoutine'
-import { AppWidgetGroupingHierarchyMeta, CustomWidgetTypes } from '@interfaces/widget'
+import { AppWidgetGroupingHierarchyMeta, AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
+
+const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
+    const { widgets, pendingDataChanges } = state.view
+    const bcDictionary: { [bcName: string]: AppWidgetMeta } = {}
+
+    widgets.forEach(widget => {
+        if (
+            !bcDictionary[widget.bcName] &&
+            widget.showCondition?.bcName === activeBcName &&
+            widget.bcName !== activeBcName &&
+            utils.checkShowCondition(
+                widget.showCondition,
+                state.screen.bo.bc[widget.showCondition?.bcName as string]?.cursor || '',
+                state.data[widget.showCondition?.bcName as string],
+                pendingDataChanges
+            )
+        ) {
+            bcDictionary[widget.bcName] = widget
+        }
+    })
+
+    return Object.values(bcDictionary)
+}
+
+export const updateRowMetaForRelatedBcEpic: RootEpic = (action$, state$) =>
+    action$.pipe(
+        filter(isAnyOf(actions.forceActiveRmUpdate)),
+        switchMap(action => {
+            const { bcName } = action.payload
+            const state = state$.value
+            const widgetsForRowMetaUpdate = getWidgetsForRowMetaUpdate(state, bcName)
+
+            if (widgetsForRowMetaUpdate.length) {
+                return concat(
+                    ...widgetsForRowMetaUpdate.map(currentWidget =>
+                        of(actions.bcFetchRowMeta({ widgetName: currentWidget.name, bcName: currentWidget.bcName }))
+                    )
+                )
+            }
+
+            return EMPTY
+        })
+    )
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
@@ -74,6 +117,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
             const filters = state.screen.filters[bcName]
             const sorters = state.screen.sorters[bcName]
             const pendingRecordChange = { ...state.view.pendingDataChanges[bcName]?.[bc?.cursor as string] }
+            const pendingChangesNow = state.view.pendingDataChangesNow[bcName]?.[bc?.cursor as string]
             for (const key in pendingRecordChange) {
                 if (fields?.find(item => item.key === key && item.disabled)) {
                     delete pendingRecordChange[key]
@@ -92,7 +136,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                 params._confirm = confirm
             }
             const context = { widgetName: action.payload.widgetName }
-            return api.customAction(screenName, bcUrl, data, context, params).pipe(
+            return api.customAction(screenName, bcUrl, data, pendingChangesNow, context, params).pipe(
                 mergeMap(response => {
                     const postInvoke = response.postActions?.[0] as OperationPostInvokeAny & { bc?: string }
                     const dataItem = response.record
@@ -241,9 +285,10 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
             const cursor = state.screen.bo.bc[bcName]?.cursor as string
             const bcUrl = buildBcUrl(bcName, true, state)
             const context = { widgetName: action.payload.widgetName }
+            const pendingChangesNow = state.view.pendingDataChangesNow[bcName]?.[cursor]
             const isTargetFormatPVF = state.view.pendingValidationFailsFormat === PendingValidationFailsFormat.target
 
-            return api.deleteBcData(state.screen.screenName, bcUrl, context).pipe(
+            return api.deleteBcData(state.screen.screenName, bcUrl, pendingChangesNow, context).pipe(
                 mergeMap(data => {
                     const postInvoke = data.postActions?.[0]
 
@@ -287,16 +332,22 @@ export const forceUpdateRowMeta: RootEpic = (action$, state$, { api }) =>
             const cursor = action.payload.cursor ?? (state.screen.bo.bc[bcName]?.cursor as string)
             const bcUrl = buildBcUrl(bcName, true, state)
             const pendingChanges = state.view.pendingDataChanges[bcName]?.[cursor]
+            const pendingChangesNow = state.view.pendingDataChangesNow[bcName]?.[cursor]
             const currentRecordData = state.data[bcName]?.find(record => record.id === cursor)
             const requestId = nanoid()
 
             return concat(
                 of(actions.addPendingRequest({ request: { requestId, type: 'force-active' } })),
                 api
-                    .getRmByForceActive(state.screen.screenName, bcUrl, {
-                        ...pendingChanges,
-                        vstamp: currentRecordData?.vstamp as number
-                    })
+                    .getRmByForceActive(
+                        state.screen.screenName,
+                        bcUrl,
+                        {
+                            ...pendingChanges,
+                            vstamp: currentRecordData?.vstamp as number
+                        },
+                        pendingChangesNow
+                    )
                     .pipe(
                         mergeMap(data => {
                             return concat(
@@ -356,5 +407,6 @@ export const viewEpics = {
     fileUploadConfirmEpic,
     bcDeleteDataEpic,
     forceUpdateRowMeta,
-    closeFormPopup
+    closeFormPopup,
+    updateRowMetaForRelatedBcEpic
 }
