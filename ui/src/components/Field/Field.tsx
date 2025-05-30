@@ -2,19 +2,25 @@ import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Icon, Input } from 'antd'
-import DatePickerField from '@components/ui/DatePickerField/DatePickerField'
-import TextArea from '@components/ui/TextArea/TextArea'
-import MultiField from '@components/ui/MultiField/MultiField'
-import ReadOnlyField from '@components/ui/ReadOnlyField/ReadOnlyField'
-import MultivalueHover from '@components/ui/Multivalue/MultivalueHover'
+import DatePickerField from '@cxboxComponents/ui/DatePickerField/DatePickerField'
+import NumberInput from '@cxboxComponents/ui/NumberInput/NumberInput'
+import { NumberTypes } from '@cxboxComponents/ui/NumberInput/formaters'
+import TextArea from '@cxboxComponents/ui/TextArea/TextArea'
+import Dictionary from '@cxboxComponents/ui/Dictionary/Dictionary'
+import MultivalueField from '@cxboxComponents/Multivalue/MultivalueField'
+import MultiField from '@cxboxComponents/ui/MultiField/MultiField'
+import ReadOnlyField from '@cxboxComponents/ui/ReadOnlyField/ReadOnlyField'
+import PickListField from '@cxboxComponents/PickListField/PickListField'
+import InlinePickList from '@cxboxComponents/InlinePickList/InlinePickList'
+import MultivalueHover from '@cxboxComponents/ui/Multivalue/MultivalueHover'
 import cn from 'classnames'
-import readOnlyFieldStyles from '@components/ui/ReadOnlyField/ReadOnlyField.less'
-import CheckboxPicker from '@components/ui/CheckboxPicker/CheckboxPicker'
-import RadioButton from '@components/ui/RadioButton/RadioButton'
+import readOnlyFieldStyles from '@cxboxComponents/ui/ReadOnlyField/ReadOnlyField.less'
+import CheckboxPicker from '@cxboxComponents/ui/CheckboxPicker/CheckboxPicker'
+import RadioButton from '@cxboxComponents/ui/RadioButton/RadioButton'
 import styles from './Field.less'
-import { CustomizationContext } from '@components/View/SimpleView'
-import InteractiveInput from '@components/ui/InteractiveInput/InteractiveInput'
-import HistoryField from '@components/ui/HistoryField/HistoryField'
+import { CustomizationContext } from '@cxboxComponents/View/View'
+import { InteractiveInput } from '@cxboxComponents/ui/InteractiveInput/InteractiveInput'
+import HistoryField from '@cxboxComponents/ui/HistoryField/HistoryField'
 import DrillDown from '@components/ui/DrillDown/DrillDown'
 import { TooltipPlacement } from 'antd/es/tooltip'
 import { interfaces, actions } from '@cxbox-ui/core'
@@ -111,7 +117,7 @@ const emptyFieldMeta = [] as any
  * @param props
  * @category Components
  */
-const Field: FunctionComponent<FieldProps> = ({
+export const Field: FunctionComponent<FieldProps> = ({
     bcName,
     widgetName,
     widgetFieldMeta,
@@ -227,6 +233,57 @@ const Field: FunctionComponent<FieldProps> = ({
                 />
             )
             break
+        case FieldType.number:
+            standardField = (
+                <NumberInput
+                    {...commonProps}
+                    value={value as number}
+                    type={NumberTypes.number}
+                    digits={widgetFieldMeta.digits}
+                    nullable={widgetFieldMeta.nullable}
+                    onChange={handleChange}
+                    forceFocus={forceFocus}
+                />
+            )
+            break
+        case FieldType.money:
+            standardField = (
+                <NumberInput
+                    {...commonProps}
+                    value={value as number}
+                    type={NumberTypes.money}
+                    digits={widgetFieldMeta.digits}
+                    nullable={widgetFieldMeta.nullable}
+                    onChange={handleChange}
+                    forceFocus={forceFocus}
+                />
+            )
+            break
+        case FieldType.percent:
+            standardField = (
+                <NumberInput
+                    {...commonProps}
+                    value={value as number}
+                    type={NumberTypes.percent}
+                    digits={widgetFieldMeta.digits}
+                    nullable={widgetFieldMeta.nullable}
+                    onChange={handleChange}
+                    forceFocus={forceFocus}
+                />
+            )
+            break
+        case FieldType.dictionary:
+            standardField = (
+                <Dictionary
+                    {...commonProps}
+                    value={value as any}
+                    values={rowFieldMeta ? (rowFieldMeta.values as Array<{ value: string; icon?: string }>) : []}
+                    fieldName={widgetFieldMeta.key}
+                    onChange={handleChange}
+                    multiple={widgetFieldMeta.multiple}
+                />
+            )
+            break
         case FieldType.text:
             standardField = (
                 <TextArea
@@ -251,6 +308,61 @@ const Field: FunctionComponent<FieldProps> = ({
                 />
             )
             break
+        case FieldType.multivalue:
+            standardField = (
+                <MultivalueField
+                    {...commonProps}
+                    widgetName={widgetName}
+                    defaultValue={
+                        Array.isArray(value) && value.length > 0 ? (value as interfaces.MultivalueSingleValue[]) : emptyMultivalue
+                    }
+                    widgetFieldMeta={widgetFieldMeta}
+                    bcName={bcName}
+                />
+            )
+            break
+        case FieldType.pickList: {
+            const pickListField = (
+                <PickListField
+                    {...commonProps}
+                    parentBCName={bcName}
+                    bcName={widgetFieldMeta.popupBcName}
+                    cursor={cursor}
+                    value={value as any}
+                    pickMap={widgetFieldMeta.pickMap}
+                />
+            )
+            standardField = readOnly ? (
+                pickListField
+            ) : (
+                <InteractiveInput suffix={handleDrilldown && <Icon type="link" />} onSuffixClick={handleDrilldown}>
+                    {pickListField}
+                </InteractiveInput>
+            )
+            break
+        }
+        case FieldType.inlinePickList: {
+            const pickListField = (
+                <InlinePickList
+                    {...commonProps}
+                    fieldName={widgetFieldMeta.key}
+                    searchSpec={widgetFieldMeta.searchSpec}
+                    bcName={bcName}
+                    popupBcName={widgetFieldMeta.popupBcName}
+                    cursor={cursor}
+                    value={value as string}
+                    pickMap={widgetFieldMeta.pickMap}
+                />
+            )
+            standardField = readOnly ? (
+                pickListField
+            ) : (
+                <InteractiveInput suffix={handleDrilldown && <Icon type="link" />} onSuffixClick={handleDrilldown}>
+                    {pickListField}
+                </InteractiveInput>
+            )
+            break
+        }
         case FieldType.checkbox:
             standardField = (
                 <CheckboxPicker

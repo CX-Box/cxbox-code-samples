@@ -1,11 +1,12 @@
 import React, { RefAttributes } from 'react'
-import { Input, Input as InputRef } from 'antd'
-import { fractionsRound, NumberInputFormat, NumberTypes } from '@cxboxComponents/ui/NumberInput/formaters'
+import { Input } from 'antd'
 import { InputProps } from 'antd/es/input'
+import { fractionsRound, NumberInputFormat, NumberTypes } from './formaters'
+import ReadOnlyField from '../../components/ui/ReadOnlyField/ReadOnlyField'
 import { BaseFieldProps } from '@cxboxComponents/Field/Field'
-import ReadOnlyField from '@cxboxComponents/ui/ReadOnlyField/ReadOnlyField'
+import styles from './CoreNumberInput.less'
 
-export interface NumberInputProps extends BaseFieldProps {
+export interface CoreNumberInputProps extends BaseFieldProps {
     onChange?: (value: number) => void
     value: number
     nullable?: boolean
@@ -14,7 +15,6 @@ export interface NumberInputProps extends BaseFieldProps {
     maxInput?: number
     forceFocus?: boolean
     currency?: string
-    onChangeInputValue?: (value: number) => void
 }
 
 /**
@@ -22,9 +22,9 @@ export interface NumberInputProps extends BaseFieldProps {
  * @param props
  * @category Components
  */
-const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
-    const { type, value, digits = 0, nullable, maxInput, forceFocus, onChange, onChangeInputValue, ...rest } = props
-    const inputRef = React.useRef<InputRef>(null)
+const CoreNumberInput: React.FunctionComponent<CoreNumberInputProps> = props => {
+    const { type, value, digits, nullable, maxInput, onChange } = props
+    const inputRef = React.useRef<Input>(null)
 
     const currency = type === NumberTypes.money && props.currency
 
@@ -54,7 +54,7 @@ const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
             if (nullable && text === '') {
                 return null
             }
-            return fractionsRound(Number(normalizeValueFormat(text)), digits)
+            return fractionsRound(Number(normalizeValueFormat(text)), digits as number)
         },
         [nullable, digits]
     )
@@ -86,14 +86,14 @@ const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
             if (inputRef.current?.input) {
                 const target = inputRef.current.input
                 const targetValue = target.value
-                const selectionStart = target.selectionStart
-                const selectionEnd = target.selectionEnd
+                const selectionStart = target.selectionStart as number
+                const selectionEnd = target.selectionEnd as number
 
                 const unformatedValue = unformatValue(targetValue)
                 setMode('edit')
 
                 target.value = unformatedValue
-                const selection = getUnformatedValueSelection(targetValue, selectionStart as number, selectionEnd as number)
+                const selection = getUnformatedValueSelection(targetValue, selectionStart, selectionEnd)
                 target.setSelectionRange(selection[0], selection[1])
             }
         }, 0)
@@ -107,12 +107,8 @@ const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
                     : event.currentTarget.value
 
             setValueText(newValue)
-
-            if (onChangeInputValue) {
-                onChangeInputValue(parseEditedValueText(event.currentTarget.value) as number)
-            }
         },
-        [maxInput, onChangeInputValue, parseEditedValueText]
+        [maxInput]
     )
 
     // Filters out incorrect symbols from keyboard
@@ -127,11 +123,12 @@ const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
         [props.maxInput, valueText]
     )
 
-    const extendedProps: InputProps & RefAttributes<InputRef> = {
-        ...rest,
+    const extendedProps: InputProps & RefAttributes<Input> = {
+        ...props,
         style: {
             backgroundColor: props.backgroundColor || '#fff'
         },
+        className: styles.container,
         addonAfter: currency,
         onChange: handleOnChange,
         onBlur: handleOnBlur,
@@ -140,7 +137,7 @@ const NumberInput: React.FunctionComponent<NumberInputProps> = props => {
         type: 'text',
         ref: inputRef,
         onKeyPress: onKeyPress,
-        autoFocus: forceFocus
+        autoFocus: props.forceFocus
     }
 
     if (props.readOnly) {
@@ -192,10 +189,4 @@ function getUnformatedValueSelection(formatedValue: string, start: number, end: 
 
     return [unformatValue(selectionStartStart).length, unformatValue(selectionEndStart).length]
 }
-
-/**
- * @category Components
- */
-const MemoizedNumberInput = React.memo(NumberInput)
-
-export default MemoizedNumberInput
+export default React.memo(CoreNumberInput)

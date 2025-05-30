@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Icon, Select as AntdSelect } from 'antd'
 import cn from 'classnames'
-import Select from '@components/ui/Select/Select'
+import Select from '@cxboxComponents/ui/Select/Select'
 import { DataValue, WidgetTypes } from '@cxbox-ui/schema'
-import { actions, FieldType, InlinePickListFieldMeta, interfaces } from '@cxbox-ui/core'
+import { actions, InlinePickListFieldMeta, interfaces } from '@cxbox-ui/core'
 import { useDebounce } from '@hooks/useDebounce'
 import ReadOnlyField from '../../components/ui/ReadOnlyField/ReadOnlyField'
 import { useAppSelector } from '@store'
 import useFixSelectDropdownForTableScroll from '@hooks/useFixSelectDropdownForTableScroll'
-import { BaseFieldProps } from '@components/Field/Field'
+import { BaseFieldProps } from '@cxboxComponents/Field/Field'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { isPopupWidgetFamily } from '@utils/isPopupWidgetFamily'
 import styles from './InlinePickList.less'
@@ -40,10 +40,6 @@ const InlinePickList: React.FunctionComponent<Props> = ({
 
     const selectRef = useRef<AntdSelect<string>>(null)
 
-    const neededSearch = meta.type === FieldType.inlinePickList
-    const getUniqueDataTestAttr = (postfix: string) => {
-        return { [`data-test-field-${meta.type?.toLowerCase()?.replace(/-/g, '')}-${postfix}`]: true }
-    }
     const widgetMeta = useAppSelector(state => state.view.widgets?.find(i => i.name === widgetName))
     const disabledPopup = isPopupWidgetFamily(widgetMeta?.type)
     const bcName = widgetMeta?.bcName
@@ -135,40 +131,39 @@ const InlinePickList: React.FunctionComponent<Props> = ({
 
     const popupOpenButton = !disabledPopup && (
         <span className={cn(styles.buttonContainer, { [styles.disabledButton]: disabled })} onClick={!disabled ? handleClick : undefined}>
-            <Icon {...getUniqueDataTestAttr('popup')} type="paper-clip" />
+            <Icon data-test-field-inlinepicklist-popup={true} type="paper-clip" />
         </span>
     )
 
     return (
-        <span className={cn(styles.container, { [styles.withoutPopupOpenButton]: disabledPopup })}>
+        <span className={cn(styles.inlinePickList, { [styles.withoutPopupOpenButton]: disabledPopup })}>
             <Select
                 className={cn(className, styles.select)}
                 disabled={disabled}
                 value={value ?? undefined}
                 allowClear={!!value}
-                clearIcon={<Icon {...getUniqueDataTestAttr('clear')} type="close-circle" />}
-                showSearch={neededSearch}
+                clearIcon={<Icon data-test-field-inlinepicklist-clear={true} type="close-circle" />}
+                showSearch
                 placeholder={placeholder ?? t('Enter value')}
                 defaultActiveFirstOption={false}
                 showArrow={false}
                 filterOption={false}
                 onSearch={setSearchTerm}
-                onFocus={neededSearch ? handleFocus : undefined}
+                onFocus={handleFocus}
                 onChange={onChange}
                 notFoundContent={null}
                 getPopupContainer={trigger => trigger.parentElement?.parentElement as HTMLElement}
                 forwardedRef={selectRef}
                 onDropdownVisibleChange={handleDropdownVisibleChange}
             >
-                {neededSearch &&
-                    data.map(item => {
-                        const title = item[pickMap[fieldName]] as string
-                        return (
-                            <Select.Option title={title} key={item.id} value={item.id}>
-                                <span {...getUniqueDataTestAttr('item')}>{title}</span>
-                            </Select.Option>
-                        )
-                    })}
+                {data.map(item => {
+                    const title = item[pickMap[fieldName]] as string
+                    return (
+                        <Select.Option title={title} key={item.id} value={item.id}>
+                            <span data-test-field-inlinepicklist-item={true}>{title}</span>
+                        </Select.Option>
+                    )
+                })}
             </Select>
             {popupOpenButton}
         </span>
