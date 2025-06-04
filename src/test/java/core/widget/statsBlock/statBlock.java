@@ -3,6 +3,7 @@ package core.widget.statsBlock;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.OriginExpectations.CxBoxExpectations;
+import core.widget.TestingTools.Constants;
 import io.qameta.allure.Allure;
 
 import lombok.RequiredArgsConstructor;
@@ -112,7 +113,7 @@ public class statBlock {
                 for (int i = 0; i < strings.length; i++) {
                     numbers[i] = Integer.parseInt(strings[i]);
                 }
-                return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+                return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
             } else {
                 return null;
             }

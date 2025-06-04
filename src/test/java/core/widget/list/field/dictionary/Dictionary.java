@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 @Slf4j
@@ -35,7 +37,6 @@ public class Dictionary extends BaseRow<String> {
     @Step("Setting the {value} in the field")
     public void setValue(String value) {
         setFocusField();
-        getRowByName().click();
         getOptionDictionary(value)
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .click();
@@ -67,7 +68,6 @@ public class Dictionary extends BaseRow<String> {
      * @return List(String)
      */
     @Step("Getting a list of options from a drop-down list")
-
     public List<String> getOptions() {
         setFocusField();
         getRowByName().click();
@@ -76,8 +76,7 @@ public class Dictionary extends BaseRow<String> {
 
     private SelenideElement getOptionDictionary(String value) {
         return getOptionsDictionary()
-                .find(Condition.match("check action name: " + value, b -> b.getText().equals(value)))
-                .scrollIntoView("{block: \"center\"}");
+                .findBy(text(value)).scrollTo();
     }
 
     private ElementsCollection getOptionsDictionary() {
@@ -91,7 +90,19 @@ public class Dictionary extends BaseRow<String> {
      */
     @Step("Clearing the field")
     public void clear() {
-        setFocusField();
+        setClearFocusField();
+        if(getRowByName().getText().equals("Not null")) {
+            return;
+        } else {
+            $("button[data-test-widget-list-row-action=\"true\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            $("li[data-test-widget-list-row-action-item=\"true\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+        }
+
+        getRowByName().click();
         getRowByName()
                 .$("i[aria-label=\"icon: close-circle\"]")
                 .hover()
@@ -105,7 +116,6 @@ public class Dictionary extends BaseRow<String> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
@@ -120,7 +130,6 @@ public class Dictionary extends BaseRow<String> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-
     public String getHexColor() {
         String color = getValueByAttribute(1, "div", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
@@ -134,7 +143,7 @@ public class Dictionary extends BaseRow<String> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }
@@ -147,7 +156,6 @@ public class Dictionary extends BaseRow<String> {
      * @return UnsupportedOperationException
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-
     public Boolean drillDown() {
         throw new UnsupportedOperationException("DrillDown not supported on Dictionary");
     }
@@ -155,7 +163,7 @@ public class Dictionary extends BaseRow<String> {
     /**
      * Focus on the field/A click in the field..
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         try {
             if (getRowByName().$$(By.tagName("div")).size() == 1) {
@@ -167,5 +175,29 @@ public class Dictionary extends BaseRow<String> {
             log.error(String.valueOf(t));
         }
 
+    }
+
+    /**
+     * Focus on the field/A click in the field..
+     */
+    @Step("Focus on the segment")
+    public void setClearFocusField() {
+        try {
+            if (getRowByName().$$(By.tagName("div")).size() == 1) {
+                getRowByName()
+                        .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                        .click();
+
+            }
+        } catch (Throwable t) {
+            log.error(String.valueOf(t));
+        }
+
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("div span").text().equals(row);
     }
 }

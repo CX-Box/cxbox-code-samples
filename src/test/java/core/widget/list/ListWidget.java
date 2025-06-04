@@ -324,7 +324,6 @@ public class ListWidget {
      * @return class FormWidget with access to all fields
      */
     @Step("Validation и Opening the InlineForm for editing строки")
-
     public Optional<FormWidget> openInlineFormRowForEdit() {
         String inlineForm = "div[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"InlineForm\"]";
         SelenideElement iconEdit = $("tr[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"Row\"]")

@@ -22,17 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HintOnFormTest extends BaseTestForSamples {
 
-//    @Test
-//    @Tag("Positive")
-//    @DisplayName("Test for getting the Placeholder value")
-//    @Description("Getting a Placeholder is not available")
-//    void placeholder() {
-//        MainPages.click("Hint placeholder");
-//        MainPages.FirstLevelMenu.click("Form");
-//        FormWidget form = page.findFormWidgetByTitle("Form title");
-//        var customField = form.input("customField");
-//        assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
-//    }
+
 
     @Test
     @Tag("Positive")

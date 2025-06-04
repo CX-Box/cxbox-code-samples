@@ -33,7 +33,6 @@ public class FileViewerPopup {
      *
      * @return String
      */
-
     public String getTitle() {
         return Allure.step("Getting the header", step -> {
             logTime(step);
@@ -75,7 +74,6 @@ public class FileViewerPopup {
      * @return File
      */
     @SneakyThrows
-
     public File getValueFile() {
         return Allure.step("Getting a file from a field in File format", step -> {
             logTime(step);
@@ -130,7 +128,6 @@ public class FileViewerPopup {
      *
      * @return 1 of 3
      */
-
     public String getPagePagination() {
         return Allure.step("Getting the current page", step -> {
            logTime(step);

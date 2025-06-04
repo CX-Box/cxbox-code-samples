@@ -2,6 +2,7 @@ package core.widget.list.field.date;
 
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
@@ -30,7 +31,7 @@ public class DateTime extends BaseRow<LocalDateTime> {
     public void setValue(LocalDateTime value) {
         setFocusField();
         clearIcon();
-        Calendar.findCalendar(getRowByName());
+        getRowByName().click();
         Calendar.setDateTime(value);
     }
 
@@ -91,7 +92,7 @@ public class DateTime extends BaseRow<LocalDateTime> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

@@ -43,4 +43,5 @@ public class Constants {
     public static final String MessageAboutError = "Custom message about error";
     public static final String OnlyLetters = "The field can contain only letters.";
     public static final String RequiredField = "Custom message about required field";
+    public static final String FormatForRgb = "#%02X%02X%02X";
 }

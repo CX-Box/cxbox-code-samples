@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
+import io.qameta.allure.Allure;
 
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -123,7 +124,6 @@ public class NumberDigits extends BaseRow<BigDecimal> {
      * @return Integer
      */
     @Step("Getting the number of digits after the decimal point")
-
     public Integer getDigits() {
         setFocusField();
         if (getRowByName().$(getValueTag()).has(Condition.attribute("digits"))) {
@@ -135,8 +135,8 @@ public class NumberDigits extends BaseRow<BigDecimal> {
     }
 
     @Step("Checking the fractional part of the number and the number of digits entered after the dot in the field")
-
     private boolean checkDigits(BigDecimal number) {
+        Allure.addAttachment("Number", number.toString());
         return number.scale() == getDigits();
     }
 }

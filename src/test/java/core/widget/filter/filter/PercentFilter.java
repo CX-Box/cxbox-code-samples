@@ -12,15 +12,39 @@ public class PercentFilter extends AbstractFilter<Integer> {
 
     @Override
     public void setFilter(Integer value) {
-        formFilter.$("input[data-test-filter-popup-value=\"true\"]")
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
                 .shouldBe(Condition.editable, Duration.ofSeconds(waitingForTests.Timeout))
                 .click();
-        formFilter.$("input[data-test-filter-popup-value=\"true\"]")
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
                 .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                 .clear();
-        formFilter.$("input[data-test-filter-popup-value=\"true\"]")
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
                 .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                 .setValue(String.valueOf(value));
+        setApply();
+    }
+
+    @Override
+    public void setFilter(Integer value, Integer endValue) {
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
+                .shouldBe(Condition.editable, Duration.ofSeconds(waitingForTests.Timeout))
+                .click();
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .clear();
+        formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .setValue(String.valueOf(value));
+
+        formFilter.$("input[data-test-filter-popup-end-value=\"true\"]")
+                .shouldBe(Condition.editable, Duration.ofSeconds(waitingForTests.Timeout))
+                .click();
+        formFilter.$("input[data-test-filter-popup-end-value=\"true\"]")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .clear();
+        formFilter.$("input[data-test-filter-popup-end-value=\"true\"]")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .setValue(String.valueOf(endValue));
         setApply();
     }
 

@@ -1,14 +1,18 @@
 package core.widget.list.field.checkbox;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
+import java.util.Objects;
 
 @Slf4j
 public class Checkbox extends BaseRow<Boolean> {
@@ -51,6 +55,9 @@ public class Checkbox extends BaseRow<Boolean> {
     }
 
     private void set() {
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
         getRowByName()
                 .$(getValueTag())
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
@@ -59,6 +66,10 @@ public class Checkbox extends BaseRow<Boolean> {
 
     private void setTrue() {
         set();
+        Selenide.sleep(100);
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
         if (!getValue()) {
             set();
         }
@@ -66,6 +77,10 @@ public class Checkbox extends BaseRow<Boolean> {
 
     private void setFalse() {
         set();
+        Selenide.sleep(100);
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
         if (getValue()) {
             set();
         }
@@ -74,7 +89,7 @@ public class Checkbox extends BaseRow<Boolean> {
     /**
      * Focus on the field/A click in the field..
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         try {
             if (getElementDisabled("input")) {
@@ -94,5 +109,12 @@ public class Checkbox extends BaseRow<Boolean> {
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
     public Boolean drillDown() {
         throw new UnsupportedOperationException("drilldown not supported for inputs on Forms");
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        SelenideElement checkbox = getRowByName().$("label");
+        return !Objects.equals(checkbox.getAttribute("class"), "ant-checkbox-wrapper ant-checkbox-wrapper-disabled");
     }
 }

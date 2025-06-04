@@ -190,8 +190,8 @@ public class MultiValueModal extends AbstractPickList {
      * @param columnName Column's name
      * @return List Pair Boolean String статус и имя
      */
-
     public List<Pair<Boolean, String>> getStatusValue(String columnName) {
+        Allure.addAttachment("Column", columnName);
         return Allure.step("Getting all values from the " + columnName + " column with the status", step -> {
             logTime(step);
             step.parameter("Column's name", columnName);

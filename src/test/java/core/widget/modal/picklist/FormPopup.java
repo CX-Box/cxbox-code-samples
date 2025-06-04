@@ -53,7 +53,6 @@ public class FormPopup {
      * Calling FormWidget to access the base fields
      * @return FormWidget
      */
-
     public FormWidget getFieldByName() {
         return Allure.step("Calling FormWidget to access the base fields", step -> {
             logTime(step);

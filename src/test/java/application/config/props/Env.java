@@ -22,6 +22,7 @@ public class Env {
 	@SneakyThrows
 	public static URI uri() {
 		var url = System.getenv("APP_URL");
+
 		if (!isValidURL(url)) {
 			return new URI("http://code-samples.cxbox.org/ui/#/");
 		}

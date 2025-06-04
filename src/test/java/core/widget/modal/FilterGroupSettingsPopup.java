@@ -67,7 +67,6 @@ public class FilterGroupSettingsPopup {
      *
      * @return String
      */
-
     public String getFilterSettings() {
         return Allure.step("Getting a list of created filters", step -> {
             logTime(step);

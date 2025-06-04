@@ -13,6 +13,7 @@ import core.config.junit.AllurePerTestLog;
 import core.config.selenide.AbstractLoggingProxyServer;
 import core.config.selenide.AllureVideoRecorder;
 import core.widget.TestingTools.AppChecks;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.listener.TestLifecycleListener;
@@ -57,6 +58,7 @@ public abstract class BaseTestForSamples {
 
 	@BeforeAll
 	public static void setUpAllure() {
+		WebDriverManager.chromedriver().setup();
 		Configuration.browser = "chrome";
 		Configuration.headless = false;
 		Configuration.timeout = 10000;

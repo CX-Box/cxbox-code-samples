@@ -5,7 +5,6 @@ import core.widget.modal.BasePopup;
 import io.qameta.allure.Allure;
 
 
-
 import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
@@ -21,7 +20,6 @@ public class ErrorPopup extends BasePopup<String> {
      * Getting the title of a modal window
      * @return String title text
      */
-
     public String getTitle() {
         return Allure.step("Getting the header value", step -> {
             logTime(step);
@@ -34,7 +32,6 @@ public class ErrorPopup extends BasePopup<String> {
      * Getting the message text
      * @return String message text
      */
-
     public String getMessage() {
         return Allure.step("Getting the message text", step -> {
             logTime(step);

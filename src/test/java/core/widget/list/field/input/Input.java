@@ -1,7 +1,9 @@
 package core.widget.list.field.input;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 
@@ -9,6 +11,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.codeborne.selenide.Selenide.$;
 
 public class Input extends BaseRow<String> {
     public Input(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean sort, Boolean filter) {
@@ -75,6 +81,27 @@ public class Input extends BaseRow<String> {
     public boolean getMaxInput(Integer n) {
         String str = getValue();
         return String.valueOf(str).length() == n;
+    }
+
+    @Step("Getting the field color in Hex format")
+    public String getHexColor() {
+        SelenideElement span = $("[data-test='FIELD'] span");
+        String color = span.getAttribute("style");
+        Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
+        Matcher matcher = pattern.matcher(color);
+
+        if (matcher.find()) {
+            String rgb = matcher.group(1);
+            String NewRGB = rgb.replaceAll(" ", "");
+            String[] strings = NewRGB.split("[,\\\\s]+");
+            int[] numbers = new int[strings.length];
+            for (int i = 0; i < strings.length; i++) {
+                numbers[i] = Integer.parseInt(strings[i]);
+            }
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
+        } else {
+            return null;
+        }
     }
 
     /**

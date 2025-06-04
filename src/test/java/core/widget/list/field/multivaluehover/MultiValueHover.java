@@ -2,6 +2,7 @@ package core.widget.list.field.multivaluehover;
 
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 
@@ -82,7 +83,7 @@ public class MultiValueHover extends BaseRow<String> {
     /**
      * Focus on the field
      */
-    @Step("Фокус на сегменте")
+    @Step("Focus on the segment")
     public void setFocusField() {
         getRowByName()
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
@@ -95,7 +96,6 @@ public class MultiValueHover extends BaseRow<String> {
      * @return String
      */
     @Step("Getting the field color in Hex format")
-
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "p", "style");
@@ -110,9 +110,15 @@ public class MultiValueHover extends BaseRow<String> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("p").text().equals(row);
     }
 }

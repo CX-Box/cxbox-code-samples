@@ -3,6 +3,7 @@ package core.widget.list.field.picklist;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
@@ -87,7 +88,6 @@ public class PickList extends BaseRow<String> {
      * @return Popup class for accessing modal windows
      */
     @Step("Validation of the Popup window")
-
     public Optional<Popup> findPopup() {
         setFocusField();
         SelenideElement elementPopup = $("div[data-test-widget-type=\"PickListPopup\"]")
@@ -105,7 +105,6 @@ public class PickList extends BaseRow<String> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-
     public String getHexColor() {
         String color = getValueByAttribute(1, "span", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
@@ -119,7 +118,7 @@ public class PickList extends BaseRow<String> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

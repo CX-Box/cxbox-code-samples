@@ -36,7 +36,7 @@ public class ListHelper {
                         .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))
                         .$$(By.tagName("th"))
                         .stream()
-                        .map(SelenideElement::getText)
+                        .map(th -> th.getAttribute("data-test-widget-list-header-column-title"))
                         .collect(Collectors.toList());
             } catch (StaleElementReferenceException ex) {
                 log.error("Stale element reference exception occurred while getting column names. Retrying...{}", i, ex);
@@ -60,7 +60,7 @@ public class ListHelper {
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))
                     .$$(By.cssSelector("table > tbody > tr"));
         } catch (StaleElementReferenceException e) {
-            log.error("Элемент устарел: {}", e);
+            log.error("The element is outdated: {}", e);
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class ListHelper {
                     return column;
                 }
             } catch (StaleElementReferenceException ex) {
-                log.error("Элемент устарел. Номер попытки: {}", i, ex);
+                log.error("The element is outdated. Attempt number: {}", i, ex);
             }
         }
         throw new RuntimeException("Time is over...");
@@ -92,7 +92,7 @@ public class ListHelper {
     public void setSorting(String column) {
         for (SelenideElement c : getColumns()) {
             if (c.getText().equals(column)) {
-                SelenideElement sortIcon = c.$("i[data-test-widget-list-header-column-sort=\"true\"]");
+                SelenideElement sortIcon = c.$("div[data-test-widget-list-header-column-sort=\"true\"] i.anticon-caret-up");
                 sortIcon.shouldBe(Condition.exist, Duration.ofSeconds(waitingForTest.Timeout))
                         .hover();
                 sortIcon.shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))

@@ -19,7 +19,6 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-
     public String getTitle() {
         return Allure.step("Getting the header value", step -> {
             logTime(step);
@@ -34,7 +33,6 @@ public class ConfirmPopup extends BasePopup<String> {
      *
      * @return String
      */
-
     public String getMessage() {
         return Allure.step("Getting the message text", step -> {
             logTime(step);

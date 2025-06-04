@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
@@ -14,6 +15,8 @@ import org.openqa.selenium.By;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -44,8 +47,6 @@ public class MultiValue extends BaseRow<List<String>> {
     @Step("Getting a value from a field")
     public List<String> getValue() {
         return getRowByName()
-                .$(getValueTag())
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$(By.tagName("span"))
                 .texts();
     }
@@ -92,7 +93,6 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return Popup class of all modal windows
      */
     @Step("Validation of the modal window")
-
     public Optional<Popup> findPopup() {
         SelenideElement elementPopup = $("div[data-test-widget-type=\"AssocListPopup\"]")
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
@@ -109,13 +109,53 @@ public class MultiValue extends BaseRow<List<String>> {
      * @return String
      */
     @Step("Getting the Placeholder value")
-
     public String getPlaceholder() {
-        String str = getValueByAttribute(1, "span[class=\"ant-form-item-children\"] div div", "data-text");
+        openInlineRedactor();
+        SelenideElement element = $(By.cssSelector("div[data-test='FIELD'][data-test-field-type='multivalue'] div[data-text]"));
+        String str = element.getAttribute("data-text");
         if (str.isEmpty()) {
             return null;
         } else {
             return str;
         }
+    }
+
+    public boolean getReadOnly() {
+        openInlineRedactor();
+        return !getRowByName().$$x(".//*[contains(@class, 'disabled')]").isEmpty();
+    }
+
+    public String getHexColor() {
+        String color = $("div[data-test='FIELD'][data-test-field-type='multivalue'][data-test-field-title='Custom Field'] > p")
+                .getAttribute("style");
+        Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
+        Matcher matcher = pattern.matcher(color);
+
+        if (matcher.find()) {
+            String rgb = matcher.group(1);
+            String NewRGB = rgb.replaceAll(" ", "");
+            String[] strings = NewRGB.split("[,\\\\s]+");
+            int[] numbers = new int[strings.length];
+            for (int i = 0; i < strings.length; i++) {
+                numbers[i] = Integer.parseInt(strings[i]);
+            }
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
+        } else {
+            return null;
+        }
+    }
+
+
+
+    public void openInlineRedactor() {
+        $(By.cssSelector("tr[data-test-widget-list-row-type='Row']"))
+                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.getTimeout()))
+                .click();
+    }
+
+    @Override
+    @Step("Read and compare")
+    public boolean compareRows(String row) {
+        return getRowByName().$("p").text().equals(row);
     }
 }

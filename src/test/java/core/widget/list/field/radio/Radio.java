@@ -65,7 +65,6 @@ public class Radio extends BaseRow<String> {
      * @return HashMap(String, Boolean)
      */
     @Step("Getting a value from a field")
-
     public HashMap<String, Boolean> getValues() {
         setFocusField();
         HashMap<String, Boolean> values = new HashMap<>();

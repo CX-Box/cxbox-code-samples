@@ -2,6 +2,7 @@ package core.widget.list.field.date;
 
 import com.codeborne.selenide.Condition;
 import core.widget.ListHelper;
+import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
@@ -31,7 +32,7 @@ public class Date extends BaseRow<LocalDate> {
     public void setValue(LocalDate value) {
         setFocusField();
         clearIcon();
-        Calendar.findCalendar(getRowByName());
+        getRowByName().click();
         Calendar.setDate(value);
     }
 
@@ -76,7 +77,6 @@ public class Date extends BaseRow<LocalDate> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-
     public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "span", "style");
@@ -91,7 +91,7 @@ public class Date extends BaseRow<LocalDate> {
             for (int i = 0; i < strings.length; i++) {
                 numbers[i] = Integer.parseInt(strings[i]);
             }
-            return String.format("#%02X%02X%02X", numbers[0], numbers[1], numbers[2]);
+            return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
         }

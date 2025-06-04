@@ -55,6 +55,7 @@ public class ListFilter {
     public DateFilter dateFilter() {
         return Allure.step("Filtering with the field type Date", step -> {
             logTime(step);
+
             return new DateFilter(columnType, columnName, helper);
         });
 
@@ -187,7 +188,6 @@ public class ListFilter {
      *
      * @return PickListFilter
      */
-
     public Optional<Popup> pickListFilter() {
         return Allure.step("Filtering with the field type PickList", step -> {
             logTime(step);
