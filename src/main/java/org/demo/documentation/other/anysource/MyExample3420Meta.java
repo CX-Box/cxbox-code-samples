@@ -6,7 +6,6 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DTO> {
 
@@ -14,6 +13,13 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
    // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription,
                                       String id, String parentId) {
+        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.customFieldDouble)) {
+            if ( fields.getCurrentValue(MyExample3420DTO_.customFieldDouble).orElse(null)> 500000) {
+                fields.setCurrentValue(MyExample3420DTO_.customField, "Sum >500 000");
+            }else{
+                fields.setCurrentValue(MyExample3420DTO_.customField, "Sum <500 000");
+            }
+        }
         fields.setEnabled(MyExample3420DTO_.customField);
         fields.setEnabled(MyExample3420DTO_.customFieldNew);
         fields.setEnabled(MyExample3420DTO_.customFieldDouble);
