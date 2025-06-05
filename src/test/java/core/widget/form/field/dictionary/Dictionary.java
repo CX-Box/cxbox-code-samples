@@ -37,7 +37,7 @@ public class Dictionary extends BaseField<String> {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
             return getFieldByName()
-                    .$("span")
+                    .$("span[data-test-field-dictionary-item=\"true\"]")
                     .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                     .text();
         });
