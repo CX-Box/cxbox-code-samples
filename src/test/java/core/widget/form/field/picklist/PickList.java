@@ -89,6 +89,22 @@ public class PickList extends BaseField<String> {
     }
 
     /**
+     * Checking the placeholder text
+     *
+     * @return String text/null
+     */
+
+    public String getPlaceholder() {
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+
+            return getFieldByName()
+                    .$("div[class=\"ant-select-selection__placeholder\"]")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout)).text();
+        });
+    }
+
+    /**
      * Initialization of the modal window
      *
      * @return Popup class for accessing modal windows
