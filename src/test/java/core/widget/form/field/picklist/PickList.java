@@ -31,7 +31,7 @@ public class PickList extends BaseField<String> {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
             return Objects.requireNonNull(getFieldByName()
-                    .$(getValueTag())
+                    .$("div[class=\"ant-select-selection-selected-value\"]")
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                     .getValue());
         });

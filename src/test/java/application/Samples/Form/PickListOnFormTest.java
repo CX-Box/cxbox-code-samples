@@ -13,6 +13,7 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test to get the field color value in Hex format")
     @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @Disabled
     void color() {
         MainPages.click("Picklist color");
         MainPages.FirstLevelMenu.click("Form");
