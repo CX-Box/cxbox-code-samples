@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.multivaluehover.required;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -8,13 +9,14 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Getter
 @Service
 public class MyEntity238PickService extends VersionAwareResponseService<MyEntity238PickDTO, MyEntity238> {
 
-    public MyEntity238PickService() {
-        super(MyEntity238PickDTO.class, MyEntity238.class, null, MyEntity238PickMeta.class);
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity238PickMeta> meta = MyEntity238PickMeta.class;
 
     @Override
     protected CreateResult<MyEntity238PickDTO> doCreateEntity(MyEntity238 entity, BusinessComponent bc) {

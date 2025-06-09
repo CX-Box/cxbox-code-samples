@@ -1,5 +1,7 @@
 package org.demo.documentation.other.drilldown.option.forfilter;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -15,15 +17,16 @@ import org.springframework.stereotype.Service;
 import java.net.URLEncoder;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3424ForFilterService extends AnySourceVersionAwareResponseService<MyExample3424ForFilterDTO, MyExample3424ForFilterDTO> {
 
     private final DrillDownExt drillDownExt;
-
-    public MyExample3424ForFilterService(DrillDownExt drillDownExt) {
-        super(MyExample3424ForFilterDTO.class, MyExample3424ForFilterDTO.class, MyExample3424ForFilterMeta.class, MyEntity3424ForFilterDao.class);
-        this.drillDownExt = drillDownExt;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3424ForFilterMeta> meta = MyExample3424ForFilterMeta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3424ForFilterDao> dao = MyEntity3424ForFilterDao.class;
 
 
     @Override

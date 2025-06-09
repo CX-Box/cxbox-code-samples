@@ -1,5 +1,7 @@
 package org.demo.documentation.fields.time.baselocaltime;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,15 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3512Service extends VersionAwareResponseService<MyExample3512DTO, MyEntity3512> {
 
     private final MyEntity3512Repository repository;
-
-    public MyExample3512Service(MyEntity3512Repository repository) {
-        super(MyExample3512DTO.class, MyEntity3512.class, null, MyExample3512Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3512Meta> meta = MyExample3512Meta.class;
 
     @Override
     protected CreateResult<MyExample3512DTO> doCreateEntity(MyEntity3512 entity, BusinessComponent bc) {
