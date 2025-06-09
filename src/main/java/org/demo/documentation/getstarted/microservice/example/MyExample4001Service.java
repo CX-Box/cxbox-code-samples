@@ -18,6 +18,8 @@ public class MyExample4001Service extends AnySourceVersionAwareResponseService<M
 
     @Getter(onMethod_ = @Override)
     private final Class<MyEntity4001Dao> dao = MyEntity4001Dao.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4001Meta> meta = MyExample4001Meta.class;
 
     @Override
     protected CreateResult<MyExample4001DTO> doCreateEntity(MyEntity4001OutServiceDTO entity, BusinessComponent bc) {
