@@ -44,7 +44,7 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$(getValueTag())
+                .$("div[class=\"ant-select-selection-selected-value\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .getValue();
     }
@@ -80,6 +80,20 @@ public class PickList extends BaseRow<String> {
                 .$("i[data-test-field-picklist-clear=\"true\"]")
                 .shouldBe(Condition.visible,
                         Duration.ofSeconds(waitingForTests.Timeout)).click();
+    }
+
+    /**
+     * Getting the placeholder text
+     *
+     * @return String
+     */
+    @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
+                .$("div[class=\"ant-select-selection__placeholder\"]")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
     }
 
     /**
