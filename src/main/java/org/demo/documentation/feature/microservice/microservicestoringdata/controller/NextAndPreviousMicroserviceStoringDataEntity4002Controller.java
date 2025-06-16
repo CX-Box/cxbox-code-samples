@@ -47,8 +47,7 @@ public class NextAndPreviousMicroserviceStoringDataEntity4002Controller {
             throw new IllegalArgumentException("Id mustn't be null for update process");
         }
         return ResponseEntity.ok().body(mapper.toDto(mapper.updateEntityByDto(
-                dataRepository.findById(Long.valueOf(request.getId())).orElseThrow(),
-                request
+                request, dataRepository.findById(Long.valueOf(request.getId())).orElseThrow()
         )));
     }
 
