@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-
 import org.openqa.selenium.By;
 
 import java.time.Duration;

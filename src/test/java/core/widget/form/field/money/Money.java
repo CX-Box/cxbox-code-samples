@@ -66,6 +66,16 @@ public class Money extends NumberDigits {
         });
     }
 
+    public Boolean checkCurrencyValue(String currencySign) {
+        return Allure.step("Check a currencySign in a field", step -> {
+            logTime(step);
+            String currency = getFieldByName().shouldBe(Condition.exist)
+                    .$("span")
+                    .getText();
+            return currency.contains(currencySign);
+        });
+    }
+
 
 
     @Override

@@ -14,6 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Radio")
 @Epic("application/Samples")
 @Tag("application/Samples")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Order(1)
 public class RadioOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -54,6 +56,7 @@ public class RadioOnInfoTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")
+    @Order(1)
     @DisplayName("The test for getting the value from the field")
     void read() {
         MainPages.click("Radio basic");

@@ -245,4 +245,21 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
                 "Tver region"));
 
     }
+
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Positive")
+    @DisplayName("A test for checking the icon")
+    @Description("The test check icon's name from the drop-down list ")
+    void icon() {
+        MainPages.click("Dictionary enum icon");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form Mode default");
+        var customField = form.dictionary("Custom Field Dictionary");
+        assertThat(customField.getOptions()).isEqualTo(List.of("High", "Upper middle", "Middle", "Low"));
+        FormWidget form2 = $box.findFormWidgetByTitle("Form Mode default");
+        var customField2 = form2.dictionary("Custom Field Dictionary");
+        assertThat(customField2.getOptions()).isEqualTo(List.of("High", "Upper middle", "Middle", "Low"));
+    }
 }

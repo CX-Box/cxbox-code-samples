@@ -34,7 +34,6 @@ public class InlinePickList extends BaseField<String> {
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                     .text();
         });
-
     }
 
     /**

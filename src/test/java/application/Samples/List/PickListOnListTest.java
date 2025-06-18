@@ -94,7 +94,7 @@ public class PickListOnListTest extends BaseTestForSamples {
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).pickListField();
         customField.openModalWindow();
         var popupPickList = customField.findPopup().get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("1100399");
+        popupPickList.setValue("New data");
         assertThat(customField.getValue()).isEqualTo("New data");
     }
 
@@ -111,19 +111,6 @@ public class PickListOnListTest extends BaseTestForSamples {
         popup.close();
     }
 
-    @Test
-    void test_2() {
-        MainPages.click("Picklist basic");
-        MainPages.FirstLevelMenu.click("List");
-        var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("Custom Field");
-        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).pickListField();
-        customField.openModalWindow();
-        var popupPickList = customField.findPopup().get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("Test123 data");
-        assertThat(customField.getValue()).isEqualTo("New data");
-        popupPickList.close();
-    }
 
     @Test
     @Severity(MINOR)

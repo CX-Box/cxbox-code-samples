@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,28 @@ public class ListHelper {
             return this.widget
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))
                     .$$(By.cssSelector("table > tbody > tr"));
+        } catch (StaleElementReferenceException e) {
+            log.error("The element is outdated: {}", e);
+            return null;
+        }
+    }
+
+    public List<String> getColumnValuesByColumnName(String fieldName) {
+        try {
+            waitingForTest.getWaitAllElements(widget);
+            ElementsCollection rows = this.widget
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTest.Timeout))
+                    .$$(By.cssSelector("table > tbody > tr"));
+
+            List<String> columnValues = new ArrayList<>();
+            for (SelenideElement row : rows) {
+                SelenideElement cell = row.$(By.cssSelector("td > div[data-test-field-title='" + fieldName + "']"));
+                if (cell.exists()) {
+                    columnValues.add(cell.getText().trim());
+                }
+            }
+            return columnValues;
+
         } catch (StaleElementReferenceException e) {
             log.error("The element is outdated: {}", e);
             return null;
