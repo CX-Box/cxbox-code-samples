@@ -47,7 +47,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 
@@ -103,6 +102,22 @@ public class RowsHelper {
     public List<String> getListRows() {
         waitingForTests.getWaitAllElements(widget);
         return helper.getListRows().texts().stream()
+                .map(s -> s
+                        .replace("\t", "")
+                        .replace("\n", "")
+                        .replace(" ", ""))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Getting a list of lines from the current page
+     *
+     * @return List String
+     */
+    @Step("Getting a list of lines from the current page")
+    public List<String> getListRowsByColumnName(String columnName) {
+        waitingForTests.getWaitAllElements(widget);
+        return helper.getColumnValuesByColumnName(columnName).stream()
                 .map(s -> s
                         .replace("\t", "")
                         .replace("\n", "")

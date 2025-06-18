@@ -37,6 +37,21 @@ public class Money extends BaseString<BigDecimal> {
         });
     }
 
+    public Boolean checkCurrencyValue(String currencySign) {
+        return Allure.step("Check a currencySign in a field", step -> {
+            logTime(step);
+
+            String str = getFieldByName()
+                    .shouldBe(Condition.exist)
+                    .$(getValueTag())
+                    .getText();
+
+            return str.contains(currencySign);
+        });
+    }
+
+
+
     public String getValueTag() {
         return "span[class*=\"ReadOnlyField\"]";
     }

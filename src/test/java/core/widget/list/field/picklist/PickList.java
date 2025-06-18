@@ -7,7 +7,6 @@ import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -44,9 +43,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$(getValueTag())
+                .$("input")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getValue();
+                .getAttribute("value");
     }
 
     @Override
@@ -111,6 +110,20 @@ public class PickList extends BaseRow<String> {
         } else {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Getting the placeholder text
+     *
+     * @return String
+     */
+    @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
+                .$("input")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .getAttribute("placeholder");
     }
 
     /**

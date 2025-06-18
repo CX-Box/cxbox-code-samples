@@ -130,7 +130,7 @@ public abstract class BaseRow<E> {
      */
     @Step("Getting a value from a field RequiredMessage")
     public String getRequiredMessage() {
-        setFocusField();
+        setFocusField(); // Проверить необходимость
         Selenide.sleep(100);
         Selenide.actions()
                 .moveToElement($("body"))

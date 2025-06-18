@@ -225,4 +225,31 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Currency test")
+    @Description("Currency check at the field")
+    void currency() {
+        MainPages.click("Money currency const");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form constant currency money");
+        var customField = form.money("Custom Field");
+        assertThat(customField.checkCurrencyValue("₽")).isTrue();
+    }
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Positive")
+    @DisplayName("A test for checking the possibility of an empty field")
+    @Description("The test clear the value in the field , and then checks the value in the field, it must be null.")
+    void nullable() {
+        MainPages.click("Money nullable");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.money("Custom Field");
+        customField.clear();
+        assertThat(customField.getFieldByName().getValue()).isNull();
+    }
 }

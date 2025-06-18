@@ -262,4 +262,34 @@ public class MoneyOnListTest extends BaseTestForSamples {
         menuRow.get().clickOption("Save");
         assertThat(row.money().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Currency test")
+    @Description("Currency by the specified column.")
+    void currency() {
+        MainPages.click("Money currency const");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List constant currency money");
+        assertThat(list.getListRows().get(0)).contains("₽");
+    }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("A test for checking the possibility of an empty field")
+    @Description("The test clear the value in the field , and then checks the value in the field, it must be null.")
+    void nullable() {
+        MainPages.click("Money nullable");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        List<String> listRows = list.getNoFocusValues("Custom Field");
+        var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
+        row.money().clear();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("save");
+        assertThat(row.getWidget().getValue()).isNull();
+    }
 }

@@ -18,7 +18,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @Slf4j
 public class Calendar {
     private static final SelenideElement PANEL_CALENDAR = $("div[class=\"ant-calendar-panel\"]");
-    static CxBoxExpectations waitingForTests = new CxBoxExpectations();
+    public static CxBoxExpectations waitingForTests = new CxBoxExpectations();
 
     /**
      * Initialization of the Calendar window, after opening.

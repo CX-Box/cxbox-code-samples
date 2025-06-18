@@ -108,6 +108,8 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
 
+
+
     @Test
     @Severity(CRITICAL)
     @Tag("Negative")
