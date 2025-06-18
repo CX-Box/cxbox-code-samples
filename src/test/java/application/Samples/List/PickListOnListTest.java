@@ -95,6 +95,7 @@ public class PickListOnListTest extends BaseTestForSamples {
         customField.openModalWindow();
         var popupPickList = customField.findPopup().get().pickListPopupForSetValue("myEntityPickListPopup Title");
         popupPickList.setValue("New data");
+
         assertThat(customField.getValue()).isEqualTo("New data");
     }
 
@@ -110,7 +111,6 @@ public class PickListOnListTest extends BaseTestForSamples {
         assertThat(popup.getColumnName()).isEqualTo(List.of("Custom Field", "id"));
         popup.close();
     }
-
 
     @Test
     @Severity(MINOR)

@@ -295,4 +295,5 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         List<String> listRows2 = list.getListRowsTexts();
         assertThat(listRows2).isEqualTo(List.of("High", "Low", "Low", "Middle"));
     }
+
 }

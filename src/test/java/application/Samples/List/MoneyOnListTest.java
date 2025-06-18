@@ -292,4 +292,5 @@ public class MoneyOnListTest extends BaseTestForSamples {
         menuRow.get().clickOption("save");
         assertThat(row.getWidget().getValue()).isNull();
     }
+
 }

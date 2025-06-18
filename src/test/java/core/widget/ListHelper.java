@@ -84,6 +84,7 @@ public class ListHelper {
 
         } catch (StaleElementReferenceException e) {
             log.error("The element is outdated: {}", e);
+
             return null;
         }
     }
