@@ -2,6 +2,7 @@ package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
 import core.MainPages;
+import core.widget.info.InfoWidget;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -102,5 +103,14 @@ public class NumberOnInfoTest extends BaseTestForSamples {
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.number("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void digits() {
+        MainPages.click("Number digits");
+        MainPages.FirstLevelMenu.click("Info");
+        InfoWidget info = $box.findInfoWidgetByTitle("Info title");
+        var customField = info.numberDigits("custom Field");
+        assertThat(customField.getDigits()).isEqualTo(2);
     }
 }

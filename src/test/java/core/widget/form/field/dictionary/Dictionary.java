@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
-
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -37,7 +36,7 @@ public class Dictionary extends BaseField<String> {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
             return getFieldByName()
-                    .$("span")
+                    .$("span[data-test-field-dictionary-item=\"true\"]")
                     .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                     .text();
         });
