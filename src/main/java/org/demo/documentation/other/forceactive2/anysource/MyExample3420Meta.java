@@ -27,11 +27,16 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
         fields.setEnabled(MyExample3420DTO_.customFieldNew);
         fields.setEnabled(MyExample3420DTO_.customFieldDouble);
         fields.setEnabled(MyExample3420DTO_.customFieldDateTime);
-        fields.setPlaceholder(MyExample3420DTO_.customFieldDouble,"More than 100 000.00");
         fields.setPlaceholder(MyExample3420DTO_.customFieldDateTime,"Less sysdate");
         fields.setEnumValues(MyExample3420DTO_.country, CountryEnum.values());
         fields.setEnumValues(MyExample3420DTO_.region, RegionEnum.values());
 
+        if (Objects.equals(fields.getCurrentValue(MyExample3420DTO_.country).orElse(null), CountryEnum.BELARUS)) {
+            fields.setEnumValues(MyExample3420DTO_.region, RegionEnum.BREST, RegionEnum.GOMEL, RegionEnum.MINSK);
+        } else if (Objects.equals(fields.getCurrentValue(MyExample3420DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
+            fields.setEnumValues(MyExample3420DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
+        }
+        
         if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.country)) {
             if (fields.getCurrentValue(MyExample3420DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample3420DTO_.region, null);
@@ -73,7 +78,6 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
         if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.customFieldDouble)) {
             fields.setCurrentValue(MyExample3420DTO_.customField, "");
         }
-
 
         if (fields.isFieldChangedNowFEForRowMeta(fields, MyExample3420DTO_.country)) {
             fields.setCurrentValue(MyExample3420DTO_.customField, "New value - call /row-meta Post(FA)");
