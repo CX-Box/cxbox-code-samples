@@ -7,9 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.demo.documentation.other.forceactive2.enums.RegionEnum;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Map;
+ ;
 import java.util.Objects;
 
 @Service
@@ -18,6 +16,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample4901DTO_.customFieldDouble);
         fields.setEnabled(MyExample4901DTO_.street);
         fields.setEnabled(MyExample4901DTO_.money);
         fields.setEnabled(MyExample4901DTO_.descriptionProduct);
@@ -48,7 +47,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         }
 
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.region)) {
-          if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MINSK))) {
+            if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MINSK))) {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti");
                 fields.setCurrentValue(MyExample4901DTO_.customField, "New value Minsk");
             } else if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.GOMEL))) {
@@ -57,7 +56,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             } else if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MOSCOWSKAYA))) {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Tverskaya street");
                 fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
-            }else {
+            } else {
                 fields.setCurrentValue(MyExample4901DTO_.street, null);
                 fields.setCurrentValue(MyExample4901DTO_.customField, null);
             }
@@ -66,11 +65,28 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.street)) {
             fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
         }
+
+        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.customFieldDouble)) {
+            fields.setCurrentValue(MyExample4901DTO_.customField, "");
+        }
+
+        if (fields.isFieldChangedNowFEForRowMeta(fields, MyExample4901DTO_.country)) {
+            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /row-meta Post(FA)");
+        }
+        if (fields.isFieldChangedNowFEForCustomAction(fields, MyExample4901DTO_.customFieldDouble, "customSave")) {
+            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /customSave");
+        }
+        if (fields.isFieldChangedNowFEForData(fields, MyExample4901DTO_.customFieldDouble)) {
+            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /data");
+        }
+
+
     }
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription, Long
             parentId) {
+        fields.enableFilter(MyExample4901DTO_.customFieldDouble);
         fields.enableFilter(MyExample4901DTO_.street);
         fields.enableFilter(MyExample4901DTO_.money);
         fields.enableFilter(MyExample4901DTO_.descriptionProduct);
@@ -82,7 +98,6 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
 
         fields.setForceActive(MyExample4901DTO_.region);
         fields.setForceActive(MyExample4901DTO_.country);
-
         fields.setForceActive(MyExample4901DTO_.money);
         fields.setForceActive(MyExample4901DTO_.product);
         fields.setForceActive(MyExample4901DTO_.descriptionProduct);

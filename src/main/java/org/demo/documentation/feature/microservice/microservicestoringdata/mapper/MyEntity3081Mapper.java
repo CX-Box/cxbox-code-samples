@@ -16,7 +16,6 @@ public interface MyEntity3081Mapper {
 
 	MyEntity3081 newEntityByDto(final String id, final MyExample3081DTO request);
 
-	@Mapping(target = "id", ignore = true)
 	MyEntity3081 updateEntityByDto(final MyExample3081DTO request, @MappingTarget final MyEntity3081 entity);
 
 }

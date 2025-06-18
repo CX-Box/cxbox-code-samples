@@ -30,6 +30,8 @@ public class MyExample4901DTO extends DataResponseDTO {
     private Long money;
     @SearchParameter(name = "street", provider = StringValueProvider.class)
     private String street;
+    @SearchParameter(name = "customFieldDouble", provider = BigDecimalValueProvider.class)
+    private Double customFieldDouble;
 
     public MyExample4901DTO(MyEntity4901 entity) {
         this.id = entity.getId().toString();
@@ -40,5 +42,6 @@ public class MyExample4901DTO extends DataResponseDTO {
         this.descriptionProduct = entity.getDescriptionProduct();
         this.money = entity.getMoney();
         this.street = entity.getStreet();
+        this.customFieldDouble = entity.getCustomFieldDouble();
     }
 }

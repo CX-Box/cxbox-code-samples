@@ -13,7 +13,6 @@ public interface MyEntity4001Mapper {
 
     MyEntity4001 newEntityByDto(final String id, final MyExample4001DTO request);
 
-    @Mapping(target = "id", ignore = true)
     MyEntity4001 updateEntityByDto(final MyExample4001DTO request, @MappingTarget final MyEntity4001 entity);
 
 }
