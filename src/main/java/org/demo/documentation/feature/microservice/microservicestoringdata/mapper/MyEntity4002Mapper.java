@@ -14,7 +14,6 @@ public interface MyEntity4002Mapper {
 
 	MyEntity4002External newEntityByDto(final String id, final MyExample4002ExternalDTO request);
 
-	@Mapping(target = "id", ignore = true)
 	MyEntity4002External updateEntityByDto(final MyExample4002ExternalDTO request,@MappingTarget final MyEntity4002External entity);
 
 }

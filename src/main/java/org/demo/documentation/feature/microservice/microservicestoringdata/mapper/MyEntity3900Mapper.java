@@ -16,7 +16,6 @@ public interface MyEntity3900Mapper {
 
 	MyEntity3900 newEntityByDto(final String id, final MyExample3900DTO request);
 
-	@Mapping(target = "id", ignore = true)
 	MyEntity3900 updateEntityByDto(final MyExample3900DTO request, @MappingTarget final MyEntity3900 entity);
 
 }

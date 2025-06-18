@@ -1,4 +1,4 @@
-package org.demo.documentation.other.anysource;
+package org.demo.documentation.other.forceactive2.anysource;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
