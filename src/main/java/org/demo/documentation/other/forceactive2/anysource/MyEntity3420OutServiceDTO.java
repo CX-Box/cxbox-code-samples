@@ -1,37 +1,34 @@
-package org.demo.documentation.other.forceactive2;
+package org.demo.documentation.other.forceactive2.anysource;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.demo.documentation.other.forceactive2.enums.RegionEnum;
 
-@Entity
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity4901 extends BaseEntity {
-    @Column
+public class MyEntity3420OutServiceDTO implements Serializable {
+
+    private String id;
     private String customField;
+    private String customFieldNew;
+    private LocalDateTime customFieldDateTime;
+    private Double customFieldDouble;
     @Enumerated(value = EnumType.STRING)
-    @Column
     private RegionEnum region;
     @Enumerated(value = EnumType.STRING)
-    @Column
     private CountryEnum country;
-    @Column
     private String product;
-    @Column
     private String descriptionProduct;
-    @Column
     private Long money;
-    @Column
     private String street;
-    @Column
-    private Double customFieldDouble;
 }

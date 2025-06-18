@@ -7,6 +7,8 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MyExample4901Service extends VersionAwareResponseService<MyExample4901DTO, MyEntity4901> {
 
@@ -25,6 +27,7 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
 
     @Override
     protected ActionResultDTO<MyExample4901DTO> doUpdateEntity(MyEntity4901 entity, MyExample4901DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample4901DTO_.customFieldDouble, entity::setCustomFieldDouble);
         setIfChanged(data, MyExample4901DTO_.street, entity::setStreet);
 
         if (data.isFieldChanged(MyExample4901DTO_.region)) {
@@ -54,9 +57,31 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
+                .action(act -> act
+                        .action("customSave", "Custom Save")
+                        .invoker(this::customSave)
+                )
                 .build();
     }
 
+    // --8<-- [start:customSave]
+    private ActionResultDTO<MyExample4901DTO> customSave(BusinessComponent bc, MyExample4901DTO dto) {
+        Optional<MyEntity4901> entity = repository.findById(bc.getIdAsLong());
+        if (entity.isEmpty()) {
+            return null;
+        }
+        entity.get()
+                .setCountry(dto.getCountry())
+                .setCustomField(dto.getCustomField())
+                .setRegion(dto.getRegion())
+                .setStreet(dto.getStreet())
+                .setProduct(dto.getProduct())
+                .setMoney(dto.getMoney())
+                .setDescriptionProduct(dto.getDescriptionProduct());
+
+        return new ActionResultDTO<>(entityToDto(bc, entity.get()));
+    }
+    // --8<-- [end:customSave]
 
 }
 
