@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
+import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +24,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
 
     private final IntegrationConfiguration integrationConfig;
     private final RestTemplate restTemplate;
+
     public MyExample3420Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate) {
         super(MyExample3420DTO.class, MyEntity3420OutServiceDTO.class, MyExample3420Meta.class, MyEntity3420Dao.class);
         this.integrationConfig = integrationConfig;
@@ -32,6 +34,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
 
     @Override
     protected CreateResult<MyExample3420DTO> doCreateEntity(MyEntity3420OutServiceDTO entity, BusinessComponent bc) {
+        entity.setCountry(CountryEnum.RUSSIA);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
@@ -68,39 +71,37 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3420DTO> getActions() {
         return Actions.<MyExample3420DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
                 .create(crt -> crt.text("Add"))
                 .delete(dlt -> dlt.text("Delete"))
                 .action(act -> act
                         .action("customButton", "Custom Save")
                         .invoker(this::customButton)
                 )
+                .save(sv -> sv.text("Save"))
                 .build();
     }
 
-     // --8<-- [end:getActions]
-     private ActionResultDTO<MyExample3420DTO> customButton(BusinessComponent bc, MyExample3420DTO dto) {
-         MyEntity3420OutServiceDTO entity= new MyEntity3420OutServiceDTO();
-         entity.setCountry(dto.getCountry());
-         entity.setDescriptionProduct(dto.getDescriptionProduct());
-         entity.setRegion(dto.getRegion());
-         entity.setCustomField(dto.getCustomField());
-         entity.setCustomFieldNew(dto.getCustomFieldNew());
-         entity.setCustomFieldDateTime(dto.getCustomFieldDateTime());
-         entity.setCustomFieldDouble(dto.getCustomFieldDouble());
-         entity.setProduct(dto.getProduct());
-         entity.setStreet(dto.getStreet());
-         entity.setId(dto.getId());
-         restTemplate.exchange(
-                 fromUriString(integrationConfig.getDataServerUrl()).build().normalize().encode().toUriString(),
-                 PUT, new HttpEntity<>(entity), MyEntity3420OutServiceDTO.class
-         ).getBody();
-         return new ActionResultDTO<>();
-     }
+    // --8<-- [end:getActions]
+    private ActionResultDTO<MyExample3420DTO> customButton(BusinessComponent bc, MyExample3420DTO dto) {
+        MyEntity3420OutServiceDTO entity = new MyEntity3420OutServiceDTO();
+        entity.setCountry(dto.getCountry());
+        entity.setDescriptionProduct(dto.getDescriptionProduct());
+        entity.setRegion(dto.getRegion());
+        entity.setCustomField(dto.getCustomField());
+        entity.setCustomFieldNew(dto.getCustomFieldNew());
+        entity.setCustomFieldDateTime(dto.getCustomFieldDateTime());
+        entity.setCustomFieldDouble(dto.getCustomFieldDouble());
+        entity.setProduct(dto.getProduct());
+        entity.setStreet(dto.getStreet());
+        entity.setId(dto.getId());
+        restTemplate.exchange(
+                fromUriString(integrationConfig.getDataServerUrl()).build().normalize().encode().toUriString(),
+                PUT, new HttpEntity<>(entity), MyEntity3420OutServiceDTO.class
+        ).getBody();
+        return new ActionResultDTO<>();
+    }
 }
