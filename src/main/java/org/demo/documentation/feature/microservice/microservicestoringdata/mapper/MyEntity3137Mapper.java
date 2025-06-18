@@ -5,8 +5,9 @@ import org.demo.documentation.feature.microservice.microservicestoringdata.repos
 import org.mapstruct.Mapper;
 
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MyEntity3137Mapper {
 
 	MyExample3137DTO toDto(final MyEntity3137 entity);

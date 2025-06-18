@@ -3,10 +3,10 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.mapp
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity4001;
 import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample4001DTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MyEntity4001Mapper {
 
     MyExample4001DTO toDto(final MyEntity4001 entity);

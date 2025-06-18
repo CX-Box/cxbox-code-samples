@@ -5,6 +5,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
 
     @Override
     protected CreateResult<MyExample4901DTO> doCreateEntity(MyEntity4901 entity, BusinessComponent bc) {
+        entity.setCountry(CountryEnum.RUSSIA);
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
