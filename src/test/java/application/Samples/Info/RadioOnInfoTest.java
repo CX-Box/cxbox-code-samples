@@ -5,9 +5,7 @@ import core.MainPages;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Radio")
 @Epic("application/Samples")
 @Tag("application/Samples")
-
 public class RadioOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -63,7 +60,7 @@ public class RadioOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.radio("Custom Field");
-        assertThat(customField.getValue()).isEqualTo("Middle");
+        assertThat(customField.getValue()).isEqualTo("Low");
     }
 
     @Test
