@@ -14,8 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Info. Checking the basic functions for the Radio")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Order(1)
 public class RadioOnInfoTest extends BaseTestForSamples {
 
     @Test
@@ -56,14 +54,13 @@ public class RadioOnInfoTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")
-    @Order(1)
     @DisplayName("The test for getting the value from the field")
     void read() {
         MainPages.click("Radio basic");
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.radio("Custom Field");
-        assertThat(customField.getValue()).isEqualTo("Middle");
+        assertThat(customField.getValue()).isEqualTo("Low");
     }
 
     @Test
