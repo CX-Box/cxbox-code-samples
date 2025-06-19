@@ -14,6 +14,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -104,4 +105,5 @@ public class MultiValueHoverOnListTest extends BaseTestForSamples {
         list.findFilterColumn("Custom Field").multiValueHoverFilter().setFilter("Saturn's interior");
         assertThat(list.getNoFocusValues("Custom Field")).isEqualTo(List.of("Saturn's ..."));
     }
+
 }

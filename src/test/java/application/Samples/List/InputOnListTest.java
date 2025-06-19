@@ -293,4 +293,5 @@ public class InputOnListTest extends BaseTestForSamples {
         row.input().setValue("td");
         assertThat(row.input().getMaxInput(2)).isTrue();
     }
+
 }
