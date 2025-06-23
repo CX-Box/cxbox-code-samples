@@ -6,6 +6,8 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.other.forceactive2.forproject.CxboxMyExample4903Controller.myEntity4903InstancePick;
+
 @Service
 public class MyEntity4903TestDataLoadService {
 
@@ -17,6 +19,9 @@ public class MyEntity4903TestDataLoadService {
 
     @Autowired
     MyEntity4903PickRepository repositoryPick;
+
+    @Autowired
+    MyEntity4903PickInstanceRepository myEntity4903PickInstanceRepository;
 
     @Autowired
     MyEntity4903PickOCPRepository repositoryOCP;
@@ -33,6 +38,11 @@ public class MyEntity4903TestDataLoadService {
         repositoryOCP.deleteAll();
         repositoryPick.deleteAll();
         myEntity4903FilePickRepository.deleteAll();
+        myEntity4903PickInstanceRepository.deleteAll();
+
+        myEntity4903PickInstanceRepository.save(new MyEntity4903Instance().setCustomField("Instance1"));
+        myEntity4903PickInstanceRepository.save(new MyEntity4903Instance().setCustomField("Instance2"));
+        myEntity4903PickInstanceRepository.save(new MyEntity4903Instance().setCustomField("Instance3"));
 
         myEntity4903FilePickRepository.save(new MyEntity4903FileNamePick().setCustomField("File name1"));
         myEntity4903FilePickRepository.save(new MyEntity4903FileNamePick().setCustomField("File name2"));
