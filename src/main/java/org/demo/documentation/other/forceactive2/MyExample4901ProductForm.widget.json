@@ -1,0 +1,55 @@
+{
+  "name": "MyExample4901ProductForm",
+  "title": "Example with money",
+  "type": "Form",
+  "bc": "myexamplefa4901",
+  "fields": [
+    {
+      "label": "Product type",
+      "key": "productType",
+      "type": "dictionary"
+    },
+    {
+      "label": "Cost",
+      "key": "money",
+      "digits": 2,
+      "type": "money",
+      "currency": "₽"
+    },
+    {
+      "label": "Comment",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "productType",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "money",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "MyExample4903Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "label": "Место предъявление Ил",
+      "key": "placePresentation",
+      "type": "dictionary"
+    },
+    {
+      "label": "Наименование ФСПП",
+      "key": "nameFSPP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903PickPick",
+      "pickMap": {
+        "nameFSPP": "customField",
+        "nameFSPPId": "id"
+      }
+    },
+    {
+      "label": "Наименование ОСП",
+      "key": "nameOSP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903OCPPickPick",
+      "pickMap": {
+        "nameOSP": "customField",
+        "nameOSPId": "id"
+      }
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "placePresentation",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "nameFSPP",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "nameOSP",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

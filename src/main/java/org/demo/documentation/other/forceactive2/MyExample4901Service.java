@@ -1,11 +1,13 @@
 package org.demo.documentation.other.forceactive2;
 
+import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class MyExample4901Service extends VersionAwareResponseService<MyExample4901DTO, MyEntity4901> {
 
     private final MyEntity4901Repository repository;
+    @Autowired
+    private EntityManager entityManager;
 
     public MyExample4901Service(MyEntity4901Repository repository) {
         super(MyExample4901DTO.class, MyEntity4901.class, null, MyExample4901Meta.class);
@@ -29,6 +33,8 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
 
     @Override
     protected ActionResultDTO<MyExample4901DTO> doUpdateEntity(MyEntity4901 entity, MyExample4901DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample4901DTO_.productType, entity::setProductType);
+
         setIfChanged(data, MyExample4901DTO_.customFieldDouble, entity::setCustomFieldDouble);
         setIfChanged(data, MyExample4901DTO_.street, entity::setStreet);
 

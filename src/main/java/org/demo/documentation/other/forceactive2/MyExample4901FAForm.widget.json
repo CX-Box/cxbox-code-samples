@@ -1,8 +1,8 @@
 {
-  "name": "MyExample4901Form",
+  "name": "MyExample4901FAForm",
   "title": "Form. Example for Inner Source",
   "type": "Form",
-  "bc": "myexample4901",
+  "bc": "myexamplefa4901",
   "fields": [
     {
       "label": "Comment",
@@ -10,19 +10,25 @@
       "type": "input"
     },
     {
-      "label": "Country",
+      "label": "Country FA",
       "key": "country",
       "type": "dictionary"
     },
     {
-      "label": "Region",
+      "label": "Region FA",
       "key": "region",
       "type": "dictionary"
     },
     {
-      "label": "Street",
+      "label": "Street FA",
       "key": "street",
       "type": "input"
+    },
+    {
+      "label": "Cost FA",
+      "key": "customFieldDouble",
+      "digits": 2,
+      "type": "number"
     }
   ],
   "options": {
@@ -64,6 +70,14 @@
           "cols": [
             {
               "fieldKey": "street",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDouble",
               "span": 12
             }
           ]
