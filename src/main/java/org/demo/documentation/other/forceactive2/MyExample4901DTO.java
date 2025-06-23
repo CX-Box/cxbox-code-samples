@@ -1,5 +1,6 @@
 package org.demo.documentation.other.forceactive2;
 
+import jakarta.validation.constraints.DecimalMin;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
@@ -7,9 +8,16 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
+import org.demo.documentation.other.forceactive2.enums.ProductTypeEnum;
 import org.demo.documentation.other.forceactive2.enums.RegionEnum;
+
+import java.util.Optional;
+
+import static org.demo.documentation.fields.main.TextError.LESS_100000;
+import static org.demo.documentation.fields.main.TextError.LESS_5000;
 
 @Getter
 @Setter
@@ -30,8 +38,12 @@ public class MyExample4901DTO extends DataResponseDTO {
     private Long money;
     @SearchParameter(name = "street", provider = StringValueProvider.class)
     private String street;
+
+    @DecimalMin(value = "5000.00", message = LESS_5000)
     @SearchParameter(name = "customFieldDouble", provider = BigDecimalValueProvider.class)
     private Double customFieldDouble;
+    @SearchParameter(name = "productType", provider = EnumValueProvider.class)
+    private ProductTypeEnum productType;
 
     public MyExample4901DTO(MyEntity4901 entity) {
         this.id = entity.getId().toString();
@@ -43,5 +55,6 @@ public class MyExample4901DTO extends DataResponseDTO {
         this.money = entity.getMoney();
         this.street = entity.getStreet();
         this.customFieldDouble = entity.getCustomFieldDouble();
+        this.productType = entity.getProductType();
     }
 }

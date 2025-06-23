@@ -1,10 +1,12 @@
 package org.demo.documentation.other.forceactive2;
 
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
+import org.demo.documentation.other.forceactive2.enums.ProductTypeEnum;
 import org.demo.documentation.other.forceactive2.enums.RegionEnum;
 import org.springframework.stereotype.Service;
 ;
@@ -16,24 +18,6 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample4901DTO_.customFieldDouble);
-        fields.setEnabled(MyExample4901DTO_.street);
-        fields.setEnabled(MyExample4901DTO_.money);
-        fields.setEnabled(MyExample4901DTO_.descriptionProduct);
-        fields.setEnabled(MyExample4901DTO_.product);
-        fields.setEnabled(MyExample4901DTO_.country);
-        fields.setEnabled(MyExample4901DTO_.region);
-        fields.setEnabled(MyExample4901DTO_.customField);
-
-        fields.setEnumValues(MyExample4901DTO_.country, CountryEnum.values());
-        fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.values());
-
-        if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.BELARUS)) {
-            fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.BREST, RegionEnum.GOMEL, RegionEnum.MINSK);
-        } else if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
-            fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
-        }
-
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.country)) {
             if (fields.getCurrentValue(MyExample4901DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample4901DTO_.region, null);
@@ -44,7 +28,6 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti");
                 fields.setCurrentValue(MyExample4901DTO_.customField, "New value for BELARUS");
             } else if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
-                //fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
                 fields.setCurrentValue(MyExample4901DTO_.region, RegionEnum.MOSCOWSKAYA);
                 fields.setCurrentValue(MyExample4901DTO_.street, "Tverskaya street");
                 fields.setCurrentValue(MyExample4901DTO_.customField, "New value for RUSSIA");
@@ -75,22 +58,45 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             fields.setCurrentValue(MyExample4901DTO_.customField, "");
         }
 
-        if (fields.isFieldChangedNowFEForRowMeta(fields, MyExample4901DTO_.country)) {
-            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /row-meta Post(FA)");
-        }
-        if (fields.isFieldChangedNowFEForCustomAction(fields, MyExample4901DTO_.customFieldDouble, "customSave")) {
-            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /customSave");
-        }
-        if (fields.isFieldChangedNowFEForData(fields, MyExample4901DTO_.customFieldDouble)) {
-            fields.setCurrentValue(MyExample4901DTO_.customField, "New value - call /data");
+        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.money)) {
+            if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty() ? false
+                    : fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000 &&
+                    fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false
+                    : fields.getCurrentValue(MyExample4901DTO_.productType).get().equals(ProductTypeEnum.FAMILY)) {
+                fields.setCurrentValue(MyExample4901DTO_.productType, null);
+            }
         }
 
+
+        fields.setPlaceholder(MyExample4901DTO_.money, "Family only < 100 000");
+        fields.setEnabled(MyExample4901DTO_.customFieldDouble);
+        fields.setEnabled(MyExample4901DTO_.street);
+        fields.setEnabled(MyExample4901DTO_.money);
+        fields.setEnabled(MyExample4901DTO_.descriptionProduct);
+        fields.setEnabled(MyExample4901DTO_.product);
+        fields.setEnabled(MyExample4901DTO_.country);
+        fields.setEnabled(MyExample4901DTO_.region);
+        fields.setEnabled(MyExample4901DTO_.customField);
+
+        fields.setEnumValues(MyExample4901DTO_.productType, ProductTypeEnum.values());
+        fields.setEnabled(MyExample4901DTO_.productType);
+
+        fields.setEnumValues(MyExample4901DTO_.country, CountryEnum.values());
+        fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.values());
+
+        if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.BELARUS)) {
+            fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.BREST, RegionEnum.GOMEL, RegionEnum.MINSK);
+        } else if (Objects.equals(fields.getCurrentValue(MyExample4901DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
+            fields.setEnumValues(MyExample4901DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
+        }
 
     }
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription, Long
             parentId) {
+        fields.setEnumFilterValues(fields, MyExample4901DTO_.productType, ProductTypeEnum.values());
+        fields.enableFilter(MyExample4901DTO_.productType);
         fields.enableFilter(MyExample4901DTO_.customFieldDouble);
         fields.enableFilter(MyExample4901DTO_.street);
         fields.enableFilter(MyExample4901DTO_.money);
@@ -101,11 +107,17 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         fields.setEnumFilterValues(fields, MyExample4901DTO_.region, RegionEnum.values());
         fields.enableFilter(MyExample4901DTO_.region);
 
-        fields.setForceActive(MyExample4901DTO_.region);
-        fields.setForceActive(MyExample4901DTO_.country);
-        fields.setForceActive(MyExample4901DTO_.money);
-        fields.setForceActive(MyExample4901DTO_.product);
-        fields.setForceActive(MyExample4901DTO_.descriptionProduct);
+
+        if (bcDescription.getName().equals(CxboxMyExample4901Controller.myexamplefa4901.getName())) {
+            fields.setForceActive(MyExample4901DTO_.region);
+            fields.setForceActive(MyExample4901DTO_.country);
+            fields.setForceActive(MyExample4901DTO_.money);
+            fields.setForceActive(MyExample4901DTO_.product);
+            fields.setForceActive(MyExample4901DTO_.descriptionProduct);
+            fields.setForceActive(MyExample4901DTO_.street);
+            fields.setForceActive(MyExample4901DTO_.customFieldDouble);
+            fields.setForceActive(MyExample4901DTO_.productType);
+        }
     }
 
 }
