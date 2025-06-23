@@ -44,6 +44,21 @@ public class Number extends BaseField<Integer> {
     }
 
 
+    public String getStrValue() {
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
+
+            String str = getFieldByName()
+                    .shouldBe(Condition.exist)
+                    .$(getValueTag())
+                    .getValue();
+            assert str != null;
+            str = str.replace(" ", "").replace(",00", "");
+            return str;
+        });
+    }
+
+
     public String getValueTag() {
         return "input";
     }
