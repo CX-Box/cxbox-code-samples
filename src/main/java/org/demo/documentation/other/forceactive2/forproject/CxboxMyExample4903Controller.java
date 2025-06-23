@@ -12,7 +12,8 @@ public enum CxboxMyExample4903Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample4903(MyExample4903Service.class), myEntity4903FileNamePickPick(myexample4903, MyEntity4903FileNamePickPickService.class), myEntity4903InstancePick(myexample4903, MyEntity4903InstancePickService.class), myEntity4903OCPPickPick(myexample4903, MyEntity4903OCPPickPickService.class), myEntity4903PickPick(myexample4903, MyEntity4903PickPickService.class);
+    myexample4903(MyExample4903Service.class), myEntity4903FileNamePickPick(myexample4903, MyEntity4903FileNamePickPickService.class),
+        myEntity4903InstancePick(myexample4903, MyEntity4903InstancePickService.class), myEntity4903OCPPickPick(myexample4903, MyEntity4903OCPPickPickService.class), myEntity4903PickPick(myexample4903, MyEntity4903PickPickService.class);
 
     // @formatter:on
 
