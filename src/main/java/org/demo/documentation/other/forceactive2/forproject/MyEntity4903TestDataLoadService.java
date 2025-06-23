@@ -13,6 +13,9 @@ public class MyEntity4903TestDataLoadService {
     MyEntity4903Repository repository;
 
     @Autowired
+    MyEntity4903FilePickRepository  myEntity4903FilePickRepository ;
+
+    @Autowired
     MyEntity4903PickRepository repositoryPick;
 
     @Autowired
@@ -29,14 +32,16 @@ public class MyEntity4903TestDataLoadService {
         repository.deleteAll();
         repositoryOCP.deleteAll();
         repositoryPick.deleteAll();
+        myEntity4903FilePickRepository.deleteAll();
+
+        myEntity4903FilePickRepository.save(new MyEntity4903FileNamePick().setCustomField("File name1"));
+        myEntity4903FilePickRepository.save(new MyEntity4903FileNamePick().setCustomField("File name2"));
+        myEntity4903FilePickRepository.save(new MyEntity4903FileNamePick().setCustomField("File name3"));
 
         repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP1"));
         repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP2"));
         repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP3"));
         repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP4"));
-        repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP5"));
-        repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP6"));
-        repositoryOCP.save(new MyEntity4903OCPPick().setCustomField("OCP7"));
 
         repositoryPick.save(new MyEntity4903Pick().setCustomField("FCPP1"));
         repositoryPick.save(new MyEntity4903Pick().setCustomField("FCPP2"));
