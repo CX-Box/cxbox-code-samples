@@ -86,9 +86,6 @@ public class NumberDigits extends BaseField<BigDecimal> {
                         .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                         .clear();
                 String emptyValue = getDigits() != null && getDigits() > 0 ? "0," + "0".repeat(getDigits()) : "0";
-                getFieldByName()
-                        .$("div[class=\"ant-col ant-form-item-label\"]")
-                        .click();
                 if (getFieldByName().$(getValueTag()).getValue().isEmpty()) {
                     log.info("Autofill field is not enabled");
                 } else {
