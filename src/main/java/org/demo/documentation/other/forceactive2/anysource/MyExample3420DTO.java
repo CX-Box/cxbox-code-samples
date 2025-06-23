@@ -37,5 +37,6 @@ public class MyExample3420DTO extends DataResponseDTO {
         this.descriptionProduct = entity.getDescriptionProduct();
         this.money = entity.getMoney();
         this.street = entity.getStreet();
+
     }
 }
