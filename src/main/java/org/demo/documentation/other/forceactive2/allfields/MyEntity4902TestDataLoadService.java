@@ -53,6 +53,10 @@ public class MyEntity4902TestDataLoadService {
         MyEntity4902Pick myEntityPick = new MyEntity4902Pick().setCustomField("Test data Pick");
         MyEntity4902PickInline  myEntityPick2 = new MyEntity4902PickInline().setCustomField("Test data Pick2");
         repositoryPick.save(myEntityPick);
+        repositoryPick.save( new MyEntity4902Pick().setCustomField("Test data Pick2"));
+        repositoryPick.save( new MyEntity4902Pick().setCustomField("Test data Pick3"));
+        repositoryPick.save( new MyEntity4902Pick().setCustomField("Test data Pick4"));
+        repositoryPick.save( new MyEntity4902Pick().setCustomField("Test data Pick5"));
         repositoryPickInline.save(myEntityPick2);
         MyEntity4902Multi myEntity3 = new MyEntity4902Multi().setCustomField("Test data 3");
         MyEntity4902Multi  myEntity4 = new MyEntity4902Multi().setCustomField("Test data 4");

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.other.forceactive2.forproject.enums.PlacePresentationEnum;
+import org.demo.documentation.other.forceactive2.forproject.enums.*;
 
 
 @Entity
@@ -24,4 +24,26 @@ public class MyEntity4903 extends BaseEntity {
     @JoinColumn(name = "NAME_O_S_P_ID")
     @ManyToOne
     private MyEntity4903OCPPick nameOSPEntity;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private ObjectTypeEnum objectType;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private FileTypeEnum fileType;
+    @JoinColumn(name = "INSTANCE_ID")
+    @ManyToOne
+    private MyEntity4903Instance instanceEntity;
+    @Column
+    private String file;
+    @Column
+    private String fileId;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private ChannelEnum channel;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private UsersNameEnum usersName;
+    @JoinColumn(name = "NAME_FILE_ID")
+    @ManyToOne
+    private MyEntity4903FileNamePick nameFileEntity;
 }

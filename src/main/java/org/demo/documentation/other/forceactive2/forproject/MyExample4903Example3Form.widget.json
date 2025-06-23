@@ -1,0 +1,66 @@
+{
+  "name": "MyExample4903Example3Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "label": "Файл",
+      "key": "nameFile",
+      "type": "pickList",
+      "popupBcName": "myEntity4903FileNamePickPick",
+      "pickMap": {
+        "nameFile": "customField",
+        "nameFileId": "id"
+      }
+    },
+    {
+      "label": "Канал коммуникации",
+      "key": "channel",
+      "type": "dictionary"
+    },
+    {
+      "label": "Получатель",
+      "key": "usersName",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "channel",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "usersName",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "nameFile",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

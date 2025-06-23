@@ -1,0 +1,81 @@
+{
+  "name": "MyExample4903Example2Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "label": "Тип объекта",
+      "key": "objectType",
+      "type": "dictionary"
+    },
+    {
+      "label": "Тип файла",
+      "key": "fileType",
+      "type": "dictionary"
+    },
+    {
+      "label": "Инстанция",
+      "key": "instance",
+      "type": "pickList",
+      "popupBcName": "myEntity4903InstancePick",
+      "pickMap": {
+        "instance": "customField",
+        "instanceId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+
+            {
+              "fieldKey": "objectType",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileType",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "instance",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

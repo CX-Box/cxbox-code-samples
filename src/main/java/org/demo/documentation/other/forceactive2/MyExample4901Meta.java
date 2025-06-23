@@ -18,6 +18,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.country)) {
             if (fields.getCurrentValue(MyExample4901DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample4901DTO_.region, null);
@@ -59,16 +60,23 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         }
 
         if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.money)) {
+            if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()
+                    || fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false :
+                    fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000
+                            && fields.getCurrentValue(MyExample4901DTO_.productType).get().equals(ProductTypeEnum.FAMILY)) {
+                fields.setCurrentValue(MyExample4901DTO_.productType, null);
+            }
+        }
+        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.productType)) {
             if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty() ? false
                     : fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000 &&
                     fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false
                     : fields.getCurrentValue(MyExample4901DTO_.productType).get().equals(ProductTypeEnum.FAMILY)) {
-                fields.setCurrentValue(MyExample4901DTO_.productType, null);
+                fields.setCurrentValue(MyExample4901DTO_.money, null);
+                fields.setPlaceholder(MyExample4901DTO_.money, "Family only < 100 000");
             }
         }
 
-
-        fields.setPlaceholder(MyExample4901DTO_.money, "Family only < 100 000");
         fields.setEnabled(MyExample4901DTO_.customFieldDouble);
         fields.setEnabled(MyExample4901DTO_.street);
         fields.setEnabled(MyExample4901DTO_.money);
@@ -78,7 +86,14 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         fields.setEnabled(MyExample4901DTO_.region);
         fields.setEnabled(MyExample4901DTO_.customField);
 
-        fields.setEnumValues(MyExample4901DTO_.productType, ProductTypeEnum.values());
+        if (!fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()) {
+            if (fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000) {
+                fields.setEnumValues(MyExample4901DTO_.productType, ProductTypeEnum.STANDART);
+            } else {
+                fields.setEnumValues(MyExample4901DTO_.productType, ProductTypeEnum.FAMILY);
+            }
+        }
+
         fields.setEnabled(MyExample4901DTO_.productType);
 
         fields.setEnumValues(MyExample4901DTO_.country, CountryEnum.values());
