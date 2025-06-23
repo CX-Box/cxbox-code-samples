@@ -34,27 +34,15 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
     @Override
     protected ActionResultDTO<MyExample4901DTO> doUpdateEntity(MyEntity4901 entity, MyExample4901DTO data, BusinessComponent bc) {
         setIfChanged(data, MyExample4901DTO_.productType, entity::setProductType);
-
+        setIfChanged(data, MyExample4901DTO_.money, entity::setMoney);
         setIfChanged(data, MyExample4901DTO_.customFieldDouble, entity::setCustomFieldDouble);
         setIfChanged(data, MyExample4901DTO_.street, entity::setStreet);
-
-        if (data.isFieldChanged(MyExample4901DTO_.region)) {
-            entity.setRegion(data.getRegion());
-        }
-        if (data.isFieldChanged(MyExample4901DTO_.country)) {
-            entity.setCountry(data.getCountry());
-        }
-
-        if (data.isFieldChanged(MyExample4901DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-
+        setIfChanged(data, MyExample4901DTO_.region, entity::setRegion);
+        setIfChanged(data, MyExample4901DTO_.country, entity::setCountry);
+        setIfChanged(data, MyExample4901DTO_.customField, entity::setCustomField);
         setIfChanged(data, MyExample4901DTO_.product, entity::setProduct);
         setIfChanged(data, MyExample4901DTO_.descriptionProduct, entity::setDescriptionProduct);
 
-        if (data.isFieldChanged(MyExample4901DTO_.product)) {
-            entity.setProduct(data.getProduct());
-        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 

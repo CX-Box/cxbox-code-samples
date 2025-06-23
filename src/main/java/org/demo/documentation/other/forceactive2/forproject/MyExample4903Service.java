@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.other.forceactive2.forproject.enums.ChannelEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +24,29 @@ public class MyExample4903Service extends VersionAwareResponseService<MyExample4
 
     @Override
     protected CreateResult<MyExample4903DTO> doCreateEntity(MyEntity4903 entity, BusinessComponent bc) {
+        entity.setChannel(ChannelEnum.EMAIL);
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
     protected ActionResultDTO<MyExample4903DTO> doUpdateEntity(MyEntity4903 entity, MyExample4903DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample4903DTO_.nameFileId)) {
+            entity.setNameFileEntity(data.getNameFileId() != null
+                    ? entityManager.getReference(MyEntity4903FileNamePick.class, data.getNameFileId())
+                    : null);
+        }
+        setIfChanged(data, MyExample4903DTO_.usersName, entity::setUsersName);
+        setIfChanged(data, MyExample4903DTO_.channel, entity::setChannel);
+        setIfChanged(data, MyExample4903DTO_.fileId, entity::setFileId);
+        setIfChanged(data, MyExample4903DTO_.file, entity::setFile);
+        if (data.isFieldChanged(MyExample4903DTO_.instanceId)) {
+            entity.setInstanceEntity(data.getInstanceId() != null
+                    ? entityManager.getReference(MyEntity4903Instance.class, data.getInstanceId())
+                    : null);
+        }
+        setIfChanged(data, MyExample4903DTO_.fileType, entity::setFileType);
+        setIfChanged(data, MyExample4903DTO_.objectType, entity::setObjectType);
         if (data.isFieldChanged(MyExample4903DTO_.nameOSPId)) {
             entity.setNameOSPEntity(data.getNameOSPId() != null
                     ? entityManager.getReference(MyEntity4903OCPPick.class, data.getNameOSPId())
