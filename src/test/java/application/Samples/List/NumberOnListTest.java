@@ -262,4 +262,15 @@ public class NumberOnListTest extends BaseTestForSamples {
         var customField = list.findRowSegmentByValue("custom Field", "123 456,00").numberDigits();
         assertThat(customField.getDigits()).isEqualTo(2);
     }
+
+    @Test
+    void nullable() {
+        MainPages.click("Number nullable");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        var customField = list.findRowSegmentByValue("Custom Field", "").number();
+        customField.setNullValue();
+
+        assertThat(customField.getStrValue()).isBlank();
+    }
 }

@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -102,5 +104,17 @@ public class PercentOnInfoTest extends BaseTestForSamples {
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.percent("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Digits test")
+    void digits() {
+        MainPages.click("Percent digits");
+        MainPages.FirstLevelMenu.click("Info");
+        var info = $box.findInfoWidgetByTitle("Info title");
+        var customField = info.percentDigits("Custom Field");
+        assertThat(customField.getValue()).isEqualTo(new BigDecimal("27.00"));
     }
 }

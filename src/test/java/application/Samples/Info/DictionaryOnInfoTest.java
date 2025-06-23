@@ -103,4 +103,20 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
         var customField = info.dictionary("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @Tag("Positive")
+    @DisplayName("The test for getting the icon value from the field")
+    void icon() {
+        MainPages.click("Dictionary enum icon");
+        MainPages.FirstLevelMenu.click("Info");
+
+        var info = $box.findInfoWidgetByTitle("Info Mode default");
+        var customField = info.dictionary("Custom Field Dictionary");
+        assertThat(customField.getValue()).isEqualTo("High");
+
+        var info2 = $box.findInfoWidgetByTitle("Info Mode Icon");
+        var customField2 = info.dictionary("Custom Field Dictionary");
+        assertThat(customField2.getValue()).isEqualTo("High");
+    }
 }
