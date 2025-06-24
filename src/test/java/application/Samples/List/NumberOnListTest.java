@@ -241,7 +241,7 @@ public class NumberOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
     void required() {
         MainPages.click("Number required");
         MainPages.FirstLevelMenu.click("List");
@@ -255,6 +255,10 @@ public class NumberOnListTest extends BaseTestForSamples {
     }
 
     @Test
+    @Severity(MINOR)
+    @Tag("Positive")
+    @DisplayName("A test for setting a number with a fractional part in a field")
+    @Description("The test sets the value in the field, and then checks the value in the field with what should be set.")
     void digits() {
         MainPages.click("Number digits");
         MainPages.FirstLevelMenu.click("List");
@@ -264,11 +268,15 @@ public class NumberOnListTest extends BaseTestForSamples {
     }
 
     @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("A test for checking the possibility of an empty field")
+    @Description("The test clear the value in the field , and then checks the value in the field, it must be null.")
     void nullable() {
         MainPages.click("Number nullable");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        var customField = list.findRowSegmentByValue("Custom Field", "").number();
+        var customField = list.findRowSegmentById("Custom Field", 1101695).number();
         customField.setNullValue();
 
         assertThat(customField.getStrValue()).isBlank();
