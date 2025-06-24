@@ -18,6 +18,7 @@ import static core.widget.TestingTools.CellProcessor.logTime;
 @Slf4j
 public class Calendar {
     private static final SelenideElement PANEL_CALENDAR = $("div[class=\"ant-calendar-panel\"]");
+    private static final SelenideElement TIME_PANEL_CALENDAR = $("div[class=\"ant-time-picker-panel-inner\"]");
     public static CxBoxExpectations waitingForTests = new CxBoxExpectations();
 
     /**
@@ -174,6 +175,41 @@ public class Calendar {
 
     }
 
+    public static void setTimeWithSecond(LocalDateTime time, String format) {
+        Allure.step("Setting the " + time + " in calendar", step -> {
+            logTime(step);
+            step.parameter("LocalDateTime with sec", time);
+
+            TIME_PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .click();
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            TIME_PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .setValue(formattedTimeWithSecond(time, format));
+            Selenide.sleep(200);
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            TIME_PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldHave(Condition.value(formattedTimeWithSecond(time, format)));
+            if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                return;
+            }
+            TIME_PANEL_CALENDAR
+                    .$("input")
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                    .sendKeys(Keys.ESCAPE);
+        });
+
+    }
+
     /**
      * Set the date for today
      */
@@ -242,6 +278,15 @@ public class Calendar {
     private static String formattedDateTimeWithSecond(LocalDateTime date) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            return date.format(formatter);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Некорректный формат даты. Должен быть dd.MM.yyyy HH:mm:ss");
+        }
+    }
+
+    private static String formattedTimeWithSecond(LocalDateTime date, String format) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
             return date.format(formatter);
         } catch (Exception e) {
             throw new IllegalArgumentException("Некорректный формат даты. Должен быть dd.MM.yyyy HH:mm:ss");
