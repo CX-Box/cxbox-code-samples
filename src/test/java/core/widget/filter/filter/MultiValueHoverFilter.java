@@ -1,6 +1,7 @@
 package core.widget.filter.filter;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.modal.Popup;
@@ -17,7 +18,9 @@ public class MultiValueHoverFilter extends AbstractFilter<String> {
 
     @Override
     public void setFilter(String value) {
-        throw new UnsupportedOperationException("First findPopup");
+        selectFilter(value);
+
+        setApply();
     }
 
     @Override
@@ -33,5 +36,30 @@ public class MultiValueHoverFilter extends AbstractFilter<String> {
         } else {
             return Optional.empty();
         }
+    }
+
+    public void selectFilter(String value) {
+        Selenide.sleep(500);
+        $("div.ant-modal-body").shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .$$((" [data-test-widget-list-row-id]")).forEach(row -> {
+
+            SelenideElement customFieldCell = row.$("div[data-test-field-key='customField'] span")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+
+            if (customFieldCell.getText().contains(value)) {
+                SelenideElement checkbox = row.$("input[type='checkbox']")
+                        .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+                if (!checkbox.isSelected()) {
+                    checkbox.click();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setApply() {
+        $("button[data-test-widget-list-save=\"true\"]")
+                .shouldBe(Condition.exist)
+                .click();
     }
 }

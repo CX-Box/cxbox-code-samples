@@ -31,9 +31,9 @@ public class PickList extends BaseField<String> {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
             return Objects.requireNonNull(getFieldByName()
-                    .$(getValueTag())
+                    .$("input")
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .getValue());
+                    .getAttribute("value"));
         });
 
     }
@@ -53,6 +53,23 @@ public class PickList extends BaseField<String> {
     @Override
     public String getValueTag() {
         return "input";
+    }
+
+    /**
+     * Checking the placeholder text
+     *
+     * @return String text/null
+     */
+
+    public String getPlaceholder() {
+        return Allure.step("Getting the Placeholder value", step -> {
+            logTime(step);
+
+            return Objects.requireNonNull(getFieldByName()
+                    .$("input")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .getAttribute("placeholder"));
+        });
     }
 
     private SelenideElement modalWindow() {

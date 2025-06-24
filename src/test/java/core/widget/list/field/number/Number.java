@@ -31,6 +31,21 @@ public class Number extends BaseRow<Integer> {
 
     }
 
+    public void setNullValue() {
+        setFocusField();
+
+        getRowByName().click();
+        getRowByName()
+                .$(getValueTag())
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .clear();
+        getRowByName(1)
+                .$(getValueTag())
+                .sendKeys(Keys.TAB);
+
+        waitingForTests.getWaitAllElements(getRowByName());
+    }
+
     /**
      * Getting a value from a field. Integer only
      *
@@ -46,6 +61,16 @@ public class Number extends BaseRow<Integer> {
                 .getValue();
         str = Objects.requireNonNull(str).replace(" ", "").replace(",00", "");
         return Integer.parseInt(str);
+    }
+
+    @Step("Getting string a value from a field")
+    public String getStrValue() {
+        String str = getRowByName()
+                .shouldBe(Condition.exist)
+                .$(getValueTag())
+                .getValue();
+        str = Objects.requireNonNull(str).replace(" ", "").replace(",00", "");
+        return str;
     }
 
     @Override

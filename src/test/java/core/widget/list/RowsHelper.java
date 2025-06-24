@@ -111,6 +111,22 @@ public class RowsHelper {
     }
 
     /**
+     * Getting a list of lines from the current page
+     *
+     * @return List String
+     */
+    @Step("Getting a list of lines from the current page")
+    public List<String> getListRowsByColumnName(String columnName) {
+        waitingForTests.getWaitAllElements(widget);
+        return helper.getColumnValuesByColumnName(columnName).stream()
+                .map(s -> s
+                        .replace("\t", "")
+                        .replace("\n", "")
+                        .replace(" ", ""))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Getting a list of Row IDs from the current page
      *
      * @return List Long

@@ -86,6 +86,7 @@ public class NumberDigits extends BaseField<BigDecimal> {
                         .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                         .clear();
                 String emptyValue = getDigits() != null && getDigits() > 0 ? "0," + "0".repeat(getDigits()) : "0";
+
                 if (getFieldByName().$(getValueTag()).getValue().isEmpty()) {
                     log.info("Autofill field is not enabled");
                 } else {

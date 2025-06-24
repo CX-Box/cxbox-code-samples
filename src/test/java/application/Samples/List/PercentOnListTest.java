@@ -275,9 +275,9 @@ public class PercentOnListTest extends BaseTestForSamples {
     }
 
     @Test
-    @Severity(CRITICAL)
+    @Severity(MINOR)
     @Tag("Positive")
-    @DisplayName("Тест на установку числа с дробной частью в поле")
+    @DisplayName("A test for setting a number with a fractional part in a field")
     @Description("The test sets the value in the field, and then checks the value in the field with what should be set.")
     void digits() {
         BigDecimal number = new BigDecimal("123.12");
