@@ -92,8 +92,8 @@ public class RadioOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).radio();
-        customField.setValue("Low");
-        assertThat(customField.getValue()).isEqualTo("Low");
+        customField.setValue("Middle");
+        assertThat(customField.getValue()).isEqualTo("Middle");
     }
 
     @Test
