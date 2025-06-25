@@ -9,10 +9,7 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -268,10 +265,10 @@ public class RadioOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
-        row.radio().setValue("Low");
+        row.radio().setValue("Middle");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("save");
-        assertThat(row.radio().getValue()).isEqualTo("Low");
+        assertThat(row.radio().getValue()).isEqualTo("Middle");
     }
 }
