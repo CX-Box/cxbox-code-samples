@@ -9,9 +9,7 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Map;
 
@@ -23,8 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Radio in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
-
+@Tag("Form")
 public class RadioOnFormTest extends BaseTestForSamples {
 
     @Test
@@ -214,7 +211,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
-        customField.setValue("Low");
-        assertThat(customField.getValues()).isEqualTo(Map.of("High", false, "Low", true, "Middle", false));
+        customField.setValue("Middle");
+        assertThat(customField.getValues()).isEqualTo(Map.of("High", false, "Low", false, "Middle", true));
     }
 }
