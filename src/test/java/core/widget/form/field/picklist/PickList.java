@@ -10,7 +10,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
-import java.util.Objects;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -30,10 +29,10 @@ public class PickList extends BaseField<String> {
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);
-            return Objects.requireNonNull(getFieldByName()
+            return getFieldByName()
                     .$("div[class=\"ant-select-selection-selected-value\"]")
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                    .getValue());
+                    .getText();
         });
 
     }
