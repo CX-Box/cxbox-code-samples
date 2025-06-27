@@ -1,9 +1,7 @@
 package org.demo.documentation.widgets.formpopup.base.onefield;
 
 import jakarta.persistence.EntityManager;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -13,20 +11,22 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.action.ActionsExt;
 
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
+import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@SuppressWarnings("java:S1170")
-@RequiredArgsConstructor
 @Service
 public class MyExample3400Service extends VersionAwareResponseService<MyExample3400DTO, MyEntity3400> {
 
     private final MyEntity3400Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3400Meta> meta = MyExample3400Meta.class;
     @Autowired
     private EntityManager entityManager;
+
+    public MyExample3400Service(MyEntity3400Repository repository) {
+        super(MyExample3400DTO.class, MyEntity3400.class, null, MyExample3400Meta.class);
+        this.repository = repository;
+    }
 
     @Override
     protected CreateResult<MyExample3400DTO> doCreateEntity(MyEntity3400 entity, BusinessComponent bc) {
@@ -36,8 +36,11 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3400DTO> doUpdateEntity(MyEntity3400 entity, MyExample3400DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3400DTO_.customFieldFA2, entity::setCustomFieldFA2);
-        setIfChanged(data, MyExample3400DTO_.customFieldFA, entity::setCustomFieldFA);
+        if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistFAId)) {
+            entity.setCustomFieldInlinePicklistFAEntity(data.getCustomFieldInlinePicklistFAId() != null
+                    ? entityManager.getReference(MyEntity3400InlinePicklistFA.class, data.getCustomFieldInlinePicklistFAId())
+                    : null);
+        }
         setIfChanged(data, MyExample3400DTO_.customFieldRequired2, entity::setCustomFieldRequired2);
         setIfChanged(data, MyExample3400DTO_.customFieldRequired, entity::setCustomFieldRequired);
         if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistId)) {

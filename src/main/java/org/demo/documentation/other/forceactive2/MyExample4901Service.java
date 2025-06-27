@@ -3,9 +3,13 @@ package org.demo.documentation.other.forceactive2;
 import jakarta.persistence.EntityManager;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +60,18 @@ public class MyExample4901Service extends VersionAwareResponseService<MyExample4
                 .action(act -> act
                         .action("customSave", "Custom Save")
                         .invoker(this::customSave)
+                )
+                .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .action("goto", "Save and Go to")
+                        .withAutoSaveBefore()
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample4901DTO>().setAction(
+                                    PostAction.drillDown(
+                                            DrillDownType.INNER,
+                                            "/screen/myexample4901/view/myexample4901form"
+                                    ));
+                        })
                 )
                 .build();
     }
