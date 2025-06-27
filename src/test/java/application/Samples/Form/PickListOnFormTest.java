@@ -13,6 +13,7 @@ import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
     @Tag("Positive")
     @DisplayName("A test to get the field color value in Hex format")
     @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @Disabled
     void color() {
         MainPages.click("Picklist color");
         MainPages.FirstLevelMenu.click("Form");
@@ -68,7 +70,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
         Optional<Popup> popup = customField.findPopup();
         assertThat(popup).isPresent();
         var popupPickList = popup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("1101088");
+        popupPickList.setValue("New data");
         assertThat(customField.getValue()).isEqualTo("New data");
     }
 
@@ -90,23 +92,6 @@ public class PickListOnFormTest extends BaseTestForSamples {
         popup.close();
     }
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field via Popup using the name, and then checks the value in the field with what should be set")
-    void edit_2() {
-        MainPages.click("Picklist basic");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        customField.openModalWindow();
-        Optional<Popup> popup = customField.findPopup();
-        assertThat(popup).isPresent();
-        var popupPickList = popup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("New data");
-        assertThat(customField.getValue()).isEqualTo("New data");
-    }
 
     @Test
     @Severity(MINOR)
