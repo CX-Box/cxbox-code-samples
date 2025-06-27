@@ -67,15 +67,8 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
                 fields.setCurrentValue(MyExample4901DTO_.productType, null);
             }
         }
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.productType)) {
-            if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty() ? false
-                    : fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000 &&
-                    fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false
-                    : fields.getCurrentValue(MyExample4901DTO_.productType).get().equals(ProductTypeEnum.FAMILY)) {
-                fields.setCurrentValue(MyExample4901DTO_.money, null);
-                fields.setPlaceholder(MyExample4901DTO_.money, "Family only < 100 000");
-            }
-        }
+
+        fields.setPlaceholder(MyExample4901DTO_.money, "Family only < 100 000");
 
         fields.setEnabled(MyExample4901DTO_.customFieldDouble);
         fields.setEnabled(MyExample4901DTO_.street);
@@ -85,6 +78,8 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         fields.setEnabled(MyExample4901DTO_.country);
         fields.setEnabled(MyExample4901DTO_.region);
         fields.setEnabled(MyExample4901DTO_.customField);
+
+        fields.setRequired(MyExample4901DTO_.customField);
 
         if (!fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()) {
             if (fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000) {
@@ -130,7 +125,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             fields.setForceActive(MyExample4901DTO_.product);
             fields.setForceActive(MyExample4901DTO_.descriptionProduct);
             fields.setForceActive(MyExample4901DTO_.street);
-            fields.setForceActive(MyExample4901DTO_.customFieldDouble);
+            //fields.setForceActive(MyExample4901DTO_.customFieldDouble);
             fields.setForceActive(MyExample4901DTO_.productType);
         }
     }
