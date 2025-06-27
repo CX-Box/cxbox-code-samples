@@ -18,7 +18,6 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
     // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription,
                                       String id, String parentId) {
-
         if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.country)) {
             if (fields.getCurrentValue(MyExample3420DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample3420DTO_.region, null);
