@@ -18,7 +18,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
     // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3420DTO> fields, BcDescription bcDescription,
                                       String id, String parentId) {
-        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.country)) {
+        if (fields.isFieldChangedNow(fields, MyExample3420DTO_.country)) {
             if (fields.getCurrentValue(MyExample3420DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample3420DTO_.region, null);
                 fields.setCurrentValue(MyExample3420DTO_.street, null);
@@ -36,7 +36,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.region)) {
+        if (fields.isFieldChangedNow(fields, MyExample3420DTO_.region)) {
             if ((Objects.equals(fields.getCurrentValue(MyExample3420DTO_.region).orElse(null), RegionEnum.MINSK))) {
                 fields.setCurrentValue(MyExample3420DTO_.street, "Avenue Nezavisimosti");
                 fields.setCurrentValue(MyExample3420DTO_.customField, "New value Minsk");
@@ -52,14 +52,14 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.street)) {
+        if (fields.isFieldChangedNow(fields, MyExample3420DTO_.street)) {
             fields.setCurrentValue(MyExample3420DTO_.customField, "New value");
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.customFieldDouble)) {
+        if (fields.isFieldChangedNow(fields, MyExample3420DTO_.customFieldDouble)) {
             fields.setCurrentValue(MyExample3420DTO_.customField, "");
         }
-        if (fields.isFieldChangedNowFE(fields, MyExample3420DTO_.street)) {
+        if (fields.isFieldChangedNow(fields, MyExample3420DTO_.street)) {
             fields.setCurrentValue(MyExample3420DTO_.customField, "test");
         }
 

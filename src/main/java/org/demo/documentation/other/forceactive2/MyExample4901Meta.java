@@ -19,7 +19,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4901DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.country)) {
+        if (fields.isFieldChangedNow(fields, MyExample4901DTO_.country)) {
             if (fields.getCurrentValue(MyExample4901DTO_.country).isEmpty()) {
                 fields.setCurrentValue(MyExample4901DTO_.region, null);
                 fields.setCurrentValue(MyExample4901DTO_.street, null);
@@ -35,7 +35,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.region)) {
+        if (fields.isFieldChangedNow(fields, MyExample4901DTO_.region)) {
             if ((Objects.equals(fields.getCurrentValue(MyExample4901DTO_.region).orElse(null), RegionEnum.MINSK))) {
                 fields.setCurrentValue(MyExample4901DTO_.street, "Avenue Nezavisimosti");
                 fields.setCurrentValue(MyExample4901DTO_.customField, "New value Minsk");
@@ -51,15 +51,15 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.street)) {
+        if (fields.isFieldChangedNow(fields, MyExample4901DTO_.street)) {
             fields.setCurrentValue(MyExample4901DTO_.customField, "New value");
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.customFieldDouble)) {
+        if (fields.isFieldChangedNow(fields, MyExample4901DTO_.customFieldDouble)) {
             fields.setCurrentValue(MyExample4901DTO_.customField, "");
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4901DTO_.money)) {
+        if (fields.isFieldChangedNow(fields, MyExample4901DTO_.money)) {
             if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()
                     || fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false :
                     fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000

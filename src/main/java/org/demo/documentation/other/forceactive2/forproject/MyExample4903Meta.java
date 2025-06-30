@@ -20,7 +20,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4903DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4903DTO_.placePresentation)) {
+        if (fields.isFieldChangedNow(fields, MyExample4903DTO_.placePresentation)) {
             if (fields.getCurrentValue(MyExample4903DTO_.placePresentation).isEmpty()) {
                 fields.setCurrentValue(MyExample4903DTO_.nameOSP, null);
                 fields.setCurrentValue(MyExample4903DTO_.nameOSPId, null);
@@ -30,7 +30,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4903DTO_.nameFSPP)) {
+        if (fields.isFieldChangedNow(fields, MyExample4903DTO_.nameFSPP)) {
             if (fields.getCurrentValue(MyExample4903DTO_.nameFSPP).isEmpty()) {
                 fields.setCurrentValue(MyExample4903DTO_.nameOSP, "");
                 fields.setCurrentValue(MyExample4903DTO_.nameOSPId, null);
@@ -45,7 +45,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4903DTO_.nameOSP)) {
+        if (fields.isFieldChangedNow(fields, MyExample4903DTO_.nameOSP)) {
             if (fields.getCurrentValue(MyExample4903DTO_.nameOSP).isPresent() &&
                     "OCP2".equals(fields.getCurrentValue(MyExample4903DTO_.nameOSP).get())) {
                 MyEntity4903Pick myEntity4903Pick = repositoryPick.findByCustomField("FCPP2");
@@ -74,7 +74,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
             }
         }
 
-        if (fields.isFieldChangedNowFE(fields, MyExample4903DTO_.nameFile)) {
+        if (fields.isFieldChangedNow(fields, MyExample4903DTO_.nameFile)) {
             if (fields.getCurrentValue(MyExample4903DTO_.nameFile).isPresent()) {
                 if ("File name1".equals(fields.getCurrentValue(MyExample4903DTO_.nameFile).get())) {
                     fields.setCurrentValue(MyExample4903DTO_.usersName, UsersNameEnum.USER_1);
@@ -85,7 +85,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
                 }
             }
         }
-        if (fields.isFieldChangedNowFE(fields, MyExample4903DTO_.channel)) {
+        if (fields.isFieldChangedNow(fields, MyExample4903DTO_.channel)) {
             fields.setCurrentValue(MyExample4903DTO_.usersName, null);
             fields.setCurrentValue(MyExample4903DTO_.nameFile, null);
         }
