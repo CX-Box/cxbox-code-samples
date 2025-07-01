@@ -106,4 +106,17 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
         var customField = info.money("Custom Field");
         assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Currency test")
+    @Description("Currency check at the field")
+    void currency() {
+        MainPages.click("Money currency const");
+        MainPages.FirstLevelMenu.click("Info");
+        var info = $box.findInfoWidgetByTitle("Info constant currency money");
+        var customField = info.money("Custom Field");
+        assertThat(customField.checkCurrencyValue("₽")).isTrue();
+    }
 }

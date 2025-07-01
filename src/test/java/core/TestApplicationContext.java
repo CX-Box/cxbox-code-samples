@@ -81,6 +81,23 @@ public class TestApplicationContext {
     }
 
     /**
+     * Searching for a widget by heading and getting access to the class RowsHelper
+     *
+     * @param title Widget title
+     * @return RowsHelper
+     */
+    public RowsHelper findDictionaryAdminWidgetByTitle(String title) {
+        return Allure.step("Validation ListWidget by heading (Title) " + title, step -> {
+            logTime(step);
+            step.parameter("Widget title", title);
+
+            SelenideElement widget = findWidgetByTypesAndTitle(WidgetType.GROUPINGHIERARCHY, title);
+            return new RowsHelper(title, widget);
+        });
+
+    }
+
+    /**
      * Searching for a widget by name and getting access to the class RowsHelper
      *
      * @param name The unique name of the widget is the value of the data-test-widget-name attribute.

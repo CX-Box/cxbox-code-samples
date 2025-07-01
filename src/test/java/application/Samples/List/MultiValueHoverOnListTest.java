@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
+import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -89,5 +90,18 @@ public class MultiValueHoverOnListTest extends BaseTestForSamples {
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).multiValueHover();
         assertThat(customField.getValue()).isEqualTo("Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium\n" +
                 "Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.");
+    }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Filtering test")
+    @Description("Filtering by the specified column.")
+    void filtration() {
+        MainPages.click("MultivalueHover filtration");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        list.findFilterColumn("Custom Field").multiValueHoverFilter().setFilter("Saturn's interior");
+        assertThat(list.getNoFocusValues("Custom Field")).isEqualTo(List.of("Saturn's ..."));
     }
 }
