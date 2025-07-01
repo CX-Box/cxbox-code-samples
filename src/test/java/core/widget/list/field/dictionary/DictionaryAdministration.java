@@ -38,7 +38,7 @@ public class DictionaryAdministration {
     public void delete(String type, String key) {
         selectRowByName(type);
 
-        SelenideElement keyCell = $$("td")
+        SelenideElement keyCell = PATH.$$("td")
                 .findBy(text(key))
                 .shouldBe(visible);
 
@@ -78,7 +78,7 @@ public class DictionaryAdministration {
     }
 
     public void selectType(String value) {
-        PATH.$("i[aria-label='icon: folder']").click();
+        PATH.$("i[aria-label='icon: paper-clip']").click();
         Optional<Popup> popup = findPopup();
         SelenideElement popupRoot = popup.get().picklistPopup("dictionaryTypeDescPickPickListPopup title").getWidget();
 

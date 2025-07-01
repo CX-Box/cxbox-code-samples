@@ -276,7 +276,7 @@ public class NumberOnListTest extends BaseTestForSamples {
         MainPages.click("Number nullable");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        var customField = list.findRowSegmentById("Custom Field", 1101695).number();
+        var customField = list.findRowSegmentByValue("Custom Field", "27 000").number();
         customField.setNullValue();
 
         assertThat(customField.getStrValue()).isBlank();

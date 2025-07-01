@@ -43,9 +43,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$("input")
+                .$("div[class=\"ant-select-selection-selected-value\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getAttribute("value");
+                .getText();
     }
 
     @Override
@@ -107,9 +107,9 @@ public class PickList extends BaseRow<String> {
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
-                .$("input")
+                .$("div[class=\"ant-select-selection__placeholder\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getAttribute("placeholder");
+                .text();
     }
 
     /**
@@ -135,5 +135,14 @@ public class PickList extends BaseRow<String> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Step("Checking the field for \"ReadOnly\"")
+    public boolean getReadOnly() {
+        setFocusField();
+
+
+        return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }
