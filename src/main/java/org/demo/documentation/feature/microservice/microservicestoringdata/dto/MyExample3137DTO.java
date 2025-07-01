@@ -3,10 +3,7 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3137;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.CountryEnum;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.RegionEnum;

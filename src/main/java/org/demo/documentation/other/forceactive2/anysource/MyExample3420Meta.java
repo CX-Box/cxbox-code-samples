@@ -1,6 +1,5 @@
 package org.demo.documentation.other.forceactive2.anysource;
 
-import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
