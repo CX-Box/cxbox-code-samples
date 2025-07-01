@@ -38,7 +38,7 @@
         <!-- dependencies versions -->
         <jobrunr-spring-boot-3-starter.version>7.3.2</jobrunr-spring-boot-3-starter.version> <!--based on spring-boot 3.3.8, e.g. synced to cxbox-starter-parent-->
         <minio.version>8.5.17</minio.version>
-        <postgresql.version>42.7.5</postgresql.version>
+        <postgresql.version>42.7.7</postgresql.version>
 
         <!-- code samples specific dependencies -->
         <zip4j.version>2.11.5</zip4j.version>
@@ -53,10 +53,13 @@
         <allure.version>2.28.0</allure.version>
         <allure-maven.version>2.12.0</allure-maven.version>
         <selenide.version>7.7.0</selenide.version>
-        <aspectj.version>1.9.22.1</aspectj.version>
+        <aspectj.version>1.9.23</aspectj.version>
         <poi.version>5.2.5</poi.version>
         <surefire.version>2.22.2</surefire.version>
-        <surefire.rerunFailingTestsCount>3</surefire.rerunFailingTestsCount>
+        <surefire.parallel>true</surefire.parallel>
+        <surefire.forkCount>3</surefire.forkCount>
+        <surefire.threadCount>1</surefire.threadCount>
+        <surefire.reuseForks>true</surefire.reuseForks>
     </properties>
 
     <dependencyManagement>
