@@ -9,7 +9,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.drilldown.goingbackafterdrilldown.MyExample3620DTO;
 import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

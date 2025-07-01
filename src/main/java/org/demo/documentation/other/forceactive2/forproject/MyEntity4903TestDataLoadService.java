@@ -6,8 +6,6 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static org.demo.documentation.other.forceactive2.forproject.CxboxMyExample4903Controller.myEntity4903InstancePick;
-
 @Service
 public class MyEntity4903TestDataLoadService {
 
