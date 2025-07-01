@@ -151,15 +151,12 @@ public class PickList extends BaseRow<String> {
         }
     }
 
-    /**
-     * Checking an item for inactivity, ReadOnly
-     *
-     * @return boolean true/false
-     */
     @Override
     @Step("Checking the field for \"ReadOnly\"")
     public boolean getReadOnly() {
         setFocusField();
-                return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
+
+
+				return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }

@@ -29,7 +29,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     @Test
     @Tag("Positive")
     @DisplayName("Test for creating admin value")
-    @Description("The test creates a new field in the admin panel")
+    @Description("The test creates and delete a new field in the admin panel")
     void create() {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
