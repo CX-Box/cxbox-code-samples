@@ -118,7 +118,6 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
             const filters = state.screen.filters[bcName]
             const sorters = state.screen.sorters[bcName]
             const pendingRecordChange = { ...state.view.pendingDataChanges[bcName]?.[bc?.cursor as string] }
-            const pendingChangesNow = state.view.pendingDataChangesNow[bcName]?.[bc?.cursor as string]
             for (const key in pendingRecordChange) {
                 if (fields?.find(item => item.key === key && item.disabled)) {
                     delete pendingRecordChange[key]
@@ -137,7 +136,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                 params._confirm = confirm
             }
             const context = { widgetName: action.payload.widgetName }
-            return api.customAction(screenName, bcUrl, data, pendingChangesNow, context, params).pipe(
+            return api.customAction(screenName, bcUrl, data, context, params).pipe(
                 mergeMap(response => {
                     const postInvoke = response.postActions?.[0] as OperationPostInvokeAny & { bc?: string }
                     const dataItem = response.record
@@ -290,10 +289,9 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
             const cursor = state.screen.bo.bc[bcName]?.cursor as string
             const bcUrl = buildBcUrl(bcName, true, state)
             const context = { widgetName: action.payload.widgetName }
-            const pendingChangesNow = state.view.pendingDataChangesNow[bcName]?.[cursor]
             const isTargetFormatPVF = state.view.pendingValidationFailsFormat === PendingValidationFailsFormat.target
 
-            return api.deleteBcData(state.screen.screenName, bcUrl, pendingChangesNow, context).pipe(
+            return api.deleteBcData(state.screen.screenName, bcUrl, context).pipe(
                 mergeMap(data => {
                     const postInvoke = data.postActions?.[0]
 
