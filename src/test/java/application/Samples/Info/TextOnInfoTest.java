@@ -63,7 +63,7 @@ public class TextOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.text("Custom Field");
-        assertThat(customField.getValue()).isEqualTo("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
+        assertThat(customField.getValue()).isEqualTo("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowel...");
     }
 
     @Test

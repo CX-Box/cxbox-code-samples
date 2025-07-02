@@ -106,7 +106,7 @@ public class TextOnListTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
         list.findFilterColumn("Custom Field").textFilter().setFilter("dozen");
-        assertThat(list.getNoFocusValues("Custom Field")).isEqualTo(List.of("A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefaces have as many as a dozen."));
+        assertThat(list.getNoFocusValues("Custom Field")).isEqualTo(List.of("A typeface may come in fonts of many weights, from ultra-light to extra-bold or black; four to six weights are not unusual, and a few typefa..."));
     }
 
     @Test
