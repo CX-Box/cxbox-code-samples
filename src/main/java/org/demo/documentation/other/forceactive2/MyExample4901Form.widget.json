@@ -1,28 +1,49 @@
 {
   "name": "MyExample4901Form",
-  "title": "Form",
+  "title": "Form. Example for Inner Source",
   "type": "Form",
   "bc": "myexample4901",
   "fields": [
     {
-      "label": "Custom Field",
+      "label": "Comment",
       "key": "customField",
       "type": "input"
     },
     {
-      "label": "Country FA",
+      "label": "Country",
       "key": "country",
       "type": "dictionary"
     },
     {
-      "label": "Region FA",
+      "label": "Region",
       "key": "region",
       "type": "dictionary"
+    },
+    {
+      "label": "Street",
+      "key": "street",
+      "type": "input"
     }
   ],
   "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "customSave",
+        "save",
+        "delete"
+      ]
+    },
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
@@ -42,7 +63,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customField",
+              "fieldKey": "street",
               "span": 12
             }
           ]

@@ -9,7 +9,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.api.data.dto.rowmeta.jackson.LocalTimeWithDateDeserializer;
 import org.cxbox.api.data.dto.rowmeta.jackson.LocalTimeWithDateSerializer;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.core.util.filter.provider.impl.TimeValueProvider;
 
 import java.time.LocalTime;

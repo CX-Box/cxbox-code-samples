@@ -1,6 +1,4 @@
 package org.demo.documentation.other.drilldown.option3.forsearch;
-
-import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -13,10 +11,7 @@ import org.demo.entity.core.User_;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service

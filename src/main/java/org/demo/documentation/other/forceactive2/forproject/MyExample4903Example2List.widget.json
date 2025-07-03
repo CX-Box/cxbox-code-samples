@@ -1,0 +1,44 @@
+{
+  "name": "MyExample4903Example2List",
+  "title": "",
+  "type": "List",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "title": "Тип объекта",
+      "key": "objectType",
+      "type": "dictionary"
+    },
+    {
+      "title": "Тип файла",
+      "key": "fileType",
+      "type": "dictionary"
+    },
+    {
+      "title": "Инстанция",
+      "key": "instance",
+      "type": "pickList",
+      "popupBcName": "myEntity4903InstancePick",
+      "pickMap": {
+        "instance": "customField",
+        "instanceId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    }
+  }
+}
+

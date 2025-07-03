@@ -1,0 +1,38 @@
+{
+  "name": "MyExample4903Example3List",
+  "title": "Form",
+  "type": "List",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "title": "Канал коммуникации FA",
+      "key": "channel",
+      "type": "dictionary"
+    },
+    {
+      "title": "Получатель FA",
+      "key": "usersName",
+      "type": "dictionary"
+    },
+    {
+      "title": "File Name",
+      "key": "nameFile",
+      "type": "pickList",
+      "popupBcName": "myEntity4903FileNamePickPick",
+      "pickMap": {
+        "nameFile": "customField",
+        "nameFileId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    }
+  }
+}
+
