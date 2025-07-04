@@ -1,5 +1,7 @@
 package org.demo.documentation.other.drilldown.option3.forsearch;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -19,19 +21,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample3431Service extends VersionAwareResponseService<MyExample3431DTO, User> {
 
 
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3431Meta> meta = MyExample3431Meta.class;
     @Autowired
     private MyEntity3431Repository contractFilterParametersRepository;
 
     @Autowired
     private SessionService sessionService;
-
-    public MyExample3431Service() {
-        super(MyExample3431DTO.class, User.class, null, MyExample3431Meta.class);
-    }
 
     @Override
     protected CreateResult<MyExample3431DTO> doCreateEntity(final User entity, final BusinessComponent bc) {
