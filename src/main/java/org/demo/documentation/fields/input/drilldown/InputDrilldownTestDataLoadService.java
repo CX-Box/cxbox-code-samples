@@ -20,7 +20,13 @@ public class InputDrilldownTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new InputDrilldown().setCustomField("test data").setCustomField2("test data"));
+		repository.save(new InputDrilldown().setCustomField("test data 1").setCustomField2("test data 1"));
+		repository.save(new InputDrilldown().setCustomField("test data 2").setCustomField2("test data 2"));
+		repository.save(new InputDrilldown().setCustomField("test data 3").setCustomField2("test data 3"));
+		repository.save(new InputDrilldown().setCustomField("test data 4").setCustomField2("test data 4"));
+		repository.save(new InputDrilldown().setCustomField("test data 5").setCustomField2("test data 5"));
+		repository.save(new InputDrilldown().setCustomField("test data 6").setCustomField2("test data 6"));
+		repository.save(new InputDrilldown());
 	}
 
 }

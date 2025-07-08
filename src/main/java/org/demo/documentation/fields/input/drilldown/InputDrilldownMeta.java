@@ -24,9 +24,6 @@ public class InputDrilldownMeta extends FieldMetaBuilder<InputDrilldownDTO> {
 		fields.setEnabled(
 				InputDrilldownDTO_.customField
 		);
-		fields.setRequired(
-				InputDrilldownDTO_.customField
-		);
 		fields.setDrilldown(
 				InputDrilldownDTO_.customField,
 				DrillDownType.INNER,
