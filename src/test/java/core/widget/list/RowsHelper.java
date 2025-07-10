@@ -114,7 +114,7 @@ public class RowsHelper {
      *
      * @return List String
      */
-    @Step("Getting a list of lines from the current page")
+    @Step("Getting a list of lines from the current page") //TODO убрать getNoFocus
     public List<String> getListRowsByColumnName(String columnName) {
         waitingForTests.getWaitAllElements(widget);
         return helper.getColumnValuesByColumnName(columnName).stream()
