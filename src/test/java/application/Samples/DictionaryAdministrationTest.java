@@ -3,7 +3,6 @@ package application.Samples;
 import application.config.BaseTestForSamples;
 import core.MainPages;
 import core.widget.form.FormWidget;
-import core.widget.list.field.dictionary.DictionaryAdministration;
 import core.widget.list.field.dictionary.FileRow;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -33,11 +32,10 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void create() {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        List<String> listRows = list.getListRows();
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("CLIENT_IMPORTANCE", "TEST", "Test", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("CLIENT_IMPORTANCE", "TEST", "Test", 2);
+        customField.clickButton("Clear Cache");
         MainPages.FirstLevelMenu.click("Example");
         var form = $box.findFormWidgetByTitle("Dictionary Client Importance");
         assertThat(form.dictionary("Dictionary").getOptions()).contains("Test");
@@ -50,10 +48,9 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void delete() {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        List<String> listRows = list.getListRows();
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.delete("CLIENT_IMPORTANCE","TEST");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.delete("CLIENT_IMPORTANCE","TEST");
         MainPages.FirstLevelMenu.click("Example");
         var form = $box.findFormWidgetByTitle("Dictionary Client Importance");
         assertThat(form.dictionary("Dictionary").getOptions()).doesNotContain("Test");
@@ -67,11 +64,10 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void edit() {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        List<String> listRows = list.getListRows();
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("CLIENT_IMPORTANCE", "TEST", "Test", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("CLIENT_IMPORTANCE", "TEST", "Test", 2);
+        customField.clickButton("Clear Cache");
         MainPages.FirstLevelMenu.click("Example");
         var form = $box.findFormWidgetByTitle("Dictionary Client Importance");
         assertThat(form.dictionary("Dictionary").getOptions()).contains("Test");
@@ -84,9 +80,10 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void testExprotFile() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        List<FileRow> listRow = dictionaryAdministration.downloadExportFile("Export");
-        assertTrue(dictionaryAdministration.checkExportSort(listRow));
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        List<FileRow> listRow = customField.downloadExportFile("Export");
+        assertTrue(customField.checkExportSort(listRow));
         for (FileRow row : listRow) {
             assertEquals(row.KEY, row.KEY.toUpperCase(), "KEY must be uppercase: " + row.KEY);
             assertTrue(row.VALUE.matches("([A-Z][a-z\\.\\-]*)( [A-Z][a-z\\.\\-]*)*"), "VALUE format incorrect: " + row.VALUE);
@@ -100,22 +97,23 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void regionsList() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("REGIONS", "TEST_CITY", "TestCity", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("REGIONS", "TEST_CITY", "TestCity", 2);
+        customField.clickButton("Clear Cache");
 
         MainPages.click("Dictionary configurable dictionary basic");
         MainPages.FirstLevelMenu.click("List");
         var listExample = $box.findListWidgetByTitle("List configurable dictionary basic");
         List<String> listRows = listExample.getListRowsByColumnName("Custom Field Lov");
-        var customField = listExample.findRowSegmentByValue("Custom Field Lov", listRows.get(0)).dictionary();
-        assertThat(customField.getOptions()).contains("TestCity");
+        var customFieldList = listExample.findRowSegmentByValue("Custom Field Lov", listRows.get(0)).dictionary();
+        assertThat(customFieldList.getOptions()).contains("TestCity");
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        DictionaryAdministration dictionaryAdministration2 = new DictionaryAdministration();
-        dictionaryAdministration2.delete("REGIONS","TEST_CITY");
-        dictionaryAdministration.clickButton("Clear Cache");
+
+        customField.delete("REGIONS","TEST_CITY");
+        customField.clickButton("Clear Cache");
     }
 
     @Test
@@ -125,23 +123,21 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void regionsForm() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("REGIONS", "TEST_CITY", "TestCity", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("REGIONS", "TEST_CITY", "TestCity", 2);
+        customField.clickButton("Clear Cache");
 
         MainPages.click("Dictionary configurable dictionary basic");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form configurable dictionary basic");
-        var customField = form.dictionary("Custom Field Lov");
-        assertThat(customField.getOptions()).contains("TestCity");
+        var customFieldList = form.dictionary("Custom Field Lov");
+        assertThat(customFieldList.getOptions()).contains("TestCity");
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var listDelete = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration2 = new DictionaryAdministration();
-        dictionaryAdministration2.delete("REGIONS","TEST_CITY");
-        dictionaryAdministration.clickButton("Clear Cache");
+        customField.delete("REGIONS","TEST_CITY");
+        customField.clickButton("Clear Cache");
     }
 
     @Test
@@ -151,24 +147,22 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void sortingList() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("CUSTOM_DICTIONARY_SORTING", "TEST", "test", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("CUSTOM_DICTIONARY_SORTING", "TEST", "test", 2);
+        customField.clickButton("Clear Cache");
 
         MainPages.click("Dictionary configurable dictionary sorting");
         MainPages.FirstLevelMenu.click("List");
         var listExample = $box.findListWidgetByTitle("List Dictionary configurable dictionary sorting");
         List<String> listRows = listExample.getListRowsByColumnName("Custom Field Dictionary");
-        var customField = listExample.findRowSegmentByValue("Custom Field Dictionary", listRows.get(0)).dictionary();
-        assertThat(customField.getOptions()).contains("test");
+        var customFieldList = listExample.findRowSegmentByValue("Custom Field Dictionary", listRows.get(0)).dictionary();
+        assertThat(customFieldList.getOptions()).contains("test");
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var listDelete = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration2 = new DictionaryAdministration();
-        dictionaryAdministration2.delete("CUSTOM_DICTIONARY_SORTING","TEST");
-        dictionaryAdministration.clickButton("Clear Cache");
+        customField.delete("CUSTOM_DICTIONARY_SORTING","TEST");
+        customField.clickButton("Clear Cache");
     }
 
     @Test
@@ -178,10 +172,10 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void filterList() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("CUSTOM_DICTIONARY_FILTRATION", "TEST", "Test", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("CUSTOM_DICTIONARY_FILTRATION", "TEST", "Test", 2);
+        customField.clickButton("Clear Cache");
 
         MainPages.click("Dictionary configurable dictionary filtration");
         var listExample = $box.findListWidgetByTitle("List configurable dictionary filtration");
@@ -190,10 +184,8 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var listDelete = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration2 = new DictionaryAdministration();
-        dictionaryAdministration2.delete("CUSTOM_DICTIONARY_FILTRATION","TEST");
-        dictionaryAdministration.clickButton("Clear Cache");
+        customField.delete("CUSTOM_DICTIONARY_FILTRATION","TEST");
+        customField.clickButton("Clear Cache");
     }
 
     @Test
@@ -203,23 +195,21 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
     void sortingForm() throws IOException {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var list = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration = new DictionaryAdministration();
-        dictionaryAdministration.createValue("CUSTOM_DICTIONARY_SORTING", "TEST", "Test", 2);
-        dictionaryAdministration.clickButton("Clear Cache");
+        var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
+        var customField = list.dictionaryAdministration();
+        customField.createValue("CUSTOM_DICTIONARY_SORTING", "TEST", "Test", 2);
+        customField.clickButton("Clear Cache");
 
         MainPages.click("Dictionary configurable dictionary sorting");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form Dictionary configurable dictionary sorting");
-        var customField = form.dictionary("customFieldDictionary");
-        assertThat(customField.getOptions()).contains("Test");
+        var customFieldList = form.dictionary("customFieldDictionary");
+        assertThat(customFieldList.getOptions()).contains("Test");
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        var listDelete = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration");
-        DictionaryAdministration dictionaryAdministration2 = new DictionaryAdministration();
-        dictionaryAdministration2.delete("CUSTOM_DICTIONARY_SORTING","TEST");
-        dictionaryAdministration.clickButton("Clear Cache");
+        customField.delete("CUSTOM_DICTIONARY_SORTING","TEST");
+        customField.clickButton("Clear Cache");
     }
 
 

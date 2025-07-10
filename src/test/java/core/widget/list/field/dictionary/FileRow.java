@@ -9,7 +9,7 @@ public class FileRow {
     public String VALUE;
     public int DISPLAY_ORDER;
 
-    static FileRow fromCsv(String line) {
+    public static FileRow fromCsv(String line) {
         System.out.println(line);
         String[] parts = line.split(";");
         FileRow r = new FileRow();

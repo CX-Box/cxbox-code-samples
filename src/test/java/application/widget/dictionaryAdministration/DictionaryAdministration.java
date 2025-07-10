@@ -1,6 +1,9 @@
-package core.widget.list.field.dictionary;
+package application.widget.dictionaryAdministration;
 
 import com.codeborne.selenide.*;
+import core.widget.ListHelper;
+import core.widget.groupingHierarchy.GroupingHierarchyWidget;
+import core.widget.list.field.dictionary.FileRow;
 import core.widget.modal.Popup;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -12,18 +15,24 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static application.config.BaseTestForSamples.$box;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static core.widget.modal.Calendar.waitingForTests;
 
-public class DictionaryAdministration {
-    private static final SelenideElement PATH = $box.findDictionaryAdminWidgetByTitle("Dictionary configurable dictionary administration").getWidget();
+public class DictionaryAdministration extends GroupingHierarchyWidget {
+
+    public DictionaryAdministration(String title, SelenideElement widget, ListHelper helper) {
+        super(title, widget, helper);
+    }
+
+    public DictionaryAdministration(SelenideElement widget, String title) {
+        super(widget, title);
+    }
 
     public void selectRowByName(String rowName){
-        PATH.$(By.cssSelector("tr[data-test-widget-list-row-type='GroupingRow'][data-row-key='" + rowName + "']")).$(By.cssSelector("i[aria-label='icon: up'")).click();
+        getWidget().$(By.cssSelector("tr[data-test-widget-list-row-type='GroupingRow'][data-row-key='" + rowName + "']")).$(By.cssSelector("i[aria-label='icon: up'")).click();
     }
 
     public void createValue(String type, String key, String value, Integer order) {
@@ -38,7 +47,7 @@ public class DictionaryAdministration {
     public void delete(String type, String key) {
         selectRowByName(type);
 
-        SelenideElement keyCell = PATH.$$("td")
+        SelenideElement keyCell = getWidget().$$("td")
                 .findBy(text(key))
                 .shouldBe(visible);
 
@@ -58,12 +67,12 @@ public class DictionaryAdministration {
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .click();
 
-       PATH.$("i[aria-label=\"icon: delete\"]").click();
+        getWidget().$("i[aria-label=\"icon: delete\"]").click();
         clickButton("Clear Cache");
     }
 
     public void clickButton(String buttonName){
-        PATH.$(byText(buttonName)).parent().click();
+        getWidget().$(byText(buttonName)).parent().click();
     }
 
     @Step("Validation of the modal window")
@@ -78,7 +87,7 @@ public class DictionaryAdministration {
     }
 
     public void selectType(String value) {
-        PATH.$("i[aria-label='icon: paper-clip']").click();
+        getWidget().$("i[aria-label='icon: paper-clip']").click();
         Optional<Popup> popup = findPopup();
         SelenideElement popupRoot = popup.get().picklistPopup("dictionaryTypeDescPickPickListPopup title").getWidget();
 
@@ -115,17 +124,17 @@ public class DictionaryAdministration {
 
 
     public void fillTheField(String value, String columnName){
-        SelenideElement field = PATH.$("div.ant-row[data-test-field-title='" + columnName + "']");
+        SelenideElement field = getWidget().$("div.ant-row[data-test-field-title='" + columnName + "']");
         field.$("input.ant-input").setValue(value);
     }
 
     public SelenideElement findRowByKey(String key) {
-        return PATH.$(byText(key)).getSelectedOption();
+        return getWidget().$(byText(key)).getSelectedOption();
 
     }
 
     public List<FileRow> downloadExportFile(String buttonName) throws IOException {
-        File csvFile = PATH.$(byText(buttonName)).parent().download(DownloadOptions.using(FileDownloadMode.FOLDER));
+        File csvFile = getWidget().$(byText(buttonName)).parent().download(DownloadOptions.using(FileDownloadMode.FOLDER));
 
         List<String> lines = Files.readAllLines(csvFile.toPath()).stream()
                 .filter(line -> !line.trim().isEmpty())
