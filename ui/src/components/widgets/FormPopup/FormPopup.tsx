@@ -3,13 +3,12 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import Form from '../Form/Form'
 import Popup from '../../Popup/Popup'
 import WidgetTitle from '@components/WidgetTitle/WidgetTitle'
-import { actions } from '@actions'
 import { useAppDispatch, useAppSelector } from '@store'
 import useFormPopupWidth from './hooks/useFormPopupWidth'
-import { useOperationInProgress } from '@hooks/useOperationInProgress'
 import { WidgetFormPopupMeta } from '@interfaces/widget'
 import { OperationPreInvokeCustom } from '@interfaces/operation'
 import styles from './FormPopup.less'
+import { actions } from '@actions'
 
 export interface FormPopupProps {
     meta: WidgetFormPopupMeta
@@ -41,7 +40,6 @@ export function FormPopup(props: FormPopupProps) {
     const preInvoke = popupData?.options?.operation?.preInvoke as OperationPreInvokeCustom | undefined
 
     const popupWidth = useFormPopupWidth(formPopupRef)
-    const isOperationInProgress = useOperationInProgress(bcName)
 
     const onClose = useCallback(() => {
         // to prevent data clearing on the main widget
@@ -89,9 +87,6 @@ export function FormPopup(props: FormPopupProps) {
                     getContainer={null}
                     defaultOkText={preInvoke?.yesText}
                     defaultCancelText={preInvoke?.noText}
-                    okButtonProps={{
-                        loading: isOperationInProgress(popupData?.options?.operation?.operationType)
-                    }}
                 >
                     {bcLoading || forceUpdateRowMetaPending ? (
                         <div data-test-loading={true}>

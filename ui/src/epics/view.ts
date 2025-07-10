@@ -152,18 +152,15 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
 
                     // defaultSaveOperation mean that executed custom autosave and postAction will be ignored
                     // drop pendingChanges and onSuccessAction execute instead
-                    return concat(
-                        of(actions.setOperationFinished({ bcName, operationType })),
-                        defaultSaveOperation
-                            ? action?.payload?.onSuccessAction
-                                ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
-                                : EMPTY
-                            : concat(
-                                  of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
-                                  withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
-                                  ...postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName)
-                              )
-                    )
+                    return defaultSaveOperation
+                        ? action?.payload?.onSuccessAction
+                            ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
+                            : EMPTY
+                        : concat(
+                              of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
+                              withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
+                              ...postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName)
+                          )
                 }),
                 catchError((e: AxiosError) => {
                     console.error(e)
@@ -175,7 +172,6 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                         viewError = operationError?.error?.popup?.[0] as string
                     }
                     return concat(
-                        of(actions.setOperationFinished({ bcName, operationType })),
                         of(actions.sendOperationFail({ bcName, bcUrl, viewError, entityError })),
                         utils.createApiErrorObservable(e, context)
                     )
@@ -304,7 +300,6 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                         const previousCursor = oldData?.[previousElementIndex]?.id ?? newData[0]?.id ?? null
 
                         return concat(
-                            of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                             isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                             of(actions.updateBcData({ bcName, data: newData })),
                             of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
@@ -314,7 +309,6 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                     }
 
                     return concat(
-                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                         isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                         of(actions.bcFetchDataRequest({ bcName, widgetName })),
                         postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
@@ -322,11 +316,7 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                 }),
                 catchError((error: any) => {
                     console.error(error)
-                    return concat(
-                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
-                        of(actions.bcDeleteDataFail({ bcName })),
-                        utils.createApiErrorObservable(error, context)
-                    )
+                    return concat(of(actions.bcDeleteDataFail({ bcName })), utils.createApiErrorObservable(error, context))
                 })
             )
         })
