@@ -8,6 +8,7 @@ import {
     isViewNavigationItem
 } from '@components/ViewNavigation/tab/standard/utils/common'
 import { ViewMetaResponse } from '@interfaces/session'
+import { FIELDS } from '@constants'
 
 export type MenuItemNode = Omit<MenuItem, 'title'> & {
     path?: string
@@ -23,7 +24,7 @@ export const getStandardViewTabs = (
     availableViews: ViewMetaResponse[],
     currentDepth: number,
     activeView: string | undefined,
-    { idKey = 'id' }: { idKey?: string } = {}
+    { idKey = FIELDS.TECHNICAL.ID }: { idKey?: string } = {}
 ) => {
     if (!navigation) {
         return

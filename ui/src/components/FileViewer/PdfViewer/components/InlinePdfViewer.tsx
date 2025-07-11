@@ -5,8 +5,8 @@ import { Spin } from 'antd'
 import Empty from '@components/FileViewer/Empty/Empty'
 
 interface InlinePdfViewerProps {
-    width: string | number
-    height: string | number
+    width: number
+    height: number
     src: string
     isFirefox?: boolean
     hideToolbar?: boolean
@@ -17,7 +17,7 @@ function InlinePdfViewer({ mode, hideToolbar, isFirefox, ...restProps }: InlineP
     const [loading, setLoading] = useState<boolean>(false)
     const objectRef = useRef<HTMLObjectElement>(null)
     const { height, width, src } = restProps
-    const toolbarFirefoxStyle = getInlineFirefoxHideToolbarStyle(isFirefox && hideToolbar && typeof height === 'number', height as number)
+    const toolbarFirefoxStyle = getInlineFirefoxHideToolbarStyle(isFirefox && hideToolbar, height)
 
     useEffect(() => {
         const objectElement = objectRef.current
