@@ -174,19 +174,20 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     return concat(
                         of(actions.setOperationFinished({ bcName, operationType })),
                         defaultSaveOperation
-                        ? action?.payload?.onSuccessAction
-                            ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
-                            : EMPTY
-                        : concat(
-                              of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
-                              isMassOperation && action.payload.onSuccessAction ? of(action.payload.onSuccessAction) : EMPTY,
-                              isMassOperation && responseIds ? of(actions.clearSelectedRows({ bcName })) : EMPTY,
-                              isMassOperation && responseIds ? of(actions.selectRows({ bcName, dataItems: responseIds })) : EMPTY,
-                              withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
-                              ...(isMassOperation
-                                  ? [of(actions.setPendingPostInvoke({ bcName, operationType, postInvoke }))]
-                                  : postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName))
-                          ))
+                            ? action?.payload?.onSuccessAction
+                                ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
+                                : EMPTY
+                            : concat(
+                                  of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
+                                  isMassOperation && action.payload.onSuccessAction ? of(action.payload.onSuccessAction) : EMPTY,
+                                  isMassOperation && responseIds ? of(actions.clearSelectedRows({ bcName })) : EMPTY,
+                                  isMassOperation && responseIds ? of(actions.selectRows({ bcName, dataItems: responseIds })) : EMPTY,
+                                  withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
+                                  ...(isMassOperation
+                                      ? [of(actions.setPendingPostInvoke({ bcName, operationType, postInvoke }))]
+                                      : postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName))
+                              )
+                    )
                 }),
                 catchError((e: AxiosError) => {
                     console.error(e)
