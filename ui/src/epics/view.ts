@@ -5,14 +5,13 @@ import {
     OperationError,
     OperationErrorEntity,
     OperationPostInvokeAny,
-    OperationPostInvokeRefreshBc,
     OperationPostInvokeType,
     OperationPreInvoke,
     OperationTypeCrud,
     PendingValidationFailsFormat,
     utils
 } from '@cxbox-ui/core'
-import { EMPTY_ARRAY } from '@constants'
+import { EMPTY_ARRAY, FIELDS } from '@constants'
 import { actions, sendOperationSuccess, setBcCount } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { AxiosError } from 'axios'
@@ -20,6 +19,7 @@ import { postOperationRoutine } from './utils/postOperationRoutine'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
+import { postInvokeHasRefreshBc } from '@utils/postInvokeHasRefreshBc'
 import { findWidgetHasCount } from '@components/ui/Pagination/utils'
 
 const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
@@ -118,23 +118,47 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
             const filters = state.screen.filters[bcName]
             const sorters = state.screen.sorters[bcName]
             const pendingRecordChange = { ...state.view.pendingDataChanges[bcName]?.[bc?.cursor as string] }
+            const selectedRows = state.view.selectedRows[bcName]
+            const flattenBcOperations = rowMeta?.actions ? utils.flattenOperations(rowMeta?.actions) : undefined
+            const currentOperation = flattenBcOperations?.find(operation => operation.type === operationType)
+            const currentOperationScope = currentOperation?.scope as string
+            const ids =
+                currentOperation?.scope === 'mass' && selectedRows?.length
+                    ? selectedRows.map(
+                          row =>
+                              ({
+                                  id: row.id as string
+                              } as DataItem)
+                      )
+                    : undefined
+            const isMassOperation = currentOperationScope === 'mass'
+
             for (const key in pendingRecordChange) {
                 if (fields?.find(item => item.key === key && item.disabled)) {
                     delete pendingRecordChange[key]
                 }
             }
-            const data = record && { ...pendingRecordChange, vstamp: record.vstamp }
+            let data = record && ({ ...pendingRecordChange, vstamp: record.vstamp } as DataItem)
             const defaultSaveOperation =
                 state.view.widgets?.find(item => item.name === widgetName)?.options?.actionGroups?.defaultSave ===
                     action.payload.operationType && actions.changeLocation.match(action.payload?.onSuccessAction?.type)
             const params: Record<string, string> = {
                 _action: operationType,
+                scope: currentOperationScope,
                 ...utils.getFilters(filters),
                 ...utils.getSorters(sorters)
             }
             if (confirm) {
                 params._confirm = confirm
             }
+
+            if (isMassOperation) {
+                data = {
+                    ...data,
+                    [FIELDS.MASS_OPERATION.MASS_IDS]: ids
+                } as DataItem
+            }
+
             const context = { widgetName: action.payload.widgetName }
             return api.customAction(screenName, bcUrl, data, context, params).pipe(
                 mergeMap(response => {
@@ -142,25 +166,28 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     const dataItem = response.record
                     // TODO: Remove in 2.0.0 in favor of postInvokeConfirm (is this todo needed?)
                     const preInvoke = response.preInvoke as OperationPreInvoke
-                    const postInvokeType = postInvoke?.type || ''
-                    const postInvokeRefreshCurrentBc =
-                        OperationPostInvokeType.refreshBC === postInvokeType && (postInvoke as OperationPostInvokeRefreshBc)?.bc === bcName
-                    const postInvokeTypesWithRefreshBc = (
-                        [OperationPostInvokeType.waitUntil, OperationPostInvokeType.drillDownAndWaitUntil] as string[]
-                    ).includes(postInvokeType)
-                    const withoutBcForceUpdate = postInvokeRefreshCurrentBc || postInvokeTypesWithRefreshBc
+                    const responseIds = response[FIELDS.MASS_OPERATION.MASS_IDS]
+                    const withoutBcForceUpdate = postInvokeHasRefreshBc(bcName, postInvoke) || isMassOperation
 
                     // defaultSaveOperation mean that executed custom autosave and postAction will be ignored
                     // drop pendingChanges and onSuccessAction execute instead
-                    return defaultSaveOperation
-                        ? action?.payload?.onSuccessAction
-                            ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
-                            : EMPTY
-                        : concat(
-                              of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
-                              withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
-                              ...postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName)
-                          )
+                    return concat(
+                        of(actions.setOperationFinished({ bcName, operationType })),
+                        defaultSaveOperation
+                            ? action?.payload?.onSuccessAction
+                                ? concat(of(actions.bcCancelPendingChanges({ bcNames: [bcName] })), of(action.payload.onSuccessAction))
+                                : EMPTY
+                            : concat(
+                                  of(actions.sendOperationSuccess({ bcName, cursor: cursor as string, dataItem })),
+                                  isMassOperation && action.payload.onSuccessAction ? of(action.payload.onSuccessAction) : EMPTY,
+                                  isMassOperation && responseIds ? of(actions.clearSelectedRows({ bcName })) : EMPTY,
+                                  isMassOperation && responseIds ? of(actions.selectRows({ bcName, dataItems: responseIds })) : EMPTY,
+                                  withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
+                                  ...(isMassOperation
+                                      ? [of(actions.setPendingPostInvoke({ bcName, operationType, postInvoke }))]
+                                      : postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName))
+                              )
+                    )
                 }),
                 catchError((e: AxiosError) => {
                     console.error(e)
@@ -172,11 +199,22 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                         viewError = operationError?.error?.popup?.[0] as string
                     }
                     return concat(
+                        of(actions.setOperationFinished({ bcName, operationType })),
                         of(actions.sendOperationFail({ bcName, bcUrl, viewError, entityError })),
                         utils.createApiErrorObservable(e, context)
                     )
                 })
             )
+        })
+    )
+
+const applyPendingPostInvokeEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(actions.applyPendingPostInvoke.match),
+        mergeMap(action => {
+            const { bcName, operationType, widgetName, postInvoke } = action.payload
+
+            return concat(...postOperationRoutine(widgetName ?? '', postInvoke, null as any, operationType, bcName))
         })
     )
 
@@ -300,6 +338,7 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                         const previousCursor = oldData?.[previousElementIndex]?.id ?? newData[0]?.id ?? null
 
                         return concat(
+                            of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                             isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                             of(actions.updateBcData({ bcName, data: newData })),
                             of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
@@ -309,6 +348,7 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                     }
 
                     return concat(
+                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                         isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                         of(actions.bcFetchDataRequest({ bcName, widgetName })),
                         postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
@@ -316,7 +356,11 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                 }),
                 catchError((error: any) => {
                     console.error(error)
-                    return concat(of(actions.bcDeleteDataFail({ bcName })), utils.createApiErrorObservable(error, context))
+                    return concat(
+                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
+                        of(actions.bcDeleteDataFail({ bcName })),
+                        utils.createApiErrorObservable(error, context)
+                    )
                 })
             )
         })
@@ -407,5 +451,6 @@ export const viewEpics = {
     bcDeleteDataEpic,
     forceUpdateRowMeta,
     closeFormPopup,
-    updateRowMetaForRelatedBcEpic
+    updateRowMetaForRelatedBcEpic,
+    applyPendingPostInvokeEpic
 }
