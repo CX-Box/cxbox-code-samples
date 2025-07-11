@@ -15,9 +15,9 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample3188DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldDeleteEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDeleteEntity.customField")
     private String customFieldDelete;
     @SearchParameter(name = "customFieldDeleteEntity.id", provider = LongValueProvider.class)
     private Long customFieldDeleteId;

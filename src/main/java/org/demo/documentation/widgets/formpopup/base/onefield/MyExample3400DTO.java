@@ -28,9 +28,9 @@ public class MyExample3400DTO extends DataResponseDTO {
     private Long customFieldInlinePicklistId;
     @SearchParameter(name = "customFieldRequired")
     private String customFieldRequired;
-    @SearchParameter(name = "customFieldRequired2", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequired2")
     private String customFieldRequired2;
-    @SearchParameter(name = "customFieldInlinePicklistFAEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlinePicklistFAEntity.customField")
     private String customFieldInlinePicklistFA;
     @SearchParameter(name = "customFieldInlinePicklistFAEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlinePicklistFAId;

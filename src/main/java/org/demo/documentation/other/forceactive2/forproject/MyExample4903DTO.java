@@ -17,15 +17,15 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample4903DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "nameFSPPEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "nameFSPPEntity.customField")
     private String nameFSPP;
     @SearchParameter(name = "nameFSPPEntity.id", provider = LongValueProvider.class)
     private Long nameFSPPId;
     @SearchParameter(name = "placePresentation", provider = EnumValueProvider.class)
     private PlacePresentationEnum placePresentation;
-    @SearchParameter(name = "nameOSPEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "nameOSPEntity.customField")
     private String nameOSP;
     @SearchParameter(name = "nameOSPEntity.id", provider = LongValueProvider.class)
     private Long nameOSPId;
@@ -33,18 +33,18 @@ public class MyExample4903DTO extends DataResponseDTO {
     private ObjectTypeEnum objectType;
     @SearchParameter(name = "fileType", provider = EnumValueProvider.class)
     private FileTypeEnum fileType;
-    @SearchParameter(name = "instanceEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "instanceEntity.customField")
     private String instance;
     @SearchParameter(name = "instanceEntity.id", provider = LongValueProvider.class)
     private Long instanceId;
-    @SearchParameter(name = "file", provider = StringValueProvider.class)
+    @SearchParameter(name = "file")
     private String file;
     private String fileId;
     @SearchParameter(name = "channel", provider = EnumValueProvider.class)
     private ChannelEnum channel;
     @SearchParameter(name = "usersName", provider = EnumValueProvider.class)
     private UsersNameEnum usersName;
-    @SearchParameter(name = "nameFileEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "nameFileEntity.customField")
     private String nameFile;
     @SearchParameter(name = "nameFileEntity.id", provider = LongValueProvider.class)
     private Long nameFileId;

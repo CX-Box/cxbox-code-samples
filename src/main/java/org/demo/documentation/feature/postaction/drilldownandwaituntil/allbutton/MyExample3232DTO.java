@@ -14,11 +14,11 @@ import org.demo.documentation.feature.postaction.enums.StatusEnum;
 @NoArgsConstructor
 public class MyExample3232DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "statusResponse", provider = EnumValueProvider.class)
     private StatusEnum statusResponse;
-    @SearchParameter(name = "customFieldForm", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldForm")
     private String customFieldForm;
 
     private Boolean statusResponseFlag;

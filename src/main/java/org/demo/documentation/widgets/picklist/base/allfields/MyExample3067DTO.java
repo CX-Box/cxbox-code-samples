@@ -37,7 +37,7 @@ public class MyExample3067DTO extends DataResponseDTO {
     private String customFieldMultivalueDisplayedKey;
     @SearchParameter(name = "customFieldRadio", provider = EnumValueProvider.class)
     private CustomFieldRadioEnum customFieldRadio;
-    @SearchParameter(name = "customFieldFileUploade", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUploade")
     private String customFieldFileUploade;
     private String customFieldFileUploadeId;
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)

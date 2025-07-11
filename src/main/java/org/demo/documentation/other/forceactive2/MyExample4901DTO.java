@@ -20,19 +20,19 @@ import static org.demo.documentation.fields.main.TextError.LESS_5000;
 @NoArgsConstructor
 public class MyExample4901DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "region", provider = EnumValueProvider.class)
     private RegionEnum region;
     @SearchParameter(name = "country", provider = EnumValueProvider.class)
     private CountryEnum country;
-    @SearchParameter(name = "product", provider = StringValueProvider.class)
+    @SearchParameter(name = "product")
     private String product;
-    @SearchParameter(name = "descriptionProduct", provider = StringValueProvider.class)
+    @SearchParameter(name = "descriptionProduct")
     private String descriptionProduct;
     @SearchParameter(name = "money", provider = BigDecimalValueProvider.class)
     private Long money;
-    @SearchParameter(name = "street", provider = StringValueProvider.class)
+    @SearchParameter(name = "street")
     private String street;
 
     @DecimalMin(value = "5000.00", message = LESS_5000)

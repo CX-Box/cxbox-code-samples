@@ -13,21 +13,21 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 @NoArgsConstructor
 public class MyExample3404DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldPlaceholder", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPlaceholder")
     private String customFieldPlaceholder;
     @SearchParameter(name = "customFieldColor", provider = BigDecimalValueProvider.class)
     private Long customFieldColor;
     @SearchParameter(name = "customFieldColorConst", provider = BigDecimalValueProvider.class)
     private Long customFieldColorConst;
-    @SearchParameter(name = "customFieldColorDrilldown", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorDrilldown")
     private String customFieldColorDrilldown;
-    @SearchParameter(name = "customFieldColorValidation", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorValidation")
     private String customFieldColorValidation;
-    @SearchParameter(name = "customFieldColorSort", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorSort")
     private String customFieldColorSort;
-    @SearchParameter(name = "customFieldRequired", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequired")
     private String customFieldRequired;
 
     public MyExample3404DTO(MyEntity3404 entity) {

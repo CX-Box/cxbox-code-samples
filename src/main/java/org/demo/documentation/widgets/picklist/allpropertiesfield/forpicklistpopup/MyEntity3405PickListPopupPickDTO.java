@@ -14,19 +14,19 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyEntity3405PickListPopupPickDTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "customFieldColorSort", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorSort")
     private String customFieldColorSort;
-    @SearchParameter(name = "customFieldRequired", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequired")
     private String customFieldRequired;
-    @SearchParameter(name = "customFieldColorValidation", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldColorValidation")
     private String customFieldColorValidation;
-    @SearchParameter(name = "customFieldDrilldown", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDrilldown")
     private String customFieldDrilldown;
     @SearchParameter(name = "customFieldColorConst", provider = BigDecimalValueProvider.class)
     private Long customFieldColorConst;
     @SearchParameter(name = "customFieldColor", provider = BigDecimalValueProvider.class)
     private Long customFieldColor;
-    @SearchParameter(name = "customFieldPlaceholder", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPlaceholder")
     private String customFieldPlaceholder;
 
     public MyEntity3405PickListPopupPickDTO(MyEntity3405PickListPopup entity) {

@@ -8,7 +8,6 @@ import org.demo.documentation.other.forceactive2.enums.CountryEnum;
 import org.demo.documentation.other.forceactive2.enums.ProductTypeEnum;
 import org.demo.documentation.other.forceactive2.enums.RegionEnum;
 import org.springframework.stereotype.Service;
-;
 import java.util.Objects;
 
 @Service
@@ -59,8 +58,8 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         }
 
         if (fields.isFieldChangedNow(fields, MyExample4901DTO_.money)) {
-            if (fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()
-                    || fields.getCurrentValue(MyExample4901DTO_.productType).isEmpty() ? false :
+            if (fields.getCurrentValue(MyExample4901DTO_.money).isPresent()
+                    || fields.getCurrentValue(MyExample4901DTO_.productType).isPresent() ? false :
                     fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000
                             && fields.getCurrentValue(MyExample4901DTO_.productType).get().equals(ProductTypeEnum.FAMILY)) {
                 fields.setCurrentValue(MyExample4901DTO_.productType, null);
