@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import RangeTransferButtons from '../RangeTransferButtons/RangeTransferButtons'
+import NumberInput, { NumberInputProps } from '@components/ui/NumberInput/NumberInput'
+import RangeTransferButtons from '@components/ColumnTitle/components/RangeTransferButtons/RangeTransferButtons'
 import { isEmptyValue } from '../utils'
 import { initialFilterValues } from './constants'
 import { DataValue } from '@cxbox-ui/schema'
-import NumberInput, { NumberInputProps } from '@components/ui/NumberInput/NumberInput'
 import styles from './NumberRangeFilter.less'
 
 interface NumberRangeFilterProps extends Omit<NumberInputProps, 'onChange' | 'value'> {

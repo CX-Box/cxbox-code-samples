@@ -200,7 +200,7 @@ public class FileUpload extends BaseRow<File> {
      */
     @Step("Focus on the field/A click in the field.")
     public void setFocusField() { // span[class*="ReadOnlyField__readOnlyField"]
-        if (getRowByName().$("span[class*=\"FileUpload__viewLink\"]").is(Condition.exist)) {
+        if (getRowByName().$("button[class*=\"ant-btn\"]").is(Condition.exist, Duration.ofSeconds(waitingForTests.getTimeout()))) {
             getRowByName()
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                     .doubleClick();
