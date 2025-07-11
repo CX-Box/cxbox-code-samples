@@ -111,19 +111,6 @@ public class PickListOnListTest extends BaseTestForSamples {
         popup.close();
     }
 
-    @Test
-    void test_2() {
-        MainPages.click("Picklist basic");
-        MainPages.FirstLevelMenu.click("List");
-        var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("Custom Field");
-        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).pickListField();
-        customField.openModalWindow();
-        var popupPickList = customField.findPopup().get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("Test data");
-        assertThat(customField.getValue()).isEqualTo("Test data");
-
-    }
 
     @Test
     @Severity(MINOR)

@@ -17,8 +17,8 @@ public class NumberDigits extends BaseString<BigDecimal> {
         super(infoWidget, title, "number");
     }
 
-    private Integer getDigits() {
-        return Integer.parseInt(getValueByAttribute(1, getValueTag(), "digits"));
+    public Integer getDigits() {
+        return getFieldByName().$("span span").getText().split(",")[1].length();
     }
 
     /**
@@ -34,16 +34,16 @@ public class NumberDigits extends BaseString<BigDecimal> {
             String str = getFieldByName()
                     .shouldBe(Condition.exist)
                     .$(getValueTag())
-                    .getValue();
+                    .getText();
             assert str != null;
-            str = str.replace(" ", "").replace(",", ".");
+            str = str.replace(" ", "").replace(",", ".");
             double value = Double.parseDouble(str);
             return BigDecimal.valueOf(value).setScale(getDigits(), RoundingMode.HALF_UP);
         });
     }
 
     public String getValueTag() {
-        return "input";
+        return "div.span.div.span";
     }
 
 }

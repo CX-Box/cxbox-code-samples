@@ -7,7 +7,6 @@ import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -83,20 +82,6 @@ public class PickList extends BaseRow<String> {
     }
 
     /**
-     * Getting the placeholder text
-     *
-     * @return String
-     */
-    @Step("Getting the Placeholder value")
-    public String getPlaceholder() {
-        setFocusField();
-        return getRowByName()
-                .$("div[class=\"ant-select-selection__placeholder\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
-    }
-
-    /**
      * Initialization of the modal window
      *
      * @return Popup class for accessing modal windows
@@ -111,6 +96,20 @@ public class PickList extends BaseRow<String> {
         } else {
             return Optional.empty();
         }
+    }
+
+    /**
+     * Getting the placeholder text
+     *
+     * @return String
+     */
+    @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
+                .$("div[class=\"ant-select-selection__placeholder\"]")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
     }
 
     /**
@@ -138,25 +137,10 @@ public class PickList extends BaseRow<String> {
         }
     }
 
-    /**
-     * Checking an item for inactivity, ReadOnly
-     *
-     * @return boolean true/false
-     */
     @Override
     @Step("Checking the field for \"ReadOnly\"")
     public boolean getReadOnly() {
         setFocusField();
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.exist));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.editable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disappear));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.readonly));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.clickable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.interactable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.focused));
-
 
 
         return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
