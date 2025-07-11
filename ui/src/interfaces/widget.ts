@@ -36,7 +36,8 @@ export enum CustomWidgetTypes {
     Pie1D = 'Pie1D',
     Column2D = 'Column2D',
     Line2D = 'Line2D',
-    DualAxes2D = 'DualAxes2D'
+    DualAxes2D = 'DualAxes2D',
+    FilePreview = 'FilePreview'
 }
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
@@ -88,6 +89,15 @@ export type OperationInfo = {
     mode?: OperationCustomMode | string
 }
 
+export enum EStatsBcCursor {
+    show = 'show',
+    none = 'none'
+}
+
+export type MassOperationOption = {
+    pickMapFieldKey?: string | null
+}
+
 export interface AppWidgetMeta extends WidgetMeta {
     personalFields?: TableSettingsItem | null // TODO make mandatory
     options?: WidgetOptions & {
@@ -124,6 +134,7 @@ export interface AppWidgetMeta extends WidgetMeta {
         }
 
         stats?: {
+            bcCursor?: EStatsBcCursor
             valueFieldKey?: string
             titleFieldKey?: string
             iconFieldKey?: string
@@ -146,6 +157,8 @@ export interface AppWidgetMeta extends WidgetMeta {
             widget: string
         }
         dual2D?: Dual2DConfig
+
+        massOp?: MassOperationOption
     }
 }
 
@@ -191,7 +204,7 @@ export type FileUploadFieldMeta = CoreFileUploadFieldMeta & {
         /**
          * Preview display mode: popup (default), side-panel.
          */
-        mode?: 'popup' | 'side-panel'
+        mode?: 'popup' | 'side-panel' | 'inline'
         /**
          * Includes display of mini-previews for file types for which we can, for the rest there are icons with an eye.
          * The default is false (icons with an eye are shown for all files).

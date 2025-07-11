@@ -1,6 +1,6 @@
 import React from 'react'
-import { Operation, OperationGroup, WidgetTypes } from '@cxbox-ui/core'
-import { Dropdown, Icon, Menu } from 'antd'
+import { Operation, OperationGroup, OperationType, WidgetTypes } from '@cxbox-ui/core'
+import { Dropdown, Icon, Menu, Spin } from 'antd'
 import styles from './OperationsGroup.less'
 import { removeRecordOperationWidgets } from '@interfaces/widget'
 import Button from '../../ui/Button/Button'
@@ -10,26 +10,35 @@ interface OperationsGroupProps {
     onClick: (operation: Operation) => void
     widgetType: WidgetTypes | string
     loading?: boolean
+    getButtonProps?: (operation: Operation) => { disabled?: boolean }
+    isOperationInProgress: (operationType?: OperationType) => boolean
 }
 
-function OperationsGroup({ group, widgetType, onClick, loading }: OperationsGroupProps) {
+function OperationsGroup({ group, widgetType, onClick, loading, getButtonProps, isOperationInProgress }: OperationsGroupProps) {
     const operations = group.actions.filter(i => !(removeRecordOperationWidgets.includes(widgetType) && i.scope === 'record'))
+
     if (!operations.length) {
         return null
     }
+
     const operationsMenu = (
         <div className={styles.overlayContainer}>
             <Menu>
                 {operations.map(operation => {
+                    const inProgress = isOperationInProgress(operation.type)
+
                     return (
                         <Menu.Item
                             key={operation.type}
                             className={styles.subOperation}
                             data-test-widget-action-item={true}
-                            onClick={() => onClick(operation)}
+                            onClick={() => !inProgress && onClick(operation)}
+                            {...getButtonProps?.(operation)}
                         >
-                            {operation.icon && <Icon type={operation.icon} />}
-                            {operation.text}
+                            <Spin spinning={inProgress}>
+                                {operation.icon && <Icon type={operation.icon} />}
+                                {operation.text}
+                            </Spin>
                         </Menu.Item>
                     )
                 })}
