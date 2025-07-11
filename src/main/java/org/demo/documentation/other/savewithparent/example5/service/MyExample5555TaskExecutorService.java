@@ -45,6 +45,7 @@ public class MyExample5555TaskExecutorService extends VersionAwareResponseServic
 				.create(crt -> crt.text("Add"))
 				.delete(del -> del.text("Delete"))
 				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel"))
 				.action(act -> act
 						.action("nextExecutor", "Next")
 						.invoker((bc, dto) ->

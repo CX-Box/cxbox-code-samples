@@ -39,9 +39,7 @@ public class NumberPlaceholderService extends
 	@Override
 	public Actions<NumberPlaceholderDTO> getActions() {
 		return Actions.<NumberPlaceholderDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -37,9 +37,7 @@ public class MyExample3086SuggestionService extends AnySourceVersionAwareRespons
     @Override
     public Actions<MyExample3086SuggestionDTO> getActions() {
         return Actions.<MyExample3086SuggestionDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
 

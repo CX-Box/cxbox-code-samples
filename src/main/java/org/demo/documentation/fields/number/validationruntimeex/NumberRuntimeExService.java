@@ -44,9 +44,7 @@ public class NumberRuntimeExService extends VersionAwareResponseService<NumberRu
 	@Override
 	public Actions<NumberRuntimeExDTO> getActions() {
 		return Actions.<NumberRuntimeExDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

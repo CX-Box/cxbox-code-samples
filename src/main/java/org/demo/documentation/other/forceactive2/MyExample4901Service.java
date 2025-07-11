@@ -1,6 +1,8 @@
 package org.demo.documentation.other.forceactive2;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -15,17 +17,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample4901Service extends VersionAwareResponseService<MyExample4901DTO, MyEntity4901> {
 
     private final MyEntity4901Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4901Meta> meta = MyExample4901Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample4901Service(MyEntity4901Repository repository) {
-        super(MyExample4901DTO.class, MyEntity4901.class, null, MyExample4901Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample4901DTO> doCreateEntity(MyEntity4901 entity, BusinessComponent bc) {

@@ -1,5 +1,7 @@
 package org.demo.documentation.other.forceactive2.anysource;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -19,17 +21,17 @@ import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 
+@SuppressWarnings({"java:S1170", "java:S2387"})
+@RequiredArgsConstructor
 @Service
 public class MyExample3420Service extends AnySourceVersionAwareResponseService<MyExample3420DTO, MyEntity3420OutServiceDTO> {
 
     private final IntegrationConfiguration integrationConfig;
     private final RestTemplate restTemplate;
-
-    public MyExample3420Service(IntegrationConfiguration integrationConfig, RestTemplate restTemplate) {
-        super(MyExample3420DTO.class, MyEntity3420OutServiceDTO.class, MyExample3420Meta.class, MyEntity3420Dao.class);
-        this.integrationConfig = integrationConfig;
-        this.restTemplate = restTemplate;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample3420Meta> meta = MyExample3420Meta.class;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyEntity3420Dao> dao = MyEntity3420Dao.class;
 
 
     @Override
@@ -48,7 +50,7 @@ public class MyExample3420Service extends AnySourceVersionAwareResponseService<M
         }
         if (data.isFieldChanged(MyExample3420DTO_.customFieldDateTime)) {
             LocalDateTime sysdate = LocalDateTime.now();
-            if (data.getCustomFieldDateTime() != null && sysdate.compareTo(data.getCustomFieldDateTime()) < 0) {
+            if (data.getCustomFieldDateTime() != null && sysdate.isBefore(data.getCustomFieldDateTime())) {
                 throw new BusinessException().addPopup(MORE_CURRENT_DATE);
             }
             entity.setCustomFieldDateTime(data.getCustomFieldDateTime());

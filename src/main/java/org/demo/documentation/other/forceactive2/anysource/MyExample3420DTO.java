@@ -26,7 +26,7 @@ public class MyExample3420DTO extends DataResponseDTO {
     private String street;
 
     public MyExample3420DTO(MyEntity3420OutServiceDTO entity) {
-        this.id = entity.getId().toString();
+        this.id = entity.getId();
         this.customField = entity.getCustomField();
         this.customFieldNew = entity.getCustomFieldNew();
         this.customFieldDateTime = entity.getCustomFieldDateTime();

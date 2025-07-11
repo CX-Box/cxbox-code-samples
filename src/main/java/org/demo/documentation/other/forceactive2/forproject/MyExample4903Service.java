@@ -1,6 +1,8 @@
 package org.demo.documentation.other.forceactive2.forproject;
 
 import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -10,17 +12,16 @@ import org.demo.documentation.other.forceactive2.forproject.enums.ChannelEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample4903Service extends VersionAwareResponseService<MyExample4903DTO, MyEntity4903> {
 
     private final MyEntity4903Repository repository;
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample4903Meta> meta = MyExample4903Meta.class;
     @Autowired
     private EntityManager entityManager;
-
-    public MyExample4903Service(MyEntity4903Repository repository) {
-        super(MyExample4903DTO.class, MyEntity4903.class, null, MyExample4903Meta.class);
-        this.repository = repository;
-    }
 
     @Override
     protected CreateResult<MyExample4903DTO> doCreateEntity(MyEntity4903 entity, BusinessComponent bc) {

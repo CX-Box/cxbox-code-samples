@@ -63,9 +63,7 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	@Override
 	public Actions<MyExample420DTO> getActions() {
 		return Actions.<MyExample420DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .action("check", "check")
                         .invoker((bc, dto) -> {

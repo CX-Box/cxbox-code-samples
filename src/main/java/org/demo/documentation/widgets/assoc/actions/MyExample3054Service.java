@@ -50,9 +50,7 @@ public class MyExample3054Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3054DTO> getActions() {
         return Actions.<MyExample3054DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
                 .build();

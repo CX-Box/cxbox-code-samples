@@ -39,9 +39,7 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 	@Override
 	public Actions<MaxInputDTO> getActions() {
 		return Actions.<MaxInputDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

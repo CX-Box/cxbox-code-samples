@@ -72,6 +72,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
                         .withPreAction(confirmWithComment("Save and send on approval"))
                         .invoker((bc, data) -> withApproval())
                 )
+                .create(crt -> crt.text("Create"))
                 .build();
     }
 

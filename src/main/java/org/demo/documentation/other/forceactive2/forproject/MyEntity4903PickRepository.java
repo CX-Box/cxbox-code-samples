@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MyEntity4903PickRepository extends JpaRepository<MyEntity4903Pick, Long>, JpaSpecificationExecutor<MyEntity4903Pick> {
 
-    public MyEntity4903Pick findByCustomField(String customField);
+     MyEntity4903Pick findByCustomField(String customField);
 }

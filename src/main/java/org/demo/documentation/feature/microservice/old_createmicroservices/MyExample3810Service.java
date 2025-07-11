@@ -36,9 +36,7 @@ public class MyExample3810Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3810DTO> getActions() {
         return Actions.<MyExample3810DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
      // --8<-- [end:getActions]  
