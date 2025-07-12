@@ -176,7 +176,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
         customField.setValue(false);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnly("'True'"));
     }
 
@@ -193,7 +193,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         var customField2 = form.checkBox("Custom Field Additional");
         customField.setValue(false);
         customField2.setValue(false);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customField'","'True"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customFieldAdditional'","'True"));
     }
@@ -221,7 +221,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.checkBox("Custom Field");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

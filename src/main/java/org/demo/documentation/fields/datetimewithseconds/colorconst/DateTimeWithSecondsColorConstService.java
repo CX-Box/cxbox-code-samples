@@ -42,9 +42,7 @@ public class DateTimeWithSecondsColorConstService extends
 	@Override
 	public Actions<DateTimeWithSecondsColorConstDTO> getActions() {
 		return Actions.<DateTimeWithSecondsColorConstDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

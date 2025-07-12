@@ -39,9 +39,7 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 	@Override
 	public Actions<InputColorDTO> getActions() {
 		return Actions.<InputColorDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

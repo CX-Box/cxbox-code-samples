@@ -48,8 +48,8 @@ public class SuggestionMicroserviceStoringDataController {
             throw new IllegalArgumentException("Id mustn't be null for update process");
         }
         return ResponseEntity.ok().body(mapper.toDto(mapper.updateEntityByDto(
-                data3081Repository.findById(Long.valueOf(request.getId())).orElseThrow(),
-                request
+                request,
+                data3081Repository.findById(Long.valueOf(request.getId())).orElseThrow()
         )));
     }
 

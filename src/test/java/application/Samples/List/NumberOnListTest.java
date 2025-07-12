@@ -198,7 +198,7 @@ public class NumberOnListTest extends BaseTestForSamples {
         row.number().setValue(123);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.number().getRequiredMessage()).isEqualTo(Constants.InvalidNumber);
     }
 
@@ -217,7 +217,7 @@ public class NumberOnListTest extends BaseTestForSamples {
         row2.number().setValue(123);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.number().getRequiredMessage()).isEqualTo("The field 'customField' cannot be less than 100 000.");
         assertThat(row2.number().getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' cannot be less than 100 000.");
     }
@@ -250,7 +250,7 @@ public class NumberOnListTest extends BaseTestForSamples {
         row.number().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.number().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

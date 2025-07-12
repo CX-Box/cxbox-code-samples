@@ -6,7 +6,6 @@ import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.other.drilldown.option.any.MyExample3424Service;
-import org.demo.documentation.other.drilldown.option.forfilter.MyExample3424ForFilterDTO;
 import org.demo.documentation.other.drilldown.option.forfilter.MyExample3424ForFilterService;
 import org.springframework.stereotype.Component;
 

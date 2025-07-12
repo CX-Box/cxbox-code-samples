@@ -196,9 +196,6 @@ public class TextOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getListRows();
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         row.text().setValue("123");
-        Optional<MenuRow> menuRow = row.findMenuRow();
-        assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
         assertThat(row.text().getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -219,7 +216,7 @@ public class TextOnListTest extends BaseTestForSamples {
         row2.text().setValue("123");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.text().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(row2.text().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }
@@ -254,7 +251,7 @@ public class TextOnListTest extends BaseTestForSamples {
         row.text().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.text().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

@@ -40,9 +40,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 	@Override
 	public Actions<InputPlaceholderDTO> getActions() {
 		return Actions.<InputPlaceholderDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

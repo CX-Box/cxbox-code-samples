@@ -186,7 +186,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
         var customField = form.fileUpload("Custom Field");
         File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -203,7 +203,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
         var customField2 = form.fileUpload("Custom Field Additional");
         customField.setValue("FILE_1.txt");
         customField2.setValue("FILE_1.txt");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }
@@ -232,7 +232,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

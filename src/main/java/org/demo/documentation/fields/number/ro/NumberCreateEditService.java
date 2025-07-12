@@ -39,9 +39,7 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 	@Override
 	public Actions<NumberCreateEditDTO> getActions() {
 		return Actions.<NumberCreateEditDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

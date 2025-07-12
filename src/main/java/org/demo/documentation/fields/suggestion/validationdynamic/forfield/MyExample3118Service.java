@@ -42,9 +42,7 @@ public class MyExample3118Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3118DTO> getActions() {
         return Actions.<MyExample3118DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
     // --8<-- [start:validateFields]

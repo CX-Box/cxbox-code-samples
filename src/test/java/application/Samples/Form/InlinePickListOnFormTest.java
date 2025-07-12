@@ -168,7 +168,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.inlinePickList("Custom Field");
         customField.setValue("Test123 data");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -185,7 +185,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
         var customField2 = form.inlinePickList("Custom Field Additional");
         customField.setValue("Test data 123");
         customField2.setValue("Test data 123");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }

@@ -38,9 +38,7 @@ public class MyExample4001Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample4001DTO> getActions() {
         return Actions.<MyExample4001DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
      // --8<-- [end:getActions]  

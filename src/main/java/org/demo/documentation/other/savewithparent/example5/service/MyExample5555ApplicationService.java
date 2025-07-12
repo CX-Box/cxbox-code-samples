@@ -46,6 +46,7 @@ public class MyExample5555ApplicationService extends
 				.create(crt -> crt.text("Add"))
 				.save(sv -> sv.text("Save"))
 				.delete(dlt -> dlt.text("Delete"))
+				.cancelCreate(ccr -> ccr.text("Cancel"))
 				.build();
 	}
 

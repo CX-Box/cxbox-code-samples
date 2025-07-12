@@ -41,9 +41,7 @@ public class DateTimeWithSecondsRequredService extends
 	@Override
 	public Actions<DateTimeWithSecondsRequredDTO> getActions() {
 		return Actions.<DateTimeWithSecondsRequredDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

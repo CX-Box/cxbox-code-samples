@@ -38,9 +38,7 @@ public class NumberSortingService extends VersionAwareResponseService<NumberSort
 	@Override
 	public Actions<NumberSortingDTO> getActions() {
 		return Actions.<NumberSortingDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

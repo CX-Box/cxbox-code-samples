@@ -169,7 +169,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
         var customField2 = form.radio("Custom Field Additional");
         customField.setValue("Low");
         customField2.setValue("Low");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
         assertThat(customField2.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
@@ -197,7 +197,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

@@ -43,9 +43,7 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act)
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .scope(ActionScope.RECORD)
                         .action("gotolistsecondlevel", "Go to view hidden 2 level")

@@ -46,9 +46,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 	@Override
 	public Actions<NumberBusinessExDTO> getActions() {
 		return Actions.<NumberBusinessExDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

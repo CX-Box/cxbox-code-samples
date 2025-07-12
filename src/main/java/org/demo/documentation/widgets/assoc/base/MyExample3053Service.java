@@ -76,9 +76,7 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
                 .associate(ast -> ast
                         .text("Popup Assoc")
                 )
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
                 .build();

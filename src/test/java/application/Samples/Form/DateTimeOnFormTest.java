@@ -174,7 +174,7 @@ public class DateTimeOnFormTest extends BaseTestForSamples {
         var customField = form.dateTime("Custom Field");
         LocalDateTime dateTime = LocalDateTime.of(1999, 4, 7, 17, 35);
         customField.setValue(dateTime);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -192,7 +192,7 @@ public class DateTimeOnFormTest extends BaseTestForSamples {
         var customField2 = form.dateTime("Custom Field Additional");
         customField.setValue(dateTime);
         customField2.setValue(dateTime);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
     }

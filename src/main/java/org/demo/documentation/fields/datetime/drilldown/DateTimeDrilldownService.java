@@ -40,9 +40,7 @@ public class DateTimeDrilldownService extends VersionAwareResponseService<DateTi
 	@Override
 	public Actions<DateTimeDrilldownDTO> getActions() {
 		return Actions.<DateTimeDrilldownDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

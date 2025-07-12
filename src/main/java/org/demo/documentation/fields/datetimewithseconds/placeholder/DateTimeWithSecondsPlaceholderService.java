@@ -40,9 +40,7 @@ public class DateTimeWithSecondsPlaceholderService extends
 	@Override
 	public Actions<DateTimeWithSecondsPlaceholderDTO> getActions() {
 		return Actions.<DateTimeWithSecondsPlaceholderDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

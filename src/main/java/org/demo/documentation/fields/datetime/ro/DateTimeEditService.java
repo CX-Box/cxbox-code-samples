@@ -41,9 +41,7 @@ public class DateTimeEditService extends VersionAwareResponseService<DateTimeEdi
 	@Override
 	public Actions<DateTimeEditDTO> getActions() {
 		return Actions.<DateTimeEditDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

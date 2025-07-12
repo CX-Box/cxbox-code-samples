@@ -51,9 +51,7 @@ public class InputValidationBusinessExceptionService extends
 	@Override
 	public Actions<InputValidationBusinessExceptionDTO> getActions() {
 		return Actions.<InputValidationBusinessExceptionDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

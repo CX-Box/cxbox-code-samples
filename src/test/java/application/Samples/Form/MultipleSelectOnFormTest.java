@@ -79,7 +79,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         customField.clear();
         customField.addValue(Set.of("Middle"));
         customField.addValue(Set.of("Low"));
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getValue()).isEqualTo(Set.of("Low", "Middle"));
     }
 
@@ -175,7 +175,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -190,7 +190,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         var customField2 = form.multipleSelect("Custom Field Additional");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
         assertThat(customField2.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
@@ -220,7 +220,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         var customField = form.multipleSelect("Custom Field");
         customField.addValue(Set.of("Low", "Middle"));
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
@@ -237,7 +237,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         var customField = form.multipleSelect("Custom Field");
         customField.clear();
         customField.addValue(Set.of("Middle"));
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getValue()).isEqualTo(Set.of("Middle"));
         assertThat(customField.getOptions()).isEqualTo(List.of("High", "Middle", "Low"));
     }
@@ -286,7 +286,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multipleSelect("Custom Field");
         customField.setValue(Set.of("Middle"));
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getValue()).isEqualTo(Set.of("Middle"));
     }
 

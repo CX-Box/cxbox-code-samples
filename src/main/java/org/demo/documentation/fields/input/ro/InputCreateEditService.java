@@ -40,9 +40,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 	@Override
 	public Actions<InputCreateEditDTO> getActions() {
 		return Actions.<InputCreateEditDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

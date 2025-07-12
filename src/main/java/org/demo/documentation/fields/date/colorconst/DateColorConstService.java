@@ -39,9 +39,7 @@ public class DateColorConstService extends VersionAwareResponseService<DateColor
 	@Override
 	public Actions<DateColorConstDTO> getActions() {
 		return Actions.<DateColorConstDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

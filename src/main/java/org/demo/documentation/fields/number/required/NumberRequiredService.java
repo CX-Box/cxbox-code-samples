@@ -38,9 +38,7 @@ public class NumberRequiredService extends VersionAwareResponseService<NumberReq
 	@Override
 	public Actions<NumberRequiredDTO> getActions() {
 		return Actions.<NumberRequiredDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

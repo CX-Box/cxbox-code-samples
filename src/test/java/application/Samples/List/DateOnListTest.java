@@ -144,7 +144,7 @@ public class DateOnListTest extends BaseTestForSamples {
         row.date().clearIcon();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -189,10 +189,10 @@ public class DateOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getNoFocusValues("Custom Field");
         LocalDate date = LocalDate.of(2023, 3, 7);
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
-        row.date().setValue(date);
+        row.date().setValueManual(date);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.date().getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -214,7 +214,7 @@ public class DateOnListTest extends BaseTestForSamples {
         row2.date().setValue(date);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.date().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(row2.date().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
     }
@@ -274,7 +274,11 @@ public class DateOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("custom Field");
         var customField = list.findRowSegmentByValue("custom Field", listRows.get(0)).date();
+        var row = list.findRowSegmentByValue("custom Field", listRows.get(0));
         customField.clearIcon();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

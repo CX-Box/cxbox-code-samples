@@ -13,6 +13,7 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.action.ActionsExt;
 
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
+import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,11 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3400DTO> doUpdateEntity(MyEntity3400 entity, MyExample3400DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3400DTO_.customFieldFA2, entity::setCustomFieldFA2);
-        setIfChanged(data, MyExample3400DTO_.customFieldFA, entity::setCustomFieldFA);
+        if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistFAId)) {
+            entity.setCustomFieldInlinePicklistFAEntity(data.getCustomFieldInlinePicklistFAId() != null
+                    ? entityManager.getReference(MyEntity3400InlinePicklistFA.class, data.getCustomFieldInlinePicklistFAId())
+                    : null);
+        }
         setIfChanged(data, MyExample3400DTO_.customFieldRequired2, entity::setCustomFieldRequired2);
         setIfChanged(data, MyExample3400DTO_.customFieldRequired, entity::setCustomFieldRequired);
         if (data.isFieldChanged(MyExample3400DTO_.customFieldInlinePicklistId)) {
@@ -68,6 +72,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
                         .withPreAction(confirmWithComment("Save and send on approval"))
                         .invoker((bc, data) -> withApproval())
                 )
+                .create(crt -> crt.text("Create"))
                 .build();
     }
 

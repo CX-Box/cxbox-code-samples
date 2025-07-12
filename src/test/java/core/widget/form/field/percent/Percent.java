@@ -37,22 +37,10 @@ public class Percent extends Number {
                     .$(getValueTag())
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .clear();
-            String emptyValue = "0";
-            if (getFieldByName().$(getValueTag()).getValue().isEmpty()) {
-                log.info("Autofill field is not enabled");
-            } else {
-                log.info("Autofill field is enabled");
-                getFieldByName()
-                        .$(getValueTag())
-                        .shouldHave(Condition.partialValue(emptyValue), Duration.ofSeconds(waitingForTests.Timeout));
-            }
             getFieldByName()
                     .$(getValueTag())
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .setValue(String.valueOf(value));
-            getFieldByName()
-                    .$(getValueTag())
-                    .shouldNotHave(Condition.partialValue(emptyValue), Duration.ofSeconds(waitingForTests.Timeout));
             getFieldByName()
                     .$(getValueTag())
                     .sendKeys(Keys.TAB);

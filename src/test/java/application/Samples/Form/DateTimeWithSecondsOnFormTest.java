@@ -116,7 +116,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
         var customField = form.dateTimeWithSeconds("Custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 9, 10, 10, 10, 10);
         customField.setValue(dateTime);
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -176,7 +176,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
         var customField = form.dateTimeWithSeconds("Custom Field");
         LocalDateTime dateTime = LocalDateTime.of(2020, 11, 10, 10, 10, 10);
         customField.setValue(dateTime);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -194,7 +194,7 @@ public class DateTimeWithSecondsOnFormTest extends BaseTestForSamples {
         LocalDateTime dateTime = LocalDateTime.of(1999, 11, 10, 10, 10, 10);
         customField.setValue(dateTime);
         customField2.setValue(dateTime);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
     }

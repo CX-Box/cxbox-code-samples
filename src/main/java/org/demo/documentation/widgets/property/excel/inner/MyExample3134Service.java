@@ -101,9 +101,7 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3134DTO> getActions() {
         return Actions.<MyExample3134DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
                 .build();

@@ -10,11 +10,9 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.drilldown.DrillDownExt;
-import org.demo.controller.CxboxRestController;
 import org.demo.documentation.other.drilldown.option.CxboxMyExample3421Controller;
 import org.springframework.stereotype.Service;
 
-import java.net.URLEncoder;
 
 
 @SuppressWarnings({"java:S1170", "java:S2387"})

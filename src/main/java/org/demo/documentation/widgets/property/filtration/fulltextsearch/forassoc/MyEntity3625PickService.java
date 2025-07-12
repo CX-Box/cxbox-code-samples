@@ -51,9 +51,7 @@ public class MyEntity3625PickService extends VersionAwareResponseService<MyEntit
     @Override
     public Actions<MyEntity3625PickDTO> getActions() {
         return Actions.<MyEntity3625PickDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
     // --8<-- [end:getActions]

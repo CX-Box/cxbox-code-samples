@@ -46,9 +46,7 @@ public class DateValidationRuntimeExEntityService extends
 	@Override
 	public Actions<DateValidationRuntimeExEntityDTO> getActions() {
 		return Actions.<DateValidationRuntimeExEntityDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

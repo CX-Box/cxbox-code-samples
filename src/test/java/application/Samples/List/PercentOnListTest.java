@@ -138,7 +138,7 @@ public class PercentOnListTest extends BaseTestForSamples {
         row.percent().setValue(3);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -160,7 +160,7 @@ public class PercentOnListTest extends BaseTestForSamples {
         row.percent().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -205,7 +205,7 @@ public class PercentOnListTest extends BaseTestForSamples {
         row.percent().setValue(3);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.percent().getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%."));
     }
 
@@ -224,14 +224,14 @@ public class PercentOnListTest extends BaseTestForSamples {
         row.percent().setValue(3);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.percent().getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%"));
 
         List<String> customFieldAdditional = list.getNoFocusValues("Custom Field Additional");
         var row2 = list.findRowSegmentByValue("Custom Field Additional", customFieldAdditional.get(0));
         Optional<MenuRow> menuRow2 = row2.findMenuRow();
         assertThat(menuRow2).isPresent();
-        menuRow2.get().clickOption("save");
+        menuRow2.get().clickOption("Save");
         row2.percent().setValue(3);
         assertThat(row2.percent().getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%"));
     }
@@ -270,7 +270,7 @@ public class PercentOnListTest extends BaseTestForSamples {
         row.percent().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.percent().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

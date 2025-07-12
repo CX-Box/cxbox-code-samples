@@ -38,9 +38,7 @@ public class MyExample3161Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3161DTO> getActions() {
         return Actions.<MyExample3161DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .action("refreshParent", "refresh Parent bc")
                         .invoker(this::customSaveInvoker)

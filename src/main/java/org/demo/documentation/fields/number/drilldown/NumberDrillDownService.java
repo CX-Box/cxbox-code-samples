@@ -37,9 +37,7 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 	@Override
 	public Actions<NumberDrillDownDTO> getActions() {
 		return Actions.<NumberDrillDownDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

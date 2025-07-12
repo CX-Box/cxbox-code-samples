@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
 
 @Getter
@@ -14,11 +13,11 @@ import org.demo.documentation.feature.postaction.enums.StatusEnum;
 @NoArgsConstructor
 public class MyExample3234DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
     @SearchParameter(name = "statusResponse", provider = EnumValueProvider.class)
     private StatusEnum statusResponse;
-    @SearchParameter(name = "customFieldForm", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldForm")
     private String customFieldForm;
 
     private Boolean statusResponseFlag;

@@ -47,9 +47,7 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 	@Override
 	public Actions<DateTimeWithSecondsValidationRuntimeExEntityDTO> getActions() {
 		return Actions.<DateTimeWithSecondsValidationRuntimeExEntityDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
