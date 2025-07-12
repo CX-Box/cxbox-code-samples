@@ -205,7 +205,7 @@ public class Calendar {
             TIME_PANEL_CALENDAR
                     .$("input")
                     .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                    .sendKeys(Keys.ESCAPE);
+                    .sendKeys(Keys.ENTER);
         });
 
     }

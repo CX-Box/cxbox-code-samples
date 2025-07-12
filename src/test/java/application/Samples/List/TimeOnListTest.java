@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.config.BaseTestForSamples;
 import core.MainPages;
+import core.widget.TestingTools.Constants;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -9,11 +10,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
+import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("List. Checking the basic functions for the Time")
@@ -48,6 +51,19 @@ public class TimeOnListTest extends BaseTestForSamples {
     }
 
     @Test
+    @Tag("Positive")
+    @DisplayName("A test to check the field for \"Read-only\"")
+    @Description("The test checks for the disabled attribute.")
+    void readonly() {
+        MainPages.click("Time readonly");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        List<String> listRows = list.getNoFocusValues("Custom Field");
+        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).time("HH:mm:ss");
+        assertThat(customField.getReadOnly()).isTrue();
+    }
+
+    @Test
     @Severity(CRITICAL)
     @Tag("Positive")
     @DisplayName("A test for setting a value in a field")
@@ -62,6 +78,7 @@ public class TimeOnListTest extends BaseTestForSamples {
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
+
 
     @Test
     @Severity(CRITICAL)
@@ -96,6 +113,21 @@ public class TimeOnListTest extends BaseTestForSamples {
     }
 
     @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Filtering test")
+    @Description("Filtering by the specified column.")
+    void filtration() {
+        MainPages.click("Time filtration");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        LocalDateTime date = LocalDateTime.of(2021, 3, 7, 5, 0);
+        LocalDateTime date2 = LocalDateTime.of(2023, 3, 7, 8, 0);
+        list.findFilterColumn("Custom Field h:mm").timeFilter("h:mm").setFilter(date, date2);
+        assertThat(list.getNoFocusValues("Custom Field h:mm").get(0)).isEqualTo("05:58");
+    }
+
+    @Test
     @Tag("Positive")
     @DisplayName("The DrillDown test")
     @Description("Checking the url before the transition and after the transition/click on a special element")
@@ -106,6 +138,51 @@ public class TimeOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).time("HH:mm:ss");
         assertThat(customField.drillDown()).isTrue();
+    }
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Sorting test")
+    @Description("Sorting by the specified column.")
+    void sorting() {
+        MainPages.click("Time sorting");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+       assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+                "05:58:54",
+                "10:58:54",
+                "12:28:54",
+                "12:58:54"));
+
+        list.setSorting("Custom Field h:mm:ss");
+        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+                "12:58:54",
+                "12:28:54",
+                "10:58:54",
+                "05:58:54"));
+
+        list.setSorting("Custom Field h:mm:ss");
+        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+                "05:58:54",
+                "10:58:54",
+                "12:28:54",
+                "12:58:54"));
+    }
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Negative")
+    @DisplayName("Required Message text Verification field test")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    void required() {
+        MainPages.click("Time required");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        List<String> listRows = list.getNoFocusValues("Custom Field");
+        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).time("HH:mm:ss");
+        customField.clearIcon();
+        assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
 }

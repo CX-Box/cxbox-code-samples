@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
 import core.MainPages;
+import core.widget.TestingTools.Constants;
 import core.widget.form.FormWidget;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -10,10 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
+import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -44,6 +47,18 @@ public class TimeOnFormTest  extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.time("Custom Field", "HH:mm:ss");
         assertThat(customField.getHexColor()).isNull();
+    }
+
+    @Test
+    @Tag("Positive")
+    @DisplayName("A test to check the field for \"Read-only\"")
+    @Description("The test checks for the disabled attribute")
+    void readonly() {
+        MainPages.click("Time readonly");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.time("Custom Field", "HH:mm:ss");
+        assertThat(customField.getReadOnly()).isTrue();
     }
 
     @Test
@@ -92,6 +107,19 @@ public class TimeOnFormTest  extends BaseTestForSamples {
     }
 
     @Test
+    @Severity(MINOR)
+    @Tag("Negative")
+    @DisplayName("Filtering test")
+    @Description("Filtering is not available for the Form widget")
+    void filtration() {
+        MainPages.click("Date filtration");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.date("Custom Field");
+        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
     @Tag("Positive")
     @DisplayName("The DrillDown test")
     @Description("Checking the url before the transition and after the transition/click on a special element")
@@ -99,8 +127,22 @@ public class TimeOnFormTest  extends BaseTestForSamples {
         MainPages.click("Time drilldown");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.date("Custom Field");
+        var customField = form.time("Custom Field", "HH:mm a");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Negative")
+    @DisplayName("Required Message text Verification field test")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
+    void required() {
+        MainPages.click("Time required");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.time("Custom Field", "HH:mm:ss");
+        customField.clearIcon();
+        assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
 }
