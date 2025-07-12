@@ -175,7 +175,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -190,7 +190,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         var customField2 = form.multiValue("Custom Field Additional");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredField);
         assertThat(customField2.getRequiredMessage()).isEqualTo(Constants.RequiredField);
     }
@@ -219,7 +219,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.multiValue("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
@@ -238,7 +238,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         assertThat(customField.findPopup()).isPresent();
         popupAssocListPopup.clear();
         popupAssocListPopup.close();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

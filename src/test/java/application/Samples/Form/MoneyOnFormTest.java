@@ -114,7 +114,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -133,7 +133,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -174,7 +174,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         var customField = form.money("Custom Field");
         BigDecimal number = new BigDecimal("1343.23");
         customField.setValue(number);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.InvalidNumberDigits);
     }
 
@@ -192,7 +192,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         BigDecimal number = new BigDecimal("1343.23");
         customField.setValue(number);
         customField2.setValue(number);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textInvalidMoney("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textInvalidMoney("customFieldAdditional"));
     }
@@ -222,7 +222,7 @@ public class MoneyOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.money("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

@@ -198,7 +198,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
         row.inlinePickList().setValue("Test123 data");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.inlinePickList().getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -217,7 +217,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
         var row2 = list.findRowSegmentByValue("Custom Field Additional", listRows.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.inlinePickList().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(row2.inlinePickList().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }
@@ -247,7 +247,11 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).inlinePickList();
+        var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         customField.clear();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

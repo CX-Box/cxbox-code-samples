@@ -236,7 +236,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.pickListField().getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
     }
 
@@ -251,7 +251,7 @@ public class PickListOnListTest extends BaseTestForSamples {
         var row2 = list.findRowSegmentByValue("Custom Field Additional", listRows2.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.pickListField().getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
         assertThat(row2.pickListField().getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
@@ -284,7 +284,7 @@ public class PickListOnListTest extends BaseTestForSamples {
         row.pickListField().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.pickListField().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

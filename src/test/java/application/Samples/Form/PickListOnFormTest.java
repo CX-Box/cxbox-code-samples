@@ -199,8 +199,8 @@ public class PickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         var customField2 = form.pickList("Custom Field Additional");
-        form.clickButton("save");
-        assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters."); //Don't work, data-test-field-type=inline picklist at this version
+        form.clickButton("Save");
+        assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
         assertThat(customField2.getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
 
@@ -228,7 +228,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.pickList("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

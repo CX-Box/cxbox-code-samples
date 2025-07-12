@@ -221,7 +221,7 @@ public class Calendar {
 
     }
 
-    private static String formattedDate(LocalDate date) {
+    public static String formattedDate(LocalDate date) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             return date.format(formatter);
@@ -230,7 +230,7 @@ public class Calendar {
         }
     }
 
-    private static String formattedDateTime(LocalDateTime date) {
+    public static String formattedDateTime(LocalDateTime date) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             return date.format(formatter);

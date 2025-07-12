@@ -1,6 +1,8 @@
 package core.widget.list.field.date;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
@@ -8,6 +10,7 @@ import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,10 +19,15 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Selenide.$;
+import static core.widget.modal.Calendar.formattedDate;
+
 public class Date extends BaseRow<LocalDate> {
     public Date(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean sort, Boolean filter) {
         super(listWidget, title, "date", id, listHelper, sort, filter);
     }
+
+    private static final SelenideElement PANEL_CALENDAR = $("div[class=\"ant-calendar-panel\"]");
 
     /**
      * Date input: year, month, day
@@ -34,6 +42,28 @@ public class Date extends BaseRow<LocalDate> {
         clearIcon();
         getRowByName().click();
         Calendar.setDate(value);
+    }
+
+    @Step("Setting the {value} in the field")
+    public void setValueManual(LocalDate value) {
+        setFocusField();
+        clearIcon();
+        getRowByName().click();
+        PANEL_CALENDAR
+                .$("input")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .click();
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
+        PANEL_CALENDAR
+                .$("input")
+                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
+                .setValue(formattedDate(value));
+        Selenide.sleep(200);
+        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+            return;
+        }
     }
 
     /**

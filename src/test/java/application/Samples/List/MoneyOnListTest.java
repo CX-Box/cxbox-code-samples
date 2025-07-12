@@ -205,7 +205,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
         row.money().setValue(number);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.money().getRequiredMessage()).isEqualTo(Constants.InvalidNumberDigits);
     }
 
@@ -226,7 +226,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
         row2.money().setValue(number);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.money().getRequiredMessage()).isEqualTo(Text.textInvalidMoney("customField"));
         assertThat(row2.money().getRequiredMessage()).isEqualTo(Text.textInvalidMoney("customFieldAdditional"));
     }
@@ -259,7 +259,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
         row.money().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.money().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

@@ -199,7 +199,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.dictionary().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -219,7 +219,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         row.dictionary().setFocusField();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.dictionary().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
         assertThat(row2.dictionary().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
@@ -249,7 +249,11 @@ public class DictionaryOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getListRows();
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).dictionary();
+        var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         customField.clear();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

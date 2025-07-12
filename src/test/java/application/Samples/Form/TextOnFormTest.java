@@ -168,7 +168,7 @@ public class TextOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.setValue("123");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -185,7 +185,7 @@ public class TextOnFormTest extends BaseTestForSamples {
         var customField2 = form.text("Custom FieldAdditional");
         customField.setValue("123");
         customField2.setValue("123");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }
@@ -214,7 +214,7 @@ public class TextOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.text("Custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

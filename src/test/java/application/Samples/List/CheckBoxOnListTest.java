@@ -220,7 +220,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
         row.checkbox().setValue(false);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.checkbox().getRequiredMessage()).isEqualTo(Text.textOnly("'True'"));
     }
 
@@ -240,7 +240,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
         row2.checkbox().setValue(false);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.checkbox().getRequiredMessage()).isEqualTo(Text.textOnlyTrue("customField"));
         assertThat(row2.checkbox().getRequiredMessage()).isEqualTo(Text.textOnlyTrue("customFieldAdditional"));
     }
@@ -273,7 +273,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
         var row = list.findRowSegmentById("Custom Field", listRowsId.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.checkbox().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

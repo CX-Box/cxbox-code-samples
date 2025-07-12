@@ -215,7 +215,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
         fileUpload.setValue(fileFromResource);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.fileUpload().getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -241,7 +241,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
         row2.fileUpload().setValue(fileFromResource1);
         Optional<MenuRow> menuRow2 = row2.findMenuRow();
         assertThat(menuRow2).isPresent();
-        menuRow2.get().clickOption("save");
+        menuRow2.get().clickOption("Save");
         assertThat(row.fileUpload().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(row2.fileUpload().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }
@@ -277,7 +277,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
         row.fileUpload().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.fileUpload().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
