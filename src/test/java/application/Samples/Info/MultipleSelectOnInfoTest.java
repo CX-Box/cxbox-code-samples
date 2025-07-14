@@ -63,7 +63,7 @@ public class MultipleSelectOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.multipleSelect("Custom Field");
-        assertThat(customField.getValue()).isEqualTo("Low");
+        assertThat(customField.getValue()).isEqualTo("Middle");
     }
 
     @Test
