@@ -81,6 +81,16 @@ public class PickList extends BaseRow<String> {
                         Duration.ofSeconds(waitingForTests.Timeout)).click();
     }
 
+
+   /* @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
+                .$("div[class=\"ant-select-selection__placeholder\"]")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
+    }*/
+
     /**
      * Getting the placeholder text
      *
@@ -90,9 +100,9 @@ public class PickList extends BaseRow<String> {
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
-                .$("div[class=\"ant-select-selection__placeholder\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
+            .$("input")
+            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+            .getAttribute("placeholder");
     }
 
     /**
@@ -110,20 +120,6 @@ public class PickList extends BaseRow<String> {
         } else {
             return Optional.empty();
         }
-    }
-
-    /**
-     * Getting the placeholder text
-     *
-     * @return String
-     */
-    @Step("Getting the Placeholder value")
-    public String getPlaceholder() {
-        setFocusField();
-        return getRowByName()
-                .$("input")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getAttribute("placeholder");
     }
 
     /**
