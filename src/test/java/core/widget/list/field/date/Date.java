@@ -1,8 +1,6 @@
 package core.widget.list.field.date;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import core.widget.ListHelper;
 import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
@@ -10,8 +8,7 @@ import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-
+import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,15 +16,12 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.codeborne.selenide.Selenide.$;
-import static core.widget.modal.Calendar.formattedDate;
 
+@Slf4j
 public class Date extends BaseRow<LocalDate> {
     public Date(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean sort, Boolean filter) {
         super(listWidget, title, "date", id, listHelper, sort, filter);
     }
-
-    private static final SelenideElement PANEL_CALENDAR = $("div[class=\"ant-calendar-panel\"]");
 
     /**
      * Date input: year, month, day
@@ -44,27 +38,6 @@ public class Date extends BaseRow<LocalDate> {
         Calendar.setDate(value);
     }
 
-    @Step("Setting the {value} in the field")
-    public void setValueManual(LocalDate value) {
-        setFocusField();
-        clearIcon();
-        getRowByName().click();
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-        PANEL_CALENDAR
-                .$("input")
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .setValue(formattedDate(value));
-        Selenide.sleep(200);
-        if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
-            return;
-        }
-    }
 
     /**
      * Getting the date in the data type -  LocalDate
@@ -95,10 +68,14 @@ public class Date extends BaseRow<LocalDate> {
     public void clearIcon() {
         setFocusField();
         getRowByName()
-                .$("i[aria-label=\"icon: close-circle\"]")
-                .hover()
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+                .hover();
+        if(getRowByName().$("i[aria-label=\"icon: close-circle\"]")
+                .is(Condition.enabled, Duration.ofSeconds(2))) {
+            getRowByName()
+                    .$("i[aria-label=\"icon: close-circle\"]")
+                    .hover()
+                    .click();
+        }
     }
 
     /**
@@ -124,6 +101,21 @@ public class Date extends BaseRow<LocalDate> {
             return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Focus on the field/A click in the field..
+     */
+    @Step("Focus on the segment")
+    public void setFocusField() {
+        if (getRowByName().$("span[class*=\"ReadOnlyField\"]").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
+            log.info("Focus on the field");
+            getRowByName()
+                    .parent()
+                    .click();
+        } else {
+            log.error("Focus on the field didn't work out");
         }
     }
 }

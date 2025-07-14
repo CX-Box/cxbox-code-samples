@@ -181,7 +181,7 @@ public class DateOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message validation test for one field")
-     @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
+    @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
     void fieldLevelValidationAnnotation() {
         MainPages.click("Date validation field level annotation");
         MainPages.FirstLevelMenu.click("List");
@@ -189,7 +189,7 @@ public class DateOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getNoFocusValues("Custom Field");
         LocalDate date = LocalDate.of(2023, 3, 7);
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
-        row.date().setValueManual(date);
+        row.date().setValue(date);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
         menuRow.get().clickOption("Save");
