@@ -43,9 +43,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$("input")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getAttribute("value");
+            .$("div[class=\"ant-select-selection-selected-value\"]")
+            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+            .text();
     }
 
     @Override
@@ -82,15 +82,6 @@ public class PickList extends BaseRow<String> {
     }
 
 
-   /* @Step("Getting the Placeholder value")
-    public String getPlaceholder() {
-        setFocusField();
-        return getRowByName()
-                .$("div[class=\"ant-select-selection__placeholder\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .text();
-    }*/
-
     /**
      * Getting the placeholder text
      *
@@ -100,10 +91,19 @@ public class PickList extends BaseRow<String> {
     public String getPlaceholder() {
         setFocusField();
         return getRowByName()
+                .$("div[class=\"ant-select-selection__placeholder\"]")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
+    }
+
+   /* @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
             .$("input")
             .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
             .getAttribute("placeholder");
-    }
+    }*/
 
     /**
      * Initialization of the modal window
