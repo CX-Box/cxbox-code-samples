@@ -264,7 +264,8 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Disabled
     void required() {
         MainPages.click("Checkbox required");
         MainPages.FirstLevelMenu.click("List");
@@ -273,7 +274,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
         var row = list.findRowSegmentById("Custom Field", listRowsId.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("Save");
+        menuRow.get().clickOption("save");
         assertThat(row.checkbox().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

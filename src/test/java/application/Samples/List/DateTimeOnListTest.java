@@ -186,7 +186,10 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getListRows();
         var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
         LocalDateTime dateTime = LocalDateTime.of(1999, 4, 7, 17, 35);
-        row.dateTime().setValueManual(dateTime);
+        row.dateTime().setValue(dateTime);
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
         assertThat(row.dateTime().getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
