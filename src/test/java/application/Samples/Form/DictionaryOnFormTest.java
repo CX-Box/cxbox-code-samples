@@ -173,7 +173,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -188,7 +188,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.dictionary("Custom Field");
         var customField2 = form.dictionary("Custom Field Additional");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
         assertThat(customField2.getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }

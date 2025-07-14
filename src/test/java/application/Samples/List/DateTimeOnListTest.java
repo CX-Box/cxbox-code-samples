@@ -189,7 +189,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         row.dateTime().setValue(dateTime);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.dateTime().getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -211,7 +211,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         row2.dateTime().setValue(dateTime);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.dateTime().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(row2.dateTime().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
     }
@@ -272,7 +272,11 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getListRows();
         var customField = list.findRowSegmentByValue("custom Field", listRows.get(0)).dateTime();
+        var row = list.findRowSegmentByValue("custom Field", listRows.get(0));
         customField.clearIcon();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

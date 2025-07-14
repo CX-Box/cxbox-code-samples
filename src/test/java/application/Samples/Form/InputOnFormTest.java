@@ -171,7 +171,7 @@ public class InputOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.input("Custom Field");
         customField.setValue("123");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -188,7 +188,7 @@ public class InputOnFormTest extends BaseTestForSamples {
         var customField2 = form.input("Custom Field Additional");
         customField.setValue("123");
         customField2.setValue("123");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }

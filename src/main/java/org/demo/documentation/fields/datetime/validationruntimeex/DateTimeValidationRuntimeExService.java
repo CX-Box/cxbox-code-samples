@@ -47,9 +47,7 @@ public class DateTimeValidationRuntimeExService extends
 	@Override
 	public Actions<DateTimeValidationRuntimeExDTO> getActions() {
 		return Actions.<DateTimeValidationRuntimeExDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

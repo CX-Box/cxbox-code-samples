@@ -39,9 +39,7 @@ public class MyExample3621Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3621DTO> getActions() {
         return Actions.<MyExample3621DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .scope(ActionScope.RECORD)
                         .action("gotolist", "Go to List")

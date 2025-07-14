@@ -10,7 +10,6 @@ import core.widget.modal.confirm.constantsConfirm;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -126,7 +125,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
         row.dateTimeWithSeconds().setValue(dateTime);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -195,7 +194,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
         row2.dateTimeWithSeconds().setValue(dateTime);
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.dateTimeWithSeconds().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(row2.dateTimeWithSeconds().getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
     }
@@ -254,7 +253,11 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("custom Field");
         var customField = list.findRowSegmentByValue("custom Field", listRows.get(0)).dateTimeWithSeconds();
+        var row = list.findRowSegmentByValue("custom Field", listRows.get(0));
         customField.clearIcon();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

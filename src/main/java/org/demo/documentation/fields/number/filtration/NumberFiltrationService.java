@@ -39,9 +39,7 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 	@Override
 	public Actions<NumberFiltrationDTO> getActions() {
 		return Actions.<NumberFiltrationDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

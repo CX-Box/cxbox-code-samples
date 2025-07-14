@@ -1,0 +1,43 @@
+{
+  "name": "MyExample4903List",
+  "title": "",
+  "type": "List",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "title": "Место предъявление Ил",
+      "key": "placePresentation",
+      "type": "dictionary"
+    },
+    {
+      "title": "Наименование ФСПП",
+      "key": "nameFSPP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903PickPick",
+      "pickMap": {
+        "nameFSPP": "customField",
+        "nameFSPPId": "id"
+      }
+    },
+    {
+      "title": "Наименование ОСП",
+      "key": "nameOSP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903OCPPickPick",
+      "pickMap": {
+        "nameOSP": "customField",
+        "nameOSPId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    }
+  }
+}
+

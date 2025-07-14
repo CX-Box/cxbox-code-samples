@@ -35,9 +35,7 @@ public class MyEntity3071PickPickService extends VersionAwareResponseService<MyE
     @Override
     public Actions<MyEntity3071PickPickDTO> getActions() {
         return Actions.<MyEntity3071PickPickDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
                 .build();
     }
      // --8<-- [end:getActions]  

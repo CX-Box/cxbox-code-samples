@@ -43,6 +43,7 @@ public class MyExample3077Service extends AnySourceVersionAwareResponseService<M
         return Actions.<MyExample3077DTO>builder()
                 .create(crt -> crt.text("Add child").withAutoSaveBefore()
                 )
+                .cancelCreate(ccr -> ccr.text("Cancel"))
                 .action(act -> act
 
                         .action("customSave", "Custom Save")

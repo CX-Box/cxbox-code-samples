@@ -195,10 +195,10 @@ public class InputOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field ");
         var row = list.findRowSegmentByValue("Custom Field ", listRows.get(0));
-        row.input().setValue("123"); // На семплах лишний пробел
+        row.input().setValue("123");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.input().getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
     }
 
@@ -219,7 +219,7 @@ public class InputOnListTest extends BaseTestForSamples {
         row2.input().setValue("123");
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.input().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
         assertThat(row2.input().getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
     }

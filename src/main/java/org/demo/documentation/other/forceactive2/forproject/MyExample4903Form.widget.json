@@ -1,0 +1,58 @@
+{
+  "name": "MyExample4903Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample4903",
+  "fields": [
+    {
+      "label": "Наименование ФСПП FA",
+      "key": "nameFSPP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903PickPick",
+      "pickMap": {
+        "nameFSPP": "customField",
+        "nameFSPPId": "id"
+      }
+    },
+    {
+      "label": "Наименование ОСП FA",
+      "key": "nameOSP",
+      "type": "pickList",
+      "popupBcName": "myEntity4903OCPPickPick",
+      "pickMap": {
+        "nameOSP": "customField",
+        "nameOSPId": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "delete"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "nameFSPP",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "nameOSP",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

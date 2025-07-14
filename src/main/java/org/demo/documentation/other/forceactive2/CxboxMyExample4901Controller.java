@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample4901Controller implements EnumBcIdentifier {
 
     // @formatter:on
+    myexample4901(MyExample4901Service.class),
 
-    myexample4901(MyExample4901Service.class);
+    myexamplefa4901(MyExample4901Service.class);
 
     // @formatter:on
 

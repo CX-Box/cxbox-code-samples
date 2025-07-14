@@ -38,9 +38,7 @@ public class NumberColorConstService extends VersionAwareResponseService<NumberC
 	@Override
 	public Actions<NumberColorConstDTO> getActions() {
 		return Actions.<NumberColorConstDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

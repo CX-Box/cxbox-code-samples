@@ -39,9 +39,7 @@ public class DateSortingService extends VersionAwareResponseService<DateSortingD
 	@Override
 	public Actions<DateSortingDTO> getActions() {
 		return Actions.<DateSortingDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

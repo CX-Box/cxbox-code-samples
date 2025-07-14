@@ -10,6 +10,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
+import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFA;
 
 
 @Entity
@@ -29,8 +30,7 @@ public class MyEntity3400 extends BaseEntity {
     private String customFieldRequired;
     @Column
     private String customFieldRequired2;
-    @Column
-    private String customFieldFA;
-    @Column
-    private String customFieldFA2;
+    @JoinColumn(name = "CUSTOM_FIELD_INLINE_PICKLIST_F_A_ID")
+    @ManyToOne
+    private MyEntity3400InlinePicklistFA customFieldInlinePicklistFAEntity;
 }

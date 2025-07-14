@@ -135,7 +135,7 @@ public class DateOnFormTest extends BaseTestForSamples {
         var customField = form.date("custom Field");
         LocalDate date = LocalDate.of(2024, 12, 5);
         customField.setValue(date);
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -176,7 +176,7 @@ public class DateOnFormTest extends BaseTestForSamples {
         var customField = form.date("Custom Field");
         LocalDate date = LocalDate.of(2010, 2, 5);
         customField.setValue(date);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -192,7 +192,7 @@ public class DateOnFormTest extends BaseTestForSamples {
         var customField = form.date("Custom Field");
         LocalDate date = LocalDate.of(2010, 2, 5);
         customField.setValue(date);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.MoreThatCurrentDate);
     }
 
@@ -211,7 +211,7 @@ public class DateOnFormTest extends BaseTestForSamples {
         customField.setValue(date);
         customField2.getValue(); //для прогрузки второго поля
         customField2.setValue(date);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customField"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional"));
 

@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklistPickService;
+import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFAPickService;
 import org.springframework.stereotype.Component;
 
 
@@ -14,7 +15,8 @@ public enum PlatformMyExample3400Controller implements EnumBcIdentifier {
 
 
     myExampleBc3400(MyExample3400Service.class),
-    myEntity3400InlinePicklistPick(myExampleBc3400, MyEntity3400InlinePicklistPickService.class);
+        myEntity3400InlinePicklistFAPick(myExampleBc3400, MyEntity3400InlinePicklistFAPickService.class),
+        myEntity3400InlinePicklistPick(myExampleBc3400, MyEntity3400InlinePicklistPickService.class);
 
 
 

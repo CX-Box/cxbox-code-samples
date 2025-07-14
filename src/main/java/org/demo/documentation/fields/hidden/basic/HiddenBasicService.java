@@ -40,9 +40,7 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 	@Override
 	public Actions<HiddenBasicDTO> getActions() {
 		return Actions.<HiddenBasicDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

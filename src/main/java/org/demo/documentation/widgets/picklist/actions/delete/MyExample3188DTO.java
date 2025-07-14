@@ -6,7 +6,6 @@ import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 import java.util.Optional;
 
@@ -15,9 +14,9 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample3188DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
-    @SearchParameter(name = "customFieldDeleteEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldDeleteEntity.customField")
     private String customFieldDelete;
     @SearchParameter(name = "customFieldDeleteEntity.id", provider = LongValueProvider.class)
     private Long customFieldDeleteId;

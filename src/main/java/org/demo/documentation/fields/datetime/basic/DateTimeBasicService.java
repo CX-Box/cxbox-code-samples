@@ -40,9 +40,7 @@ public class DateTimeBasicService extends VersionAwareResponseService<DateTimeBa
 	@Override
 	public Actions<DateTimeBasicDTO> getActions() {
 		return Actions.<DateTimeBasicDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

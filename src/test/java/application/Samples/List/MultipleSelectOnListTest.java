@@ -201,7 +201,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
         row.multipleSelect().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multipleSelect().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -220,7 +220,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
         var row2 = list.findRowSegmentByValue("Custom Field Additional", listRows2.get(0));
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multipleSelect().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
         assertThat(row2.multipleSelect().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
@@ -229,7 +229,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
     void required() {
         MainPages.click("MultipleSelect required");
         MainPages.FirstLevelMenu.click("List");
@@ -240,7 +240,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
         row.multipleSelect().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multipleSelect().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

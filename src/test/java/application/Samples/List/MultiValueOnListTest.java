@@ -215,7 +215,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
         row.multiValue().openInlineRedactor();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multiValue().getRequiredMessage()).isEqualTo(Constants.MessageAboutError);
     }
 
@@ -235,7 +235,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
         row.multiValue().openInlineRedactor();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multiValue().getRequiredMessage()).isEqualTo(Constants.RequiredField);
         assertThat(row2.multiValue().getRequiredMessage()).isEqualTo(Constants.RequiredField);
     }
@@ -256,7 +256,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
         row.multiValue().clear();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multiValue().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
@@ -281,7 +281,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
         popupAssocListPopup.close();
         Optional<MenuRow> menuRow = row.findMenuRow();
         assertThat(menuRow).isPresent();
-        menuRow.get().clickOption("save");
+        menuRow.get().clickOption("Save");
         assertThat(row.multiValue().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 }

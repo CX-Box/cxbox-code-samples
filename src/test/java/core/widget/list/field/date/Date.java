@@ -8,7 +8,7 @@ import core.widget.list.field.BaseRow;
 import core.widget.modal.Calendar;
 
 import io.qameta.allure.Step;
-
+import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +16,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+@Slf4j
 public class Date extends BaseRow<LocalDate> {
     public Date(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean sort, Boolean filter) {
         super(listWidget, title, "date", id, listHelper, sort, filter);
@@ -35,6 +37,7 @@ public class Date extends BaseRow<LocalDate> {
         getRowByName().click();
         Calendar.setDate(value);
     }
+
 
     /**
      * Getting the date in the data type -  LocalDate
@@ -65,10 +68,14 @@ public class Date extends BaseRow<LocalDate> {
     public void clearIcon() {
         setFocusField();
         getRowByName()
-                .$("i[aria-label=\"icon: close-circle\"]")
-                .hover()
-                .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
-                .click();
+                .hover();
+        if(getRowByName().$("i[aria-label=\"icon: close-circle\"]")
+                .is(Condition.enabled, Duration.ofSeconds(2))) {
+            getRowByName()
+                    .$("i[aria-label=\"icon: close-circle\"]")
+                    .hover()
+                    .click();
+        }
     }
 
     /**
@@ -94,6 +101,21 @@ public class Date extends BaseRow<LocalDate> {
             return String.format(Constants.FormatForRgb, numbers[0], numbers[1], numbers[2]);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Focus on the field/A click in the field..
+     */
+    @Step("Focus on the segment")
+    public void setFocusField() {
+        if (getRowByName().$("span[class*=\"ReadOnlyField\"]").is(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))) {
+            log.info("Focus on the field");
+            getRowByName()
+                    .parent()
+                    .click();
+        } else {
+            log.error("Focus on the field didn't work out");
         }
     }
 }

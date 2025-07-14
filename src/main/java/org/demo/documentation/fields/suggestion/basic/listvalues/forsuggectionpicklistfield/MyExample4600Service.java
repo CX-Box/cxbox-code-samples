@@ -37,7 +37,7 @@ public class MyExample4600Service extends AnySourceVersionAwareResponseService<M
         return Actions.<MyExample4600DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
-                .cancelCreate().text("Cancel").available(bc -> true).add()
+                .cancelCreate(ccr -> ccr.text("Cancel"))
                 .delete(dlt -> dlt.text("Delete"))
                 .build();
     }

@@ -41,9 +41,7 @@ public class DateTimeWithSecondsDrillDownService extends
 	@Override
 	public Actions<DateTimeWithSecondsDrillDownDTO> getActions() {
 		return Actions.<DateTimeWithSecondsDrillDownDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                )
+               .save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

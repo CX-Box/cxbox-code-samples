@@ -4,7 +4,6 @@ import lombok.*;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 @Getter
 @Setter
@@ -12,9 +11,9 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample3126DTO extends DataResponseDTO {
 
     private String customField;
-    @SearchParameter(name = "location", provider = StringValueProvider.class)
+    @SearchParameter(name = "location")
     private String location;
-    @SearchParameter(name = "object", provider = StringValueProvider.class)
+    @SearchParameter(name = "object")
     private String object;
     @SearchParameter(name = "insuranceValue", provider = BigDecimalValueProvider.class)
     private Long insuranceValue;

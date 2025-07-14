@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 
 import java.util.Optional;
@@ -28,12 +27,12 @@ public class MyExample3400DTO extends DataResponseDTO {
     private Long customFieldInlinePicklistId;
     @SearchParameter(name = "customFieldRequired")
     private String customFieldRequired;
-    @SearchParameter(name = "customFieldRequired2", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldRequired2")
     private String customFieldRequired2;
-    @SearchParameter(name = "customFieldFA", provider = StringValueProvider.class)
-    private String customFieldFA;
-    @SearchParameter(name = "customFieldFA2", provider = StringValueProvider.class)
-    private String customFieldFA2;
+    @SearchParameter(name = "customFieldInlinePicklistFAEntity.customField")
+    private String customFieldInlinePicklistFA;
+    @SearchParameter(name = "customFieldInlinePicklistFAEntity.id", provider = LongValueProvider.class)
+    private Long customFieldInlinePicklistFAId;
 
     public MyExample3400DTO(MyEntity3400 entity) {
         this.id = entity.getId().toString();
@@ -47,7 +46,11 @@ public class MyExample3400DTO extends DataResponseDTO {
                 .orElse(null);
         this.customFieldRequired = entity.getCustomFieldRequired();
         this.customFieldRequired2 = entity.getCustomFieldRequired2();
-        this.customFieldFA = entity.getCustomFieldFA();
-        this.customFieldFA2 = entity.getCustomFieldFA2();
+        this.customFieldInlinePicklistFAId = Optional.ofNullable(entity.getCustomFieldInlinePicklistFAEntity())
+                .map(e -> e.getId())
+                .orElse(null);
+        this.customFieldInlinePicklistFA = Optional.ofNullable(entity.getCustomFieldInlinePicklistFAEntity())
+                .map(e -> e.getCustomField())
+                .orElse(null);
     }
 }

@@ -131,7 +131,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -170,7 +170,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("Customer Field");
         customField.setValue(123);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textInvalidNumber());
     }
 
@@ -187,7 +187,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
         var customField2 = form.number("Custom Field Additional");
         customField.setValue(123);
         customField2.setValue(123);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' cannot be less than 100 000.");
         assertThat(customField2.getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' cannot be less than 100 000.");
     }
@@ -217,7 +217,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.number("custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

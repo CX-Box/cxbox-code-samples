@@ -113,7 +113,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.setValue(3);
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -132,7 +132,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -171,7 +171,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("Custom Field");
         customField.setValue(3);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%."));
     }
 
@@ -188,7 +188,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
         var customField2 = form.percent("Custom Field Additional");
         customField.setValue(3);
         customField2.setValue(3);
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%"));
         assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textInvalidPercent("5%"));
     }
@@ -219,7 +219,7 @@ public class PercentOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.percent("custom Field");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 
