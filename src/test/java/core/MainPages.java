@@ -68,9 +68,35 @@ public class MainPages {
             });
 
         }
-
-
     }
+
+    public static class SecondLevelMenu {
+
+        private static final ElementsCollection FIRST_LEVEL_SECTIONS = $(
+                "div[data-test-widget-name='ThirdLevelMenu']")
+                .$$("span[data-test-navigation-tabs-item='true']");
+
+
+        /**
+         * Selecting a tab on a page
+         *
+         * @param sectionName Name of the tab
+         */
+        public static void click(String sectionName) {
+            Allure.step("Selecting a tab " + sectionName + " on a page", step -> {
+                logTime(step);
+                step.parameter("Name of tab", sectionName);
+
+                FIRST_LEVEL_SECTIONS
+                        .find(Condition.exactText(sectionName))
+                        .shouldBe(Condition.enabled)
+                        .click();
+                checkPagesLoad();
+            });
+
+        }
+    }
+
     /**
      * Waiting for the page to load
      */

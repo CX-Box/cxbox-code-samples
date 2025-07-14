@@ -25,6 +25,7 @@ import core.widget.list.field.percent.Percent;
 import core.widget.list.field.percent.PercentDigits;
 import core.widget.list.field.picklist.InlinePickList;
 import core.widget.list.field.picklist.PickList;
+import core.widget.list.field.picklist.SuggestionPickList;
 import core.widget.list.field.radio.Radio;
 import core.widget.list.field.text.Text;
 
@@ -252,6 +253,17 @@ public class ListWidget {
     @Step("Validation of a field with the InlinePickList by heading ")
     public InlinePickList inlinePickList() {
         return new InlinePickList(this, title, id, listHelper, sort, filter);
+    }
+
+    /**
+     * Getting access to field functions InlinePickList
+     * The field accepts values via a drop-down list, in String format
+     *
+     * @return class InlinePickList
+     */
+    @Step("Validation of a field with the InlinePickList by heading ")
+    public SuggestionPickList suggestionPickList() {
+        return new SuggestionPickList(this, title, id, listHelper, sort, filter);
     }
 
     /**

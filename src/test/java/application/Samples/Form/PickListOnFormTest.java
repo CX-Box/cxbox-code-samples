@@ -120,71 +120,71 @@ public class PickListOnFormTest extends BaseTestForSamples {
     }
 
     @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Business Exception Validation Test")
-    @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
-    void businessException() {
-        MainPages.click("Picklist validation business exception");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        customField.openModalWindow();
-        Optional<Popup> fieldPopup = customField.findPopup();
-        assertThat(fieldPopup).isPresent();
-        var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("1234");
-        var popup = $box.findPopup("error");
-        assertThat(popup).isPresent();
-        assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
-        assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
-        popup.get().errorPopup().close();
-    }
+        @Severity(CRITICAL)
+        @Tag("Negative")
+        @DisplayName("Business Exception Validation Test")
+        @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
+        void businessException() {
+            MainPages.click("Picklist validation business exception");
+            MainPages.FirstLevelMenu.click("Form");
+            FormWidget form = $box.findFormWidgetByTitle("Form title");
+            var customField = form.pickList("Custom Field");
+            customField.openModalWindow();
+            Optional<Popup> fieldPopup = customField.findPopup();
+            assertThat(fieldPopup).isPresent();
+            var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
+            popupPickList.setValue("1234");
+            var popup = $box.findPopup("error");
+            assertThat(popup).isPresent();
+            assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
+            assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
+            popup.get().errorPopup().close();
+        }
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Run-time exception validation test")
-    @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
-    void runtimeException() {
-        MainPages.click("Picklist runtime");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        customField.openModalWindow();
-        Optional<Popup> fieldPopup = customField.findPopup();
-        assertThat(fieldPopup).isPresent();
-        var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("Test data");
-        var popup = $box.findPopup("error");
-        assertThat(popup).isPresent();
-        assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
-        assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
-        popup.get().errorPopup().close();
-    }
+        @Test
+        @Severity(CRITICAL)
+        @Tag("Negative")
+        @DisplayName("Run-time exception validation test")
+        @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
+        void runtimeException() {
+            MainPages.click("Picklist runtime");
+            MainPages.FirstLevelMenu.click("Form");
+            FormWidget form = $box.findFormWidgetByTitle("Form title");
+            var customField = form.pickList("Custom Field");
+            customField.openModalWindow();
+            Optional<Popup> fieldPopup = customField.findPopup();
+            assertThat(fieldPopup).isPresent();
+            var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
+            popupPickList.setValue("Test data");
+            var popup = $box.findPopup("error");
+            assertThat(popup).isPresent();
+            assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
+            assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
+            popup.get().errorPopup().close();
+        }
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("Confirmation Popup Validation Test")
-    @Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
-    void confirm() {
-        MainPages.click("Picklist validation confirm");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        customField.openModalWindow();
-        Optional<Popup> fieldPopup = customField.findPopup();
-        assertThat(fieldPopup).isPresent();
-        var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("Test data");
-        form.clickButton("save");
-        var popup = $box.findPopup("confirm");
-        assertThat(popup).isPresent();
-        popup.get().confirmPopup().getButtons();
-        assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
-        assertThat(popup.get().confirmPopup().getMessage()).isEqualTo(Constants.SaveValue);
-        popup.get().confirmPopup().clickOk();
+        @Test
+        @Severity(CRITICAL)
+        @Tag("Positive")
+        @DisplayName("Confirmation Popup Validation Test")
+        @Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
+        void confirm() {
+            MainPages.click("Picklist validation confirm");
+            MainPages.FirstLevelMenu.click("Form");
+            FormWidget form = $box.findFormWidgetByTitle("Form title");
+            var customField = form.pickList("Custom Field");
+            customField.openModalWindow();
+            Optional<Popup> fieldPopup = customField.findPopup();
+            assertThat(fieldPopup).isPresent();
+            var popupPickList = fieldPopup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
+            popupPickList.setValue("Test data");
+            form.clickButton("save");
+            var popup = $box.findPopup("confirm");
+            assertThat(popup).isPresent();
+            popup.get().confirmPopup().getButtons();
+            assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
+            assertThat(popup.get().confirmPopup().getMessage()).isEqualTo(Constants.SaveValue);
+            popup.get().confirmPopup().clickOk();
     }
 
 

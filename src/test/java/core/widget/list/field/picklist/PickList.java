@@ -147,18 +147,6 @@ public class PickList extends BaseRow<String> {
     @Step("Checking the field for \"ReadOnly\"")
     public boolean getReadOnly() {
         setFocusField();
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.exist));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.editable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disappear));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.readonly));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.clickable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.interactable));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.disabled));
-        System.out.println(getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.focused));
-
-
-
-        return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
+                return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }
