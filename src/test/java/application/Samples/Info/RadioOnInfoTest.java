@@ -60,7 +60,7 @@ public class RadioOnInfoTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
         var customField = info.radio("Custom Field");
-        assertThat(customField.getValue()).isEqualTo("Low");
+        assertThat(customField.getValue()).isEqualTo("Middle");
     }
 
     @Test
