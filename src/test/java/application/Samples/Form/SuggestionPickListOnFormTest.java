@@ -91,7 +91,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.suggestionPickList("customField");
         customField.setValue("Test data9");
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
@@ -109,7 +109,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.suggestionPickList("customField");
         customField.setValue("Test data9");
-        form.clickButton("save");
+        form.clickButton("Save");
         var popup = $box.findPopup("error");
         assertThat(popup).isPresent();
         assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
@@ -148,7 +148,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
         var customField2 = form.suggestionPickList("customFieldAdditional");
         customField.setValue("Test data9");
         customField2.setValue("Test data10");
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo("The field 'customField' can contain only letters.");
         assertThat(customField2.getRequiredMessage()).isEqualTo("The field 'customFieldAdditional' can contain only letters.");
     }
@@ -177,7 +177,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
         FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.suggestionPickList("customField");
         customField.clear();
-        form.clickButton("save");
+        form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
     }
 

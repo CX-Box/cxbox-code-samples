@@ -7,6 +7,7 @@ import core.widget.ListHelper;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
+import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -22,6 +23,12 @@ public class DictionaryFilter extends AbstractFilter<String> {
                 .$(By.tagName("label"))
                 .click();
         setApply();
+    }
+
+    public List<String> getFilters() {
+        List<String> filters = getOptionsDictionary().stream().map(SelenideElement::getText).toList();
+        setApply();
+        return filters;
     }
 
     @Override

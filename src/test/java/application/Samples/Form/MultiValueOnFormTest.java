@@ -100,6 +100,18 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
     }
 
     @Test
+    @Tag("Positive")
+    @DisplayName("A test to check the field for \"Read-only\"")
+    @Description("The test checks for the disabled attribute.")
+    void readonly() {
+        MainPages.click("MultiValue readonly");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.multiValue("Custom Field");
+        assertThat(customField.getReadOnly()).isTrue();
+    }
+
+    @Test
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Business Exception Validation Test")

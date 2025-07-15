@@ -7,7 +7,6 @@ import core.widget.TestingTools.Constants;
 import core.widget.list.ListWidget;
 import core.widget.list.field.BaseRow;
 import core.widget.modal.Popup;
-
 import io.qameta.allure.Step;
 
 import java.time.Duration;
@@ -44,9 +43,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-                .$("div[class=\"ant-select-selection-selected-value\"]")
-                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                .getText();
+            .$("div[class=\"ant-select-selection-selected-value\"]")
+            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+            .text();
     }
 
     @Override
@@ -82,6 +81,7 @@ public class PickList extends BaseRow<String> {
                         Duration.ofSeconds(waitingForTests.Timeout)).click();
     }
 
+
     /**
      * Getting the placeholder text
      *
@@ -95,6 +95,15 @@ public class PickList extends BaseRow<String> {
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .text();
     }
+
+   /* @Step("Getting the Placeholder value")
+    public String getPlaceholder() {
+        setFocusField();
+        return getRowByName()
+            .$("input")
+            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+            .getAttribute("placeholder");
+    }*/
 
     /**
      * Initialization of the modal window
@@ -138,15 +147,12 @@ public class PickList extends BaseRow<String> {
         }
     }
 
-    /**
-     * Checking an item for inactivity, ReadOnly
-     *
-     * @return boolean true/false
-     */
     @Override
     @Step("Checking the field for \"ReadOnly\"")
     public boolean getReadOnly() {
         setFocusField();
-                return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
+
+
+				return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }

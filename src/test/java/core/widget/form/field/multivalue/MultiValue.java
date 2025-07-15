@@ -126,6 +126,10 @@ public class MultiValue extends BaseField<List<String>> {
 
     }
 
+    public boolean getReadOnly() {
+        return !getFieldByName().$$x(".//*[contains(@class, 'disabled')]").isEmpty();
+    }
+
     /**
      * Getting the placeholder value
      *

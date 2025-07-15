@@ -283,4 +283,20 @@ public class DictionaryOnListTest extends BaseTestForSamples {
                 "Tver region"));
 
     }
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Positive")
+    @DisplayName("A test for checking the icon")
+    @Description("The test check icon's name from the drop-down list ")
+    void icon() {
+        MainPages.click("Dictionary enum icon");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List Mode default");
+        List<String> listRows = list.getListRowsTexts();
+        assertThat(listRows).isEqualTo(List.of("High", "Low", "Low", "Middle"));
+        var list2 = $box.findListWidgetByTitle("List Mode icon");
+        List<String> listRows2 = list.getListRowsTexts();
+        assertThat(listRows2).isEqualTo(List.of("High", "Low", "Low", "Middle"));
+    }
 }

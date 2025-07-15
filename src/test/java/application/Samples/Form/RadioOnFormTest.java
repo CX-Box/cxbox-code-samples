@@ -70,8 +70,8 @@ public class RadioOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
-        customField.setValue("Middle");
-        assertThat(customField.getValue()).isEqualTo("Middle");
+        customField.setValue("Low");
+        assertThat(customField.getValue()).isEqualTo("Low");
     }
 
     @Test
@@ -211,7 +211,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.radio("Custom Field");
-        customField.setValue("Middle");
-        assertThat(customField.getValues()).isEqualTo(Map.of("High", false, "Low", false, "Middle", true));
+        customField.setValue("Low");
+        assertThat(customField.getValues()).isEqualTo(Map.of("High", false, "Low", true, "Middle", false));
     }
 }

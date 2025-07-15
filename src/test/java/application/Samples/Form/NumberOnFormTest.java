@@ -222,4 +222,22 @@ public class NumberOnFormTest extends BaseTestForSamples {
     }
 
 
+    @Test
+    void digits() {
+        MainPages.click("Number digits");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.numberDigits("custom Field");
+        assertThat(customField.getDigits()).isEqualTo(2);
+    }
+
+    @Test
+    void nullable() {
+        MainPages.click("Number nullable");
+        MainPages.FirstLevelMenu.click("Form");
+        FormWidget form = $box.findFormWidgetByTitle("Form title");
+        var customField = form.number("Custom Field");
+        customField.clear();
+        assertThat(customField.getStrValue()).isBlank();
+    }
 }

@@ -1,5 +1,6 @@
 package core.widget.groupingHierarchy;
 
+import application.widget.dictionaryAdministration.DictionaryAdministration;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -14,6 +15,8 @@ import core.widget.form.FormWidget;
 import core.widget.list.ListWidget;
 import io.qameta.allure.Allure;
 
+import io.qameta.allure.Step;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -30,6 +33,7 @@ import static java.lang.String.format;
 public class GroupingHierarchyWidget {
 
     private final String title;
+    @Getter
     private final SelenideElement widget;
     private final ListHelper helper;
     private final CxBoxExpectations waitingForTests = new CxBoxExpectations();
@@ -38,6 +42,11 @@ public class GroupingHierarchyWidget {
         this.title = title;
         this.widget = widget;
         this.helper = new ListHelper(this.widget);
+    }
+
+    @Step("Validation of a field with the CheckBox by heading ")
+    public DictionaryAdministration dictionaryAdministration() {
+        return new DictionaryAdministration(widget, title);
     }
 
 

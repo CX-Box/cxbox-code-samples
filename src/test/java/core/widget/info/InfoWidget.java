@@ -19,6 +19,7 @@ import core.widget.info.field.multivaluehover.MultiValueHover;
 import core.widget.info.field.number.Number;
 import core.widget.info.field.number.NumberDigits;
 import core.widget.info.field.percent.Percent;
+import core.widget.info.field.percent.PercentDigits;
 import core.widget.info.field.picklist.InlinePickList;
 import core.widget.info.field.picklist.PickListField;
 import core.widget.info.field.radio.Radio;
@@ -168,6 +169,22 @@ public class InfoWidget {
             step.parameter("Field header", title);
 
             return new Percent(this, title);
+        });
+    }
+
+    /**
+     * Getting access to field functions Percent
+     * For InfoWidget Setting the not available. ReadOnly.
+     *
+     * @param title Field header
+     * @return class Percent
+     */
+    public PercentDigits percentDigits(String title) {
+        return Allure.step("Validation of a field with the Percent by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field header", title);
+
+            return new PercentDigits(this, title);
         });
     }
 

@@ -256,4 +256,41 @@ public class InputOnListTest extends BaseTestForSamples {
         assertThat(list.checkFilterColumn("customField")).isTrue();
         assertThat(list.checkSorting("brand")).isFalse();
     }
+
+    @Test
+    @Severity(CRITICAL)
+    @Tag("Negative")
+    @DisplayName("Required Message text Verification field test")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    void required() {
+        MainPages.click("Input required");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List");
+        List<String> listRows = list.getListRows();
+        var row = list.findRowSegmentByValue("customField", listRows.get(0));
+        row.input().setFocusField();
+        row.input().clear();
+        Optional<MenuRow> menuRow = row.findMenuRow();
+        assertThat(menuRow).isPresent();
+        menuRow.get().clickOption("Save");
+        assertThat(row.input().getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
+    }
+
+
+    @Test
+    @Severity(MINOR)
+    @Tag("Positive")
+    @DisplayName("Max input test")
+    @Description("Test check max input at the field")
+    void maxInput() {
+        MainPages.click("Input maxInput");
+        MainPages.FirstLevelMenu.click("List");
+        var list = $box.findListWidgetByTitle("List title");
+        List<String> listRows = list.getListRows();
+        var row = list.findRowSegmentByValue("Custom Field", listRows.get(0));
+        row.input().setFocusField();
+        row.input().clear();
+        row.input().setValue("td");
+        assertThat(row.input().getMaxInput(2)).isTrue();
+    }
 }
