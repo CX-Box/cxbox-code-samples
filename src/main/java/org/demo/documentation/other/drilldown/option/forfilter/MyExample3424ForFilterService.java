@@ -9,7 +9,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.drilldown.DrillDownExt;
+import org.cxbox.core.service.drilldown.PlatformDrilldownService;
 import org.demo.documentation.other.drilldown.option.CxboxMyExample3421Controller;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3424ForFilterService extends AnySourceVersionAwareResponseService<MyExample3424ForFilterDTO, MyExample3424ForFilterDTO> {
 
-    private final DrillDownExt drillDownExt;
+    private final PlatformDrilldownService platformDrilldownService;
+
     @Getter(onMethod_ = @Override)
     private final Class<MyExample3424ForFilterMeta> meta = MyExample3424ForFilterMeta.class;
+
     @Getter(onMethod_ = @Override)
     private final Class<MyEntity3424ForFilterDao> dao = MyEntity3424ForFilterDao.class;
 
@@ -55,17 +57,15 @@ public class MyExample3424ForFilterService extends AnySourceVersionAwareResponse
                 )
                 .action(act -> act
                         .action("findOut", "Find CustomField")
-                        .invoker((bc, dto) -> {
-                            String urlFilter = drillDownExt.filterBcByFields(
-                                    CxboxMyExample3421Controller.myexample3424, MyExample3424ForFilterDTO.class, fb -> fb
-                                            .input(MyExample3424ForFilterDTO_.customField, dto.getCustomField()));
-                            String urlBC = "/screen/myexample3421/view/myexample3421form" + "/" + CxboxMyExample3421Controller.myexample3424;
-                            return new ActionResultDTO<MyExample3424ForFilterDTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            urlBC + urlFilter
-                                    ));
-                        })
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3424ForFilterDTO>().setAction(
+																PostAction.drillDownWithFilter(
+                                    DrillDownType.INNER,
+																		"/screen/myexample3421/view/myexample3421form",
+                                    fc -> fc
+                                        .add(CxboxMyExample3421Controller.myexample3424, MyExample3424ForFilterDTO.class, fb -> fb
+                                            .input(MyExample3424ForFilterDTO_.customField, dto.getCustomField())
+                                        )
+																)))
                 )
                 .build();
     }
