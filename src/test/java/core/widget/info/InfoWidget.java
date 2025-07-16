@@ -24,6 +24,7 @@ import core.widget.info.field.picklist.InlinePickList;
 import core.widget.info.field.picklist.PickListField;
 import core.widget.info.field.radio.Radio;
 import core.widget.info.field.text.Text;
+import core.widget.info.field.time.Time;
 import io.qameta.allure.Allure;
 
 import lombok.Getter;
@@ -89,6 +90,15 @@ public class InfoWidget {
             step.parameter("Field header", title);
 
             return new Date(this, title);
+        });
+    }
+
+    public Time time(String title, String format) {
+        return Allure.step("Validation of a field with the Date by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field header", title);
+
+            return new Time(this, title, format);
         });
     }
 

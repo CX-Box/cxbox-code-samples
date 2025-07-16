@@ -29,6 +29,7 @@ import core.widget.list.field.picklist.SuggestionPickList;
 import core.widget.list.field.radio.Radio;
 import core.widget.list.field.text.Text;
 
+import core.widget.list.field.time.Time;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -89,6 +90,17 @@ public class ListWidget {
     @Step("Validation of a field with the Date by heading ")
     public Date date() {
         return new Date(this, title, id, listHelper, sort, filter);
+    }
+
+    /**
+     * Getting access to field functions Time
+     * The field accepts values in the LocalDateTime format.
+     *
+     * @return class Time
+     */
+    @Step("Validation of a field with the Time by heading ")
+    public Time time(String format) {
+        return new Time(this, title, id, listHelper, sort, filter, format);
     }
 
     /**
