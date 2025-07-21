@@ -9,6 +9,7 @@ import core.widget.info.field.datetime.DateTime;
 import core.widget.info.field.datetimewithseconds.DateTimeWithSeconds;
 import core.widget.info.field.dictionary.Dictionary;
 import core.widget.info.field.fileupload.FileUpload;
+import core.widget.info.field.hidden.Hidden;
 import core.widget.info.field.hint.Hint;
 import core.widget.info.field.input.Input;
 import core.widget.info.field.money.Money;
@@ -307,6 +308,22 @@ public class InfoWidget {
             step.parameter("Field header", title);
 
             return new MultiValue(this, title);
+        });
+    }
+
+    /**
+     * Getting access to field functions Hidden
+     * For InfoWidget Setting the not available. ReadOnly.
+     *
+     * @param title Field header
+     * @return class Hidden
+     */
+    public Hidden hidden(String title) {
+        return Allure.step("Validation of a field with the Hidden by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field header", title);
+
+            return new Hidden(this, title);
         });
     }
 

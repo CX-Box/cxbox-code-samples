@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -150,10 +149,10 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
-                "05:58:54",
-                "10:58:54",
-                "12:28:54",
-                "12:58:54"));
+               "12:58:54",
+               "12:28:54",
+               "10:58:54",
+               "05:58:54"));
 
         list.setSorting("Custom Field h:mm:ss");
         assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(

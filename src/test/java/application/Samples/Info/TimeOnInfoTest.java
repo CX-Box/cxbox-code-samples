@@ -32,8 +32,8 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @DisplayName("A test to read value")
+    @Description("The test checks the value in the field with what should be set")
     void read() {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
@@ -44,8 +44,8 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @DisplayName("A test to read value")
+    @Description("The test checks the value in the field with what should be set")
     void read2() {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
@@ -56,8 +56,8 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+    @DisplayName("A test to read value")
+    @Description("The test checks the value in the field with what should be set")
     void read3() {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");

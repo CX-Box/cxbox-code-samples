@@ -10,6 +10,7 @@ import core.widget.form.field.datetime.DateTime;
 import core.widget.form.field.datetimewithseconds.DateTimeWithSeconds;
 import core.widget.form.field.dictionary.Dictionary;
 import core.widget.form.field.fileupload.FileUpload;
+import core.widget.form.field.hidden.Hidden;
 import core.widget.form.field.hint.Hint;
 import core.widget.form.field.input.Input;
 import core.widget.form.field.money.Money;
@@ -350,6 +351,15 @@ public class FormWidget {
         });
     }
 
+    public Hidden hidden(String title) {
+        return Allure.step("Validation of a field with the Hidden by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Hidden(this, title);
+        });
+    }
+
     /**
      * Getting access to field functions MultiValueHover
      * The field does not accept values, ReadOnly
@@ -557,4 +567,6 @@ public class FormWidget {
             return values;
         });
     }
+
+
 }

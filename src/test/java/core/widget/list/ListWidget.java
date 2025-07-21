@@ -12,6 +12,7 @@ import core.widget.list.field.date.DateTime;
 import core.widget.list.field.date.DateTimeWithSeconds;
 import core.widget.list.field.dictionary.Dictionary;
 import core.widget.list.field.fileupload.FileUpload;
+import core.widget.list.field.hidden.Hidden;
 import core.widget.list.field.hint.Hint;
 import core.widget.list.field.input.Input;
 import core.widget.list.field.money.Money;
@@ -200,6 +201,17 @@ public class ListWidget {
     @Step("Validation of a field with the Hint by heading ")
     public Hint hint() {
         return new Hint(this, title, id, listHelper, sort, filter);
+    }
+
+    /**
+     * Getting access to field functions Hidden
+     * The field accepts values in the List(String) format to select multiple values.
+     *
+     * @return class Hidden
+     */
+    @Step("Validation of a field with the Hidden by heading ")
+    public Hidden hidden() {
+        return new Hidden(this, title, id);
     }
 
     /**

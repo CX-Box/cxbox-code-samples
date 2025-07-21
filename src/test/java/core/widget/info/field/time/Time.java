@@ -43,8 +43,8 @@ public class Time extends BaseString<LocalDateTime> {
                     .$(getValueTag())
                     .getText();
 
-
             LocalTime times = LocalTime.parse(time, DateTimeFormatter.ofPattern(format));
+
             LocalDateTime dateTime = times.atDate(LocalDate.of(2024, 12, 5));
 
             return dateTime;
