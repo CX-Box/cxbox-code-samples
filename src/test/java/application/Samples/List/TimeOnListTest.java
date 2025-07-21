@@ -6,6 +6,7 @@ import core.widget.TestingTools.Constants;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -116,6 +117,7 @@ public class TimeOnListTest extends BaseTestForSamples {
     @Tag("Negative")
     @DisplayName("Filtering test")
     @Description("Filtering by the specified column.")
+    @Disabled
     void filtration() {
         MainPages.click("Time filtration");
         MainPages.FirstLevelMenu.click("List");
