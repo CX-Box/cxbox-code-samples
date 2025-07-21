@@ -10,6 +10,7 @@ import core.widget.form.field.datetime.DateTime;
 import core.widget.form.field.datetimewithseconds.DateTimeWithSeconds;
 import core.widget.form.field.dictionary.Dictionary;
 import core.widget.form.field.fileupload.FileUpload;
+import core.widget.form.field.hidden.Hidden;
 import core.widget.form.field.hint.Hint;
 import core.widget.form.field.input.Input;
 import core.widget.form.field.money.Money;
@@ -26,6 +27,7 @@ import core.widget.form.field.picklist.PickList;
 import core.widget.form.field.picklist.SuggestionPickList;
 import core.widget.form.field.radio.Radio;
 import core.widget.form.field.text.Text;
+import core.widget.form.field.time.Time;
 import io.qameta.allure.Allure;
 
 import io.qameta.allure.Step;
@@ -136,6 +138,22 @@ public class FormWidget {
             step.parameter("Field heading", title);
 
             return new DateTimeWithSeconds(this, title);
+        });
+    }
+
+    /**
+     * Getting access to field functions DateTimeWithSeconds
+     * The field accepts values in the LocalDateTime format.
+     *
+     * @param title Field header
+     * @return class DateTimeWithSeconds
+     */
+    public Time time(String title, String format) {
+        return Allure.step("Validation of a field with the DateTimeWithSeconds by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Time(this, title, format);
         });
     }
 
@@ -330,6 +348,15 @@ public class FormWidget {
             step.parameter("Field heading", title);
 
             return new Hint(this, title);
+        });
+    }
+
+    public Hidden hidden(String title) {
+        return Allure.step("Validation of a field with the Hidden by heading " + title, step -> {
+            logTime(step);
+            step.parameter("Field heading", title);
+
+            return new Hidden(this, title);
         });
     }
 
@@ -540,4 +567,6 @@ public class FormWidget {
             return values;
         });
     }
+
+
 }
