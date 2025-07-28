@@ -16,6 +16,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
     @Autowired
     MyEntity4903PickOCPRepository repositoryOCP;
 
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4903DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -112,6 +113,7 @@ public class MyExample4903Meta extends FieldMetaBuilder<MyExample4903DTO> {
         fields.setEnabled(MyExample4903DTO_.nameFSPP);
         fields.setEnabled(MyExample4903DTO_.customField);
     }
+    // --8<-- [end:buildRowDependentMeta]
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample4903DTO> fields, InnerBcDescription bcDescription, Long
