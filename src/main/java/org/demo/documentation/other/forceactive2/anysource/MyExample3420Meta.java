@@ -23,13 +23,11 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
                 fields.setCurrentValue(MyExample3420DTO_.street, null);
                 fields.setCurrentValue(MyExample3420DTO_.customField, null);
             } else if (Objects.equals(fields.getCurrentValue(MyExample3420DTO_.country).orElse(null), CountryEnum.BELARUS)) {
-                fields.setEnumValues(MyExample3420DTO_.region, RegionEnum.BREST, RegionEnum.GOMEL, RegionEnum.MINSK);
                 fields.setCurrentValue(MyExample3420DTO_.region, RegionEnum.MINSK);
                 fields.setCurrentValue(MyExample3420DTO_.street, "Avenue Nezavisimosti");
                 fields.setCurrentValue(MyExample3420DTO_.customField, "New value for BELARUS");
             } else if (Objects.equals(fields.getCurrentValue(MyExample3420DTO_.country).orElse(null), CountryEnum.RUSSIA)) {
-                fields.setEnumValues(MyExample3420DTO_.region, RegionEnum.KOSTROMSKAYA, RegionEnum.MOSCOWSKAYA, RegionEnum.VOLGOGRADSKAYA);
-                fields.setCurrentValue(MyExample3420DTO_.region, RegionEnum.MOSCOWSKAYA);
+                 fields.setCurrentValue(MyExample3420DTO_.region, RegionEnum.MOSCOWSKAYA);
                 fields.setCurrentValue(MyExample3420DTO_.street, "Tverskaya street");
                 fields.setCurrentValue(MyExample3420DTO_.customField, "New value for RUSSIA");
             }
@@ -62,7 +60,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
             fields.setCurrentValue(MyExample3420DTO_.customField, "test");
         }
 
-        fields.setEnabled(MyExample3420DTO_.street);
+              fields.setEnabled(MyExample3420DTO_.street);
         fields.setEnabled(MyExample3420DTO_.money);
         fields.setEnabled(MyExample3420DTO_.descriptionProduct);
         fields.setEnabled(MyExample3420DTO_.product);
