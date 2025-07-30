@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 public class MyEntity357TestDataLoadService {
 
     @Autowired
-    MyEntity357Repository repository;
-
-    @Autowired
     MyEntity356Repository repository356;
 
     @Autowired

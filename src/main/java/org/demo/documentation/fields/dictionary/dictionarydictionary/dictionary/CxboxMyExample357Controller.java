@@ -5,6 +5,8 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.conf.cxbox.customization.dictionary.service.DictionaryAdminService;
+import org.demo.conf.cxbox.customization.dictionary.service.DictionaryTypeAdminService;
 import org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary.example.MyExample356Service;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +14,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample357Controller implements EnumBcIdentifier {
 
 
-    myexample356(MyExample356Service.class),
-    // --8<-- [start:bc]
-    myexample357(MyExample357Service.class),
-        dictionaryTypeDescPick(myexample357, DictionaryTypeDescPickService.class);
-    // --8<-- [start:bc]
-
+    myexample356(MyExample356Service.class);
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample357Controller> Holder = new Holder<>(
             CxboxMyExample357Controller.class);
