@@ -60,7 +60,7 @@ public class MyExample3420Meta extends AnySourceFieldMetaBuilder<MyExample3420DT
             fields.setCurrentValue(MyExample3420DTO_.customField, "test");
         }
 
-              fields.setEnabled(MyExample3420DTO_.street);
+        fields.setEnabled(MyExample3420DTO_.street);
         fields.setEnabled(MyExample3420DTO_.money);
         fields.setEnabled(MyExample3420DTO_.descriptionProduct);
         fields.setEnabled(MyExample3420DTO_.product);
