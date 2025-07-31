@@ -34,7 +34,7 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3800DTO> getActions() {
         return Actions.<MyExample3800DTO>builder()
@@ -44,12 +44,8 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
                         "Actions",
                         0,
                         Actions.<MyExample3800DTO>builder()
-                                .action(act -> act
-                                        .action("delete", "delete")
-                                )
-                                .action(act -> act
-                                        .action("save", "save")
-                                )
+                                .delete(dlt -> dlt.text("Delete"))
+                                .save(sv -> sv.text("Save"))
                                 .build()).
                 build();
     }

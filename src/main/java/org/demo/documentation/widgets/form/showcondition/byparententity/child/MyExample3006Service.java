@@ -34,6 +34,7 @@ public class MyExample3006Service extends VersionAwareResponseService<MyExample3
                 cb.equal(root.get(MyEntity3006_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
         );
     }
+
     @Override
     protected CreateResult<MyExample3006DTO> doCreateEntity(MyEntity3006 entity, BusinessComponent bc) {
         MyEntity3007 myEntity3007 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
@@ -59,7 +60,8 @@ public class MyExample3006Service extends VersionAwareResponseService<MyExample3
     @Override
     public Actions<MyExample3006DTO> getActions() {
         return Actions.<MyExample3006DTO>builder()
-               .save(sv -> sv.text("Save"))
+                .save(sv -> sv.text("Save"))
+                .create(crt -> crt.text("Add"))
                 .build();
     }
     // --8<-- [end:getActions]

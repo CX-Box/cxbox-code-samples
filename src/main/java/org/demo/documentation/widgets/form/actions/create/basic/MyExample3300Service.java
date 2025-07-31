@@ -39,6 +39,7 @@ public class MyExample3300Service extends VersionAwareResponseService<MyExample3
                 .create(crt -> crt.text("Add").available(bc -> true))
                 .save(sv -> sv.text("Save").available(bc -> true))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt)
                 .build();
     }
     // --8<-- [end:getActions]

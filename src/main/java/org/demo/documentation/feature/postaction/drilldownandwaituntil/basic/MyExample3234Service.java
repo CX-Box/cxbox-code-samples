@@ -13,7 +13,6 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.demo.documentation.feature.postaction.CxboxMyExample3231Controller;
 import org.demo.documentation.feature.postaction.anysorce.MyEntity3231AnySourceOutServiceDTO;
-import org.demo.documentation.feature.postaction.drilldownandwaituntil.allbutton.MyExample3232DTO_;
 import org.demo.documentation.feature.postaction.enums.StatusEnum;
 import org.demo.services.utils.RestResponsePage;
 import org.springframework.core.ParameterizedTypeReference;
@@ -74,7 +73,7 @@ public class MyExample3234Service extends VersionAwareResponseService<MyExample3
                                                     "/screen/myexample3231/view/myexample3234resultform/" +
                                                             CxboxMyExample3231Controller.myexample3234 + "/" + myEntity.getId(),
                                                     CxboxMyExample3231Controller.myexample3234,
-                                                    MyExample3232DTO_.statusResponse,
+                                                    MyExample3234DTO_.statusResponse,
                                                     StatusEnum.DONE
                                             )
                                             .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());

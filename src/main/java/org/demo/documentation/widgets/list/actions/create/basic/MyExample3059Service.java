@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("java:S1170")
@@ -32,5 +33,15 @@ public class MyExample3059Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample3059DTO> getActions() {
+        return Actions.<MyExample3059DTO>builder()
+                .save(sv -> sv.text("Save"))
+                .create(crt -> crt)
+                .delete(dlt -> dlt)
+                .build();
+    }
+    // --8<-- [end:getActions]
 
 }
