@@ -37,6 +37,7 @@ public class MyEntity3198PickPickService extends VersionAwareResponseService<MyE
     public Actions<MyEntity3198PickPickDTO> getActions() {
         return Actions.<MyEntity3198PickPickDTO>builder()
                 .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .build();
     }
