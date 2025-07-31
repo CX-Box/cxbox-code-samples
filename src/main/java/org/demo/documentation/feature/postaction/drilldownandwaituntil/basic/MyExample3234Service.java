@@ -74,7 +74,7 @@ public class MyExample3234Service extends VersionAwareResponseService<MyExample3
                                                     "/screen/myexample3231/view/myexample3234resultform/" +
                                                             CxboxMyExample3231Controller.myexample3234 + "/" + myEntity.getId(),
                                                     CxboxMyExample3231Controller.myexample3234,
-                                                    MyExample3232DTO_.statusResponse,
+                                                    MyExample3234DTO_.statusResponse,
                                                     StatusEnum.DONE
                                             )
                                             .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());

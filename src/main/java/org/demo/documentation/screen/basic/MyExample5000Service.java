@@ -1,5 +1,7 @@
 package org.demo.documentation.screen.basic;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -7,15 +9,14 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
 @Service
 public class MyExample5000Service extends VersionAwareResponseService<MyExample5000DTO, MyEntity5000> {
 
     private final MyEntity5000Repository repository;
-
-    public MyExample5000Service(MyEntity5000Repository repository) {
-        super(MyExample5000DTO.class, MyEntity5000.class, null, MyExample5000Meta.class);
-        this.repository = repository;
-    }
+    @Getter(onMethod_ = @Override)
+    private final Class<MyExample5000Meta> meta = MyExample5000Meta.class;
 
     @Override
     protected CreateResult<MyExample5000DTO> doCreateEntity(MyEntity5000 entity, BusinessComponent bc) {
@@ -34,10 +35,10 @@ public class MyExample5000Service extends VersionAwareResponseService<MyExample5
     @Override
     public Actions<MyExample5000DTO> getActions() {
         return Actions.<MyExample5000DTO>builder()
-                .create().text("Add").add()
-                .save().text("Save").add()
-                .cancelCreate().text("Cancel").available(bc -> true).add()
-                .delete().text("Delete").add()
+                .create(crt -> crt.text("Add"))
+                .save(sv -> sv.text("Save"))
+                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+                .delete(dlt -> dlt.text("Delete"))
                 .build();
     }
 
