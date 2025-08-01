@@ -1,6 +1,7 @@
 package core.widget.info.field;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import core.OriginExpectations.CxBoxExpectations;
@@ -200,5 +201,13 @@ public abstract class BaseString<E> {
     @Step("Filtering")
     public void setFiltration() {
         throw new UnsupportedOperationException("Filtration not supported for for Info Widget");
+    }
+
+    public boolean isHidden() {
+        Selenide.sleep(200);
+        return !infoWidget.getWidget()
+                .$$("div[data-test-field-type='" + fieldType + "'][data-test-field-title='" + title + "']")
+                .get(0)
+                .is(Condition.exist, Duration.ofSeconds(1));
     }
 }

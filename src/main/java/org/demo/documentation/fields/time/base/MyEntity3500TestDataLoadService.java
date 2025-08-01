@@ -23,14 +23,14 @@ public class MyEntity3500TestDataLoadService {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
         repository.save(new MyEntity3500()
-                .setCustomField(LocalDateTime.now())
-                .setCustomFieldh(LocalDateTime.now())
-                .setCustomFieldhmm(LocalDateTime.now())
-                .setCustomFieldhmmA(LocalDateTime.now())
-                .setCustomFieldmmss(LocalDateTime.now())
-                .setCustomFieldhmmssA(LocalDateTime.now())
-                .setCustomFieldss(LocalDateTime.now())
-                .setCustomFieldmm(LocalDateTime.now())
+                .setCustomField(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldh(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldhmm(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldhmmA(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldmmss(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldhmmssA(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldss(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldmm(LocalDateTime.of(2024,12,5,11,54, 25))
         );
     }
 

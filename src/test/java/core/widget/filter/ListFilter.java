@@ -87,6 +87,19 @@ public class ListFilter {
     }
 
     /**
+     * Filtering with the field type DateTime
+     *
+     * @return DateTimeFilter
+     */
+    public TimeFilter timeFilter(String format) {
+        return Allure.step("Filtering with the field type Time", step -> {
+            logTime(step);
+            return new TimeFilter(columnType, columnName, helper, format);
+        });
+
+    }
+
+    /**
      * Filtering with the field type Money
      *
      * @return MoneyFilter

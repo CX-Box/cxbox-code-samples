@@ -239,5 +239,13 @@ public abstract class BaseRow<E> {
         return getRowByName().$("span").text().equals(row);
     }
 
+    public boolean isHidden() {
+        Selenide.sleep(200);
+
+        return !$("tr[data-test-widget-list-row-id=\"" + id + "\"][data-test-widget-list-row-type=\"Row\"]")
+                .$$("div[data-test-field-type='" + fieldType + "'][data-test-field-title='" + title + "']")
+                .get(0)
+                .is(Condition.exist, Duration.ofSeconds(1));
+    }
 
 }
