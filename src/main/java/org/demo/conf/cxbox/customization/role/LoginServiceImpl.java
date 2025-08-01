@@ -181,6 +181,10 @@ public class LoginServiceImpl implements LoginService {
                         feature(
                                 CxboxBeanProperties.DEFAULT_DATE,
                                 cxboxBeanProperties.getDefaultDate()
+                        ),
+                        feature(
+                                UIProperties.SIDE_BAR_WORD_BREAK,
+                                "auto"
                         )
 
                 )
