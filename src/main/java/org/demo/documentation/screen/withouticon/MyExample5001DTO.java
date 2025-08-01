@@ -1,6 +1,5 @@
 package org.demo.documentation.screen.withouticon;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;

@@ -5,8 +5,6 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.conf.cxbox.customization.dictionary.service.DictionaryAdminService;
-import org.demo.conf.cxbox.customization.dictionary.service.DictionaryTypeAdminService;
 import org.demo.documentation.fields.dictionary.dictionarydictionary.dictionary.example.MyExample356Service;
 import org.springframework.stereotype.Component;
 
