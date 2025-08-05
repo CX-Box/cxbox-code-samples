@@ -378,7 +378,6 @@ public class RowsHelper {
     }
 
 
-
     /**
      * Sorting. If the column has a sorting function.
      *

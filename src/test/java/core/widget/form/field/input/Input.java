@@ -132,7 +132,7 @@ public class Input extends BaseField<String> {
         return Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
             logTime(step);
 
-            if(fieldType.equals("text")) {
+            if (fieldType.equals("text")) {
                 super.drillDown();
             }
             String oldUrl = WebDriverRunner.url();

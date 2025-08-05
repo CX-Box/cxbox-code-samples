@@ -27,11 +27,11 @@ public class AdditionalInformationWidget {
      * @return HashMap  Title - Value
      */
 
-    public HashMap<String , String> getValue() {
+    public HashMap<String, String> getValue() {
         return Allure.step("Getting all values from fields", step -> {
             logTime(step);
 
-            HashMap<String , String> values = new HashMap<>();
+            HashMap<String, String> values = new HashMap<>();
             waitingForTests.getWaitAllElements(widget);
             ElementsCollection elementsCollection = widget
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
@@ -53,7 +53,6 @@ public class AdditionalInformationWidget {
             return values;
         });
     }
-
 
 
 }

@@ -10,7 +10,6 @@ public class FileRow {
     public int DISPLAY_ORDER;
 
     public static FileRow fromCsv(String line) {
-        System.out.println(line);
         String[] parts = line.split(";");
         FileRow r = new FileRow();
         r.TYPE = parts.length > 0 ? parts[0].trim() : "";

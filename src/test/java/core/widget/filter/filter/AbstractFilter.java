@@ -26,7 +26,8 @@ public abstract class AbstractFilter<E> {
     final ListHelper helper;
 
     public abstract void setFilter(E value);
-    public void setFilter(E value, E secondValue){
+
+    public void setFilter(E value, E secondValue) {
         throw new UnsupportedOperationException("setFilter(value, secondValue) is not supported by default");
     }
 

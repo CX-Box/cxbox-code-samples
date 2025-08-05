@@ -31,7 +31,7 @@ public class Date extends BaseField<LocalDate> {
      * Date input: year, month, day
      *
      * @param value LocalDate
-     * {@code example} LocalDate date = LocalDate.of(2024, 20, 5)
+     *              {@code example} LocalDate date = LocalDate.of(2024, 20, 5)
      */
     @Override
     public void setValue(LocalDate value) {

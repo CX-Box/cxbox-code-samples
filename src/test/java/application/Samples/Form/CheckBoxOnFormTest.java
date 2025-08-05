@@ -194,8 +194,8 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
         customField.setValue(false);
         customField2.setValue(false);
         form.clickButton("Save");
-        assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customField'","'True"));
-        assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customFieldAdditional'","'True"));
+        assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customField'", "'True"));
+        assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyWithTitle("'customFieldAdditional'", "'True"));
     }
 
     @Test

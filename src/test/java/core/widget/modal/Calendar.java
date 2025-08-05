@@ -29,15 +29,15 @@ public class Calendar {
      */
     public static void findCalendar(SelenideElement field) {
         Allure.step("Validating the calendar window", step -> {
-           logTime(step);
-           step.parameter("Field", field);
+            logTime(step);
+            step.parameter("Field", field);
 
-           if (PANEL_CALENDAR.is(Condition.disappear)) {
+            if (PANEL_CALENDAR.is(Condition.disappear)) {
                 field
                         .$("i[aria-label=\"icon: calendar\"]")
                         .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                         .click();
-           }
+            }
         });
     }
 
@@ -135,6 +135,7 @@ public class Calendar {
         });
 
     }
+
     /**
      * Set date
      *

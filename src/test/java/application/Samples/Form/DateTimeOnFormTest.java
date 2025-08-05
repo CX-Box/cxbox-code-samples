@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the DateTime in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class DateTimeOnFormTest extends BaseTestForSamples {
 

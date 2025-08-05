@@ -16,7 +16,6 @@ public class DateTimeFilter extends AbstractFilter<LocalDateTime> {
     }
 
 
-
     @Override
     public void setFilter(LocalDateTime value) {
         $(ConstantSetter.DateFilterSelector)

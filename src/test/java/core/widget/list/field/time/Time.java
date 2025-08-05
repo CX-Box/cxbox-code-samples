@@ -30,11 +30,11 @@ public class Time extends BaseRow<LocalDateTime> {
      * Date input: year, month, day
      *
      * @param value LocalDate
-     * {@code example} LocalDate date = LocalDate.of(2024, 20,5)
+     *              {@code example} LocalDate date = LocalDate.of(2024, 20,5)
      */
     @Override
     @Step("Setting the {value} in the field")
-    public void setValue (LocalDateTime value){
+    public void setValue(LocalDateTime value) {
         setFocusField();
         clearIcon();
 
@@ -49,7 +49,7 @@ public class Time extends BaseRow<LocalDateTime> {
      */
     @Override
     @Step("Getting a value from a field")
-    public LocalDateTime getValue () {
+    public LocalDateTime getValue() {
         setFocusField();
         String time = getRowByName()
                 .shouldBe(Condition.exist)
@@ -63,7 +63,7 @@ public class Time extends BaseRow<LocalDateTime> {
     }
 
     @Override
-    public String getValueTag () {
+    public String getValueTag() {
         return "input";
     }
 
@@ -71,7 +71,7 @@ public class Time extends BaseRow<LocalDateTime> {
      * Clearing the field through the cross icon.
      */
     @Step("Clearing the field")
-    public void clearIcon () {
+    public void clearIcon() {
         getRowByName()
                 .$("i[aria-label=\"icon: close-circle\"]")
                 .hover()
@@ -87,7 +87,7 @@ public class Time extends BaseRow<LocalDateTime> {
      * @return String/null
      */
     @Step("Getting the field color in Hex format")
-    public String getHexColor () {
+    public String getHexColor() {
         setFocusField();
         String color = getValueByAttribute(1, "span", "style");
         Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");

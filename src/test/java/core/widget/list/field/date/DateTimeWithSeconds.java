@@ -24,7 +24,7 @@ public class DateTimeWithSeconds extends BaseRow<LocalDateTime> {
      * Setting the date in the calendar
      *
      * @param value LocalDateTime with Second
-     * {@code example} LocalDateTime dateTime = LocalDateTime.of(2020, 15, 10, 10, 10, 10)
+     *              {@code example} LocalDateTime dateTime = LocalDateTime.of(2020, 15, 10, 10, 10, 10)
      */
     @Override
     @Step("Setting the {value} in the field")
@@ -34,6 +34,7 @@ public class DateTimeWithSeconds extends BaseRow<LocalDateTime> {
         getRowByName().click();
         Calendar.setDateTimeWithSecond(value);
     }
+
     /**
      * Getting the date in the data type -  LocalDateTime
      *

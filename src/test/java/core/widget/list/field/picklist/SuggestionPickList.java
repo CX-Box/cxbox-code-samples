@@ -17,7 +17,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class SuggestionPickList extends BaseRow<String> {
 
-    public SuggestionPickList(ListWidget listWidget, String title,  String id, ListHelper listHelper, Boolean filter, Boolean sort) {
+    public SuggestionPickList(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean filter, Boolean sort) {
         super(listWidget, title, "suggestionPickList", id, listHelper, filter, sort);
     }
 
@@ -58,8 +58,6 @@ public class SuggestionPickList extends BaseRow<String> {
     }
 
 
-
-
     /**
      * Clearing the field
      */
@@ -78,7 +76,6 @@ public class SuggestionPickList extends BaseRow<String> {
                     .click();
         }
     }
-
 
 
     /**

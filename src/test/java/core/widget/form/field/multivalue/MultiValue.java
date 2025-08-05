@@ -35,25 +35,25 @@ public class MultiValue extends BaseField<List<String>> {
      */
     @Override
     public List<String> getValue() {
-        return Allure.step("Getting a value from a field", step ->{
-                    logTime(step);
+        return Allure.step("Getting a value from a field", step -> {
+            logTime(step);
 
-                    List<String> strings =  getFieldByName()
-                            .$(getValueTag())
-                            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-                            .$$(By.tagName("span"))
-                            .texts();
-                    Collections.reverse(strings);
-                    return strings;
+            List<String> strings = getFieldByName()
+                    .$(getValueTag())
+                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                    .$$(By.tagName("span"))
+                    .texts();
+            Collections.reverse(strings);
+            return strings;
         });
     }
 
-        /**
-         * This method is not available for MultiValue.
-         * Data entry takes place via findPopup.
-         *
-         * @param value UnsupportedOperationException
-         */
+    /**
+     * This method is not available for MultiValue.
+     * Data entry takes place via findPopup.
+     *
+     * @param value UnsupportedOperationException
+     */
     @Override
     @Step("Setting the value in the field is not available")
     public void setValue(List<String> value) {

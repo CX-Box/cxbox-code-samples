@@ -33,7 +33,7 @@ public class Money extends BaseRow<BigDecimal> {
      * Entering a value in the field
      *
      * @param value BigDecimal
-     * {@code pattern} ***.XX
+     *              {@code pattern} ***.XX
      */
     @Override
     @Step("Setting the {value} in the field")

@@ -43,9 +43,9 @@ public class PickList extends BaseRow<String> {
     public String getValue() {
         setFocusField();
         return getRowByName()
-            .$("div[class=\"ant-select-selection-selected-value\"]")
-            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
-            .text();
+                .$("div[class=\"ant-select-selection-selected-value\"]")
+                .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
+                .text();
     }
 
     @Override
@@ -153,6 +153,6 @@ public class PickList extends BaseRow<String> {
         setFocusField();
 
 
-				return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
+        return getRowByName().$("div[class=\"ant-select-selection-selected-value\"]").is(Condition.enabled);
     }
 }

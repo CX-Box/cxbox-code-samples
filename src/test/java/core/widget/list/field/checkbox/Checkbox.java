@@ -19,6 +19,7 @@ public class Checkbox extends BaseRow<Boolean> {
     public Checkbox(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean filter, Boolean sort) {
         super(listWidget, title, "checkbox", id, listHelper, filter, sort);
     }
+
     /**
      * Setting the selected value
      *
@@ -34,6 +35,7 @@ public class Checkbox extends BaseRow<Boolean> {
             setFalse();
         }
     }
+
     /**
      * CheckBox value
      *

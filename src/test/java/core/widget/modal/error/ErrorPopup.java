@@ -12,12 +12,15 @@ public class ErrorPopup extends BasePopup<String> {
     public ErrorPopup() {
         super("error");
     }
+
     @Override
     public SelenideElement findPopup() {
         return $("div[data-test-" + typePopup + "-popup=\"true\"]");
     }
+
     /**
      * Getting the title of a modal window
+     *
      * @return String title text
      */
     public String getTitle() {
@@ -30,6 +33,7 @@ public class ErrorPopup extends BasePopup<String> {
 
     /**
      * Getting the message text
+     *
      * @return String message text
      */
     public String getMessage() {

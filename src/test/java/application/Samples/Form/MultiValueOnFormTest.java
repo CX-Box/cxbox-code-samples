@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the MultiValue in the widget Form")
 @Epic("Samples")
 @Tag("Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class MultiValueOnFormTest extends BaseTestForSamples {
 
@@ -303,7 +303,8 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         assertThat(customField.getValue()).isEqualTo(List.of("Abs data", "Information7 data", "Information9 data"));
     }
 
-    @Test@Severity(CRITICAL)
+    @Test
+    @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("A test for checking values by column heading in a modal window")
     @Description("The test calls a modal window, after which the method returns Status-Value pairs depending on the column header.")
@@ -334,6 +335,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
         expectedPairs.add(Pair.of(true, "Abs data"));
         assertThat(popupAssocListPopup2.getStatusValue("Custom Field")).isEqualTo(expectedPairs);
     }
+
     @Test
     @Severity(CRITICAL)
     @Tag("Negative")

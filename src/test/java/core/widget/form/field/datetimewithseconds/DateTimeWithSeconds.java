@@ -45,7 +45,7 @@ public class DateTimeWithSeconds extends BaseField<LocalDateTime> {
      * Setting the date in the calendar
      *
      * @param value LocalDateTime with Second
-     * {@code example} LocalDateTime dateTime = LocalDateTime.of(2020, 15, 10, 10, 10, 10)
+     *              {@code example} LocalDateTime dateTime = LocalDateTime.of(2020, 15, 10, 10, 10, 10)
      */
     @Override
     public void setValue(LocalDateTime value) {

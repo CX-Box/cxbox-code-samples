@@ -62,7 +62,7 @@ public class Popup {
     }
 
     /**
-     *  Initialization of the modal window FilterGroupSettingsPopup
+     * Initialization of the modal window FilterGroupSettingsPopup
      *
      * @return FilterGroupSettingsPopup
      */

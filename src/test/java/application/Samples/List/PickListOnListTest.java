@@ -221,7 +221,7 @@ public class PickListOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message validation test for one field")
-     @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
+    @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
     void fieldLevelValidationAnnotation() {
         MainPages.click("Picklist validation field level dynamic");
         MainPages.FirstLevelMenu.click("List");
@@ -272,7 +272,7 @@ public class PickListOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
     void required() {
         MainPages.click("Picklist required");
         MainPages.FirstLevelMenu.click("List");

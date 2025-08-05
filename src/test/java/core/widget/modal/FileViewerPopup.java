@@ -130,7 +130,7 @@ public class FileViewerPopup {
      */
     public String getPagePagination() {
         return Allure.step("Getting the current page", step -> {
-           logTime(step);
+            logTime(step);
 
             return popup
                     .$("div[class*=\"ArrowPagination__compact\"]")

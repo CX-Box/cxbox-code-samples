@@ -182,7 +182,6 @@ public class GroupingHierarchyWidget {
     }
 
 
-
     /**
      * Revealing the hierarchy by branch name
      *
@@ -544,7 +543,6 @@ public class GroupingHierarchyWidget {
             return list;
         });
     }
-
 
 
     /**

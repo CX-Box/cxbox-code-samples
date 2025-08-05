@@ -8,7 +8,7 @@ import org.openqa.selenium.Keys;
 import java.math.BigDecimal;
 import java.time.Duration;
 
-public class MoneyFilter extends AbstractFilter<BigDecimal>{
+public class MoneyFilter extends AbstractFilter<BigDecimal> {
     public MoneyFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

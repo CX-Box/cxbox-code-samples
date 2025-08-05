@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class MultipleSelectFilter extends AbstractFilter<Set<String>>{
+public class MultipleSelectFilter extends AbstractFilter<Set<String>> {
     public MultipleSelectFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

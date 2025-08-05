@@ -14,7 +14,7 @@ public class Text {
     }
 
     public static String textOnlyWithTitle(String title, String value) {
-        return ("The field " + title +" can contain only " + value);
+        return ("The field " + title + " can contain only " + value);
     }
 
     public static String textOnlyTrue(String field) {

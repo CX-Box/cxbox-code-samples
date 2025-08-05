@@ -204,7 +204,7 @@ public abstract class BaseField<E> {
             logTime(step);
             getFieldByName()
                     .$(getValueTag())
-                    .shouldBe(Condition.enabled , Duration.ofSeconds(waitingForTests.Timeout))
+                    .shouldBe(Condition.enabled, Duration.ofSeconds(waitingForTests.Timeout))
                     .click();
         });
 

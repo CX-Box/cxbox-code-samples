@@ -50,7 +50,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Dictionary administration");
         var list = $box.findGroupingHierarchyWidgetByTitle("Dictionary configurable dictionary administration");
         var customField = list.dictionaryAdministration();
-        customField.delete("CLIENT_IMPORTANCE","TEST");
+        customField.delete("CLIENT_IMPORTANCE", "TEST");
         MainPages.FirstLevelMenu.click("Example");
         var form = $box.findFormWidgetByTitle("Dictionary Client Importance");
         assertThat(form.dictionary("Dictionary").getOptions()).doesNotContain("Test");
@@ -87,7 +87,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
         for (FileRow row : listRow) {
             assertEquals(row.KEY, row.KEY.toUpperCase(), "KEY must be uppercase: " + row.KEY);
             assertTrue(row.VALUE != null && !row.VALUE.isBlank()
-                , "VALUE format incorrect: " + row.VALUE);
+                    , "VALUE format incorrect: " + row.VALUE);
         }
     }
 
@@ -113,7 +113,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
 
-        customField.delete("REGIONS","TEST_CITY");
+        customField.delete("REGIONS", "TEST_CITY");
         customField.clickButton("Clear Cache");
     }
 
@@ -137,7 +137,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        customField.delete("REGIONS","TEST_CITY");
+        customField.delete("REGIONS", "TEST_CITY");
         customField.clickButton("Clear Cache");
     }
 
@@ -162,7 +162,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        customField.delete("CUSTOM_DICTIONARY_SORTING","TEST");
+        customField.delete("CUSTOM_DICTIONARY_SORTING", "TEST");
         customField.clickButton("Clear Cache");
     }
 
@@ -185,7 +185,7 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        customField.delete("CUSTOM_DICTIONARY_FILTRATION","TEST");
+        customField.delete("CUSTOM_DICTIONARY_FILTRATION", "TEST");
         customField.clickButton("Clear Cache");
     }
 
@@ -209,10 +209,9 @@ public class DictionaryAdministrationTest extends BaseTestForSamples {
 
         MainPages.click("Dictionary configurable dictionary administration");
         MainPages.FirstLevelMenu.click("Dictionary administration");
-        customField.delete("CUSTOM_DICTIONARY_SORTING","TEST");
+        customField.delete("CUSTOM_DICTIONARY_SORTING", "TEST");
         customField.clickButton("Clear Cache");
     }
-
 
 
 }

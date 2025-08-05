@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the MultipleSelect in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class MultipleSelectOnFormTest extends BaseTestForSamples {
 
@@ -107,7 +107,6 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
         var customField = form.multipleSelect("Custom Field");
         assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
     }
-
 
 
     @Test

@@ -44,7 +44,7 @@ public class Money extends NumberDigits {
      * Entering a value in the field
      *
      * @param value BigDecimal
-     * {@code pattern} ***.XX
+     *              {@code pattern} ***.XX
      */
     @Override
     public void setValue(BigDecimal value) {
@@ -75,7 +75,6 @@ public class Money extends NumberDigits {
             return currency.contains(currencySign);
         });
     }
-
 
 
     @Override

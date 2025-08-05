@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class MultiFieldFilter extends AbstractFilter<String>{
+public class MultiFieldFilter extends AbstractFilter<String> {
     public MultiFieldFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

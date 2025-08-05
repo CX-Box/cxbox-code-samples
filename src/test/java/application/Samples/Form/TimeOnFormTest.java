@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Time")
 @Epic("application/Samples")
 @Tag("application/Samples")
-public class TimeOnFormTest  extends BaseTestForSamples {
+public class TimeOnFormTest extends BaseTestForSamples {
 
     @Test
     @Tag("Positive")

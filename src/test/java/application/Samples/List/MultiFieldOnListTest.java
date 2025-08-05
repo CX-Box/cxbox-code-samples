@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,9 +30,10 @@ public class MultiFieldOnListTest extends BaseTestForSamples {
         List<String> listRows = list.getListRows();
         var column = list.getNoFocusValues("Custom Field Additional");
         var column2 = list.getNoFocusValues("Custom multifield hint");
-        assertThat(column).isEqualTo(List.of("Additional test data" ,"Additional test data 2"));
-        assertThat(column2).isEqualTo(List.of("Test data\nInformation data" ,"Test data 2\nInformation data 2"));
+        assertThat(column).isEqualTo(List.of("Additional test data", "Additional test data 2"));
+        assertThat(column2).isEqualTo(List.of("Test data\nInformation data", "Test data 2\nInformation data 2"));
     }
+
     @Test
     @Severity(MINOR)
     @Tag("Negative")

@@ -178,7 +178,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message validation test for one field")
-     @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
+    @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
     void fieldLevelValidationAnnotation() {
         MainPages.click("Datetime validation field level annotation");
         MainPages.FirstLevelMenu.click("List");
@@ -228,25 +228,25 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         assertThat(list.getNoFocusValues("custom Field"))
                 .isEqualTo(List.of("15.06.2025 06:05",
-                "15.05.2023 08:50",
-                "15.05.2024 05:05",
-                "15.05.2025 09:05",
-                "14.05.2025 06:17",
-                "15.05.2025 06:50",
-                "15.05.2025 09:20",
-                "15.05.2025 08:53",
-                "15.05.2025 08:50"));
+                        "15.05.2023 08:50",
+                        "15.05.2024 05:05",
+                        "15.05.2025 09:05",
+                        "14.05.2025 06:17",
+                        "15.05.2025 06:50",
+                        "15.05.2025 09:20",
+                        "15.05.2025 08:53",
+                        "15.05.2025 08:50"));
         list.setSorting("custom Field");
         assertThat(list.getNoFocusValues("custom Field"))
                 .isEqualTo(List.of("15.06.2025 06:05",
-                "15.05.2025 09:20",
-                "15.05.2025 09:05",
-                "15.05.2025 08:53",
-                "15.05.2025 08:50",
-                "15.05.2025 06:50",
-                "14.05.2025 06:17",
-                "15.05.2024 05:05",
-                "15.05.2023 08:50"));
+                        "15.05.2025 09:20",
+                        "15.05.2025 09:05",
+                        "15.05.2025 08:53",
+                        "15.05.2025 08:50",
+                        "15.05.2025 06:50",
+                        "14.05.2025 06:17",
+                        "15.05.2024 05:05",
+                        "15.05.2023 08:50"));
 
         list.setSorting("custom Field");
         assertThat(list.getNoFocusValues("custom Field"))
@@ -259,13 +259,13 @@ public class DateTimeOnListTest extends BaseTestForSamples {
                         "15.05.2025 09:05",
                         "15.05.2025 09:20",
                         "15.06.2025 06:05"));
-        }
+    }
 
     @Test
     @Severity(CRITICAL)
     @Tag("Negative")
     @DisplayName("Required Message text Verification field test")
-   @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
+    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required.")
     void required() {
         MainPages.click("Datetime required");
         MainPages.FirstLevelMenu.click("List");

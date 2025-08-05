@@ -144,7 +144,7 @@ public class MultiValueModal extends AbstractPickList {
             while (true) {
                 getCheckBoxAll().click();
 
-                if(Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
+                if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"")).exists()) {
                     return;
                 }
 
@@ -207,7 +207,6 @@ public class MultiValueModal extends AbstractPickList {
                             statusAndNames.add(Pair.of(status, name));
                         });
                 if (isLastPage()) {
-                    System.out.println(statusAndNames);
                     break;
                 }
                 pressRight(1);
