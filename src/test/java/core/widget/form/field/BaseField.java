@@ -226,4 +226,12 @@ public abstract class BaseField<E> {
         throw new UnsupportedOperationException("Filtration not supported for inputs on Forms");
     }
 
+    public boolean isHidden() {
+        Selenide.sleep(200);
+        return !formWidget.getWidget()
+                .$$("div[data-test-field-type='" + fieldType + "'][data-test-field-title='" + title + "']")
+                .get(0)
+                .is(Condition.exist, Duration.ofSeconds(1));
+    }
+
 }
