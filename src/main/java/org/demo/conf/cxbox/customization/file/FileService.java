@@ -13,6 +13,7 @@ import java.util.UUID;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.jetbrains.annotations.NotNull;
@@ -52,17 +53,7 @@ public class FileService implements CxboxFileService {
 	@SneakyThrows
 	@Override
 	public FileDownloadDto download(@NonNull String id, @Nullable String source) {
-		StatObjectResponse statObjectResponse = minioClient.statObject(StatObjectArgs
-				.builder()
-				.bucket(defaultBucketName)
-				.object(id)
-				.build()
-		);
-		return new FileDownloadDto(
-				() -> getObject(id), statObjectResponse.size(),
-				statObjectResponse.userMetadata().get(FILENAME_FIELD),
-				statObjectResponse.contentType()
-		);
+		throw new BusinessException().addPopup("My error");
 	}
 
 	@SneakyThrows
