@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class TextFilter extends AbstractFilter<String>{
+public class TextFilter extends AbstractFilter<String> {
     public TextFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

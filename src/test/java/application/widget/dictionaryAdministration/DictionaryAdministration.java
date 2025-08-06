@@ -31,7 +31,7 @@ public class DictionaryAdministration extends GroupingHierarchyWidget {
         super(widget, title);
     }
 
-    public void selectRowByName(String rowName){
+    public void selectRowByName(String rowName) {
         getWidget().$(By.cssSelector("tr[data-test-widget-list-row-type='GroupingRow'][data-row-key='" + rowName + "']")).$(By.cssSelector("i[aria-label='icon: up'")).click();
     }
 
@@ -71,7 +71,7 @@ public class DictionaryAdministration extends GroupingHierarchyWidget {
         clickButton("Clear Cache");
     }
 
-    public void clickButton(String buttonName){
+    public void clickButton(String buttonName) {
         getWidget().$(byText(buttonName)).parent().click();
     }
 
@@ -122,8 +122,7 @@ public class DictionaryAdministration extends GroupingHierarchyWidget {
     }
 
 
-
-    public void fillTheField(String value, String columnName){
+    public void fillTheField(String value, String columnName) {
         SelenideElement field = getWidget().$("div.ant-row[data-test-field-title='" + columnName + "']");
         field.$("input.ant-input").setValue(value);
     }

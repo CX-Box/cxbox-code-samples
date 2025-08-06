@@ -1,11 +1,13 @@
 package core.widget.TestingTools;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 
 import java.io.File;
 import java.util.*;
 
+@Slf4j
 public class ExcelComparator {
 
     private static final String CELL_DATA_DOES_NOT_MATCH = "Cell Data does not Match ::";
@@ -21,14 +23,14 @@ public class ExcelComparator {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 2 || !(new File(args[0]).exists()) || !(new File(args[1]).exists())) {
-            System.err.println("java -cp <classpath> " + ExcelComparator.class.getCanonicalName() + " <workbook1.xls/x> <workbook2.xls/x");
+            log.error("java -cp <classpath> " + ExcelComparator.class.getCanonicalName() + " <workbook1.xls/x> <workbook2.xls/x");
             System.exit(-1);
         }
         Workbook wb1 = WorkbookFactory.create(new File(args[0]));
         Workbook wb2 = WorkbookFactory.create(new File(args[1]));
 
         for (String d : ExcelComparator.compare(wb1, wb2)) {
-            System.out.println(d);
+            log.info(d);
         }
 
         wb2.close();

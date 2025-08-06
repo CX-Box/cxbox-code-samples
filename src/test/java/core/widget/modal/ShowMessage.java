@@ -21,6 +21,7 @@ public class ShowMessage {
 
     /**
      * Getting the icon test
+     *
      * @return String
      */
     public String getIcon() {
@@ -36,6 +37,7 @@ public class ShowMessage {
 
     /**
      * Getting the message text
+     *
      * @return String
      */
     public String getAlertMessage() {
@@ -51,6 +53,7 @@ public class ShowMessage {
 
     /**
      * Getting the Message Description
+     *
      * @return String
      */
     public String getAlertDescription() {

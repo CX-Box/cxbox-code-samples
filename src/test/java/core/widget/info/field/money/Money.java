@@ -51,7 +51,6 @@ public class Money extends BaseString<BigDecimal> {
     }
 
 
-
     public String getValueTag() {
         return "span[class*=\"ReadOnlyField\"]";
     }

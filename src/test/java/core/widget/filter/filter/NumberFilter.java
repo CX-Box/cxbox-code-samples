@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class NumberFilter extends AbstractFilter<Integer>{
+public class NumberFilter extends AbstractFilter<Integer> {
     public NumberFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

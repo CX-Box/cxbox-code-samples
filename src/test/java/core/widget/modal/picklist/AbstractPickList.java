@@ -32,7 +32,6 @@ public abstract class AbstractPickList {
     protected final CxBoxExpectations waitingForTests = new CxBoxExpectations();
 
 
-
     public AbstractPickList(String typePopup, String title) {
         this.typePopup = typePopup;
         this.title = title;
@@ -199,6 +198,7 @@ public abstract class AbstractPickList {
 
     /**
      * Getting the column type
+     *
      * @param column Column's name
      * @return String
      */

@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the FileUpload in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class FileUploadOnFormTest extends BaseTestForSamples {
 
@@ -262,7 +262,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
-        File expected =  getFileFromResource("FILE_1.txt");
+        File expected = getFileFromResource("FILE_1.txt");
         customField.setValue("FILE_1.txt");
         File given = customField.getValue();
         assertThat(given)
@@ -275,7 +275,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
     @SneakyThrows
     private File getFileFromResource(String value) {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource(value) ;
+        URL resource = classLoader.getResource(value);
         if (resource == null) {
             throw new IllegalArgumentException("file is not found!");
         } else {

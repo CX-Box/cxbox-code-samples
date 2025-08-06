@@ -7,10 +7,12 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.FileAppender;
 import io.qameta.allure.Allure;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
+
 import lombok.SneakyThrows;
 import net.jcip.annotations.ThreadSafe;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * <pre>{@code
  * <configuration>
  *
- *<!-- This logger matches the name passed to AllurePerTestLog. MUST BE in logback-test.xml -->
+ * <!-- This logger matches the name passed to AllurePerTestLog. MUST BE in logback-test.xml -->
  *  <logger name="network_log" level="TRACE" additivity="false"/>
  *
  * </configuration>
@@ -60,88 +62,88 @@ import org.slf4j.LoggerFactory;
 @ThreadSafe
 public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 
-	private final String allureAttachmentName;
+    private final String allureAttachmentName;
 
-	private final String loggerName;
+    private final String loggerName;
 
-	private final Logger logger;
+    private final Logger logger;
 
-	public AllurePerTestLog(String allureAttachmentName, String loggerName) {
-		this.allureAttachmentName = allureAttachmentName;
-		this.loggerName = loggerName;
-		this.logger = LoggerFactory.getLogger(loggerName);
-	}
+    public AllurePerTestLog(String allureAttachmentName, String loggerName) {
+        this.allureAttachmentName = allureAttachmentName;
+        this.loggerName = loggerName;
+        this.logger = LoggerFactory.getLogger(loggerName);
+    }
 
-	public Logger getPerTestLogger() {
-		return logger;
-	}
+    public Logger getPerTestLogger() {
+        return logger;
+    }
 
-	private static String sanitizeFileName(String input) {
-		return input.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
-	}
+    private static String sanitizeFileName(String input) {
+        return input.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+    }
 
-	@NotNull
-	private static FileAppender<ILoggingEvent> getILoggingEventFileAppender(String perTestFileName) {
-		var logFile = new File("target/log/", perTestFileName + UUID.randomUUID() + ".log");
+    @NotNull
+    private static FileAppender<ILoggingEvent> getILoggingEventFileAppender(String perTestFileName) {
+        var logFile = new File("target/log/", perTestFileName + UUID.randomUUID() + ".log");
 
-		var context = (LoggerContext) LoggerFactory.getILoggerFactory();
+        var context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-		// Create encoder
-		var encoder = new PatternLayoutEncoder();
-		encoder.setContext(context);
-		encoder.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n");
-		encoder.start();
+        // Create encoder
+        var encoder = new PatternLayoutEncoder();
+        encoder.setContext(context);
+        encoder.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n");
+        encoder.start();
 
-		// Create file appender
-		var fileAppender = new FileAppender<ILoggingEvent>();
-		fileAppender.setContext(context);
-		fileAppender.setName(perTestFileName);
-		fileAppender.setFile(logFile.getAbsolutePath());
-		fileAppender.setEncoder(encoder);
-		fileAppender.setAppend(true);
+        // Create file appender
+        var fileAppender = new FileAppender<ILoggingEvent>();
+        fileAppender.setContext(context);
+        fileAppender.setName(perTestFileName);
+        fileAppender.setFile(logFile.getAbsolutePath());
+        fileAppender.setEncoder(encoder);
+        fileAppender.setAppend(true);
 
-		return fileAppender;
-	}
+        return fileAppender;
+    }
 
-	@NotNull
-	private String getPerTestUniqueAppenderName(ExtensionContext context) {
-		return loggerName + sanitizeFileName(format("-%s", context.getUniqueId()));
-	}
+    @NotNull
+    private String getPerTestUniqueAppenderName(ExtensionContext context) {
+        return loggerName + sanitizeFileName(format("-%s", context.getUniqueId()));
+    }
 
-	@Override
-	public void beforeEach(ExtensionContext context) {
-		var perTestFileName = getPerTestUniqueAppenderName(context);
-		var logback = (ch.qos.logback.classic.Logger) this.logger;
-		var fileAppender = getILoggingEventFileAppender(perTestFileName);
-		var appender = logback.getAppender(perTestFileName);
-		if (appender == null) {
-			logback.addAppender(fileAppender);
-			fileAppender.start();
-		}
+    @Override
+    public void beforeEach(ExtensionContext context) {
+        var perTestFileName = getPerTestUniqueAppenderName(context);
+        var logback = (ch.qos.logback.classic.Logger) this.logger;
+        var fileAppender = getILoggingEventFileAppender(perTestFileName);
+        var appender = logback.getAppender(perTestFileName);
+        if (appender == null) {
+            logback.addAppender(fileAppender);
+            fileAppender.start();
+        }
 
-		logback.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
-	}
+        logback.trace("starting test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
+    }
 
-	@Override
-	@SneakyThrows
-	public void afterEach(ExtensionContext context) {
-		var perTestFileName = getPerTestUniqueAppenderName(context);
-		logger.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
+    @Override
+    @SneakyThrows
+    public void afterEach(ExtensionContext context) {
+        var perTestFileName = getPerTestUniqueAppenderName(context);
+        logger.trace("ending test: {}. uuid: {}", context.getDisplayName(), context.getUniqueId());
 
-		var logback = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(loggerName);
-		var appender = logback.getAppender(perTestFileName);
+        var logback = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(loggerName);
+        var appender = logback.getAppender(perTestFileName);
 
-		if (appender != null) {
-			logback.detachAppender(perTestFileName);
-			appender.stop();
-			var file = ((FileAppender<?>) appender).getFile();
-			var logFile = Path.of(file);
-			if (context.getExecutionException().isPresent()) {
-				Allure.addAttachment(allureAttachmentName, Files.newInputStream(logFile));
-			}
-		}
+        if (appender != null) {
+            logback.detachAppender(perTestFileName);
+            appender.stop();
+            var file = ((FileAppender<?>) appender).getFile();
+            var logFile = Path.of(file);
+            if (context.getExecutionException().isPresent()) {
+                Allure.addAttachment(allureAttachmentName, Files.newInputStream(logFile));
+            }
+        }
 
-	}
+    }
 
 
 }

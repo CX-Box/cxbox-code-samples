@@ -146,7 +146,6 @@ public class MultiValue extends BaseRow<List<String>> {
     }
 
 
-
     public void openInlineRedactor() {
         $(By.cssSelector("tr[data-test-widget-list-row-type='Row']"))
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.getTimeout()))

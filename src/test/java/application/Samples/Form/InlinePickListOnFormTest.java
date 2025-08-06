@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the InlinePickList in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class InlinePickListOnFormTest extends BaseTestForSamples {
 

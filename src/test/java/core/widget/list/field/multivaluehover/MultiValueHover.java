@@ -71,7 +71,7 @@ public class MultiValueHover extends BaseRow<String> {
     }
 
     /**
-     * This method is not supported 
+     * This method is not supported
      *
      * @return UnsupportedOperationException
      */

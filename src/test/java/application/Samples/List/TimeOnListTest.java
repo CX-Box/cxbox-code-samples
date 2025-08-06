@@ -150,11 +150,11 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time sorting");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-       assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
-               "12:58:54",
-               "12:28:54",
-               "10:58:54",
-               "05:58:54"));
+        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+                "12:58:54",
+                "12:28:54",
+                "10:58:54",
+                "05:58:54"));
 
         list.setSorting("Custom Field h:mm:ss");
         assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(

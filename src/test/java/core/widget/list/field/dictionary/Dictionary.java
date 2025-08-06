@@ -91,7 +91,7 @@ public class Dictionary extends BaseRow<String> {
     @Step("Clearing the field")
     public void clear() {
         setClearFocusField();
-        if(getRowByName().getText().equals("Not null")) {
+        if (getRowByName().getText().equals("Not null")) {
             return;
         } else {
             $("button[data-test-widget-list-row-action=\"true\"]")

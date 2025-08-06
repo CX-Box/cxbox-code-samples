@@ -23,6 +23,7 @@ public class FormPopup {
 
     /**
      * Getting the Popup Header
+     *
      * @return String
      */
     public String getNameFormPopup() {
@@ -38,6 +39,7 @@ public class FormPopup {
 
     /**
      * Clicking on the button by name
+     *
      * @param nameButton The name of the button or the text in it
      */
     public void clickButton(String nameButton) {
@@ -51,6 +53,7 @@ public class FormPopup {
 
     /**
      * Calling FormWidget to access the base fields
+     *
      * @return FormWidget
      */
     public FormWidget getFieldByName() {

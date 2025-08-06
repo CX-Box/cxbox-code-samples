@@ -18,10 +18,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the Hint in the widget Form")
 @Epic("Samples")
 @Tag("Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class HintOnFormTest extends BaseTestForSamples {
-
 
 
     @Test

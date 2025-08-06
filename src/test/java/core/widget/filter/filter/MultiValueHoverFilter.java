@@ -43,17 +43,17 @@ public class MultiValueHoverFilter extends AbstractFilter<String> {
         $("div.ant-modal-body").shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$((" [data-test-widget-list-row-id]")).forEach(row -> {
 
-            SelenideElement customFieldCell = row.$("div[data-test-field-key='customField'] span")
-                    .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
+                    SelenideElement customFieldCell = row.$("div[data-test-field-key='customField'] span")
+                            .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout));
 
-            if (customFieldCell.getText().contains(value)) {
-                SelenideElement checkbox = row.$("input[type='checkbox']")
-                        .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
-                if (!checkbox.isSelected()) {
-                    checkbox.click();
-                }
-            }
-        });
+                    if (customFieldCell.getText().contains(value)) {
+                        SelenideElement checkbox = row.$("input[type='checkbox']")
+                                .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+                        if (!checkbox.isSelected()) {
+                            checkbox.click();
+                        }
+                    }
+                });
     }
 
     @Override

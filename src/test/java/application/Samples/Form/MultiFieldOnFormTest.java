@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("Form. Checking the basic functions for the MultiField in the widget Form")
 @Epic("Samples")
 @Tag("Samples")
-@Tag("Form") 
+@Tag("Form")
 
 public class MultiFieldOnFormTest extends BaseTestForSamples {
 
@@ -33,6 +33,7 @@ public class MultiFieldOnFormTest extends BaseTestForSamples {
         var customField = form.multiField("Custom multifield hint");
         assertThat(customField.getValue()).isEqualTo(List.of(Pair.of("input", "Test data"), Pair.of("hint", "Information data")));
     }
+
     @Test
     @Severity(MINOR)
     @Tag("Negative")

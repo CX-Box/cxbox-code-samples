@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Form. Checking the basic functions for the NumberDigits in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
-@Tag("Form") 
+@Tag("Form")
 
 @Tag("NumberDigitsForm")
 public class NumberDigitsOnFormTest extends BaseTestForSamples {

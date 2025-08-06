@@ -8,7 +8,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class RadioFilter extends AbstractFilter<String>{
+public class RadioFilter extends AbstractFilter<String> {
     public RadioFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

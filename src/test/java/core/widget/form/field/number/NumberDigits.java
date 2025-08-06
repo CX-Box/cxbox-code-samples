@@ -71,7 +71,7 @@ public class NumberDigits extends BaseField<BigDecimal> {
      * Entering a value in the field
      *
      * @param value BigDecimal
-     * {@code pattern} ***.XX
+     *              {@code pattern} ***.XX
      */
     @Override
     public void setValue(BigDecimal value) {

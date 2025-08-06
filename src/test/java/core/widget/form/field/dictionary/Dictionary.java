@@ -31,7 +31,7 @@ public class Dictionary extends BaseField<String> {
      * @return String
      */
     @Override
-    
+
     public String getValue() {
         return Allure.step("Getting a value from a field", step -> {
             logTime(step);

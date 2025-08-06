@@ -222,7 +222,7 @@ public class FileUpload extends BaseRow<File> {
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .click();
         SelenideElement widget = getListHelper().getWidget();
-        SelenideElement FilePopup =  $("div[role=\"document\"][class*=\"FileViewerPopup__popup\"]");
+        SelenideElement FilePopup = $("div[role=\"document\"][class*=\"FileViewerPopup__popup\"]");
         waitingForTests.getWaitAllElements(FilePopup);
         if (FilePopup.is(Condition.visible)) {
             return Optional.of(new FileViewerPopup(FilePopup, widget));

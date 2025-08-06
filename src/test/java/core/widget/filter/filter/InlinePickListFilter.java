@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class InlinePickListFilter extends AbstractFilter<String>{
+public class InlinePickListFilter extends AbstractFilter<String> {
     public InlinePickListFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

@@ -9,6 +9,7 @@ import core.widget.modal.Calendar;
 
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +28,7 @@ public class Date extends BaseRow<LocalDate> {
      * Date input: year, month, day
      *
      * @param value LocalDate
-     * {@code example} LocalDate date = LocalDate.of(2024, 20,5)
+     *              {@code example} LocalDate date = LocalDate.of(2024, 20,5)
      */
     @Override
     @Step("Setting the {value} in the field")
@@ -69,7 +70,7 @@ public class Date extends BaseRow<LocalDate> {
         setFocusField();
         getRowByName()
                 .hover();
-        if(getRowByName().$("i[aria-label=\"icon: close-circle\"]")
+        if (getRowByName().$("i[aria-label=\"icon: close-circle\"]")
                 .is(Condition.enabled, Duration.ofSeconds(2))) {
             getRowByName()
                     .$("i[aria-label=\"icon: close-circle\"]")

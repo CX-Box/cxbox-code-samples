@@ -51,7 +51,7 @@ public class Time extends BaseString<LocalDateTime> {
         });
     }
 
-    public String getStringValue(){
+    public String getStringValue() {
         return getFieldByName().shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout)).$(getValueTag())
                 .getText();
     }

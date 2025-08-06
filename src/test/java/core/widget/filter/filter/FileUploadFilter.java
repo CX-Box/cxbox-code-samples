@@ -5,7 +5,7 @@ import core.widget.ListHelper;
 
 import java.time.Duration;
 
-public class FileUploadFilter extends AbstractFilter<String>{
+public class FileUploadFilter extends AbstractFilter<String> {
 
     public FileUploadFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);

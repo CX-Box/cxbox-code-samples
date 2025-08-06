@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class MultiValueFilter extends AbstractFilter<String>{
+public class MultiValueFilter extends AbstractFilter<String> {
     public MultiValueFilter(String columnType, String columnName, ListHelper helper) {
         super(columnType, columnName, helper);
     }

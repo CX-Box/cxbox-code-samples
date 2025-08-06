@@ -32,7 +32,7 @@ public class DateTime extends BaseRow<LocalDateTime> {
      * Setting the date in the calendar
      *
      * @param value LocalDateTime
-     * {@code example} LocalDateTime dateTime = LocalDateTime.of(2020,10,10,10,10)
+     *              {@code example} LocalDateTime dateTime = LocalDateTime.of(2020,10,10,10,10)
      */
     @Override
     @Step("Setting the {value} in the field")

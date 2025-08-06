@@ -38,7 +38,7 @@ public class DateTime extends BaseField<LocalDateTime> {
                     .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                     .getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-            if (Objects.requireNonNull(date) == null || Objects.requireNonNull(date).isEmpty()){
+            if (Objects.requireNonNull(date) == null || Objects.requireNonNull(date).isEmpty()) {
                 return null;
             }
             return LocalDateTime.parse(Objects.requireNonNull(date), formatter);
@@ -49,7 +49,7 @@ public class DateTime extends BaseField<LocalDateTime> {
      * Setting the date in the calendar
      *
      * @param date LocalDateTime
-     * {@code example} LocalDateTime dateTime = LocalDateTime.of(2020,10,10,10,10)
+     *             {@code example} LocalDateTime dateTime = LocalDateTime.of(2020,10,10,10,10)
      */
     @Override
     public void setValue(LocalDateTime date) {
