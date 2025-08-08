@@ -83,7 +83,7 @@ public class MultiValue extends BaseField<List<String>> {
 
     private SelenideElement modalWindow() {
         return getFieldByName()
-                .$("i[aria-label=\"icon: folder-open\"]")
+                .$("div[data-test-field-multivalue-icon=\"true\"]")
                 .shouldBe(Condition.visible,
                         Duration.ofSeconds(waitingForTests.Timeout));
     }
