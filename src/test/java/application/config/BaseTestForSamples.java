@@ -101,7 +101,7 @@ public abstract class BaseTestForSamples {
                 "--enable-automation",
                 "--remote-allow-origins=*",
                 "--disable-features=InsecureDownloadWarnings",
-                "--unsafely-treat-insecure-origin-as-secure=" + appURL,
+                "--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#",
                 "--disable-popup-blocking",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
