@@ -1,9 +1,14 @@
 {
-  "name": "myexample3022list",
+  "name": "myexample3022listwithcondition",
   "title": "MyExample3022 List",
   "template": "DashboardView",
-  "url": "/screen/myexample3022/view/myexample3022list",
+  "url": "/screen/myexample3022/view/myexample3022listwithcondition",
   "widgets": [
+    {
+      "widgetName": "SecondLevelMenu",
+      "position": 10,
+      "gridWidth": 12
+    },
     {
       "widgetName": "MyExample3022RingProcessl",
       "position": 97,
@@ -18,11 +23,6 @@
       "widgetName": "MyExample3022DashboardList",
       "position": 99,
       "gridWidth": 24
-    },
-    {
-      "widgetName": "SecondLevelMenu",
-      "position": 10,
-      "gridWidth": 12
     },
     {
       "widgetName": "MyExample3022List",
@@ -70,14 +70,20 @@
       "widgetNames": [
         "MyExample3022RingProcessl",
         "MyExample3022Funnel",
-      ]
+      ],
+      "collapsedCondition": {
+        "default": true
+      }
     },
     {
       "widgetNames": [
         "MyExample3022DashboardList",
         "MyExample3022Form",
         "cliMyExample3022Info"
-      ]
+      ],
+      "collapsedCondition": {
+        "default": false
+      }
     }
   ],
   "rolesAllowed": [
