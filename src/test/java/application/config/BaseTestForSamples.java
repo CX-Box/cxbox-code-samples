@@ -68,6 +68,7 @@ public abstract class BaseTestForSamples {
         Configuration.pageLoadTimeout = 60000;
         Configuration.webdriverLogsEnabled = false;
         Configuration.reportsFolder = "target/videos";
+        Configuration.baseUrl = "http://code-samples.cxbox.org/ui/#";
         if (Env.logEnabled()) {
             Configuration.proxyEnabled = true;
         }
@@ -101,7 +102,7 @@ public abstract class BaseTestForSamples {
                 "--enable-automation",
                 "--remote-allow-origins=*",
                 "--disable-features=InsecureDownloadWarnings",
-                "--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#",
+                "--unsafely-treat-insecure-origin-as-secure="+appURL,
                 "--disable-popup-blocking",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
