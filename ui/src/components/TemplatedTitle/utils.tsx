@@ -5,9 +5,9 @@ import cn from 'classnames'
 import moment from 'moment'
 import { getFormat as getDateFormat } from '@utils/date'
 import { FieldType } from '@cxbox-ui/core'
-import { NumberInputFormat } from '@cxboxComponents/ui/NumberInput/formaters'
+import { NumberInputFormat } from '@components/ui/NumberInput/formaters'
 import { DateFieldMeta, DateTimeFieldMeta, DateTimeWithSecondsFieldMeta } from '@cxbox-ui/core'
-import { ITimePickerFieldMeta, TimeFormat } from '../../fields/TimePicker/TimePickerField'
+import { ITimePickerFieldMeta } from '../../fields/TimePicker/TimePickerField'
 import { AppNumberFieldMeta, CustomFieldTypes } from '@interfaces/widget'
 
 // Token format: '${fieldName:defaultValue}'
@@ -43,7 +43,7 @@ export function normalizeFieldValue(value: DataValue | undefined, fieldMeta?: Wi
     const timeFieldMeta = fieldMeta as ITimePickerFieldMeta
     const isTimeField = (timeFieldMeta?.type as string) === CustomFieldTypes.Time
     if (isTimeField) {
-        return moment.parseZone(value as string | null)?.format(timeFieldMeta.format ?? TimeFormat.outputFullTimeAFormat)
+        return moment.parseZone(value as string | null)?.format(timeFieldMeta.format ?? 'HH:mm:ss')
     }
 
     return value
@@ -61,7 +61,7 @@ export function normalizeFieldValue(value: DataValue | undefined, fieldMeta?: Wi
  * @param item An object in the fields of which tokens should be searched
  * @param fields
  */
-const convertTemplatedString = (templatedString: string, item: DataItem | undefined, fields?: WidgetField[]): ReactNode => {
+const convertTemplatedString = (templatedString: string, item: Omit<DataItem, 'vstamp'> | undefined, fields?: WidgetField[]): ReactNode => {
     if (!templatedString) {
         return ''
     }
@@ -112,7 +112,7 @@ const isTemplate = (templatedString: string): boolean => {
     return templatedString.match(TAG_PLACEHOLDER_FULL) !== null
 }
 
-export function getWidgetTitle(str: string, record?: DataItem, fields?: WidgetField[]) {
+export function getWidgetTitle(str: string, record?: Omit<DataItem, 'vstamp'>, fields?: WidgetField[]) {
     if (isTemplate(str)) {
         return convertTemplatedString(str, record, fields)
     } else {

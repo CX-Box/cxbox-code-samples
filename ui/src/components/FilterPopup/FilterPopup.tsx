@@ -2,25 +2,31 @@
  * Opens when column filter requested
  */
 
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useMemo } from 'react'
 import { Button, Form } from 'antd'
-import styles from './FilterPopup.less'
-import { useAppSelector } from '@store'
 import { useTranslation } from 'react-i18next'
-import { FieldType, WidgetField, WidgetTypes } from '@cxbox-ui/schema'
-import { useAssociateFieldKeyForPickList } from '../ColumnTitle/ColumnFilter'
 import { useDispatch } from 'react-redux'
+import { FieldType, WidgetField, WidgetTypes } from '@cxbox-ui/schema'
+import { useAppSelector } from '@store'
+import { useAssociateFieldKeyForPickList } from '../ColumnTitle/ColumnFilter'
 import { actions } from '@actions'
-import { FilterType } from '@interfaces/filters'
-import { PickListFieldMeta, BcFilter, DataValue, FilterType as CoreFilterType } from '@cxbox-ui/core'
+import { PickListFieldMeta, BcFilter, DataValue, FilterType as CoreFilterType, RowMetaField } from '@cxbox-ui/core'
 import { getFilterType } from '@utils/filters'
+import { checkboxFilterCounterLimit, checkboxFilterMaxVisibleItems } from '@constants/filter'
+import { numberFieldTypes } from '@constants/field'
+import { checkboxFilterFieldTypes } from './constants'
+import { FilterType } from '@interfaces/filters'
+import { CustomFieldTypes } from '@interfaces/widget'
+import styles from './FilterPopup.less'
 
 interface FilterPopupProps {
     widgetName: string
     fieldKey: string
     value: DataValue | DataValue[]
     children: React.ReactNode
+    rowFieldMeta: RowMetaField
     fieldType?: FieldType
+    filterByRangeEnabled?: boolean
     onApply?: () => void
     onCancel?: () => void
 }
@@ -54,6 +60,22 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
 
+    const filtersCounter = useMemo(() => {
+        if (checkboxFilterFieldTypes.includes(props?.fieldType as FieldType)) {
+            const filterValuesLength = props.rowFieldMeta?.filterValues?.length || 0
+
+            if (filterValuesLength > checkboxFilterMaxVisibleItems) {
+                const selectedFilterValuesLength = (props.value as DataValue[])?.length || 0
+
+                return selectedFilterValuesLength > checkboxFilterCounterLimit
+                    ? ` (${checkboxFilterCounterLimit}+)`
+                    : ` (${selectedFilterValuesLength})`
+            }
+        }
+
+        return null
+    }, [props?.fieldType, props.rowFieldMeta?.filterValues?.length, props.value])
+
     if (!widgetMeta) {
         return null
     }
@@ -61,7 +83,13 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
     const handleApply = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const newFilter: BcFilter = {
-            type: ([FieldType.date, FieldType.dateTime, FieldType.dateTimeWithSeconds].includes(props?.fieldType as FieldType)
+            type: ([
+                FieldType.date,
+                FieldType.dateTime,
+                FieldType.dateTimeWithSeconds,
+                CustomFieldTypes.Time,
+                ...(props.filterByRangeEnabled ? numberFieldTypes : [])
+            ].includes(props?.fieldType as FieldType | CustomFieldTypes)
                 ? FilterType.range
                 : getFilterType(widgetMeta.type)) as CoreFilterType,
             value: props.value,
@@ -115,6 +143,7 @@ const FilterPopup: React.FC<FilterPopupProps> = props => {
             <div className={styles.operators}>
                 <Button className={styles.button} data-test-filter-popup-apply={true} htmlType="submit">
                     {t('Apply')}
+                    {filtersCounter}
                 </Button>
                 <Button className={styles.button} data-test-filter-popup-clear={true} onClick={handleCancel}>
                     {t('Clear')}

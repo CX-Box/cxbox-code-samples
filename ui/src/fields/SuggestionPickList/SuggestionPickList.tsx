@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import Select from 'rc-select'
 import { Empty, Icon, Input, Spin } from 'antd'
 import { shallowEqual, useDispatch } from 'react-redux'
@@ -6,14 +6,14 @@ import cn from 'classnames'
 import ReadOnlyField from '../../components/ui/ReadOnlyField/ReadOnlyField'
 import { useOptions } from './hooks/useOptions'
 import { createDataItemFrom } from './utils'
-import { BaseFieldProps } from '@cxboxComponents/Field/Field'
+import { BaseFieldProps } from '@components/Field/Field'
 import { useAppSelector } from '@store'
 import { actions } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { PendingDataItem } from '@cxbox-ui/core'
 import { SuggestionPickListDataItem } from '@interfaces/data'
 import { SuggestionPickListField, SuggestionPickListWidgetMeta } from '@interfaces/widget'
-import { WidgetFieldBase } from '@cxbox-ui/schema'
+import { DataValue, WidgetFieldBase } from '@cxbox-ui/schema'
 import 'rc-select/assets/index.less'
 import styles from './SuggestionPickList.less'
 
@@ -28,7 +28,7 @@ export function SuggestionPickList({
     meta: fieldMeta,
     widgetName,
     cursor,
-    value,
+    value: externalValue,
     disabled,
     placeholder,
     readOnly,
@@ -36,10 +36,7 @@ export function SuggestionPickList({
     className,
     backgroundColor
 }: SuggestionPickListProps) {
-    const dispatch = useDispatch()
-
-    const fieldBc = useAppSelector(state => (fieldMeta.popupBcName ? state.screen.bo.bc[fieldMeta.popupBcName] : undefined))
-    const { fieldBcUrl, screenName, widget, widgetBcName } = useAppSelector(state => {
+    const { fieldBcUrl, screenName, widget, widgetBcName, fieldBc } = useAppSelector(state => {
         const fieldBcName = fieldMeta.popupBcName
         const limitBySelfCursor = state.router.bcPath?.includes(`${fieldBcName}/${cursor}`)
         const widgetBcName = state.view.widgets.find(item => item.name === widgetName)?.bcName
@@ -47,13 +44,19 @@ export function SuggestionPickList({
         return {
             screenName: state.screen.screenName,
             fieldBcUrl: buildBcUrl(fieldBcName, limitBySelfCursor),
-            fieldBc,
+            fieldBc: fieldMeta.popupBcName ? state.screen.bo.bc[fieldMeta.popupBcName] : undefined,
             widget: state.view.widgets.find(widget => widget.bcName === fieldMeta.popupBcName) as SuggestionPickListWidgetMeta,
             widgetBcName: widgetBcName
         }
     }, shallowEqual)
 
     const { elements: optionElements, fetchData: fetchOptions, options, isLoading } = useOptions({ widget })
+
+    const [localValue, setLocalValue] = useState<string | null>(null)
+
+    const currentValue = localValue !== null ? localValue : externalValue
+
+    const dispatch = useDispatch()
 
     const changeDataAction = useCallback(
         (item: PendingDataItem) => {
@@ -73,16 +76,30 @@ export function SuggestionPickList({
 
     const changeDataFromString = useCallback(
         (value: string | null) => {
-            changeDataAction({
-                [fieldMeta.key]: value
-            })
+            setLocalValue(null)
+
+            if (fieldMeta.pickMap) {
+                const restData: Record<string, DataValue> = {}
+
+                Object.keys(fieldMeta.pickMap).forEach(field => {
+                    restData[field] = field === fieldMeta.key ? value : null
+                })
+
+                changeDataAction(restData)
+            } else {
+                changeDataAction({
+                    [fieldMeta.key]: value
+                })
+            }
         },
-        [changeDataAction, fieldMeta.key]
+        [changeDataAction, fieldMeta.key, fieldMeta.pickMap]
     )
 
     const changeDataFromObject = useCallback(
         (item?: SuggestionPickListDataItem) => {
             if (fieldMeta.pickMap && item) {
+                setLocalValue(null)
+
                 const restData = createDataItemFrom(fieldMeta.pickMap, item)
 
                 changeDataAction({
@@ -93,18 +110,24 @@ export function SuggestionPickList({
         [changeDataAction, fieldMeta.pickMap]
     )
 
+    const clearData = useCallback(() => {
+        changeDataFromString(null)
+    }, [changeDataFromString])
+
     const changeData = useCallback(
         (value?: string | SuggestionPickListDataItem | null) => {
             if (typeof value === 'object' && value !== null) {
                 changeDataFromObject(value)
-            } else if (typeof value === 'string' || value === null) {
+            } else if (typeof value === 'string') {
                 changeDataFromString(value)
+            } else if (value === null) {
+                clearData()
             }
         },
-        [changeDataFromObject, changeDataFromString]
+        [changeDataFromObject, changeDataFromString, clearData]
     )
 
-    const handleSearch = useCallback(
+    const searchData = useCallback(
         (query?: string) => {
             fetchOptions.current?.(screenName, fieldBcUrl, {
                 query: query ?? '',
@@ -115,16 +138,22 @@ export function SuggestionPickList({
         [fetchOptions, fieldBc, fieldBcUrl, screenName, widget.limit]
     )
 
-    const handleInputChange = useCallback(
+    const handleChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const value = event.currentTarget.value
 
-            changeData(value)
+            setLocalValue(value)
 
-            handleSearch(value)
+            searchData(value)
         },
-        [changeData, handleSearch]
+        [searchData]
     )
+
+    const handleBlur = React.useCallback(() => {
+        if (localValue != null) {
+            changeDataFromString(localValue)
+        }
+    }, [localValue, changeDataFromString])
 
     const handleSelect = useCallback(
         (value: string) => {
@@ -137,16 +166,14 @@ export function SuggestionPickList({
 
             changeData(selectedOption)
 
-            handleSearch(selectedOption?.[searchValueKey])
+            searchData(selectedOption?.[searchValueKey])
         },
-        [changeData, fieldMeta.key, fieldMeta.pickMap, handleSearch, options]
+        [changeData, fieldMeta.key, fieldMeta.pickMap, searchData, options]
     )
 
-    const handleClear = useCallback(() => {
-        changeData(null)
-    }, [changeData])
-
-    const handleFocus = useCallback(() => handleSearch(''), [handleSearch])
+    const handleFocus = useCallback(() => {
+        searchData(currentValue)
+    }, [currentValue, searchData])
 
     if (readOnly) {
         return (
@@ -158,7 +185,7 @@ export function SuggestionPickList({
                 cursor={cursor}
                 onDrillDown={onDrillDown}
             >
-                {value}
+                {currentValue}
             </ReadOnlyField>
         )
     }
@@ -171,12 +198,12 @@ export function SuggestionPickList({
             mode="combobox"
             virtual={false}
             defaultActiveFirstOption={false}
-            value={value}
+            value={currentValue}
             getInputElement={() => (
-                <div className={cn(styles.inputWrapper, { [styles.filled]: !disabled && value?.length })}>
-                    <Input value={value} onChange={handleInputChange} placeholder={placeholder} disabled={disabled} />
+                <div className={cn(styles.inputWrapper, { [styles.filled]: !disabled && currentValue?.length })}>
+                    <Input value={currentValue} onChange={handleChange} placeholder={placeholder} disabled={disabled} />
 
-                    <span className={styles.clear} onClick={handleClear}>
+                    <span className={styles.clear} onClick={clearData}>
                         <Icon type="close-circle" theme="filled" />
                     </span>
 
@@ -186,9 +213,14 @@ export function SuggestionPickList({
                 </div>
             )}
             notFoundContent={<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-            dropdownRender={menu => (isLoading ? <Spin className={styles.spinner} /> : menu)}
+            dropdownRender={menu => (
+                <Spin className={styles.spinner} spinning={isLoading}>
+                    {menu}
+                </Spin>
+            )}
             onSelect={handleSelect}
             onFocus={handleFocus}
+            onBlur={handleBlur}
             filterOption={false}
             disabled={disabled}
         >

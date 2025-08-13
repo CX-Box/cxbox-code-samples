@@ -1,10 +1,9 @@
 import React from 'react'
 import cn from 'classnames'
-import { SearchHighlight } from '@cxboxComponents'
+import SearchHighlight from '@components/ui/SearchHightlight/SearchHightlight'
 import DrillDown from '@components/ui/DrillDown/DrillDown'
 import { useWidgetHighlightFilter } from '@hooks/useWidgetFilter'
-import { escapedSrc } from '@utils/strings'
-import { interfaces } from '@cxbox-ui/core'
+import { utils, WidgetFieldBase } from '@cxbox-ui/core'
 import styles from './ReadOnlyField.less'
 
 export interface ReadOnlyFieldProps {
@@ -16,9 +15,10 @@ export interface ReadOnlyFieldProps {
      * TODO: Will be mandatory in 2.0.0
      */
     cursor?: string
-    meta?: interfaces.WidgetFieldBase
+    meta?: WidgetFieldBase
     backgroundColor?: string
     className?: string
+    extraContent?: React.ReactNode
     onDrillDown?: () => void
     children: React.ReactNode
 }
@@ -30,15 +30,22 @@ export interface ReadOnlyFieldProps {
  */
 const ReadOnlyField: React.FunctionComponent<ReadOnlyFieldProps> = props => {
     const filter = useWidgetHighlightFilter(props.widgetName as string, props.meta?.key as string)
-    const displayedValue = filter ? (
-        <SearchHighlight
-            source={(props.children || '').toString()}
-            search={escapedSrc(filter?.value?.toString() as string)}
-            match={formatString => <b>{formatString}</b>}
-        />
-    ) : (
-        props.children
+    const displayedValue = (
+        <>
+            {filter ? (
+                <SearchHighlight
+                    source={(props.children || '').toString()}
+                    search={utils.escapedSrc(filter.value?.toString() as string)}
+                    match={formatString => <b>{formatString}</b>}
+                />
+            ) : (
+                props.children
+            )}
+
+            {props.extraContent}
+        </>
     )
+
     return (
         <span
             className={cn(styles.readOnlyField, { [styles.coloredField]: props.backgroundColor }, props.className)}

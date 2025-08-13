@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@store'
 import { FieldType, WidgetListField, PickListFieldMeta } from '@cxbox-ui/schema'
 import { actions } from '@actions'
 import { EFeatureSettingKey } from '@interfaces/session'
+import { FIELDS } from '@constants'
 
 interface ColumnFilterProps {
     widgetName: string
@@ -115,9 +116,11 @@ function ColumnFilter({ widgetName, widgetMeta, rowMeta, components }: ColumnFil
             widgetName={widgetName}
             fieldKey={effectiveFieldMeta.key}
             value={value}
+            rowFieldMeta={rowMeta}
             onApply={handleApply}
             onCancel={handleClose}
             fieldType={effectiveFieldMeta.type}
+            filterByRangeEnabled={filterByRangeEnabled}
         >
             <div className={styles.filterContainer}>
                 <FilterField
@@ -161,7 +164,7 @@ function getAssociateFieldKeyForPickList(fieldMeta: PickListFieldMeta) {
     }
 
     return Object.entries(fieldMeta.pickMap).reduce((acc: null | string, [key, value]) => {
-        if (value === 'id') {
+        if (value === FIELDS.TECHNICAL.ID) {
             return key
         }
 

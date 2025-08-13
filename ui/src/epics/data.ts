@@ -1,11 +1,10 @@
 import { RootEpic } from '@store'
-import { catchError, concat, EMPTY, filter, map, mergeMap, Observable, of } from 'rxjs'
-import { DataItem, OperationError, OperationErrorEntity, OperationTypeCrud, utils } from '@cxbox-ui/core'
+import { catchError, concat, EMPTY, filter, mergeMap, Observable, of } from 'rxjs'
+import { OperationError, OperationErrorEntity, OperationTypeCrud, utils } from '@cxbox-ui/core'
 import { actions } from '@actions'
 import { AxiosError } from 'axios'
 import { AnyAction } from '@reduxjs/toolkit'
 import { buildBcUrl } from '@utils/buildBcUrl'
-import { selectBc, selectBcData } from '@selectors/selectors'
 
 // TODO update this epic in the kernel to the current implementation
 /**
@@ -97,6 +96,7 @@ export const bcSaveDataEpic: RootEpic = (action$, state$, { api }) =>
                     const postInvoke = data.postActions?.[0]
                     const responseDataItem = data.record
                     return concat(
+                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.save })),
                         of(actions.bcSaveDataSuccess({ bcName, cursor, dataItem: responseDataItem })),
                         of(actions.bcFetchRowMeta({ widgetName, bcName })),
                         of(actions.deselectTableRow()),
@@ -143,6 +143,7 @@ export const bcSaveDataEpic: RootEpic = (action$, state$, { api }) =>
                     }
 
                     return concat(
+                        of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.save })),
                         of(actions.bcSaveDataFail({ bcName, bcUrl, viewError, entityError })),
                         notification$,
                         utils.createApiErrorObservable(e, context)

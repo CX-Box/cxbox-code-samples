@@ -33,8 +33,11 @@
 }
 
 .table {
-    overflow-x: auto;
     :global {
+        .ant-table .ant-table-body {
+            overflow-x: auto;
+        }
+
         .ant-table .ant-table-thead > tr > th {
             padding: 11px 16px;
             font-weight: 500;
@@ -193,6 +196,22 @@
         }
     }
 
+    .columnIcon {
+        font-size: 20px;
+
+        &:global.anticon svg {
+            width: 1em;
+            height: 1em;
+        }
+
+        &:global.anticon-close-square {
+            color: #d04437;
+        }
+        &:global.anticon-check-circle {
+            color: #14892c;
+        }
+    }
+
     .tableWithRowMenu tbody td:last-child {
         padding-right: 34px;
     }
@@ -303,4 +322,8 @@
     min-height: 48px;
     margin: 0 -4px;
     padding: 0 4px;
+}
+
+.massResultColum {
+    padding: 0 12px
 }

@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
-import { actions, interfaces, Operation, OperationGroup } from '@cxbox-ui/core'
+import { isOperationGroup, WidgetTypes, Operation, OperationGroup } from '@cxbox-ui/core'
 import { Icon } from 'antd'
 import { useAppSelector } from '@store'
 import styles from './Operations.less'
@@ -9,43 +9,66 @@ import { AppWidgetMeta, OperationCustomMode, removeRecordOperationWidgets } from
 import Button, { customTypes } from '../ui/Button/Button'
 import cn from 'classnames'
 import { useWidgetOperations } from '@hooks/useWidgetOperations'
+import { useOperationInProgress } from '@hooks/useOperationInProgress'
 import TextSearchInput from '@components/Operations/components/TextSearchInput/TextSearchInput'
 import { FileUpload } from '@components/Operations/components/FileUpload/FileUpload'
 import { buildBcUrl } from '@utils/buildBcUrl'
-
-const { isOperationGroup, WidgetTypes } = interfaces
+import { actions } from '@actions'
+import { AVAILABLE_MASS_STEPS } from '@components/widgets/Table/massOperations/constants'
 
 export interface OperationsOwnProps {
     className?: string
     bcName: string
     widgetMeta: AppWidgetMeta
-    operations: Array<interfaces.Operation | interfaces.OperationGroup>
+    operations: Array<Operation | OperationGroup> | undefined
     additionalOperations?: ReactNode
 }
 
 function Operations(props: OperationsOwnProps) {
-    const { bcName, widgetMeta, operations, className, additionalOperations } = props
+    const { bcName, widgetMeta, operations = [], className, additionalOperations } = props
+    const bcData = useAppSelector(state => {
+        return state.data[bcName]
+    })
     const metaInProgress = useAppSelector(state => state.view.metaInProgress[bcName])
 
     const { defaultOperations, customOperations, isUploadDnDMode } = useWidgetOperationsMode(widgetMeta, operations)
     const cachedOperations = useCacheForDefaultUploadOperation(defaultOperations, bcName)
+    const isOperationInProgress = useOperationInProgress(bcName)
 
     const dispatch = useDispatch()
 
     const handleOperationClick = React.useCallback(
-        (operation: interfaces.Operation) => {
-            dispatch(
-                actions.sendOperation({
-                    bcName,
-                    operationType: operation.type,
-                    widgetName: widgetMeta.name,
-                    bcKey: operation.bcKey,
-                    confirmOperation: operation.preInvoke
-                })
-            )
+        (operation: Operation) => {
+            if (operation.scope === 'mass') {
+                dispatch(
+                    actions.setViewerMode({
+                        bcName,
+                        operationType: operation.type,
+                        widgetName: widgetMeta.name,
+                        mode: operation.scope,
+                        step: AVAILABLE_MASS_STEPS[0]
+                    })
+                )
+            } else {
+                dispatch(
+                    actions.sendOperation({
+                        bcName,
+                        operationType: operation.type,
+                        widgetName: widgetMeta.name,
+                        bcKey: operation.bcKey,
+                        confirmOperation: operation.preInvoke
+                    })
+                )
+            }
         },
         [dispatch, bcName, widgetMeta]
     )
+
+    const getButtonProps = (operation: Operation) => {
+        return {
+            disabled: operation.scope === 'mass' ? !bcData?.length : false
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -57,15 +80,17 @@ function Operations(props: OperationsOwnProps) {
                 return null
             })}
             <div className={cn(styles.operations, className, { [styles.empty]: !defaultOperations?.length })}>
-                {cachedOperations.map((item: interfaces.Operation | interfaces.OperationGroup, index) => {
+                {cachedOperations.map((item: Operation | OperationGroup, index) => {
                     if (isOperationGroup(item)) {
                         return (
                             <OperationsGroup
                                 key={item.type}
+                                isOperationInProgress={isOperationInProgress}
                                 group={item}
                                 widgetType={widgetMeta.type}
                                 onClick={handleOperationClick}
                                 loading={metaInProgress}
+                                getButtonProps={getButtonProps}
                             />
                         )
                     }
@@ -83,6 +108,7 @@ function Operations(props: OperationsOwnProps) {
                                     data-test-widget-action-item={true}
                                     type={getButtonType({ widgetType: widgetMeta.type, index })}
                                     loading={metaInProgress}
+                                    {...getButtonProps?.(item)}
                                 >
                                     {item.icon && <Icon type={item.icon} />}
                                     {item.text}
@@ -97,7 +123,8 @@ function Operations(props: OperationsOwnProps) {
                             data-test-widget-action-item={true}
                             type={getButtonType({ widgetType: widgetMeta.type, index })}
                             onClick={() => handleOperationClick(item)}
-                            loading={metaInProgress}
+                            loading={metaInProgress || isOperationInProgress(item.type)}
+                            {...getButtonProps(item)}
                         >
                             {item.icon && <Icon type={item.icon} />}
                             {item.text}
@@ -138,7 +165,7 @@ const getButtonType = ({ widgetType, index, defaultType }: { widgetType?: string
 const CUSTOM_COMBINED_WITH_DEFAULT_MODE: OperationCustomMode[] = ['default-and-file-upload-dnd']
 const FILE_UPLOAD_DND_MODE: OperationCustomMode[] = ['default-and-file-upload-dnd', 'file-upload-dnd']
 
-const useWidgetOperationsMode = (widget: AppWidgetMeta, operations: (interfaces.Operation | interfaces.OperationGroup)[]) => {
+const useWidgetOperationsMode = (widget: AppWidgetMeta, operations: (Operation | OperationGroup)[]) => {
     const customOperations = widget.options?.buttons?.filter(button => button.actionKey && button.mode?.length && button.mode !== 'default')
 
     const customOperationsWithoutDefaultMode = customOperations

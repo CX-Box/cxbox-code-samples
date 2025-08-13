@@ -1,11 +1,22 @@
-@import '@assets/styles/theme.less';
+.formItem {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
 
-.div[class*="FormWidget__required"] {
-    :global(.ant-form-item-label label.ant-form-item-no-colon::after) {
-        content: "*";
-        display: inline-block;
-        color: red;
-    }
+.formLabel {
+    color: #000000d9;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+
+    padding-bottom: 2px;
+    white-space: normal;
+}
+
+.nowrap {
+    flex-wrap: nowrap;
 }
 
 
@@ -42,7 +53,19 @@
                 color: rgba(0, 0, 0, 0.85);
             }
 
+            .ant-select-selection--multiple {
+                min-height: 40px;
 
+                .ant-select-selection__rendered {
+                    line-height: 38px;
+                }
+
+                .ant-select-selection__choice,
+                .ant-select-search--inline {
+                    height: 32px;
+                    line-height: 32px;
+                }
+            }
 
             .ant-select-selection--single {
                 height: 40px;
@@ -79,7 +102,6 @@
                     border-left: none;
                     padding: 0;
                     border-radius: 0 2px 2px 0;
-                    background: transparent;
 
                     i {
                         display: block;
@@ -125,6 +147,15 @@
                 }
             }
 
+            div[class*='MultivalueTag__multivalue'] {
+                min-height: 40px;
+
+                .ant-tag {
+                    height: 32px;
+                    line-height: 30px;
+                }
+            }
+
             .ant-form-item-control.has-error {
                 input {
                     border-color: #f85359;
@@ -134,11 +165,14 @@
                     border-color: #f85359;
                 }
             }
+            .ant-time-picker {
+                width: 100%;
+            }
         }
     }
 }
 
 .formContainer div[class^="CheckboxPicker__container"] :global(.ant-checkbox-wrapper) {
     min-height: 40px;
-    font-size: 16px;
+    font-size: 14px;
 }
