@@ -68,7 +68,6 @@ public abstract class BaseTestForSamples {
         Configuration.pageLoadTimeout = 60000;
         Configuration.webdriverLogsEnabled = false;
         Configuration.reportsFolder = "target/videos";
-        Configuration.baseUrl = "http://code-samples.cxbox.org/ui/#";
         if (Env.logEnabled()) {
             Configuration.proxyEnabled = true;
         }
