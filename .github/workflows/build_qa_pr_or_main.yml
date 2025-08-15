@@ -46,12 +46,7 @@ jobs:
 
       - name: Run tests
         id: run_tests
-        run: mvn --batch-mode -DrunTests=true \
-          -Dsurefire.parallel=classes \
-          -Dsurefire.forkCount=3 \
-          -Dsurefire.threadCount=1 \
-          -Dsurefire.reuseForks=true \
-          -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
 
       - name: Get last 20 allure reports from gh-pages
         run: |
