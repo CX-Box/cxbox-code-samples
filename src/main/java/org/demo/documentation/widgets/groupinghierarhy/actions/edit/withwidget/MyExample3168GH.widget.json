@@ -4,44 +4,65 @@
   "type": "GroupingHierarchy",
   "bc": "myexample3168",
   "fields": [
-    {
-      "title": "Custom Field Dictionary",
-      "key": "customFieldDictionary",
-      "type": "dictionary"
-    },
-    {
-      "label": "Field Input",
-      "key": "customField",
-      "type": "input"
-    },
-    {
-      "label": "Field Dictionary Fa",
-      "key": "customFieldDictionary3",
-      "type": "dictionary"
-    },
-    {
-      "label": "Test",
-      "key": "customFieldDictionary2",
-      "type": "dictionary"
+       {
+        "title": "Тип документа",
+        "key": "docType",
+        "type": "dictionary"
+      },
+      {
+        "title": "Тип файла",
+        "key": "fileTypeCd",
+        "type": "dictionary"
+      },
+      {
+        "title": "Файл",
+        "key": "fileName",
+        "type": "fileUpload",
+        "fileIdKey": "fileNameId",
+        "preview": {
+          "enabled": true,
+          "titleKey": "fileTypeCd",
+          "hintKey": "fileName",
+          "mode": "popup",
+          "miniPreview": true
+        }
+      },
+
+      {
+        "title": "Дата создания",
+        "key": "createdDate",
+        "type": "dateTime"
+      },
+      {
+        "title": "Дата получения",
+        "key": "dateReceipt",
+        "type": "date"
+      }
+    ],
+    "options": {
+      "groupingHierarchy": {
+        "fields": [
+          "fileTypeCd"
+        ]
+      },
+      "buttons": [
+        {
+          "actionKey": "associate",
+          "fieldKey": "fileName",
+          "mode": "default-and-file-upload-dnd"
+        }
+      ],
+      "create": {
+        "widget": "myEntity3168EditForm"
+      },
+      "edit": {
+        "widget": "myEntity3168EditForm"
+      },
+      "actionGroups": {
+        "include": [
+          "create",
+          "associate"
+        ]
+      }
     }
-  ],
-  "options": {
-    "create": {
-      "widget": "myEntity3168EditForm"
-    },
-    "edit": {
-      "widget": "myEntity3168EditForm"
-    },
-    "actionGroups": {
-      "include": [
-        "create",
-        "delete"
-      ]
-    },
-    "groupingHierarchy": {
-      "fields": [
-        "customFieldDictionary"
-      ]
     }
-  }
-}

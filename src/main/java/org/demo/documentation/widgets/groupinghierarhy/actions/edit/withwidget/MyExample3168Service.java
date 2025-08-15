@@ -26,6 +26,15 @@ public class MyExample3168Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3168DTO> doUpdateEntity(MyEntity3168 entity, MyExample3168DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3168DTO_.sodfuDocNumber, entity::setSodfuDocNumber);
+        setIfChanged(data, MyExample3168DTO_.fileId, entity::setFileId);
+        setIfChanged(data, MyExample3168DTO_.needAnAnswer, entity::setNeedAnAnswer);
+        setIfChanged(data, MyExample3168DTO_.dateReceipt, entity::setDateReceipt);
+        setIfChanged(data, MyExample3168DTO_.createdDate, entity::setCreatedDate);
+        setIfChanged(data, MyExample3168DTO_.fileNameId, entity::setFileNameId);
+        setIfChanged(data, MyExample3168DTO_.fileName, entity::setFileName);
+        setIfChanged(data, MyExample3168DTO_.fileTypeCd, entity::setFileTypeCd);
+        setIfChanged(data, MyExample3168DTO_.docType, entity::setDocType);
         setIfChanged(data, MyExample3168DTO_.customFieldDictionary3, entity::setCustomFieldDictionary3);
         setIfChanged(data, MyExample3168DTO_.customFieldDictionary2, entity::setCustomFieldDictionary2);
         setIfChanged(data, MyExample3168DTO_.customFieldDictionary, entity::setCustomFieldDictionary);

@@ -4,21 +4,36 @@
   "type": "Form",
   "bc": "myexample3168",
   "fields": [
-
     {
-      "label": "Field Input",
-      "key": "customField",
+      "label": "Тип документа",
+      "key": "docType",
+      "type": "dictionary"
+    },
+    {
+      "label": "Тип файла",
+      "key": "fileTypeCd",
+      "type": "dictionary"
+    },
+    {
+      "label": "Файл",
+      "key": "fileName",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "label": "Дата получения",
+      "key": "dateReceipt",
+      "type": "date"
+    },
+    {
+      "label": "Требует ответа",
+      "key": "needAnAnswer",
+      "type": "checkbox"
+    },
+    {
+      "label": "Номер документа",
+      "key": "sodfuDocNumber",
       "type": "input"
-    },
-    {
-      "label": "Field Dictionary Fa",
-      "key": "customFieldDictionary3",
-      "type": "dictionary"
-    },
-    {
-      "label": "Test",
-      "key": "customFieldDictionary2",
-      "type": "dictionary"
     }
   ],
   "options": {
@@ -27,7 +42,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldDictionary3",
+              "fieldKey": "docType",
               "span": 12
             }
           ]
@@ -35,16 +50,39 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldDictionary2",
+              "fieldKey": "fileTypeCd",
               "span": 12
             }
           ]
         },
-
         {
           "cols": [
             {
-              "fieldKey": "customField",
+              "fieldKey": "fileName",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "dateReceipt",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "needAnAnswer",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "sodfuDocNumber",
               "span": 12
             }
           ]
