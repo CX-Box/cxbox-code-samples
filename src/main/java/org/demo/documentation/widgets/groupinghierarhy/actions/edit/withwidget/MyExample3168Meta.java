@@ -7,6 +7,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.cxbox.dictionary.DictionaryProvider;
+import org.demo.documentation.other.forceactive2.MyExample4901DTO_;
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.withwidget.enums.CustomFieldDictionary2Enum;
 import org.demo.documentation.widgets.groupinghierarhy.actions.edit.withwidget.enums.CustomFieldDictionary3Enum;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 
 @SuppressWarnings("EmptyMethod")
@@ -32,9 +34,7 @@ public class MyExample3168Meta extends FieldMetaBuilder<MyExample3168DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3168DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
-        fields.setEnabled(MyExample3168DTO_.sodfuDocNumber);
         fields.setEnabled(MyExample3168DTO_.fileId);
-        fields.setEnabled(MyExample3168DTO_.needAnAnswer);
         fields.setEnabled(MyExample3168DTO_.dateReceipt);
         fields.setEnabled(MyExample3168DTO_.createdDate);
         fields.setEnabled(MyExample3168DTO_.fileNameId);
@@ -67,19 +67,12 @@ public class MyExample3168Meta extends FieldMetaBuilder<MyExample3168DTO> {
                 && fields.getCurrentValue(MyExample3168DTO_.needAnAnswer).filter(BooleanUtils::isTrue).isPresent()) {
             fields.setRequired(MyExample3168DTO_.sodfuDocNumber);
         }
-        fields.setEnabled(
-                MyExample3168DTO_.docType,
-                MyExample3168DTO_.fileTypeCd,
-                MyExample3168DTO_.fileName,
-                MyExample3168DTO_.fileId
-        );
-        if( !((fields.getCurrentValue(MyExample3168DTO_.docType).isPresent()&&fields.getCurrentValue(MyExample3168DTO_.docType).get().getValue()==DocTypeEnum.HIGH.getValue()))
-        ) {
+
+    if (!(Objects.equals(fields.getCurrentValue(MyExample3168DTO_.docType).orElse(null), DocTypeEnum.HIGH))) {
+
             fields.setEnabled(
-                    MyExample3168DTO_.docType,
-                    MyExample3168DTO_.fileTypeCd,
-                    MyExample3168DTO_.fileName,
-                    MyExample3168DTO_.fileId
+                    MyExample3168DTO_.sodfuDocNumber,
+                    MyExample3168DTO_.needAnAnswer
             );
         }
 
