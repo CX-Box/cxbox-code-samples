@@ -48,17 +48,15 @@ jobs:
         id: run_tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
 
-      - name: Get last 20 allure reports from gh-pages
-        run: |
-          git clone --depth 1 --branch gh-pages \
-            https://github.com/CX-Box/cxbox-code-samples-allure.git old-gh-pages
-          mkdir -p allure-history
-          if [ -d "old-gh-pages/pull_request" ]; then
-            cd old-gh-pages/pull_request
-            ls -1t | head -n 20 | xargs -I{} cp -r "{}" ../../allure-history/
-            cd ../../
-          fi
-          rm -rf old-gh-pages
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.12
