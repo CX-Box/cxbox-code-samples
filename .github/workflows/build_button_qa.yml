@@ -121,7 +121,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: main
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
@@ -213,7 +213,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: manual
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
@@ -322,7 +322,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: manual
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
