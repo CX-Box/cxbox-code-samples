@@ -27,9 +27,6 @@ interface ViewState extends Omit<CoreViewState, 'popupData'> {
     popupData?: PopupData
     groups?: {
         widgetNames: string[]
-        collapsedCondition?: {
-            default?: boolean
-        }
     }[]
 }
 
