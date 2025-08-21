@@ -1,6 +1,6 @@
 {
-  "name": "MyExample3124SumGH",
-  "title": "GroupingHierarchy (GH) widget aggregate `sum`, Sum above the same column",
+  "name": "MyExample3124SumGHForOptionalParameter",
+  "title": "GroupingHierarchy (GH) widget aggregate `sum`. Sum above the other column",
   "type": "GroupingHierarchy",
   "bc": "myexample3124",
   "fields": [
@@ -27,8 +27,10 @@
       ],
       "aggFields": [
         {
-          "fieldKey": "customFieldNumber",
-          "func": "sum"
+          "fieldKey": "customField",
+          "func": "sum",
+          "argFieldKeys": ["customFieldNumber"],
+          "description": "Sum field customFieldNumber"
         }
       ]
     }
