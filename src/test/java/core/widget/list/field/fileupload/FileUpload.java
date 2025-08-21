@@ -146,6 +146,15 @@ public class FileUpload extends BaseRow<File> {
                 .text();
     }
 
+	/**
+	 * Assert that no file is present in the field
+	 */
+	@Step("Assert that no file is present in the field")
+	public void assertNoFileInField() {
+		setFocusField();
+		getRowByName().$("button").shouldNot(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+	}
+
     /**
      * Getting the placeholder text
      *
