@@ -61,6 +61,19 @@
       ],
       "aggLevels": [
         {
+          "level": 0,
+          "aggFields": [
+            {
+              "fieldKey": "insuranceValue",
+              "func": "sum",
+              "argFieldKeys": [
+                "insuranceValue"
+              ],
+              "description": "sum fields `Insured amount`"
+            }
+          ]
+        },
+        {
           "level": 1,
           "aggFields": [
             {
@@ -70,29 +83,6 @@
                 "annualPremium"
               ],
               "description": "sum fields `Annual Premium`"
-            },
-            {
-              "fieldKey": "annualPremium",
-              "func": "sum",
-              "argFieldKeys": [
-                "annualPremium"
-              ]
-            },
-            {
-              "fieldKey": "insuranceAmount",
-              "func": "sum",
-              "argFieldKeys": [
-                "acquisition","annualPremium"
-              ],
-              "description": "sum fields `Annual Premium` and `Acquisition`"
-            },
-            {
-              "fieldKey": "acquisition",
-              "func": "sum",
-              "argFieldKeys": [
-                "acquisition"
-              ],
-              "description": "sum"
             }
           ]
         }

@@ -15,7 +15,7 @@
       "type": "number"
     },
     {
-      "label": "Custom Field Number Other",
+      "title": "Custom Field Number Other",
       "key": "customFieldNumberOther",
       "type": "number"
     },
@@ -33,8 +33,9 @@
       "aggFields": [
         {
           "fieldKey": "customFieldNumber",
-          "func": "max",
-          "argFieldKeys": ["customFieldNumberOther"]
+          "func": "sum",
+          "argFieldKeys": ["customFieldNumberOther","customFieldNumber"],
+          "description": "Sum field `Custom Field Number Other` and `Custom Field Number`"
         }
       ]
     }

@@ -38,10 +38,10 @@ public class MyEntity3125TestDataLoadService {
 
         repository3126.save(new MyEntity3126().setCustomField("test data"));
 
-        repository3124.save(new MyEntity3124().setCustomField("test data 4").setCustomFieldNumber(7500L).setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH).setCustomFieldNumberOther(500L));
-        repository3124.save(new MyEntity3124().setCustomField("test data 1").setCustomFieldNumber(6500L).setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH).setCustomFieldNumberOther(700L));
-        repository3124.save(new MyEntity3124().setCustomField("test data 2").setCustomFieldNumber(4500L).setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW).setCustomFieldNumberOther(600L));
-        repository3124.save(new MyEntity3124().setCustomField("test data 3").setCustomFieldNumber(5500L).setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
+        repository3124.save(new MyEntity3124().setCustomField("Description 4").setCustomFieldNumber(75000L).setCustomFieldDictionary(CustomFieldDictionaryEnum.LAND).setCustomFieldNumberOther(500L));
+        repository3124.save(new MyEntity3124().setCustomField("Description 1").setCustomFieldNumber(65000L).setCustomFieldDictionary(CustomFieldDictionaryEnum.MOVABLE).setCustomFieldNumberOther(700L));
+        repository3124.save(new MyEntity3124().setCustomField("Description 2").setCustomFieldNumber(45000L).setCustomFieldDictionary(CustomFieldDictionaryEnum.MOVABLE).setCustomFieldNumberOther(600L));
+        repository3124.save(new MyEntity3124().setCustomField("Description 3").setCustomFieldNumber(55000L).setCustomFieldDictionary(CustomFieldDictionaryEnum.IMMOVABLE));
 
         repository.save(new MyEntity3125()
                 .setLocation("Saint Petersburg, Obvodny Canal Embankment")

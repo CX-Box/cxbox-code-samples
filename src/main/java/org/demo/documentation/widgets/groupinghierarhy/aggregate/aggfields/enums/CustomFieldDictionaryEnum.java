@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldDictionaryEnum {
-    HIGH("High"),
-    MIDDLE("Middle"),
-    LOW("Low");
+    IMMOVABLE("Immovable property"),
+    MOVABLE("Movable property"),
+    LAND("Land parcel");
 
     @JsonValue
     private final String value;
