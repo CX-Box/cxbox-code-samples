@@ -1,0 +1,43 @@
+{
+  "name": "MyExample6100Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample6100",
+  "fields": [
+    {
+      "label": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldFile",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "create",
+        "associate",
+        "delete",
+        "save"
+      ]
+    }
+  }
+}
