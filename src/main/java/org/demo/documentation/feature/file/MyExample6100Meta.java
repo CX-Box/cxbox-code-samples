@@ -22,7 +22,7 @@ public class MyExample6100Meta extends FieldMetaBuilder<MyExample6100DTO> {
       fields.setEnabled(MyExample6100DTO_.customField);
 
     }
-
+    // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription, Long parentId) {
       fields.setEnumFilterValues(fields, MyExample6100DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
@@ -31,5 +31,5 @@ public class MyExample6100Meta extends FieldMetaBuilder<MyExample6100DTO> {
       fields.setFileAccept(MyExample6100DTO_.customFieldFile, List.of(".png",".pdf",".jpg",".jpeg"));
 
     }
-
+    // --8<-- [end:buildIndependentMeta]
 }
