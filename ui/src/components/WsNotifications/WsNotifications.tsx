@@ -65,7 +65,6 @@ export function WsNotifications(props: NotificationProps) {
         if (selectedRowKeys.length > 0) {
             return lastValueFrom(instance.deleteNotifications(selectedRowKeys)).then(
                 () => {
-                    setRead(selectedRowKeys)
                     setSelectedRowKeys([])
                     notification.getCurrentPage()
                 },

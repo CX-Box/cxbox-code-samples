@@ -8,6 +8,7 @@ import { AVAILABLE_LIMITS_LIST } from '@constants/pagination'
 export const useWidgetPaginationLimit = (widget: AppWidgetMeta) => {
     const { hideLimitOptions = false, availableLimitsList = AVAILABLE_LIMITS_LIST } = widget.options?.pagination ?? {}
     const bcPageLimit = useAppSelector(state => state.screen.bo.bc[widget.bcName].limit)
+    const localPageLimit = useAppSelector(state => state.screen.pagination[widget.bcName]?.limit)
     const defaultLimit = useAppSelector(state => state.screen.bo.bc[widget.bcName]?.defaultLimit)
 
     const dispatch = useDispatch()
@@ -31,7 +32,7 @@ export const useWidgetPaginationLimit = (widget: AppWidgetMeta) => {
     return {
         hideLimitOptions,
         changePageLimit,
-        value: bcPageLimit,
+        value: localPageLimit ?? bcPageLimit,
         options
     }
 }

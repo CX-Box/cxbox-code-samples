@@ -21,6 +21,7 @@ const cellBorder = {
 export const exportXlsx = (
     columns: interfaces.DataItem[],
     filteredFieldsMeta: TableWidgetField[],
+    fieldsMeta: TableWidgetField[],
     keys: string[],
     fileName: string,
     bcName: string,
@@ -34,7 +35,7 @@ export const exportXlsx = (
         const sheet = workbook1.addWorksheet(sheetName || 'Sheet1')
         setColumnWidths(sheet, filteredFieldsMeta)
 
-        const headerRowIndex = buildHeader(sheet, filteredFieldsMeta, columns, currentDate)
+        const headerRowIndex = buildHeader(sheet, fieldsMeta, columns, currentDate)
 
         columns.forEach(item => {
             let col = 0
@@ -43,7 +44,7 @@ export const exportXlsx = (
                 row[col] = valueMapper(
                     item[key],
                     true,
-                    filteredFieldsMeta.find((field: TableWidgetField) => field.key === key)
+                    fieldsMeta.find((field: TableWidgetField) => field.key === key)
                 )
                 col++
             }
@@ -89,11 +90,19 @@ const { FieldType } = interfaces
  * Inserts a cap into the sheet: top stamp, column groups, columns
  *
  * @param sheet
- * @param filteredFieldsMeta
+ * @param fieldsMeta Field metas, to define header alignment
  * @param data
  * @param currentDate
  */
-function buildHeader(sheet: Worksheet, filteredFieldsMeta: TableWidgetField[], data: interfaces.DataItem[], currentDate?: string) {
+function buildHeader(sheet: Worksheet, fieldsMeta: TableWidgetField[], data: interfaces.DataItem[], currentDate?: string) {
+    const filteredFieldsMeta = fieldsMeta.reduce<TableWidgetField[]>((result, fieldMeta) => {
+        if (!fieldMeta.hidden && fieldMeta.type !== FieldType.hidden) {
+            return [...result, fieldMeta]
+        }
+
+        return result
+    }, [])
+
     if (currentDate) {
         const mergeLength = filteredFieldsMeta.length ? filteredFieldsMeta.length : 1
         const rowIndex = 2

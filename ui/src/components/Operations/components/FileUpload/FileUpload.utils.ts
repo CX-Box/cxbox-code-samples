@@ -36,14 +36,10 @@ export const needSendAllFiles = (filesInfo: AddedFileInfo[]) => {
     return filesExist && someDoneFilesExist && !uploadingFilesContinues
 }
 
-export const addDotToExtension = (fileExtension: string) => {
-    return fileExtension.startsWith('.') ? fileExtension : `.${fileExtension}`
-}
-
 export function getFileExtension(fileName: string | null = null) {
     const fileExtension = fileName ? (fileName.split('.').pop() as string) : String(fileName)
 
-    return addDotToExtension(fileExtension)
+    return `.${fileExtension}`
 }
 
 export function checkFileFormat(fileName: string, accept?: string) {

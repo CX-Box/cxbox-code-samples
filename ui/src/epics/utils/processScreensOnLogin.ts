@@ -2,7 +2,6 @@ import { createDefaultSort } from '@utils/groupingHierarchy'
 import { BcMeta, WidgetListField } from '@cxbox-ui/core'
 import { AppWidgetMeta, CustomWidgetTypes, DualAxes2DWidgetMeta } from '@interfaces/widget'
 import { SessionScreen } from '@interfaces/session'
-import { addUidToTree } from '@components/ViewNavigation/tab/standard/utils/addUidToTree'
 
 const combineDualAxes2DFields = (dualAxes2DWidget: DualAxes2DWidgetMeta, viewWidgets: AppWidgetMeta[]) => {
     const uniqueFields: Map<string, WidgetListField> = new Map()
@@ -23,7 +22,7 @@ const combineDualAxes2DFields = (dualAxes2DWidget: DualAxes2DWidgetMeta, viewWid
     dualAxes2DWidget.fields = Array.from(uniqueFields.values())
 }
 
-// add sort for groupHierarchies mutate, combine DualAxes2D fields, add uid for navigation
+// add sort for groupHierarchies mutate and combine DualAxes2D fields
 export const processScreensOnLogin = (screens: SessionScreen[]) => {
     screens.forEach(newScreen => {
         const dictionary: { [bcName: string]: { widget?: AppWidgetMeta; bc?: BcMeta } | undefined } = {}
@@ -52,8 +51,6 @@ export const processScreensOnLogin = (screens: SessionScreen[]) => {
                 bcWithGrouping.defaultSort = createDefaultSort(widgetWithGrouping, bcWithGrouping) ?? bcWithGrouping.defaultSort
             }
         })
-
-        newScreen.meta?.navigation?.menu?.forEach(addUidToTree)
     })
 
     return screens

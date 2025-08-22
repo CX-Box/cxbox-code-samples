@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Button, DatePicker } from 'antd'
-import moment, { Moment } from 'moment'
-import { useTranslation } from 'react-i18next'
-import { isoLocalFormatter } from '@utils/date'
+import { DatePicker } from 'antd'
 import { DatePickerProps, SinglePickerProps } from 'antd/lib/date-picker/interface'
 import { DataValue } from '@cxbox-ui/schema'
+import moment, { Moment } from 'moment'
 import styles from './RangePicker.less'
-import buttonStyles from './components/RangeTransferButtons/RangeTransferButtons.less'
-import { isEmptyValue } from '@components/ColumnTitle/components/utils'
+import { useTranslation } from 'react-i18next'
+import { isoLocalFormatter } from '@utils/date'
 
 interface RangePickerProps extends Omit<DatePickerProps, 'onChange' | 'value'> {
     onChange: (v: DataValue[]) => void
@@ -64,17 +62,6 @@ function RangePicker({ value, onChange, open, ...rest }: RangePickerProps) {
         }
     }
 
-    const handleDateTransfer = (type: 'toStart' | 'toEnd') => {
-        if (type === 'toStart') {
-            const newStartValue = moment(startDate).endOf('day')
-            onChange([isoLocalFormatter(startDate), isoLocalFormatter(newStartValue)])
-        }
-        if (type === 'toEnd') {
-            const newEndValue = moment(endDate).startOf('day')
-            onChange([isoLocalFormatter(newEndValue), isoLocalFormatter(endDate)])
-        }
-    }
-
     return (
         <div className={styles.container}>
             <DatePicker
@@ -87,12 +74,6 @@ function RangePicker({ value, onChange, open, ...rest }: RangePickerProps) {
                 onOpenChange={handleStartOpenChange}
                 open={startOpen}
             />
-
-            <div className={buttonStyles.container}>
-                <Button disabled={isEmptyValue(isoLocalFormatter(startDate))} onClick={() => handleDateTransfer('toStart')} icon="right" />
-                <Button disabled={isEmptyValue(isoLocalFormatter(endDate))} onClick={() => handleDateTransfer('toEnd')} icon="left" />
-            </div>
-
             <DatePicker
                 {...rest}
                 data-test-filter-popup-end-value={true}

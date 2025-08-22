@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '@store'
 import { FieldType, WidgetListField, PickListFieldMeta } from '@cxbox-ui/schema'
 import { actions } from '@actions'
 import { EFeatureSettingKey } from '@interfaces/session'
-import { FIELDS } from '@constants'
 
 interface ColumnFilterProps {
     widgetName: string
@@ -164,7 +163,7 @@ function getAssociateFieldKeyForPickList(fieldMeta: PickListFieldMeta) {
     }
 
     return Object.entries(fieldMeta.pickMap).reduce((acc: null | string, [key, value]) => {
-        if (value === FIELDS.TECHNICAL.ID) {
+        if (value === 'id') {
             return key
         }
 

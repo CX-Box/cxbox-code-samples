@@ -9,8 +9,9 @@ import { buildBcUrl } from '@utils/buildBcUrl'
 import { openNotification } from '@components/NotificationsContainer/utils'
 import { defaultExcelLimit, maxExcelLimit } from '@constants/export'
 import { TableWidgetField } from '@interfaces/widget'
-import { BcFilter, BcSorter, DataItem, DataValue, FieldType, MultivalueSingleValue } from '@cxbox-ui/core'
-import { FIELDS } from '@constants'
+import { interfaces } from '@cxbox-ui/core'
+
+const { FieldType } = interfaces
 
 export type ExportOptions = { page?: number; limit?: number }
 
@@ -46,12 +47,10 @@ export async function exportTable(
     hasData: boolean,
     appExportExcelLimit: string,
     total: number,
-    filters?: BcFilter[],
-    sorters?: BcSorter[],
+    filters?: interfaces.BcFilter[],
+    sorters?: interfaces.BcSorter[],
     { page = 1, limit = 5 }: ExportOptions = {},
-    exportType: string = 'excel',
-    selectedRows: Omit<DataItem, 'vstamp'>[] = [],
-    massMode: boolean = false
+    exportType: string = 'excel'
 ) {
     const url = buildBcUrl(bcName)
     const filtersObj: Record<string, string> = convertFiltersIntoObject(filters)
@@ -63,7 +62,7 @@ export async function exportTable(
         sortersObj[fieldString] = sorter.fieldName
     })
 
-    let fullData: DataItem[] = []
+    let fullData: interfaces.DataItem[] = []
 
     if (hasData) {
         const resultData = await lastValueFrom(
@@ -78,7 +77,7 @@ export async function exportTable(
             fullData = resultData
         }
     }
-    let parsedData = fullData
+    const parsedData = fullData
 
     if (parsedData?.length < total) {
         openNotification({
@@ -89,31 +88,12 @@ export async function exportTable(
         })
     }
 
-    const filteredFieldsMetaWithId = filterFieldsMeta(fieldsMeta)
-
-    if (massMode) {
-        filteredFieldsMetaWithId.push({
-            key: FIELDS.MASS_OPERATION.ERROR_MESSAGE,
-            type: FieldType.input,
-            title: t('Errors')
-        })
-
-        const selectedRowsDictionary: Record<string, Omit<DataItem, 'vstamp'>> = {}
-
-        selectedRows.forEach(row => {
-            selectedRowsDictionary[row.id as string] = row
-        })
-
-        parsedData = parsedData.map(item => ({ ...item, ...selectedRowsDictionary[item.id] }))
-    }
-
-    filteredFieldsMetaWithId.push({ key: FIELDS.TECHNICAL.ID, type: FieldType.input, title: FIELDS.TECHNICAL.ID, excelWidth: 5 })
-
-    const keys: string[] = getKeyArray(filteredFieldsMetaWithId)
+    const filteredFieldsMeta = filterFieldsMeta(fieldsMeta)
+    const keys: string[] = getKeyArray(filteredFieldsMeta)
     const dateFileName = fileName + ' ' + getCurrentDate()
     switch (exportType) {
         case 'excel': {
-            return exportXlsx(parsedData, filteredFieldsMetaWithId, keys, dateFileName, bcName, currentDate)
+            return exportXlsx(parsedData, filteredFieldsMeta, fieldsMeta, keys, dateFileName, bcName, currentDate)
         }
         default: {
             return null
@@ -123,7 +103,7 @@ export async function exportTable(
 /**
  * Converts values before sending to excel:
  */
-export function valueMapper(value: DataValue, isExcel: boolean, fieldMeta?: TableWidgetField) {
+export function valueMapper(value: interfaces.DataValue, isExcel: boolean, fieldMeta?: TableWidgetField) {
     let result: any
 
     switch (fieldMeta?.type) {
@@ -141,7 +121,7 @@ export function valueMapper(value: DataValue, isExcel: boolean, fieldMeta?: Tabl
             result = (value as number) / 100
             break
         case FieldType.multivalue:
-            result = Array.isArray(value) ? (value as MultivalueSingleValue[]).map(mvValue => mvValue.value).join(', ') : null
+            result = Array.isArray(value) ? (value as interfaces.MultivalueSingleValue[]).map(mvValue => mvValue.value).join(', ') : null
             break
         default: {
             result = typeof value !== 'object' ? value : null

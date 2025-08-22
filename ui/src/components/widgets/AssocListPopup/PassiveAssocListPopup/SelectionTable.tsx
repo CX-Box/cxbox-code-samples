@@ -49,15 +49,7 @@ export const SelectionTable = ({ ...props }: SelectionTableProps) => {
         [changeItem, props.meta.options?.primary?.title, selectedRecords, t]
     )
 
-    return (
-        <Table
-            meta={props.meta}
-            rowSelection={rowSelection}
-            disableMassMode={true}
-            disablePagination={props.disablePagination}
-            primaryColumn={primaryColumn}
-        />
-    )
+    return <Table meta={props.meta} rowSelection={rowSelection} disablePagination={props.disablePagination} primaryColumn={primaryColumn} />
 }
 
 export default SelectionTable

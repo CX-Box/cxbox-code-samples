@@ -1,6 +1,7 @@
 import { RootState } from '@store'
 import { PendingValidationFails, WidgetMeta } from '@cxbox-ui/core'
 import { buildBcUrl } from '@utils/buildBcUrl'
+import { AppWidgetMeta } from '@interfaces/widget'
 
 export const selectBc = (state: RootState, bcName: string | undefined) => (bcName ? state.screen.bo.bc?.[bcName] : undefined)
 
@@ -28,6 +29,14 @@ export const selectBcPendingValidationFails = (state: RootState, bcName: string 
 export const selectBcFilters = (state: RootState, bcName: string | undefined) => (bcName ? state.screen.filters[bcName] : undefined)
 
 export const selectBcSorters = (state: RootState, bcName: string | undefined) => (bcName ? state.screen.sorters[bcName] : undefined)
+
+export const selectInternalWidgetsBcName = (state: RootState, widgetName: string | undefined) => {
+    const externalWidget = widgetName ? (state.view.widgets.find(item => item.name === widgetName) as AppWidgetMeta) : undefined
+
+    return state.view.widgets.find(
+        widget => externalWidget?.options?.create?.widget === widget?.name || externalWidget?.options?.edit?.widget === widget?.name
+    )?.bcName as string
+}
 
 export const selectWidget = (state: RootState, widgetName: string | undefined) =>
     widgetName ? state.view.widgets.find(widget => widgetName === widget?.name) : undefined

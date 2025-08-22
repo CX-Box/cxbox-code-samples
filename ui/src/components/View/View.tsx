@@ -29,16 +29,16 @@ import { AdditionalInfoWidget } from '@components/widgets/AdditionalInfo/Additio
 import { WidgetTypes } from '@cxbox-ui/schema'
 import TimeField from '../../fields/TimePicker/TimePickerField'
 import SuggestionPickListField from '../../fields/SuggestionPickList/SuggestionPickList'
-import StatsBlock from '@components/widgets/StatsBlock/StatsBlock'
-import FileViewerContainer from '@components/FileViewerContainer/FileViewerContainer'
+import { StatsBlock } from '@components/widgets/StatsBlock/StatsBlock'
+import FileViewerPopup from '@components/FileViewerPopup/FileViewerPopup'
 import GroupingHierarchy from '@components/widgets/GroupingHierarchy/GroupingHierarchy'
 import { AdditionalListWidget } from '@components/widgets/AdditionalListWidget/AdditionalListWidget'
 import WaitUntilPopup from '@components/WaitUntilPopup/WaitUntilPopup'
 import NotificationsContainer from '@components/NotificationsContainer/NotificationsContainer'
 import Chart from '../widgets/Chart/Chart'
 import DebugViewInfoLabel from '@components/DebugViewInfoLabel/DebugViewInfoLabel'
-import FilePreview from '@components/widgets/FilePreview/FilePreview'
-import FilePreviewCard from '@components/FilePreviewCard/FilePreviewCard'
+import CardList from '@components/widgets/CardList/CardList'
+import CardCarouselList from '@components/widgets/CardCarouselList/CardCarouselList'
 
 const customFields = {
     [FieldType.number]: Number,
@@ -54,7 +54,7 @@ const customFields = {
     [CustomFieldTypes.SuggestionPickList]: SuggestionPickListField
 }
 
-const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, interfaces.CustomWidgetDescriptor>> = {
+export const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, interfaces.CustomWidgetDescriptor>> = {
     [WidgetTypes.Form]: { component: Form },
     [WidgetTypes.Info]: { component: Info },
     [WidgetTypes.List]: { component: Table },
@@ -77,14 +77,15 @@ const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.WidgetTypes, 
     [CustomWidgetTypes.Column2D]: { component: Chart, card: DashboardCard },
     [CustomWidgetTypes.Line2D]: { component: Chart, card: DashboardCard },
     [CustomWidgetTypes.DualAxes2D]: { component: Chart, card: DashboardCard },
-    [CustomWidgetTypes.FilePreview]: { component: FilePreview, card: FilePreviewCard }
+    [CustomWidgetTypes.CardList]: { component: CardList },
+    [CustomWidgetTypes.CardCarouselList]: { component: CardCarouselList }
 }
 
 function View() {
     return (
         <div className={styles.container}>
             <DebugViewInfoLabel />
-            <FileViewerContainer />
+            <FileViewerPopup />
             <WaitUntilPopup />
             <NotificationsContainer />
             <CxboxView
