@@ -112,12 +112,10 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
             const bcUrl = buildBcUrl(bcName, true, state)
             const bc = bcName ? state.screen.bo.bc[bcName] : undefined
             const rowMeta = bcUrl ? state.view.rowMeta[bcName]?.[bcUrl] : undefined
-            const fields = rowMeta?.fields
             const cursor = bc?.cursor
             const record = state.data[bcName]?.find(item => item.id === bc?.cursor)
             const filters = state.screen.filters[bcName]
             const sorters = state.screen.sorters[bcName]
-            const pendingRecordChange = { ...state.view.pendingDataChanges[bcName]?.[bc?.cursor as string] }
             const selectedRows = state.view.selectedRows[bcName]
             const flattenBcOperations = rowMeta?.actions ? utils.flattenOperations(rowMeta?.actions) : undefined
             const currentOperation = flattenBcOperations?.find(operation => operation.type === operationType)
@@ -133,12 +131,9 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     : undefined
             const isMassOperation = currentOperationScope === 'mass'
 
-            for (const key in pendingRecordChange) {
-                if (fields?.find(item => item.key === key && item.disabled)) {
-                    delete pendingRecordChange[key]
-                }
-            }
-            let data = record && ({ ...pendingRecordChange, vstamp: record.vstamp } as DataItem)
+            const pendingChanges = utils.removeDisabledFields(state.view.pendingDataChanges[bcName]?.[bc?.cursor as string], rowMeta)
+
+            let data = record && ({ ...pendingChanges, vstamp: record.vstamp } as DataItem)
             const defaultSaveOperation =
                 state.view.widgets?.find(item => item.name === widgetName)?.options?.actionGroups?.defaultSave ===
                     action.payload.operationType && actions.changeLocation.match(action.payload?.onSuccessAction?.type)
@@ -444,6 +439,27 @@ const closeFormPopup: RootEpic = (action$, state$) =>
         })
     )
 
+const collapseWidgetsByDefaultEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(actions.selectView.match),
+        mergeMap(() => {
+            const viewName = state$.value.view.name
+            const viewGroups = state$.value.view.groups
+            const collapsedWidgets = state$.value.screen.collapsedWidgets?.[viewName]
+
+            const result = viewGroups
+                ?.filter(
+                    viewGroup =>
+                        viewGroup.collapsedCondition?.default === true &&
+                        viewGroup.widgetNames?.length &&
+                        !collapsedWidgets?.includes(viewGroup.widgetNames?.[0])
+                )
+                .map(viewGroup => of(actions.setCollapsedWidgets({ viewName: viewName, widgetNameGroup: viewGroup.widgetNames })))
+
+            return result?.length ? concat(...result) : EMPTY
+        })
+    )
+
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
@@ -452,5 +468,6 @@ export const viewEpics = {
     forceUpdateRowMeta,
     closeFormPopup,
     updateRowMetaForRelatedBcEpic,
-    applyPendingPostInvokeEpic
+    applyPendingPostInvokeEpic,
+    collapseWidgetsByDefaultEpic
 }
