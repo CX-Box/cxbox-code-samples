@@ -25,7 +25,7 @@ public class MyExample3126Service extends VersionAwareResponseService<MyExample3
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
-
+    // --8<-- [start:entityToDto]
     @Override
     protected MyExample3126DTO entityToDto(final BusinessComponent bc, final MyEntity3126 entity) {
         final MyExample3126DTO dto = super.entityToDto(bc, entity);
@@ -41,7 +41,7 @@ public class MyExample3126Service extends VersionAwareResponseService<MyExample3
 
         return dto;
     }
-
+    // --8<-- [end:entityToDto]
     @Override
     protected ActionResultDTO<MyExample3126DTO> doUpdateEntity(MyEntity3126 entity, MyExample3126DTO data, BusinessComponent bc) {
         setIfChanged(data, MyExample3126DTO_.netAnnualRate, entity::setNetAnnualRate);
