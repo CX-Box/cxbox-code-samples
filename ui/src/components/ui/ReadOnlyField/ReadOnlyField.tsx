@@ -18,7 +18,6 @@ export interface ReadOnlyFieldProps {
     meta?: WidgetFieldBase
     backgroundColor?: string
     className?: string
-    extraContent?: React.ReactNode
     onDrillDown?: () => void
     children: React.ReactNode
 }
@@ -30,22 +29,15 @@ export interface ReadOnlyFieldProps {
  */
 const ReadOnlyField: React.FunctionComponent<ReadOnlyFieldProps> = props => {
     const filter = useWidgetHighlightFilter(props.widgetName as string, props.meta?.key as string)
-    const displayedValue = (
-        <>
-            {filter ? (
-                <SearchHighlight
-                    source={(props.children || '').toString()}
-                    search={utils.escapedSrc(filter.value?.toString() as string)}
-                    match={formatString => <b>{formatString}</b>}
-                />
-            ) : (
-                props.children
-            )}
-
-            {props.extraContent}
-        </>
+    const displayedValue = filter ? (
+        <SearchHighlight
+            source={(props.children || '').toString()}
+            search={utils.escapedSrc(filter.value?.toString() as string)}
+            match={formatString => <b>{formatString}</b>}
+        />
+    ) : (
+        props.children
     )
-
     return (
         <span
             className={cn(styles.readOnlyField, { [styles.coloredField]: props.backgroundColor }, props.className)}

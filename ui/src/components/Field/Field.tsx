@@ -19,6 +19,7 @@ import DrillDown from '@components/ui/DrillDown/DrillDown'
 import { TooltipPlacement } from 'antd/es/tooltip'
 import { interfaces, actions } from '@cxbox-ui/core'
 import { RootState } from '@store'
+import { useDrillDownUrl } from '@hooks/useDrillDownUrl'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { useTranslation } from 'react-i18next'
 import FieldErrorPopupWrapper from '@components/FieldErrorPopupWrapper/FieldErrorPopupWrapper'
@@ -135,6 +136,7 @@ const Field: FunctionComponent<FieldProps> = ({
     const { t } = useTranslation()
     const [localValue, setLocalValue] = React.useState<string | null>(null)
     let standardField: React.ReactChild | null = null
+    const drillDownUrl = useDrillDownUrl(bcName, widgetFieldMeta, cursor)
 
     const value = forcedValue ? forcedValue : pendingValue !== undefined ? pendingValue : data?.[widgetFieldMeta.key]
 
@@ -158,12 +160,12 @@ const Field: FunctionComponent<FieldProps> = ({
     const bgColor = widgetFieldMeta.bgColorKey ? (data?.[widgetFieldMeta.bgColorKey] as string) : widgetFieldMeta.bgColor
 
     const handleDrilldown = React.useMemo(() => {
-        return !disableDrillDown && widgetFieldMeta.drillDown
+        return !disableDrillDown && drillDownUrl
             ? () => {
                   onDrillDown(widgetName, data?.id, bcName, widgetFieldMeta.key)
               }
             : undefined
-    }, [disableDrillDown, widgetFieldMeta.drillDown, widgetFieldMeta.key, onDrillDown, widgetName, data?.id, bcName])
+    }, [disableDrillDown, drillDownUrl, widgetName, data?.id, bcName, widgetFieldMeta.key, onDrillDown])
 
     const handleInputBlur = React.useCallback(() => {
         if (localValue != null) {

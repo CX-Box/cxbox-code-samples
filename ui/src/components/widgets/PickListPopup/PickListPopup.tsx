@@ -13,7 +13,6 @@ import { DataItem } from '@cxbox-ui/schema'
 import { PendingDataItem } from '@cxbox-ui/core'
 import styles from './PickListPopup.module.css'
 import { Spin } from 'antd'
-import { FIELDS } from '@constants'
 
 interface PickListPopupProps {
     meta: AppWidgetTableMeta
@@ -50,7 +49,7 @@ function PickListPopup({ meta }: PickListPopupProps) {
         (rowData: DataItem): TableEventListeners => {
             return {
                 onClick: (e: React.MouseEvent) => {
-                    if (rowData[FIELDS.TECHNICAL.ID] === selectedRowId) {
+                    if (rowData['id'] === selectedRowId) {
                         return
                     }
                     if (cursor) {
@@ -89,7 +88,7 @@ function PickListPopup({ meta }: PickListPopupProps) {
         >
             <div className={styles.container}>
                 <Spin spinning={(pending?.length as number) > 0}>
-                    <Table meta={meta} disableCellEdit={false} disableMassMode={true} onRow={onRow} />
+                    <Table meta={meta} disableCellEdit={false} onRow={onRow} />
                 </Spin>
             </div>
         </Popup>

@@ -1,4 +1,4 @@
-import { AppWidgetMeta, AppWidgetTableMeta } from '@interfaces/widget'
+import { AppWidgetMeta } from '@interfaces/widget'
 import { useDispatch } from 'react-redux'
 import { useCallback, useEffect, useMemo } from 'react'
 import { TableSettingsItem, TableSettingsList } from '@interfaces/tableSettings'
@@ -12,18 +12,18 @@ import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { ControlColumn } from '@components/widgets/Table/Table.interfaces'
 import { getRowSelectionOffset } from '@components/widgets/Table/utils/rowSelection'
-import { useVisibleFlattenWidgetFields } from '@hooks/widgetGrid'
 
 export function useTableSetting(
-    widget: AppWidgetMeta,
+    widgetName: string,
+    widgetFields: AppWidgetMeta['fields'],
+    widgetOptions?: AppWidgetMeta['options'],
     blockedFields?: string[],
     rowSelectionType?: string,
     controlColumns?: ControlColumn<any>[]
 ) {
     const view = useAppSelector(state => state.view)
     const viewName = view.name
-    const widgetName = widget?.name
-    const additionalFields = widget?.options?.additional?.fields
+    const additionalFields = widgetOptions?.additional?.fields
     const settingPath = createSettingPath({ view: viewName, widget: widgetName })
     const settingsMap = useAppSelector(state => state.session.tableSettings)
     const setting = settingsMap?.[settingPath as string] ?? null
@@ -46,26 +46,9 @@ export function useTableSetting(
         }
     }, [dispatch, sessionScreens, settingPath, settingsMap, view.widgets])
 
-    const allVisibleFields = useVisibleFlattenWidgetFields(widget as AppWidgetTableMeta)
-
     const visibleFields = useMemo(() => {
-        const allFields = (allVisibleFields as (WidgetListField & { disabled?: boolean })[]).filter(
-            field => !field?.hidden && field.type !== FieldType.hidden
-        )
-
-        blockedFields?.forEach(groupingFieldKey => {
-            const groupingFieldIndex = allFields?.findIndex(field => field.key === groupingFieldKey) ?? -1
-
-            if (groupingFieldIndex !== -1) {
-                allFields[groupingFieldIndex] = {
-                    ...allFields[groupingFieldIndex],
-                    disabled: true
-                }
-            }
-        })
-
-        return allFields
-    }, [allVisibleFields, blockedFields])
+        return (widgetFields as WidgetListField[]).filter(field => !field?.hidden && field.type !== FieldType.hidden)
+    }, [widgetFields])
 
     const getColumnOffset = useCallback(
         (type: ControlColumn<unknown>['position']) => {
@@ -284,7 +267,7 @@ export function useTableSetting(
     )
 
     return {
-        showColumnSettings: !!widget?.options?.additional?.enabled,
+        showColumnSettings: !!widgetOptions?.additional?.enabled,
         allFields: visibleFields,
         resultedFields,
         currentAdditionalFields: calculateHiddenFields(),

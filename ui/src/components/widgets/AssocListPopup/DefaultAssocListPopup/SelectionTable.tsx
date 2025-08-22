@@ -27,7 +27,6 @@ const SelectionTable: React.FC<SelectionTableProps> = props => {
         <Table
             meta={props.meta}
             rowSelection={rowSelection as TableRowSelection<interfaces.DataItem>}
-            disableMassMode={true}
             disablePagination={props.disablePagination}
         />
     )

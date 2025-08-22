@@ -1,74 +1,50 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
-import { isOperationGroup, WidgetTypes, Operation, OperationGroup } from '@cxbox-ui/core'
+import { actions, isOperationGroup, WidgetTypes } from '@cxbox-ui/core'
 import { Icon } from 'antd'
 import { useAppSelector } from '@store'
 import styles from './Operations.less'
 import { useDispatch } from 'react-redux'
 import OperationsGroup from './components/OperationsGroup'
-import { AppWidgetMeta, OperationCustomMode, removeRecordOperationWidgets } from '@interfaces/widget'
+import { AppWidgetMeta, OperationCustomMode, OperationInfo, removeRecordOperationWidgets } from '@interfaces/widget'
 import Button, { customTypes } from '../ui/Button/Button'
 import cn from 'classnames'
 import { useWidgetOperations } from '@hooks/useWidgetOperations'
-import { useOperationInProgress } from '@hooks/useOperationInProgress'
 import TextSearchInput from '@components/Operations/components/TextSearchInput/TextSearchInput'
 import { FileUpload } from '@components/Operations/components/FileUpload/FileUpload'
-import { buildBcUrl } from '@utils/buildBcUrl'
-import { actions } from '@actions'
-import { AVAILABLE_MASS_STEPS } from '@components/widgets/Table/massOperations/constants'
+import { selectBcUrlRowMeta } from '@selectors/selectors'
+import { Operation, OperationGroup } from '@interfaces/rowMeta'
 
 export interface OperationsOwnProps {
     className?: string
     bcName: string
     widgetMeta: AppWidgetMeta
-    operations: Array<Operation | OperationGroup> | undefined
+    operations: Array<Operation | OperationGroup>
     additionalOperations?: ReactNode
 }
 
 function Operations(props: OperationsOwnProps) {
-    const { bcName, widgetMeta, operations = [], className, additionalOperations } = props
-    const bcData = useAppSelector(state => {
-        return state.data[bcName]
-    })
+    const { bcName, widgetMeta, operations, className, additionalOperations } = props
     const metaInProgress = useAppSelector(state => state.view.metaInProgress[bcName])
 
     const { defaultOperations, customOperations, isUploadDnDMode } = useWidgetOperationsMode(widgetMeta, operations)
-    const cachedOperations = useCacheForDefaultUploadOperation(defaultOperations, bcName)
-    const isOperationInProgress = useOperationInProgress(bcName)
+    const cachedOperations = useOperationsCache(defaultOperations, bcName)
 
     const dispatch = useDispatch()
 
     const handleOperationClick = React.useCallback(
         (operation: Operation) => {
-            if (operation.scope === 'mass') {
-                dispatch(
-                    actions.setViewerMode({
-                        bcName,
-                        operationType: operation.type,
-                        widgetName: widgetMeta.name,
-                        mode: operation.scope,
-                        step: AVAILABLE_MASS_STEPS[0]
-                    })
-                )
-            } else {
-                dispatch(
-                    actions.sendOperation({
-                        bcName,
-                        operationType: operation.type,
-                        widgetName: widgetMeta.name,
-                        bcKey: operation.bcKey,
-                        confirmOperation: operation.preInvoke
-                    })
-                )
-            }
+            dispatch(
+                actions.sendOperation({
+                    bcName,
+                    operationType: operation.type,
+                    widgetName: widgetMeta.name,
+                    bcKey: operation.bcKey,
+                    confirmOperation: operation.preInvoke
+                })
+            )
         },
         [dispatch, bcName, widgetMeta]
     )
-
-    const getButtonProps = (operation: Operation) => {
-        return {
-            disabled: operation.scope === 'mass' ? !bcData?.length : false
-        }
-    }
 
     return (
         <div className={styles.container}>
@@ -85,30 +61,33 @@ function Operations(props: OperationsOwnProps) {
                         return (
                             <OperationsGroup
                                 key={item.type}
-                                isOperationInProgress={isOperationInProgress}
                                 group={item}
                                 widgetType={widgetMeta.type}
                                 onClick={handleOperationClick}
                                 loading={metaInProgress}
-                                getButtonProps={getButtonProps}
+                                bgColor={item.customParameter?.platformBgColor}
                             />
                         )
                     }
 
                     if (item.subtype === 'multiFileUpload') {
+                        const operationInfo: OperationInfo = widgetMeta.options?.buttons?.find(
+                            button => button.actionKey === item.type
+                        ) ?? {
+                            actionKey: item.type
+                        }
                         return (
-                            <FileUpload
-                                key={item.type}
-                                widget={widgetMeta}
-                                operationInfo={widgetMeta.options?.buttons?.find(button => button.actionKey === item.type)}
-                                mode="default"
-                            >
+                            <FileUpload key={item.type} widget={widgetMeta} operationInfo={operationInfo} mode="default">
                                 <Button
                                     key={item.type}
                                     data-test-widget-action-item={true}
-                                    type={getButtonType({ widgetType: widgetMeta.type, index })}
+                                    type={getButtonType({
+                                        widgetType: widgetMeta.type,
+                                        index,
+                                        bgColor: item.customParameter?.platformBgColor
+                                    })}
                                     loading={metaInProgress}
-                                    {...getButtonProps?.(item)}
+                                    bgColor={item.customParameter?.platformBgColor}
                                 >
                                     {item.icon && <Icon type={item.icon} />}
                                     {item.text}
@@ -121,10 +100,14 @@ function Operations(props: OperationsOwnProps) {
                         <Button
                             key={item.type}
                             data-test-widget-action-item={true}
-                            type={getButtonType({ widgetType: widgetMeta.type, index })}
+                            type={getButtonType({
+                                widgetType: widgetMeta.type,
+                                index,
+                                bgColor: item.customParameter?.platformBgColor
+                            })}
                             onClick={() => handleOperationClick(item)}
-                            loading={metaInProgress || isOperationInProgress(item.type)}
-                            {...getButtonProps(item)}
+                            loading={metaInProgress}
+                            bgColor={item.customParameter?.platformBgColor}
                         >
                             {item.icon && <Icon type={item.icon} />}
                             {item.text}
@@ -148,7 +131,21 @@ function Operations(props: OperationsOwnProps) {
 
 export default React.memo(Operations)
 
-const getButtonType = ({ widgetType, index, defaultType }: { widgetType?: string; defaultType?: string; index: number }) => {
+const getButtonType = ({
+    widgetType,
+    index,
+    defaultType,
+    bgColor
+}: {
+    widgetType?: string
+    defaultType?: string
+    index: number
+    bgColor?: string
+}) => {
+    if (bgColor) {
+        return customTypes.customDefault
+    }
+
     const isFormWidget = widgetType === WidgetTypes.Form
 
     if (isFormWidget && index !== 0) {
@@ -176,10 +173,6 @@ const useWidgetOperationsMode = (widget: AppWidgetMeta, operations: (Operation |
         item => !customOperationsWithoutDefaultMode?.includes(item.type as string)
     )
 
-    const getCustomOperationByMode = (mode: OperationCustomMode | string) => {
-        return customOperations?.find(customOperation => customOperation.mode === mode)
-    }
-
     const isUploadDnDMode = (mode?: OperationCustomMode | string) => {
         return FILE_UPLOAD_DND_MODE.includes(mode as OperationCustomMode)
     }
@@ -187,37 +180,27 @@ const useWidgetOperationsMode = (widget: AppWidgetMeta, operations: (Operation |
     return {
         defaultOperations,
         customOperations,
-        getOperationByMode: getCustomOperationByMode,
         isUploadDnDMode
     }
 }
 /**
  *  Решает проблему с потерей состояния FileUpload из-за metaInProgress, исчезновения rowMeta при перезагрузке страницы и хука useWidgetOperations, который всегда возвращает массив вместо undefined.
  */
-const useCacheForDefaultUploadOperation = (defaultOperations: (OperationGroup | Operation)[], bcName: string) => {
-    const cachedMultiFileUpload = useRef<Operation | null>(null)
-
+const useOperationsCache = (operations: (OperationGroup | Operation)[], bcName: string) => {
     const metaInProgress = useAppSelector(state => state.view.metaInProgress[bcName])
-    const existRowMeta = useAppSelector(state => {
-        const bcUrl = buildBcUrl(bcName, true)
-        return Array.isArray(state.view.rowMeta[bcName]?.[bcUrl]?.actions)
-    })
+    const rowMeta = useAppSelector(state => selectBcUrlRowMeta(state, bcName))
+
+    const cached = useRef<(OperationGroup | Operation)[] | null>(null)
 
     useEffect(() => {
-        const multiFileUpload = defaultOperations.find(item => (item as Operation).subtype === 'multiFileUpload')
-
-        if (!metaInProgress && multiFileUpload && cachedMultiFileUpload.current === null) {
-            cachedMultiFileUpload.current = multiFileUpload as Operation
-        } else if (!metaInProgress && multiFileUpload && multiFileUpload !== cachedMultiFileUpload.current) {
-            cachedMultiFileUpload.current = multiFileUpload as Operation
-        } else if (!metaInProgress && existRowMeta && cachedMultiFileUpload && !multiFileUpload) {
-            cachedMultiFileUpload.current = null
+        if (!metaInProgress) {
+            cached.current = operations ?? null
         }
-    }, [cachedMultiFileUpload, defaultOperations, existRowMeta, metaInProgress])
+    }, [operations, metaInProgress])
 
-    if (defaultOperations.length === 0 && cachedMultiFileUpload.current) {
-        return [...defaultOperations, cachedMultiFileUpload.current]
+    if (!rowMeta && metaInProgress && cached.current) {
+        return cached.current
     }
 
-    return defaultOperations
+    return operations
 }

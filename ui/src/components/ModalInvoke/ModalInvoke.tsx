@@ -1,42 +1,62 @@
 import React from 'react'
+import { Dispatch } from 'redux'
+import { connect } from 'react-redux'
 import { Modal, Input } from 'antd'
 import cn from 'classnames'
-import { useOperationInProgress } from '@hooks/useOperationInProgress'
 import styles from './ModalInvoke.less'
-import { OperationPostInvokeConfirmType, OperationPreInvokeType } from '@cxbox-ui/core'
-import { useModalInvoke } from '@components/ModalInvoke/hooks/useModalInvoke'
-import { ModalProps } from 'antd/lib/modal'
+import { actions, OperationModalInvokeConfirm, OperationPostInvokeConfirmType, OperationPreInvokeType } from '@cxbox-ui/core'
+import { RootState } from '@store'
+import { useTranslation } from 'react-i18next'
 
-interface ModalInvokeProps {}
+interface ModalInvokeOwnProps {}
 
-const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = () => {
-    const { cancelText, okText, title, message, confirmOperationType, closeModal, sendOperation, visible, bcName, operationType } =
-        useModalInvoke()
+interface ModalInvokeProps extends ModalInvokeOwnProps {
+    bcName: string
+    operationType: string
+    widgetName: string
+    confirmOperation?: OperationModalInvokeConfirm
+    onOk: (bcName: string, operationType: string, widgetName: string, confirm: string) => void
+    onCancel: () => void
+}
 
+const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = props => {
+    const { t } = useTranslation()
     const [value, setValue] = React.useState('')
-
-    const isOperationInProgress = useOperationInProgress(bcName as string)
-
-    if (!visible) {
-        return null
-    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value || (null as any))
     }
 
     const getContent = () => {
-        switch (confirmOperationType) {
-            case OperationPostInvokeConfirmType.confirmText:
-            case OperationPostInvokeConfirmType.confirm:
-            case OperationPreInvokeType.info:
-            case OperationPreInvokeType.error: {
-                const showInput = OperationPostInvokeConfirmType.confirmText === confirmOperationType
+        switch (props.confirmOperation?.type) {
+            case OperationPostInvokeConfirmType.confirm: {
+                const message = props.confirmOperation?.message ?? t('Perform an additional action?')
 
+                return message ? (
+                    <div>
+                        <p className={styles.multiline}>{message}</p>
+                    </div>
+                ) : null
+            }
+            case OperationPostInvokeConfirmType.confirmText: {
                 return (
                     <div>
-                        {message && <p className={styles.multiline}>{message}</p>}
-                        {showInput && <Input value={value} onChange={handleChange} />}
+                        {props.confirmOperation?.message && <p className={styles.multiline}>{props.confirmOperation?.message}</p>}
+                        {<Input value={value} onChange={handleChange} />}
+                    </div>
+                )
+            }
+            case OperationPreInvokeType.info: {
+                return (
+                    <div>
+                        <p className={styles.multiline}>{props.confirmOperation?.message || t('Action has warning')}</p>
+                    </div>
+                )
+            }
+            case OperationPreInvokeType.error: {
+                return (
+                    <div>
+                        <p className={styles.multiline}>{props.confirmOperation?.message || t('Action cannot be performed')}</p>
                     </div>
                 )
             }
@@ -45,16 +65,18 @@ const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = () => {
         }
     }
 
-    switch (confirmOperationType) {
+    const okLabel = props.confirmOperation?.okText || t('Ok')
+    const cancelLabel = props.confirmOperation?.cancelText || t('Cancel')
+
+    switch (props.confirmOperation?.type) {
         case OperationPreInvokeType.info: {
             const modal = Modal.info({
                 className: styles.modal,
-                title: title,
-                okText: okText,
-                cancelText: cancelText,
+                title: props.confirmOperation?.messageContent,
+                okText: okLabel,
+                cancelText: cancelLabel,
                 onOk: () => {
-                    sendOperation(value || 'ok')
-                    closeModal()
+                    props.onOk(props.bcName, props.operationType, props.widgetName, value || 'ok')
                     modal.destroy()
                 },
                 content: getContent()
@@ -64,11 +86,11 @@ const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = () => {
         case OperationPreInvokeType.error: {
             const modal = Modal.error({
                 className: styles.modal,
-                title: title,
-                okText: okText,
-                cancelText: cancelText,
+                title: props.confirmOperation?.messageContent,
+                okText: okLabel,
+                cancelText: cancelLabel,
                 onOk: () => {
-                    closeModal()
+                    props.onCancel()
                     modal.destroy()
                 },
                 content: getContent()
@@ -76,25 +98,33 @@ const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = () => {
             return null
         }
         default: {
-            const { cancelButtonProps, okButtonProps, wrapProps } = getModalDataTestProps()
-
             return (
                 <Modal
                     className={cn(styles.modal, styles.overwrite)}
                     visible={true}
-                    title={title}
-                    okText={okText}
-                    cancelText={cancelText}
-                    wrapProps={wrapProps}
-                    okButtonProps={{ ...okButtonProps, loading: isOperationInProgress(operationType) }}
-                    cancelButtonProps={cancelButtonProps}
+                    title={props.confirmOperation?.messageContent ?? t('Are you sure?')}
+                    okText={okLabel}
+                    cancelText={cancelLabel}
+                    wrapProps={{
+                        'data-test-confirm-popup': true
+                    }}
+                    okButtonProps={
+                        {
+                            'data-test-confirm-popup-button-ok': true
+                        } as any
+                    }
+                    cancelButtonProps={
+                        {
+                            'data-test-confirm-popup-button-cancel': true
+                        } as any
+                    }
                     bodyStyle={getContent() ? undefined : { padding: 0 }}
                     onOk={() => {
-                        sendOperation(value || 'ok')
-                        closeModal()
+                        props.onOk(props.bcName, props.operationType, props.widgetName, value || 'ok')
                     }}
-                    onCancel={closeModal}
-                    {...getModalDataTestProps()}
+                    onCancel={() => {
+                        props.onCancel()
+                    }}
                 >
                     {getContent()}
                 </Modal>
@@ -103,18 +133,28 @@ const ModalInvoke: React.FunctionComponent<ModalInvokeProps> = () => {
     }
 }
 
-export default React.memo(ModalInvoke)
-
-function getModalDataTestProps() {
+function mapStateToProps(state: RootState) {
+    const modalInvoke = state.view.modalInvoke
+    const operation = modalInvoke?.operation
+    const confirmOperation = modalInvoke?.confirmOperation
     return {
-        wrapProps: {
-            'data-test-confirm-popup': true
-        } as any,
-        okButtonProps: {
-            'data-test-confirm-popup-button-ok': true
-        } as any,
-        cancelButtonProps: {
-            'data-test-confirm-popup-button-cancel': true
-        } as any
-    } as Pick<ModalProps, 'wrapProps' | 'okButtonProps' | 'cancelButtonProps'>
+        bcName: operation?.bcName ?? '',
+        operationType: operation?.operationType ?? '',
+        widgetName: operation?.widgetName ?? '',
+        confirmOperation
+    }
 }
+
+function mapDispatchToProps(dispatch: Dispatch) {
+    return {
+        onOk: (bcName: string, operationType: string, widgetName: string, confirm?: string) => {
+            dispatch(actions.sendOperation({ bcName, operationType, widgetName, confirm }))
+            dispatch(actions.closeConfirmModal(null))
+        },
+        onCancel: () => {
+            dispatch(actions.closeConfirmModal(null))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalInvoke)

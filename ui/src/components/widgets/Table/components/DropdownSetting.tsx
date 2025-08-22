@@ -5,14 +5,13 @@ import { DropDownProps } from 'antd/lib/dropdown'
 
 interface DropdownSettingProps extends Omit<DropDownProps, 'trigger'> {
     buttonClassName?: string
-    buttonIcon?: string
 }
 
-function DropdownSetting({ buttonClassName, buttonIcon, ...restProps }: DropdownSettingProps) {
+function DropdownSetting({ buttonClassName, ...restProps }: DropdownSettingProps) {
     return (
         <Dropdown {...restProps} trigger={['click']}>
             <Button type="empty" className={buttonClassName}>
-                <Icon type={buttonIcon ?? 'setting'} />
+                <Icon type="setting" />
             </Button>
         </Dropdown>
     )

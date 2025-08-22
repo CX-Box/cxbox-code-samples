@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import cn from 'classnames'
+import styles from './FileUpload.less'
 import FileIcon from './FileIconContainer'
 import { trimString } from '@utils/fileViewer'
+import { CxBoxApiInstance } from '../../api'
 import Button from '@components/ui/Button/Button'
-import { actions } from '@actions'
-import { useAppDispatch } from '@store'
-import styles from './FileUpload.less'
+import FileViewer, { FileViewerProps } from '@components/FileViewer/FileViewer'
+import { FilePreviewMode } from '@interfaces/widget'
+import { ImageControlEnabledContext } from '@fields/FileUpload/context'
+import { PREVIEW_WIDTH_DEFAULT } from '@constants/fileViewer'
 
-export interface ReadOnlySingleFileUploadProps {
-    mode?: 'default' | 'snapshot'
+export interface ReadOnlySingleFileUploadProps extends Pick<FileViewerProps, 'footer'> {
+    mode?: FilePreviewMode | 'snapshot'
+    width?: number
+    height?: number
 
     fileName: string
     downloadUrl?: string // undefined if file url for download is not correct (no id)
@@ -19,37 +24,44 @@ export interface ReadOnlySingleFileUploadProps {
 }
 
 function ReadOnlySingleFileUpload({
-    mode,
+    mode = 'popup',
+    width,
+    height,
     fileName,
     downloadUrl,
     diffFileName,
     diffDownloadUrl,
-    onFileIconClick
+    onFileIconClick,
+    footer
 }: ReadOnlySingleFileUploadProps) {
-    const dispatch = useAppDispatch()
-
     const smartIcon = <FileIcon fileName={fileName} onFileIconClick={onFileIconClick} />
 
     const handleDownload = () => {
-        if (downloadUrl) {
-            dispatch(
-                actions.downloadFileByUrl({
-                    url: downloadUrl,
-                    name: fileName
-                })
-            )
-        }
+        downloadUrl && CxBoxApiInstance.saveBlob(downloadUrl, fileName)
     }
 
     const handleDiffDownload = () => {
-        if (diffDownloadUrl) {
-            dispatch(
-                actions.downloadFileByUrl({
-                    url: diffDownloadUrl,
-                    name: diffFileName
-                })
-            )
-        }
+        diffDownloadUrl && CxBoxApiInstance.saveBlob(diffDownloadUrl, diffFileName)
+    }
+
+    const imageControlEnabled = useContext(ImageControlEnabledContext)
+
+    if (mode === 'inline') {
+        const normalizedWidth = width ?? PREVIEW_WIDTH_DEFAULT
+        const normalizedHeight = height ?? normalizedWidth
+
+        return (
+            <FileViewer
+                fileName={fileName}
+                url={downloadUrl}
+                view="preview"
+                width={normalizedWidth}
+                height={normalizedHeight}
+                onClick={!imageControlEnabled ? onFileIconClick : undefined}
+                imageControlEnabled={imageControlEnabled}
+                footer={footer}
+            />
+        )
     }
 
     if (mode === 'snapshot') {
@@ -57,7 +69,7 @@ function ReadOnlySingleFileUpload({
             return (
                 <div className={cn(styles.snapshot)}>
                     {smartIcon}
-                    <div>
+                    <div onClickCapture={e => e.stopPropagation()}>
                         {diffDownloadUrl && (
                             <div>
                                 <span className={cn(styles.viewLink, styles.prevValue)}>
@@ -84,13 +96,9 @@ function ReadOnlySingleFileUpload({
 
     return (
         <div className={styles.root}>
+            {smartIcon}
             <Button className={styles.readOnlyFileButton} type="link" removeIndentation={true} onClick={handleDownload}>
-                {downloadUrl ? (
-                    <>
-                        {smartIcon}
-                        {trimString(fileName)}
-                    </>
-                ) : null}
+                <span className={styles.viewLink}>{downloadUrl && <span>{trimString(fileName)}</span>}</span>
             </Button>
         </div>
     )

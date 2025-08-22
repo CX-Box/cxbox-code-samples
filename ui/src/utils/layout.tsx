@@ -1,7 +1,7 @@
-import { createSkipWidgetList } from '@utils/createSkipWidgetList'
-import { popupWidgets, sidebarWidgetsTypes } from '@constants/layout'
+import { AppWidgetMeta } from '@interfaces/widget'
 import { WidgetTypes } from '@cxbox-ui/core'
-import { AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
+import { popupWidgets, sidebarWidgetsTypes } from '@constants/layout'
+import { createSkipWidgetList } from '@utils/createSkipWidgetList'
 
 export function groupByRow<WidgetMeta extends AppWidgetMeta>(widgets: WidgetMeta[], skipWidgetTypes: string[]) {
     const byRow: Record<string, WidgetMeta[]> = {}
@@ -9,12 +9,7 @@ export function groupByRow<WidgetMeta extends AppWidgetMeta>(widgets: WidgetMeta
 
     widgets
         .filter(item => {
-            return (
-                !skipWidgetTypes.includes(item.type) &&
-                !skipWidgetList.includes(item.name) &&
-                !sidebarWidgetsTypes.includes(item.type) &&
-                item.type !== CustomWidgetTypes.FilePreview
-            )
+            return !skipWidgetTypes.includes(item.type) && !skipWidgetList.includes(item.name) && !sidebarWidgetsTypes.includes(item.type)
         })
         .forEach(item => {
             if (!byRow[item.position]) {
