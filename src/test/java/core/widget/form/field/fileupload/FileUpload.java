@@ -106,6 +106,18 @@ public class FileUpload extends BaseField<File> {
         });
     }
 
+	/**
+	 * Assert that no file is present in the field
+	 */
+	public void assertNoFileInField() {
+		Allure.step("Assert that no file is present in the field", step -> {
+			logTime(step);
+			getFieldByName()
+				.$("button")
+				.shouldNot(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
+		});
+	}
+
     /**
      * Getting the placeholder text
      *
@@ -148,8 +160,7 @@ public class FileUpload extends BaseField<File> {
                     .click();
             getFieldByName()
                     .$("button")
-                    .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
-                    .shouldBe(Condition.empty, Duration.ofSeconds(waitingForTests.Timeout));
+                    .shouldNot(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout));
         });
     }
 }

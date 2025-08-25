@@ -295,7 +295,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
         customField.setValue(fileFromResource);
         assertThat(customField.getNameFileInField()).isEqualTo("FILE_1.txt");
         customField.clear();
-        assertThat(customField.getNameFileInField()).isEmpty();
+		customField.assertNoFileInField();
     }
 
     @Test
