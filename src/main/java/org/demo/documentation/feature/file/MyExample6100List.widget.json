@@ -1,0 +1,31 @@
+{
+  "name": "MyExample6100List",
+  "title": "List",
+  "type": "List",
+  "bc": "myexample6100",
+  "fields": [
+    {
+      "title": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId"
+    }
+  ],
+  "options": {
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "create",
+        "associate",
+        "delete",
+        "save"
+      ]
+    }
+  }
+}

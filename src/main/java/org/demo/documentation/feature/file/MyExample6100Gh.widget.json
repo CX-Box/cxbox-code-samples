@@ -1,0 +1,46 @@
+{
+  "name": "MyExample6100Gh",
+  "title": "Grouping Hierarchy",
+  "type": "GroupingHierarchy",
+  "bc": "myexample6100",
+  "fields": [
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId"
+    },
+    {
+      "title": "customField",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "create",
+        "associate",
+        "delete",
+        "save"
+      ]
+    }
+  }
+}
