@@ -9,6 +9,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.Actions;
@@ -66,6 +67,7 @@ public class MyExample6100Service extends VersionAwareResponseService<MyExample6
     List<MyEntity6100> meetingDocuments = fileUpload(bc, data);
     List<MyExample6100DTO> collect = meetingDocuments.stream().map(e -> entityToDto(bc, e))
             .collect(Collectors.toList());
+
     return new AssociateResultDTO((List) collect);
   }
   // --8<-- [end:doAssociate]

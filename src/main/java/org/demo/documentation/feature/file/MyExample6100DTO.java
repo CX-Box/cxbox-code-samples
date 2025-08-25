@@ -15,10 +15,10 @@ import org.demo.documentation.feature.file.enums.CustomFieldDictionaryEnum;
 @NoArgsConstructor
 public class MyExample6100DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
-    @SearchParameter(name = "customFieldFile", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFile")
     private String customFieldFile;
 
     private String customFieldFileId;
