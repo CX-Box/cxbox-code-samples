@@ -2,8 +2,6 @@ package org.demo.conf.cxbox.extension.metrics;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import java.util.Optional;
-import java.util.stream.Stream;
 import org.cxbox.core.crudma.CrudmaActionHolder.CrudmaAction;
 import org.cxbox.core.crudma.CrudmaEvent;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -12,6 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Component
 public class CrudmaEventListener implements ApplicationListener<CrudmaEvent> {

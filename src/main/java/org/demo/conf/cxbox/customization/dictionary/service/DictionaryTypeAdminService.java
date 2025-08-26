@@ -1,7 +1,5 @@
 package org.demo.conf.cxbox.customization.dictionary.service;
 
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO_.type;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,6 +11,8 @@ import org.cxbox.model.core.dao.JpaDao;
 import org.cxbox.model.dictionary.entity.DictionaryTypeDesc;
 import org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO;
 import org.springframework.stereotype.Service;
+
+import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO_.type;
 
 @Getter
 @Service

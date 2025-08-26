@@ -1,12 +1,13 @@
 package org.demo.conf.cxbox.extension.siem;
 
 import jakarta.annotation.Nullable;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Optional;
 
 @Slf4j
 @Service

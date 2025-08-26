@@ -16,16 +16,15 @@
 
 package org.demo.conf.cxbox.customization.dictionary.conf;
 
-import java.util.Collection;
-import java.util.Comparator;
 import lombok.NonNull;
 import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.dictionary.Dictionary;
 import org.cxbox.dictionary.DictionaryProvider;
-import org.demo.documentation.fields.dictionary.dictionarydictionary.sorting.CustomDictionarySortingExample;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Collection;
 
 @Configuration
 public class DictionaryConfig {
@@ -48,15 +47,6 @@ public class DictionaryConfig {
 
 			@Override
 			public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
-
-				if (dictionaryType == CustomDictionarySortingExample.class) {
-					return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
-							.stream()
-							.sorted(Comparator.comparing(SimpleDictionary::getKey))
-							.map(e -> Dictionary.of(dictionaryType, e.getKey()))
-							.toList();
-				}
-
 				return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
 						.stream()
 						.map(e -> Dictionary.of(dictionaryType, e.getKey()))

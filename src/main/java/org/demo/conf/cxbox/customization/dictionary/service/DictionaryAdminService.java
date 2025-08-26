@@ -25,10 +25,6 @@ import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDT
 import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.value;
 
 import jakarta.persistence.EntityManager;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -58,6 +54,13 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.*;
 
 @SuppressWarnings({"java:S6813", "java:S1170"})
 @Service

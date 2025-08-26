@@ -1,12 +1,13 @@
 package org.demo.conf.cxbox.extension.multivaluePrimary;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import lombok.experimental.UtilityClass;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
+
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collector;
 
 @UtilityClass
 public class MultivalueExt {

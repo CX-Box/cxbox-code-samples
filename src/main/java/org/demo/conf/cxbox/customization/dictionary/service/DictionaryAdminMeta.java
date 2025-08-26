@@ -16,15 +16,15 @@
 
 package org.demo.conf.cxbox.customization.dictionary.service;
 
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.*;
-
+import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import lombok.RequiredArgsConstructor;
 import org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO;
 import org.springframework.stereotype.Service;
+
+import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.*;
 
 @Service
 @RequiredArgsConstructor

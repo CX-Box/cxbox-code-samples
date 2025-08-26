@@ -1,13 +1,6 @@
 package org.demo.conf.security.oidc;
 
 
-import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -24,6 +17,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.cxbox.api.service.session.InternalAuthorizationService.SystemUsers.VANILLA;
 
 @Service
 @Slf4j
@@ -43,7 +44,7 @@ public class CxboxAuthUserRepository {
 	private final UserService userService;
 
 	public User getUserIdOrElseCreate(String login, Set<String> roles) throws AuthenticationException {
-		User user =  txService.invokeInNewTx(() -> upsertUserAndRoles(login, roles));
+		User user = txService.invokeInNewTx(() -> upsertUserAndRoles(login, roles));
 		SecurityContextHolder.getContext().setAuthentication(null);
 		return user;
 	}
@@ -72,6 +73,7 @@ public class CxboxAuthUserRepository {
 		if (user == null) {
 			throw new UsernameNotFoundException(null);
 		}
+
 		return user;
 	}
 
