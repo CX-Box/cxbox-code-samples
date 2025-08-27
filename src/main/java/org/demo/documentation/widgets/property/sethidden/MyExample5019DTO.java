@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample5019DTO extends DataResponseDTO {
 
+
+    public static final String TEXT = "The field **customField** is dynamically hidden when the field **customField** has the value **Low**.\n";
+
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;
 
