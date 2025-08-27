@@ -1,15 +1,6 @@
 package org.demo.conf.cxbox.customization.responsibilitiesAction.service;
 
-import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.actionKey;
-import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.view;
-import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.widget;
-
 import jakarta.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,6 +21,10 @@ import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.Responsibili
 import org.demo.util.CSVUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.*;
 
 @SuppressWarnings({"java:S3252", "java:S1186", "java:S6813", "java:S1170"})
 @Service

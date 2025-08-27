@@ -1,9 +1,6 @@
 package org.demo.conf.security;
 
 
-import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_ENABLED;
-import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_PREFIX;
-
 import org.cxbox.core.config.properties.UIProperties;
 import org.cxbox.meta.metahotreload.conf.properties.MetaConfigurationProperties;
 import org.demo.conf.cxbox.customization.role.UserRoleService;
@@ -28,6 +25,9 @@ import org.springframework.security.oauth2.server.resource.web.DefaultBearerToke
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
+import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_ENABLED;
+import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_PREFIX;
 
 @SuppressWarnings({"java:S4502", "java:S5122", "java:S5804"})
 @EnableWebSecurity

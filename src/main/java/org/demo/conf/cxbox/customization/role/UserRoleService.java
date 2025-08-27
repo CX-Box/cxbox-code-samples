@@ -16,15 +16,6 @@
 
 package org.demo.conf.cxbox.customization.role;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
@@ -38,6 +29,9 @@ import org.demo.entity.core.User_;
 import org.hibernate.LockOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -68,10 +62,10 @@ public class UserRoleService {
 			return roles;
 		} else {
 			return Optional.ofNullable(userRoleList.stream()
-					.filter(UserRole::getMain)
-					.map(UserRole::getInternalRoleCd)
-					.findFirst()
-					.orElse(roles.stream().findFirst().orElse(null)))
+							.filter(UserRole::getMain)
+							.map(UserRole::getInternalRoleCd)
+							.findFirst()
+							.orElse(roles.stream().findFirst().orElse(null)))
 					.map(Set::of)
 					.orElse(new HashSet<>());
 		}

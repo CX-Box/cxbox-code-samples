@@ -16,7 +16,6 @@
 
 package org.demo.conf.security.common;
 
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxAuthenticationService;
 import org.demo.conf.cxbox.customization.role.UserRoleService;
@@ -24,6 +23,8 @@ import org.demo.conf.cxbox.customization.role.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 
 @Service

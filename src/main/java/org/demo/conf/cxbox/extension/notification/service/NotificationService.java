@@ -1,8 +1,9 @@
 package org.demo.conf.cxbox.extension.notification.service;
 
-import java.util.List;
 import org.demo.conf.cxbox.extension.notification.NotificationTemplate;
 import org.demo.conf.cxbox.extension.notification.dto.NotificationDTO;
+
+import java.util.List;
 
 
 public interface NotificationService extends NotificationTemplate {

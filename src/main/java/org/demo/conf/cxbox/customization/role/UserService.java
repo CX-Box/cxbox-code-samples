@@ -1,7 +1,5 @@
 package org.demo.conf.cxbox.customization.role;
 
-import java.util.Collections;
-import java.util.Set;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxUserDetails;
@@ -10,6 +8,9 @@ import org.demo.entity.core.User;
 import org.demo.entity.core.User_;
 import org.demo.repository.core.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

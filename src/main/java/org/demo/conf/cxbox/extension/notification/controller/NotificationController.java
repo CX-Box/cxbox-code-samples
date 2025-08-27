@@ -1,19 +1,14 @@
 package org.demo.conf.cxbox.extension.notification.controller;
 
-import static org.cxbox.core.config.properties.APIProperties.CXBOX_API_PATH_SPEL;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.dto.ResponseDTO;
 import org.cxbox.core.util.ResponseBuilder;
 import org.demo.conf.cxbox.extension.notification.service.NotificationService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static org.cxbox.core.config.properties.APIProperties.CXBOX_API_PATH_SPEL;
 
 @RestController
 @RequiredArgsConstructor

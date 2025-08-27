@@ -1,10 +1,11 @@
 package org.demo.conf.cxbox.extension.notification;
 
-import java.time.ZonedDateTime;
-import java.util.List;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.cxbox.api.data.dto.rowmeta.Icon;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @SuperBuilder

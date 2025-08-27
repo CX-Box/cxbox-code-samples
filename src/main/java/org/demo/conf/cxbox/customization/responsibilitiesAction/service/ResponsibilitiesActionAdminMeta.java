@@ -1,12 +1,6 @@
 package org.demo.conf.cxbox.customization.responsibilitiesAction.service;
 
-import static org.cxbox.meta.entity.ResponsibilitiesAction.ANY_INTERNAL_ROLE_CD;
-import static org.cxbox.meta.entity.ResponsibilitiesAction.ANY_VIEW;
-import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.*;
-
 import com.google.common.base.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -16,10 +10,17 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.cxbox.dictionary.DictionaryProvider;
 import org.cxbox.meta.metahotreload.dto.ViewSourceDTO.ViewWidgetSourceDTO;
-import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO;
 import org.demo.conf.cxbox.customization.metaAdmin.MetaAdminServiceExt;
+import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO;
 import org.demo.entity.dictionary.InternalRole;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static org.cxbox.meta.entity.ResponsibilitiesAction.ANY_INTERNAL_ROLE_CD;
+import static org.cxbox.meta.entity.ResponsibilitiesAction.ANY_VIEW;
+import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO_.*;
 
 @SuppressWarnings({"java:S3252", "java:S1186"})
 @Service

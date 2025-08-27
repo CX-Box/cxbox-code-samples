@@ -1,12 +1,6 @@
 package org.demo.conf.cxbox.customization.responsibilities.service;
 
-import static org.demo.conf.cxbox.customization.responsibilities.dto.ResponsibilitiesAdminDTO_.*;
-
 import jakarta.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -23,6 +17,13 @@ import org.demo.conf.cxbox.customization.metaAdmin.MetaAdminServiceExt;
 import org.demo.conf.cxbox.customization.responsibilities.dto.ResponsibilitiesAdminDTO;
 import org.demo.entity.dictionary.InternalRole;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.demo.conf.cxbox.customization.responsibilities.dto.ResponsibilitiesAdminDTO_.*;
 
 @SuppressWarnings({"java:S3252", "java:S1186"})
 @Service

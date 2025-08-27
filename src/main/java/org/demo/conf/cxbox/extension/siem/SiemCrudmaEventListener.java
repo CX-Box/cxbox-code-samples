@@ -1,15 +1,7 @@
 package org.demo.conf.cxbox.extension.siem;
 
-import static org.demo.conf.cxbox.extension.siem.SecurityLogger.writeErrorAsString;
-import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,6 +22,14 @@ import org.demo.controller.CxboxRestController;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.demo.conf.cxbox.extension.siem.SecurityLogger.getUserIp;
+import static org.demo.conf.cxbox.extension.siem.SecurityLogger.writeErrorAsString;
 
 @Slf4j
 @Component
