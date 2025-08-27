@@ -1,9 +1,9 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.collapse;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.collapse.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.collapse.enums.CustomFieldDictionaryEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

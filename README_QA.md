@@ -15,18 +15,18 @@
 ![QA_On_pr_example.png](src/test/resources/QA_Launch_concrete.png)
 
 * To run tests on docker local
-1. Set env
+1 Set env
 ```
 Add the url of the default page to the env in cmd (for Windows)
   setx APP_URL http://localhost:81/ui/#/
 ```
-2. Open Docker desktop
-3. Build project
+2 Open Docker desktop
+3 Build project
 ```
 mvn clean install -PUI
 ```
-4. Launch [docker-compose-test.yml](docker-compose-test.yml)
-5. When docker starts, you will be able to run tests with mvn
+4 Launch [docker-compose-test.yml](docker-compose-test.yml)
+5 When docker starts, you will be able to run tests with mvn
 ```
 Run the tests using mvn
 
@@ -44,32 +44,32 @@ mvn -DrunTests=true -Dtest=application.Samples.{testPacage}.**,application.Sampl
 ```
 
 * To run tests on the local build
-1. Set env
+1 Set env
 ```
 Add the url of the default page to the env in cmd (for Windows)
   setx APP_URL http://localhost:81/ui/#/
 ```
-2. Open Docker desktop
-3. Build project 
+2 Open Docker desktop
+3 Build project 
 ```
 mvn clean install -PUI
 ```
-4. Launch [docker-compose-test.yml](docker-compose-test.yml)
-5. When docker starts, you will be able to run tests as on the website.
+4 Launch [docker-compose-test.yml](docker-compose-test.yml)
+5 When docker starts, you will be able to run tests as on the website.
 
 ### GitHub Actions
 
 * Launch at pull request
-1. When you try to make a pull request in main, the tests will run on your build and the result will be visible in allure attached to the pr. Example:
+1 When you try to make a pull request in main, the tests will run on your build and the result will be visible in allure attached to the pr. Example:
 ![QA_On_pr_example.png](src/test/resources/QA_On_pr_example.png)
-2. You can view the details in the allure report by following the link in the Test Report.
+2 You can view the details in the allure report by following the link in the Test Report.
 
 
 * Launch by button
-1. To start using the button, go to
+1 To start using the button, go to
 
 https://github.com/CX-Box/cxbox-code-samples/actions/workflows/build_button_qa.yml
-2. Using "Run  workflow". 
+2 Using "Run  workflow". 
 
 <img src = "src/test/resources/QA_Button_menu.png" width = "300">
 

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.collapse.enums;
+package org.demo.documentation.widgets.property.collapse.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;

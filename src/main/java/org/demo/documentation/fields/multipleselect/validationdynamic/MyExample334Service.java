@@ -65,21 +65,21 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample334DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
-		Boolean customFieldFlg = dto.getCustomField().getValues()
+		boolean customFieldFlg = dto.getCustomField().getValues()
 				.stream()
 				.anyMatch(val ->
 						CustomFieldEnum.HIGH.getValue().equals(val.getValue()));
-		Boolean customFieldAdditionalFlg = dto.getCustomFieldAdditional().getValues()
+		boolean customFieldAdditionalFlg = dto.getCustomFieldAdditional().getValues()
 				.stream()
 				.anyMatch(val ->
 						CustomFieldEnum.HIGH.getValue().equals(val.getValue()));
-		if (Boolean.TRUE.equals(customFieldFlg)) {
+		if (customFieldFlg) {
 			entity.addField(
 					MyExample334DTO_.customField.getName(),
 					"Custom message about error"
 			);
 		}
-		if  (Boolean.TRUE.equals(customFieldAdditionalFlg)) {
+		if  (customFieldAdditionalFlg) {
 			entity.addField(
 					MyExample334DTO_.customFieldAdditional.getName(),
 					"Custom message about error"
