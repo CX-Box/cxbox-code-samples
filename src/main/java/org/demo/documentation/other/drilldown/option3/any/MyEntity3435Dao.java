@@ -81,7 +81,7 @@ public class MyEntity3435Dao extends AbstractAnySourceBaseDAO<MyEntity3435OutSer
         final Long userId = sessionService.getSessionUser().getId();
         final String taskId = bc.getHierarchy().getId(CxboxMyExample3430Controller.myexample3430.getName());
         final Optional<MyEntity3431> optionalFilter = searchRepository.findByUserId(sessionService.getSessionUser().getId());
-        if (optionalFilter.isEmpty() ) {
+        if (optionalFilter.isEmpty()) {
             return new PageImpl<>(new ArrayList<>());
         }
         //Filter
