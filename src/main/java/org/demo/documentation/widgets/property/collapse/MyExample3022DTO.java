@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.collapse;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,8 +7,8 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 
-import org.demo.documentation.widgets.collapse.enums.CustomFieldDictionaryEnum;
-import org.demo.documentation.widgets.collapse.enums.EditStep;
+import org.demo.documentation.widgets.property.collapse.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.collapse.enums.EditStep;
 
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.collapse;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.widgets.collapse.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.collapse.enums.CustomFieldDictionaryEnum;
 
 
 @Entity

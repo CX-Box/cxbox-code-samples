@@ -1,10 +1,10 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.sethidden;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MyEntity3022Repository extends JpaRepository<MyEntity3022, Long>, JpaSpecificationExecutor<MyEntity3022> {
+public interface MyEntity5019PickRepository extends JpaRepository<MyEntity5019Pick, Long>, JpaSpecificationExecutor<MyEntity5019Pick> {
 
 }

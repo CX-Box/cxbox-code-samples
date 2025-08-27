@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.collapse;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

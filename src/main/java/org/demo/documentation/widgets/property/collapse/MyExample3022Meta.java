@@ -1,10 +1,10 @@
-package org.demo.documentation.widgets.collapse;
+package org.demo.documentation.widgets.property.collapse;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.widgets.collapse.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.collapse.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")

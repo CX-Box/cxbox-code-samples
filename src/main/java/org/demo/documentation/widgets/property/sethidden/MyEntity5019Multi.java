@@ -1,0 +1,25 @@
+package org.demo.documentation.widgets.property.sethidden;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.property.sethidden.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.property.sethidden.enums.CustomFieldDictionaryEnum1;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyEntity5019Multi extends BaseEntity {
+    @Column
+    private String customField;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private CustomFieldDictionaryEnum1 customFieldDictionary;
+}
