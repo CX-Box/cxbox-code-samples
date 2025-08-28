@@ -143,7 +143,7 @@ public class GroupingHierarchyWidget {
     }
 
     /**
-     * Row search by column name and row id
+     * Search for rows by column name if it is a non-grouping column and by the row identifier.
      *
      * @param columnName String
      * @param id         long
@@ -161,6 +161,24 @@ public class GroupingHierarchyWidget {
         });
     }
 
+    /**
+     * Search for rows by columnName if it is a grouping column and by the row identifier
+     *
+     * @param columnName String
+     * @param id         long
+     * @return ListWidget with access to all fields
+     */
+
+    public ListWidget findRowGoupingFieldsById(String columnName, long id) {
+        return Allure.step("Searching for a row by column name " + columnName + " and lines id " + id, step -> {
+            logTime(step);
+            step.parameter("Column Name", columnName);
+            step.parameter("id", id);
+
+            waitingForTests.getWaitAllElements(widget);
+            return new ListWidget(columnName, widget, String.valueOf(id), this.helper, false, checkFilterColumn(columnName));
+        });
+    }
     /**
      * Searching for a row by column name and by value in the segment
      *
