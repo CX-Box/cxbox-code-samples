@@ -18,7 +18,7 @@ public class SaleStatsProductPieMeta extends AnySourceFieldMetaBuilder<SalesProd
     public void buildRowDependentMeta(RowDependentFieldsMeta<SalesProductPieDTO> fields, BcDescription bc,
                                       String id, String parentId) {
         if (Objects.equals(fields.getCurrentValue(SalesProductPieDTO_.title).orElse(null),
-                ProductNameEnum.EQUIPMENT)) {
+                ProductNameEnum.EQUIPMENT.getValue())) {
             fields.setHidden(SalesProductPieDTO_.value);
         }
     }

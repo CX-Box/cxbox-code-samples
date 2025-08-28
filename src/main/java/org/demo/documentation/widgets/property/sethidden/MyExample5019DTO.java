@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 public class MyExample5019DTO extends DataResponseDTO {
 
 
-    public static final String TEXT = "The field **customField** is dynamically hidden when the field **customField** has the value **Low**.\n";
+    public static final String TEXT = "The field  customField is dynamically hidden when the field  customFieldDictionary has the value Low.\n";
+    public static final String TEXT_GRAPH_2D = "The field clientName is dynamically hidden when the field  productName has the value Equipment.\n";
+    public static final String TEXT_GRAPH_PIE = "The field value is dynamically hidden when the field title has the value Equipment.\n";
 
     @SearchParameter(name = "customField", provider = StringValueProvider.class)
     private String customField;

@@ -5,14 +5,21 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.property.sethidden.graph.SaleStatsProductService;
+import org.demo.documentation.widgets.property.sethidden.graph.inner.MyExample5020Service;
+import org.demo.documentation.widgets.property.sethidden.graph.pie.SaleStatsProductPieService;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample5019Controller implements EnumBcIdentifier {
 
     // @formatter:on
-
-    myexample5019(MyExample5019Service.class), myEntity5019PickPick(myexample5019, MyEntity5019PickPickService.class), myEntity5019MultiPick(myexample5019, MyEntity5019MultiPickService.class);
+    saleStatsProduct(SaleStatsProductService.class),
+    saleStatsProductPie(SaleStatsProductPieService.class),
+    myexample5020(MyExample5020Service.class),
+    myexample5019(MyExample5019Service.class),
+        myEntity5019PickPick(myexample5019, MyEntity5019PickPickService.class),
+        myEntity5019MultiPick(myexample5019, MyEntity5019MultiPickService.class);
 
     // @formatter:on
 
