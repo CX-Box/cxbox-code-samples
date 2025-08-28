@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.widgets.property.sethidden.graph.SaleStatsProductService;
+import org.demo.documentation.widgets.property.sethidden.graph.pie.SaleStatsProductPieService;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -13,6 +14,7 @@ public enum CxboxMyExample5020Controller implements EnumBcIdentifier {
 
     // @formatter:on
     saleStatsProduct(SaleStatsProductService.class),
+    saleStatsProductPie(SaleStatsProductPieService.class),
     myexample5020(MyExample5020Service.class);
 
     // @formatter:on

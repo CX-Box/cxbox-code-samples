@@ -2,31 +2,35 @@
   "name": "MyExample5020Pie",
   "title": "Pie1D",
   "type": "Pie1D",
-  "bc": "saleStatsProduct",
+  "bc": "saleStatsProductPie",
   "fields": [
     {
-      "title": "productName",
-      "key": "productName",
+      "title": "value",
+      "key": "value",
+      "type": "number",
+      "bgColorKey": "color",
+      "drillDown": true
+    },
+    {
+      "title": "title",
+      "key": "title",
       "type": "input"
     },
     {
-      "title": "clientName",
-      "key": "clientName",
-      "type": "input",
-      "drillDown": true,
-      "bgColorKey": "color"
-    },
-    {
-      "title": "sum",
-      "key": "sum",
-      "type": "number"
+      "title": "description",
+      "key": "description",
+      "type": "hint"
     }
   ],
   "options": {
-    "chart2D": {
-      "xValueFieldKey": "clientName",
-      "yValueFieldKey": "sum",
-      "groupFieldKey": "productName"
+    "chart1D": {
+      "valueFieldKey": "value",
+      "titleFieldKey": "title",
+      "descriptionFieldKey": ["description"],
+      "total": {
+        "func": "sum",
+        "description": "Total "
+      }
     }
   }
 }

@@ -7,8 +7,6 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.demo.documentation.widgets.property.sethidden.graph.SaleStatsProductDao;
-import org.demo.documentation.widgets.property.sethidden.graph.SaleStatsProductMeta;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "java:S2387"})
@@ -17,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class SaleStatsProductPieService extends AnySourceVersionAwareResponseService<SalesProductPieDTO, SalesProductPieDTO> {
 
     @Getter(onMethod_ = @Override)
-    private final Class<SaleStatsProductMeta> meta = SaleStatsProductMeta.class;
+    private final Class<SaleStatsProductPieMeta> meta = SaleStatsProductPieMeta.class;
 
     @Getter(onMethod_ = @Override)
-    private final Class<SaleStatsProductDao> dao = SaleStatsProductDao.class;
+    private final Class<SaleStatsProductPieDao> dao = SaleStatsProductPieDao.class;
 
     @Override
     protected CreateResult<SalesProductPieDTO> doCreateEntity(SalesProductPieDTO entity, BusinessComponent bc) {
