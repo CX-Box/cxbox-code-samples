@@ -5,41 +5,84 @@
   "bc": "myExampleBc420",
   "fields": [
     {
-      "title": "Custom Field ForceActive3",
-      "key": "customFieldForceActive3",
+      "title": "id",
+      "key": "id",
       "type": "input"
     },
     {
-      "title": "Custom Field ForceActive2",
-      "key": "customFieldForceActive2",
-      "type": "input"
+      "title": "Payment Request",
+      "key": "paymentRequest",
+      "type": "pickList",
+      "popupBcName": "applicationEntityPick",
+      "pickMap": {
+        "paymentRequest": "name",
+        "paymentRequestId": "id"
+      }
     },
     {
-      "title": "Custom Field ForceActive",
-      "key": "customFieldForceActive",
-      "type": "input"
+      "title": "Endpoint",
+      "key": "endpoint",
+      "type": "text"
     },
     {
-      "title": "Custom Field 3",
-      "key": "customField3",
-      "type": "input"
+      "title": "Request",
+      "key": "request",
+      "type": "text"
     },
     {
-      "title": "Custom Field 2",
-      "key": "customField2",
-      "type": "input"
+      "title": "Request Files",
+      "key": "requestFiles",
+      "type": "text"
     },
     {
-      "title": "Custom Field",
-      "key": "customField",
-      "type": "input"
+      "title": "Response",
+      "key": "response",
+      "type": "text"
+    },
+    {
+      "title": "Response Files",
+      "key": "responseFiles",
+      "type": "text"
     }
   ],
   "options": {
-    "actionGroups": {
-      "include": [
-        "save",
-        "check"
+    "pagination": {
+      "type": "nextAndPreviousSmart"
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "paymentRequest",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "request",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "response",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "id",
+              "span": 12
+            }
+          ]
+        }
       ]
     }
   }

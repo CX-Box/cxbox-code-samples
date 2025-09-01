@@ -13,7 +13,7 @@ public enum PlatformMyExample420Controller implements EnumBcIdentifier {
 
 
 	// --8<-- [start:bc]
-	myExampleBc420(MyExample420Service.class);
+	myExampleBc420(MyExample420Service.class), applicationEntityPick(myExampleBc420, ApplicationEntityPickService.class);
 	// --8<-- [end:bc]
 
 

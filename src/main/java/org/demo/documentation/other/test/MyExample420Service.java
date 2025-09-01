@@ -1,6 +1,7 @@
 package org.demo.documentation.other.test;
 
 
+import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -10,6 +11,8 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -18,52 +21,65 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample420Service extends VersionAwareResponseService<MyExample420DTO, MyEntity420> {
 
-	private final MyEntity420Repository repository;
+    private final MyEntity420Repository repository;
     @Getter(onMethod_ = @Override)
     private final Class<MyExample420Meta> meta = MyExample420Meta.class;
 
+    @Autowired
+    private EntityManager entityManager;
+
 
     @Override
-	protected CreateResult<MyExample420DTO> doCreateEntity(MyEntity420 entity, BusinessComponent bc) {
-		repository.save(entity);
-		return new CreateResult<>(entityToDto(bc, entity));
-	}
+    protected CreateResult<MyExample420DTO> doCreateEntity(MyEntity420 entity, BusinessComponent bc) {
+        repository.save(entity);
+        return new CreateResult<>(entityToDto(bc, entity));
+    }
 
-	// --8<-- [start:doUpdateEntity]
-	@Override
-	protected ActionResultDTO<MyExample420DTO> doUpdateEntity(MyEntity420 entity, MyExample420DTO data,
-			BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive2)) {
-			entity.setCustomFieldForceActive2(data.getCustomFieldForceActive2());
-		}
-		if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive3)) {
-			entity.setCustomFieldForceActive3(data.getCustomFieldForceActive3());
-		}
-		if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive)) {
-			entity.setCustomFieldForceActive(data.getCustomFieldForceActive());
-			entity.setCustomFieldForceActive2("New data 2");
-			entity.setCustomField2("New data 2");
-		}
-		if (data.isFieldChanged(MyExample420DTO_.customField2)) {
-			entity.setCustomField2(data.getCustomField2());
-		}
-		if (data.isFieldChanged(MyExample420DTO_.customField3)) {
-			entity.setCustomField3(data.getCustomField3());
-		}
-		if (data.isFieldChanged(MyExample420DTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
-			entity.setCustomField2("Test44");
-		}
+    // --8<-- [start:doUpdateEntity]
+    @Override
+    protected ActionResultDTO<MyExample420DTO> doUpdateEntity(MyEntity420 entity, MyExample420DTO data,
+                                                              BusinessComponent bc) {
+        setIfChanged(data, MyExample420DTO_.responseFiles, entity::setResponseFiles);
+        setIfChanged(data, MyExample420DTO_.response, entity::setResponse);
+        setIfChanged(data, MyExample420DTO_.requestFiles, entity::setRequestFiles);
+        setIfChanged(data, MyExample420DTO_.request, entity::setRequest);
+        setIfChanged(data, MyExample420DTO_.endpoint, entity::setEndpoint);
+        if (data.isFieldChanged(MyExample420DTO_.paymentRequestId)) {
+            entity.setPaymentRequestEntity(data.getPaymentRequestId() != null
+                    ? entityManager.getReference(ApplicationEntity.class, data.getPaymentRequestId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive2)) {
+            entity.setCustomFieldForceActive2(data.getCustomFieldForceActive2());
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive3)) {
+            entity.setCustomFieldForceActive3(data.getCustomFieldForceActive3());
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive)) {
+            entity.setCustomFieldForceActive(data.getCustomFieldForceActive());
+            entity.setCustomFieldForceActive2("New data 2");
+            entity.setCustomField2("New data 2");
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customField2)) {
+            entity.setCustomField2(data.getCustomField2());
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customField3)) {
+            entity.setCustomField3(data.getCustomField3());
+        }
+        if (data.isFieldChanged(MyExample420DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+            entity.setCustomField2("Test44");
+        }
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
-	}
-	// --8<-- [end:doUpdateEntity]
+        return new ActionResultDTO<>(entityToDto(bc, entity));
+    }
+    // --8<-- [end:doUpdateEntity]
 
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample420DTO> getActions() {
-		return Actions.<MyExample420DTO>builder()
-               .save(sv -> sv.text("Save"))
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample420DTO> getActions() {
+        return Actions.<MyExample420DTO>builder()
+                .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .action("check", "check")
                         .invoker((bc, dto) -> {
@@ -71,50 +87,50 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
                             return new ActionResultDTO<>();
                         })
                 )
-				.build();
-	}
-	// --8<-- [end:getActions]
+                .build();
+    }
+    // --8<-- [end:getActions]
 
-	// --8<-- [start:validateFields]
-	private void validateFields(BusinessComponent bc, MyExample420DTO dto) {
-		BusinessError.Entity entity = new BusinessError.Entity(bc);
-		if (!String.valueOf(dto.getCustomField()).matches("[A-Za-z]+")) {
-			entity.addField(MyExample420DTO_.customField.getName(), "The field 'customField' can contain only letters.");
-		}
-		if (!String.valueOf(dto.getCustomField2()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample420DTO_.customField2.getName(),
-					"The field 'customFieldAdditional' can contain only letters."
-			);
-		}
-		if (!String.valueOf(dto.getCustomField3()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample420DTO_.customField3.getName(),
-					"The field 'customFieldAdditional' can contain only letters."
-			);
-		}
-		if (!String.valueOf(dto.getCustomFieldForceActive()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample420DTO_.customFieldForceActive.getName(),
-					"The field 'customField' can contain only letters."
-			);
-		}
-		if (!String.valueOf(dto.getCustomField2()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample420DTO_.customFieldForceActive2.getName(),
-					"The field 'customFieldAdditional' can contain only letters."
-			);
-		}
-		if (!String.valueOf(dto.getCustomField3()).matches("[A-Za-z]+")) {
-			entity.addField(
-					MyExample420DTO_.customFieldForceActive3.getName(),
-					"The field 'customFieldAdditional' can contain only letters."
-			);
-		}
-		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
-		}
-	}
-	// --8<-- [end:validateFields]
+    // --8<-- [start:validateFields]
+    private void validateFields(BusinessComponent bc, MyExample420DTO dto) {
+        BusinessError.Entity entity = new BusinessError.Entity(bc);
+        if (!String.valueOf(dto.getCustomField()).matches("[A-Za-z]+")) {
+            entity.addField(MyExample420DTO_.customField.getName(), "The field 'customField' can contain only letters.");
+        }
+        if (!String.valueOf(dto.getCustomField2()).matches("[A-Za-z]+")) {
+            entity.addField(
+                    MyExample420DTO_.customField2.getName(),
+                    "The field 'customFieldAdditional' can contain only letters."
+            );
+        }
+        if (!String.valueOf(dto.getCustomField3()).matches("[A-Za-z]+")) {
+            entity.addField(
+                    MyExample420DTO_.customField3.getName(),
+                    "The field 'customFieldAdditional' can contain only letters."
+            );
+        }
+        if (!String.valueOf(dto.getCustomFieldForceActive()).matches("[A-Za-z]+")) {
+            entity.addField(
+                    MyExample420DTO_.customFieldForceActive.getName(),
+                    "The field 'customField' can contain only letters."
+            );
+        }
+        if (!String.valueOf(dto.getCustomField2()).matches("[A-Za-z]+")) {
+            entity.addField(
+                    MyExample420DTO_.customFieldForceActive2.getName(),
+                    "The field 'customFieldAdditional' can contain only letters."
+            );
+        }
+        if (!String.valueOf(dto.getCustomField3()).matches("[A-Za-z]+")) {
+            entity.addField(
+                    MyExample420DTO_.customFieldForceActive3.getName(),
+                    "The field 'customFieldAdditional' can contain only letters."
+            );
+        }
+        if (!entity.getFields().isEmpty()) {
+            throw new BusinessException().setEntity(entity);
+        }
+    }
+    // --8<-- [end:validateFields]
 
 }
