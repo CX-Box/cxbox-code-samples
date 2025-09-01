@@ -1,4 +1,4 @@
-package org.demo.documentation.screen.basic;
+package org.demo.documentation.widgets.headerwidget;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -7,15 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity5000 extends BaseEntity {
+public class MyEntity5021 extends BaseEntity {
     @Column
     private String customField;
-
-    @Column
-    private String editStep;
 }

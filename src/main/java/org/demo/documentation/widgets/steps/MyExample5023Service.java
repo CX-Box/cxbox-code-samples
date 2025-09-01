@@ -1,4 +1,4 @@
-package org.demo.documentation.screen.basic;
+package org.demo.documentation.widgets.steps;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,30 +12,27 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
 @Service
-public class MyExample5000Service extends VersionAwareResponseService<MyExample5000DTO, MyEntity5000> {
+public class MyExample5023Service extends VersionAwareResponseService<MyExample5023DTO, MyEntity5023> {
 
-    private final MyEntity5000Repository repository;
+    private final MyEntity5023Repository repository;
     @Getter(onMethod_ = @Override)
-    private final Class<MyExample5000Meta> meta = MyExample5000Meta.class;
+    private final Class<MyExample5023Meta> meta = MyExample5023Meta.class;
 
     @Override
-    protected CreateResult<MyExample5000DTO> doCreateEntity(MyEntity5000 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample5023DTO> doCreateEntity(MyEntity5023 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample5000DTO> doUpdateEntity(MyEntity5000 entity, MyExample5000DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample5000DTO_.editStep, entity::setEditStep);
-        if (data.isFieldChanged(MyExample5000DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
+    protected ActionResultDTO<MyExample5023DTO> doUpdateEntity(MyEntity5023 entity, MyExample5023DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample5023DTO_.customField, entity::setCustomField);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
-    public Actions<MyExample5000DTO> getActions() {
-        return Actions.<MyExample5000DTO>builder()
+    public Actions<MyExample5023DTO> getActions() {
+        return Actions.<MyExample5023DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
