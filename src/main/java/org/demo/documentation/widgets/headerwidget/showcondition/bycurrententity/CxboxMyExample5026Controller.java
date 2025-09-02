@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.headerwidget.showcondition;
+package org.demo.documentation.widgets.headerwidget.showcondition.bycurrententity;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

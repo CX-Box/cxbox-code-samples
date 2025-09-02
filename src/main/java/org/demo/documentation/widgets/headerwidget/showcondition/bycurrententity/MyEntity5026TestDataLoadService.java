@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.headerwidget.showcondition;
+package org.demo.documentation.widgets.headerwidget.showcondition.bycurrententity;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,9 @@ public class MyEntity5026TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity5026().setCustomField("test data"));
+        repository.save(new MyEntity5026().setCustomField(5L));
+        repository.save(new MyEntity5026().setCustomField(2L));
+        repository.save(new MyEntity5026().setCustomField(100L));
     }
 
 }

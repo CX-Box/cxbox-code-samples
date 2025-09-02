@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.headerwidget.showcondition;
+package org.demo.documentation.widgets.headerwidget.showcondition.bycurrententity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
