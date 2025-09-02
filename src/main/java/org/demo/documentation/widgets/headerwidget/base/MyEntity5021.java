@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.headerwidget;
+package org.demo.documentation.widgets.headerwidget.base;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
