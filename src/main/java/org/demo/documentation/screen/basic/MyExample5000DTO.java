@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class MyExample5000DTO extends DataResponseDTO {
     @SearchParameter(name = "customField")
     private String customField;
 
-    @SearchParameter(name = "editStep", provider = StringValueProvider.class)
+    @SearchParameter(name = "editStep")
     private String editStep;
 
     public MyExample5000DTO(MyEntity5000 entity) {

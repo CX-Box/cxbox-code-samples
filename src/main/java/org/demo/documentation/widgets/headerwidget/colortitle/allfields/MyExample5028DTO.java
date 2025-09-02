@@ -2,8 +2,7 @@ package org.demo.documentation.widgets.headerwidget.colortitle.allfields;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
+import lombok.Setter; 
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
@@ -25,7 +24,7 @@ public class MyExample5028DTO extends DataResponseDTO {
     private String customFieldColor;
     private String customFieldTextColor;
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     @SearchParameter(name = "customFieldMultivalueHoverList.id", provider = LongValueProvider.class)
@@ -33,7 +32,7 @@ public class MyExample5028DTO extends DataResponseDTO {
 
     private String customFieldMultivalueHoverDisplayedKey;
 
-    @SearchParameter(name = "customFieldHint", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldHint")
     private String customFieldHint;
 
     @SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
@@ -51,13 +50,13 @@ public class MyExample5028DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
     private Double customFieldMoney;
 
-    @SearchParameter(name = "customFieldInlineEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldInlineEntity.customField")
     private String customFieldInline;
 
     @SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
     private Long customFieldInlineId;
 
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
 
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
@@ -69,7 +68,7 @@ public class MyExample5028DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
     private Long customFieldNumber;
 
-    @SearchParameter(name = "customFieldFileUpload", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldFileUpload")
     private String customFieldFileUpload;
 
     private String customFieldFileUploadId;
@@ -89,10 +88,10 @@ public class MyExample5028DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
     private LocalDateTime customFieldDateTime;
 
-    @SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
-    @SearchParameter(name = "customFieldHidden", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldHidden")
     private String customFieldHidden;
 
     public MyExample5028DTO(MyEntity5028 entity) {
