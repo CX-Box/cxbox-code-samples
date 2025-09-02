@@ -1,10 +1,10 @@
-package org.demo.documentation.widgets.headerwidget;
+package org.demo.documentation.widgets.headerwidget.showcondition;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MyEntity5021Repository extends JpaRepository<MyEntity5021, Long>, JpaSpecificationExecutor<MyEntity5021> {
+public interface MyEntity5026Repository extends JpaRepository<MyEntity5026, Long>, JpaSpecificationExecutor<MyEntity5026> {
 
 }
