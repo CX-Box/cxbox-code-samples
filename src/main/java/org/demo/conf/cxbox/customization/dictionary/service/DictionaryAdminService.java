@@ -16,14 +16,6 @@
 
 package org.demo.conf.cxbox.customization.dictionary.service;
 
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.active;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.description;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.dictionaryTypeId;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.displayOrder;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.key;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.type;
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryAdminDTO_.value;
-
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

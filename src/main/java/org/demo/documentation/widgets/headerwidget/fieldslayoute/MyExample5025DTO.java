@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.headerwidget.fieldslayoute;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;

@@ -30,9 +30,9 @@ public class MyEntity5029TestDataLoadService {
         repository5030.deleteAll();
 
 
-        MyEntity5030 myEntity5030 =  new MyEntity5030().setCustomField(3L);
-        MyEntity5030 myEntity5030_1 =  new MyEntity5030().setCustomField(3L);
-        MyEntity5030 myEntity5030_2 =  new MyEntity5030().setCustomField(3L);
+        MyEntity5030 myEntity5030 =  new MyEntity5030().setCustomField(30L);
+        MyEntity5030 myEntity5030_1 =  new MyEntity5030().setCustomField(4L);
+        MyEntity5030 myEntity5030_2 =  new MyEntity5030().setCustomField(300L);
         repository5030.save(myEntity5030);
         repository5030.save(myEntity5030_1);
         repository5030.save(myEntity5030_2);

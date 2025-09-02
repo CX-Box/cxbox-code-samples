@@ -8,6 +8,8 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
+import org.demo.documentation.widgets.headerwidget.showcondition.byparententity.parent.MyEntity5030;
+import org.demo.documentation.widgets.headerwidget.showcondition.byparententity.parent.MyEntity5030Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5029Service extends VersionAwareResponseService<MyExample5029DTO, MyEntity5029> {
 
+    private final MyEntity5030Repository repositoryParent;
     private final MyEntity5029Repository repository;
     @Getter(onMethod_ = @Override)
     private final Class<MyExample5029Meta> meta = MyExample5029Meta.class;
@@ -31,6 +34,8 @@ public class MyExample5029Service extends VersionAwareResponseService<MyExample5
 
     @Override
     protected CreateResult<MyExample5029DTO> doCreateEntity(MyEntity5029 entity, BusinessComponent bc) {
+        MyEntity5030 myEntityParent = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
+        entity.setCustomFieldEntity(myEntityParent);
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }

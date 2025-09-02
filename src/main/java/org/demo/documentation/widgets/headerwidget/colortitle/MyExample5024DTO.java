@@ -17,6 +17,7 @@ public class MyExample5024DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldText")
     private String customFieldText;
 
+    // --8<-- [start:colorDTO]
     private String customFieldColor;
     private String customFieldTextColor;
 
@@ -27,4 +28,5 @@ public class MyExample5024DTO extends DataResponseDTO {
         this.customFieldColor = "#eda6a6";
         this.customFieldTextColor = "#a6eda6";
     }
+    // --8<-- [end:colorDTO]
 }
