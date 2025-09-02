@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget;
+package org.demo.documentation.widgets.emptywidget.base;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

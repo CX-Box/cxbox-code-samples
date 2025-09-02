@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget;
+package org.demo.documentation.widgets.emptywidget.showcondition;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -12,7 +12,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity5022 extends BaseEntity {
+public class MyEntity5033 extends BaseEntity {
     @Column
     private String customField;
 }

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget;
+package org.demo.documentation.widgets.emptywidget.fieldslayoute;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,27 +12,27 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
 @Service
-public class MyExample5022Service extends VersionAwareResponseService<MyExample5022DTO, MyEntity5022> {
+public class MyExample5032Service extends VersionAwareResponseService<MyExample5032DTO, MyEntity5032> {
 
-    private final MyEntity5022Repository repository;
+    private final MyEntity5032Repository repository;
     @Getter(onMethod_ = @Override)
-    private final Class<MyExample5022Meta> meta = MyExample5022Meta.class;
+    private final Class<MyExample5032Meta> meta = MyExample5032Meta.class;
 
     @Override
-    protected CreateResult<MyExample5022DTO> doCreateEntity(MyEntity5022 entity, BusinessComponent bc) {
+    protected CreateResult<MyExample5032DTO> doCreateEntity(MyEntity5032 entity, BusinessComponent bc) {
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
     @Override
-    protected ActionResultDTO<MyExample5022DTO> doUpdateEntity(MyEntity5022 entity, MyExample5022DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample5022DTO_.customField, entity::setCustomField);
+    protected ActionResultDTO<MyExample5032DTO> doUpdateEntity(MyEntity5032 entity, MyExample5032DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample5032DTO_.customField, entity::setCustomField);
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
     @Override
-    public Actions<MyExample5022DTO> getActions() {
-        return Actions.<MyExample5022DTO>builder()
+    public Actions<MyExample5032DTO> getActions() {
+        return Actions.<MyExample5032DTO>builder()
                 .create(crt -> crt.text("Add"))
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))

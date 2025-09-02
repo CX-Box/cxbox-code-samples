@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget;
+package org.demo.documentation.widgets.emptywidget.base;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

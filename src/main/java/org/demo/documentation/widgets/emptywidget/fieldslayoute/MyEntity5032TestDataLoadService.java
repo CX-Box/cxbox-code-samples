@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget;
+package org.demo.documentation.widgets.emptywidget.fieldslayoute;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity5022TestDataLoadService {
+public class MyEntity5032TestDataLoadService {
 
     @Autowired
-    MyEntity5022Repository repository;
+    MyEntity5032Repository repository;
 
     @Autowired
     InternalAuthorizationService authzService;
@@ -20,7 +20,7 @@ public class MyEntity5022TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        repository.save(new MyEntity5022().setCustomField("test data"));
+        repository.save(new MyEntity5032().setCustomField("test data"));
     }
 
 }
