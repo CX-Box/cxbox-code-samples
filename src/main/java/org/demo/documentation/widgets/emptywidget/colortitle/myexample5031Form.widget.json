@@ -5,14 +5,29 @@
   "bc": "myexample5031",
   "fields": [
     {
-      "label": "customField",
+      "label": "Custom Field Color",
       "key": "customField",
-      "type": "input"
+      "type": "input",
+      "bgColorKey": "customFieldColor"
+    },
+    {
+      "label": "Custom Field",
+      "key": "customFieldText",
+      "type": "input",
+      "bgColorKey": "customFieldTextColor"
     }
   ],
   "options": {
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldText",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {

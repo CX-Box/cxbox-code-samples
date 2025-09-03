@@ -37,6 +37,7 @@ public class MyEntity5031TestDataLoadService {
         repository.deleteAll();
         repository5035.deleteAll();
 
+        repository.save(new MyEntity5031().setCustomField("test data").setCustomFieldText("test data text"));
         repository5035.save(new MyEntity5035().setCustomField("test data"));
         MyEntity5035Muti myEntity1 = new MyEntity5035Muti().setCustomField(
                 "Saturn's  ");
