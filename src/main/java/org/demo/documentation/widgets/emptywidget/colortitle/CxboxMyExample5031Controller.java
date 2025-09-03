@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.emptywidget.colortitle.allfields.*;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -12,6 +13,7 @@ public enum CxboxMyExample5031Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
+    myexample5035(MyExample5035Service.class), myEntity5035PickPick0(myexample5035, MyEntity5035PickPick0Service.class), myEntity5035PickPick(myexample5035, MyEntity5035PickPickService.class), myEntity5035MutiPick0(myexample5035, MyEntity5035MutiPick0Service.class), myEntity5035MutiPick(myexample5035, MyEntity5035MutiPickService.class),
     myexample5031(MyExample5031Service.class);
 
     // @formatter:on
