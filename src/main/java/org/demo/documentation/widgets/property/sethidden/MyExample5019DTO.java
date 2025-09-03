@@ -1,6 +1,5 @@
 package org.demo.documentation.widgets.property.sethidden;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.property.sethidden.enums.CustomFieldDictionaryEnum;
 
@@ -27,7 +25,7 @@ public class MyExample5019DTO extends DataResponseDTO {
     public static final String TEXT_GRAPH_2D = "The field clientName is dynamically hidden when the field  productName has the value Equipment.\n";
     public static final String TEXT_GRAPH_PIE = "The field value is dynamically hidden when the field title has the value Equipment.\n";
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customField")
     private String customField;
 
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
@@ -38,7 +36,7 @@ public class MyExample5019DTO extends DataResponseDTO {
 
     private String customFieldMVDisplayedKey;
 
-    @SearchParameter(name = "customFieldPickListEntity.customField", provider = StringValueProvider.class)
+    @SearchParameter(name = "customFieldPickListEntity.customField")
     private String customFieldPickList;
 
     @SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)

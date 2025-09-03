@@ -15,4 +15,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity5000 extends BaseEntity {
     @Column
     private String customField;
+
+    @Column
+    private String editStep;
 }

@@ -6,7 +6,6 @@ import core.widget.ListHelper;
 import core.widget.modal.Calendar;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.codeborne.selenide.Selenide.$;
