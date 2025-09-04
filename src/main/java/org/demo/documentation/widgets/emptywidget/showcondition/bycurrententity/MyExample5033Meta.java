@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget.showcondition;
+package org.demo.documentation.widgets.emptywidget.showcondition.bycurrententity;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

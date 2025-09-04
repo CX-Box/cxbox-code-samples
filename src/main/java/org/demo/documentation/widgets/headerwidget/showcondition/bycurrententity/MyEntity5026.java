@@ -15,5 +15,5 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity5026 extends BaseEntity {
 
     @Column
-    private Long customField;
+    private Long customField = 0L;
 }

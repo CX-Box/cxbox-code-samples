@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.emptywidget.showcondition;
+package org.demo.documentation.widgets.emptywidget.showcondition.bycurrententity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
@@ -14,5 +14,5 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity5033 extends BaseEntity {
     @Column
-    private String customField;
+    private Long customField = 0L;
 }
