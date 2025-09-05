@@ -1,9 +1,10 @@
-package org.demo.documentation.widgets.steps;
+package org.demo.documentation.widgets.steps.base;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.widgets.steps.MyExample5023DTO_;
 import org.springframework.stereotype.Service;
 
 @Service

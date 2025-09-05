@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.steps;
+package org.demo.documentation.widgets.steps.base;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
