@@ -11,10 +11,11 @@ import org.openqa.selenium.By;
 import java.time.Duration;
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
 public class Dictionary extends BaseField<String> {
-    protected final String MENU_OPTIONS = "div.ant-select-dropdown";
+    protected final String MENU_OPTIONS = "div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]";
 
     public Dictionary(FormWidget formWidget, String title) {
         super(formWidget, title, "dictionary");
@@ -81,7 +82,7 @@ public class Dictionary extends BaseField<String> {
     }
 
     private ElementsCollection getOptionsDictionary() {
-        return getFieldByName().$(MENU_OPTIONS)
+        return $(MENU_OPTIONS)
                 .shouldBe(Condition.exist, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$(By.tagName("li"));
     }
