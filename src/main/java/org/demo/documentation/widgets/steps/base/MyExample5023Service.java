@@ -11,8 +11,6 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionAvailableChecker;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.controller.CxboxRestController;
-import org.demo.documentation.widgets.steps.MyExample5023DTO_;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,7 +46,7 @@ public class MyExample5023Service extends VersionAwareResponseService<MyExample5
                 .delete(dlt -> dlt.text("Delete"))
                 .action(act -> act
                         .scope(ActionScope.RECORD)
-                        .action("next", "Save and Continue")
+                        .action("next", "Continue")
                         .invoker((bc, dto) -> {
                             MyEntity5023 myEntityStep = repository.getById(bc.getIdAsLong());
                             StepsEnum nextStep = StepsEnum.getNextEditStep(myEntityStep).get();
@@ -68,7 +66,7 @@ public class MyExample5023Service extends VersionAwareResponseService<MyExample5
                 )
                 .action(act -> act
                         .scope(ActionScope.RECORD)
-                        .action("finish", "Save and Close")
+                        .action("finish", "Close")
                         .invoker((bc, dto) -> {
                             MyEntity5023 myEntityStep = repository.getById(bc.getIdAsLong());
                             StepsEnum firstStep  = Arrays.stream(StepsEnum.values()).findFirst().get();

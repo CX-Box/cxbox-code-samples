@@ -11,9 +11,9 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public enum StepsEnum {
-	STEP_1("Step 1", "screen/myexample5023/view/myexample5023step1/"),
-	STEP_2("Step 2", "screen/myexample5023/view/myexample5023step2/"),
-	STEP_3("Step 3", "screen/myexample5023/view/myexample5023step3/");
+	STEP_1("It's step 1", "screen/myexample5023/view/myexample5023step1/"),
+	STEP_2("It's step 2", "screen/myexample5023/view/myexample5023step2/"),
+	STEP_3("It's step 3", "screen/myexample5023/view/myexample5023step3/");
 
 	@JsonValue
 	private final String value;
