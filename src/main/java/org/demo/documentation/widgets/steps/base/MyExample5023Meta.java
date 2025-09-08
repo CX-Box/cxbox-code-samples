@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.steps;
+package org.demo.documentation.widgets.steps.base;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
@@ -13,6 +13,9 @@ public class MyExample5023Meta extends FieldMetaBuilder<MyExample5023DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5023DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample5023DTO_.customField);
+
+
+        fields.setEnumValues(MyExample5023DTO_.editStep, StepsEnum.values());
     }
 
     @Override

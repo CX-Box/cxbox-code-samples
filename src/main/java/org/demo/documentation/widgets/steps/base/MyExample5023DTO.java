@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.steps;
+package org.demo.documentation.widgets.steps.base;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +13,11 @@ public class MyExample5023DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField")
     private String customField;
+    private StepsEnum editStep;
 
     public MyExample5023DTO(MyEntity5023 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
+        this.editStep = entity.getEditStep();
     }
 }

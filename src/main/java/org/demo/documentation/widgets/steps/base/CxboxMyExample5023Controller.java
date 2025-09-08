@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.steps;
+package org.demo.documentation.widgets.steps.base;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
