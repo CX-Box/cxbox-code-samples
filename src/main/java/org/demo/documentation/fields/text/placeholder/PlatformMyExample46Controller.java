@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.fields.suggestion.filtration.SdfsdfService;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +14,8 @@ public enum PlatformMyExample46Controller implements EnumBcIdentifier {
 
 
 	// --8<-- [start:bc]
-	myExampleBc46(MyExample46Service.class);
+	myExampleBc46(MyExample46Service.class),
+	sdfsdf(SdfsdfService.class);
 	// --8<-- [end:bc]
 
 
