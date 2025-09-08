@@ -35,7 +35,11 @@ export const getBcPaginationTypes = (bcName: string | undefined, widgets: AppWid
 }
 
 export const findWidgetHasCount = (bcName: string | undefined, widgets: AppWidgetMeta[] | undefined) => {
-    return widgets?.find(
-        widget => widget.bcName === bcName && getWidgetPaginationType(widget) === SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT
-    )
+    return widgets?.find(widget => {
+        if (widget.bcName === 'myexample3189') {
+            console.log(widget)
+            console.log(getWidgetPaginationType(widget))
+        }
+        return widget.bcName === bcName && getWidgetPaginationType(widget) === SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT
+    })
 }
