@@ -19,10 +19,10 @@ import DrillDown from '@components/ui/DrillDown/DrillDown'
 import { TooltipPlacement } from 'antd/es/tooltip'
 import { interfaces, actions } from '@cxbox-ui/core'
 import { RootState } from '@store'
-import { useDrillDownUrl } from '@hooks/useDrillDownUrl'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { useTranslation } from 'react-i18next'
 import FieldErrorPopupWrapper from '@components/FieldErrorPopupWrapper/FieldErrorPopupWrapper'
+import { customFields } from '@components/View/View'
 
 interface FieldOwnProps {
     widgetFieldMeta: interfaces.WidgetField
@@ -327,7 +327,7 @@ const Field: FunctionComponent<FieldProps> = ({
     const resultField = (
         <CustomizationContext.Consumer>
             {context => {
-                const CustomComponent = context.customFields?.[widgetFieldMeta.type]
+                const CustomComponent = (customFields as typeof context.customFields)?.[widgetFieldMeta.type]
 
                 if (CustomComponent) {
                     return (

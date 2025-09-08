@@ -16,7 +16,6 @@ import { applyParams, getFileUploadEndpoint } from '@utils/api'
 import { trimString } from '@utils/fileViewer'
 import { actions } from '@cxbox-ui/core'
 import { WidgetField } from '@cxbox-ui/schema'
-import { CxBoxApiInstance } from '../../api'
 import { FileViewerPopupOptions, PopupData } from '@interfaces/view'
 import { FileUploadFieldMeta } from '@interfaces/widget'
 import styles from './FileViewerContainer.less'
@@ -86,7 +85,14 @@ function FileViewerContainer({ isInline, widgetName, fieldKey }: FileViewerConta
     }
 
     const handleDownload = () => {
-        downloadUrl && CxBoxApiInstance.saveBlob(downloadUrl, fileName)
+        if (downloadUrl) {
+            dispatch(
+                actions.downloadFileByUrl({
+                    url: downloadUrl,
+                    name: fileName
+                })
+            )
+        }
     }
 
     return (
@@ -99,7 +105,7 @@ function FileViewerContainer({ isInline, widgetName, fieldKey }: FileViewerConta
                         title={preview?.titleKey ? record?.[preview?.titleKey] : trimString(fileName)}
                         center={
                             <div className={styles.headerCenter}>
-                                {t('number of total files', {
+                                {t('number of total', {
                                     number: paginationProps.currentIndex + 1,
                                     total: paginationProps.total
                                 })}
