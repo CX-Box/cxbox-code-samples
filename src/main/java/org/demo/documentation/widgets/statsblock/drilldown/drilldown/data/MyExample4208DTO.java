@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.drilldown.data;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown.data;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 
-import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.CustomFieldEnum;
 
 
 @Getter

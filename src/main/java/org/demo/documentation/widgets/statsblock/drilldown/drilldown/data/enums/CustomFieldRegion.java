@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.drilldown.data.enums;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;

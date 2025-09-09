@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.drilldown;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown;
 
 import lombok.NonNull;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
@@ -6,14 +6,14 @@ import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
-import org.demo.documentation.widgets.statsblock.drilldown.data.PlatformMyExample4208Controller;
-import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.PlatformMyExample4208Controller;
+import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 
-import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.COUNT_NEW_IN_PROGRESS_ROW_ID;
-import static org.demo.documentation.widgets.statsblock.drilldown.MyExample4210Dao.COUNT_NEW_ROW_ID;
+import static org.demo.documentation.widgets.statsblock.drilldown.drilldown.MyExample4210Dao.ROW_ID_0;
+import static org.demo.documentation.widgets.statsblock.drilldown.drilldown.MyExample4210Dao.ROW_ID_1;
 
 
 @Service
@@ -40,9 +40,9 @@ public class MyExample4210Meta extends AnySourceFieldMetaBuilder<MyExample4210DT
     }
 
     private String getStatusFilterValues(@NonNull String id) {
-        if (COUNT_NEW_ROW_ID.equals(id)) {
+        if (ROW_ID_0.equals(id)) {
             return CustomFieldEnum.NEW.getValue();
-        } else if (COUNT_NEW_IN_PROGRESS_ROW_ID.equals(id)) {
+        } else if (ROW_ID_1.equals(id)) {
             return CustomFieldEnum.NEW.getValue() + "," + CustomFieldEnum.IN_PROGRESS.getValue();
         }
 

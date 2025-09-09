@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.drilldown;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;

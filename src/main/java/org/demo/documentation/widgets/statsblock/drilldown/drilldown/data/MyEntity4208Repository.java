@@ -1,7 +1,7 @@
-package org.demo.documentation.widgets.statsblock.drilldown.data;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown.data;
 
-import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldEnum;
-import org.demo.documentation.widgets.statsblock.drilldown.data.enums.CustomFieldRegion;
+import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.CustomFieldEnum;
+import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.CustomFieldRegion;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -71,7 +71,7 @@ public class MyExample4206Dao extends AbstractAnySourceBaseDAO<MyExample4206DTO>
                 .setValue(repository.count())
                 .setIcon("team")
                 .setDescription("Count rows in table")
-                .setColor("#edaa");
+                .setColor("#779FE9");
         newRow.setId(COUNT_ROW_ID);
         result.add(newRow);
 

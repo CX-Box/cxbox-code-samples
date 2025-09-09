@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.statsblock.drilldown.data;
+package org.demo.documentation.widgets.statsblock.drilldown.drilldown.data;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

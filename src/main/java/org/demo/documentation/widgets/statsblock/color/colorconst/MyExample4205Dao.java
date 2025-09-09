@@ -22,9 +22,6 @@ public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO>
 
     public static final String COUNT_ROW_ID = "0";
 
-    public static final String SUM_CUSTOM_FIELD_NUM = "1";
-
-
     private final MyEntity4204Repository repository;
 
     @Override
