@@ -1,17 +1,19 @@
-package org.demo.documentation.widgets.statsblock.icon.withicon;
+package org.demo.documentation.widgets.statsblock.icon;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.statsblock.icon.withicon.MyExample4223Service;
+import org.demo.documentation.widgets.statsblock.icon.withouticon.MyExample4224Service;
 import org.springframework.stereotype.Component;
 
 @Getter
 public enum CxboxMyExample4223Controller implements EnumBcIdentifier {
 
 
-
+    myexample4224(MyExample4224Service.class),
     myexample4223(MyExample4223Service.class);
 
 

@@ -84,7 +84,7 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
         newRow2.setId(ROW_ID_1);
         result.add(newRow);
         MyExample4210DTO newRow3 = new MyExample4210DTO()
-                .setTitle("New record")
+                .setTitle("Close")
                 .setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.CLOSE))))
                 .setIcon("pie-chart")
                 .setDescription("Count rows status = close in table")

@@ -1,10 +1,12 @@
-package org.demo.documentation.widgets.statsblock.title.withouttitle;
+package org.demo.documentation.widgets.statsblock.title;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.statsblock.title.withouttitle.MyExample4225Service;
+import org.demo.documentation.widgets.statsblock.title.withtitle.MyExample4226Service;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -12,8 +14,8 @@ public enum CxboxMyExample4225Controller implements EnumBcIdentifier {
 
 
 
-    myexample4225(MyExample4225Service.class);
-
+    myexample4225(MyExample4225Service.class),
+    myexample4226(MyExample4226Service .class);
 
 
     public static final EnumBcIdentifier.Holder<CxboxMyExample4225Controller> Holder = new Holder<>(

@@ -14,10 +14,11 @@ public class MyExample5023DTO extends DataResponseDTO {
     @SearchParameter(name = "customField")
     private String customField;
     private StepsEnum editStep;
-
+    private String description;
     public MyExample5023DTO(MyEntity5023 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.editStep = entity.getEditStep();
+        this.description = entity.getEditStep().getDescription();
     }
 }

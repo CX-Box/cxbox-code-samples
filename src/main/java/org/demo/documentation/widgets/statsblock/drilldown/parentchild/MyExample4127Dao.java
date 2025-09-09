@@ -97,7 +97,7 @@ public class MyExample4127Dao extends AbstractAnySourceBaseDAO<MyExample4127DTO>
                                 "#5F90EA",
                                 "calendar",
                                 NOT_STARTED,
-                                "Not started meetings"
+                                "Not started"
                         ),
                         createMyExample4127DTO(
                                 "In Completion",
@@ -105,11 +105,11 @@ public class MyExample4127Dao extends AbstractAnySourceBaseDAO<MyExample4127DTO>
                                 "#4D83E7",
                                 "pie-chart",
                                 IN_COMPLETION,
-                                "Meetings in completion"
+                                "In completion"
                         ),
-                        createMyExample4127DTO("In Progress", inProgressCount, "#3A76E4", "plus-circle", IN_PROGRESS, "Meetings in progress"),
-                        createMyExample4127DTO("Completed", completedCount, "#2769E1", "check", COMPLETED, "Completed meetings"),
-                        createMyExample4127DTO("Cancelled", cancelledCount, "#145CDE", "stop", CANCELLED, "Cancelled meetings")
+                        createMyExample4127DTO("In Progress", inProgressCount, "#3A76E4", "plus-circle", IN_PROGRESS, "In progress"),
+                        createMyExample4127DTO("Completed", completedCount, "#2769E1", "check", COMPLETED, "Completed"),
+                        createMyExample4127DTO("Cancelled", cancelledCount, "#145CDE", "stop", CANCELLED, "Cancelled")
                 ).stream()
                 .filter(dto -> dto.getValue() > 0)
                 .collect(Collectors.toList());
