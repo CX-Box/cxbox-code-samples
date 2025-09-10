@@ -82,7 +82,7 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
                 .setDescription("Count rows status = in_progress in table")
                 .setColor("#5F90EA");
         newRow2.setId(ROW_ID_1);
-        result.add(newRow);
+        result.add(newRow2);
         MyExample4210DTO newRow3 = new MyExample4210DTO()
                 .setTitle("Close")
                 .setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.CLOSE))))
@@ -90,7 +90,7 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
                 .setDescription("Count rows status = close in table")
                 .setColor("#5F90EA");
         newRow3.setId(ROW_ID_2);
-        result.add(newRow);
+        result.add(newRow3);
         return result;
     }
 
