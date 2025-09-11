@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample3401Controller implements EnumBcIdentifier {
 
 
-    myExampleBc3401(MyExample3401Service.class);
+    myExampleBc3401(MyExample3401Service.class), myEntity10Pick(myExampleBc3401, MyEntity10PickService.class);
 
 
 
