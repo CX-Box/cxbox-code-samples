@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.formpopup.title;
 
+import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.demo.conf.cxbox.extension.action.ActionsExt;
+import org.demo.documentation.fields.percent.validationbusinessex.MyEntity10;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -22,6 +25,9 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
     @Getter(onMethod_ = @Override)
     private final Class<MyExample3401Meta> meta = MyExample3401Meta.class;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Override
     protected CreateResult<MyExample3401DTO> doCreateEntity(MyEntity3401 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -30,21 +36,29 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3401DTO> doUpdateEntity(MyEntity3401 entity, MyExample3401DTO data, BusinessComponent bc) {
-      if (data.isFieldChanged(MyExample3401DTO_.customField2)) {
-        entity.setCustomField2(data.getCustomField2());
-      }
-      if (data.isFieldChanged(MyExample3401DTO_.customField)) {
-        entity.setCustomField(data.getCustomField());
-      }
+        if (data.isFieldChanged(MyExample3401DTO_.fghgfId)) {
+            entity.setFghgfEntity(data.getFghgfId() != null
+                    ? entityManager.getReference(MyEntity10.class, data.getFghgfId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample3401DTO_.customField2)) {
+            entity.setCustomField2(data.getCustomField2());
+        }
+        if (data.isFieldChanged(MyExample3401DTO_.customField)) {
+            entity.setCustomField(data.getCustomField());
+        }
 
-      return new ActionResultDTO<>(entityToDto(bc, entity));
+        return new ActionResultDTO<>(entityToDto(bc, entity));
     }
+
     private static PreAction seeConstantTitle(@NonNull String actionText) {
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3401Formpopup", "Done", "Cancel");
     }
+
     private static PreAction seeCustomTitle(@NonNull String actionText) {
         return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3401FormpopupCustomTitle", "Done", "Cancel");
     }
+
     @Override
     public Actions<MyExample3401DTO> getActions() {
         return Actions.<MyExample3401DTO>builder()
@@ -60,6 +74,7 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
                 )
                 .build();
     }
+
     private ActionResultDTO<MyExample3401DTO> withApproval() {
         return new ActionResultDTO<>();
     }

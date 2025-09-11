@@ -1,5 +1,6 @@
 package org.demo.documentation.navigation.tab.typestandard;
 
+import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -11,6 +12,8 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 
+import org.demo.documentation.fields.fileupload.validationbusinessex.MyEntity103;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
@@ -22,6 +25,9 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
     @Getter(onMethod_ = @Override)
     private final Class<MyExample3235Meta> meta = MyExample3235Meta.class;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Override
     protected CreateResult<MyExample3235DTO> doCreateEntity(MyEntity3235 entity, BusinessComponent bc) {
         repository.save(entity);
@@ -30,20 +36,25 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3235DTO> doUpdateEntity(MyEntity3235 entity, MyExample3235DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3235DTO_.dsdfsId)) {
+            entity.setDsdfsEntity(data.getDsdfsId() != null
+                    ? entityManager.getReference(MyEntity103.class, data.getDsdfsId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3235DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3235DTO> getActions() {
         return Actions.<MyExample3235DTO>builder()
                 .action(act -> act)
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
-               .save(sv -> sv.text("Save"))
+                .save(sv -> sv.text("Save"))
                 .action(act -> act
                         .scope(ActionScope.RECORD)
                         .action("gotolistsecondlevel", "Go to view hidden 2 level")
@@ -79,5 +90,5 @@ public class MyExample3235Service extends VersionAwareResponseService<MyExample3
                 )
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
