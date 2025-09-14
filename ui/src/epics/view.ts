@@ -9,6 +9,7 @@ import {
     OperationPreInvoke,
     OperationTypeCrud,
     PendingValidationFailsFormat,
+    PopupWidgetTypes,
     utils
 } from '@cxbox-ui/core'
 import { EMPTY_ARRAY, FIELDS } from '@constants'
@@ -21,6 +22,7 @@ import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
 import { postInvokeHasRefreshBc } from '@utils/postInvokeHasRefreshBc'
 import { findWidgetHasCount } from '@components/ui/Pagination/utils'
+import { getInternalWidgets } from '@utils/getInternalWidgets'
 
 const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
     const { widgets, pendingDataChanges } = state.view
@@ -67,50 +69,23 @@ export const updateRowMetaForRelatedBcEpic: RootEpic = (action$, state$) =>
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isAnyOf(actions.bcFetchDataSuccess, actions.selectView)),
+        filter(actions.bcFetchDataSuccess.match),
         mergeMap(action => {
-            if (actions.bcFetchDataSuccess.match(action)) {
-                const state = state$.value
-                const widgetWithCount = findWidgetHasCount(action.payload.bcName, state.view.widgets)
+            const state = state$.value
+            const widgetWithCount = findWidgetHasCount(action.payload.bcName, state.view.widgets)
 
-                if (!widgetWithCount) {
-                    return EMPTY
-                }
+            if (!widgetWithCount) {
+                return EMPTY
+            }
 
-                const bcName = widgetWithCount.bcName
-                const screenName = state.screen.screenName
-                const filters = utils.getFilters(state.screen.filters[bcName] || EMPTY_ARRAY)
-                const bcUrl = buildBcUrl(bcName)
-                return api.fetchBcCount(screenName, bcUrl, filters).pipe(
-                    mergeMap(({ data }) => of(setBcCount({ bcName, count: data }))),
-                    catchError((error: AxiosError) => utils.createApiErrorObservable(error))
-                )
-            }
-            if (actions.selectView.match(action)) {
-                const state = state$.value
-                const widgets = state.view.widgets
-                const data = state.data
-                const bcList = [...new Set(widgets.map(widget => widget.bcName))]
-                const missingBcCountsWidgets = bcList
-                    .map(bc => findWidgetHasCount(bc, widgets))
-                    .filter(widget => widget && !(widget.bcName in state.view.bcRecordsCount) && widget.bcName in data)
-                return concat(
-                    ...missingBcCountsWidgets.map(widget => {
-                        if (widget) {
-                            const bcName = widget?.bcName
-                            const screenName = state.screen.screenName
-                            const filters = utils.getFilters(state.screen.filters[bcName] || EMPTY_ARRAY)
-                            const bcUrl = buildBcUrl(bcName)
-                            return api.fetchBcCount(screenName, bcUrl, filters).pipe(
-                                mergeMap(({ data }) => of(setBcCount({ bcName, count: data }))),
-                                catchError((error: AxiosError) => utils.createApiErrorObservable(error))
-                            )
-                        }
-                        return EMPTY
-                    })
-                )
-            }
-            return EMPTY
+            const bcName = widgetWithCount.bcName
+            const screenName = state.screen.screenName
+            const filters = utils.getFilters(state.screen.filters[bcName] || EMPTY_ARRAY)
+            const bcUrl = buildBcUrl(bcName)
+            return api.fetchBcCount(screenName, bcUrl, filters).pipe(
+                mergeMap(({ data }) => of(setBcCount({ bcName, count: data }))),
+                catchError((error: AxiosError) => utils.createApiErrorObservable(error))
+            )
         }),
         catchError(err => {
             console.error(err)
@@ -487,6 +462,44 @@ const collapseWidgetsByDefaultEpic: RootEpic = (action$, state$, { api }) =>
         })
     )
 
+const checkWidgetsEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(actions.selectView.match),
+        mergeMap(() => {
+            const widgets = state$.value.view.widgets
+            const widgetsMap = widgets.reduce((acc, widget) => {
+                acc[widget.name] = widget
+                return acc
+            }, {} as Record<string, (typeof widgets)[0]>)
+            const popupInternalWidgetsMap = widgets
+                .filter(widget => PopupWidgetTypes.includes(widget.type))
+                .reduce((acc, widget) => {
+                    const internalWidgets = getInternalWidgets([widget])
+
+                    if (internalWidgets.length > 0) {
+                        acc[widget.name] = internalWidgets
+                    }
+
+                    return acc
+                }, {} as Record<string, string[]>)
+
+            Object.entries(popupInternalWidgetsMap).forEach(([widgetName, internalWidgets]) => {
+                internalWidgets.forEach(internalWidget => {
+                    const popupWidget = widgetsMap[widgetName]
+                    const currentInternalWidget = widgetsMap[internalWidget]
+
+                    if (popupWidget?.name && currentInternalWidget?.name && popupWidget.bcName !== currentInternalWidget.bcName) {
+                        console.error(
+                            `Popup Widget "${popupWidget.name}" has an internal widget "${currentInternalWidget.name}" with another BC, this is not supported."`
+                        )
+                    }
+                })
+            })
+
+            return EMPTY
+        })
+    )
+
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
@@ -496,5 +509,6 @@ export const viewEpics = {
     closeFormPopup,
     updateRowMetaForRelatedBcEpic,
     applyPendingPostInvokeEpic,
-    collapseWidgetsByDefaultEpic
+    collapseWidgetsByDefaultEpic,
+    checkWidgetsEpic
 }
