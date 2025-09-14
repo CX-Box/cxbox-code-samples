@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.fields.date.basic.DateBasic;
+import org.demo.documentation.fields.fileupload.sorting.MyEntity102;
+import org.demo.documentation.fields.percent.validationbusinessex.MyEntity10;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 
 import java.util.ArrayList;
@@ -38,4 +40,12 @@ public class MyEntity3065 extends BaseEntity {
             {CascadeType.PERSIST,
                     CascadeType.MERGE})
     private List<ApplicationEntity> hkjhkjList = new ArrayList<>();
+
+    @JoinColumn(name = "DSFGSGS_ID")
+    @ManyToOne
+    private MyEntity10 dsfgsgsEntity;
+
+    @JoinColumn(name = "FDSFDSF_ID")
+    @ManyToOne
+    private MyEntity102 fdsfdsfEntity;
 }

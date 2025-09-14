@@ -16,6 +16,10 @@ public class MyExample3065Meta extends FieldMetaBuilder<MyExample3065DTO> {
     // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3065DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3065DTO_.fdsfdsfId);
+        fields.setEnabled(MyExample3065DTO_.fdsfdsf);
+        fields.setEnabled(MyExample3065DTO_.dsfgsgsId);
+        fields.setEnabled(MyExample3065DTO_.dsfgsgs);
         fields.setEnabled(MyExample3065DTO_.hkjhkj);
         fields.setEnabled(MyExample3065DTO_.fjhjklId);
         fields.setEnabled(MyExample3065DTO_.fjhjkl);
@@ -28,6 +32,8 @@ public class MyExample3065Meta extends FieldMetaBuilder<MyExample3065DTO> {
     // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3065DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3065DTO_.fdsfdsf);
+        fields.enableFilter(MyExample3065DTO_.dsfgsgs);
         fields.enableFilter(MyExample3065DTO_.hkjhkj);
         fields.enableFilter(MyExample3065DTO_.fjhjkl);
         fields.enableFilter(MyExample3065DTO_.dfgjhkl);

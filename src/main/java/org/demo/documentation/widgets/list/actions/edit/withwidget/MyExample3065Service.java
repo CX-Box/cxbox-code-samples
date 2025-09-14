@@ -10,6 +10,8 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.fields.date.basic.DateBasic;
+import org.demo.documentation.fields.fileupload.sorting.MyEntity102;
+import org.demo.documentation.fields.percent.validationbusinessex.MyEntity10;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,16 @@ public class MyExample3065Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3065DTO> doUpdateEntity(MyEntity3065 entity, MyExample3065DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3065DTO_.fdsfdsfId)) {
+            entity.setFdsfdsfEntity(data.getFdsfdsfId() != null
+                    ? entityManager.getReference(MyEntity102.class, data.getFdsfdsfId())
+                    : null);
+        }
+        if (data.isFieldChanged(MyExample3065DTO_.dsfgsgsId)) {
+            entity.setDsfgsgsEntity(data.getDsfgsgsId() != null
+                    ? entityManager.getReference(MyEntity10.class, data.getDsfgsgsId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3065DTO_.hkjhkj)) {
             entity.getHkjhkjList().clear();
             entity.getHkjhkjList().addAll(data.getHkjhkj().getValues().stream()

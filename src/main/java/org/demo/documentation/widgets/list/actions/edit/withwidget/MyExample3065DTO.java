@@ -43,6 +43,18 @@ public class MyExample3065DTO extends DataResponseDTO {
 
     private String hkjhkjDisplayedKey;
 
+    @SearchParameter(name = "dsfgsgsEntity.customField", provider = LongValueProvider.class)
+    private Long dsfgsgs;
+
+    @SearchParameter(name = "dsfgsgsEntity.id", provider = LongValueProvider.class)
+    private Long dsfgsgsId;
+
+    @SearchParameter(name = "fdsfdsfEntity.customField", provider = StringValueProvider.class)
+    private String fdsfdsf;
+
+    @SearchParameter(name = "fdsfdsfEntity.id", provider = LongValueProvider.class)
+    private Long fdsfdsfId;
+
     public MyExample3065DTO(MyEntity3065 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
@@ -65,5 +77,17 @@ public class MyExample3065DTO extends DataResponseDTO {
         ));
         this.hkjhkjDisplayedKey = StringUtils.abbreviate(entity.getHkjhkjList().stream().map(ApplicationEntity::getName
         ).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+        this.dsfgsgsId = Optional.ofNullable(entity.getDsfgsgsEntity())
+                .map(e -> e.getId())
+                .orElse(null);
+        this.dsfgsgs = Optional.ofNullable(entity.getDsfgsgsEntity())
+                .map(e -> e.getCustomField())
+                .orElse(null);
+        this.fdsfdsfId = Optional.ofNullable(entity.getFdsfdsfEntity())
+                .map(e -> e.getId())
+                .orElse(null);
+        this.fdsfdsf = Optional.ofNullable(entity.getFdsfdsfEntity())
+                .map(e -> e.getCustomField())
+                .orElse(null);
     }
 }
