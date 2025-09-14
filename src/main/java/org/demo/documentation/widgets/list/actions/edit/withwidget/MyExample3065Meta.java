@@ -12,16 +12,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3065Meta extends FieldMetaBuilder<MyExample3065DTO> {
 
-    @Override  
-   // --8<-- [start:buildRowDependentMeta]
+    @Override
+    // --8<-- [start:buildRowDependentMeta]
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3065DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setEnabled(MyExample3065DTO_.hkjhkj);
+        fields.setEnabled(MyExample3065DTO_.fjhjklId);
+        fields.setEnabled(MyExample3065DTO_.fjhjkl);
+        fields.setEnabled(MyExample3065DTO_.dfgjhklId);
+        fields.setEnabled(MyExample3065DTO_.dfgjhkl);
         fields.setEnabled(MyExample3065DTO_.customFieldText);
         fields.setEnabled(MyExample3065DTO_.customField);
     }
-   // --8<-- [end:buildRowDependentMeta]
+
+    // --8<-- [end:buildRowDependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3065DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.enableFilter(MyExample3065DTO_.hkjhkj);
+        fields.enableFilter(MyExample3065DTO_.fjhjkl);
+        fields.enableFilter(MyExample3065DTO_.dfgjhkl);
         fields.enableFilter(MyExample3065DTO_.customFieldText);
     }
 

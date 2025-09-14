@@ -12,7 +12,7 @@ public enum CxboxMyExample3065Controller implements EnumBcIdentifier {
 
 
 
-    myexample3065(MyExample3065Service.class);
+    myexample3065(MyExample3065Service.class), applicationEntityPick0(myexample3065, ApplicationEntityPick0Service.class), applicationEntityPick(myexample3065, ApplicationEntityPickService.class), dateBasicPick(myexample3065, DateBasicPickService.class);
 
 
 
