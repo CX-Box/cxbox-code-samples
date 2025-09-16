@@ -1,0 +1,53 @@
+{
+  "name": "cxvx",
+  "title": "Title",
+  "type": "Form",
+  "bc": "myEntity10Pick",
+  "fields": [
+    {
+      "label": "Inline-picklist",
+      "key": "dfgdfgd",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity101Pick",
+      "pickMap": {
+        "dfgdfgd": "customField",
+        "dfgdfgdId": "id"
+      }
+    },
+    {
+      "label": "customField",
+      "key": "customField",
+      "type": "number"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "dfgdfgd",
+              "span": 12
+            }
+          ]
+        },
+
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    }
+  }
+}
+

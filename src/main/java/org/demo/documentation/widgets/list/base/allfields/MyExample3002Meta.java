@@ -3,11 +3,14 @@ package org.demo.documentation.widgets.list.base.allfields;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 
+import org.demo.documentation.other.savewithparent.example3.CxboxMyExample3422Controller;
+import org.demo.documentation.other.savewithparent.example3.MyExample3422DTO_;
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldRadioEnum;
@@ -52,6 +55,10 @@ public class MyExample3002Meta extends FieldMetaBuilder<MyExample3002DTO> {
         fields.setEnabled(MyExample3002DTO_.customFieldText);
         fields.setEnabled(MyExample3002DTO_.customFieldHidden);
         fields.setEnabled(MyExample3002DTO_.customField);
+        fields.setDrilldown(MyExample3002DTO_.customField,
+                DrillDownType.INNER,
+                "/screen/mytasks/view/mytaskslist/" + PlatformMyExample3002Controller.myExampleBc3002 + "/" + id
+        );
     }
     // --8<-- [end:buildRowDependentMeta]
 

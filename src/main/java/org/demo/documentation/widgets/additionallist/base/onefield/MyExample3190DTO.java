@@ -7,6 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.widgets.additionallist.base.onefield.enums.CustomFieldDictionaryEnum;
 
 @Getter
@@ -19,9 +20,13 @@ public class MyExample3190DTO extends DataResponseDTO {
     @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
     private CustomFieldDictionaryEnum customFieldDictionary;
 
+    @SearchParameter(name = "sdfdsf", provider = StringValueProvider.class)
+    private String sdfdsf;
+
     public MyExample3190DTO(MyEntity3190 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();
+        this.sdfdsf = entity.getSdfdsf();
     }
 }

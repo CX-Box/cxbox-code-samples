@@ -1,0 +1,33 @@
+{
+  "name": "mytasks",
+  "icon": "form",
+  "order": 3000,
+  "title": "Мои задачи",
+  "primaryViewName": "mytaskslist",
+  "primaryViews": [
+    "mytaskslist"
+  ],
+  "navigation": {
+    "type": "standard",
+    "menu": [
+      {
+        "title": "Мои задачи",
+        "defaultView": "mytaskslist",
+        "child": [
+          {
+            "viewName": "mytaskslist",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "title": "задачи",
+        "viewName": "mytaskslist2"
+      },
+      {
+        "title": "Все задачи",
+        "viewName": "alltasks"
+      }
+    ]
+  }
+}
