@@ -17,8 +17,8 @@ import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.MetaDTO;
 import org.cxbox.core.dto.rowmeta.RowMetaDTO;
 import org.cxbox.core.util.session.SessionService;
-import org.demo.conf.cxbox.extension.siem.SecurityLogger.SecurityLogLevel;
 import org.demo.controller.CxboxRestController;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -73,6 +73,7 @@ public class SiemCrudmaEventListener implements ApplicationListener<CrudmaEvent<
 
 	private final ObjectMapper cxboxObjectMapper;
 
+
 	@Override
 	@SneakyThrows
 	public void onApplicationEvent(@NonNull CrudmaEvent<?> event) {
@@ -83,10 +84,9 @@ public class SiemCrudmaEventListener implements ApplicationListener<CrudmaEvent<
 		String customAction = getCustomAction(event, crudmaActionType);
 		BusinessComponent bc = event.getCrudmaAction().getBc();
 
-		SecurityLogLevel level = event.getException() != null
-				? SecurityLogLevel.ERROR
+		LogLevel level = event.getException() != null
+				? logger.getLevelLogException(event.getException())
 				: getLevel(bc, crudmaActionType);
-
 		logger.logSecurityEvent(
 				level,
 				crudmaActionType.name() + Optional.ofNullable(customAction).map(e -> "." + e).orElse(""),
@@ -95,17 +95,18 @@ public class SiemCrudmaEventListener implements ApplicationListener<CrudmaEvent<
 				String.join(",", sessionService.getSessionUserRoles()),
 				sessionService.getSessionId(),
 				getUserIp(),
-				SecurityLogLevel.ERROR.equals(level) ? writeErrorAsString(event.getException())
+				LogLevel.ERROR.equals(level) ? writeErrorAsString(event.getException())
 						: cxboxObjectMapper.writeValueAsString(getData(event))
 		);
 	}
 
+
 	@NonNull
-	private SecurityLogLevel getLevel(@NonNull BusinessComponent bc, CrudmaActionType crudmaActionType) {
+	private LogLevel getLevel(@NonNull BusinessComponent bc, CrudmaActionType crudmaActionType) {
 		return SIEM_CONFIG_LOG_LEVEL_WARN.entrySet().stream()
 				.anyMatch(entry -> entry.getKey().isBc(bc) && (entry.getValue().contains(crudmaActionType)))
-				? SecurityLogLevel.WARN
-				: SecurityLogLevel.INFO;
+				? LogLevel.WARN
+				: LogLevel.INFO;
 	}
 
 	@Nullable
