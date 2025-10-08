@@ -2,7 +2,7 @@ package org.demo.documentation.widgets.formpopup.colortitle;
 
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
-import lombok.NonNull;
+
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -11,7 +11,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.action.ActionsExt;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3041;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3042;
 import org.demo.documentation.widgets.formpopup.colortitle.forfields.MyEntity3043;

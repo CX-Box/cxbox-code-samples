@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.formpopup.title;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -9,7 +8,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.action.ActionsExt;
 import org.springframework.stereotype.Service;
 
 
