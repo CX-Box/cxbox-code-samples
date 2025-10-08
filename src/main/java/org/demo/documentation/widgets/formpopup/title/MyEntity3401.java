@@ -8,10 +8,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
-// 3401
-// 3000
-//  Title",
-
 @Entity
 @Getter
 @Setter

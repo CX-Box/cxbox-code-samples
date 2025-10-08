@@ -59,9 +59,6 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-    private static PreAction confirmWithComment(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3400Formpopup", "Done", "Cancel");
-    }
 
     // --8<-- [start:getActions]
     @Override
@@ -69,15 +66,11 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return Actions.<MyExample3400DTO>builder()
                 .action(act -> act
                         .action("save-send", "Save and send on approval")
-                        .withPreAction(confirmWithComment("Save and send on approval"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3400Formpopup", cfw -> cfw))
                 )
                 .create(crt -> crt.text("Create"))
                 .build();
     }
 
-    private ActionResultDTO<MyExample3400DTO> withApproval() {
-        return new ActionResultDTO<>();
-    }
-
+    // --8<-- [end:getActions]
 }

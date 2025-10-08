@@ -113,40 +113,29 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-    private static PreAction confirmWithComment(@NonNull String widget,@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText, widget, "Done", "Cancel");
-    }
-
      // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()
                 .action(act -> act
                         .action("save-send-color-const-all", "Save and send on approval")
-                        .withPreAction(confirmWithComment("MyExample3027FormPopupColorConstAll", "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConstAll", cfw -> cfw))
                 )
                 .action(act -> act
                         .action("save-send-color-all", "Save and send on approval")
-                        .withPreAction(confirmWithComment("MyExample3027FormPopupAll", "InlinePicklist: ${customFieldColorInlinePicklist} - Picklist: ${customFieldColorPicklist} - Radio: ${customFieldColorRadio} - Money: ${customFieldColorMoney} - Percent: ${customFieldColorPercent} - Number: ${customFieldColorNumber} - FileUploade: ${customFieldColorFileUploade} - Dictionary: ${customFieldColorDictionary} - DateTimeWithSeconds: ${customFieldColorDateTimeWithSeconds} - Date: ${customFieldColorDate} - Checkbox: ${customFieldColorCheckbox} - DateTime: ${customFieldColorDateTime} - Text: ${customFieldColorText} - Input:${customFieldColorInput} customFieldColorMultivalueHover: ${customFieldColorMultivalueHover} customFieldColorMultivalue: ${customFieldColorMultivalue}"))
-                        .invoker((bc, data) -> withApproval())
+                          .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
+
                 )
                 .action(act -> act
                         .action("save-send-color-const", "Save and send on approval")
-                        .withPreAction(confirmWithComment("MyExample3027FormPopupColorConst", "customField: ${customField},  customFieldText: ${customFieldText}"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConst", cfw -> cfw))
                 )
                 .action(act -> act
                         .action("save-send-color", "Save and send on approval")
-                        .withPreAction(confirmWithComment("MyExample3027FormPopup", "customField: ${customField},  customFieldText: ${customFieldText}"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopup", cfw -> cfw))
                 )
                 .build();
 
-    }
-
-    private ActionResultDTO<MyExample3027DTO> withApproval() {
-        return new ActionResultDTO<>();
     }
 
 }
