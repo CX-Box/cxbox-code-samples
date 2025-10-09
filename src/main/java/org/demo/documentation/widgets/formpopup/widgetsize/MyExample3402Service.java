@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.formpopup.widgetsize;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -9,7 +8,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.action.ActionsExt;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
@@ -35,39 +33,21 @@ public class MyExample3402Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-    private static PreAction formPopup6(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText, "MyExample3402Formpopup6", "Done", "Cancel");
-    }
-
-    private static PreAction formPopup12(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText, "MyExample3402Formpopup12", "Done", "Cancel");
-    }
-    private static PreAction formPopup24(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText , "MyExample3402Formpopup24", "Done", "Cancel");
-    }
-
     @Override
     public Actions<MyExample3402DTO> getActions() {
         return Actions.<MyExample3402DTO>builder()
                 .action(act -> act
                         .action("form-popup6", "See formPopup6")
-                        .withPreAction(formPopup6("Widget formPopup6"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup6", cfw -> cfw))
                 )
                 .action(act -> act
                         .action("form-popup12", "See formPopup12")
-                        .withPreAction(formPopup12("Widget formPopup12"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup12", cfw -> cfw))
                 )
                 .action(act -> act
                         .action("form-popup24", "See formPopup24")
-                        .withPreAction(formPopup24("Widget formPopup24"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup24", cfw -> cfw))
                 )
                 .build();
-    }
-
-    private ActionResultDTO<MyExample3402DTO> withApproval() {
-        return new ActionResultDTO<>();
     }
 }

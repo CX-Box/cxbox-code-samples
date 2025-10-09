@@ -2,7 +2,6 @@ package org.demo.documentation.widgets.formpopup.base.onefield;
 
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -10,7 +9,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.action.ActionsExt;
 
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFA;
@@ -59,9 +57,6 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-    private static PreAction confirmWithComment(@NonNull String actionText) {
-        return ActionsExt.confirmWithCustomWidget(actionText + "?", "MyExample3400Formpopup", "Done", "Cancel");
-    }
 
     // --8<-- [start:getActions]
     @Override
@@ -69,15 +64,11 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
         return Actions.<MyExample3400DTO>builder()
                 .action(act -> act
                         .action("save-send", "Save and send on approval")
-                        .withPreAction(confirmWithComment("Save and send on approval"))
-                        .invoker((bc, data) -> withApproval())
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3400Formpopup", cfw -> cfw))
                 )
                 .create(crt -> crt.text("Create"))
                 .build();
     }
 
-    private ActionResultDTO<MyExample3400DTO> withApproval() {
-        return new ActionResultDTO<>();
-    }
-
+    // --8<-- [end:getActions]
 }
