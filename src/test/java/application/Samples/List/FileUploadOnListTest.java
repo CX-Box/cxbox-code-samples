@@ -71,7 +71,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getListRows();
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).fileUpload();
-        assertThat(customField.getReadOnly()).isTrue();
+        assertThat(customField.getReadOnlyFileUpload()).isTrue();
     }
 
     @Test
