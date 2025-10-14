@@ -180,6 +180,17 @@ public class FileUpload extends BaseRow<File> {
         setFocusField();
         return !getRowByName().$(getValueTag()).is(Condition.exist);
     }
+    /**
+     * Checking if a FileUpload field is unavailable for download
+     *
+     * @return Boolean true/false
+     */
+    @Step("Checking the FileUpload field for \"ReadOnly\"")
+    public boolean getReadOnlyFileUpload() {
+        setFocusField();
+        return getRowByName().$(".ant-upload-select.ant-upload-disabled").exists();
+    }
+
 
     /**
      * Clearing the field. Deleting a file.

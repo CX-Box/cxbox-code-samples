@@ -8,6 +8,7 @@ import core.widget.form.field.BaseField;
 import io.qameta.allure.Allure;
 
 
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -147,6 +148,18 @@ public class FileUpload extends BaseField<File> {
             logTime(step);
             return !getFieldByName().$(getValueTag()).is(Condition.exist);
         });
+    }
+
+    /**
+     * Checking if a FileUpload field is unavailable for download
+     *
+     * @return Boolean true/false
+     */
+    @Step("Checking the FileUpload field for \"ReadOnly\"")
+    public boolean getReadOnlyFileUpload() {
+        return getFieldByName()
+                .$("div.ant-upload-disabled")
+                .exists();
     }
 
     /**

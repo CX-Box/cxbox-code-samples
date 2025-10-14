@@ -87,7 +87,7 @@ public class DictionaryAdministration extends GroupingHierarchyWidget {
     }
 
     public void selectType(String value) {
-        getWidget().$("i[aria-label='icon: paper-clip']").click();
+        getWidget().$("i[data-test-field-inlinepicklist-popup='true']").click();
         Optional<Popup> popup = findPopup();
         SelenideElement popupRoot = popup.get().picklistPopup("Dictionary Type").getWidget();
 

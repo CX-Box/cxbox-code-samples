@@ -65,7 +65,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
         var customField = form.fileUpload("Custom Field");
-        assertThat(customField.getReadOnly()).isTrue();
+        assertThat(customField.getReadOnlyFileUpload()).isTrue();
     }
 
     @Test
