@@ -43,6 +43,12 @@ public class MyExample82DTO extends DataResponseDTO {
     @SearchParameter(name = "customField9", provider = BooleanValueProvider.class)
     private Boolean customField9;
 
+    @SearchParameter(name = "customField10", provider = BooleanValueProvider.class)
+    private Boolean customField10;
+
+    @SearchParameter(name = "customField11", provider = BooleanValueProvider.class)
+    private Boolean customField11;
+
     public MyExample82DTO(MyEntity82 entity) {
         this.id = entity.getId().toString();
         this.customField = entity.getCustomField();
@@ -55,6 +61,8 @@ public class MyExample82DTO extends DataResponseDTO {
         this.customField7 = entity.getCustomField7();
         this.customField8 = entity.getCustomField8();
         this.customField9 = entity.getCustomField9();
+        this.customField10 = entity.getCustomField10();
+        this.customField11 = entity.getCustomField11();
     }
 
 }

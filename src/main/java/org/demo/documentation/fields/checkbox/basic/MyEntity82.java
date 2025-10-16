@@ -42,4 +42,10 @@ public class MyEntity82 extends BaseEntity {
 
     @Column
     private Boolean customField9;
+
+    @Column
+    private Boolean customField10;
+
+    @Column
+    private Boolean customField11;
 }
