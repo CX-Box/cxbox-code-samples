@@ -40,13 +40,14 @@ public class MyExample94Service extends VersionAwareResponseService<MyExample94D
 	}
 	// --8<-- [end:doUpdateEntity]
 
-	// --8<-- [start:getActions]
-	@Override
-	public Actions<MyExample94DTO> getActions() {
-		return Actions.<MyExample94DTO>builder()
-               .save(sv -> sv.text("Save"))
-				.build();
-	}
+    // --8<-- [start:getActions]
+    @Override
+    public Actions<MyExample94DTO> getActions() {
+        return Actions.<MyExample94DTO>builder()
+                .save(sv -> sv.text("Save"))
+                .associate(assoc -> assoc.text("Associate"))
+                .build();
+    }
 	// --8<-- [end:getActions]
 
 }
