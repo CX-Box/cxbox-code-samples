@@ -71,7 +71,7 @@ public class InlinePickList extends BaseField<String> {
     }
 
     private ElementsCollection getValues() {
-        return $("div.ant-select-dropdown")
+        return $("div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]")
                 .$("ul[role=\"listbox\"]")
                 .shouldBe(Condition.visible, Duration.ofSeconds(waitingForTests.Timeout))
                 .$$(By.tagName("li"));

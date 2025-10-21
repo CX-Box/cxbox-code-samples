@@ -22,7 +22,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 @Slf4j
 public class Dictionary extends BaseRow<String> {
-    protected final String MENU_OPTIONS = "div.ant-select-dropdown";
+    protected final String MENU_OPTIONS = "div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]";
 
     public Dictionary(ListWidget listWidget, String title, String id, ListHelper listHelper, Boolean filter, Boolean sort) {
         super(listWidget, title, "dictionary", id, listHelper, filter, sort);
