@@ -33,6 +33,10 @@ public class MyEntity3121TestDataLoadService {
         repository.save(new MyEntity3121().setCustomField("test data 7").setCustomFieldCheckbox(Boolean.TRUE));
         repository.save(new MyEntity3121().setCustomField("test data 8").setCustomFieldDictionary(MIDDLE));
         repository.save(new MyEntity3121().setCustomField("test data 9").setCustomFieldRadio(CustomFieldRadioEnum.MIDDLE));
+        repository.save(new MyEntity3121().setCustomField("test data 10").setCustomFieldCheckbox(Boolean.TRUE));
+        repository.save(new MyEntity3121().setCustomField("test data 17").setCustomFieldCheckbox(Boolean.TRUE));
+        repository.save(new MyEntity3121().setCustomField("test data 18").setCustomFieldDictionary(MIDDLE));
+        repository.save(new MyEntity3121().setCustomField("test data 19").setCustomFieldRadio(CustomFieldRadioEnum.MIDDLE));
 
     }
 

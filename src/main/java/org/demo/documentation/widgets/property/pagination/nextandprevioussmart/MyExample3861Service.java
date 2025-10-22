@@ -27,6 +27,7 @@ public class MyExample3861Service extends AnySourceVersionAwareResponseService<M
 
     @Override
     protected ActionResultDTO<MyExample3861DTO> doUpdateEntity(MyEntity3861OutServiceDTO entity, MyExample3861DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3861DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
 
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
@@ -35,8 +36,8 @@ public class MyExample3861Service extends AnySourceVersionAwareResponseService<M
     @Override
     public Actions<MyExample3861DTO> getActions() {
         return Actions.<MyExample3861DTO>builder()
-               .save(sv -> sv.text("Save"))
+                .save(sv -> sv.text("Save"))
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

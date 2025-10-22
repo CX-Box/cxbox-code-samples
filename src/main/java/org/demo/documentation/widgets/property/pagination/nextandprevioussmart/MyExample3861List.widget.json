@@ -1,9 +1,14 @@
 {
   "name": "MyExample3861List",
   "title": "Widget property Pagination nextAndPreviousSmart AnySource",
-  "type": "List",
+  "type": "GroupingHierarchy",
   "bc": "myexample3861",
   "fields": [
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
     {
       "title": "customField",
       "key": "customField",
@@ -12,8 +17,13 @@
   ],
   "options": {
     "pagination": {
-      "type": "nextAndPreviousSmart"
+      "type": "nextAndPreviousSmart",
+      "hideLimitOptions": false
+    },
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
     }
   }
 }
-
