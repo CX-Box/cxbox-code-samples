@@ -1,0 +1,50 @@
+{
+  "name": "assignmentRuleList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample6001",
+  "fields": [
+    {
+      "title": "Отдел",
+      "key": "businessUnitName2",
+      "type": "input"
+    },
+    {
+      "title": "Категория заявки",
+      "key": "requestCategory",
+      "type": "dictionary"
+    },
+    {
+      "title": "Тип заявки",
+      "key": "requestType",
+      "type": "dictionary"
+    },
+    {
+      "title": "Территориальная принадлежность",
+      "key": "territorialAffiliation",
+      "type": "dictionary"
+    },
+    {
+      "title": "Исполнители заявок",
+      "key": "assignedUsersDisplayKey",
+      "displayedKey": "assignedUsersDisplayKey",
+      "type": "multivalue"
+    }
+  ],
+  "options": {
+    "pagination": {
+      "hideLimitOptions": false
+    },
+    "readOnly": true,
+    "create": {
+      "widget": "assignmentRuleCreate"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "toEdit",
+        "delete"
+      ]
+    }
+  }
+}

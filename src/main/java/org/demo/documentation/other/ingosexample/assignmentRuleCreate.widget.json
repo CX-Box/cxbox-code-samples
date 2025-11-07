@@ -1,0 +1,94 @@
+{
+  "name": "assignmentRuleCreate",
+  "title": "",
+  "type": "Form",
+  "bc": "myexample6001",
+  "fields": [
+    {
+      "label": "Отдел",
+      "key": "businessUnitName2",
+      "type": "inline-pickList",
+      "popupBcName": "applicationEntityPick",
+      "searchSpec": "name",
+      "pickMap": {
+        "businessUnitName2": "name",
+        "businessUnitName2Id": "id"
+      }
+    },
+    {
+      "label": "Категория заявки",
+      "key": "requestCategory",
+      "type": "dictionary"
+    },
+    {
+      "label": "Тип заявки",
+      "key": "requestType",
+      "type": "dictionary"
+    },
+    {
+      "label": "Территориальная принадлежность",
+      "key": "territorialAffiliation",
+      "type": "dictionary"
+    },
+    {
+      "label": "Исполнители заявок",
+      "key": "assignedUsers",
+      "displayedKey": "assignedUsersDisplayKey",
+      "type": "multivalue",
+      "popupBcName": "assignmentRuleCreateAssigneeMultivaluePopup",
+      "assocValueKey": "fullName"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "businessUnitName2",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "requestCategory",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "requestType",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "territorialAffiliation",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "assignedUsers",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

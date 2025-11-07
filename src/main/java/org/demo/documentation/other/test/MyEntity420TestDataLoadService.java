@@ -21,7 +21,7 @@ public class MyEntity420TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 		repository.save(new MyEntity420()
-				.setCustomFieldForceActive2("Test2").setCustomFieldForceActive3("Test3").setCustomFieldForceActive("Test44")
+				.setCustomFieldForceActive2("Test2").setCustomFieldForceActive3("Test3").setCustomFieldForceActive("Test44").setFullName("dfgdfgfd")
 				.setCustomField2("Test2").setCustomField3("Test3").setCustomField("Test44"));
 	}
 

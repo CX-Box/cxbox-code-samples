@@ -32,7 +32,8 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample420DTO> doUpdateEntity(MyEntity420 entity, MyExample420DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
+		setIfChanged(data, MyExample420DTO_.fullName, entity::setFullName);
 		if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive2)) {
 			entity.setCustomFieldForceActive2(data.getCustomFieldForceActive2());
 		}
@@ -63,7 +64,7 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	@Override
 	public Actions<MyExample420DTO> getActions() {
 		return Actions.<MyExample420DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
                 .action(act -> act
                         .action("check", "check")
                         .invoker((bc, dto) -> {
@@ -112,7 +113,7 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

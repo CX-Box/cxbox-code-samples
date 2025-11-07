@@ -13,35 +13,37 @@ import org.springframework.stereotype.Service;
 public class MyExample420Meta extends FieldMetaBuilder<MyExample420DTO> {
 
 
-	// --8<-- [start:buildRowDependentMeta]
-	@Override
-	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample420DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
-		fields.setEnabled(MyExample420DTO_.customFieldForceActive2);
-		fields.setEnabled(MyExample420DTO_.customFieldForceActive3);
-		fields.setEnabled(MyExample420DTO_.customFieldForceActive);
+    // --8<-- [start:buildRowDependentMeta]
+    @Override
+    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample420DTO> fields, InnerBcDescription bcDescription,
+                                      Long id, Long parentId) {
+        fields.setEnabled(MyExample420DTO_.fullName);
+        fields.setEnabled(MyExample420DTO_.customFieldForceActive2);
+        fields.setEnabled(MyExample420DTO_.customFieldForceActive3);
+        fields.setEnabled(MyExample420DTO_.customFieldForceActive);
 
-		fields.setEnabled(MyExample420DTO_.customField3);
-		fields.setEnabled(MyExample420DTO_.customField2);
-		fields.setEnabled(MyExample420DTO_.customField);
-	}
-	// --8<-- [end:buildRowDependentMeta]
+        fields.setEnabled(MyExample420DTO_.customField3);
+        fields.setEnabled(MyExample420DTO_.customField2);
+        fields.setEnabled(MyExample420DTO_.customField);
+    }
+    // --8<-- [end:buildRowDependentMeta]
 
-	// --8<-- [start:buildIndependentMeta]
-	@Override
-	public void buildIndependentMeta(FieldsMeta<MyExample420DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
-		fields.enableFilter(MyExample420DTO_.customFieldForceActive2);
-		fields.enableFilter(MyExample420DTO_.customFieldForceActive3);
-		fields.enableFilter(MyExample420DTO_.customFieldForceActive);
+    // --8<-- [start:buildIndependentMeta]
+    @Override
+    public void buildIndependentMeta(FieldsMeta<MyExample420DTO> fields, InnerBcDescription bcDescription,
+                                     Long parentId) {
+        fields.enableFilter(MyExample420DTO_.fullName);
+        fields.enableFilter(MyExample420DTO_.customFieldForceActive2);
+        fields.enableFilter(MyExample420DTO_.customFieldForceActive3);
+        fields.enableFilter(MyExample420DTO_.customFieldForceActive);
 
-		fields.setForceActive(MyExample420DTO_.customFieldForceActive);
-		fields.setForceActive(MyExample420DTO_.customFieldForceActive2);
-		fields.setForceActive(MyExample420DTO_.customFieldForceActive3);
+        fields.setForceActive(MyExample420DTO_.customFieldForceActive);
+        fields.setForceActive(MyExample420DTO_.customFieldForceActive2);
+        fields.setForceActive(MyExample420DTO_.customFieldForceActive3);
 
-		fields.enableFilter(MyExample420DTO_.customField3);
-		fields.enableFilter(MyExample420DTO_.customField2);
-		fields.enableFilter(MyExample420DTO_.customField);
-	}
-	// --8<-- [end:buildIndependentMeta]
+        fields.enableFilter(MyExample420DTO_.customField3);
+        fields.enableFilter(MyExample420DTO_.customField2);
+        fields.enableFilter(MyExample420DTO_.customField);
+    }
+    // --8<-- [end:buildIndependentMeta]
 }

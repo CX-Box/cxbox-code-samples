@@ -13,25 +13,27 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity420 extends BaseEntity {
 
-	@Column
-	private String customField;
+    @Column
+    private String customField;
 
-	@Column
-	private String customField2;
+    @Column
+    private String customField2;
 
-	@Column
-	private String customField3;
+    @Column
+    private String customField3;
 
-	@Column
-	private String customF9ield3;
+    @Column
+    private String customF9ield3;
 
-	@Column
-	private String customFieldForceActive;
+    @Column
+    private String customFieldForceActive;
 
-	@Column
-	private String customFieldForceActive3;
+    @Column
+    private String customFieldForceActive3;
 
-	@Column
-	private String customFieldForceActive2;
+    @Column
+    private String customFieldForceActive2;
 
+    @Column
+    private String fullName;
 }
