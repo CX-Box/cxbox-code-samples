@@ -16,9 +16,12 @@ import styles from './ColumnTitle.less'
 interface ColumnTitleProps {
     widgetName: string
     widgetMeta: interfaces.WidgetListField
-    rowMeta: RowMetaField
+    rowMeta: RowMetaField | undefined
     onClose?: (fieldKey: string) => void
     showCloseButton?: boolean
+    disableSort?: boolean
+    disableFilter?: boolean
+    className?: string
 }
 
 const { FieldType } = interfaces
@@ -32,11 +35,22 @@ export const notSortableFields: readonly (interfaces.FieldType | CustomFieldType
     FieldType.hint
 ]
 
-const ColumnTitle = ({ widgetName, widgetMeta, rowMeta, onClose, showCloseButton }: ColumnTitleProps) => {
+const ColumnTitle = ({
+    className,
+    widgetName,
+    widgetMeta,
+    rowMeta,
+    onClose,
+    showCloseButton,
+    disableFilter,
+    disableSort
+}: ColumnTitleProps) => {
     const sortingSetting = useAppSelector(state =>
         state.session.featureSettings?.find(feature => feature.key === EFeatureSettingKey.sortEnabled)
     )
-    const isSortingEnabled = sortingSetting?.value === 'true' || rowMeta?.sortable === true
+    const isServerSideSortingEnabled = sortingSetting?.value === 'true' || rowMeta?.sortable === true
+    const isSortingEnabled = !disableSort && !notSortableFields.includes(widgetMeta.type) && isServerSideSortingEnabled
+    const isFilteringEnabled = !disableFilter && rowMeta?.filterable
 
     const handleColumnClose = useCallback(() => {
         onClose?.(widgetMeta.key)
@@ -61,28 +75,14 @@ const ColumnTitle = ({ widgetName, widgetMeta, rowMeta, onClose, showCloseButton
 
     const title = <TemplatedTitle widgetName={widgetName} title={widgetMeta.title} />
 
-    if (!rowMeta) {
-        return (
-            <div
-                className={cn({
-                    [styles.rightAlignment]: numberFieldTypes.includes(widgetMeta.type)
-                })}
-            >
-                {title}
-            </div>
-        )
-    }
+    const sort = isSortingEnabled && <ColumnSort widgetName={widgetName} fieldKey={widgetMeta.key} className={styles.sort} />
 
-    const sort = !notSortableFields.includes(widgetMeta.type) && isSortingEnabled && (
-        <ColumnSort widgetName={widgetName} fieldKey={widgetMeta.key} className={styles.sort} />
-    )
-
-    const filter = rowMeta.filterable && (
+    const filter = isFilteringEnabled && (
         <ColumnFilter className={styles.filter} widgetName={widgetName} widgetMeta={widgetMeta} rowMeta={rowMeta} />
     )
 
     return (
-        <div className={cn(styles.container, { [styles.rightAlignment]: numberFieldTypes.includes(widgetMeta.type) })}>
+        <div className={cn(styles.container, className, { [styles.rightAlignment]: numberFieldTypes.includes(widgetMeta.type) })}>
             {title}
             {filter}
             {sort}
