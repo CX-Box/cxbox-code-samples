@@ -16,7 +16,6 @@ public class MyEntity6001TestDataLoadService {
 
     @Autowired
     ApplicationRepository repositoryApp;
-
     @Autowired
     InternalAuthorizationService authzService;
 
