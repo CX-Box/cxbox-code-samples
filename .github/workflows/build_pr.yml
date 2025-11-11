@@ -24,20 +24,30 @@ jobs:
       - name: Setup checkout
         uses: actions/checkout@v3
 
-      - name: Check MR title
+      - name: Validate MR/PR title
+        shell: bash
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          LC_ALL: C.UTF-8
         run: |
           echo "Checking MR title format..."
+          
           if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
             TITLE="${{ github.event.pull_request.title }}"
           else
-            # push
-            TITLE=$(gh pr list --head $GITHUB_REF_NAME --state open --json title -q '.[0].title')
+            TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
+            if [ -z "$TITLE" ]; then
+              echo "⚠️ No open PR found for branch $GITHUB_REF_NAME. Skipping title check."
+              exit 0
+            fi
           fi
-          echo "Title: $TITLE" 
-          # Regex pattern
-
-          REGEX="^CXBOX-[0-9]+ \| (Fixed|Added)\. [A-ZА-Я].*"
-      
+          
+          echo "Title: $TITLE"
+          
+          REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
+          
+ 
           if [[ ! $TITLE =~ $REGEX ]]; then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
