@@ -25,13 +25,12 @@ jobs:
       - name: Check MR title
         run: |
           echo "Checking MR title format..."
-          title =  github.event.pull_request.title
-          
-          echo "Title: title" 
+         
+          echo "Title: $title" 
           # Regex pattern
           REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
           
-          if [[ ! "title" =~ $REGEX ]]; then
+          if [[ ! "$title" =~ $REGEX ]]; then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
             echo "  CXBOX-1234 | Fix. Fixed login bug"
