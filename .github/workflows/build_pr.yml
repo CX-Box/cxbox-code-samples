@@ -45,6 +45,32 @@ jobs:
           
           echo "Title: $TITLE"
  
+
+          # 1. Разбиваем на части по |
+          LEFT_PART=$(echo "$TITLE" | cut -d'|' -f1 | xargs)   # ticket
+          RIGHT_PART=$(echo "$TITLE" | cut -d'|' -f2 | xargs)  # type + description
+          
+          # 2. Проверка ticket
+          if [[ ! $LEFT_PART =~ ^CXBOX-[0-9]+$ ]]; then
+          echo "::error ::❌ Ticket part 1 is invalid!"
+          exit 1
+          fi
+          
+          # 3. Проверка типа изменения
+          TYPE=$(echo "$RIGHT_PART" | awk '{print $1}' | sed 's/\.//')  # убираем точку
+          if [[ ! "$TYPE" =~ ^(Fix|Fixed|Add|Added)$ ]]; then
+          echo "::error ::❌ Type must be Fix/Fixed/Add/Added!"
+          exit 1
+          fi
+          
+          # 4. Проверка заглавной буквы в описании
+          DESCRIPTION=$(echo "$RIGHT_PART" | cut -d' ' -f2-)
+          FIRST_CHAR=${DESCRIPTION:0:1}
+          if [[ ! "$FIRST_CHAR" =~ [A-ZА-Я] ]]; then
+          echo "::error ::❌ Description must start with a capital letter!"
+          exit 1
+          fi
+               
           REGEX="^CXBOX-[0-9]+[[:space:]]*\\|[[:space:]]*(Fixed|Added)\\.[[:space:]]*[A-ZА-Я].*"  
           
           
