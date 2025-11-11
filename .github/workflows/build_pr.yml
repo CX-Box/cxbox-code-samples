@@ -16,27 +16,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check MR/commit title
+      - name: Check MR title
         run: |
-          echo "Checking MR/commit title format..."
+          echo "Checking MR title format..."
           
-          # Get PR title or last commit message
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            TITLE="${{ github.event.pull_request.title }}"
-          else
-            TITLE="$(git log -1 --pretty=%B)"
-          fi
-
+           # Get PR title
+          TITLE="${{ github.event.pull_request.title }}"
           echo "Title: $TITLE"
-
+          
           # Regex pattern
           REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
-
+          
           if [[ ! "$TITLE" =~ $REGEX ]]; then
-            echo "::error ::❌ MR/commit title does not match the required format!"
+            echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
             echo "  CXBOX-1234 | Fix. Fixed login bug"
-            echo "  CXBOX-5678 | Added. c new feature"
+            echo "  CXBOX-5678 | Added. New feature"
             echo ""
             echo "Rules:"
             echo "  • Start with ticket number (CXBOX-XXXX)"
@@ -45,7 +40,7 @@ jobs:
             echo "  • Then a description starting with a capital letter"
             exit 1
           fi
-          echo "✅ MR/commit title is valid."
+          echo "✅ MR title is valid."
 
       - name: Setup Node
         uses: actions/setup-node@v3
