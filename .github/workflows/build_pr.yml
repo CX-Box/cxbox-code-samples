@@ -44,8 +44,8 @@ jobs:
           fi
           
           echo "Title: $TITLE"
-          
-          REGEX="^CXBOX-[0-9]+[[:space:]]*\|[[:space:]]*(Fixed|Added)\.[[:space:]]*[A-ZА-Я].*"       
+ 
+          REGEX="^CXBOX-[0-9]+[[:space:]]*|[[:space:]]*(Fixed|Added)\.[[:space:]]*[A-ZА-Я].*"   
           
           
           if [[ ! $TITLE =~ $REGEX ]]; then
