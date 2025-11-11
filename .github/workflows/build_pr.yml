@@ -36,18 +36,18 @@ jobs:
           echo "Title: $TITLE" 
           # Regex pattern
 
-          REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
+          REGEX="^CXBOX-[0-9]+ \| (Fixed|Added)\. [A-ZА-Я].*"
       
           if [[ ! $TITLE =~ $REGEX ]]; then then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
-            echo "  CXBOX-1234 | Fix. Fixed login bug"
+            echo "  CXBOX-1234 | Fixed. Fixed login bug"
             echo "  CXBOX-5678 | Added. New feature"
             echo ""
             echo "Rules:"
             echo "  • Start with ticket number (CXBOX-XXXX)"
             echo "  • Then ' | ' (space, pipe, space)"
-            echo "  • Then 'Fix.' or 'Added.'"
+            echo "  • Then 'Fixed.' or 'Added.'"
             echo "  • Then a description starting with a capital letter"
             exit 1
           fi
