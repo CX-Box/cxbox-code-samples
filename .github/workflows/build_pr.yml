@@ -15,12 +15,7 @@ jobs:
         java: ['17']
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: "yarn"
-          cache-dependency-path: ui/yarn.lock
+
       - name: Check MR/commit title
         run: |
           echo "Checking MR/commit title format..."
@@ -52,6 +47,12 @@ jobs:
           fi
           echo "✅ MR/commit title is valid."
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
       - name: Build with Maven
         run: mvn clean install -U -PUI -Pcoverage sonar:sonar -Dsonar.organization=cx-box -Dsonar.projectKey=CX-Box_cxbox-demo -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
