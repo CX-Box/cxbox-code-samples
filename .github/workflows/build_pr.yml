@@ -65,7 +65,12 @@ jobs:
           
           # 4. Проверка заглавной буквы в описании
           DESCRIPTION=$(echo "$RIGHT_PART" | cut -d' ' -f2-)
-          FIRST_CHAR=${DESCRIPTION:0:1}
+          
+          echo "DESCRIPTION : $DESCRIPTION"
+          FIRST_CHAR=${DESCRIPTION:0:1}          
+          
+          echo "DESCRIPTION : FIRST_CHAR" 
+          
           if [[ ! "$FIRST_CHAR" =~ [A-ZА-Я] ]]; then
           echo "::error ::❌ Description must start with a capital letter!"
           exit 1
