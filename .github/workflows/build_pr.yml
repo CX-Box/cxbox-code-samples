@@ -8,6 +8,7 @@ on:
     branches-ignore:
       - 'main'
 env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_EVENT_NAME: ${{ github.event_name }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,8 +27,8 @@ jobs:
           if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
             TITLE="${{ github.event.pull_request.title }}"
           else
-          # push
-          TITLE=$(gh pr list --head $GITHUB_REF_NAME --state open --json title -q '.[0].title')
+            # push
+            TITLE=$(gh pr list --head $GITHUB_REF_NAME --state open --json title -q '.[0].title')
           fi
           echo "Title: $TITLE" 
           # Regex pattern
