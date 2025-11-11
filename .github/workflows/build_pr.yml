@@ -48,7 +48,7 @@ jobs:
           LEFT_PART=$(echo "$TITLE" | cut -d'|' -f1 | xargs)   # ticket
           RIGHT_PART=$(echo "$TITLE" | cut -d'|' -f2 | xargs)  # type + description
    
-          ERROR_MESSAGE="::error ::❌ MR title does not match the required format!
+          ERROR_MESSAGE="::error ::
           ✅ Correct examples:
             CXBOX-1234 | Fixed. Fixed login bug
             CXBOX-5678 | Added. New feature
@@ -58,7 +58,14 @@ jobs:
             • Then ' | ' (space, pipe, space)
             • Then 'Fixed.' or 'Added.'
             • Then a description starting with a capital letter"
-  
+          
+          # 0. Check |
+          if [[ "$TITLE" != *"|"* ]]; then
+          echo "::error ::❌  MR title does not match the required format: Add ' | ' separator!"
+            echo "$ERROR_MESSAGE"
+            exit 1
+          fi
+          
           # 1. Check ticket
           if [[ ! $LEFT_PART =~ ^CXBOX-[0-9]+$ ]]; then
             echo "::error ::❌ MR title does not match the required format: Add number ticket (CXBOX-) !"
