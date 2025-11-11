@@ -24,7 +24,7 @@ jobs:
       - name: Setup checkout
         uses: actions/checkout@v3
 
-      - name: Validate MR/PR title
+      - name: Validate MR title
         shell: bash
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
@@ -45,53 +45,57 @@ jobs:
           
           echo "Title: $TITLE"
  
-
-          # 1. Разбиваем на части по |
           LEFT_PART=$(echo "$TITLE" | cut -d'|' -f1 | xargs)   # ticket
           RIGHT_PART=$(echo "$TITLE" | cut -d'|' -f2 | xargs)  # type + description
+   
+          ERROR_MESSAGE="::error ::❌ MR title does not match the required format!
+          ✅ Correct examples:
+            CXBOX-1234 | Fixed. Fixed login bug
+            CXBOX-5678 | Added. New feature
           
-          # 2. Проверка ticket
+          Rules:
+            • Start with ticket number (CXBOX-XXXX)
+            • Then ' | ' (space, pipe, space)
+            • Then 'Fixed.' or 'Added.'
+            • Then a description starting with a capital letter"
+  
+          # 1. Check ticket
           if [[ ! $LEFT_PART =~ ^CXBOX-[0-9]+$ ]]; then
-          echo "::error ::❌ Ticket part 1 is invalid!"
-          exit 1
+            echo "::error ::❌ MR title does not match the required format: Add number ticket (CXBOX-) !"
+            echo "$ERROR_MESSAGE"
+            exit 1
           fi
           
-          # 3. Проверка типа изменения
-          TYPE=$(echo "$RIGHT_PART" | awk '{print $1}' | sed 's/\.//')  # убираем точку
-          if [[ ! "$TYPE" =~ ^(Fix|Fixed|Add|Added)$ ]]; then
-          echo "::error ::❌ Type must be Fix/Fixed/Add/Added!"
-          exit 1
+          # 2. Check type changing
+          TYPE=$(echo "$RIGHT_PART" | awk '{print $1}' | sed 's/\.//')   
+          if [[ ! "$TYPE" =~ ^(Fixed|Added)$ ]]; then
+            echo "::error ::❌ MR title does not match the required format: Add type changing (Fixed|Added) !"
+            echo "$ERROR_MESSAGE"
+            exit 1
           fi
           
-          # 4. Проверка заглавной буквы в описании
+          # 3. Check first char in description
           DESCRIPTION=$(echo "$RIGHT_PART" | cut -d' ' -f2-)
           
           echo "DESCRIPTION : $DESCRIPTION"
-          FIRST_CHAR=${DESCRIPTION:0:1}          
-          
+          DESCRIPTION_NO_SPACES="${DESCRIPTION// /}"            
+          FIRST_CHAR=${DESCRIPTION_NO_SPACES:0:1}
+                    
           echo "DESCRIPTION : $FIRST_CHAR" 
           
-          if [[ ! "$FIRST_CHAR" =~ [A-ZА-Я] ]]; then
-          echo "::error ::❌ Description must start with a capital letter!"
-          exit 1
-          fi
-               
-          REGEX="^CXBOX-[0-9]+[[:space:]]*\\|[[:space:]]*(Fixed|Added)\\.[[:space:]]*[A-ZА-Я].*"  
-          
-          
-          if [[ ! $TITLE =~ $REGEX ]]; then
-            echo "::error ::❌ MR title does not match the required format!"
-            echo "✅ Correct examples:"
-            echo "  CXBOX-1234 | Fixed. Fixed login bug"
-            echo "  CXBOX-5678 | Added. New feature"
-            echo ""
-            echo "Rules:"
-            echo "  • Start with ticket number (CXBOX-XXXX)"
-            echo "  • Then ' | ' (space, pipe, space)"
-            echo "  • Then 'Fixed.' or 'Added.'"
-            echo "  • Then a description starting with a capital letter"
+          case "$FIRST_CHAR" in
+          [A-ZА-Я]*)
+          echo "✅ First char is capital"
+          ;;
+          *)
+            echo "::error ::❌ MR title does not match the required format: Description must start with a capital letter!" !"
+            echo "$ERROR_MESSAGE"
             exit 1
           fi
+          exit 1
+          ;;
+          esac
+      
           echo "✅ MR title is valid."
 
       - name: Setup Node
