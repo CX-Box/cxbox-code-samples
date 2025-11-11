@@ -12,9 +12,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  title: ${{ github.event.pull_request.title }}
-
 jobs:
   build-pr:
     runs-on: ubuntu-latest
@@ -25,12 +22,17 @@ jobs:
       - name: Check MR title
         run: |
           echo "Checking MR title format..."
-         
-          echo "Title: $title" 
+          if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
+            TITLE="${{ github.event.pull_request.title }}"
+          else
+          # push
+          TITLE=$(gh pr list --head $GITHUB_REF_NAME --state open --json title -q '.[0].title')
+          fi
+          echo "Title: $TITLE" 
           # Regex pattern
           REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
           
-          if [[ ! "$title" =~ $REGEX ]]; then
+          if [[ ! "$TITLE" =~ $REGEX ]]; then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
             echo "  CXBOX-1234 | Fix. Fixed login bug"
