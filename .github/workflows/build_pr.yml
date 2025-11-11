@@ -7,6 +7,14 @@ on:
   pull_request:
     branches-ignore:
       - 'main'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  title: ${{ github.event.pull_request.title }}
+
 jobs:
   build-pr:
     runs-on: ubuntu-latest
@@ -14,19 +22,16 @@ jobs:
       matrix:
         java: ['17']
     steps:
-      - uses: actions/checkout@v3
-
       - name: Check MR title
-        env:
-          TITLE: ${{ github.event.pull_request.title }}
         run: |
           echo "Checking MR title format..."
-          echo "Title: $TITLE"
+          title =  github.event.pull_request.title
           
+          echo "Title: title" 
           # Regex pattern
           REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
           
-          if [[ ! "$TITLE" =~ $REGEX ]]; then
+          if [[ ! "title" =~ $REGEX ]]; then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
             echo "  CXBOX-1234 | Fix. Fixed login bug"
