@@ -21,6 +21,9 @@ jobs:
       matrix:
         java: ['17']
     steps:
+      - steps:
+      - uses: actions/checkout@v3
+
       - name: Check MR title
         run: |
           echo "Checking MR title format..."
