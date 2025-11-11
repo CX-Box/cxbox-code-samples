@@ -35,9 +35,8 @@ jobs:
           fi
           echo "Title: $TITLE" 
           # Regex pattern
-          REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
           
-          if [[ ! "$TITLE" =~ $REGEX ]]; then
+          if [[ ! "$TITLE" =~ ^CXBOX-[0-9]+[[:space:]]\|[[:space:]](Fix|Added)\.[[:space:]][A-ZА-Я].* ]]; then
             echo "::error ::❌ MR title does not match the required format!"
             echo "✅ Correct examples:"
             echo "  CXBOX-1234 | Fix. Fixed login bug"
