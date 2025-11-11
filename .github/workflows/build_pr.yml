@@ -14,13 +14,37 @@ jobs:
       matrix:
         java: ['17']
     steps:
+      - name: Check MR/commit title
+        run: |
+          echo "Checking MR/commit title format..."
+          
+          # Get PR title or last commit message
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            TITLE="${{ github.event.pull_request.title }}"
+          else
+            TITLE="$(git log -1 --pretty=%B)"
+          fi
+
+          echo "Title: $TITLE"
+
+          # Regex pattern
+          REGEX="^CXBOX-[0-9]+ \| (Fix|Added)\. [A-ZА-Я].*"
+
+          if [[ ! "$TITLE" =~ $REGEX ]]; then
+            echo "::error ::❌ MR/commit title does not match the required format!"
+            echo "✅ Correct examples:"
+            echo "  CXBOX-1234 | Fix. Fixed login bug"
+            echo "  CXBOX-5678 | Added. c new feature"
+            echo ""
+            echo "Rules:"
+            echo "  • Start with ticket number (CXBOX-XXXX)"
+            echo "  • Then ' | ' (space, pipe, space)"
+            echo "  • Then 'Fix.' or 'Added.'"
+            echo "  • Then a description starting with a capital letter"
+            exit 1
+          fi
+          echo "✅ MR/commit title is valid."
       - uses: actions/checkout@v3
-      - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: 'adopt'
-          cache: "maven"
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
