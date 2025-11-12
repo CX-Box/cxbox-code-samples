@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.dto.rowmeta.PreAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 
+import org.demo.controller.CxboxRestController;
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.MyEntity3400InlinePicklist;
 import org.demo.documentation.widgets.formpopup.base.onefield.forfields.fa.MyEntity3400InlinePicklistFA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +67,15 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
     public Actions<MyExample3400DTO> getActions() {
         return Actions.<MyExample3400DTO>builder()
                 .action(act -> act
+                        .scope(ActionScope.RECORD)
+                        .withAutoSaveBefore()
                         .action("save-send", "Save and send on approval")
-                        .withPreAction(PreAction.confirmWithWidget("MyExample3400Formpopup", cfw -> cfw))
-                )
+                        .withPreAction(PreAction.confirmWithWidget(
+                                "MyExample3400Formpopup", cfw -> cfw
+                                        .title("Approve?")
+                                        .yesText("Approve and Save")
+                                        .noText("Cancel")))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3400DTO>()))
                 .create(crt -> crt.text("Create"))
                 .build();
     }

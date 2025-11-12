@@ -8,6 +8,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.formpopup.widgetsize.MyExample3402DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("java:S1170")
@@ -39,10 +40,12 @@ public class MyExample3403Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("see-formpopup1", "See formpopup1")
                         .withPreAction(PreAction.confirmWithWidget("myExample3403FormPopup1", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3403DTO>())
                 )
                 .action(act -> act
                         .action("see-formpopup2", "See formpopup2")
                         .withPreAction(PreAction.confirmWithWidget("myExample3403FormPopup2", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3403DTO>())
                 )
                 .build();
     }
