@@ -33,6 +33,7 @@ public class ResponsibilitiesActionAdminService extends
 		VersionAwareResponseService<ResponsibilitiesActionAdminDTO, ResponsibilitiesAction> {
 
 
+
 	private final MetaAdminServiceExt metaAdminServiceExt;
 
 	private Map<String, WidgetSourceDTO> nameToWidget;
