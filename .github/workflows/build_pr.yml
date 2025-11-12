@@ -9,7 +9,7 @@ on:
       - 'main'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_EVENT_NAME: ${{ github.event_name }}
+  GITHUB_REF_NAME: ${{ github.ref_name }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -27,26 +27,36 @@ jobs:
       - name: Validate MR title
         shell: bash
         env:
-          GITHUB_REF_NAME: ${{ github.ref_name }}
           LC_ALL: C.UTF-8
         run: |
-          echo "Checking MR title format..."
+          echo "Checking MR title format..."ф
+          # If it's a push — try to find an open PR for this branch
+          TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
           
-          if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
-            TITLE="${{ github.event.pull_request.title }}"
-          else
-            TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
-            if [ -z "$TITLE" ]; then
-              echo "⚠️ No open PR found for branch $GITHUB_REF_NAME. Skipping title check."
-              exit 0
-            fi
+          if [ -z "$TITLE" ]; then
+          # If no PR exists — use the latest commit message as the title   
+   
+            TARGET_BRANCH="main"
+        
+            # make sure branch info is up to date
+            git fetch origin $TARGET_BRANCH
+        
+            # use last commit that is not in target branch
+            TITLE=$(git log origin/$TARGET_BRANCH..HEAD -1 --pretty=%s) 
+        
+          fi
+          
+          if [ -z "$TITLE" ]; then
+          # If there is no commit message either — skip the check
+          echo "⚠️ No PR and no commit title found for branch $GITHUB_REF_NAME. Skipping title check."
+          exit 0
           fi
           
           echo "Title: $TITLE"
- 
+          
           LEFT_PART=$(echo "$TITLE" | cut -d'|' -f1 | xargs)   # ticket
           RIGHT_PART=$(echo "$TITLE" | cut -d'|' -f2 | xargs)  # type + description
-   
+          
           ERROR_MESSAGE="::error ::
           ✅ Correct examples:
             CXBOX-1234 | Fixed. Fixed login bug
@@ -64,6 +74,7 @@ jobs:
             echo "$ERROR_MESSAGE"
             exit 1
           fi
+          echo "✅  ' | ' separator"
           
           # 1. Check ticket
           if [[ ! $LEFT_PART =~ ^CXBOX-[0-9]+$ ]]; then
@@ -71,6 +82,7 @@ jobs:
             echo "$ERROR_MESSAGE"
             exit 1
           fi
+          echo "✅ Check ticket"
           
           # 2. Check type changing
           TYPE=$(echo "$RIGHT_PART" | awk '{print $1}' | sed 's/\.//')   
@@ -79,6 +91,7 @@ jobs:
             echo "$ERROR_MESSAGE"
             exit 1
           fi
+          echo "✅ Check type changing"
           
           # 3. Check first char in description
           DESCRIPTION=$(echo "$RIGHT_PART" | cut -d' ' -f2-)
