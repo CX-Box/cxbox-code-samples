@@ -32,6 +32,7 @@ import static org.demo.conf.cxbox.customization.responsibilitiesAction.dto.Respo
 public class ResponsibilitiesActionAdminService extends
 		VersionAwareResponseService<ResponsibilitiesActionAdminDTO, ResponsibilitiesAction> {
 
+
 	private final MetaAdminServiceExt metaAdminServiceExt;
 
 	private Map<String, WidgetSourceDTO> nameToWidget;
