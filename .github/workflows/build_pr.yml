@@ -34,8 +34,16 @@ jobs:
           TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
           
           if [ -z "$TITLE" ]; then
-          # If no PR exists — use the latest commit message as the title
-          TITLE=$(git log -1 --pretty=%s)
+          # If no PR exists — use the latest commit message as the title   
+   
+            TARGET_BRANCH="main"
+        
+            # make sure branch info is up to date
+            git fetch origin $TARGET_BRANCH
+        
+            # use last commit that is not in target branch
+            TITLE=$(git log origin/$TARGET_BRANCH..HEAD -1 --pretty=%s) 
+        
           fi
           
           if [ -z "$TITLE" ]; then
