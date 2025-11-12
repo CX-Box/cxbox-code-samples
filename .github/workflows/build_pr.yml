@@ -37,12 +37,29 @@ jobs:
           # If no PR exists — use the latest commit message as the title   
    
             TARGET_BRANCH="main"
-        
-            # make sure branch info is up to date
             git fetch origin $TARGET_BRANCH
-        
-            # use last commit that is not in target branch
-            TITLE=$(git log origin/$TARGET_BRANCH..HEAD -1 --pretty=%s) 
+            
+            COMMITS_COUNT=$(git rev-list --count origin/$TARGET_BRANCH..HEAD)
+          
+            echo "Commits ahead of $TARGET_BRANCH: $COMMITS_COUNT"
+              
+              if [ "$COMMITS_COUNT" -eq 0 ]; then
+              echo "⚠️ No commits in this branch. Skipping."
+              exit 0
+              fi
+              
+              # 4. 1 commit → name commit
+              if [ "$COMMITS_COUNT" -eq 1 ]; then
+              TITLE=$(git log origin/$TARGET_BRANCH..HEAD -1 --pretty=%s)
+            echo "Using single commit title: $TITLE"
+              echo "TITLE=$TITLE" >> $GITHUB_ENV
+              exit 0
+              fi
+              
+              # 5.2+ commits → name branch
+              TITLE="$GITHUB_REF_NAME"
+              echo "Using branch name: $TITLE"
+              echo "TITLE=$TITLE" >> $GITHUB_ENV
         
           fi
           
