@@ -31,15 +31,18 @@ jobs:
           LC_ALL: C.UTF-8
         run: |
           echo "Checking MR title format..."
-          
-          if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
-            TITLE="${{ github.event.pull_request.title }}"
-          else
-            TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
-            if [ -z "$TITLE" ]; then
-              echo "⚠️ No open PR found for branch $GITHUB_REF_NAME. Skipping title check."
-              exit 0
-            fi
+          # If it's a push — try to find an open PR for this branch
+          TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
+        
+          if [ -z "$TITLE" ]; then
+          # If no PR exists — use the latest commit message as the title
+          TITLE=$(git log -1 --pretty=%s)
+          fi
+        
+          if [ -z "$TITLE" ]; then
+          # If there is no commit message either — skip the check
+          echo "⚠️ No PR and no commit title found for branch $GITHUB_REF_NAME. Skipping title check."
+          exit 0
           fi
           
           echo "Title: $TITLE"
