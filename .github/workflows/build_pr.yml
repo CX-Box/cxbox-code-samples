@@ -33,19 +33,30 @@ jobs:
           # If it's a push — try to find an open PR for this branch
           TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
           
+          # If no PR exists — determine the number of commits and set the title based on commits in the branch
+
           if [ -z "$TITLE" ]; then
-          # If no PR exists — use the latest commit message as the title   
-   
-            TARGET_BRANCH="main"
-        
-            # make sure branch info is up to date
-            git fetch origin $TARGET_BRANCH
-        
-            # use last commit that is not in target branch
-            TITLE=$(git log origin/$TARGET_BRANCH..HEAD -1 --pretty=%s) 
-        
-          fi
+          # If no PR exists — determine the number of commits and set the title based on commits in the branch
           
+          TARGET_BRANCH="main"
+          
+          # Make sure the main branch info is up to date
+          git fetch origin $TARGET_BRANCH
+          
+          # Count how many commits are in the current branch but not in main
+          COMMIT_COUNT=$(git rev-list --count origin/$TARGET_BRANCH..HEAD)
+          
+            # If there is only one commit — use its message as the title
+            if [ "$COMMIT_COUNT" -eq 1 ]; then
+              TITLE=$(git log -1 --pretty=%s)
+            else
+            # If there are multiple commits — use the branch name as the title
+              BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+              TITLE="$BRANCH_NAME"
+            fi
+          fi
+       
+         
           if [ -z "$TITLE" ]; then
           # If there is no commit message either — skip the check
           echo "⚠️ No PR and no commit title found for branch $GITHUB_REF_NAME. Skipping title check."
