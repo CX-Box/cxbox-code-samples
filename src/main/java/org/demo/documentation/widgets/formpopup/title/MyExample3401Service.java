@@ -44,10 +44,14 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("see-constant-title", "See constant title")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3401Formpopup", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3401DTO>())
+
                 )
                 .action(act -> act
                         .action("see-custom-title", "See custom title")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3401FormpopupCustomTitle", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3401DTO>())
+
                 )
                 .build();
     }

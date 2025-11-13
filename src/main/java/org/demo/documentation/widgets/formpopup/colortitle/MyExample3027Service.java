@@ -112,26 +112,33 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3027DTO> getActions() {
         return Actions.<MyExample3027DTO>builder()
                 .action(act -> act
                         .action("save-send-color-const-all", "Save and send on approval")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConstAll", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+
                 )
                 .action(act -> act
                         .action("save-send-color-all", "Save and send on approval")
-                          .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
+                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
                 )
                 .action(act -> act
                         .action("save-send-color-const", "Save and send on approval")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConst", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+
                 )
                 .action(act -> act
                         .action("save-send-color", "Save and send on approval")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopup", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+
                 )
                 .build();
 

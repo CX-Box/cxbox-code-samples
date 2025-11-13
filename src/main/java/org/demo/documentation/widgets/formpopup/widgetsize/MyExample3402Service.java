@@ -39,14 +39,18 @@ public class MyExample3402Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("form-popup6", "See formPopup6")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup6", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3402DTO>())
+
                 )
                 .action(act -> act
                         .action("form-popup12", "See formPopup12")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup12", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3402DTO>())
                 )
                 .action(act -> act
                         .action("form-popup24", "See formPopup24")
                         .withPreAction(PreAction.confirmWithWidget("MyExample3402Formpopup24", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3402DTO>())
                 )
                 .build();
     }

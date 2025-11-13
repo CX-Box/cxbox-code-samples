@@ -39,10 +39,12 @@ public class MyExample3403Service extends VersionAwareResponseService<MyExample3
                 .action(act -> act
                         .action("see-formpopup1", "See formpopup1")
                         .withPreAction(PreAction.confirmWithWidget("myExample3403FormPopup1", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3403DTO>())
                 )
                 .action(act -> act
                         .action("see-formpopup2", "See formpopup2")
                         .withPreAction(PreAction.confirmWithWidget("myExample3403FormPopup2", cfw -> cfw))
+                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3403DTO>())
                 )
                 .build();
     }
