@@ -8,7 +8,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.formpopup.widgetsize.MyExample3402DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("java:S1170")
