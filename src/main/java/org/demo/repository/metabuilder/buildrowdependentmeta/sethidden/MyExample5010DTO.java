@@ -14,6 +14,7 @@ import org.demo.repository.metabuilder.buildrowdependentmeta.sethidden.enums.Cus
 @NoArgsConstructor
 public class MyExample5010DTO extends DataResponseDTO {
 
+    public static final String TEXT = "setHidden - if CustomField != High customFieldHidden show" ;
 
     @SearchParameter(name = "customField", provider = EnumValueProvider.class)
     private CustomFieldEnum customField;
