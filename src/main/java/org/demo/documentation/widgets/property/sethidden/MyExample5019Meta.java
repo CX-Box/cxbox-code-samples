@@ -36,6 +36,7 @@ public class MyExample5019Meta extends FieldMetaBuilder<MyExample5019DTO> {
         fields.enableFilter(MyExample5019DTO_.customFieldMV);
         fields.setEnumFilterValues(fields, MyExample5019DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.enableFilter(MyExample5019DTO_.customFieldDictionary);
+        fields.setForceActive(MyExample5019DTO_.customFieldDictionary);
     }
 
 }
