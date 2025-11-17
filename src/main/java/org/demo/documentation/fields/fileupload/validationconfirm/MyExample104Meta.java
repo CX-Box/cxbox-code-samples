@@ -8,6 +8,8 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample104Meta extends FieldMetaBuilder<MyExample104DTO> {
@@ -31,6 +33,7 @@ public class MyExample104Meta extends FieldMetaBuilder<MyExample104DTO> {
 			fields.setForceActive(MyExample104DTO_.customField);
 		}
 		fields.enableFilter(MyExample104DTO_.customField);
+		fields.setFileAccept(MyExample104DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

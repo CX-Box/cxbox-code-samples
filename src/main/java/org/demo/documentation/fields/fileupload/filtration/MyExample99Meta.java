@@ -31,6 +31,7 @@ public class MyExample99Meta extends FieldMetaBuilder<MyExample99DTO> {
 		}
 		fields.enableFilter(MyExample99DTO_.customField);
 		fields.enableSort(MyExample99DTO_.customField);
+		fields.setFileAccept(MyExampleDTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }
