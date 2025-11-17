@@ -36,9 +36,10 @@ public class MyExample3010Meta extends FieldMetaBuilder<MyExample3010DTO> {
         fields.setEnabled(MyExample3010DTO_.customFieldMoney);
         fields.setEnumValues(MyExample3010DTO_.customFieldRadio, CustomFieldRadioEnum.values());
         fields.setEnabled(MyExample3010DTO_.customFieldRadio);
-        fields.setDictionaryTypeWithCustomValues(MyExample3010DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+        fields.setConcreteValues( MyExample3010DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3010DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3010DTO_.customFieldMultivalue);
         fields.setEnabled(MyExample3010DTO_.customFieldHint);

@@ -22,18 +22,18 @@ public class WidgetStylesMeta extends FieldMetaBuilder<WidgetStylesDTO> {
 		fields.setEnabled(WidgetStylesDTO_.hidden);
 		fields.setEnabled(WidgetStylesDTO_.time);
 		if (CxboxWidgetStylesController.widgetStylesNone.isBc(bcDescription)) {
-			fields.setDictionaryTypeWithCustomValues(WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
+			fields.setConcreteValues(WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
 					.map(WidgetStylesTestEnum::getValue)
-					.toArray(String[]::new));
+					.map(e -> new SimpleDictionary(e, e))
+					.toList());
 			fields.setEnumValues(WidgetStylesDTO_.customFieldColorDictionary, WidgetStylesColorDictionaryEnum.values());
 			fields.setEnumValues(WidgetStylesDTO_.customFieldColorRadio, WidgetStylesColorRadioEnum.values());
 			fields.setRequired(WidgetStylesDTO_.customField);
-			fields.setDictionaryTypeWithCustomValues(
-					WidgetStylesDTO_.multipleSelect,
-					Arrays.stream(WidgetStylesTestEnum.values())
-							.map(WidgetStylesTestEnum::getValue)
-							.toArray(String[]::new)
-			);
+			fields.setConcreteValues( WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
+					.map(WidgetStylesTestEnum::getValue)
+					.map(e -> new SimpleDictionary(e, e))
+					.toList());
+
 		} else {
 			fields.setEnabled(WidgetStylesDTO_.hint);
 			fields.setEnabled(WidgetStylesDTO_.suggestion);
@@ -64,12 +64,10 @@ public class WidgetStylesMeta extends FieldMetaBuilder<WidgetStylesDTO> {
 			fields.setEnabled(WidgetStylesDTO_.customField);
 			fields.setEnabled(WidgetStylesDTO_.multipleSelect);
 			fields.setRequired(WidgetStylesDTO_.customField);
-			fields.setDictionaryTypeWithCustomValues(
-					WidgetStylesDTO_.multipleSelect,
-					Arrays.stream(WidgetStylesTestEnum.values())
-							.map(WidgetStylesTestEnum::getValue)
-							.toArray(String[]::new)
-			);
+			fields.setConcreteValues(WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
+					.map(WidgetStylesTestEnum::getValue)
+					.map(e -> new SimpleDictionary(e, e))
+					.toList());
 		}
 	}
 
