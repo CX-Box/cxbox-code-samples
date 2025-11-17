@@ -1,0 +1,45 @@
+{
+  "name": "myexample5010Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample5010",
+  "fields": [
+    {
+      "label": "Custom Field Hidden",
+      "key": "customFieldHidden",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldHidden",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

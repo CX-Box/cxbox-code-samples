@@ -63,7 +63,7 @@ public class MyExample5019Service extends VersionAwareResponseService<MyExample5
     public Actions<MyExample5019DTO> getActions() {
         return Actions.<MyExample5019DTO>builder()
                 .action(act -> act
-                        .action("save-send", "Save and send on approval")
+                        .action("save-send", "see FormPopup")
                         .withPreAction(PreAction.confirmWithWidget("MyExample5019Formpopup",  cfw -> cfw
                                         .title("Approval?")
                                         .yesText("Approve and Save")
