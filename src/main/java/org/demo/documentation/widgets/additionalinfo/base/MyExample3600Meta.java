@@ -23,9 +23,10 @@ public class MyExample3600Meta extends FieldMetaBuilder<MyExample3600DTO> {
         fields.setEnabled(MyExample3600DTO_.customFieldMultivalueHover);
         fields.setEnabled(MyExample3600DTO_.customFieldHint);
         fields.setEnabled(MyExample3600DTO_.customFieldMultivalue);
-        fields.setDictionaryTypeWithCustomValues(MyExample3600DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+        fields.setConcreteValues(MyExample3600DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3600DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3600DTO_.customFieldPickListId);
         fields.setEnabled(MyExample3600DTO_.customFieldPickList);

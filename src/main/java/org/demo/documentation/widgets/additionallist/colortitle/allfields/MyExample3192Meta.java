@@ -37,9 +37,10 @@ public class MyExample3192Meta extends FieldMetaBuilder<MyExample3192DTO> {
         fields.setEnabled(MyExample3192DTO_.customFieldMoney);
         fields.setEnumValues(MyExample3192DTO_.customFieldRadio, CustomFieldRadioEnum.values());
         fields.setEnabled(MyExample3192DTO_.customFieldRadio);
-        fields.setDictionaryTypeWithCustomValues(MyExample3192DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+        fields.setConcreteValues(MyExample3192DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3192DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3192DTO_.customFieldMultivalue);
         fields.setEnabled(MyExample3192DTO_.customFieldHint);

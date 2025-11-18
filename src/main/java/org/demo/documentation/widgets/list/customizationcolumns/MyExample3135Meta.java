@@ -22,9 +22,10 @@ public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3135DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
         fields.setEnabled(MyExample3135DTO_.customFieldMultivalueHover);
-        fields.setDictionaryTypeWithCustomValues(MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum1.values())
+        fields.setConcreteValues( MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum1.values())
                 .map(CustomFieldMultipleSelectEnum1::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3135DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3135DTO_.customFieldMultivalue);
         fields.setEnabled(MyExample3135DTO_.customFieldHidden);
@@ -42,9 +43,10 @@ public class MyExample3135Meta extends FieldMetaBuilder<MyExample3135DTO> {
         fields.setEnabled(MyExample3135DTO_.customFieldMoney);
         fields.setEnumValues(MyExample3135DTO_.customFieldRadio, CustomFieldRadioEnum.values());
         fields.setEnabled(MyExample3135DTO_.customFieldRadio);
-        fields.setDictionaryTypeWithCustomValues(MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+        fields.setConcreteValues( MyExample3135DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
                 .map(CustomFieldMultipleSelectEnum::getValue)
-                .toArray(String[]::new));
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
         fields.setEnabled(MyExample3135DTO_.customFieldMultipleSelect);
         fields.setEnabled(MyExample3135DTO_.customFieldMultivalue);
         fields.setEnabled(MyExample3135DTO_.customFieldHint);

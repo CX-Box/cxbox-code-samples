@@ -9,6 +9,8 @@ import org.demo.conf.document.DocumentConfig;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
@@ -33,6 +35,7 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 			fields.setForceActive(MyExample103DTO_.customField);
 		}
 		fields.enableFilter(MyExample103DTO_.customField);
+		fields.setFileAccept(MyExample103DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a",".txt"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }
