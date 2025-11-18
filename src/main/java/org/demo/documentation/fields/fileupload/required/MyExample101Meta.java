@@ -34,7 +34,7 @@ public class MyExample101Meta extends FieldMetaBuilder<MyExample101DTO> {
 			fields.setForceActive(MyExample101DTO_.customField);
 		}
 		fields.enableFilter(MyExample101DTO_.customField);
-		fields.setFileAccept(MyExample101DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a"));
+		fields.setFileAccept(MyExample101DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a",".txt"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }
