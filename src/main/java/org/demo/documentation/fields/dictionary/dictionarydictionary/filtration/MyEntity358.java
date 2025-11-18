@@ -18,4 +18,6 @@ public class MyEntity358 extends BaseEntity {
     private CustomDictionaryFiltration customFieldDictionary;
     @Column
     private CustomDictionaryNewFiltration customFieldNewDictionary;
+    @Column
+    private CustomDictionaryFiltrationSecond customFieldDictionarySecond;
 }

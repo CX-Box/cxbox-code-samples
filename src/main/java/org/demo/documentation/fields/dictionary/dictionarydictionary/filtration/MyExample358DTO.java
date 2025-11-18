@@ -16,10 +16,11 @@ public class MyExample358DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField")
     private String customField;
-
+    @SearchParameter(name = "customFieldDictionarySecond", provider = DictionaryValueProvider.class)
+    private CustomDictionaryFiltrationSecond customFieldDictionarySecond;
     @SearchParameter(name = "customFieldDictionary", provider = DictionaryValueProvider.class)
     private CustomDictionaryFiltration customFieldDictionary;
-    @SearchParameter(name = "customFieldNewDictionary", provider = EnumValueProvider.class)
+    @SearchParameter(name = "customFieldNewDictionary", provider = DictionaryValueProvider.class)
     private CustomDictionaryNewFiltration customFieldNewDictionary;
 
     public MyExample358DTO(MyEntity358 entity) {
@@ -27,5 +28,6 @@ public class MyExample358DTO extends DataResponseDTO {
         this.customField = entity.getCustomField();
         this.customFieldDictionary = entity.getCustomFieldDictionary();
         this.customFieldNewDictionary = entity.getCustomFieldNewDictionary();
+        this.customFieldDictionarySecond = entity.getCustomFieldDictionarySecond();
     }
 }

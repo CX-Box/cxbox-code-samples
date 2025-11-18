@@ -33,6 +33,9 @@ public class MyExample358Service extends VersionAwareResponseService<MyExample35
         if (data.isFieldChanged(MyExample358DTO_.customFieldDictionary)) {
             entity.setCustomFieldDictionary(data.getCustomFieldDictionary());
         }
+        if (data.isFieldChanged(MyExample358DTO_.customFieldDictionarySecond)) {
+            entity.setCustomFieldDictionarySecond(data.getCustomFieldDictionarySecond());
+        }
         if (data.isFieldChanged(MyExample358DTO_.customFieldNewDictionary)) {
             entity.setCustomFieldNewDictionary(data.getCustomFieldNewDictionary());
         }
