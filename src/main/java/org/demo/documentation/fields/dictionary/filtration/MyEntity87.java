@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldEnum;
 import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldNewEnum;
+import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldSecondEnum;
 
 @Entity
 @Getter
@@ -25,4 +26,7 @@ public class MyEntity87 extends BaseEntity {
 	@Column
 	private CustomFieldNewEnum customFieldNew;
 
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldSecondEnum customFieldSecond;
 }

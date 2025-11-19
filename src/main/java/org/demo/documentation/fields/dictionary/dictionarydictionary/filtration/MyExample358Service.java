@@ -26,15 +26,17 @@ public class MyExample358Service extends VersionAwareResponseService<MyExample35
 
     @Override
     protected ActionResultDTO<MyExample358DTO> doUpdateEntity(MyEntity358 entity, MyExample358DTO data, BusinessComponent bc) {
+
         setIfChanged(data, MyExample358DTO_.customFieldNewDictionary, entity::setCustomFieldNewDictionary);
+
         if (data.isFieldChanged(MyExample358DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         if (data.isFieldChanged(MyExample358DTO_.customFieldDictionary)) {
             entity.setCustomFieldDictionary(data.getCustomFieldDictionary());
         }
-        if (data.isFieldChanged(MyExample358DTO_.customFieldNewDictionary)) {
-            entity.setCustomFieldNewDictionary(data.getCustomFieldNewDictionary());
+        if (data.isFieldChanged(MyExample358DTO_.customFieldDictionarySecond)) {
+            entity.setCustomFieldDictionarySecond(data.getCustomFieldDictionarySecond());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }

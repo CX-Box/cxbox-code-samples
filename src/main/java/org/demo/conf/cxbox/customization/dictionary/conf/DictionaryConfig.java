@@ -21,6 +21,7 @@ import org.cxbox.api.data.dictionary.DictionaryCache;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.dictionary.Dictionary;
 import org.cxbox.dictionary.DictionaryProvider;
+import org.demo.documentation.fields.dictionary.dictionarydictionary.filtration.CustomDictionaryFiltrationSecond;
 import org.demo.documentation.fields.dictionary.dictionarydictionary.sorting.CustomDictionarySortingExample;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +50,8 @@ public class DictionaryConfig {
 			// --8<-- [start:getAll]
             @Override
             public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
-                if (dictionaryType == CustomDictionarySortingExample.class) {
+                if ( dictionaryType == CustomDictionarySortingExample.class
+                        || dictionaryType == CustomDictionaryFiltrationSecond.class) {
                     return DictionaryCache.dictionary()
 							.getAll(Dictionary.of(dictionaryType, "")
 							.getDictionaryType()).

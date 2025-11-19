@@ -48,7 +48,7 @@ public class SourcesGithubService {
     private final GitHubApi zitHubApi;
     public static final String IN_ZIP_NAME = "in_sample.zip";
     public static final String OUT_ZIP_NAME = "out_sample.zip";
-    public static final String DOCUMENTATION_PATH = "/src/main/java/org/demo/documentation";
+    public static final String DOCUMENTATION_PATH = "/src/main/java/org/demo";
 
     @SneakyThrows
     public ResponseEntity<String> getSourceCode(HttpServletRequest request) {

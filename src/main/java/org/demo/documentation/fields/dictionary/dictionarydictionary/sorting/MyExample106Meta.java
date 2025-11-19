@@ -30,6 +30,10 @@ public class MyExample106Meta extends FieldMetaBuilder<MyExample106DTO> {
         fields.enableSort(MyExample106DTO_.customFieldDictionaryExample);
         fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionary);
         fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionaryExample);
+
+        fields.enableFilter(MyExample106DTO_.customFieldDictionary);
+        fields.enableFilter(MyExample106DTO_.customFieldDictionaryExample);
+
     }
     // --8<-- [end:buildIndependentMeta]
 }
