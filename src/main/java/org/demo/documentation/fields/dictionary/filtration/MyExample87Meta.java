@@ -8,9 +8,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldEnum;
 import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldNewEnum;
-import org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldSecondEnum;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 import static org.demo.documentation.fields.dictionary.filtration.enums.CustomFieldSecondEnum.*;
 
