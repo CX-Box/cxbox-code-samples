@@ -15,7 +15,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class MyExample3400DTO extends DataResponseDTO {
 
-    public static final String TEXT = "Form Popup widget is a component for confirmation text.";
+    public static final String TEXT = "FormPopup widget is a component for confirmation text.";
 
     @SearchParameter(name = "customField")
     private String customField;
