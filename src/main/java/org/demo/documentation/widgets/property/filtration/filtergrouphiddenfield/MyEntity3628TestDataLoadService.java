@@ -24,6 +24,8 @@ public class MyEntity3628TestDataLoadService {
         repository.save(new MyEntity3628().setCustomField("test data 1").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH).setCustomFieldCheckbox(false));
         repository.save(new MyEntity3628().setCustomField("test data 2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW).setCustomFieldCheckbox(true));
         repository.save(new MyEntity3628().setCustomField("test data 3").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
+        repository.save(new MyEntity3628().setCustomField("test data 4"));
+        repository.save(new MyEntity3628().setCustomField("test data 5"));
     }
 
 }
