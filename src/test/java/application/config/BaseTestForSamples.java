@@ -93,14 +93,18 @@ public abstract class BaseTestForSamples {
         AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
     }
 
+
+
     @NonNull
     private static ChromeOptions getChromeOptions() {
+        String envApp = String.valueOf(Env.uri());
+
         var options = new ChromeOptions().addArguments(
                 "--headless",
                 "--enable-automation",
                 "--remote-allow-origins=*",
                 "--disable-features=InsecureDownloadWarnings",
-                "--unsafely-treat-insecure-origin-as-secure=http://code-samples.cxbox.org/ui/#",
+                "--unsafely-treat-insecure-origin-as-secure=" + envApp,
                 "--disable-popup-blocking",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
