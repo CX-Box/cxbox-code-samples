@@ -9,6 +9,8 @@ on:
 jobs:
   build-main-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      APP_URL: http://code-samples.cxbox.org/ui/#/
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK '17'
