@@ -1,6 +1,7 @@
 package application.config;
 
 import application.config.props.Env;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -37,6 +38,7 @@ import org.opentest4j.TestAbortedException;
 import org.selenide.videorecorder.core.RecordingMode;
 import org.selenide.videorecorder.core.VideoSaveMode;
 
+import static com.codeborne.selenide.Selenide.$;
 import static core.widget.TestingTools.CellProcessor.logTime;
 
 /**
@@ -91,12 +93,8 @@ public abstract class BaseTestForSamples {
                         .screenshots(true)
                         .savePageSource(true)
         );
-        //Stop the execution of all tests when any test hangs due to the environment not working
-        try {
-            AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
-        } catch (Exception e) {
-            throw new RuntimeException("App did not start in time, aborting test run");
-        }
+        AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+
     }
 
 
@@ -147,6 +145,15 @@ public abstract class BaseTestForSamples {
                     LoginPage.keycloakLogin("demo", "demo", Env.uri());
                 }
         );
+        // 💥 Если меню после логина не появилось — останавливаем весь ран
+        try {
+            $("aside[data-test='LEFT_SIDER']")
+                    .shouldBe(Condition.visible, Duration.ofSeconds(15));
+        } catch (Exception e) {
+            //Stop the execution of all tests when any test hangs due to the environment not working
+            throw new RuntimeException(
+                    "Application UI is not ready after login — aborting entire test suite", e);
+        }
     }
 
     @SuppressWarnings("unused")
