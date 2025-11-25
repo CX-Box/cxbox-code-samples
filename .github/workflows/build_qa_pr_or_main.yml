@@ -176,6 +176,23 @@ jobs:
           sudo docker images
           sudo docker compose -f docker-compose-test.yml up -d
 
+      - name: Check if stand is available
+        run: |
+          echo "Checking stand availability at: $APP_URL"
+          
+          ATTEMPTS=5
+          for i in $(seq 1 $ATTEMPTS); do
+          if curl -s --head --request GET "$APP_URL" | grep "200" > /dev/null; then
+           echo -e "✔ Stand is available"
+           exit 0
+          fi
+          echo "Attempt $i/$ATTEMPTS failed. Stand not available yet..."
+          sleep 5
+          done 
+          
+          echo "::error::❌ STAND IS NOT AVAILABLE: $APP_URL"
+          exit 1
+
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
 
