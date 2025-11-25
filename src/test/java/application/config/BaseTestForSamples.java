@@ -95,7 +95,7 @@ public abstract class BaseTestForSamples {
         try {
             AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
         } catch (Exception e) {
-            throw new TestAbortedException("App did not start in time, aborting test run", e);
+            throw new RuntimeException("App did not start in time, aborting test run");
         }
     }
 
