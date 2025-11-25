@@ -2,8 +2,9 @@ package application.config.props;
 
 import java.net.URI;
 import java.net.URL;
-import javax.annotation.Nullable;
 
+
+import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
