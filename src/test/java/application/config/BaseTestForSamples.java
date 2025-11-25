@@ -33,6 +33,7 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import java.time.Duration;
 import java.util.logging.Level;
 
+import org.opentest4j.TestAbortedException;
 import org.selenide.videorecorder.core.RecordingMode;
 import org.selenide.videorecorder.core.VideoSaveMode;
 
@@ -90,7 +91,12 @@ public abstract class BaseTestForSamples {
                         .screenshots(true)
                         .savePageSource(true)
         );
-        AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+        //Stop the execution of all tests when any test hangs due to the environment not working
+        try {
+            AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+        } catch (Exception e) {
+            throw new TestAbortedException("App did not start in time, aborting test run", e);
+        }
     }
 
 
