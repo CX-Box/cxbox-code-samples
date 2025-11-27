@@ -43,9 +43,12 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
+
+                // --8<-- [start:massEdit]
                 .action(act -> act
                         .action("massEdit", "Mass Edit")
-                        .withPreAction(PreAction.confirmWithWidget("myexample6101Form", cfw -> cfw))
+                        .withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+                                cfw -> cfw))
                         .scope(ActionScope.MASS)
                         .massInvoker((bc, data, ids) -> {
                             var massResult = ids.stream()
@@ -64,6 +67,9 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
                 )
+                // --8<-- [end:massEdit]
+
+                // --8<-- [start:massCheckboxTrue]
                 .action(act -> act
                         .action("massCheckboxTrue", "Mass Set Checkbox true")
                         .scope(ActionScope.MASS)
@@ -83,6 +89,59 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The CustomFieldCheckbox mass operation was completed!"));
                         })
                 )
+
+                // --8<-- [start:massEditCustomTitle]
+                .action(act -> act
+                        .action("massEditCustomTitle", "Mass Edit With Custom Text")
+                        .withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+                                cfw -> cfw.noText("It is text no")
+                                        .title("Mass Edit Title")
+                                        .yesText("It is text yes")))
+                        .scope(ActionScope.MASS)
+                        .massInvoker((bc, data, ids) -> {
+                            var massResult = ids.stream()
+                                    .map(id -> {
+                                        try {
+                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
+                                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
+                                            myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
+                                            return MassDTO.success(id);
+                                        } catch (Exception e) {
+                                            return MassDTO.fail(id, "cannot update");
+                                        }
+                                    })
+                                    .collect(Collectors.toSet());
+                            return new MassActionResultDTO<MyExample6101DTO>(massResult)
+                                    .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
+                        })
+                )
+                // --8<-- [end:massEditCustomTitle]
+
+                // --8<-- [start:massEditWithoutTitle]
+                .action(act -> act
+                        .action("massEditWithoutTitle", "Mass Edit Without Custom Text")
+                        .withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+                                cfw -> cfw.withoutTitle()))
+                        .scope(ActionScope.MASS)
+                        .massInvoker((bc, data, ids) -> {
+                            var massResult = ids.stream()
+                                    .map(id -> {
+                                        try {
+                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
+                                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
+                                            myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
+                                            return MassDTO.success(id);
+                                        } catch (Exception e) {
+                                            return MassDTO.fail(id, "cannot update");
+                                        }
+                                    })
+                                    .collect(Collectors.toSet());
+                            return new MassActionResultDTO<MyExample6101DTO>(massResult)
+                                    .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
+                        })
+                )
+                // --8<-- [end:massEditWithoutTitle]
+
                 .build();
     }
 
