@@ -1,4 +1,4 @@
-import { RootEpic, RootState } from '@store'
+import { RootEpic } from '@store'
 import { catchError, concat, EMPTY, filter, mergeMap, of, switchMap } from 'rxjs'
 import { isAnyOf, nanoid } from '@reduxjs/toolkit'
 import {
@@ -9,6 +9,7 @@ import {
     OperationPreInvoke,
     OperationTypeCrud,
     PendingValidationFailsFormat,
+    PopupWidgetTypes,
     utils
 } from '@cxbox-ui/core'
 import { EMPTY_ARRAY, FIELDS } from '@constants'
@@ -16,54 +17,12 @@ import { actions, sendOperationSuccess, setBcCount } from '@actions'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { AxiosError } from 'axios'
 import { postOperationRoutine } from './utils/postOperationRoutine'
-import { AppWidgetGroupingHierarchyMeta, AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
+import { AppWidgetGroupingHierarchyMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
 import { postInvokeHasRefreshBc } from '@utils/postInvokeHasRefreshBc'
 import { findWidgetHasCount } from '@components/ui/Pagination/utils'
-
-const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
-    const { widgets, pendingDataChanges } = state.view
-    const bcDictionary: { [bcName: string]: AppWidgetMeta } = {}
-
-    widgets.forEach(widget => {
-        if (
-            !bcDictionary[widget.bcName] &&
-            widget.showCondition?.bcName === activeBcName &&
-            widget.bcName !== activeBcName &&
-            utils.checkShowCondition(
-                widget.showCondition,
-                state.screen.bo.bc[widget.showCondition?.bcName as string]?.cursor || '',
-                state.data[widget.showCondition?.bcName as string],
-                pendingDataChanges
-            )
-        ) {
-            bcDictionary[widget.bcName] = widget
-        }
-    })
-
-    return Object.values(bcDictionary)
-}
-
-export const updateRowMetaForRelatedBcEpic: RootEpic = (action$, state$) =>
-    action$.pipe(
-        filter(isAnyOf(actions.forceActiveRmUpdate)),
-        switchMap(action => {
-            const { bcName } = action.payload
-            const state = state$.value
-            const widgetsForRowMetaUpdate = getWidgetsForRowMetaUpdate(state, bcName)
-
-            if (widgetsForRowMetaUpdate.length) {
-                return concat(
-                    ...widgetsForRowMetaUpdate.map(currentWidget =>
-                        of(actions.bcFetchRowMeta({ widgetName: currentWidget.name, bcName: currentWidget.bcName }))
-                    )
-                )
-            }
-
-            return EMPTY
-        })
-    )
+import { getInternalWidgets } from '@utils/getInternalWidgets'
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
@@ -355,12 +314,23 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                         const newData = oldData.filter(dataItem => dataItem.id !== cursor)
                         const previousCursor = oldData?.[previousElementIndex]?.id ?? newData[0]?.id ?? null
 
+                        const bcMeta = state.screen.bo.bc[bcName]
+                        const actions$ = []
+
+                        if (bcMeta.hasNext || bcMeta.page !== 1 || bcMeta.limit === oldData.length) {
+                            actions$.push(of(actions.bcFetchDataRequest({ bcName, widgetName })))
+                        } else {
+                            actions$.push(
+                                of(actions.updateBcData({ bcName, data: newData })),
+                                of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
+                                of(actions.bcFetchRowMeta({ widgetName, bcName }))
+                            )
+                        }
+
                         return concat(
                             of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                             isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
-                            of(actions.updateBcData({ bcName, data: newData })),
-                            of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
-                            of(actions.bcFetchRowMeta({ widgetName, bcName })),
+                            ...actions$,
                             postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
                         )
                     }
@@ -483,6 +453,44 @@ const collapseWidgetsByDefaultEpic: RootEpic = (action$, state$, { api }) =>
         })
     )
 
+const checkWidgetsEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(actions.selectView.match),
+        mergeMap(() => {
+            const widgets = state$.value.view.widgets
+            const widgetsMap = widgets.reduce((acc, widget) => {
+                acc[widget.name] = widget
+                return acc
+            }, {} as Record<string, (typeof widgets)[0]>)
+            const popupInternalWidgetsMap = widgets
+                .filter(widget => PopupWidgetTypes.includes(widget.type))
+                .reduce((acc, widget) => {
+                    const internalWidgets = getInternalWidgets([widget])
+
+                    if (internalWidgets.length > 0) {
+                        acc[widget.name] = internalWidgets
+                    }
+
+                    return acc
+                }, {} as Record<string, string[]>)
+
+            Object.entries(popupInternalWidgetsMap).forEach(([widgetName, internalWidgets]) => {
+                internalWidgets.forEach(internalWidget => {
+                    const popupWidget = widgetsMap[widgetName]
+                    const currentInternalWidget = widgetsMap[internalWidget]
+
+                    if (popupWidget?.name && currentInternalWidget?.name && popupWidget.bcName !== currentInternalWidget.bcName) {
+                        console.error(
+                            `Popup Widget "${popupWidget.name}" has an internal widget "${currentInternalWidget.name}" with another BC, this is not supported."`
+                        )
+                    }
+                })
+            })
+
+            return EMPTY
+        })
+    )
+
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
@@ -490,7 +498,7 @@ export const viewEpics = {
     bcDeleteDataEpic,
     forceUpdateRowMeta,
     closeFormPopup,
-    updateRowMetaForRelatedBcEpic,
     applyPendingPostInvokeEpic,
-    collapseWidgetsByDefaultEpic
+    collapseWidgetsByDefaultEpic,
+    checkWidgetsEpic
 }

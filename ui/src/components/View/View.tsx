@@ -24,7 +24,7 @@ import { FormPopup } from '../widgets/FormPopup/FormPopup'
 import MultivalueField from '../../fields/Multivalue/MultivalueField'
 import InlinePickList from '../../fields/InlinePickList/InlinePickList'
 import FileUpload from '../../fields/FileUpload/FileUploadContainer'
-import { FieldType, interfaces } from '@cxbox-ui/core'
+import { FieldType, interfaces, utils } from '@cxbox-ui/core'
 import { AdditionalInfoWidget } from '@components/widgets/AdditionalInfo/AdditionalInfoWidget'
 import { WidgetTypes } from '@cxbox-ui/schema'
 import TimeField from '../../fields/TimePicker/TimePickerField'
@@ -39,6 +39,8 @@ import Chart from '../widgets/Chart/Chart'
 import DebugViewInfoLabel from '@components/DebugViewInfoLabel/DebugViewInfoLabel'
 import FilePreview from '@components/widgets/FilePreview/FilePreview'
 import FilePreviewCard from '@components/FilePreviewCard/FilePreviewCard'
+import CalendarList from '@components/widgets/CalendarList/CalendarList'
+import CalendarYearList from '@components/widgets/CalendarList/CalendarYearList'
 
 export const customFields = {
     [FieldType.number]: Number,
@@ -64,7 +66,7 @@ export const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.Widget
     [CustomWidgetTypes.Funnel]: { component: Funnel, card: DashboardCard },
     [CustomWidgetTypes.RingProgress]: { component: RingProgress, card: DashboardCard },
     [CustomWidgetTypes.DashboardList]: { component: DashboardList, card: DashboardCard },
-    [CustomWidgetTypes.FormPopup]: { component: FormPopup, card: null },
+    [CustomWidgetTypes.FormPopup]: { component: FormPopup, card: null, isPopup: true },
     [CustomWidgetTypes.AdditionalInfo]: { component: AdditionalInfoWidget, card: EmptyCard },
     [CustomWidgetTypes.AdditionalList]: { component: AdditionalListWidget, card: EmptyCard },
     [WidgetTypes.AssocListPopup]: AssocListPopup,
@@ -77,8 +79,12 @@ export const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.Widget
     [CustomWidgetTypes.Column2D]: { component: Chart, card: DashboardCard },
     [CustomWidgetTypes.Line2D]: { component: Chart, card: DashboardCard },
     [CustomWidgetTypes.DualAxes2D]: { component: Chart, card: DashboardCard },
-    [CustomWidgetTypes.FilePreview]: { component: FilePreview, card: FilePreviewCard }
+    [CustomWidgetTypes.FilePreview]: { component: FilePreview, card: FilePreviewCard },
+    [CustomWidgetTypes.CalendarList]: { component: CalendarList, card: null },
+    [CustomWidgetTypes.CalendarYearList]: { component: CalendarYearList, card: null }
 }
+
+utils.extendPopupWidgetTypes(customWidgets)
 
 function View() {
     return (
