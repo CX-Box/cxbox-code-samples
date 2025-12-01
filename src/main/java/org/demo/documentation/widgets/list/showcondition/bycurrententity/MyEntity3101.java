@@ -18,4 +18,6 @@ public class MyEntity3101 extends BaseEntity {
     @Column
     private Long customField;
 
+    @Column
+    private Boolean customFieldCh;
 }

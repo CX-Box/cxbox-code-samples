@@ -17,6 +17,7 @@ public class MyExample3101Meta extends FieldMetaBuilder<MyExample3101DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3101DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3101DTO_.customFieldCh);
 		fields.setEnabled(MyExample3101DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -24,11 +25,12 @@ public class MyExample3101Meta extends FieldMetaBuilder<MyExample3101DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3101DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3101DTO_.customFieldCh);
 		fields.enableFilter(MyExample3101DTO_.customField);
 		fields.enableSort(MyExample3101DTO_.customField);
-		if (configuration.getForceActiveEnabled()) {
+
 			fields.setForceActive(MyExample3101DTO_.customField);
-		}
+		fields.setForceActive(MyExample3101DTO_.customFieldCh);
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

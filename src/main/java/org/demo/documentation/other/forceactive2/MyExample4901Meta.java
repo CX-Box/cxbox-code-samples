@@ -78,6 +78,9 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         fields.setEnabled(MyExample4901DTO_.customField);
 
         fields.setRequired(MyExample4901DTO_.customField);
+        fields.setRequired(MyExample4901DTO_.region);
+        fields.setRequired(MyExample4901DTO_.country);
+        fields.setRequired(MyExample4901DTO_.street);
 
         if (!fields.getCurrentValue(MyExample4901DTO_.money).isEmpty()) {
             if (fields.getCurrentValue(MyExample4901DTO_.money).get() > 100000) {
@@ -116,7 +119,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
         fields.enableFilter(MyExample4901DTO_.region);
 
 
-        if (bcDescription.getName().equals(CxboxMyExample4901Controller.myexamplefa4901.getName())) {
+
             fields.setForceActive(MyExample4901DTO_.region);
             fields.setForceActive(MyExample4901DTO_.country);
             fields.setForceActive(MyExample4901DTO_.money);
@@ -125,7 +128,7 @@ public class MyExample4901Meta extends FieldMetaBuilder<MyExample4901DTO> {
             fields.setForceActive(MyExample4901DTO_.street);
             //fields.setForceActive(MyExample4901DTO_.customFieldDouble);
             fields.setForceActive(MyExample4901DTO_.productType);
-        }
+
     }
 
 }

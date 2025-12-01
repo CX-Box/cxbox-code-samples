@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
 
 
 @Getter
@@ -20,10 +21,14 @@ public class MyExample3007DTO extends DataResponseDTO {
     @SearchParameter(name = "customField")
     private Long customField;
 
+    @SearchParameter(name = "customFieldCh", provider = BooleanValueProvider.class)
+    private Boolean customFieldCh;
+
     public MyExample3007DTO(MyEntity3007 entity) {
         this.id = entity.getId().toString();
-        this.customFieldShowCondition = entity.getCustomField() > 5 ;
+        this.customFieldShowCondition = entity.getCustomField() > 5;
         this.customField = entity.getCustomField();
+        this.customFieldCh = entity.getCustomFieldCh();
     }
 
 }
