@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.other.ingosexample.enums.AssignedUsers22Enum;
-import org.demo.documentation.other.ingosexample.enums.AssignedUsers2Enum;
-import org.demo.documentation.other.ingosexample.enums.AssignedUsersDisplayKeyEnum;
-import org.demo.documentation.other.ingosexample.enums.AssignedUsersEnum;
+import org.demo.documentation.fields.multivalue.basic.MyEntityMultivalue177;
+import org.demo.documentation.fields.multivalue.basic.MyExample176DTO_;
+import org.demo.documentation.other.ingosexample.enums.*;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S1170")
@@ -38,6 +39,20 @@ public class MyExample6001Service extends VersionAwareResponseService<MyExample6
 
     @Override
     protected ActionResultDTO<MyExample6001DTO> doUpdateEntity(MyEntity6001 entity, MyExample6001DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample6001DTO_.displayedKey)) {
+            entity.setDisplayedKey(
+                    data.getDisplayedKey().getValues()
+                            .stream()
+                            .map(v -> DisplayedKeyEnum.getByValue(v.getValue()))
+                            .collect(Collectors.toSet()));
+        }
+        if (data.isFieldChanged(MyExample6001DTO_.etwtrrt)) {
+            entity.setEtwtrrt(
+                    data.getEtwtrrt().getValues()
+                            .stream()
+                            .map(v -> EtwtrrtEnum.getByValue(v.getValue()))
+                            .collect(Collectors.toSet()));
+        }
         if (data.isFieldChanged(MyExample6001DTO_.assignedUsers22)) {
             entity.setAssignedUsers22(
                     data.getAssignedUsers22().getValues()
@@ -76,6 +91,15 @@ public class MyExample6001Service extends VersionAwareResponseService<MyExample6
         setIfChanged(data, MyExample6001DTO_.requestCategory, entity::setRequestCategory);
         setIfChanged(data, MyExample6001DTO_.businessUnitName, entity::setBusinessUnitName);
         setIfChanged(data, MyExample6001DTO_.customField, entity::setCustomField);
+        if (data.isFieldChanged(MyExample6001DTO_.customField2)) {
+            entity.getCustomFieldList().clear();
+            entity.getCustomFieldList().addAll(data.getCustomField2().getValues().stream()
+                    .map(MultivalueFieldSingleValue::getId)
+                    .filter(Objects::nonNull)
+                    .map(Long::parseLong)
+                    .map(e -> entityManager.getReference(MyEntityMultivalue177.class, e))
+                    .toList());
+        }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 

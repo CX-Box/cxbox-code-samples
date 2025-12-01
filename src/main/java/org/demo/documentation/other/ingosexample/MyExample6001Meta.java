@@ -17,6 +17,16 @@ public class MyExample6001Meta extends FieldMetaBuilder<MyExample6001DTO> {
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample6001DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
+        fields.setConcreteValues(MyExample6001DTO_.displayedKey, Arrays.stream(DisplayedKeyEnum.values())
+                .map(DisplayedKeyEnum::getValue)
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
+        fields.setEnabled(MyExample6001DTO_.displayedKey);
+        fields.setConcreteValues(MyExample6001DTO_.etwtrrt, Arrays.stream(EtwtrrtEnum.values())
+                .map(EtwtrrtEnum::getValue)
+                .map(e -> new SimpleDictionary(e, e))
+                .toList());
+        fields.setEnabled(MyExample6001DTO_.etwtrrt);
         fields.setConcreteValues(MyExample6001DTO_.assignedUsers22, Arrays.stream(AssignedUsers22Enum.values())
                 .map(AssignedUsers22Enum::getValue)
                 .map(e -> new SimpleDictionary(e, e))
@@ -47,16 +57,17 @@ public class MyExample6001Meta extends FieldMetaBuilder<MyExample6001DTO> {
         fields.setEnabled(MyExample6001DTO_.requestCategory);
         fields.setEnabled(MyExample6001DTO_.businessUnitName);
         fields.setEnabled(MyExample6001DTO_.customField);
+        fields.setEnabled(MyExample6001DTO_.customField2);
 
         fields.setEnabled(
-                 MyExample6001DTO_.businessUnitName2Id,
+                MyExample6001DTO_.businessUnitName2Id,
                 MyExample6001DTO_.businessUnitName2,
                 MyExample6001DTO_.requestCategory,
                 MyExample6001DTO_.requestType,
                 MyExample6001DTO_.territorialAffiliation
         );
         fields.setRequired(
-                 MyExample6001DTO_.businessUnitName2Id,
+                MyExample6001DTO_.businessUnitName2Id,
                 MyExample6001DTO_.businessUnitName2,
                 MyExample6001DTO_.requestCategory,
                 MyExample6001DTO_.requestType,
@@ -71,6 +82,14 @@ public class MyExample6001Meta extends FieldMetaBuilder<MyExample6001DTO> {
 
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample6001DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+        fields.setConcreteFilterValues(MyExample6001DTO_.displayedKey, Arrays.stream(DisplayedKeyEnum.values())
+                .map(en -> new SimpleDictionary(en.name(), en.getValue()))
+                .collect(Collectors.toList()));
+        fields.enableFilter(MyExample6001DTO_.displayedKey);
+        fields.setConcreteFilterValues(MyExample6001DTO_.etwtrrt, Arrays.stream(EtwtrrtEnum.values())
+                .map(en -> new SimpleDictionary(en.name(), en.getValue()))
+                .collect(Collectors.toList()));
+        fields.enableFilter(MyExample6001DTO_.etwtrrt);
         fields.setConcreteFilterValues(MyExample6001DTO_.assignedUsers22, Arrays.stream(AssignedUsers22Enum.values())
                 .map(en -> new SimpleDictionary(en.name(), en.getValue()))
                 .collect(Collectors.toList()));

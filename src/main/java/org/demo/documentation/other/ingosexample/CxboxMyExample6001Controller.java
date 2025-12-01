@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.fields.multivalue.basic.MyEntity177MultivalueService;
 import org.demo.documentation.other.test.MyExample420Service;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,9 @@ public enum CxboxMyExample6001Controller implements EnumBcIdentifier {
     // @formatter:on
 
     myexample6001(MyExample6001Service.class),
-    assignmentRuleCreateAssigneeMultivaluePopup(myexample6001, MyExample420Service.class),
-    applicationEntityPick(myexample6001, ApplicationEntityPickService.class);
+        assignmentRuleCreateAssigneeMultivaluePopup(myexample6001, MyExample420Service.class),
+        applicationEntityPick(myexample6001, ApplicationEntityPickService.class),
+    myEntity177AssocListPopup2(myexample6001, MyEntity177MultivalueService.class);
 
     // @formatter:on
 

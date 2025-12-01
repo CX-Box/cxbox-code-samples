@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.fields.multivalue.basic.MyEntityMultivalue177;
 import org.demo.documentation.other.ingosexample.enums.*;
 import org.demo.documentation.other.savewithparent.example5.entity.ApplicationEntity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -62,4 +65,24 @@ public class MyEntity6001 extends BaseEntity {
     @ElementCollection(targetClass = AssignedUsers22Enum.class)
     @Column(name = "VALUE", nullable = false)
     private Set<AssignedUsers22Enum> assignedUsers22 = new HashSet<>();
+
+    @Enumerated(value = EnumType.STRING)
+    @CollectionTable(name = "ETWTRRT_MYEXAMPLE6001", joinColumns = @JoinColumn(name = "MyEntity6001_ID"))
+    @ElementCollection(targetClass = EtwtrrtEnum.class)
+    @Column(name = "VALUE", nullable = false)
+    private Set<EtwtrrtEnum> etwtrrt = new HashSet<>();
+
+    @Enumerated(value = EnumType.STRING)
+    @CollectionTable(name = "DISPLAYED_KEY_MYEXAMPLE6001", joinColumns = @JoinColumn(name = "MyEntity6001_ID"))
+    @ElementCollection(targetClass = DisplayedKeyEnum.class)
+    @Column(name = "VALUE", nullable = false)
+    private Set<DisplayedKeyEnum> displayedKey = new HashSet<>();
+
+    @JoinTable(name = "MyEntity6001_MyEntity177",
+            joinColumns = @JoinColumn(name = "MyEntity6001_id"),
+            inverseJoinColumns = @JoinColumn(name = "MyEntity177_id")
+    )
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<MyEntityMultivalue177> customFieldList = new ArrayList<>();
+
 }

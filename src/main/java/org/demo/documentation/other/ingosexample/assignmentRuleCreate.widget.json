@@ -30,13 +30,14 @@
       "key": "territorialAffiliation",
       "type": "dictionary"
     },
+
     {
-      "label": "Исполнители заявок",
-      "key": "assignedUsers",
-      "displayedKey": "assignedUsersDisplayKey",
+      "label": "Custom Field",
+      "key": "customField2",
       "type": "multivalue",
-      "popupBcName": "assignmentRuleCreateAssigneeMultivaluePopup",
-      "assocValueKey": "fullName"
+      "popupBcName": "myEntity177AssocListPopup2",
+      "assocValueKey": "customField",
+      "displayedKey": "customFieldCalc"
     }
   ],
   "options": {
@@ -48,6 +49,14 @@
     },
     "layout": {
       "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField2",
+              "span": 12
+            }
+          ]
+        },
         {
           "cols": [
             {
