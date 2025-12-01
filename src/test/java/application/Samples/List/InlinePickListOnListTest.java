@@ -120,7 +120,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).inlinePickList();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/myexample140/view/myexample140form/myExampleBc140")).isTrue();
     }
 
     @Test

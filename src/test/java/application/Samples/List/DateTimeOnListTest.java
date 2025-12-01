@@ -107,7 +107,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getListRows();
         var customField = list.findRowSegmentByValue("custom Field", listRows.get(0)).dateTime();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/DateTimeDrilldown/view/DateTimeDrilldownform/dateTimeDrilldown")).isTrue();
     }
 
     @Test

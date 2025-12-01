@@ -107,7 +107,7 @@ public class DateOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("custom Field");
         var customField = list.findRowSegmentByValue("custom Field", listRows.get(0)).date();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/DateDrillDown/view/DateDrillDownform/dateDrillDown")).isTrue();
     }
 
     @Test
