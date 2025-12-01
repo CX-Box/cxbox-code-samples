@@ -54,13 +54,15 @@ jobs:
 
           ATTEMPTS=5
           for i in $(seq 1 $ATTEMPTS); do
-          if curl -s --head --request GET "$APP_URL" | grep "200" > /dev/null; then
-           echo -e "✔ Stand is available"
-           exit 0
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL)
+          if [ "$STATUS" = "200" ]; then
+          echo "✔ Stand is available"
+          exit 0
           fi
-          echo "Attempt $i/$ATTEMPTS failed. Stand not available yet..."
+          echo "Attempt $i/$ATTEMPTS failed (HTTP $STATUS). Stand not available yet..."
           sleep 5
-          done 
+          done
+          
 
           echo "::error::❌ STAND IS NOT AVAILABLE: $APP_URL"
           exit 1
