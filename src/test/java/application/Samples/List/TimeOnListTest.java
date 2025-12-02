@@ -138,7 +138,7 @@ public class TimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).time("HH:mm:ss");
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/myexample3503/view/myexample3503form/myExampleBc3503")).isTrue();
     }
 
     @Test

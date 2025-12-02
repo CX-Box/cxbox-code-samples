@@ -193,11 +193,11 @@ public abstract class BaseRow<E> {
      * @return Boolean true/false
      */
     @Step("Clicking on a hyperlink in the text or by clicking on a special element")
-    public Boolean drillDown() {
-        String oldUrl = WebDriverRunner.url();
-        getRowByName().$("span a").click();
+    public Boolean drillDown(String url) {
+         getRowByName().$("span a").click();
+        Selenide.sleep(300);
         String newUrl = WebDriverRunner.url();
-        return oldUrl.equals(newUrl) && $x("//body").exists();
+        return newUrl.contains(url) && $x("//body").exists();
     }
 
     /**

@@ -123,7 +123,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).money();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/myexample62/view/myexample62form/myExampleBc62")).isTrue();
     }
 
     @Test

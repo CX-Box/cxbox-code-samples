@@ -107,7 +107,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getNoFocusValues("Custom Field");
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).dateTimeWithSeconds();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/DateTimeWithSecondsDrillDown/view/DateTimeWithSecondsDrillDownform/dateTimeWithSecondsDrillDown")).isTrue();
     }
 
     @Test

@@ -105,7 +105,7 @@ public class SuggestionPickListOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List Widget with suggestionPickList drilldown");
         List<String> listRows = list.getNoFocusValues("customField");
         var customField = list.findRowSegmentByValue("customField", listRows.get(0)).suggestionPickList();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("screen/myexample3080/view/myexample3091form")).isTrue();
     }
 
 

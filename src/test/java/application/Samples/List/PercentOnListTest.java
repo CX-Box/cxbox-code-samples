@@ -119,7 +119,7 @@ public class PercentOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> values = list.getNoFocusValues("custom Field");
         var customField = list.findRowSegmentByValue("custom Field", values.get(0)).percent();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/myexample5/view/myexample5form/myExampleBc5")).isTrue();
     }
 
     @Test

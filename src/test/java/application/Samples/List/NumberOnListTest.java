@@ -121,7 +121,7 @@ public class NumberOnListTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
         var customField = list.findRowSegmentByValue("custom Field", "234 567").number();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/NumberDrillDown/view/NumberDrillDownform/numberDrillDown")).isTrue();
     }
 
     @Test

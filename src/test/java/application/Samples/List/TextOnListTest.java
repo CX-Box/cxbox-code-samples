@@ -119,7 +119,7 @@ public class TextOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         List<String> listRows = list.getListRows();
         var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).text();
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/myexample44/view/myexample44form/myExampleBc44")).isTrue();
     }
 
     @Test
