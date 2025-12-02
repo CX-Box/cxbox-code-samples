@@ -54,7 +54,7 @@ jobs:
           
           ATTEMPTS=5
           for i in $(seq 1 $ATTEMPTS); do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:81/ui")
+            STATUS=$(curl -s -o NUL -w "%{http_code}" http://localhost:81/ui/)
             if [ "$STATUS" = "200" ]; then
               echo "✔ Stand is available"
               exit 0
