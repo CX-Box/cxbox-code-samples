@@ -9,8 +9,10 @@ import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.*;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S1170")
@@ -54,6 +56,11 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                             var massResult = ids.stream()
                                     .map(id -> {
                                         try {
+                                            if (data.getCustomFieldDictionary() != null
+
+                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                                                return MassDTO.fail(id, "cannot update Error");
+                                            }
                                             MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
                                             myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
                                             myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
@@ -77,6 +84,11 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                             var massResult = ids.stream()
                                     .map(id -> {
                                         try {
+                                            if (data.getCustomFieldDictionary() != null
+
+                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                                                return MassDTO.fail(id, "cannot update Error");
+                                            }
                                             MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
                                             myEntity6101.setCustomFieldCheckbox(true);
                                             return MassDTO.success(id);
@@ -102,6 +114,11 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                             var massResult = ids.stream()
                                     .map(id -> {
                                         try {
+                                            if (data.getCustomFieldDictionary() != null
+
+                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                                                return MassDTO.fail(id, "cannot update Error");
+                                            }
                                             MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
                                             myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
                                             myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
@@ -127,6 +144,11 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                             var massResult = ids.stream()
                                     .map(id -> {
                                         try {
+                                            if (data.getCustomFieldDictionary() != null
+
+                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                                                return MassDTO.fail(id, "cannot update Error");
+                                            }
                                             MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
                                             myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
                                             myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());

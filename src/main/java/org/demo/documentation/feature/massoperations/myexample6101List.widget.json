@@ -5,6 +5,11 @@
   "bc": "myexample6101",
   "fields": [
     {
+      "title": "Id",
+      "key": "id",
+      "type": "hidden"
+    },
+    {
       "title": "Custom Field Checkbox",
       "key": "customFieldCheckbox",
       "type": "checkbox"
@@ -21,6 +26,16 @@
     }
   ],
   "options": {
+    "additional": {
+      "fields": [
+        "customFieldCheckbox",
+        "customFieldDictionary"
+      ],
+      "enabled": true
+    },
+    "massOp": {
+      "pickMapFieldKey": "id"
+    },
     "actionGroups": {
       "include": [
         "massEdit"

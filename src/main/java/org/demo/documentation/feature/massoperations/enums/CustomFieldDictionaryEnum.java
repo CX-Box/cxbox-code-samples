@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum CustomFieldDictionaryEnum {
     HIGH("High"),
     MIDDLE("Middle"),
+    ERROR("Error"),
     LOW("Low");
 
     @JsonValue
