@@ -1,6 +1,7 @@
 package org.demo.documentation.feature.massoperations;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dto.MassDTO;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -10,9 +11,12 @@ import org.cxbox.core.dto.rowmeta.*;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
+import org.demo.entity.core.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S1170")
@@ -53,23 +57,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                 cfw -> cfw))
                         .scope(ActionScope.MASS)
                         .massInvoker((bc, data, ids) -> {
-                            var massResult = ids.stream()
-                                    .map(id -> {
-                                        try {
-                                            if (data.getCustomFieldDictionary() != null
-
-                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
-                                                return MassDTO.fail(id, "cannot update Error");
-                                            }
-                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
-                                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
-                                            myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
-                                            return MassDTO.success(id);
-                                        } catch (Exception e) {
-                                            return MassDTO.fail(id, "cannot update");
-                                        }
-                                    })
-                                    .collect(Collectors.toSet());
+                            var massResult = getMassDTO(data, ids,false);
                             return new MassActionResultDTO<MyExample6101DTO>(massResult)
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
@@ -81,24 +69,9 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                         .action("massCheckboxTrue", "Mass Set Checkbox true")
                         .scope(ActionScope.MASS)
                         .massInvoker((bc, data, ids) -> {
-                            var massResult = ids.stream()
-                                    .map(id -> {
-                                        try {
-                                            if (data.getCustomFieldDictionary() != null
-
-                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
-                                                return MassDTO.fail(id, "cannot update Error");
-                                            }
-                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
-                                            myEntity6101.setCustomFieldCheckbox(true);
-                                            return MassDTO.success(id);
-                                        } catch (Exception e) {
-                                            return MassDTO.fail(id, "Cannot update CustomFieldCheckbox");
-                                        }
-                                    })
-                                    .collect(Collectors.toSet());
+                            var massResult = getMassDTO(data, ids, true);
                             return new MassActionResultDTO<MyExample6101DTO>(massResult)
-                                    .setAction(PostAction.showMessage(MessageType.INFO, "The CustomFieldCheckbox mass operation was completed!"));
+                                    .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
                 )
 
@@ -111,23 +84,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                         .yesText("It is text yes")))
                         .scope(ActionScope.MASS)
                         .massInvoker((bc, data, ids) -> {
-                            var massResult = ids.stream()
-                                    .map(id -> {
-                                        try {
-                                            if (data.getCustomFieldDictionary() != null
-
-                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
-                                                return MassDTO.fail(id, "cannot update Error");
-                                            }
-                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
-                                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
-                                            myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
-                                            return MassDTO.success(id);
-                                        } catch (Exception e) {
-                                            return MassDTO.fail(id, "cannot update");
-                                        }
-                                    })
-                                    .collect(Collectors.toSet());
+                            var massResult = getMassDTO(data, ids,false);
                             return new MassActionResultDTO<MyExample6101DTO>(massResult)
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
@@ -141,23 +98,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                 cfw -> cfw.withoutTitle()))
                         .scope(ActionScope.MASS)
                         .massInvoker((bc, data, ids) -> {
-                            var massResult = ids.stream()
-                                    .map(id -> {
-                                        try {
-                                            if (data.getCustomFieldDictionary() != null
-
-                                                    && Objects.equals(data.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
-                                                return MassDTO.fail(id, "cannot update Error");
-                                            }
-                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
-                                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
-                                            myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
-                                            return MassDTO.success(id);
-                                        } catch (Exception e) {
-                                            return MassDTO.fail(id, "cannot update");
-                                        }
-                                    })
-                                    .collect(Collectors.toSet());
+                            var massResult = getMassDTO(data, ids,false);
                             return new MassActionResultDTO<MyExample6101DTO>(massResult)
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
@@ -165,6 +106,31 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                 // --8<-- [end:massEditWithoutTitle]
 
                 .build();
+    }
+
+    @NotNull
+    private Set<MassDTO> getMassDTO(@NonNull MyExample6101DTO data, Set<String> ids, boolean onlyCheckboxChange) {
+        return ids.stream()
+                .map(id -> {
+                    try {
+                        MyEntity6101 myEntity6101BD = repository.findById(Long.parseLong(id)).orElseThrow();
+                        if (myEntity6101BD.getCustomFieldDictionary() != null
+
+                                && Objects.equals(myEntity6101BD.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                            return MassDTO.fail(id, "cannot update Error");
+                        }
+                        MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
+                        if (!onlyCheckboxChange) {
+                            myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
+                        }
+                        myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
+                        return MassDTO.success(id);
+                    } catch (Exception e) {
+                        return MassDTO.fail(id, "cannot update");
+                    }
+                })
+                .collect(Collectors.toSet());
+
     }
 
 }
