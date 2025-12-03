@@ -1,9 +1,14 @@
 {
-  "name": "myexample6101ListWithoutTitle",
+  "name": "myexample6101GH",
   "title": "List",
-  "type": "List",
+  "type": "GroupingHierarchy",
   "bc": "myexample6101",
   "fields": [
+    {
+      "title": "Id",
+      "key": "id",
+      "type": "hidden"
+    },
     {
       "title": "Custom Field Checkbox",
       "key": "customFieldCheckbox",
@@ -21,9 +26,24 @@
     }
   ],
   "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "additional": {
+      "fields": [
+        "customFieldCheckbox",
+        "customFieldDictionary"
+      ],
+      "enabled": true
+    },
+    "massOp": {
+      "pickMapFieldKey": "id"
+    },
     "actionGroups": {
       "include": [
-        "massEditWithoutTitle",
+        "massEdit",
         "save"
       ]
     }
