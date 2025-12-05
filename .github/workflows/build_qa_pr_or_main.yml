@@ -23,7 +23,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+
+      # -------------------------
+      # BASE
+      # -------------------------
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up JDK '17'
         uses: actions/setup-java@v3
@@ -38,19 +43,38 @@ jobs:
           node-version: '18'
           cache: "yarn"
           cache-dependency-path: ui/yarn.lock
-
-      - name: Load target
+      # -------------------------
+      # BUILD BACK + FRONT
+      # -------------------------
+      - name: Build backend + UI
         run: mvn clean install -U -PUI
 
-      - name: build docker image and start
+      # -------------------------
+      # START DOCKER
+      # -------------------------
+      - name: Clean docker builder cache
+        run: docker builder prune -af
+
+      - name: Run docker compose
         run: |
           sudo chmod -R 777 ./docker
           sudo docker images
-          sudo docker compose -f docker-compose-test.yml up -d
+          docker compose -f docker-compose-test.yml up -d
 
-      - name: Run tests
+      # -------------------------
+      # TESTS
+      # -------------------------
+      - name: Run Tests
         id: run_tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
+        run: |
+          mvn --batch-mode \
+            -DrunTests=true \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.forkCount=3 \
+            -Dsurefire.threadCount=1 \
+            -Dsurefire.reuseForks=true \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest \
+            test
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -190,8 +214,22 @@ jobs:
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
           echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
 
-      - name: cleanup docker resources
+      # -------------------------
+      # CLEANUP
+      # -------------------------
+      - name: Stop and clean docker
         if: always()
         run: |
-          sudo docker compose -f docker-compose-test.yml down --remove-orphans
-          sudo docker system prune -a --volumes -f
+          docker compose -f docker-compose-test.yml down --remove-orphans
+          docker system prune -af --volumes
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          rm -rf $GITHUB_WORKSPACE/*
+          rm -rf ~/.m2/repository/*
+          rm -rf ~/.cache/yarn/*
+
+      - name: Check disk after cleanup
+        if: always()
+        run: df -h
