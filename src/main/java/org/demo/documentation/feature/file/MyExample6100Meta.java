@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class MyExample6100Meta extends FieldMetaBuilder<MyExample6100DTO> {
 
+    // --8<-- [start:buildRowDependentMeta]
     @Override
     public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription,
                                       Long id, Long parentId) {
@@ -22,6 +23,7 @@ public class MyExample6100Meta extends FieldMetaBuilder<MyExample6100DTO> {
       fields.setEnabled(MyExample6100DTO_.customField);
 
     }
+    // --8<-- [end:buildRowDependentMeta]
     // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription, Long parentId) {
