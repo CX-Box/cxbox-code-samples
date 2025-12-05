@@ -120,7 +120,7 @@ public class InputOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List");
         List<String> listRows = list.getNoFocusValues("customField");
         var customField = list.findRowSegmentByValue("customField", listRows.get(0)).input();
-        assertThat(customField.drillDown("/screen/InputDrilldown/view/InputDrilldownform/InputDrilldown/")).isTrue();
+        assertThat(customField.drillDown("/screen/InputDrilldown/view/InputDrilldownform/InputDrilldown")).isTrue();
     }
 
     @Test
