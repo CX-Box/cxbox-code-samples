@@ -25,4 +25,13 @@ jobs:
     steps:
     - name: Check disk space
       run: df -h
+    - name: Check runner directories size
+      run: du -h --max-depth=1 /home/runner/actions-runner | sort -h
+    - name: Check diag blocks
+      run: du -h --max-depth=1 /home/runner/actions-runner/cached/_diag/blocks | sort -h
+    - name: Find largest cached diag files
+      run: |
+        find /home/runner/actions-runner/cached/_diag/blocks -type f -printf "%s %p\n" \
+          | sort -nr | head -n 20
+
 
