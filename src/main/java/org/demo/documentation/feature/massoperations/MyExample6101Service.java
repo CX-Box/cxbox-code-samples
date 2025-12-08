@@ -104,7 +104,33 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                         })
                 )
                 // --8<-- [end:massEditWithoutTitle]
+                // --8<-- [start:massDelete]
+                .action(act -> act
+                        .action("massDelete", "Mass Delete")
+                        .scope(ActionScope.MASS)
+                        .massInvoker((bc, data, ids) -> {
+                            var massResult =  ids.stream()
+                                    .map(id -> {
+                                        try {
+                                            MyEntity6101 myEntity6101BD = repository.findById(Long.parseLong(id)).orElseThrow();
+                                            if (myEntity6101BD.getCustomFieldDictionary() != null
 
+                                                    && Objects.equals(myEntity6101BD.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+                                                return MassDTO.fail(id, "cannot delete Error");
+                                            }
+                                            MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
+                                            repository.delete(myEntity6101);
+                                            return MassDTO.success(id);
+                                        } catch (Exception e) {
+                                            return MassDTO.fail(id, "cannot delete");
+                                        }
+                                    })
+                                    .collect(Collectors.toSet());
+                            return new MassActionResultDTO<MyExample6101DTO>(massResult)
+                                    .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
+                        })
+                )
+                // --8<-- [end:massDelete]
                 .build();
     }
 
