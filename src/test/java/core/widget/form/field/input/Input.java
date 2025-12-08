@@ -129,7 +129,7 @@ public class Input extends BaseField<String> {
      *
      * @return Boolean true/false
      */
-    public Boolean drillDown(String oldUrl) {
+    public Boolean drillDown(String url) {
         return Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
             logTime(step);
 
@@ -141,8 +141,8 @@ public class Input extends BaseField<String> {
             Selenide.sleep(300);
             String newUrl = WebDriverRunner.url();
             waitingForTests.getContextMenu();
-            assert oldUrl != null;
-            return oldUrl.contains(newUrl) && $x("//body").exists();
+            assert url != null;
+            return newUrl.contains(url) && $x("//body").exists();
         });
     }
 }
