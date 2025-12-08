@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample3101Controller implements EnumBcIdentifier {
 
-
+    myExampleBc31012(MyExample3101Service.class),
     myExampleBc3101(MyExample3101Service.class);
 
 
