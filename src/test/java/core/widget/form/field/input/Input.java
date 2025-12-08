@@ -1,6 +1,7 @@
 package core.widget.form.field.input;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import core.widget.form.FormWidget;
 import core.widget.form.field.BaseField;
@@ -128,19 +129,20 @@ public class Input extends BaseField<String> {
      *
      * @return Boolean true/false
      */
-    public Boolean drillDown() {
+    public Boolean drillDown(String url) {
         return Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
             logTime(step);
 
             if (fieldType.equals("text")) {
                 super.drillDown();
             }
-            String oldUrl = WebDriverRunner.url();
+
             getFieldByName().$("i[class=\"anticon anticon-link\"]").click();
+            Selenide.sleep(300);
             String newUrl = WebDriverRunner.url();
             waitingForTests.getContextMenu();
-            assert oldUrl != null;
-            return oldUrl.equals(newUrl) && $x("//body").exists();
+            assert url != null;
+            return newUrl.contains(url) && $x("//body").exists();
         });
     }
 }
