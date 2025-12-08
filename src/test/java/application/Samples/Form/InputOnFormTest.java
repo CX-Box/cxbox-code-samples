@@ -100,7 +100,7 @@ public class InputOnFormTest extends BaseTestForSamples {
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form");
         var customField = form.input("customField2");
-        assertThat(customField.drillDown()).isTrue();
+        assertThat(customField.drillDown("/screen/InputDrilldown/view/InputDrilldowninfo/InputDrilldown")).isTrue();
     }
 
     @Test
