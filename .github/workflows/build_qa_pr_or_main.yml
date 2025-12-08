@@ -55,8 +55,9 @@ jobs:
       - name: Clean docker builder cache
         run: docker builder prune -af
 
-      - name: Run docker compose
+      - name: Start isolated docker environment
         run: |
+          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}"
           sudo chmod -R 777 ./docker
           sudo docker images
           docker compose -f docker-compose-test.yml up -d
