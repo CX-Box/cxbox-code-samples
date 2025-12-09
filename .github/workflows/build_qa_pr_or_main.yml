@@ -45,3 +45,15 @@ jobs:
         run: |
           find /home/runner/actions-runner/cached/_diag/blocks -type f -printf "%s %p\n" \
           | sort -nr | head -n 20
+      - name: Check diag permissions
+        run: |
+          ls -ld /home/runner/actions-runner/cached/_diag
+          ls -l /home/runner/actions-runner/cached/_diag | head
+
+      - name: Test write into _diag
+        run: |
+          echo "Testing write..." > /home/runner/actions-runner/cached/_diag/test.log
+          echo "Write OK"
+      - name: Check kernel errors
+        run: |
+          dmesg | tail -n 30
