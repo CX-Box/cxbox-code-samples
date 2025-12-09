@@ -27,7 +27,7 @@ public class MyExample70Meta extends FieldMetaBuilder<MyExample70DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample70DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
-			//fields.setForceActive(MyExample70DTO_.customField);
+			fields.setForceActive(MyExample70DTO_.customField);
 		}
 		fields.setEnumValues(MyExample70DTO_.customField, CustomFieldEnum.values());
 	}

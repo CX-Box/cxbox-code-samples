@@ -11,7 +11,6 @@ import org.cxbox.core.dto.rowmeta.*;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
-import org.demo.entity.core.User;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
