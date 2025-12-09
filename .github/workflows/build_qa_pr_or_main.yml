@@ -84,14 +84,23 @@ jobs:
       - name: Check git remote access
         run: |
           git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
+
+      - name: Check Docker images size
+        run: |
+          echo ">>> Docker images:"
+          docker images --digests
+          echo ">>> Total Docker images size:"
+          docker system df -v
+      - name: Check Docker layers (overlay2) size
+        run: |
+          echo ">>> Docker overlay2 size:"
+          sudo du -sh /var/lib/docker/overlay2 | true
       - name: Install GitHub CLI
         run: |
-            sudo apt-get update
-            sudo apt-get install -y gh jq
+          sudo apt-get update
+          sudo apt-get install -y gh jq
 
       - name: Authenticate GH CLI
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "$GH_TOKEN" | gh auth login --with-token
 
@@ -104,13 +113,3 @@ jobs:
         run: |
           echo ">>> Caches with size:"
           gh cache list -R ${{ github.repository }} --json id,key,size | jq .
-      - name: Check Docker images size
-        run: |
-          echo ">>> Docker images:"
-          docker images --digests
-          echo ">>> Total Docker images size:"
-          docker system df -v
-      - name: Check Docker layers (overlay2) size
-        run: |
-          echo ">>> Docker overlay2 size:"
-          sudo du -sh /var/lib/docker/overlay2 | true
