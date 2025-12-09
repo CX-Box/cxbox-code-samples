@@ -13,8 +13,6 @@ import org.cxbox.core.dto.rowmeta.MassActionResultDTO;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.massoperations.MyEntity6101;
-import org.demo.documentation.feature.massoperations.MyExample6101DTO;
 import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
