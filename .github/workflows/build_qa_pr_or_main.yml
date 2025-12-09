@@ -100,6 +100,18 @@ jobs:
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
           keep_reports: 20
 
+      - name: Cleanup old Allure reports
+        run: |
+          cd gh-pages/pull_request || exit
+          reports=($(ls -dt */))
+          keep=20
+          count=${#reports[@]}
+          if [ "$count" -gt "$keep" ]; then
+            for ((i=keep; i<count; i++)); do
+              rm -rf "${reports[$i]}"
+            done
+          fi
+
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -109,7 +121,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: pull_request
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
