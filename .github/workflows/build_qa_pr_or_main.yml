@@ -109,7 +109,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: pull_request
-          keep_files: false
+          keep_files: true
 
       - name: Generate and add report URL to Job Summary
         if: always()
