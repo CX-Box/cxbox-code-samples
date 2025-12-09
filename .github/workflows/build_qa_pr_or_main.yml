@@ -23,19 +23,213 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cleanup old reports and gh-pages cache
+
+      # -------------------------
+      # BASE
+      # -------------------------
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK '17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
+      # -------------------------
+      # BUILD BACK + FRONT
+      # -------------------------
+      - name: Build backend + UI
+        run: mvn clean install -U -PUI
+
+      # -------------------------
+      # START DOCKER
+      # -------------------------
+      - name: Clean docker builder cache
+        run: docker builder prune -af
+
+      - name: Run docker compose
+        run: |
+          sudo chmod -R 777 ./docker
+          sudo docker images
+          docker compose -f docker-compose-test.yml up -d
+
+      # -------------------------
+      # TESTS
+      # -------------------------
+      - name: Run Tests
+        id: run_tests
+        run: |
+          mvn --batch-mode \
+            -DrunTests=true \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.forkCount=3 \
+            -Dsurefire.threadCount=1 \
+            -Dsurefire.reuseForks=true \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest \
+            test
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.13
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages/pull_request
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
+          keep_reports: 20
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: pull_request
+          keep_files: false
+
+      - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-            echo "=== CLEANING ALLURE AND GH-PAGES FOLDERS ==="
-            rm -rf allure-history || true
-            rm -rf allure-report || true
-            rm -rf gh-pages || true
-            rm -rf .gh-pages || true
-            rm -rf target/allure-results || true
-            rm -rf target/site || true
-            echo "=== DONE ==="
-      - name: Cleanup old gh-pages repo content before upload
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.run_number}}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY      
+
+      - name: Post link to PR
+        if: always()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+
+      - name: cleanup docker resources
         if: always()
         run: |
-              echo "Cleaning existing gh-pages data before uploading new report"
-              rm -rf gh-pages/pull_request/* || true
+             sudo docker compose -f docker-compose-test.yml down --remove-orphans
+              sudo docker system prune -a --volumes -f
+
+  build-qa-main-and-check-autotests:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK '17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
+
+      - name: Load target
+        run: mvn clean install -U -PUI
+
+      - name: build docker image and start
+        run: |
+          sudo chmod -R 777 ./docker
+          sudo docker images
+          sudo docker compose -f docker-compose-test.yml up -d
+
+      - name: Run tests
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.13
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages/main
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main
+          keep_reports: 20
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: main
+          keep_files: true
+
+      - name: Generate and add report URL to Job Summary
+        if: always()
+        run: |
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/main/${{ github.run_number}}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+
+      # -------------------------
+      # CLEANUP
+      # -------------------------
+      - name: Stop and clean docker
+        if: always()
+        run: |
+          docker compose -f docker-compose-test.yml down --remove-orphans
+          docker system prune -af --volumes
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          rm -rf $GITHUB_WORKSPACE/*
+          rm -rf ~/.m2/repository/*
+          rm -rf ~/.cache/yarn/*
+
+      - name: Check disk after cleanup
+        if: always()
+        run: df -h
