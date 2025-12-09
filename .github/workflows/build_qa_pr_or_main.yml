@@ -24,23 +24,6 @@ jobs:
 
     steps:
 
-      - name: Cleanup old reports and gh-pages cache
-        if: always()
-        run: |
-          echo "=== CLEANING ALLURE AND GH-PAGES FOLDERS ==="
-          rm -rf allure-history || true
-          rm -rf allure-report || true
-          rm -rf gh-pages || true
-          rm -rf .gh-pages || true
-          rm -rf target/allure-results || true
-          rm -rf target/site || true
-          echo "=== DONE ==="
-      - name: Cleanup old gh-pages repo content before upload
-        if: always()
-        run: |
-            echo "Cleaning existing gh-pages data before uploading new report"
-            rm -rf gh-pages/pull_request/* || true
-
       # -------------------------
       # BASE
       # -------------------------
