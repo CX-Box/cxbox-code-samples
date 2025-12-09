@@ -90,3 +90,5 @@ jobs:
           git clone --depth=1 --single-branch --branch gh-pages \
             https://x-access-token:${GITHUB_TOKEN}@github.com/CX-Box/cxbox-code-samples-allure.git \
             /tmp/test-gh-pages
+      - name: List all caches
+        run: gh actions-cache list -R ${{ github.repository }}
