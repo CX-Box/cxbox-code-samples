@@ -31,7 +31,10 @@ jobs:
                 
                 echo ">>> Top 10 biggest folders BEFORE cleanup:"
                 du -ah /home/runner 2>/dev/null | sort -rh | head -n 10 || true
-
+      - name: Check inode usage
+        run: |
+          echo "INODE USAGE:"
+          df -i
       - name: Check disk space
         run: df -h
       - name: Check runner directories size
