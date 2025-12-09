@@ -99,6 +99,14 @@ jobs:
           github_repo_owner: CX-Box
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
           keep_reports: 20
+      - name: Check disk usage
+        run: |
+          echo "=== Disk usage in runner ==="
+          df -h
+          echo "=== Size of Allure history directory ==="
+          du -sh allure-history
+          echo "=== Detailed size by folder ==="
+          du -sh allure-history/*
 
       - name: Cleanup old Allure reports
         run: |
