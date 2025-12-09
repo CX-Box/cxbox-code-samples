@@ -57,3 +57,9 @@ jobs:
       - name: Check kernel errors
         run: |
           dmesg | tail -n 30
+      - name: Check runner quota
+        run: |
+          echo "Space available for runner user:"
+          df -h /home/runner/actions-runner
+          echo "Disk usage inside actions-runner:"
+          du -sh /home/runner/actions-runner/*
