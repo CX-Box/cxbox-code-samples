@@ -16,100 +16,225 @@ concurrency:
 env:
   APP_URL: http://localhost:81/ui/#/
   CXBOX_LOGGER:  true
-  GH_TOKEN: ${{ github.token }}
 
 jobs:
   build-qa-pr-and-check-autotests:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check and cleanup disk on self-hosted runner
+
+      # -------------------------
+      # BASE
+      # -------------------------
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK '17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: "maven"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
+      # -------------------------
+      # BUILD BACK + FRONT
+      # -------------------------
+      - name: Build backend + UI
+        run: mvn clean install -U -PUI
+
+      # -------------------------
+      # START DOCKER
+      # -------------------------
+      - name: Clean docker builder cache
+        run: docker builder prune -af
+
+      - name: Run docker compose
+        run: |
+          sudo chmod -R 777 ./docker
+          sudo docker images
+          docker compose -f docker-compose-test.yml up -d
+
+      # -------------------------
+      # TESTS
+      # -------------------------
+      - name: Run Tests
+        id: run_tests
+        run: |
+          mvn --batch-mode \
+            -DrunTests=true \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.forkCount=3 \
+            -Dsurefire.threadCount=1 \
+            -Dsurefire.reuseForks=true \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest \
+            test
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.13
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages/pull_request
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
+          keep_reports: 20
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: pull_request
+          keep_files: false
+
+      - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-                echo ">>> Disk usage BEFORE cleanup:"
-                df -h
-                
-                echo ">>> Top 10 biggest folders BEFORE cleanup:"
-                du -ah /home/runner 2>/dev/null | sort -rh | head -n 10 || true
-      - name: Check inode usage
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.run_number}}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY      
+
+      - name: Post link to PR
+        if: always()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
+
+      - name: Stop and clean docker
+        if: always()
         run: |
-          echo "INODE USAGE:"
-          df -i
-      - name: Check disk space
+             sudo docker compose -f docker-compose-test.yml down --remove-orphans
+              sudo docker system prune -a --volumes -f
+
+      - name: Check disk after cleanup
+        if: always()
         run: df -h
-      - name: Check runner directories size
-        run: du -h --max-depth=1 /home/runner/actions-runner | sort -h
-      - name: Check diag blocks
-        run: du -h --max-depth=1 /home/runner/actions-runner/cached/_diag/blocks | sort -h
-      - name: Find largest cached diag files
-        run: |
-          find /home/runner/actions-runner/cached/_diag/blocks -type f -printf "%s %p\n" \
-          | sort -nr | head -n 20
-      - name: Check diag permissions
-        run: |
-          ls -ld /home/runner/actions-runner/cached/_diag
-          ls -l /home/runner/actions-runner/cached/_diag | head
 
-      - name: Test write into _diag
-        run: |
-          echo "Testing write..." > /home/runner/actions-runner/cached/_diag/test.log
-          echo "Write OK"
-      - name: Check kernel errors
-        run: |
-          dmesg | tail -n 30
-      - name: Check runner quota
-        run: |
-          echo "Space available for runner user:"
-          df -h /home/runner/actions-runner
-          echo "Disk usage inside actions-runner:"
-          du -sh /home/runner/actions-runner/*
-      - name: Check permissions before gh-pages clone
-        run: |
-          echo "Checking cached directory..."
-          ls -la /home/runner/actions-runner/cached || true
-          
-          echo "Checking gh-pages temp dirs..."
-          find /home/runner/actions-runner -maxdepth 4 -name "*gh-pages*" -print || true
-      - name: Scan cached dir for leftover git dirs
-        run: |
-          echo "Looking for leftover .git directories in cache..."
-          find /home/runner/actions-runner/cached -type d -name ".git" | head
-      - name: Check for leftover .git dirs
-        run: |
-          find /home/runner/actions-runner -type d -name ".git" | head
-      - name: Check auth token length
-        run: |
-          echo "TOKEN LENGTH: ${#GITHUB_TOKEN}"
+  build-qa-main-and-check-autotests:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v3
 
-      - name: Check git remote access
-        run: |
-          git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
+      - name: Set up JDK '17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: "maven"
 
-      - name: Check Docker images size
-        run: |
-          echo ">>> Docker images:"
-          docker images --digests
-          echo ">>> Total Docker images size:"
-          docker system df -v
-      - name: Check Docker layers (overlay2) size
-        run: |
-          echo ">>> Docker overlay2 size:"
-          sudo du -sh /var/lib/docker/overlay2 | true
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh jq
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: "yarn"
+          cache-dependency-path: ui/yarn.lock
 
-      - name: Authenticate GH CLI
-        run: |
-          echo "$GH_TOKEN" | gh auth login --with-token
+      - name: Load target
+        run: mvn clean install -U -PUI
 
-      - name: List GitHub Actions caches
+      - name: build docker image and start
         run: |
-          echo ">>> Listing caches..."
-          gh cache list -R ${{ github.repository }}
+          sudo chmod -R 777 ./docker
+          sudo docker images
+          sudo docker compose -f docker-compose-test.yml up -d
 
-      - name: List GitHub Actions caches with size
+      - name: Run tests
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          repository: CX-Box/cxbox-code-samples-allure
+          ref: gh-pages
+          path: gh-pages
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+
+      - name: Test here and host elsewhere
+        uses: simple-elf/allure-report-action@v1.13
+        if: always()
+        id: allure-report
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages/main
+          allure_report: allure-report
+          allure_history: allure-history
+          github_repo: CX-Box/cxbox-code-samples-allure
+          github_repo_owner: CX-Box
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main
+          keep_reports: 20
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          external_repository: CX-Box/cxbox-code-samples-allure
+          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          destination_dir: main
+          keep_files: true
+
+      - name: Generate and add report URL to Job Summary
+        if: always()
         run: |
-          echo ">>> Caches with size:"
-          gh cache list -R ${{ github.repository }} --json id,key,size | jq .
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/main/${{ github.run_number}}"
+          echo "Report URL: $REPORT_URL"
+          echo "::notice::Report URL: $REPORT_URL"
+          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
+          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+
+      # -------------------------
+      # CLEANUP
+      # -------------------------
+      - name: Stop and clean docker
+        if: always()
+        run: |
+          sudo docker compose -f docker-compose-test.yml down --remove-orphans
+           sudo docker system prune -a --volumes -f
+
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          rm -rf $GITHUB_WORKSPACE/*
+          rm -rf ~/.m2/repository/*
+          rm -rf ~/.cache/yarn/*
+
+      - name: Check disk after cleanup
+        if: always()
+        run: df -h
