@@ -188,9 +188,10 @@ jobs:
 
       - name: build docker image and start
         run: |
+          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}"
           sudo chmod -R 777 ./docker
           sudo docker images
-          sudo docker compose -f docker-compose-test.yml up -d
+          sudo docker compose -f docker-compose-test.yml up -d --wait
 
       - name: Run tests
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest test
