@@ -63,3 +63,26 @@ jobs:
           df -h /home/runner/actions-runner
           echo "Disk usage inside actions-runner:"
           du -sh /home/runner/actions-runner/*
+      - name: Check permissions before gh-pages clone
+        run: |
+          echo "Checking cached directory..."
+          ls -la /home/runner/actions-runner/cached || true
+          
+          echo "Checking gh-pages temp dirs..."
+          find /home/runner/actions-runner -maxdepth 4 -name "*gh-pages*" -print || true
+      - name: Check for leftover .git dirs
+        run: |
+          find /home/runner/actions-runner -type d -name ".git" | head
+      - name: Check auth token length
+        run: |
+          echo "TOKEN LENGTH: ${#GITHUB_TOKEN}"
+
+      - name: Check git remote access
+        run: |
+          git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
+      - name: Run gh-pages clone manually
+        run: |
+          set -x
+          git clone --depth=1 --single-branch --branch gh-pages \
+            https://x-access-token:${GITHUB_TOKEN}@github.com/CX-Box/cxbox-code-samples-allure.git \
+            /tmp/test-gh-pages
