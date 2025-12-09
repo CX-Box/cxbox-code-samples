@@ -180,6 +180,9 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
+      - name: Clean gh-pages folder
+        run: rm -rf gh-pages/*
+
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.13
         if: always()
@@ -203,7 +206,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: main
-          keep_files: true
+          keep_files: false
 
       - name: Generate and add report URL to Job Summary
         if: always()
