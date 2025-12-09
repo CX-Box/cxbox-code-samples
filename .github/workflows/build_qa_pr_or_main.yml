@@ -70,6 +70,10 @@ jobs:
           
           echo "Checking gh-pages temp dirs..."
           find /home/runner/actions-runner -maxdepth 4 -name "*gh-pages*" -print || true
+      - name: Scan cached dir for leftover git dirs
+        run: |
+          echo "Looking for leftover .git directories in cache..."
+          find /home/runner/actions-runner/cached -type d -name ".git" | head
       - name: Check for leftover .git dirs
         run: |
           find /home/runner/actions-runner -type d -name ".git" | head
