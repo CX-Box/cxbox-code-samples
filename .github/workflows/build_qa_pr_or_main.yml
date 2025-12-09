@@ -110,7 +110,15 @@ jobs:
           publish_dir: allure-history
           destination_dir: pull_request
           keep_files: true
-
+      - name: DEBUG — before gh-pages repo folder
+        run: |
+          echo "Checking .gh-pages folder BEFORE action:"
+          if [ -d .gh-pages ]; then
+            du -sh .gh-pages || true
+            ls -lah .gh-pages || true
+          else
+            echo ".gh-pages does not exist yet"
+          fi
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
