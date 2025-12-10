@@ -2,7 +2,7 @@
   "name": "myexample6101",
   "icon": "calendar",
   "order": 6101,
-  "title": "Mass operations support",
+  "title": "Bulk upload",
   "navigation": {
     "type": "standard",
     "menu": [
@@ -11,6 +11,10 @@
         "child": [
           {
             "viewName": "myexample6101list",
+            "hidden": false
+          },
+          {
+            "viewName": "myexample6101gh",
             "hidden": false
           },
           {
@@ -27,7 +31,22 @@
         "title": "without Confirm operation",
         "child": [
           {
-            "viewName": "myexample6101checkboxtruelist"
+            "title": "Basic",
+            "child": [
+              {
+                "viewName": "myexample6101checkboxtruelist",
+                "hidden": false
+              }
+            ]
+          },
+          {
+            "title": "Delete",
+            "child": [
+              {
+                "viewName": "myexample6101delete",
+                "hidden": false
+              }
+            ]
           }
         ]
       }

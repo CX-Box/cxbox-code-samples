@@ -1,13 +1,13 @@
 {
-  "name": "myexample6101List",
-  "title": "List",
+  "name": "myexample6101Delete",
+  "title": "Delete",
   "type": "List",
   "bc": "myexample6101",
   "fields": [
     {
       "title": "Id",
       "key": "id",
-      "type": "input"
+      "type": "hidden"
     },
     {
       "title": "Custom Field Checkbox",
@@ -26,21 +26,14 @@
     }
   ],
   "options": {
-    "additional": {
-      "fields": [
-        "customFieldCheckbox",
-        "customFieldDictionary"
-      ],
-      "enabled": true
+    "actionGroups": {
+      "include": [
+        "massDelete",
+        "save"
+      ]
     },
     "massOp": {
       "pickMapFieldKey": "id"
-    },
-    "actionGroups": {
-      "include": [
-        "massEdit",
-        "save"
-      ]
     }
   }
 }

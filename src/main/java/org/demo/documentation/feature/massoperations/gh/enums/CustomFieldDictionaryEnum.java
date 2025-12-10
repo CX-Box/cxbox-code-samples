@@ -1,4 +1,4 @@
-package org.demo.documentation.feature.massoperations.enums;
+package org.demo.documentation.feature.massoperations.gh.enums;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum CustomFieldDictionaryEnum {
     HIGH("High"),
     MIDDLE("Middle"),
-    ERROR("Error"),
     LOW("Low");
 
     @JsonValue
