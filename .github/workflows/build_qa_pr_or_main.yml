@@ -52,9 +52,6 @@ jobs:
       # -------------------------
       # START DOCKER
       # -------------------------
-      - name: Clean docker builder cache
-        run: docker builder prune -af
-
 
       - name: Start isolated docker environment
         run: |
@@ -131,11 +128,21 @@ jobs:
           body: |
             ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
-      - name: cleanup docker resources
+      - name: Remove only created docker containers
         if: always()
         run: |
-             sudo docker compose -f docker-compose-test.yml down --remove-orphans
-              sudo docker system prune -a --volumes -f
+            export COMPOSE_PROJECT_NAME="${{ env.COMPOSE_PROJECT_NAME }}"
+  
+            echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
+            docker compose -f docker-compose-test.yml down --remove-orphans
+  
+            echo "Removing containers by label..."
+            docker container prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+  
+            echo "Removing networks by label..."
+            docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+  
+            echo "Done!"
 
   build-qa-main-and-check-autotests:
     if: github.event_name == 'push'
@@ -220,11 +227,21 @@ jobs:
       # -------------------------
       # CLEANUP
       # -------------------------
-      - name: Stop and clean docker
+      - name: Remove only created docker containers
         if: always()
         run: |
-         sudo docker compose -f docker-compose-test.yml down --remove-orphans
-         sudo docker system prune -af --volumes
+          export COMPOSE_PROJECT_NAME="${{ env.COMPOSE_PROJECT_NAME }}"
+          
+          echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
+          docker compose -f docker-compose-test.yml down --remove-orphans
+          
+          echo "Removing containers by label..."
+          docker container prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+          
+          echo "Removing networks by label..."
+          docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+          
+          echo "Done!"
 
       - name: Cleanup workspace
         if: always()
