@@ -63,6 +63,7 @@ jobs:
       # TESTS
       # -------------------------
       - name: Run Tests
+        timeout-minutes: 60
         id: run_tests
         run: |
           mvn --batch-mode \
@@ -101,6 +102,7 @@ jobs:
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
+        timeout-minutes: 5
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
