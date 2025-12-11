@@ -12,7 +12,8 @@ public enum CxboxMyExample5028Controller implements EnumBcIdentifier {
 
     // @formatter:on
 
-    myexample5028(MyExample5028Service.class), myEntity5028PickPick0(myexample5028, MyEntity5028PickPick0Service.class), myEntity5028PickPick(myexample5028, MyEntity5028PickPickService.class), myEntity5028MultiPick0(myexample5028, MyEntity5028MultiPick0Service.class), myEntity5028MultiPick(myexample5028, MyEntity5028MultiPickService.class);
+    myexample5028(MyExample5028Service.class), myEntity5028PickPick0(myexample5028, MyEntity5028PickPick0Service.class),
+    myEntity5028PickPick(myexample5028, MyEntity5028PickPickService.class), myEntity5028MultiPick0(myexample5028, MyEntity5028MultiPick0Service.class), myEntity5028MultiPick(myexample5028, MyEntity5028MultiPickService.class);
 
     // @formatter:on
 

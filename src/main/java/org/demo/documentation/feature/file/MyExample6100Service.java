@@ -48,6 +48,7 @@ public class MyExample6100Service extends VersionAwareResponseService<MyExample6
     public Actions<MyExample6100DTO> getActions() {
         return Actions.<MyExample6100DTO>builder()
                 .save(sv -> sv.text("Save"))
+                .create(crt -> crt.text("Create"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
                 .associate(ast -> ast
