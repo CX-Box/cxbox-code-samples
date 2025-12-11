@@ -14,7 +14,8 @@ export enum EFeatureSettingKey {
     sideBarSearchEnabled = 'sideBarSearchEnabled',
     defaultDate = 'defaultDate',
     appExportExcelLimit = 'appExportExcelLimit',
-    timeoutShowMessage = 'timeoutShowMessage'
+    timeoutShowMessage = 'timeoutShowMessage',
+    webSocketNotificationEnabled = 'webSocketNotificationEnabled'
 }
 
 export type FeatureSetting = {
