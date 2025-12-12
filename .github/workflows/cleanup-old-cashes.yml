@@ -10,68 +10,14 @@ on:
         type: choice
         options:
           - main
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_REF_NAME: ${{ github.ref_name }}
 
 jobs:
   cleanup-old-caches:
     runs-on: ubuntu-latest
     steps:
-      - name: Check inode usage
-        run: |
-          echo "INODE USAGE:"
-          df -i
-      - name: Check disk space
-        run: df -h
-      - name: Top 10 biggest folders
-        run:  du -ah /home/runner 2>/dev/null | sort -rh | head -n 10 || true
-      - name: Check runner directories size
-        run: du -h --max-depth=1 /home/runner/actions-runner | sort -h
-      - name: Check diag blocks
-        run: du -h --max-depth=1 /home/runner/actions-runner/cached/_diag/blocks | sort -h
-      - name: Find largest cached diag files
-        run: |
-          find /home/runner/actions-runner/cached/_diag/blocks -type f -printf "%s %p\n" \
-          | sort -nr | head -n 20
-      - name: Check diag permissions
-        run: |
-          ls -ld /home/runner/actions-runner/cached/_diag
-          ls -l /home/runner/actions-runner/cached/_diag | head
-
-      - name: Test write into _diag
-        run: |
-          echo "Testing write..." > /home/runner/actions-runner/cached/_diag/test.log
-          echo "Write OK"
-      - name: Check kernel errors
-        run: |
-          dmesg | tail -n 30
-      - name: Check runner quota
-        run: |
-          echo "Space available for runner user:"
-          df -h /home/runner/actions-runner
-          echo "Disk usage inside actions-runner:"
-          du -sh /home/runner/actions-runner/*
-      - name: Check permissions before gh-pages clone
-        run: |
-          echo "Checking cached directory..."
-          ls -la /home/runner/actions-runner/cached || true
-          
-          echo "Checking gh-pages temp dirs..."
-          find /home/runner/actions-runner -maxdepth 4 -name "*gh-pages*" -print || true
-      - name: Check for leftover .git dirs
-        run: |
-          find /home/runner/actions-runner -type d -name ".git" | head
-      - name: Check auth token length
-        run: |
-          echo "TOKEN LENGTH: ${#GITHUB_TOKEN}"
-
-      - name: Check git remote access
-        run: |
-          git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set branch variable
-        run: echo "BRANCH=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
-
       - name: Cleanup old caches
         run: |
           echo "Fetching list of cache keys for branch $BRANCH"

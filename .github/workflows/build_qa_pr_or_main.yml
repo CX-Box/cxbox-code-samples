@@ -142,6 +142,35 @@ jobs:
             docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
   
             echo "Done!"
+      - name: Cleanup old commits in gh-pages
+        if: always()
+        run: |
+            GH_REPO="CX-Box/cxbox-code-samples-allure"
+            GH_BRANCH="gh-pages"
+            KEEP_COMMITS=2
+            
+            echo "Fetching $GH_BRANCH branch..."
+            git fetch origin $GH_BRANCH:$GH_BRANCH
+            git checkout $GH_BRANCH
+            
+            # Считаем количество коммитов
+            COMMIT_COUNT=$(git rev-list --count HEAD)
+            echo "Current commit count in $GH_BRANCH: $COMMIT_COUNT"
+            
+            if [ "$COMMIT_COUNT" -gt "$KEEP_COMMITS" ]; then
+              REMOVE_COUNT=$((COMMIT_COUNT - KEEP_COMMITS))
+              echo "Removing $REMOVE_COUNT oldest commits..."
+            
+              # Создаём новую ветку с последними $KEEP_COMMITS коммитами
+              git checkout --orphan temp_branch $(git rev-list --max-count=$KEEP_COMMITS HEAD)
+              git commit -m "Keep last $KEEP_COMMITS commits"
+            
+              # Переписываем ветку gh-pages
+              git branch -M $GH_BRANCH
+              git push -f origin $GH_BRANCH
+            else
+              echo "No cleanup needed."
+            fi
 
   build-qa-main-and-check-autotests:
     if: github.event_name == 'push'
@@ -242,13 +271,6 @@ jobs:
           docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
           
           echo "Done!"
-
-      - name: Cleanup workspace
-        if: always()
-        run: |
-          rm -rf $GITHUB_WORKSPACE/*
-          rm -rf ~/.m2/repository/*
-          rm -rf ~/.cache/yarn/*
 
       - name: Check disk after cleanup
         if: always()
