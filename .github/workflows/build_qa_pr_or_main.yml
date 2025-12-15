@@ -23,7 +23,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       # -------------------------
       # BASE
       # -------------------------
@@ -213,7 +212,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: main
-          keep_files: true
+          keep_files: false
 
       - name: Generate and add report URL to Job Summary
         if: always()
@@ -243,13 +242,6 @@ jobs:
           docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
           
           echo "Done!"
-
-      - name: Cleanup workspace
-        if: always()
-        run: |
-          rm -rf $GITHUB_WORKSPACE/*
-          rm -rf ~/.m2/repository/*
-          rm -rf ~/.cache/yarn/*
 
       - name: Check disk after cleanup
         if: always()

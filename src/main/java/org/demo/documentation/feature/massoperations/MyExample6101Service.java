@@ -73,7 +73,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
                                     .setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
                         })
                 )
-
+                // --8<-- [end:massCheckboxTrue]
                 // --8<-- [start:massEditCustomTitle]
                 .action(act -> act
                         .action("massEditCustomTitle", "Mass Edit With Custom Text")

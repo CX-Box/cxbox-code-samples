@@ -1,0 +1,42 @@
+name: Cron Cleanup gh-pages once per month
+
+on:
+  schedule:
+    - cron: "0 3 1 * *"   # 1 , 03:00 UTC
+  workflow_dispatch:       #
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cleanup old commits in gh-pages
+        run: |
+          GH_BRANCH="gh-pages"
+          KEEP_COMMITS=30   # <-- сколько последних коммитов оставить
+          
+          echo "Cloning only $GH_BRANCH branch..."
+          git clone --branch "$GH_BRANCH" --single-branch https://github.com/${{ github.repository }} ghpages-clean
+          cd ghpages-clean
+          
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "Commit count: $COMMIT_COUNT"
+          
+          if [ "$COMMIT_COUNT" -le "$KEEP_COMMITS" ]; then
+            echo "No cleanup needed."
+            exit 0
+          fi
+          
+          echo "Trimming branch to last $KEEP_COMMITS commits..."
+          
+          # Получаем SHA самого старого из последних $KEEP_COMMITS коммитов
+          BASE_SHA=$(git rev-list --max-count=$KEEP_COMMITS HEAD | tail -n 1)
+          
+          # Создаем orphan ветку на этом коммите
+          git checkout --orphan temp_branch "$BASE_SHA"
+          git commit -m "Keep last $KEEP_COMMITS commits"
+          
+          git branch -M "$GH_BRANCH"
+          git push -f origin "$GH_BRANCH"
+          
+          echo "Cleanup complete."
