@@ -13,7 +13,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity82 extends BaseEntity {
 
-	@Column
-	private Boolean customField;
+    @Column
+    private Boolean customField;
 
+    @Column
+    private Boolean customField4;
 }

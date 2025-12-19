@@ -1,0 +1,70 @@
+{
+  "name": "MyExample3094Form2",
+  "title": "(not applicable)Form Widget with suggestionPickList color",
+  "type": "Form",
+  "bc": "myexample3094",
+
+  "fields": [
+    {
+      "label": "ЮЛ резидент РФ",
+      "key": "residentType",
+      "type": "radio"
+    },
+    {
+      "label": "Наименование на русском языке",
+      "key": "rusShortName",
+      "type": "suggestionPickList",
+      "popupBcName": "inputFiltrationPick",
+      "pickMap": {
+      "rusFullName": "name",
+        "rusShortName": "shortName",
+        "inn2": "inn"
+      }
+    },
+    {
+      "label": "ИНН",
+      "key": "inn2",
+      "type": "suggestionPickList",
+      "popupBcName": "inputFiltrationPick0",
+      "pickMap": {
+        "inn2": "inn",
+        "rusShortName": "shortName"
+      }
+    },
+    {
+      "label": "rusFullName",
+      "key": "rusFullName",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "residentType",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "rusShortName",
+              "span": 12
+            },
+            {
+              "fieldKey": "inn2",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

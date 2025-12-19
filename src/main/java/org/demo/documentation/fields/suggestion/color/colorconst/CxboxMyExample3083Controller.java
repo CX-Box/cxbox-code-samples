@@ -5,6 +5,8 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.fields.suggestion.color.colorconst.forfield.InputFiltrationPick0Service;
+import org.demo.documentation.fields.suggestion.color.colorconst.forfield.InputFiltrationPickService;
 import org.demo.documentation.fields.suggestion.color.colorconst.forfield.MyExample3094Service;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ public enum CxboxMyExample3083Controller implements EnumBcIdentifier {
     
 
     myexample3083(MyExample3083SuggestionService.class),
-    myexample3094(MyExample3094Service.class);
+    myexample3094(MyExample3094Service.class), inputFiltrationPick0(myexample3094, InputFiltrationPick0Service.class), inputFiltrationPick(myexample3094, InputFiltrationPickService.class);
 
     
 

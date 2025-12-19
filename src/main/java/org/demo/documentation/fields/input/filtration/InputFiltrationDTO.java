@@ -17,10 +17,17 @@ public class InputFiltrationDTO extends DataResponseDTO {
 	@SearchParameter(name = "brand")
 	private String brand;
 
+	private String name;
+
+	private String shortName;
+	private String inn;
+
 	public InputFiltrationDTO(InputFiltration entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.brand = entity.getBrand();
+		this.shortName = entity.getShortName();
+		this.inn = entity.getInn();
 	}
 
 }

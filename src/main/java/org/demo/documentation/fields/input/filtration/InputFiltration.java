@@ -19,4 +19,9 @@ public class InputFiltration extends BaseEntity {
 
 	private String brand;
 
+	private String name;
+
+	private String shortName;
+	private String inn;
+
 }

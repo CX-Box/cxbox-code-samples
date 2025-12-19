@@ -20,13 +20,15 @@ public class InputFiltrationTestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new InputFiltration().setCustomField("Test data1"));
-		repository.save(new InputFiltration().setCustomField("Test data2"));
-		repository.save(new InputFiltration().setCustomField("Test data3"));
-		repository.save(new InputFiltration().setCustomField("Test data4"));
-		repository.save(new InputFiltration().setCustomField("Test data5"));
-		repository.save(new InputFiltration().setCustomField("Test data6"));
-		repository.save(new InputFiltration().setCustomField("Test data7"));
+
+
+		repository.save(new InputFiltration().setCustomField("Test data1").setName("1").setShortName("1sh").setInn("1111"));
+		repository.save(new InputFiltration().setCustomField("Test data2").setName("2").setShortName("2sh").setInn("2111"));
+		repository.save(new InputFiltration().setCustomField("Test data3").setName("3").setShortName("3sh").setInn("3111"));
+		repository.save(new InputFiltration().setCustomField("Test data4").setName("4").setShortName("4sh").setInn("4111"));
+		//repository.save(new InputFiltration().setCustomField("Test data5").setName("1").setShortName("1sh").setInn("1111"));
+	//	repository.save(new InputFiltration().setCustomField("Test data6").setName("1").setShortName("1sh").setInn("1111"));
+	//	repository.save(new InputFiltration().setCustomField("Test data7").setName("1").setShortName("1sh").setInn("1111"));
 	}
 
 }
