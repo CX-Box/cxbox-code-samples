@@ -1,5 +1,6 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
+import static org.cxbox.core.util.ResponseBuilder.build;
 import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
 
 import io.minio.MinioClient;
@@ -18,6 +19,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO;
@@ -80,10 +82,17 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
                 .save(sv -> sv.text("Save"))
                 .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
                 .delete(dlt -> dlt.text("Delete"))
-                .associate(ast -> ast
-                        .withCustomParameter(Map.of("subtype", "multiFileUpload"))
-                        .text("Add Files")
-                ).build();
+
+				.associate(ast -> ast
+						.withCustomParameter(Map.of("subtype", "multiFileUpload"))
+						.available(bc -> true)
+						.text("Загрузить несколько")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.title("Approve?") /*or withoutTitle()*/.text("Changes will ba saved") //or withoutText()
+								.yesText("Yes")
+								.noText("Cancel")))
+				)
+				.build();
     }
 
 	@Override
