@@ -190,6 +190,10 @@ public class LoginServiceImpl implements LoginService {
 						feature(
 								UIProperties.APP_EXPORT_EXCEL_LIMIT,
 								uiProperties.getAppExportExcelLimit()
+						),
+						feature(
+								UIProperties.SEASONAL_EFFECTS_ENABLED,
+								uiProperties.isSeasonalEffectsEnabled()
 						)
 				)
 				.filter(Objects::nonNull)
