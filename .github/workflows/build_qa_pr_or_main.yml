@@ -108,7 +108,7 @@ jobs:
           publish_dir: allure-history
           destination_dir: pull_request
           keep_files: false
-
+          force_orphan: true
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
@@ -213,7 +213,7 @@ jobs:
           publish_dir: allure-history
           destination_dir: main
           keep_files: false
-
+          force_orphan: true
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
