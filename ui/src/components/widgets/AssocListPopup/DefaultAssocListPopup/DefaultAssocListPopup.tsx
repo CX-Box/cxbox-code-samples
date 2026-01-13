@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { shallowEqual } from 'react-redux'
 import cn from 'classnames'
 import Popup from '@components/Popup/Popup'
-import { actions, AssociatedItem, BcFilter, interfaces, PendingValidationFailsFormat, WidgetTableMeta } from '@cxbox-ui/core'
-import SelectionTable from './SelectionTable'
 import Title from '@components/widgets/AssocListPopup/DefaultAssocListPopup/Title'
-import { useAppDispatch, useAppSelector } from '@store'
 import Pagination from '@components/ui/Pagination/Pagination'
 import Button from '@components/ui/Button/Button'
-import { EMPTY_ARRAY } from '@constants'
-import { DataItem } from '@cxbox-ui/schema'
+import SelectionTable from './SelectionTable'
+import { useAppDispatch, useAppSelector } from '@store'
 import { useAssocRecords } from '@hooks/useAssocRecords'
 import { useOperationInProgress } from '@hooks/useOperationInProgress'
+import { EMPTY_ARRAY } from '@constants'
+import { DataItem } from '@cxbox-ui/schema'
+import { actions, AssociatedItem, BcFilter, interfaces, PendingValidationFailsFormat, WidgetTableMeta } from '@cxbox-ui/core'
 import { FilterType } from '@interfaces/filters'
 import styles from '@components/widgets/AssocListPopup/AssocListPopup.less'
 
@@ -182,13 +182,13 @@ function DefaultAssocListPopup({ meta, isFilter }: DefaultAssocListPopupProps) {
             className={cn(styles.container)}
             title={<Title title={meta.title} widgetName={meta.name} assocValueKey={assocValueKey} bcName={meta.bcName} />}
             showed
-            size="large"
             onCancelHandler={onClose}
             bcName={meta.bcName}
             widgetName={meta.name}
             footer={
                 <>
                     <Pagination meta={meta} />
+
                     <div className={styles.actions}>
                         <Button
                             data-test-widget-list-save={true}
@@ -197,6 +197,7 @@ function DefaultAssocListPopup({ meta, isFilter }: DefaultAssocListPopupProps) {
                         >
                             {t('Save')}
                         </Button>
+
                         <Button data-test-widget-list-cancel={true} onClick={onClose}>
                             {t('Cancel')}
                         </Button>
