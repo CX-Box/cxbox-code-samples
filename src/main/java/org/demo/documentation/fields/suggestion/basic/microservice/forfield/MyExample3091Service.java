@@ -27,6 +27,7 @@ public class MyExample3091Service extends VersionAwareResponseService<MyExample3
     // --8<-- [start:doUpdateEntity]
     @Override
     protected ActionResultDTO<MyExample3091DTO> doUpdateEntity(MyEntity3091 entity, MyExample3091DTO data, BusinessComponent bc) {
+        setIfChanged(data, MyExample3091DTO_.customFieldNew, entity::setCustomFieldNew);
         if (data.isFieldChanged(MyExample3091DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
@@ -34,12 +35,12 @@ public class MyExample3091Service extends VersionAwareResponseService<MyExample3
     }
     // --8<-- [end:doUpdateEntity]
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3091DTO> getActions() {
         return Actions.<MyExample3091DTO>builder()
-               .save(sv -> sv.text("Save"))
+                .save(sv -> sv.text("Save"))
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }
