@@ -4,9 +4,17 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.other.forceactive.example3.child.MyExample3208DTO;
+import org.demo.documentation.widgets.list.showcondition.byparententity.PlatformMyExample3100Controller;
+import org.demo.documentation.widgets.list.showcondition.byparententity.child.MyExample3106DTO;
+import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.CxboxMyExample3145Controller;
+import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.child.MyExample3145DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
@@ -39,7 +47,16 @@ public class MyExample3146Service extends VersionAwareResponseService<MyExample3
                .save(sv -> sv.text("Save"))
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
-                .build();
+                .action(act -> act
+                        .action("goto", "Refresh")
+                        .scope(ActionScope.BC)
+                        .withAutoSaveBefore()
+                        .invoker((bc, dto) -> {
+                            return new ActionResultDTO<MyExample3146DTO>().setAction(
+                                    PostAction.refreshBc(CxboxMyExample3145Controller.myexample3146
+                                    ));
+                        })
+                ).build();
     }
      // --8<-- [end:getActions]
 }
