@@ -1,15 +1,23 @@
 package org.demo.documentation.widgets.property.showcondition.twobcshowcondition.child;
 
+import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
+import org.demo.documentation.other.savewithparent.example5.dto.ExecutorDTO;
+import org.demo.documentation.other.savewithparent.example5.entity.Executor;
+import org.demo.documentation.widgets.list.showcondition.byparententity.PlatformMyExample3100Controller;
+import org.demo.documentation.widgets.list.showcondition.byparententity.child.MyEntity3106;
 import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.parent.MyEntity3146;
 import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.parent.MyEntity3146Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +31,9 @@ public class MyExample3145Service extends VersionAwareResponseService<MyExample3
     @Getter(onMethod_ = @Override)
     private final Class<MyExample3145Meta> meta = MyExample3145Meta.class;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Override
     protected Specification<MyEntity3145> getParentSpecification(BusinessComponent bc) {
         return (root, cq, cb) -> cb.and(
@@ -33,7 +44,7 @@ public class MyExample3145Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected CreateResult<MyExample3145DTO> doCreateEntity(MyEntity3145 entity, BusinessComponent bc) {
-        MyEntity3146 myEntity3146= repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
+        MyEntity3146 myEntity3146 = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
         entity.setCustomFieldEntity(myEntity3146);
         repository.save(entity);
         return new CreateResult<>(entityToDto(bc, entity));
@@ -41,20 +52,25 @@ public class MyExample3145Service extends VersionAwareResponseService<MyExample3
 
     @Override
     protected ActionResultDTO<MyExample3145DTO> doUpdateEntity(MyEntity3145 entity, MyExample3145DTO data, BusinessComponent bc) {
+        if (data.isFieldChanged(MyExample3145DTO_.fgdfgdId)) {
+            entity.setFgdfgdEntity(data.getFgdfgdId() != null
+                    ? entityManager.getReference(MyEntity3106.class, data.getFgdfgdId())
+                    : null);
+        }
         if (data.isFieldChanged(MyExample3145DTO_.customField)) {
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
 
-     // --8<-- [start:getActions]
+    // --8<-- [start:getActions]
     @Override
     public Actions<MyExample3145DTO> getActions() {
         return Actions.<MyExample3145DTO>builder()
-               .save(sv -> sv.text("Save"))
+                .save(sv -> sv.text("Save"))
                 .create(crt -> crt)
                 .delete(dlt -> dlt)
                 .build();
     }
-     // --8<-- [end:getActions]  
+    // --8<-- [end:getActions]
 }

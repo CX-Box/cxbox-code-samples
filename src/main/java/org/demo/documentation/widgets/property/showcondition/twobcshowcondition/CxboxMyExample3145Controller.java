@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.child.MyEntity3106PickService;
 import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.child.MyExample3145Service;
 import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.parent.MyExample3146Service;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,8 @@ public enum CxboxMyExample3145Controller implements EnumBcIdentifier {
 
 
     myexample3146(MyExample3146Service.class),
-    myexample3145(myexample3146, MyExample3145Service.class);
+    myexample3145(myexample3146, MyExample3145Service.class),
+    myEntity3106Pick(myexample3145, MyEntity3106PickService.class);
 
 
 
