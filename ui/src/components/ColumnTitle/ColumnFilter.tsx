@@ -72,6 +72,10 @@ function ColumnFilter({ widgetName, widgetMeta: widgetFieldMeta, rowMeta, compon
     const isPickList = effectiveFieldMeta.type === FieldType.pickList
     const isMultivalue = [FieldType.multivalue, FieldType.multivalueHover].includes(effectiveFieldMeta.type)
     const { associateFieldKeyForPickList } = useAssociateFieldKeyForPickList(fieldMetaPickListField)
+    const associateFieldKey = associateFieldKeyForPickList || fieldMetaMultivalue?.associateFieldKey
+    const associatedFilter = useAppSelector(state =>
+        associateFieldKey ? state.screen.filters[bcName]?.find(item => item.fieldName === associateFieldKey) : undefined
+    )
 
     const showPopup = useCallback(() => {
         dispatch(
@@ -165,7 +169,7 @@ function ColumnFilter({ widgetName, widgetMeta: widgetFieldMeta, rowMeta, compon
         >
             <div
                 className={cn(className, styles.icon, {
-                    [styles.active]: (filter?.value?.toString()?.length as number) > 0 || Array.isArray(filter?.value)
+                    [styles.active]: (filter?.value?.toString()?.length as number) > 0 || Array.isArray((filter || associatedFilter)?.value)
                 })}
                 data-test-widget-list-header-column-filter={true}
             >
