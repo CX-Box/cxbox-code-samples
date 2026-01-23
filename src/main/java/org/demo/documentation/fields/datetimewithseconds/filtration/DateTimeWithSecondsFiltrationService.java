@@ -30,7 +30,7 @@ public class DateTimeWithSecondsFiltrationService extends
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsFiltrationDTO> doUpdateEntity(DateTimeWithSecondsFiltrationEntity entity,
 			DateTimeWithSecondsFiltrationDTO data, BusinessComponent bc) {
-
+		setIfChanged(data, DateTimeWithSecondsFiltrationDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]
