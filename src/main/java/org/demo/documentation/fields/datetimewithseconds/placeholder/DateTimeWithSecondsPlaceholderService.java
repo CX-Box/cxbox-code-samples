@@ -31,6 +31,7 @@ public class DateTimeWithSecondsPlaceholderService extends
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsPlaceholderDTO> doUpdateEntity(
 			DateTimeWithSecondsPlaceholderEntity entity, DateTimeWithSecondsPlaceholderDTO data, BusinessComponent bc) {
+		setIfChanged(data, DateTimeWithSecondsPlaceholderDTO_.customField, entity::setCustomField);
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}

@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-
-//dateTimeWithSecondsFiltration
 @Entity
 @Table(name = "DateTimeWithSecondsFiltrationEntity")
 @Getter
