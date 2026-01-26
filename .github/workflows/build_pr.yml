@@ -29,7 +29,7 @@ jobs:
         env:
           LC_ALL: C.UTF-8
         run: |
-          echo "Checking MR title format..."ф
+          echo "Checking MR title format..."
           # If it's a push — try to find an open PR for this branch
           TITLE=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json title -q '.[0].title')
           
