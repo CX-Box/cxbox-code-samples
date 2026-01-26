@@ -22,7 +22,6 @@ public class MyEntity3500TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-
         repository.save(new MyEntity3500()
                 .setCustomField(LocalDateTime.of(2024,12,5,11,54, 25))
                 .setCustomFieldh(LocalDateTime.of(2024,12,5,11,54, 25))
