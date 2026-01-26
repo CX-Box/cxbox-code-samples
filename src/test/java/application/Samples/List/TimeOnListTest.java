@@ -72,8 +72,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("Custom Field h:mm:ss");
-        var customField = list.findRowSegmentByValue("Custom Field h:mm:ss", listRows.get(0)).time("HH:mm:ss");
+        List<String> listRows = list.getNoFocusValues("h:mm:ss");
+        var customField = list.findRowSegmentByValue("h:mm:ss", listRows.get(0)).time("HH:mm:ss");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
@@ -89,8 +89,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("Custom Field h:mm");
-        var customField = list.findRowSegmentByValue("Custom Field h:mm", listRows.get(0)).time("HH:mm");
+        List<String> listRows = list.getNoFocusValues("h:mm");
+        var customField = list.findRowSegmentByValue("h:mm", listRows.get(0)).time("HH:mm");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -105,8 +105,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("Custom Field h:mm:ss A");
-        var customField = list.findRowSegmentByValue("Custom Field h:mm:ss A", listRows.get(0)).time("HH:mm:ss a");
+        List<String> listRows = list.getNoFocusValues("h:mm:ss A");
+        var customField = list.findRowSegmentByValue("h:mm:ss A", listRows.get(0)).time("HH:mm:ss a");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss a")));
@@ -124,8 +124,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         LocalDateTime date = LocalDateTime.of(2021, 3, 7, 5, 0);
         LocalDateTime date2 = LocalDateTime.of(2023, 3, 7, 8, 0);
-        list.findFilterColumn("Custom Field h:mm").timeFilter("h:mm").setFilter(date, date2);
-        assertThat(list.getNoFocusValues("Custom Field h:mm").get(0)).isEqualTo("05:58");
+        list.findFilterColumn("h:mm").timeFilter("h:mm").setFilter(date, date2);
+        assertThat(list.getNoFocusValues("h:mm").get(0)).isEqualTo("05:58");
     }
 
     @Test
@@ -150,21 +150,21 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time sorting");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+        assertThat(list.getNoFocusValues("h:mm:ss")).isEqualTo(List.of(
                 "12:58:54",
                 "12:28:54",
                 "10:58:54",
                 "05:58:54"));
 
-        list.setSorting("Custom Field h:mm:ss");
-        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+        list.setSorting("h:mm:ss");
+        assertThat(list.getNoFocusValues("h:mm:ss")).isEqualTo(List.of(
                 "12:58:54",
                 "12:28:54",
                 "10:58:54",
                 "05:58:54"));
 
-        list.setSorting("Custom Field h:mm:ss");
-        assertThat(list.getNoFocusValues("Custom Field h:mm:ss")).isEqualTo(List.of(
+        list.setSorting("h:mm:ss");
+        assertThat(list.getNoFocusValues("h:mm:ss")).isEqualTo(List.of(
                 "05:58:54",
                 "10:58:54",
                 "12:28:54",

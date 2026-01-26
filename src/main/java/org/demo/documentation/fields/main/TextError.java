@@ -3,6 +3,7 @@ package org.demo.documentation.fields.main;
 public class TextError {
 
     public static final String ONLY_LETTER = "The field can contain only letters.";
+    public static final String LESS_CURRENT_TIME = "The field cannot be less than the current time";
     public static final String LESS_CURRENT_DATE = "The field cannot be less than the current date";
     public static final String MORE_CURRENT_DATE = "The field cannot be more than the current date";
     public static final String ONLY_TRUE = "The field can contain only 'True'";

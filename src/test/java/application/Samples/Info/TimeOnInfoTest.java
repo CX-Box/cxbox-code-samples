@@ -38,7 +38,7 @@ public class TimeOnInfoTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.time("Custom Field h:mm:ss", "HH:mm:ss");
+        var customField = info.time("h:mm:ss", "HH:mm:ss");
         assertThat(customField.getValue()).isEqualTo(LocalDateTime.of(2024, 12, 5, 11, 54, 25));
     }
 
@@ -50,7 +50,7 @@ public class TimeOnInfoTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.time("Custom Field h:mm", "HH:mm");
+        var customField = info.time("h:mm", "HH:mm");
         assertThat(customField.getValue()).isEqualTo(LocalDateTime.of(2024, 12, 5, 11, 54));
     }
 
@@ -62,7 +62,7 @@ public class TimeOnInfoTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.time("Custom Field h:mm:ss A", "HH:mm:ss a");
+        var customField = info.time("h:mm:ss A", "HH:mm:ss a");
         assertThat(customField.getValue()).isEqualTo(LocalDateTime.of(2024, 12, 5, 11, 54, 25));
         assertThat(customField.getStringValue()).isEqualTo("11:54:25 AM");
     }

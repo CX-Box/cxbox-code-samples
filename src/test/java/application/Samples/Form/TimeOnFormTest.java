@@ -69,7 +69,7 @@ public class TimeOnFormTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field h:mm:ss", "HH:mm:ss");
+        var customField = form.time("h:mm:ss", "HH:mm:ss");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
@@ -84,7 +84,7 @@ public class TimeOnFormTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field h:mm", "HH:mm");
+        var customField = form.time("h:mm", "HH:mm");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -99,7 +99,7 @@ public class TimeOnFormTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field h:mm A", "HH:mm a");
+        var customField = form.time("h:mm A", "HH:mm a");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm a"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm a")));

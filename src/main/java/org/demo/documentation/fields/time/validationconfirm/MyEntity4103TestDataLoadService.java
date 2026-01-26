@@ -7,6 +7,8 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class MyEntity4103TestDataLoadService {
 
@@ -21,7 +23,7 @@ public class MyEntity4103TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
-        //repository.save(new MyEntity4103().setCustomField("Test data"));
+        repository.save(new MyEntity4103().setCustomField(LocalDateTime.of(2024,12,5,5,58, 54)));
     }
 
 }

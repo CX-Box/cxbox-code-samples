@@ -41,10 +41,11 @@ public class InputValidationService extends VersionAwareResponseService<InputVal
 	@Override
 	public Actions<InputValidationDTO> getActions() {
 		return Actions.<InputValidationDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
-                )
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to save the value?")
+						)))
 				.build();
 	}
 	// --8<-- [end:getActions]

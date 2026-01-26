@@ -39,10 +39,11 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 	@Override
 	public Actions<NumberConfirmDTO> getActions() {
 		return Actions.<NumberConfirmDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
-                )
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to save the value?")
+						)))
 				.build();
 	}
 	// --8<-- [end:getActions]
