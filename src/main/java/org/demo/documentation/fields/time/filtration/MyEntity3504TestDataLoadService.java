@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -39,7 +40,9 @@ public class MyEntity3504TestDataLoadService {
                 .setCustomFieldmmss(LocalDateTime.now().minusMinutes(30).minusDays(4))
                 .setCustomFieldhmmssA(LocalDateTime.now().minusMinutes(30).minusDays(4))
                 .setCustomFieldss(LocalDateTime.now().minusMinutes(30).minusDays(4))
+                .setCustomFieldhA(LocalDateTime.now().minusMinutes(30).minusDays(4))
                 .setCustomFieldmm(LocalDateTime.now().minusMinutes(30).minusDays(4)));
+
         repository.save(new MyEntity3504().setCustomField(LocalDateTime.now().minusHours(2))
                 .setCustomField(LocalDateTime.now().minusHours(2).minusYears(1))
                 .setCustomFieldh(LocalDateTime.now().minusHours(2).minusYears(1))
@@ -48,9 +51,10 @@ public class MyEntity3504TestDataLoadService {
                 .setCustomFieldmmss(LocalDateTime.now().minusHours(2).minusYears(1))
                 .setCustomFieldhmmssA(LocalDateTime.now().minusHours(2).minusYears(1))
                 .setCustomFieldss(LocalDateTime.now().minusHours(2).minusYears(1))
+                .setCustomFieldhA(LocalDateTime.now().minusHours(2).minusYears(1))
                 .setCustomFieldmm(LocalDateTime.now().minusHours(2).minusYears(1)));
         repository.save(new MyEntity3504().setCustomField(LocalDateTime.now().minusDays(1)
-                .minusHours(2).minusMinutes(3))
+                        .minusHours(2).minusMinutes(3))
                 .setCustomField(LocalDateTime.now().minusHours(7).minusMonths(2))
                 .setCustomFieldh(LocalDateTime.now().minusHours(7).minusMonths(2))
                 .setCustomFieldhmm(LocalDateTime.now().minusHours(7).minusMonths(2))
@@ -59,6 +63,6 @@ public class MyEntity3504TestDataLoadService {
                 .setCustomFieldhmmssA(LocalDateTime.now().minusHours(7).minusMonths(2))
                 .setCustomFieldss(LocalDateTime.now().minusHours(7).minusMonths(2))
                 .setCustomFieldmm(LocalDateTime.now().minusHours(7).minusMonths(2)));
-        }
+    }
 
 }
