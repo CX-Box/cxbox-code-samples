@@ -99,10 +99,10 @@ public class TimeOnFormTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Form");
         FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("h:mm A", "h:mm A");
+        var customField = form.time("hh:mm A", "hh:mm A");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
-        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("h:mm A"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm a")));
+        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("hh:mm A"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm a")));
     }
 
     @Test
