@@ -10,11 +10,10 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_TIME;
+import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_TIME;
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -31,6 +30,7 @@ public class MyExample4101Service extends VersionAwareResponseService<MyExample4
         return new CreateResult<>(entityToDto(bc, entity));
     }
 
+    // --8<-- [start:doUpdateEntity]
     @Override
     protected ActionResultDTO<MyExample4101DTO> doUpdateEntity(MyEntity4101 entity, MyExample4101DTO data, BusinessComponent bc) {
         if (data.isFieldChanged(MyExample4101DTO_.customField)) {
@@ -41,13 +41,13 @@ public class MyExample4101Service extends VersionAwareResponseService<MyExample4
             LocalTime currentTime = LocalTime.now();
 
             if (currentTime.isBefore(fieldTime)) {
-                            throw new BusinessException().addPopup(LESS_CURRENT_TIME);
+                            throw new BusinessException().addPopup(MORE_CURRENT_TIME);
             }
             entity.setCustomField(data.getCustomField());
         }
         return new ActionResultDTO<>(entityToDto(bc, entity));
     }
-
+    // --8<-- [end:doUpdateEntity]
     // --8<-- [start:getActions]
     @Override
     public Actions<MyExample4101DTO> getActions() {

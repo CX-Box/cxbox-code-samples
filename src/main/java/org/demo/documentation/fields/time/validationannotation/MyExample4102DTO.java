@@ -1,6 +1,7 @@
 package org.demo.documentation.fields.time.validationannotation;
 
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_TIME;
 public class MyExample4102DTO extends DataResponseDTO {
 
     @SearchParameter(name = "customField", provider = TimeValueProvider.class)
-    @Future(message = LESS_CURRENT_TIME)
+    @NotNull(message = "Custom message about error")
     private LocalDateTime customField;
 
     public MyExample4102DTO(MyEntity4102 entity) {
