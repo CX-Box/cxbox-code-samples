@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
-import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_TIME;
-
 @Service
 @Getter
 @RequiredArgsConstructor
