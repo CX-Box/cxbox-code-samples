@@ -89,8 +89,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("h:mm");
-        var customField = list.findRowSegmentByValue("h:mm", listRows.get(0)).time("HH:mm");
+        List<String> listRows = list.getNoFocusValues("HH:mm");
+        var customField = list.findRowSegmentByValue("HH:mm", listRows.get(0)).time("HH:mm");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25);
         customField.setValue(date);
         assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -124,8 +124,8 @@ public class TimeOnListTest extends BaseTestForSamples {
         var list = $box.findListWidgetByTitle("List title");
         LocalDateTime date = LocalDateTime.of(2021, 3, 7, 5, 0);
         LocalDateTime date2 = LocalDateTime.of(2023, 3, 7, 8, 0);
-        list.findFilterColumn("h:mm").timeFilter("h:mm").setFilter(date, date2);
-        assertThat(list.getNoFocusValues("h:mm").get(0)).isEqualTo("05:58");
+        list.findFilterColumn("HH:mm").timeFilter("HH:mm").setFilter(date, date2);
+        assertThat(list.getNoFocusValues("HH:mm").get(0)).isEqualTo("05:58");
     }
 
     @Test
