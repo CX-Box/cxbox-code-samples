@@ -11,9 +11,6 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.fields.dictionary.validationbusinessex.enums.CustomFieldEnum;
-import org.demo.documentation.fields.dictionary.validationdynamic.MyExample323DTO;
-import org.demo.documentation.fields.dictionary.validationdynamic.MyExample323DTO_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

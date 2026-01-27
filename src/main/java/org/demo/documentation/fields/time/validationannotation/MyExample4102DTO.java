@@ -11,9 +11,6 @@ import org.cxbox.core.util.filter.provider.impl.TimeValueProvider;
 
 import java.time.LocalDateTime;
 
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_TIME;
-
 @Getter
 @Setter
 @NoArgsConstructor
