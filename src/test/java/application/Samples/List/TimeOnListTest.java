@@ -105,11 +105,11 @@ public class TimeOnListTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("List");
         var list = $box.findListWidgetByTitle("List title");
-        List<String> listRows = list.getNoFocusValues("h:mm:ss A");
-        var customField = list.findRowSegmentByValue("h:mm:ss A", listRows.get(0)).time("HH:mm:ss a");
+        List<String> listRows = list.getNoFocusValues("hh:mm:ss A");
+        var customField = list.findRowSegmentByValue("hh:mm:ss A", listRows.get(0)).time("hh:mm:ss A");
         LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
         customField.setValue(date);
-        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss a"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss a")));
+        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("hh:mm:ss A"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("hh:mm:ss A")));
     }
 
     @Test
