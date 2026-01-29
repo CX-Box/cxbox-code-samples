@@ -62,7 +62,7 @@ public class TimeOnInfoTest extends BaseTestForSamples {
         MainPages.click("Time base");
         MainPages.FirstLevelMenu.click("Info");
         var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.time("hh:mm:ss A", "hh:mm:ss A");
+        var customField = info.time("hh:mm:ss A", "hh:mm:ss a");
         assertThat(customField.getValue()).isEqualTo(LocalDateTime.of(2024, 12, 5, 11, 54, 25));
         assertThat(customField.getStringValue()).isEqualTo("11:54:25 AM");
     }
