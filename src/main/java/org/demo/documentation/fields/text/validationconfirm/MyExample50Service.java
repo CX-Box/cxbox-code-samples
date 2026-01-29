@@ -44,7 +44,7 @@ public class MyExample50Service extends VersionAwareResponseService<MyExample50D
 		return Actions.<MyExample50DTO>builder()
                 .action(act -> act
                         .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
+                        .withPreAction(PreAction.confirm("You want to save the value?"))
                 )
 				.build();
 	}

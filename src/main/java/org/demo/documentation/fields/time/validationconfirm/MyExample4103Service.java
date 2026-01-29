@@ -6,9 +6,9 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
-
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -36,7 +36,11 @@ public class MyExample4103Service extends VersionAwareResponseService<MyExample4
     @Override
     public Actions<MyExample4103DTO> getActions() {
         return Actions.<MyExample4103DTO>builder()
-               .save(sv -> sv.text("Save"))
+                .action(act -> act
+                        .action("save", "save")
+                        .withPreAction(PreAction.confirm(cf -> cf
+                                .text("You want to save the value?")
+                        )))
                 .build();
     }
     // --8<-- [end:getActions]

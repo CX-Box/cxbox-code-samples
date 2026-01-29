@@ -39,8 +39,9 @@ public class MyExample3116Service extends VersionAwareResponseService<MyExample3
         return Actions.<MyExample3116DTO>builder()
                 .action(act -> act
                         .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
-                )
+                        .withPreAction(PreAction.confirm(cf -> cf
+                                .text("You want to save the value?")
+                        )))
                 .build();
     }
      // --8<-- [end:getActions]  

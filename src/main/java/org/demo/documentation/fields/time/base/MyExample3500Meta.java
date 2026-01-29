@@ -28,8 +28,7 @@ public class MyExample3500Meta extends FieldMetaBuilder<MyExample3500DTO> {
     // --8<-- [start:buildIndependentMeta]
     @Override
     public void buildIndependentMeta(FieldsMeta<MyExample3500DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3500DTO_.customFieldhA);
-        fields.enableFilter(MyExample3500DTO_.customField);
+
     }
     // --8<-- [end:buildIndependentMeta]
 }

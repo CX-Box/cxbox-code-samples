@@ -31,6 +31,7 @@ public class MyEntity3500TestDataLoadService {
                 .setCustomFieldhmmssA(LocalDateTime.of(2024,12,5,11,54, 25))
                 .setCustomFieldss(LocalDateTime.of(2024,12,5,11,54, 25))
                 .setCustomFieldmm(LocalDateTime.of(2024,12,5,11,54, 25))
+                .setCustomFieldhA(LocalDateTime.of(2024,12,5,11,54, 25))
         );
     }
 

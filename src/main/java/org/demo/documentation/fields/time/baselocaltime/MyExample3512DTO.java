@@ -17,7 +17,6 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 public class MyExample3512DTO extends DataResponseDTO {
-
     @JsonSerialize(using = LocalTimeWithDateSerializer.class)
     @JsonDeserialize(using = LocalTimeWithDateDeserializer.class)
     @SearchParameter(name = "customField", provider = TimeValueProvider.class)

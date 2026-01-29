@@ -40,10 +40,11 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 	@Override
 	public Actions<DateConfirmDTO> getActions() {
 		return Actions.<DateConfirmDTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
-                )
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to save the value?")
+						)))
 				.build();
 	}
 	// --8<-- [end:getActions]

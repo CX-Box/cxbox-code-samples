@@ -49,10 +49,11 @@ public class MyExample115Service extends VersionAwareResponseService<MyExample11
 	@Override
 	public Actions<MyExample115DTO> getActions() {
 		return Actions.<MyExample115DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value ?"))
-                )
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to save the value?")
+						)))
 				.build();
 	}
 	// --8<-- [end:getActions]
