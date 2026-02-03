@@ -21,7 +21,7 @@ public class MyEntity3011MultiPickMeta extends FieldMetaBuilder<MyEntity3011Mult
     @Override
     public void buildIndependentMeta(FieldsMeta<MyEntity3011MultiPickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
-        fields.setAllValuesWithIcons(MyEntity3011MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
+        fields.setEnumIcons(MyEntity3011MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.enableFilter(MyEntity3011MultiPickDTO_.customFieldDictionary);
         fields.setEnumFilterValues(fields,MyEntity3011MultiPickDTO_.customFieldDictionary,CustomFieldDictionaryEnum.values());
         fields.setEnumValues(MyEntity3011MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());

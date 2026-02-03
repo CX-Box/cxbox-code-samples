@@ -23,7 +23,7 @@ public class MyEntity3012PickMeta extends FieldMetaBuilder<MyEntity3012PickDTO> 
     public void buildIndependentMeta(FieldsMeta<MyEntity3012PickDTO> fields, InnerBcDescription bcDescription,
                                      Long parentId) {
         fields.enableFilter(MyEntity3012PickDTO_.customField);
-        fields.setAllValuesWithIcons(MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
+        fields.setEnumIcons(MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.enableFilter(MyEntity3012PickDTO_.customFieldDictionary);
         fields.setEnumFilterValues(fields, MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
         fields.setEnumValues(MyEntity3012PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
