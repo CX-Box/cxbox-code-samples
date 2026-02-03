@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.jcip.annotations.ThreadSafe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
-import org.awaitility.Awaitility;
 
 import java.net.URI;
 import java.net.URLEncoder;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -90,16 +90,22 @@ public class AppChecks {
 	@SneakyThrows
 	public static boolean awaitIsTrue(Duration totalWait, Duration retryPeriod, String target,
 									  Supplier<Boolean> supplier) {
-		try {
-			Awaitility.await().atMost(totalWait)
-					.pollInterval(retryPeriod)
-					.pollDelay(Duration.ZERO)
-					.untilAsserted(supplier::get);
-			return true;
-		} catch (Exception exception) {
-			return false;
+		for (var end = LocalDateTime.now().plusNanos(totalWait.toNanos()); LocalDateTime.now().isBefore(end); ) {
+			try {
+				if (supplier.get()) {
+					return true;
+				}
+			} catch (Exception exception) {
+				//retry
+			}
+
+			log.info("Retrying to achieve target '{}' check util success or {}", target, end);
+			Thread.sleep(retryPeriod.toMillis());
 		}
+		log.error("target '{}' has not been achieved!!", target);
+		return false;
 	}
+
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public record AuthConfig(String realm, @JsonProperty("auth-server-url") String authServerUrl) {

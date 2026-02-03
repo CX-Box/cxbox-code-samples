@@ -11,7 +11,6 @@ import core.config.AppChecks;
 import core.config.TestApplicationContext;
 import core.config.allure.AbstractAllureDescAppender;
 import core.config.junit.AllurePerTestLog;
-import core.config.junit.JvmStatsPerTest;
 import core.config.selenide.AbstractLoggingProxyServer;
 import core.config.selenide.AllureVideoRecorder;
 import core.page.auth.keycloak.KeycloackAuthPage;
@@ -46,7 +45,6 @@ import static core.element.widget.AbstractWidget.logTime;
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
 @ExtendWith({AllureVideoRecorder.class})
-@ExtendWith({JvmStatsPerTest.class})
 public abstract class BaseTestForSamples {
 
 	/**
