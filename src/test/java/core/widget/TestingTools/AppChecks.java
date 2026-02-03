@@ -39,8 +39,9 @@ public class AppChecks {
         var client = new OkHttpClient.Builder().build();
         try (var rs = client.newCall(authConfigUri).execute()) {
             if (rs.body() != null) {
-                log.info(rs.body().string());
-                var cfg = objectMapper.readValue(rs.body().string(), AuthConfig.class);
+                var string = rs.body().string();
+                log.info(string);
+                var cfg = objectMapper.readValue(string, AuthConfig.class);
                 log.debug("Auth server url: {}", cfg.authServerUrl());
                 var authUri = new URI(cfg.authServerUrl());
                 String logoutUri =
