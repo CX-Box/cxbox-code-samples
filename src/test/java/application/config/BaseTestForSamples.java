@@ -93,6 +93,7 @@ public abstract class BaseTestForSamples {
 						.savePageSource(true)
 		);
 //		SelenideHighlightSetup.registerAllHighlightedCommands();
+
 	}
 
 
@@ -133,22 +134,19 @@ public abstract class BaseTestForSamples {
 		return options;
 	}
 
-
 	@BeforeEach
-	public void beforeAll() {
-		CxboxAppReadyCheck cxboxAppReadyCheck = new CxboxAppReadyCheck();
-		Allure.step("Waiting app Started", step -> {
-			logTime(step);
-			cxboxAppReadyCheck.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
-		});
+	public void beforeEach() {
 		Allure.step(
 				"Logout and login from scratch", step -> {
 					logTime(step);
+					CxboxAppReadyCheck cxboxAppReadyCheck = new CxboxAppReadyCheck();
+					cxboxAppReadyCheck.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
 					Selenide.open(cxboxAppReadyCheck.appReady(Env.uri()));
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
 		);
 	}
+
 
 	@SuppressWarnings("unused")
 	@AutoService(SelenideProxyServerFactory.class)
