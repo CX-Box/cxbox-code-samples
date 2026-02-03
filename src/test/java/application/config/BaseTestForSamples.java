@@ -90,7 +90,9 @@ public abstract class BaseTestForSamples {
 						.screenshots(true)
 						.savePageSource(true)
 		);
-//		SelenideHighlightSetup.registerAllHighlightedCommands();
+		// Disabled  ( catch error in debug running mod)
+		// Highlight current  element on page orange border
+		//SelenideHighlightSetup.registerAllHighlightedCommands();
 		AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
 
 

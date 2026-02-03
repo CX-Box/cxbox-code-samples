@@ -52,12 +52,12 @@ public class TestLogic extends BaseTestForSamples {
 //		formWidget.actions().action("Cancel").click()
 //				.row().burgerAction();
 
-		PlatformApp.screen("List widget action create inline-form")
+		var row = PlatformApp.screen("List widget action create inline-form")
 				.view()
 				.listInlineForm("List")
 				.rows()
-				.row(0).clickPencil()
-				.input("Custom Field")
+				.row(0).clickPencil();
+		row.input("Custom Field")
 				.setValue("test")
 				.widget()
 				.actions().action("Save");
@@ -88,19 +88,18 @@ public class TestLogic extends BaseTestForSamples {
 
 	@Test
 	void groupingHierarchy() {
-//		PlatformApp.screen("GroupingHierarchy (GH) widget basic")
-//				.view().listInlineByName("").rows();
-//		// добавить группы
-//
-//	 var values = PlatformApp.screen("GroupingHierarchy (GH) widget basic")
-//				.view()
-//				.groupingHierarchyInline("GroupingHierarchy (GH) widget basic")
-//			 	.expandAll()
-//				.rows()
-//			 .row(0)
-//			 	// придумать
-//			 .streamCurrentPage().map(r -> r.input("customField").getValue())
-//				.toList();
+		PlatformApp.screen("GroupingHierarchy (GH) widget basic")
+				.view().listInlineByName("").rows();
+		// добавить группы
+
+		var values = PlatformApp.screen("GroupingHierarchy (GH) widget basic")
+				.view()
+				.groupingHierarchyInline("GroupingHierarchy (GH) widget basic")
+				.expandAll()
+				.rows()
+				// придумать
+				.streamCurrentPage().map(r -> r.input("customField").getValue())
+				.toList();
 //		Selenide.sleep(2000);
 //		assertThat(values.size()).isGreaterThan(0);
 //		log.info("values {}", values);

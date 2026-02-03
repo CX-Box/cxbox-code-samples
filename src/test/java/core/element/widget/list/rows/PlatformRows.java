@@ -32,12 +32,16 @@ public abstract class PlatformRows<SELF extends PlatformRows<SELF, WIDGET, ROW>,
 
 	public abstract ROW row(int number);
 
-
+	//  can use for filtration ( if not available UI filter)
+	// this get all rows ( <tr> ) from table, this get from current page only
 	public Stream<ROW> streamCurrentPage() {
 		StreamHelper<WIDGET, SELF, ROW> streamHelper = new StreamHelper<>(widget());
 		return streamHelper.streamCurrentPage();
 	}
 
+
+	//  can use for filtration ( if not available UI filter)
+	// this get all rows ( <tr> ) from table, this get from all page ( iterate all data)
 	// TODO deprecated in GH
 	public StreamWithPagination<ROW> streamAllPages() {
 		widget().pagination().firstPage();

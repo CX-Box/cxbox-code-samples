@@ -93,6 +93,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.money("Custom Field")
 				.checkReadOnly(ro -> assertThat(ro).isTrue());
+
 	}
 
 	@Test

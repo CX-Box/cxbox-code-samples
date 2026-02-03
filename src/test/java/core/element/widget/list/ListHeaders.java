@@ -37,7 +37,7 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 				.$$("th");
 	}
 
-
+	// ui filtration
 	public ListHeaders<W, ROWS, ROW> filter(Consumer<FB<W, ?, ?, ?>> fb) {
 		FB<W, ?, ?, ?> FBRInstance = new FB<>(FC.getContainer(), widget, this);
 		fb.accept(FBRInstance);
@@ -45,6 +45,7 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 		return this;
 	}
 
+	// ui sort
 	public ListHeaders<W, ROWS, ROW> sort(Consumer<SB<W, ?, ?, ?>> sb) {
 		SC<W, ?, ?> FSRC = new SC<>(widget());
 		SB<W, ?, ?, ?> sbInstanse = new SB<>(FSRC.getContainer());
@@ -53,6 +54,7 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 		return this;
 	}
 
+	// ui filtration and sort
 	public W filterAndSort(Consumer<FB<W, ?, ?, ?>> fb, Consumer<SB<W, ?, ?, ?>> sb) {
 		sort(sb);
 		filter(fb);

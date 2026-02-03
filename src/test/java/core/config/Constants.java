@@ -11,7 +11,7 @@ public class Constants {
 	public static final String MoreThatNumber = "The field cannot be less than 20 000.";
 	public static final String MoreThatPercent = "The field cannot be less than 10%.";
 	public static final String SystemError = "System error has been occurred";
-	public static final String SaveValue = "You want to save the value ?";
+	public static final String SaveValue = "You want to save the value?";
 	public static final String InvalidNumberDigits = "The field cannot be less than 100 000.00.";
 	public static final String InvalidNumber = "The field cannot be less than 100 000.";
 	public static final String RequiredMessage = "This field is mandatory";

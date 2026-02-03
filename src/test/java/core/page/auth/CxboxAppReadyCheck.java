@@ -53,10 +53,15 @@ public class CxboxAppReadyCheck extends AppReadyCheck {
 		log.info("Application url: " + uri);
 		OkHttpClient client = new OkHttpClient.Builder().build();
 		var request = new Request.Builder().url(uri.toString()).build();
+		var authConfigUri = new Request.Builder()
+				.url(uri.getScheme() + "://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "")
+						+ "/api/v1/auth/oidc.json")
+				.build();
 		boolean appReady = awaitIsTrue(
 				totalWait, retryPeriod, "app started", () -> {
-					try (var response = client.newCall(request).execute()) {
+					try (var response = client.newCall(authConfigUri).execute()) {
 						if (response.code() == 200) {
+							log.info(response.body().string());
 							log.info("App login page is ready. Starting tests");
 							return true;
 						}

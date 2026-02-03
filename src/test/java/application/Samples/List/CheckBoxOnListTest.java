@@ -322,6 +322,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		assertThat(actualData).isEqualTo(expectedValues);
 
 		headers.sort(sb -> sb.sort("Custom Field"));
+
 		actualData = rows.streamAllPages()
 				.map(r -> r.checkBox("Custom Field"))
 				.map(CheckBox::getValue)

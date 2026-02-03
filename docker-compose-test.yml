@@ -21,8 +21,8 @@ services:
   cxbox-code-samples-test:
     build: ./
     environment:
-      FRONTEND_AUTH_SERVER_URL: 'http://code-samples.cxbox.org/auth'
-      BACKEND_AUTH_SERVER_URL: 'http://code-samples.cxbox.org/auth'
+      FRONTEND_AUTH_SERVER_URL: 'cxbox-code-samples-nginx'
+      BACKEND_AUTH_SERVER_URL: 'cxbox-code-samples-nginx'
       HIBERNATE_DDL_AUTO: 'update'
       DEV_PANEL_ENABLED: 'true'
       META_DIRECTORY: 'classpath:meta'
@@ -45,6 +45,9 @@ services:
     restart: always
     depends_on:
       - cxbox-code-samples-postgres
+      - cxbox-code-samples-keycloak
+      - cxbox-code-samples-minio
+
   cxbox-code-samples-keycloak:
     image: maxird/keycloak:12.0.4
     command:

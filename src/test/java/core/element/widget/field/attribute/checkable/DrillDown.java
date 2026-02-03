@@ -19,6 +19,7 @@ import static core.element.widget.AbstractWidget.logTime;
 public interface DrillDown<W extends AbstractWidget<ExpectationPattern, W>, VF, V, SELF extends DrillDown<W, VF, V, SELF>> extends AbstractField<ExpectationPattern, W, VF, SELF> {
 
 	@SuppressWarnings("unchecked")
+	// TODO >> !! >> drilldown with filter ( on self !!!)
 	default void drilldown(Consumer<V> consumer) {
 		Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
 			logTime(step);
@@ -33,8 +34,7 @@ public interface DrillDown<W extends AbstractWidget<ExpectationPattern, W>, VF, 
 			}
 			String oldUrl = WebDriverRunner.url();
 			element().find(drilldownHolder).click();
-			webdriver().shouldNotHave(url(oldUrl),
-					Duration.ofMillis(widget().getExpectations().getTimeout().toMillis()));
+			webdriver().shouldNotHave(url(oldUrl), Duration.ofMillis(widget().getExpectations().getTimeout().toMillis()));
 			$x("//body").exists();
 			String newUrl = WebDriverRunner.url();
 			consumer.accept((V) newUrl);
