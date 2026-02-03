@@ -7,19 +7,26 @@ import java.util.List;
 import jakarta.annotation.PostConstruct;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.cxbox.core.file.dto.CxboxResponseDTO;
+import org.cxbox.core.file.dto.FileUploadDto;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldRadioEnum;
 import org.demo.documentation.widgets.property.excel.inner.forfields.*;
+import org.demo.services.CustomFileUploadServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class MyEntity3134TestDataLoadService {
 
     @Autowired
     MyEntity3134Repository repository;
+    @Autowired
+    MyEntity3134SuggRepository repositorySugg;
     @Autowired
     MyEntity3134PickRepository repositoryPick;
     @Autowired
@@ -28,11 +35,15 @@ public class MyEntity3134TestDataLoadService {
     @Autowired
     InternalAuthorizationService authzService;
 
+    private final CustomFileUploadServices customFileUploadServices;
+
     @Transactional
     @PostConstruct
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
+
         MyEntity3134MultiHover myEntity1 = new MyEntity3134MultiHover().setCustomField(
                 "Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
         MyEntity3134MultiHover myEntity2 = new MyEntity3134MultiHover().setCustomField(
@@ -40,6 +51,8 @@ public class MyEntity3134TestDataLoadService {
         List<MyEntity3134MultiHover> list = new ArrayList<>();
         list.add(myEntity1);
         list.add(myEntity2);
+        MyEntity3134SuggectionPick myEntiMyEntity3134SuggectionPickyPick = new MyEntity3134SuggectionPick().setCustomField("Test data Pick");
+        repositorySugg.save(myEntiMyEntity3134SuggectionPickyPick);
         MyEntity3134Pick myEntityPick = new MyEntity3134Pick().setCustomField("Test data Pick");
         MyEntity3134InlinePick myEntityPick2 = new MyEntity3134InlinePick().setCustomField("Test data Pick2");
         repositoryPick.save(myEntityPick);
@@ -63,7 +76,10 @@ public class MyEntity3134TestDataLoadService {
                 .setCustomFieldRadio(CustomFieldRadioEnum.LOW)
                 .setCustomFieldPickListEntity(myEntityPick)
                 .setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
-                .setCustomFieldInlineEntity(myEntityPick2);
+                .setCustomFieldInlineEntity(myEntityPick2)
+                .setCustomFieldFileUpload(file.getData().getName())
+                .setCustomFieldSuggectionPickListEntity(myEntiMyEntity3134SuggectionPickyPick)
+                .setCustomFieldFileUploadId(file.getData().getId());
         repository.save(myEntity3134new.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
     }
 

@@ -1,4 +1,4 @@
-package org.demo.documentation.other.postAction;
+package org.demo.documentation.widgets.property.excel.postAction.base;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

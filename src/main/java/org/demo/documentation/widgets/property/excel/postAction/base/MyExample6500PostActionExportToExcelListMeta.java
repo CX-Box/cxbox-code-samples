@@ -1,4 +1,4 @@
-package org.demo.documentation.other.postAction;
+package org.demo.documentation.widgets.property.excel.postAction.base;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

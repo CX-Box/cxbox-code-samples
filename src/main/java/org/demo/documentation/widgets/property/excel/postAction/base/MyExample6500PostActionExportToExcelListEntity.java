@@ -1,4 +1,4 @@
-package org.demo.documentation.other.postAction;
+package org.demo.documentation.widgets.property.excel.postAction.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
