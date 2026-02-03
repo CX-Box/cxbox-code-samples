@@ -39,7 +39,7 @@ public class MyExample3011Meta extends FieldMetaBuilder<MyExample3011DTO> {
         fields.setEnumFilterValues(fields,MyExample3011DTO_.customFieldPickList,CustomFieldDictionaryEnum.values());
         fields.setEnumFilterValues(fields,MyExample3011DTO_.customFieldDictionary,CustomFieldDictionaryEnum.values());
 
-        fields.setAllValuesWithIcons(MyExample3011DTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
+        fields.setEnumIcons(MyExample3011DTO_.customFieldDictionary, CustomFieldDictionaryEnum.iconMap());
         fields.setEnumValues(MyExample3011DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
     }
     // --8<-- [end:buildIndependentMeta]
