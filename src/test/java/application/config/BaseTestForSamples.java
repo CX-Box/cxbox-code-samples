@@ -7,13 +7,13 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.codeborne.selenide.proxy.SelenideProxyServerFactory;
 import com.google.auto.service.AutoService;
+import core.config.AppChecks;
 import core.config.TestApplicationContext;
 import core.config.allure.AbstractAllureDescAppender;
 import core.config.junit.AllurePerTestLog;
 import core.config.junit.JvmStatsPerTest;
 import core.config.selenide.AbstractLoggingProxyServer;
 import core.config.selenide.AllureVideoRecorder;
-import core.page.auth.CxboxAppReadyCheck;
 import core.page.auth.keycloak.KeycloackAuthPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
@@ -93,6 +93,8 @@ public abstract class BaseTestForSamples {
 						.savePageSource(true)
 		);
 //		SelenideHighlightSetup.registerAllHighlightedCommands();
+		AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
+
 
 	}
 
@@ -139,9 +141,7 @@ public abstract class BaseTestForSamples {
 		Allure.step(
 				"Logout and login from scratch", step -> {
 					logTime(step);
-					CxboxAppReadyCheck cxboxAppReadyCheck = new CxboxAppReadyCheck();
-					cxboxAppReadyCheck.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
-					Selenide.open(cxboxAppReadyCheck.appReady(Env.uri()));
+					Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
 		);

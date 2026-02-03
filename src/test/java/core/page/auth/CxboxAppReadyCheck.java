@@ -3,7 +3,6 @@ package core.page.auth;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.config.AppChecks;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,7 @@ public class CxboxAppReadyCheck extends AppReadyCheck {
 	@Override
 	@SneakyThrows
 	public String appReady(URI uri) {
-		log.debug("app server url: {}", uri);
+		log.error("app server url: {}", uri);
 		var authConfigUri = new Request.Builder()
 				.url(uri.getScheme() + "://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "")
 						+ "/api/v1/auth/oidc.json")
@@ -34,7 +33,7 @@ public class CxboxAppReadyCheck extends AppReadyCheck {
 		var client = new OkHttpClient.Builder().build();
 		try (var rs = client.newCall(authConfigUri).execute()) {
 			if (rs.body() != null) {
-				var cfg = objectMapper.readValue(rs.body().string(), AppChecks.AuthConfig.class);
+				var cfg = objectMapper.readValue(rs.body().string(), AuthConfig.class);
 				log.debug("Auth server url: {}", cfg.authServerUrl());
 				var authUri = new URI(cfg.authServerUrl());
 				String logoutUri =
