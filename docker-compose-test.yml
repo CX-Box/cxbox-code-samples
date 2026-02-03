@@ -21,8 +21,8 @@ services:
   cxbox-code-samples-test:
     build: ./
     environment:
-      FRONTEND_AUTH_SERVER_URL: 'cxbox-code-samples-nginx'
-      BACKEND_AUTH_SERVER_URL: 'cxbox-code-samples-nginx'
+      FRONTEND_AUTH_SERVER_URL: 'http://cxbox-code-samples-nginx/auth'
+      BACKEND_AUTH_SERVER_URL: 'http://cxbox-code-samples-nginx/auth'
       HIBERNATE_DDL_AUTO: 'update'
       DEV_PANEL_ENABLED: 'true'
       META_DIRECTORY: 'classpath:meta'
