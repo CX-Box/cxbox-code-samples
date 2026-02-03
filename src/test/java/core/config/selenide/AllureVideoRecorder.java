@@ -22,17 +22,17 @@ import org.selenide.videorecorder.junit5.VideoRecorderExtension;
 @ThreadSafe
 public class AllureVideoRecorder extends VideoRecorderExtension {
 
-    @Override
-    protected void afterTestExecution(ExtensionContext context, boolean testFailed) {
-        super.afterTestExecution(context, testFailed);
-        if (testFailed) {
-            VideoRecorderExtension.getRecordedVideo().ifPresent(video -> Allure.addAttachment(
-                    "Video",
-                    "video/webm",
-                    FileUtil.newInputStreamSneaky(video),
-                    ".webm"
-            ));
-        }
-    }
+	@Override
+	protected void afterTestExecution(ExtensionContext context, boolean testFailed) {
+		super.afterTestExecution(context, testFailed);
+		if (testFailed) {
+			VideoRecorderExtension.getRecordedVideo().ifPresent(video -> Allure.addAttachment(
+					"Video",
+					"video/webm",
+					FileUtil.newInputStreamSneaky(video),
+					".webm"
+			));
+		}
+	}
 
 }

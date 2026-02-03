@@ -1,10 +1,5 @@
 package core.config.selenide;
 
-import static core.config.selenide.AbstractLoggingProxyServer.HttpUtils.addQueryParam;
-import static core.config.selenide.AbstractLoggingProxyServer.HttpUtils.getQueryParam;
-import static core.config.selenide.AbstractLoggingProxyServer.HttpUtils.rqString;
-import static core.config.selenide.AbstractLoggingProxyServer.HttpUtils.rsString;
-
 import com.browserup.bup.filters.RequestFilter;
 import com.browserup.bup.filters.ResponseFilter;
 import com.browserup.bup.util.HttpMessageContents;
@@ -12,21 +7,7 @@ import com.browserup.bup.util.HttpMessageInfo;
 import com.codeborne.selenide.Config;
 import com.codeborne.selenide.proxy.SelenideProxyServer;
 import com.codeborne.selenide.proxy.SelenideProxyServerFactory;
-import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpRequest;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.QueryStringDecoder;
-import io.netty.handler.codec.http.QueryStringEncoder;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
+import io.netty.handler.codec.http.*;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -35,8 +16,16 @@ import net.jcip.annotations.ThreadSafe;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Proxy;
 
+import java.net.URI;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import static core.config.selenide.AbstractLoggingProxyServer.HttpUtils.*;
+
+
 /**
- * {@code AbstractProxyServer} is a base class for creating a custom {@link com.codeborne.selenide.proxy.SelenideProxyServer}
+ * {@code AbstractProxyServer} is a base class for creating a custom {@link SelenideProxyServer}
  * that logs HTTP traffic in Selenide-based tests.
  * <p>
  * It allows you to intercept HTTP requests and responses based on a URL predicate, and log them using your logic (without using RAM hungry HAR capture).
@@ -44,7 +33,7 @@ import org.openqa.selenium.Proxy;
  *
  * <h2>Logging Behavior</h2>
  * <ul>
- *   <li>Each request and response is logged if its URL matches a provided {@link java.util.function.Predicate}.</li>
+ *   <li>Each request and response is logged if its URL matches a provided {@link Predicate}.</li>
  *   <li>The logged output includes the HTTP method, URL, status code (for responses), and body if present.</li>
  *   <li>A unique {@code X-UUID} query parameter is added to the request URL and reused when logging the matching response.</li>
  * </ul>
@@ -94,122 +83,121 @@ import org.openqa.selenium.Proxy;
  * which spawns each test in a separate JVM process. This setup guarantees no log mixing between tests.
  *
  * @see ProxyLogFilter for request/response matching and log formatting
- * @see com.codeborne.selenide.proxy.SelenideProxyServer for proxy integration
+ * @see SelenideProxyServer for proxy integration
  */
 @ThreadSafe
 public abstract class AbstractLoggingProxyServer implements SelenideProxyServerFactory {
 
-    private final Map<String, ProxyLogFilter> loggers;
+	private final Map<String, ProxyLogFilter> loggers;
 
-    public AbstractLoggingProxyServer(@NonNull Map<String, ProxyLogFilter> loggers) {
-        this.loggers = loggers;
-    }
+	public AbstractLoggingProxyServer(@NonNull Map<String, ProxyLogFilter> loggers) {
+		this.loggers = loggers;
+	}
 
-    @NotNull
-    @Override
-    public SelenideProxyServer create(@NonNull Config config, @Nullable Proxy userProvidedProxy) {
-        var proxy = new SelenideProxyServer(config, userProvidedProxy);
-        loggers.forEach((name, logger) -> {
-            proxy.addRequestFilter(name, logger);
-            proxy.addResponseFilter(name, logger);
-        });
-        proxy.start();
-        return proxy;
-    }
+	@NotNull
+	@Override
+	public SelenideProxyServer create(@NonNull Config config, @Nullable Proxy userProvidedProxy) {
+		var proxy = new SelenideProxyServer(config, userProvidedProxy);
+		loggers.forEach((name, logger) -> {
+			proxy.addRequestFilter(name, logger);
+			proxy.addResponseFilter(name, logger);
+		});
+		proxy.start();
+		return proxy;
+	}
 
-    @Slf4j
-    public static class ProxyLogFilter implements ResponseFilter, RequestFilter {
+	@Slf4j
+	public static class ProxyLogFilter implements ResponseFilter, RequestFilter {
 
-        private final Predicate<String> urlPredicate;
-        private final Consumer<String> rqConsumer;
+		public static final String X_UUID = "x-uuid";
+		private final Predicate<String> urlPredicate;
+		private final Consumer<String> rqConsumer;
 
-        public ProxyLogFilter(Predicate<String> urlPredicate, Consumer<String> rqConsumer) {
-            this.urlPredicate = urlPredicate;
-            this.rqConsumer = rqConsumer;
-        }
+		public ProxyLogFilter(Predicate<String> urlPredicate, Consumer<String> rqConsumer) {
+			this.urlPredicate = urlPredicate;
+			this.rqConsumer = rqConsumer;
+		}
 
-        public static final String X_UUID = "x-uuid";
+		@Override
+		public HttpResponse filterRequest(HttpRequest rq, HttpMessageContents rqContents, HttpMessageInfo messageInfo) {
+			var method = messageInfo.getOriginalRequest().method();
+			var url = rq.uri();
+			if (urlPredicate.test(url)) {
+				var uuid = UUID.randomUUID().toString();
+				rqConsumer.accept(rqString(uuid, url, method, rqContents));
+				rq.setUri(addQueryParam(rq.uri(), X_UUID, uuid));
+			}
+			return null;
+		}
 
-        @Override
-        public HttpResponse filterRequest(HttpRequest rq, HttpMessageContents rqContents, HttpMessageInfo messageInfo) {
-            var method = messageInfo.getOriginalRequest().method();
-            var url = rq.uri();
-            if (urlPredicate.test(url)) {
-                var uuid = UUID.randomUUID().toString();
-                rqConsumer.accept(rqString(uuid, url, method, rqContents));
-                rq.setUri(addQueryParam(rq.uri(), X_UUID, uuid));
-            }
-            return null;
-        }
+		@Override
+		public void filterResponse(HttpResponse rs, HttpMessageContents rsContents, HttpMessageInfo rsMessageInfo) {
+			var method = rsMessageInfo.getOriginalRequest().method();
+			var url = rsMessageInfo.getOriginalUrl(); //without added X_UUID
+			if (urlPredicate.test(url)) {
+				var uuid = HttpUtils.getQueryParam(rsMessageInfo.getUrl(), X_UUID);
+				rqConsumer.accept(rsString(uuid, url, method, rs, rsContents));
+			}
+		}
 
-        @Override
-        public void filterResponse(HttpResponse rs, HttpMessageContents rsContents, HttpMessageInfo rsMessageInfo) {
-            var method = rsMessageInfo.getOriginalRequest().method();
-            var url = rsMessageInfo.getOriginalUrl(); //without added X_UUID
-            if (urlPredicate.test(url)) {
-                var uuid = getQueryParam(rsMessageInfo.getUrl(), X_UUID);
-                rqConsumer.accept(rsString(uuid, url, method, rs, rsContents));
-            }
-        }
+	}
 
-    }
+	public static class HttpUtils {
 
-    public static class HttpUtils {
+		@NonNull
+		public static String rqString(
+				@Nullable String uuid,
+				@NonNull String url,
+				@NonNull HttpMethod method,
+				@Nullable HttpMessageContents rqContents) {
+			return "\nRequest: " + uuid + " " +
+					"\n" + method + " " + url +
+					Optional.ofNullable(rqContents)
+							.map(HttpMessageContents::getTextContents)
+							.map(s -> !s.isBlank() ? "\nRequest Body: " + s : "")
+							.orElse("") +
+					"\n";
+		}
 
-        @NonNull
-        public static String rqString(
-                @Nullable String uuid,
-                @NonNull String url,
-                @NonNull HttpMethod method,
-                @Nullable HttpMessageContents rqContents) {
-            return "\nRequest: " + uuid + " " +
-                    "\n" + method + " " + url +
-                    Optional.ofNullable(rqContents)
-                            .map(HttpMessageContents::getTextContents)
-                            .map(s -> !s.isBlank() ? "\nRequest Body: " + s : "")
-                            .orElse("") +
-                    "\n";
-        }
+		@NonNull
+		public static String rsString(
+				@Nullable String uuid,
+				@NonNull String url,
+				@NonNull HttpMethod method,
+				@NonNull HttpResponse rs,
+				@Nullable HttpMessageContents rsContents) {
+			return "\nResponse: " + uuid + " " +
+					"\n" + method.name() + " " + url +
+					"\n" + rs.status() +
+					Optional.ofNullable(rsContents)
+							.map(HttpMessageContents::getTextContents)
+							.map(s -> !s.isBlank() ? "\nResponse Body: " + s : "")
+							.orElse("") +
+					"\n";
+		}
 
-        @NonNull
-        public static String rsString(
-                @Nullable String uuid,
-                @NonNull String url,
-                @NonNull HttpMethod method,
-                @NonNull HttpResponse rs,
-                @Nullable HttpMessageContents rsContents) {
-            return "\nResponse: " + uuid + " " +
-                    "\n" + method.name() + " " + url +
-                    "\n" + rs.status() +
-                    Optional.ofNullable(rsContents)
-                            .map(HttpMessageContents::getTextContents)
-                            .map(s -> !s.isBlank() ? "\nResponse Body: " + s : "")
-                            .orElse("") +
-                    "\n";
-        }
+		@NonNull
+		@SneakyThrows
+		public static String addQueryParam(@NonNull String url, @NonNull String key, @Nullable String value) {
+			var uri = new URI(url);
+			var decoder = new QueryStringDecoder(uri);
+			var encoder = new QueryStringEncoder(decoder.path());
+			if (decoder.parameters() != null) {
+				decoder.parameters().forEach((k, v) -> v.forEach(val -> encoder.addParam(k, val)));
+			}
+			encoder.addParam(key, value);
+			var portPart = (uri.getPort() == -1) ? "" : ":" + uri.getPort();
+			return uri.getScheme() + "://" + uri.getHost() + portPart + encoder;
+		}
 
-        @NonNull
-        @SneakyThrows
-        public static String addQueryParam(@NonNull String url, @NonNull String key, @Nullable String value) {
-            var uri = new URI(url);
-            var decoder = new QueryStringDecoder(uri);
-            var encoder = new QueryStringEncoder(decoder.path());
-            if (decoder.parameters() != null) {
-                decoder.parameters().forEach((k, v) -> v.forEach(val -> encoder.addParam(k, val)));
-            }
-            encoder.addParam(key, value);
-            var portPart = (uri.getPort() == -1) ? "" : ":" + uri.getPort();
-            return uri.getScheme() + "://" + uri.getHost() + portPart + encoder;
-        }
+		@Nullable
+		@SneakyThrows
+		public static String getQueryParam(@NonNull String uri, @NonNull String paramName) {
+			var parameters = new QueryStringDecoder(uri).parameters();
+			var vals = parameters != null ? parameters.get(paramName) : new ArrayList<String>();
+			return vals != null ? vals.stream().filter(Objects::nonNull).findFirst().orElse(null) : null;
+		}
 
-        @Nullable
-        @SneakyThrows
-        public static String getQueryParam(@NonNull String uri, @NonNull String paramName) {
-            var parameters = new QueryStringDecoder(uri).parameters();
-            var vals = parameters != null ? parameters.get(paramName) : new ArrayList<String>();
-            return vals != null ? vals.stream().filter(Objects::nonNull).findFirst().orElse(null) : null;
-        }
-
-    }
+	}
 
 }
