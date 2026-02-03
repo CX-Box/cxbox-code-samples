@@ -1,0 +1,49 @@
+{
+  "name": "legalEntityListManagingAuthorityEdit",
+  "title": "Органы управления",
+  "type": "List",
+  "bc": "editManagingAuthority",
+  "fields": [
+    {
+      "title": "Тип",
+      "key": "partyType",
+      "type": "input",
+      "width": 100
+    },
+    {
+      "title": "ФИО/Наименование",
+      "key": "partyName",
+      "type": "input",
+      "drillDown": true,
+      "width": 100
+    },
+    {
+      "title": "ИНН",
+      "key": "partyInn",
+      "type": "input",
+      "width": 100
+    },
+    {
+      "title": "Орган управления",
+      "key": "types",
+      "type": "multipleSelect",
+      "width": 100
+    },
+    {
+      "title": "Иной орган",
+      "key": "otherType",
+      "type": "input",
+      "width": 100
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "deleteManagingAuthorityEdit",
+        "save"
+      ],
+      "defaultSave": "save"
+    }
+  }
+}

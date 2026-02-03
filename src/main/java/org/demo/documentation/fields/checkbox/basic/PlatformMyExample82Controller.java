@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.fields.checkbox.basic.EditManagingAuthorityService;
 import org.springframework.stereotype.Component;
 
 
@@ -13,7 +14,8 @@ public enum PlatformMyExample82Controller implements EnumBcIdentifier {
 
 
 	// --8<-- [start:bc]
-	myExampleBc82(MyExample82Service.class);
+	myExampleBc82(MyExample82Service.class),
+	editManagingAuthority(EditManagingAuthorityService.class);
 	// --8<-- [end:bc]
 
 
