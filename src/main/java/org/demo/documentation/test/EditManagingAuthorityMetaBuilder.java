@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.checkbox.basic;
+package org.demo.documentation.test;
 
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -26,7 +26,7 @@ public class EditManagingAuthorityMetaBuilder extends FieldMetaBuilder<EditManag
 		fields.setEnabled(EditManagingAuthorityDTO_.partyName);
 		fields.setEnabled(EditManagingAuthorityDTO_.partyType);
 		fields.setEnabled(
-				org.demo.documentation.fields.checkbox.basic.EditManagingAuthorityDTO_.id
+				EditManagingAuthorityDTO_.id
 		);
 	}
 
@@ -41,10 +41,10 @@ public class EditManagingAuthorityMetaBuilder extends FieldMetaBuilder<EditManag
 		fields.enableFilter(EditManagingAuthorityDTO_.partyName);
 		fields.enableFilter(EditManagingAuthorityDTO_.partyType);
 		fields.enableFilter(
-				org.demo.documentation.fields.checkbox.basic.EditManagingAuthorityDTO_.id
+				EditManagingAuthorityDTO_.id
 		);
 		fields.enableSort(
-				org.demo.documentation.fields.checkbox.basic.EditManagingAuthorityDTO_.id
+				EditManagingAuthorityDTO_.id
 		);
 	}
 

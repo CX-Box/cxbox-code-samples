@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.checkbox.basic;
+package org.demo.documentation.test;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -20,6 +20,9 @@ import java.util.Set;
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class EditManagingAuthority extends BaseEntity {
 
+	@ManyToOne
+	@JoinColumn(name = "PARTY_ID")
+	private EditLegalEntity party;
 
 	@Column
 	private String partyType;

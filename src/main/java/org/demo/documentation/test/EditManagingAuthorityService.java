@@ -1,6 +1,7 @@
-package org.demo.documentation.fields.checkbox.basic;
+package org.demo.documentation.test;
 
 
+import jakarta.persistence.criteria.Root;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -10,8 +11,8 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.fields.checkbox.basic.enums.TypesEnum;
-import org.demo.repository.core.EditManagingAuthorityRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,15 @@ public class EditManagingAuthorityService extends VersionAwareResponseService<Ed
 	protected Specification<EditManagingAuthority> getSpecification(BusinessComponent bc) {
 		return super.getSpecification(bc);
 	}
-
+	@Override
+	protected Specification<EditManagingAuthority> getParentSpecification(BusinessComponent bc) {
+		return (root, cq, cb) -> {
+			Root<EditManagingAuthority> rootManagingAuthority = cb.treat(root, EditManagingAuthority.class);
+			return cb.and(
+					cb.equal(rootManagingAuthority.get(EditManagingAuthority_.party).get(BaseEntity_.ID), bc.getParentIdAsLong())
+			);
+		};
+	}
 	@Override
 	protected CreateResult<EditManagingAuthorityDTO> doCreateEntity(EditManagingAuthority entity, BusinessComponent bc) {
 		return new CreateResult<>(entityToDto(bc, editManagingAuthorityRepository.save(entity)));

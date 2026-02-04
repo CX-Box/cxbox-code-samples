@@ -1,4 +1,4 @@
-package org.demo.documentation.fields.checkbox.basic;
+package org.demo.documentation.test;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
