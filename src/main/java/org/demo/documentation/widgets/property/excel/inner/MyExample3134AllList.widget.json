@@ -1,9 +1,19 @@
 {
   "name": "MyExample3134AllList",
-  "title": "Widget property Excel inner source - List (all fields)",
+  "title": "Widget property export Excel inner source - List (all fields)",
   "type": "List",
   "bc": "myexample3134",
   "fields": [
+    {
+      "title": "Custom Field suggestionPickList",
+      "key": "customFieldSuggectionPickList",
+      "type": "suggestionPickList",
+      "popupBcName": "myEntity3134SuggectionPickPick",
+      "pickMap": {
+        "customFieldSuggectionPickList": "customField",
+        "customFieldSuggectionPickListId": "id"
+      }
+    },
     {
       "title": "Custom Field Multivalue Hover",
       "key": "customFieldMultivalueHover",
@@ -153,6 +163,14 @@
     }
   ],
   "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete",
+        "save",
+        "customExportToExcel"
+      ]
+    },
     "export": {
       "enabled": true,
       "title": "Custom Name"

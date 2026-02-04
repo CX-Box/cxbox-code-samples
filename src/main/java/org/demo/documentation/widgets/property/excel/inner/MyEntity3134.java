@@ -9,10 +9,7 @@ import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldCurr
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldRadioEnum;
-import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134InlinePick;
-import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134Multi;
-import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134MultiHover;
-import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134Pick;
+import org.demo.documentation.widgets.property.excel.inner.forfields.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,7 +51,7 @@ public class MyEntity3134 extends BaseEntity {
     @Column
     private CustomFieldRadioEnum customFieldRadio;
     @Column
-    private Double customFieldMoney=10000.0;
+    private Double customFieldMoney = 10000.0;
     @JoinColumn(name = "CUSTOM_FIELD_INLINE_ID")
     @ManyToOne
     private MyEntity3134InlinePick customFieldInlineEntity;
@@ -62,9 +59,9 @@ public class MyEntity3134 extends BaseEntity {
     @ManyToOne
     private MyEntity3134Pick customFieldPickListEntity;
     @Column
-    private Long customFieldPercent=0L;
+    private Long customFieldPercent = 0L;
     @Column
-    private Long customFieldNumber=0L;
+    private Long customFieldNumber = 0L;
     @Column
     private String customFieldFileUpload;
     @Column
@@ -85,10 +82,14 @@ public class MyEntity3134 extends BaseEntity {
     @Column
     private String customFieldHidden;
     @Column
-    private Double customFieldMoneyWithCurrencyConst=10000.0;
+    private Double customFieldMoneyWithCurrencyConst = 10000.0;
     @Enumerated(value = EnumType.STRING)
     @Column
     private CustomFieldCurrencyDictionaryEnum customFieldCurrencyDictionary;
     @Column
-    private Double customFieldMoneyWithCurrencyDynamic=10000.0;
+    private Double customFieldMoneyWithCurrencyDynamic = 10000.0;
+
+    @JoinColumn(name = "CUSTOM_FIELD_SUGGECTION_PICK_LIST_ID")
+    @ManyToOne
+    private MyEntity3134SuggectionPick customFieldSuggectionPickListEntity;
 }
