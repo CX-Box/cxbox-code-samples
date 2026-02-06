@@ -7,6 +7,7 @@ import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -57,8 +58,8 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.screen("Dictionary enum readonly")
 				.secondLevelView("Form")
 				.form("Form title");
-		form.dictionary("Custom Field")
-				.checkReadOnly(readonly -> assertThat(readonly).isTrue());
+		form.dictionary("Custom Field").checkReadOnly(ro -> Assertions.assertThat(ro).isTrue());
+
 	}
 
 	@Test
@@ -72,6 +73,9 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.dictionary("Custom Field")
 				.setValue("Tver region");
+
+		form.dictionary("Custom Field").checkValue(val->assertThat(val).isEqualTo("Tver region"));
+
 	}
 
 	@Test

@@ -16,10 +16,9 @@ public interface ReadOnlyCheckable<W extends AbstractWidget<ExpectationPattern, 
 	default SELF checkReadOnly(Consumer<Boolean> expectedReadOnly) {
 		return Allure.step("Checking the field for \"ReadOnly\"", step -> {
 			logTime(step);
-			Boolean disabled = element().shouldBe(Condition.exist)
-					.$(valueTag())
-					.has(Condition.attribute("disabled"));
-			expectedReadOnly.accept(disabled);
+		 		boolean disabled = element().$("input")
+						.has(Condition.attribute("disabled"));
+				expectedReadOnly.accept(disabled);
 			return (SELF) this;
 		});
 	}

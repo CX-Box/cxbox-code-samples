@@ -65,7 +65,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
 			return "div[data-test-field-value=\"true\"]";
 		}
-		return super.valueTag();
+		return "[data-test-field-dictionary-item=\"true\"]";
 	}
 
 	@Override

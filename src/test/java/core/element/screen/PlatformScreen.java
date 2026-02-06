@@ -3,10 +3,7 @@ package core.element.screen;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import core.element.screen.view.AbstractView;
-import core.element.screen.view.PlatformView;
-import core.element.screen.view.SecondLevelMenu;
-import core.element.screen.view.ThirdLevelMenu;
+import core.element.screen.view.*;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +45,10 @@ public class PlatformScreen extends AbstractScreen {
 
 	public PlatformView thirdLevelView(String name) {
 		return new ThirdLevelMenu().view(name);
+	}
+
+	public PlatformView fourthLevelView(String name) {
+		return new FourthLevelMenu().view(name);
 	}
 
 	public <T extends AbstractView> T view(Supplier<T> viewSupplier) {

@@ -265,5 +265,23 @@ public class PickListOnListTest extends BaseTestForSamples {
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
 	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Open Picklist With RequiredFields")
+	@Description("Checking the picklist behavior when required fields are present on the widget: the picklist should open.")
+	void openPicklistWithRequiredFields() {
+		var list = PlatformApp.screen("PickListPopup widget picklist create with parent")
+				.view().listInline("List");
+		list.actions().action("Create").click();
+
+		var form = PlatformApp.screen("PickListPopup widget picklist create with parent").secondLevelView("Picklist With Required Fields").form("Form Requred field");
+		form.pickList("Custom Field").setValue("Custom Field", "test data");
+
+		var row = list.rows().clickRow(0);
+		row.burgerAction("Save").click();
+	}
+
 }
 
