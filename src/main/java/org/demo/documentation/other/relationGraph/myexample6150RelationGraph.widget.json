@@ -1,0 +1,74 @@
+{
+  "name": "myexample6150RelationGraph",
+  "title": "Title",
+  "type": "RelationGraph",
+  "bc": "myexample6150",
+  "fields": [
+    {
+      "title": "id",
+      "key": "id",
+      "type": "input"
+    },
+    {
+      "title": "Source Id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Node Id",
+      "key": "targetNodeId",
+      "type": "input",
+      "bgColorKey": "targetNodeBgColorKey"
+    },
+    {
+      "title": "Target Node Type",
+      "key": "targetNodeType",
+      "type": "dictionary"
+    },
+    {
+      "title": "Target Node Name",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "NodeDescription",
+      "key": "targetNodeDescription",
+      "type": "input"
+    },
+    {
+      "title": "Edge Description",
+      "key": "edgeDescription",
+      "type": "input"
+    },
+    {
+      "title": "Edge Value",
+      "key": "edgeValue",
+      "type": "input",
+      "bgColorKey": "edgeValueBgColorKey",
+      "drilldown": true
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "mode": "TB",
+      "dragNode": true,
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeDescription",
+          "edgeValue"
+        ],
+        "type": "polyline"
+      }
+    },
+    "actionGroups": {
+      "include": [
+      ]
+    }
+  }
+}
+
