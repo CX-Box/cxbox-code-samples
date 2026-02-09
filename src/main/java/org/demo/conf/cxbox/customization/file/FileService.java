@@ -4,6 +4,7 @@ import io.minio.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.jetbrains.annotations.NotNull;
@@ -31,16 +32,9 @@ public class FileService implements CxboxFileService {
 	public <D extends FileDownloadDto> String upload(@NonNull D file, @Nullable String source) {
 		var contentType = file.getType();
 		var name = file.getName();
-		ObjectWriteResponse objectWriteResponse = minioClient.putObject(PutObjectArgs
-				.builder()
-				.bucket(defaultBucketName)
-				.object(UUID.randomUUID().toString())
-				.contentType(contentType)
-				.userMetadata(Collections.singletonMap(FILENAME_FIELD, name))
-				.stream(file.getContent().get(), -1, FIVE_MIB)
-				.build()
-		);
-		return objectWriteResponse.object();
+
+		throw new BusinessException().addPopup("file upload failed");
+
 	}
 
 	@SneakyThrows
