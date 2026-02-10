@@ -4,6 +4,8 @@ import io.minio.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.cxbox.core.dto.rowmeta.converter.FileConverterService;
+import org.cxbox.core.file.dto.FileConverterDto;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +28,8 @@ public class FileService implements CxboxFileService {
 	@Value("${minio.bucket.name}")
 	private final String defaultBucketName;
 
+	private final FileConverterService fileConverterService;
+
 	@SneakyThrows
 	@Override
 	public <D extends FileDownloadDto> String upload(@NonNull D file, @Nullable String source) {
@@ -41,6 +45,11 @@ public class FileService implements CxboxFileService {
 				.build()
 		);
 		return objectWriteResponse.object();
+	}
+
+	@Override
+	public FileConverterDto convert(@NonNull FileDownloadDto file, @Nullable String convertTo) {
+		return fileConverterService.convert(file, convertTo);
 	}
 
 	@SneakyThrows

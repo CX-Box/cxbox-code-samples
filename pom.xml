@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.cxbox</groupId>
         <artifactId>cxbox-starter-parent</artifactId>
-        <version>4.0.0-M22-SNAPSHOT</version> <!-- based on spring-boot-starter-parent 3.5.7-->
+        <version>4.0.0-M22-CXBOX-1139-3-SNAPSHOT</version> <!-- based on spring-boot-starter-parent 3.5.7-->
         <relativePath/><!-- lookup parent from repository -->
     </parent>
 
@@ -186,6 +186,43 @@
             <version>${zip4j.version}</version>
         </dependency>
 
+        <!-- Конвертер (тянет за собой xdocreport-core) -->
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.poi.xwpf.converter.pdf</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+
+        <!-- Apache POI для работы с .docx -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
+        <!-- Обязательно для POI 5.x: полные схемы XML -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-full</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-core</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-all-deps</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.29</version>
+        </dependency>
+
         <!--cxbox dependencies-->
         <dependency>
             <groupId>org.cxbox</groupId>
@@ -271,6 +308,12 @@
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.4.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
