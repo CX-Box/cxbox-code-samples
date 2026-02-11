@@ -40,6 +40,7 @@ import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static core.element.widget.AbstractWidget.logTime;
 
 /**
@@ -143,14 +144,15 @@ public abstract class BaseTestForSamples {
 
 	@BeforeEach
 	public void beforeEach()  {
-		Allure.step("Login ", step -> {
-			logTime(step);
-			open(Env.uri().toURL());
-			if (isLoginPage()) {
-				new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
-			}
-			Selenide.sleep(Duration.ofMillis(500L).toMillis());
-		});
+		Allure.step(
+				"Logout and login from scratch", step -> {
+					logTime(step);
+					Selenide.closeWebDriver();
+					open(Env.uri().toURL());
+					//Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
+					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
+				}
+		);
 
 	}
 
