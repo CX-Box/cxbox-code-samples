@@ -149,6 +149,7 @@ public abstract class BaseTestForSamples {
 					logTime(step);
 					Selenide.closeWebDriver();
 					open(Env.uri().toURL());
+					log.info("Opening URL: {}", Env.uri().toURL());
 					//Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
