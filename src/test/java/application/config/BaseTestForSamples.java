@@ -32,10 +32,13 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.selenide.videorecorder.core.RecordingMode;
 import org.selenide.videorecorder.core.VideoSaveMode;
 
+import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.logging.Level;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static core.element.widget.AbstractWidget.logTime;
 
 /**
@@ -138,16 +141,17 @@ public abstract class BaseTestForSamples {
 	}
 
 	@BeforeEach
-	public void beforeEach() {
-		Allure.step(
-				"Logout and login from scratch", step -> {
-					logTime(step);
+	public void beforeEach() throws MalformedURLException {
+		open(Env.uri().toURL());
 
-					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
-				}
-		);
+		if (isLoginPage()) {
+			new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
+		}
 	}
 
+	boolean isLoginPage() {
+		return $("input[name='username']").exists();
+	}
 
 	@SuppressWarnings("unused")
 	@AutoService(SelenideProxyServerFactory.class)
