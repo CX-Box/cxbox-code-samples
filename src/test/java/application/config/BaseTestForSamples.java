@@ -144,12 +144,12 @@ public abstract class BaseTestForSamples {
 	@BeforeEach
 	public void beforeEach()  {
 		Allure.step("Login ", step -> {
-			open(Env.uri().toURL());
 			logTime(step);
+			open(Env.uri().toURL());
 			if (isLoginPage()) {
 				new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 			}
-			;
+			Selenide.sleep(Duration.ofMillis(500L).toMillis());
 		});
 
 	}
