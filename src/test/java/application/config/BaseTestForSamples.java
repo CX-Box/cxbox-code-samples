@@ -143,7 +143,7 @@ public abstract class BaseTestForSamples {
 	}
 
 	@BeforeEach
-	public void beforeEach()  {
+	public void beforeEach() {
 		Allure.step(
 				"Logout and login from scratch", step -> {
 					logTime(step);
@@ -151,7 +151,6 @@ public abstract class BaseTestForSamples {
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
 		);
-
 	}
 
 	boolean isLoginPage() {
