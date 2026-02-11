@@ -142,7 +142,7 @@ public abstract class BaseTestForSamples {
 		Allure.step(
 				"Logout and login from scratch", step -> {
 					logTime(step);
-					Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
+
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
 		);
