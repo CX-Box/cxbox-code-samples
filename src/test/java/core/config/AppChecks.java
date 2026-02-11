@@ -43,7 +43,7 @@ public class AppChecks {
 				String logoutUri =
 						authUri.getScheme() + "://" + authUri.getHost() + (authUri.getPort() != -1 ? ":" + authUri.getPort() : "")
 								+ "/auth/realms/" + cfg.realm() + "/protocol/openid-connect/logout"
-								+ "?redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8);
+								+ "?redirect_uri=http://code-samples.cxbox.org/ui/#/";
 				log.debug("logout uri: {}", logoutUri);
 				return logoutUri;
 			}
