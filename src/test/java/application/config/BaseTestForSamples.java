@@ -2,6 +2,7 @@ package application.config;
 
 
 import application.config.props.Env;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -141,12 +142,16 @@ public abstract class BaseTestForSamples {
 	}
 
 	@BeforeEach
-	public void beforeEach() throws MalformedURLException {
-		open(Env.uri().toURL());
+	public void beforeEach()  {
+		Allure.step("Login ", step -> {
+			open(Env.uri().toURL());
+			logTime(step);
+			if (isLoginPage()) {
+				new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
+			}
+			;
+		});
 
-		if (isLoginPage()) {
-			new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
-		}
 	}
 
 	boolean isLoginPage() {
