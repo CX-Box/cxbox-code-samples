@@ -124,7 +124,8 @@ public abstract class BaseTestForSamples {
 				"--safebrowsing-disable-auto-update",
 				"--no-first-run",
 				"--no-default-browser-check",
-				"--disable-translate"
+				"--disable-translate",
+				"--disable-features=OptimizationHints,OptimizationGuideModelDownloading"
 		);
 		options.setAcceptInsecureCerts(true);
 		if (Env.logEnabled()) {
