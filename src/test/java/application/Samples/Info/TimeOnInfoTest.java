@@ -39,11 +39,11 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 		var info = PlatformApp.screen("Time base")
 				.secondLevelView("Info")
 				.info("Info title");
-		var customFieldHHmmSS = info.time("Custom Field h:mm:ss", "HH:mm:ss");
-		var customFieldHH = info.time("Custom Fieldh", "HH");
-		var customFieldHmm = info.time("Custom Field h:mm", "HH:mm");
-		var customFieldHmmA = info.time("Custom Field h:mm A", "h:mm a");
-		var customFieldHmmSSA = info.time("Custom Field h:mm:ss A", "hh:mm:ss a");
+		var customFieldHHmmSS = info.time("HH:mm:ss", "HH:mm:ss");
+		var customFieldHH = info.time("HH", "HH");
+		var customFieldHmm = info.time("HH:mm", "HH:mm");
+		var customFieldHmmA = info.time("hh:mm A", "h:mm a");
+		var customFieldHmmSSA = info.time("hh:mm:ss A", "hh:mm:ss a");
 		customFieldHHmmSS.checkValue(value -> assertThat(value).isEqualTo(LocalDate.MIN.atTime(11, 54, 25)));
 		customFieldHH.checkValue(value -> assertThat(value).isEqualTo(LocalDate.MIN.atTime(11, 0)));
 		customFieldHmm.checkValue(value -> assertThat(value).isEqualTo(LocalDate.MIN.atTime(11, 54)));

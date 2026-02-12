@@ -37,9 +37,9 @@ public class TimeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		LocalDateTime from = LocalDateTime.of(LocalDate.MIN, LocalTime.now().minusHours(8));
 		LocalDateTime to = LocalDateTime.of(LocalDate.MIN, LocalTime.now().minusHours(6));
-		list.headers().filter(fb -> fb.timeFromTo("Custom Field h:mm", from, to, "HH:mm"));
+		list.headers().filter(fb -> fb.timeFromTo("HH:mm", from, to, "HH:mm"));
 		var values = list.rows().streamCurrentPage()
-				.map(r -> r.time("Custom Field h:mm", "HH:mm").getValue())
+				.map(r -> r.time("HH:mm", "HH:mm").getValue())
 				.toList();
 		assertThat(values).isNotEmpty();
 		assertThat(values.size()).isEqualTo(1);
@@ -101,11 +101,11 @@ public class TimeOnListTest extends BaseTestForSamples {
 		var customValHmmA = (LocalDate.MIN.atTime(11, 54));
 		var customValHmmSSA = (LocalDate.MIN.atTime(11, 54, 25));
 
-		var customFieldHHmmSS = row.time("Custom Field h:mm:ss", "HH:mm:ss");
-		var customFieldHH = row.time("Custom Fieldh", "HH");
-		var customFieldHmm = row.time("Custom Field h:mm", "HH:mm");
-		var customFieldHmmA = row.time("Custom Field h:mm A", "h:mm a");
-		var customFieldHmmSSA = row.time("Custom Field h:mm:ss A", "hh:mm:ss a");
+		var customFieldHHmmSS = row.time("HH:mm:ss", "HH:mm:ss");
+		var customFieldHH = row.time("HH", "HH");
+		var customFieldHmm = row.time("HH:mm", "HH:mm");
+		var customFieldHmmA = row.time("hh:mm A", "h:mm a");
+		var customFieldHmmSSA = row.time("hh:mm:ss A", "hh:mm:ss a");
 
 		customFieldHHmmSS.setValue(customValHHmmSS).checkValue(value -> assertThat(value).isNotNull())
 				.checkValue(value -> assertThat(value).isEqualTo(customValHHmmSS));
@@ -147,20 +147,20 @@ public class TimeOnListTest extends BaseTestForSamples {
 				.map(v -> LocalDateTime.of(LocalDate.MIN, LocalTime.parse(v)))
 				.collect(Collectors.toList());
 		var actualValue = list.rows().streamCurrentPage()
-				.map(r -> r.time("Custom Field h:mm:ss", "HH:mm:ss").getValue())
+				.map(r -> r.time("HH:mm:ss", "HH:mm:ss").getValue())
 				.collect(Collectors.toList());
 		assertThat(actualValue).isEqualTo(expectedValue);
 
-		list.headers().sort(sb -> sb.sort("Custom Field h:mm:ss"));
+		list.headers().sort(sb -> sb.sort("HH:mm:ss"));
 		var actualReverseOrderSortedValue = list.rows().streamCurrentPage()
-				.map(r -> r.time("Custom Field h:mm:ss", "HH:mm:ss").getValue())
+				.map(r -> r.time("HH:mm:ss", "HH:mm:ss").getValue())
 				.collect(Collectors.toList());
 		expectedValue.sort(Comparator.reverseOrder());
 		assertThat(actualReverseOrderSortedValue).isEqualTo(expectedValue);
 
-		list.headers().sort(sb -> sb.sort("Custom Field h:mm:ss"));
+		list.headers().sort(sb -> sb.sort("HH:mm:ss"));
 		var actualNaturalOrderSortedValue = list.rows().streamCurrentPage()
-				.map(r -> r.time("Custom Field h:mm:ss", "HH:mm:ss").getValue())
+				.map(r -> r.time("HH:mm:ss", "HH:mm:ss").getValue())
 				.collect(Collectors.toList());
 		expectedValue.sort(Comparator.naturalOrder());
 		assertThat(actualNaturalOrderSortedValue).isEqualTo(expectedValue);

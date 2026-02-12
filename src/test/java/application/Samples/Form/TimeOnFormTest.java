@@ -89,7 +89,6 @@ public class TimeOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
 		LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
-		String pattern = "HH:mm:ss";
 		var form = PlatformApp.screen("Time base")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -100,11 +99,11 @@ public class TimeOnFormTest extends BaseTestForSamples {
 		var customValHmmA = (LocalDate.MIN.atTime(11, 54));
 		var customValHmmSSA = (LocalDate.MIN.atTime(11, 54, 25));
 
-		var customFieldHHmmSS = form.time("Custom Field h:mm:ss", "HH:mm:ss");
-		var customFieldHH = form.time("Custom Fieldh", "HH");
-		var customFieldHmm = form.time("Custom Field h:mm", "HH:mm");
-		var customFieldHmmA = form.time("Custom Field h:mm A", "h:mm a");
-		var customFieldHmmSSA = form.time("Custom Field h:mm:ss A", "hh:mm:ss a");
+		var customFieldHHmmSS = form.time("HH:mm:ss", "HH:mm:ss");
+		var customFieldHH = form.time("HH", "HH");
+		var customFieldHmm = form.time("HH:mm", "HH:mm");
+		var customFieldHmmA = form.time("hh:mm A", "h:mm a");
+		var customFieldHmmSSA = form.time("hh:mm:ss A", "hh:mm:ss a");
 
 		customFieldHHmmSS.setValue(customValHHmmSS).checkValue(value -> assertThat(value).isNotNull())
 				.checkValue(value -> assertThat(value).isEqualTo(customValHHmmSS));
