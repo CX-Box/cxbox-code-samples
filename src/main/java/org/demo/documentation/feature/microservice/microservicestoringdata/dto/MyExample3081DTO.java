@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3081DTO implements Serializable {
 
-    private String id;
-    private String customFieldSuggestion;
-    private LocalDateTime customFieldSuggestionDate;
+	private String id;
+	private String customFieldSuggestion;
+	private LocalDateTime customFieldSuggestionDate;
 
-    public MyExample3081DTO(MyEntity3081 entity) {
-        this.id = entity.getId().toString();
-        this.customFieldSuggestion = entity.getCustomFieldSuggestion();
-        this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
-    }
+	public MyExample3081DTO(MyEntity3081 entity) {
+		this.id = entity.getId().toString();
+		this.customFieldSuggestion = entity.getCustomFieldSuggestion();
+		this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
+	}
 }

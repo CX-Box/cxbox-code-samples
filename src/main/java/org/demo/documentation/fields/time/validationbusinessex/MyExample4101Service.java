@@ -20,40 +20,41 @@ import static org.demo.documentation.fields.main.TextError.MORE_CURRENT_TIME;
 @Service
 public class MyExample4101Service extends VersionAwareResponseService<MyExample4101DTO, MyEntity4101> {
 
-    private final MyEntity4101Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4101Meta> meta = MyExample4101Meta.class;
+	private final MyEntity4101Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4101Meta> meta = MyExample4101Meta.class;
 
-    @Override
-    protected CreateResult<MyExample4101DTO> doCreateEntity(MyEntity4101 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample4101DTO> doCreateEntity(MyEntity4101 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:doUpdateEntity]
-    @Override
-    protected ActionResultDTO<MyExample4101DTO> doUpdateEntity(MyEntity4101 entity, MyExample4101DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample4101DTO_.customField)) {
-            LocalTime fieldTime = data.getCustomField()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalTime();
+	// --8<-- [start:doUpdateEntity]
+	@Override
+	protected ActionResultDTO<MyExample4101DTO> doUpdateEntity(MyEntity4101 entity, MyExample4101DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample4101DTO_.customField)) {
+			LocalTime fieldTime = data.getCustomField()
+					.atZone(ZoneId.systemDefault())
+					.toLocalTime();
 
-            LocalTime currentTime = LocalTime.now();
+			LocalTime currentTime = LocalTime.now();
 
-            if (currentTime.isBefore(fieldTime)) {
-                            throw new BusinessException().addPopup(MORE_CURRENT_TIME);
-            }
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
-    // --8<-- [end:doUpdateEntity]
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample4101DTO> getActions() {
-        return Actions.<MyExample4101DTO>builder()
-                .save(sv -> sv.text("Save"))
-                .build();
-    }
-    // --8<-- [end:getActions]
+			if (currentTime.isBefore(fieldTime)) {
+				throw new BusinessException().addPopup(MORE_CURRENT_TIME);
+			}
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+
+	// --8<-- [end:doUpdateEntity]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample4101DTO> getActions() {
+		return Actions.<MyExample4101DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

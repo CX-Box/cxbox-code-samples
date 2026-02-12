@@ -12,19 +12,19 @@ import static org.demo.documentation.fields.dictionary.dictionarydictionary.old.
 public class MyExample350Meta extends FieldMetaBuilder<MyExample350DTO> {
 
 
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample350DTO_.customField);
-    }
-    // --8<-- [end:buildRowDependentMeta]
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample350DTO_.customField);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
-        fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
-    }
-    // --8<-- [end:buildIndependentMeta]
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample350DTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
+		fields.setDictionaryTypeWithAllValues(MyExample350DTO_.customField, REGIONS);
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

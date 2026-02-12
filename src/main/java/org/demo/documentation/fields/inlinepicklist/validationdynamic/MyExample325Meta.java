@@ -13,7 +13,7 @@ public class MyExample325Meta extends FieldMetaBuilder<MyExample325DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample325DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample325DTO_.customField);
 		fields.setEnabled(MyExample325DTO_.customFieldAdditional);
 	}
@@ -22,7 +22,7 @@ public class MyExample325Meta extends FieldMetaBuilder<MyExample325DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample325DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 	}
 
 }

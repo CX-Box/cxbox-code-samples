@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3155TestDataLoadService {
 
-    @Autowired
-    MyEntity3155Repository repository;
+	@Autowired
+	MyEntity3155Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3155().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3155().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW));
+	}
 
 }

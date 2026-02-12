@@ -11,18 +11,18 @@ import static org.demo.documentation.fields.dictionary.dictionarydictionary.old.
 @Service
 public class MyEntity351TestDataLoadService {
 
-    @Autowired
-    MyEntity351Repository repository;
+	@Autowired
+	MyEntity351Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity351().setCustomField("test data").setCustomFieldDictionary(REGIONS.lookupName("Kostroma")));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity351().setCustomField("test data").setCustomFieldDictionary(REGIONS.lookupName("Kostroma")));
+	}
 
 }

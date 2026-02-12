@@ -15,12 +15,12 @@ import org.demo.documentation.widgets.list.showcondition.byparententity.parent.M
 public class MyEntity3106 extends BaseEntity {
 
 
-    @Column
-    private String customField;
-    @Column
-    private Long customFieldNumber = 0L;
+	@Column
+	private String customField;
+	@Column
+	private Long customFieldNumber = 0L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3100 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3100 customFieldEntity;
 }

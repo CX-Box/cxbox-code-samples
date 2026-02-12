@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -11,10 +12,10 @@ import java.util.Objects;
 @AllArgsConstructor
 public enum ExampleStatus {
 	IN_COMPLETION("In completion"),
-	COMPLETED("Completed") ,
-	IN_PROGRESS("In progress") ,
-	NOT_STARTED("Not started") ,
-	CANCELLED("Cancelled") ;
+	COMPLETED("Completed"),
+	IN_PROGRESS("In progress"),
+	NOT_STARTED("Not started"),
+	CANCELLED("Cancelled");
 
 	@JsonValue
 	private final String value;

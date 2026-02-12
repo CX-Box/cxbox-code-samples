@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.multipleselect.basic;
 
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -11,6 +10,8 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample251Meta extends FieldMetaBuilder<MyExample251DTO> {
@@ -20,8 +21,8 @@ public class MyExample251Meta extends FieldMetaBuilder<MyExample251DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample251DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
-		 fields.setConcreteValues(MyExample251DTO_.customField, Arrays.stream(CustomFieldEnum.values())
+									  Long id, Long parentId) {
+		fields.setConcreteValues(MyExample251DTO_.customField, Arrays.stream(CustomFieldEnum.values())
 				.map(CustomFieldEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
 				.toList());
@@ -32,7 +33,7 @@ public class MyExample251Meta extends FieldMetaBuilder<MyExample251DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample251DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample251DTO_.customField);
 		}

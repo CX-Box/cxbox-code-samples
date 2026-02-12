@@ -19,10 +19,10 @@ import static org.demo.documentation.fields.main.TextError.LESS_20000;
 public class NumberBusinessExService extends VersionAwareResponseService<NumberBusinessExDTO, NumberBusinessExEntity> {
 
 	private final NumberBusinessExEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberBusinessExMeta> meta = NumberBusinessExMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberBusinessExMeta> meta = NumberBusinessExMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberBusinessExDTO> doCreateEntity(NumberBusinessExEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberBusinessExDTO> doUpdateEntity(NumberBusinessExEntity entity, NumberBusinessExDTO data,
-			BusinessComponent bc) {
+																  BusinessComponent bc) {
 		if (data.isFieldChanged(NumberBusinessExDTO_.customField)) {
 			if (data.getCustomField() < 20000) {
 				throw new BusinessException().addPopup(LESS_20000);
@@ -46,7 +46,7 @@ public class NumberBusinessExService extends VersionAwareResponseService<NumberB
 	@Override
 	public Actions<NumberBusinessExDTO> getActions() {
 		return Actions.<NumberBusinessExDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

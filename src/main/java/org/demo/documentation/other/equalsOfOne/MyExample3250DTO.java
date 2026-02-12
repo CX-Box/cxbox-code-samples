@@ -1,13 +1,8 @@
 package org.demo.documentation.other.equalsOfOne;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
@@ -18,6 +13,10 @@ import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOne;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneManyToMany;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToMany;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToOne;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -39,47 +38,32 @@ public class MyExample3250DTO extends DataResponseDTO {
 	public String myExample3250OneToOneOneToOneMyExample3250MultivaluesHoverDisplayedKey;
 
 	public String myExample3250OneToOneOneToOneMyExample3250MultivaluesDisplayedKey;
-
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.dictionary", provider = EnumValueProvider.class)
+	public MyExample3250Dictionary myExample3250OneToOneOneToManiesDictionary;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.dictionary", provider = EnumValueProvider.class)
+	public MyExample3250Dictionary myExample3250OneToOneOneToManiesDictionaryRadio;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
+	public MultivalueField myExample3250OneToOneOneToManiesMyExample3250Multivalues;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
+	public MultivalueField myExample3250OneToOneOneToManiesMyExample3250MultivaluesHover;
+	public String myExample3250OneToOneOneToManiesMyExample3250MultivaluesDisplayedKey;
+	public String myExample3250OneToOneOneToManiesMyExample3250MultivaluesHoverDisplayedKey;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.dictionary", provider = EnumValueProvider.class)
+	public MyExample3250Dictionary myExample3250OneToOneManyToManyDictionary;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.dictionary", provider = EnumValueProvider.class)
+	public MyExample3250Dictionary myExample3250OneToOneManyToManyDictionaryRadio;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
+	public MultivalueField myExample3250OneToOneManyToManyMyExample3250Multivalues;
+	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
+	public MultivalueField myExample3250OneToOneManyToManyMyExample3250MultivaluesHover;
+	public String myExample3250OneToOneManyToManyMyExample3250MultivaluesHoverDisplayedKey;
+	public String myExample3250OneToOneManyToManyMyExample3250MultivaluesDisplayedKey;
 	@BaseEnum(MyExample3250ElementCollectionData.class)
 	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToOne.myExample3250ElementCollectionData", provider = MultiFieldValueProvider.class, multiFieldKey = EnumValueProvider.class)
 	private MultivalueField myExample3250OneToOneOneToOneMyExample3250ElementCollectionData;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.dictionary", provider = EnumValueProvider.class)
-	public MyExample3250Dictionary myExample3250OneToOneOneToManiesDictionary;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.dictionary", provider = EnumValueProvider.class)
-	public MyExample3250Dictionary myExample3250OneToOneOneToManiesDictionaryRadio;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
-	public MultivalueField myExample3250OneToOneOneToManiesMyExample3250Multivalues;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
-	public MultivalueField myExample3250OneToOneOneToManiesMyExample3250MultivaluesHover;
-
-	public String myExample3250OneToOneOneToManiesMyExample3250MultivaluesDisplayedKey;
-
-	public String myExample3250OneToOneOneToManiesMyExample3250MultivaluesHoverDisplayedKey;
-
 	@BaseEnum(MyExample3250ElementCollectionData.class)
 	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneOneToManies.myExample3250ElementCollectionData", provider = MultiFieldValueProvider.class, multiFieldKey = EnumValueProvider.class)
 	private MultivalueField myExample3250OneToOneOneToManiesMyExample3250ElementCollectionData;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.dictionary", provider = EnumValueProvider.class)
-	public MyExample3250Dictionary myExample3250OneToOneManyToManyDictionary;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.dictionary", provider = EnumValueProvider.class)
-	public MyExample3250Dictionary myExample3250OneToOneManyToManyDictionaryRadio;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
-	public MultivalueField myExample3250OneToOneManyToManyMyExample3250Multivalues;
-
-	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.myExample3250Multivalues.id", provider = MultiFieldValueProvider.class)
-	public MultivalueField myExample3250OneToOneManyToManyMyExample3250MultivaluesHover;
-
-	public String myExample3250OneToOneManyToManyMyExample3250MultivaluesHoverDisplayedKey;
-
-	public String myExample3250OneToOneManyToManyMyExample3250MultivaluesDisplayedKey;
-
 	@BaseEnum(MyExample3250ElementCollectionData.class)
 	@SearchParameter(name = "myExample3250OneToOne.myExample3250OneToOneManyToMany.myExample3250ElementCollectionData", provider = MultiFieldValueProvider.class, multiFieldKey = EnumValueProvider.class)
 	private MultivalueField myExample3250OneToOneManyToManyMyExample3250ElementCollectionData;

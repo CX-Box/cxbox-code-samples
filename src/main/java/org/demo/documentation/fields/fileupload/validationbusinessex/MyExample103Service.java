@@ -19,10 +19,10 @@ import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 public class MyExample103Service extends VersionAwareResponseService<MyExample103DTO, MyEntity103> {
 
 	private final MyEntity103Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample103Meta> meta = MyExample103Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample103Meta> meta = MyExample103Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample103DTO> doCreateEntity(MyEntity103 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample103Service extends VersionAwareResponseService<MyExample10
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample103DTO> doUpdateEntity(MyEntity103 entity, MyExample103DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample103DTO_.customFieldId)) {
 			entity.setCustomFieldId(data.getCustomFieldId());
 		}
@@ -50,7 +50,7 @@ public class MyExample103Service extends VersionAwareResponseService<MyExample10
 	@Override
 	public Actions<MyExample103DTO> getActions() {
 		return Actions.<MyExample103DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

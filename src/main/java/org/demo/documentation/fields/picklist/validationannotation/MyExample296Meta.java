@@ -17,17 +17,17 @@ public class MyExample296Meta extends FieldMetaBuilder<MyExample296DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample296DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample296DTO_.customFieldId);
 		fields.setEnabled(MyExample296DTO_.customField);
-		fields.setPlaceholder(MyExample296DTO_.customField,"Only letters");
+		fields.setPlaceholder(MyExample296DTO_.customField, "Only letters");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample296DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample296DTO_.customField);
 		}

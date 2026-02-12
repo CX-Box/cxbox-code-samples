@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class NumberSortingService extends VersionAwareResponseService<NumberSortingDTO, NumberSortingEntity> {
 
 	private final NumberSortingEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberSortingMeta> meta = NumberSortingMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberSortingMeta> meta = NumberSortingMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberSortingDTO> doCreateEntity(NumberSortingEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class NumberSortingService extends VersionAwareResponseService<NumberSort
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberSortingDTO> doUpdateEntity(NumberSortingEntity entity, NumberSortingDTO data,
-			BusinessComponent bc) {
+															   BusinessComponent bc) {
 		setIfChanged(data, NumberSortingDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -38,7 +38,7 @@ public class NumberSortingService extends VersionAwareResponseService<NumberSort
 	@Override
 	public Actions<NumberSortingDTO> getActions() {
 		return Actions.<NumberSortingDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

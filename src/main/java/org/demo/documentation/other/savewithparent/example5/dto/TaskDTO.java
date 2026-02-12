@@ -1,7 +1,5 @@
 package org.demo.documentation.other.savewithparent.example5.dto;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +11,9 @@ import org.demo.documentation.other.savewithparent.example5.entity.Executor;
 import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.enums.ImportanceEnum;
 import org.demo.documentation.other.savewithparent.example5.enums.StatusEnum;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -54,6 +55,7 @@ public class TaskDTO extends DataResponseDTO {
 	private Integer documentCount;
 
 	private Integer taskCount;
+
 	public TaskDTO(Task task) {
 		this.id = task.getId().toString();
 		this.applicationEntityName = Optional.ofNullable(task.getApplicationEntityId()).map(ApplicationEntity::getName).orElse(null);

@@ -15,7 +15,7 @@ public class MyExample5555TaskDocumentMeta extends FieldMetaBuilder<TaskDocument
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<TaskDocumentDTO> fields,
-			InnerBcDescription bcDescription, Long id, Long parentId) {
+									  InnerBcDescription bcDescription, Long id, Long parentId) {
 		fields.setEnabled(TaskDocumentDTO_.file);
 		fields.setEnabled(TaskDocumentDTO_.fileId);
 		fields.setEnabled(TaskDocumentDTO_.taskId);
@@ -23,7 +23,7 @@ public class MyExample5555TaskDocumentMeta extends FieldMetaBuilder<TaskDocument
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<TaskDocumentDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(TaskDocumentDTO_.file);
 	}
 

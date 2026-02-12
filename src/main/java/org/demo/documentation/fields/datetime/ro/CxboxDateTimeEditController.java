@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxDateTimeEditController implements EnumBcIdentifier {
 
-	
 
 	dateTimeEdit(DateTimeEditService.class);
 	// --8<-- [end:bc]
-	
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeEditController> Holder = new Holder<>(

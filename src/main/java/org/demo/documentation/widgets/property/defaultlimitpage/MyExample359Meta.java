@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample359Meta extends FieldMetaBuilder<MyExample359DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample359DTO_.customFieldPicklistId);
-        fields.setEnabled(MyExample359DTO_.customFieldPicklist);
-        fields.setEnabled(MyExample359DTO_.customFieldMultivalue);
-        fields.setEnabled(MyExample359DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample359DTO_.customFieldPicklistId);
+		fields.setEnabled(MyExample359DTO_.customFieldPicklist);
+		fields.setEnabled(MyExample359DTO_.customFieldMultivalue);
+		fields.setEnabled(MyExample359DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample359DTO_.customFieldPicklist);
-        fields.enableFilter(MyExample359DTO_.customFieldMultivalue);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample359DTO_.customFieldPicklist);
+		fields.enableFilter(MyExample359DTO_.customFieldMultivalue);
+	}
 
 }

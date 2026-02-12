@@ -22,56 +22,56 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity3052Multi extends BaseEntity {
-    @Column
-    private String customField;
-    @JoinTable(name = "MyEntity3052Multi_MyEntity3052MultiAssoc",
-            joinColumns = @JoinColumn(name = "MyEntity3052Multi_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3052MultiAssoc_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3052MultiAssoc> customFieldColorMultivalueHoverList = new ArrayList<>();
-    @JoinTable(name = "MyEntity3052Multi_MyEntity3052MultiMultiAssoc",
-            joinColumns = @JoinColumn(name = "MyEntity3052Multi_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3052MultiMultiAssoc_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3052MultiMultiAssoc> customFieldColorMultivalueList = new ArrayList<>();
-    @JoinColumn(name = "CUSTOM_FIELD_COLOR_INLINE_PICKLIST_ID")
-    @ManyToOne
-    private MyEntity3052Picklist customFieldColorInlinePicklistEntity;
-    @JoinColumn(name = "CUSTOM_FIELD_COLOR_PICKLIST_ID")
-    @ManyToOne
-    private MyEntity3052PicklistAssoc customFieldColorPicklistEntity;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldColorRadioEnum customFieldColorRadio;
-    @Column
-    private Double customFieldColorMoney;
-    @Column
-    private Long customFieldColorPercent;
-    @Column
-    private Long customFieldColorNumber;
-    @Column
-    private String customFieldColorFileUploade;
-    @Column
-    private String customFieldColorFileUploadeId;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldColorDictionaryEnum customFieldColorDictionary;
-    @Column
-    private LocalDateTime customFieldColorDateTimeWithSeconds;
-    @Column
-    private LocalDateTime customFieldColorDate;
-    @Column
-    private Boolean customFieldColorCheckbox;
-    @Column
-    private LocalDateTime customFieldColorDateTime;
-    @Column
-    private String customFieldColorText;
-    @Column
-    private String customFieldColorInput;
+	@Column
+	private String customField;
+	@JoinTable(name = "MyEntity3052Multi_MyEntity3052MultiAssoc",
+			joinColumns = @JoinColumn(name = "MyEntity3052Multi_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3052MultiAssoc_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3052MultiAssoc> customFieldColorMultivalueHoverList = new ArrayList<>();
+	@JoinTable(name = "MyEntity3052Multi_MyEntity3052MultiMultiAssoc",
+			joinColumns = @JoinColumn(name = "MyEntity3052Multi_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3052MultiMultiAssoc_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3052MultiMultiAssoc> customFieldColorMultivalueList = new ArrayList<>();
+	@JoinColumn(name = "CUSTOM_FIELD_COLOR_INLINE_PICKLIST_ID")
+	@ManyToOne
+	private MyEntity3052Picklist customFieldColorInlinePicklistEntity;
+	@JoinColumn(name = "CUSTOM_FIELD_COLOR_PICKLIST_ID")
+	@ManyToOne
+	private MyEntity3052PicklistAssoc customFieldColorPicklistEntity;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldColorRadioEnum customFieldColorRadio;
+	@Column
+	private Double customFieldColorMoney;
+	@Column
+	private Long customFieldColorPercent;
+	@Column
+	private Long customFieldColorNumber;
+	@Column
+	private String customFieldColorFileUploade;
+	@Column
+	private String customFieldColorFileUploadeId;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldColorDictionaryEnum customFieldColorDictionary;
+	@Column
+	private LocalDateTime customFieldColorDateTimeWithSeconds;
+	@Column
+	private LocalDateTime customFieldColorDate;
+	@Column
+	private Boolean customFieldColorCheckbox;
+	@Column
+	private LocalDateTime customFieldColorDateTime;
+	@Column
+	private String customFieldColorText;
+	@Column
+	private String customFieldColorInput;
 }

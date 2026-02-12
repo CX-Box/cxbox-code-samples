@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity4903InstancePickMeta extends FieldMetaBuilder<MyEntity4903InstancePickDTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity4903InstancePickDTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyEntity4903InstancePickDTO_.id);
-        fields.setEnabled(MyEntity4903InstancePickDTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity4903InstancePickDTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyEntity4903InstancePickDTO_.id);
+		fields.setEnabled(MyEntity4903InstancePickDTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyEntity4903InstancePickDTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyEntity4903InstancePickDTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
 
-    }
+	}
 
 }

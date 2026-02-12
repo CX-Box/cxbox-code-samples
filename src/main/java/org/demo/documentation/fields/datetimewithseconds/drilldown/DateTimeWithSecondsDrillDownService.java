@@ -16,12 +16,12 @@ public class DateTimeWithSecondsDrillDownService extends
 		VersionAwareResponseService<DateTimeWithSecondsDrillDownDTO, DateTimeWithSecondsDrillDownEntity> {
 
 	private final DateTimeWithSecondsDrillDownEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsDrillDownMeta> meta = DateTimeWithSecondsDrillDownMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsDrillDownMeta> meta = DateTimeWithSecondsDrillDownMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsDrillDownDTO> doCreateEntity(DateTimeWithSecondsDrillDownEntity entity,
-			BusinessComponent bc) {
+																		   BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsDrillDownService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsDrillDownDTO> doUpdateEntity(DateTimeWithSecondsDrillDownEntity entity,
-			DateTimeWithSecondsDrillDownDTO data, BusinessComponent bc) {
+																			  DateTimeWithSecondsDrillDownDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeWithSecondsDrillDownDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -41,7 +41,7 @@ public class DateTimeWithSecondsDrillDownService extends
 	@Override
 	public Actions<DateTimeWithSecondsDrillDownDTO> getActions() {
 		return Actions.<DateTimeWithSecondsDrillDownDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

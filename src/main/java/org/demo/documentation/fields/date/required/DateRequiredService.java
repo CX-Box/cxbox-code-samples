@@ -30,7 +30,7 @@ public class DateRequiredService extends VersionAwareResponseService<DateRequire
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateRequiredDTO> doUpdateEntity(DateRequiredEntity entity, DateRequiredDTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(DateRequiredDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}

@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, MaxInputEntity> {
 
 	private final MaxInputEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MaxInputMeta> meta = MaxInputMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MaxInputMeta> meta = MaxInputMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MaxInputDTO> doCreateEntity(MaxInputEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -39,7 +39,7 @@ public class MaxInputService extends VersionAwareResponseService<MaxInputDTO, Ma
 	@Override
 	public Actions<MaxInputDTO> getActions() {
 		return Actions.<MaxInputDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

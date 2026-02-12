@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateColorConstController implements EnumBcIdentifier {
 
 
-
 	dateColorConst(DateColorConstService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateColorConstController> Holder = new Holder<>(

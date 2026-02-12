@@ -17,16 +17,16 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class GitHubApi {
 
-    private final SourcesConfig sourcesConfig;
+	private final SourcesConfig sourcesConfig;
 
-    private final RestTemplate proxyRestTemplate;
+	private final RestTemplate proxyRestTemplate;
 
-    public ResponseEntity<Resource> callZipball(String branch) throws URISyntaxException {
-        String requestUrl = sourcesConfig.getGihubApi() + sourcesConfig.getTargetPathPrefix() + "/zipball"+"/"+branch;
-        URI uri = new URI(sourcesConfig.getScheme(), null, requestUrl, -1, null, null, null);
-        uri = UriComponentsBuilder.fromUri(uri)
-                .build(true)
-                .toUri();
-        return proxyRestTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(null), Resource.class);
-    }
+	public ResponseEntity<Resource> callZipball(String branch) throws URISyntaxException {
+		String requestUrl = sourcesConfig.getGihubApi() + sourcesConfig.getTargetPathPrefix() + "/zipball" + "/" + branch;
+		URI uri = new URI(sourcesConfig.getScheme(), null, requestUrl, -1, null, null, null);
+		uri = UriComponentsBuilder.fromUri(uri)
+				.build(true)
+				.toUri();
+		return proxyRestTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(null), Resource.class);
+	}
 }

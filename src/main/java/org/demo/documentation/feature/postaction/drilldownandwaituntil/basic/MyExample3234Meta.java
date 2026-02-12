@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3234Meta extends FieldMetaBuilder<MyExample3234DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3234DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3234DTO_.customField);
-        fields.setEnabled(MyExample3234DTO_.customFieldForm);
-        fields.setPlaceholder(MyExample3234DTO_.customFieldForm,"The search is performed on `customField` with an exact match.");
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3234DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3234DTO_.customField);
+		fields.setEnabled(MyExample3234DTO_.customFieldForm);
+		fields.setPlaceholder(MyExample3234DTO_.customFieldForm, "The search is performed on `customField` with an exact match.");
 
-    }
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3234DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3234DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+	}
 
 }

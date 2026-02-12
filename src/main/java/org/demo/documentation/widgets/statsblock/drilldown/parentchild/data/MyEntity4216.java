@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.statsblock.drilldown.parentchild.data;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,10 +16,10 @@ import org.demo.documentation.widgets.statsblock.drilldown.parentchild.data.enum
 @Setter
 @NoArgsConstructor
 public class MyEntity4216 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private ExampleStatus status;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private ExampleStatus status;
 }

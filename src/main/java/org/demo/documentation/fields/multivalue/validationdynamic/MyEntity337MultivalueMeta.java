@@ -18,8 +18,8 @@ public class MyEntity337MultivalueMeta extends FieldMetaBuilder<MyEntity337Multi
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity337MultivalueDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity337MultivalueDTO_.id);
 		fields.setEnabled(MyEntity337MultivalueDTO_.customField);
 	}
@@ -28,7 +28,7 @@ public class MyEntity337MultivalueMeta extends FieldMetaBuilder<MyEntity337Multi
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity337MultivalueDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyEntity337MultivalueDTO_.customField);
 		fields.enableSort(MyEntity337MultivalueDTO_.customField);
 		fields.enableSort(MyEntity337MultivalueDTO_.id);

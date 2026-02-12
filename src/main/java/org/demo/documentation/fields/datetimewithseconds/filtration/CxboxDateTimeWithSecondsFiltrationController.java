@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeWithSecondsFiltrationController implements EnumBcIdentifier {
 
 
-
 	dateTimeWithSecondsFiltration(DateTimeWithSecondsFiltrationService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsFiltrationController> Holder = new Holder<>(

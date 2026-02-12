@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class NumberDrillDownService extends VersionAwareResponseService<NumberDrillDownDTO, NumberDrillDownEntity> {
 
 	private final NumberDrillDownEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberDrillDownMeta> meta = NumberDrillDownMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberDrillDownMeta> meta = NumberDrillDownMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberDrillDownDTO> doCreateEntity(NumberDrillDownEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberDrillDownDTO> doUpdateEntity(NumberDrillDownEntity entity, NumberDrillDownDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		setIfChanged(data, NumberDrillDownDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -37,7 +37,7 @@ public class NumberDrillDownService extends VersionAwareResponseService<NumberDr
 	@Override
 	public Actions<NumberDrillDownDTO> getActions() {
 		return Actions.<NumberDrillDownDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

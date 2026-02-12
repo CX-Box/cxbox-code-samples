@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputRequiredService extends VersionAwareResponseService<InputRequiredDTO, InputRequired> {
 
 	private final InputRequiredRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputRequiredMeta> meta = InputRequiredMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputRequiredMeta> meta = InputRequiredMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputRequiredDTO> doCreateEntity(InputRequired entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputRequiredDTO> doUpdateEntity(InputRequired entity, InputRequiredDTO data,
-			BusinessComponent bc) {
+															   BusinessComponent bc) {
 		if (data.isFieldChanged(InputRequiredDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 	@Override
 	public Actions<InputRequiredDTO> getActions() {
 		return Actions.<InputRequiredDTO>builder()
-                .save(sv -> sv.text("Save").available(bc -> true))
+				.save(sv -> sv.text("Save").available(bc -> true))
 				.build();
 	}
 

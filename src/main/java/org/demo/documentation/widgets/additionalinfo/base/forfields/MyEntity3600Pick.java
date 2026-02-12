@@ -14,6 +14,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity3600Pick extends BaseEntity {
 
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 }

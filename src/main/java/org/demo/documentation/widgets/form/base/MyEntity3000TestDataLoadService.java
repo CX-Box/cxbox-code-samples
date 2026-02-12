@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.form.base;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.widgets.form.base.allfields.MyEntity3010;
 import org.demo.documentation.widgets.form.base.allfields.MyEntity3010Repository;
@@ -9,14 +11,11 @@ import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010
 import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010PickRepository;
 import org.demo.documentation.widgets.form.base.allfields.forfields.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.form.base.allfields.forfields.enums.CustomFieldMultipleSelectEnum;
+import org.demo.documentation.widgets.form.base.allfields.forfields.enums.CustomFieldRadioEnum;
 import org.demo.documentation.widgets.form.base.onefield.MyEntity3000;
 import org.demo.documentation.widgets.form.base.onefield.MyEntity3000Repository;
-import org.demo.documentation.widgets.form.base.allfields.forfields.enums.CustomFieldRadioEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,11 +54,11 @@ public class MyEntity3000TestDataLoadService {
 		list.add(myEntity1);
 		list.add(myEntity2);
 		MyEntity3010Pick myEntityPick = new MyEntity3010Pick().setCustomField("Test data Pick");
-		MyEntity3010Pick  myEntityPick2 = new MyEntity3010Pick().setCustomField("Test data Pick2");
+		MyEntity3010Pick myEntityPick2 = new MyEntity3010Pick().setCustomField("Test data Pick2");
 		repositoryPick.save(myEntityPick);
 		repositoryPick.save(myEntityPick2);
 		MyEntity3010Multi myEntity3 = new MyEntity3010Multi().setCustomField("Test data 3");
-		MyEntity3010Multi  myEntity4 = new MyEntity3010Multi().setCustomField("Test data 4");
+		MyEntity3010Multi myEntity4 = new MyEntity3010Multi().setCustomField("Test data 4");
 		List<MyEntity3010Multi> list2 = new ArrayList<>();
 		list2.add(myEntity3);
 		list2.add(myEntity4);
@@ -77,8 +76,7 @@ public class MyEntity3000TestDataLoadService {
 				.setCustomFieldRadio(CustomFieldRadioEnum.LOW)
 				.setCustomFieldPickListEntity(myEntityPick)
 				.setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
-				.setCustomFieldInlineEntity(myEntityPick2)
-				;
+				.setCustomFieldInlineEntity(myEntityPick2);
 		repository.save(myEntity3010new.setCustomFieldMultivalueList(list2)
 				.setCustomFieldMultivalueHoverList(list));
 	}

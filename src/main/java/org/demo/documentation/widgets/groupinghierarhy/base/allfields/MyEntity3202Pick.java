@@ -15,9 +15,9 @@ import org.demo.documentation.widgets.groupinghierarhy.base.allfields.enums.Cust
 @Setter
 @NoArgsConstructor
 public class MyEntity3202Pick extends BaseEntity {
-    @Column
-    private String customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

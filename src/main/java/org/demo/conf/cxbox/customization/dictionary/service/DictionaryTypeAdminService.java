@@ -33,7 +33,7 @@ public class DictionaryTypeAdminService extends VersionAwareResponseService<Dict
 
 	@Override
 	protected ActionResultDTO<DictionaryTypeAdminDTO> doUpdateEntity(DictionaryTypeDesc entity, DictionaryTypeAdminDTO data,
-			BusinessComponent bc) {
+																	 BusinessComponent bc) {
 		setIfChanged(data, type, entity::setType);
 		jpaDao.save(entity);
 		return new ActionResultDTO<>(entityToDto(bc, entity));

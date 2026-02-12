@@ -4,6 +4,6 @@ import org.cxbox.dictionary.Dictionary;
 
 public record ClientImportance(String key) implements Dictionary {
 
-    public static final ClientImportance HIGH = new ClientImportance("HIGH");
+	public static final ClientImportance HIGH = new ClientImportance("HIGH");
 
 }

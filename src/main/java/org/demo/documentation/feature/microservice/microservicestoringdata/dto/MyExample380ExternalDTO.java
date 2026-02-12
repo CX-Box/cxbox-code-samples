@@ -12,17 +12,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MyExample380ExternalDTO implements Serializable {
 
-    private String id;
-    private String type;
-    private String key;
-    private String value;
-    private Integer displayOrder;
+	private String id;
+	private String type;
+	private String key;
+	private String value;
+	private Integer displayOrder;
 
-    public MyExample380ExternalDTO(MyEntity380External entity) {
-        this.id = entity.getId().toString();
-        this.type = entity.getType();
-        this.key = entity.getKey();
-        this.value = entity.getValue();
-        this.displayOrder = entity.getDisplayOrder();
-    }
+	public MyExample380ExternalDTO(MyEntity380External entity) {
+		this.id = entity.getId().toString();
+		this.type = entity.getType();
+		this.key = entity.getKey();
+		this.value = entity.getValue();
+		this.displayOrder = entity.getDisplayOrder();
+	}
 }

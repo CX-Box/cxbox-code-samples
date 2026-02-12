@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface MyEntity3431Repository extends JpaRepository<MyEntity3431, Long>, JpaSpecificationExecutor<MyEntity3430> {
 
-    Optional<MyEntity3431> findByUserId(Long userId);
+	Optional<MyEntity3431> findByUserId(Long userId);
 
 }

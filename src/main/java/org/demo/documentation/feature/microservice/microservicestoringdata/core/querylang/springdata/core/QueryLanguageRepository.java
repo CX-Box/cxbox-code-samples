@@ -1,7 +1,6 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springdata.core;
 
 import lombok.NonNull;
-
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.DtoToEntityFilterParameterMapper;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.FilterParameters;
 import org.springframework.data.domain.Pageable;

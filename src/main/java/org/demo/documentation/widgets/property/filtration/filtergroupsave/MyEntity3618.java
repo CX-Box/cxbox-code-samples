@@ -18,22 +18,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity3618 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldNew;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
-    @JoinTable(name = "MyEntity3618_MyEntity3624Pick",
-            joinColumns = @JoinColumn(name = "MyEntity3618_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3624_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3624> customFieldMultivalueDisplayedKeyList = new ArrayList<>();
-    @JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
-    @ManyToOne
-    private MyEntity3618Pick customFieldPicklistEntity;
+	@Column
+	private String customField;
+	@Column
+	private String customFieldNew;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
+	@JoinTable(name = "MyEntity3618_MyEntity3624Pick",
+			joinColumns = @JoinColumn(name = "MyEntity3618_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3624_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3624> customFieldMultivalueDisplayedKeyList = new ArrayList<>();
+	@JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
+	@ManyToOne
+	private MyEntity3618Pick customFieldPicklistEntity;
 }

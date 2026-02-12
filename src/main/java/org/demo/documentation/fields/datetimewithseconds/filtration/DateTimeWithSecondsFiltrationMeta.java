@@ -17,8 +17,8 @@ public class DateTimeWithSecondsFiltrationMeta extends FieldMetaBuilder<DateTime
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsFiltrationDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsFiltrationDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class DateTimeWithSecondsFiltrationMeta extends FieldMetaBuilder<DateTime
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsFiltrationDTO> fields,
-			InnerBcDescription bcDescription, Long parentId) {
+									 InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsFiltrationDTO_.customField);
 		}

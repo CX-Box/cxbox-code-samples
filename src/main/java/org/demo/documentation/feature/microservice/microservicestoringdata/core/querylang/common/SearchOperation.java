@@ -14,7 +14,7 @@ public enum SearchOperation {
 	/**
 	 * Greater or equal
 	 */
-	GREATER_OR_EQUAL_THAN("greaterOrEqualThan",false),
+	GREATER_OR_EQUAL_THAN("greaterOrEqualThan", false),
 
 	/**
 	 * Less or equal
@@ -43,29 +43,29 @@ public enum SearchOperation {
 
 	/**
 	 * Greater
-
-	GREATER_THAN("greaterThan"),
-
-	/**
+	 * <p>
+	 * GREATER_THAN("greaterThan"),
+	 * <p>
+	 * /**
 	 * Less
-
-	LESS_THAN("lessThan"),
-
-
-	/**
+	 * <p>
+	 * LESS_THAN("lessThan"),
+	 * <p>
+	 * <p>
+	 * /**
 	 * Boolean value specified, use for sql entities
-
-	SPECIFIED_BOOLEAN_SQL("specifiedBooleanSql"),
-
-	/**
+	 * <p>
+	 * SPECIFIED_BOOLEAN_SQL("specifiedBooleanSql"),
+	 * <p>
+	 * /**
 	 * Contains one from the list
-
-	CONTAINS_ONE_OF("containsOneOf"),
-
-	/**
+	 * <p>
+	 * CONTAINS_ONE_OF("containsOneOf"),
+	 * <p>
+	 * /**
 	 * Specified value in intervals
-
-	INTERVALS("intervals");
+	 * <p>
+	 * INTERVALS("intervals");
 	 */
 	public static final Map<String, SearchOperation> OPERATIONS = EnumSet.allOf(SearchOperation.class).stream()
 			.collect(Collectors.toMap(

@@ -15,10 +15,10 @@ import org.demo.documentation.widgets.property.sethidden.enums.CustomFieldDictio
 @Setter
 @NoArgsConstructor
 public class MyEntity5019Multi extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum1 customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum1 customFieldDictionary;
 }

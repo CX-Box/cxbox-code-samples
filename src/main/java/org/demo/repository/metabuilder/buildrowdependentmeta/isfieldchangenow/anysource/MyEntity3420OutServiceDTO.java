@@ -17,17 +17,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3420OutServiceDTO implements Serializable {
 
-    private String id;
-    private String customField;
-    private String customFieldNew;
-    private LocalDateTime customFieldDateTime;
-    private Double customFieldDouble;
-    @Enumerated(value = EnumType.STRING)
-    private RegionEnum region;
-    @Enumerated(value = EnumType.STRING)
-    private CountryEnum country;
-    private String product;
-    private String descriptionProduct;
-    private Long money;
-    private String street;
+	private String id;
+	private String customField;
+	private String customFieldNew;
+	private LocalDateTime customFieldDateTime;
+	private Double customFieldDouble;
+	@Enumerated(value = EnumType.STRING)
+	private RegionEnum region;
+	@Enumerated(value = EnumType.STRING)
+	private CountryEnum country;
+	private String product;
+	private String descriptionProduct;
+	private Long money;
+	private String street;
 }

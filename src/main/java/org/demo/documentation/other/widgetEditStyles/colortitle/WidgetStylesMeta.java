@@ -29,7 +29,7 @@ public class WidgetStylesMeta extends FieldMetaBuilder<WidgetStylesDTO> {
 			fields.setEnumValues(WidgetStylesDTO_.customFieldColorDictionary, WidgetStylesColorDictionaryEnum.values());
 			fields.setEnumValues(WidgetStylesDTO_.customFieldColorRadio, WidgetStylesColorRadioEnum.values());
 			fields.setRequired(WidgetStylesDTO_.customField);
-			fields.setConcreteValues( WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
+			fields.setConcreteValues(WidgetStylesDTO_.multipleSelect, Arrays.stream(WidgetStylesTestEnum.values())
 					.map(WidgetStylesTestEnum::getValue)
 					.map(e -> new SimpleDictionary(e, e))
 					.toList());
@@ -101,9 +101,9 @@ public class WidgetStylesMeta extends FieldMetaBuilder<WidgetStylesDTO> {
 		fields.enableFilter(WidgetStylesDTO_.customFieldColorMultivalue);
 		fields.enableFilter(WidgetStylesDTO_.customFieldColorMultivalueHover);
 		fields.setForceActive(
-                WidgetStylesDTO_.suggestion,
-                WidgetStylesDTO_.hint,
-                WidgetStylesDTO_.hidden,
+				WidgetStylesDTO_.suggestion,
+				WidgetStylesDTO_.hint,
+				WidgetStylesDTO_.hidden,
 				WidgetStylesDTO_.multipleSelect,
 				WidgetStylesDTO_.customFieldColorInput,
 				WidgetStylesDTO_.customFieldColorText,

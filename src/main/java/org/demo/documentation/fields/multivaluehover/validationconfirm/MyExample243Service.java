@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class MyExample243Service extends VersionAwareResponseService<MyExample243DTO, MyEntity243> {
 
 	private final MyEntity243Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample243Meta> meta = MyExample243Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample243Meta> meta = MyExample243Meta.class;
 	@Autowired
 	private EntityManager entityManager;
 
@@ -55,7 +55,7 @@ public class MyExample243Service extends VersionAwareResponseService<MyExample24
 	@Override
 	public Actions<MyExample243DTO> getActions() {
 		return Actions.<MyExample243DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

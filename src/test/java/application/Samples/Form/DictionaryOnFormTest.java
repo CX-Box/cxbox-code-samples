@@ -74,7 +74,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 		form.dictionary("Custom Field")
 				.setValue("Tver region");
 
-		form.dictionary("Custom Field").checkValue(val->assertThat(val).isEqualTo("Tver region"));
+		form.dictionary("Custom Field").checkValue(val -> assertThat(val).isEqualTo("Tver region"));
 
 	}
 

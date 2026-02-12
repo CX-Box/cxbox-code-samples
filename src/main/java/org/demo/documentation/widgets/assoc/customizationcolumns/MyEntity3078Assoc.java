@@ -12,12 +12,12 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity3078Assoc extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldTest;
-    @Column
-    private Long customFieldNumber;
-    @Column
-    private String customFieldText;
+	@Column
+	private String customField;
+	@Column
+	private String customFieldTest;
+	@Column
+	private Long customFieldNumber;
+	@Column
+	private String customFieldText;
 }

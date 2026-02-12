@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class SaleStatsProductPieService extends AnySourceVersionAwareResponseService<SalesProductPieDTO, SalesProductPieDTO> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<SaleStatsProductPieMeta> meta = SaleStatsProductPieMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<SaleStatsProductPieMeta> meta = SaleStatsProductPieMeta.class;
 
-    @Getter(onMethod_ = @Override)
-    private final Class<SaleStatsProductPieDao> dao = SaleStatsProductPieDao.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<SaleStatsProductPieDao> dao = SaleStatsProductPieDao.class;
 
-    @Override
-    protected CreateResult<SalesProductPieDTO> doCreateEntity(SalesProductPieDTO entity, BusinessComponent bc) {
-        throw new IllegalStateException();
-    }
+	@Override
+	protected CreateResult<SalesProductPieDTO> doCreateEntity(SalesProductPieDTO entity, BusinessComponent bc) {
+		throw new IllegalStateException();
+	}
 
-    @Override
-    protected ActionResultDTO<SalesProductPieDTO> doUpdateEntity(SalesProductPieDTO entity, SalesProductPieDTO data, BusinessComponent bc) {
-        throw new IllegalStateException();
-    }
+	@Override
+	protected ActionResultDTO<SalesProductPieDTO> doUpdateEntity(SalesProductPieDTO entity, SalesProductPieDTO data, BusinessComponent bc) {
+		throw new IllegalStateException();
+	}
 
 }
 

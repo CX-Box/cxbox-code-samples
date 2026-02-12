@@ -11,47 +11,46 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample3700Controller implements EnumBcIdentifier {
 
-    
-    myExampleBc3700(MyExample3700Service.class);
 
-    
+	myExampleBc3700(MyExample3700Service.class);
 
-    public static final EnumBcIdentifier.Holder<PlatformMyExample3700Controller> Holder = new Holder<>(
-            PlatformMyExample3700Controller.class);
 
-    private final BcDescription bcDescription;
+	public static final EnumBcIdentifier.Holder<PlatformMyExample3700Controller> Holder = new Holder<>(
+			PlatformMyExample3700Controller.class);
 
-    PlatformMyExample3700Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	private final BcDescription bcDescription;
 
-    PlatformMyExample3700Controller(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
+	PlatformMyExample3700Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    PlatformMyExample3700Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
+	PlatformMyExample3700Controller(String parentName, Class<?> serviceClass) {
+		this(parentName, serviceClass, false);
+	}
 
-    PlatformMyExample3700Controller(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
+	PlatformMyExample3700Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
 
-    PlatformMyExample3700Controller(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
+	PlatformMyExample3700Controller(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
 
-    PlatformMyExample3700Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	PlatformMyExample3700Controller(Class<?> serviceClass, boolean refresh) {
+		this((String) null, serviceClass, refresh);
+	}
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample3700Controller> {
+	PlatformMyExample3700Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-        public BcSupplier() {
-            super(PlatformMyExample3700Controller.Holder);
-        }
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample3700Controller> {
 
-    }
+		public BcSupplier() {
+			super(PlatformMyExample3700Controller.Holder);
+		}
+
+	}
 
 }

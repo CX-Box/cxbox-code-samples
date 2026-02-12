@@ -17,7 +17,7 @@ public class DateConfirmMeta extends FieldMetaBuilder<DateConfirmDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateConfirmDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateConfirmDTO_.customField
 		);

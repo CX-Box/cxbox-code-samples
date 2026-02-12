@@ -13,10 +13,10 @@ import org.demo.documentation.navigation.tab.typestandard.businessexample.task.M
 @Setter
 @NoArgsConstructor
 public class MyEntity3427 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3428 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3428 customFieldEntity;
 }

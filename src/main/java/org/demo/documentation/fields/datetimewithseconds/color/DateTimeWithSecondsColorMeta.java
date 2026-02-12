@@ -17,8 +17,8 @@ public class DateTimeWithSecondsColorMeta extends FieldMetaBuilder<DateTimeWithS
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsColorDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsColorDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class DateTimeWithSecondsColorMeta extends FieldMetaBuilder<DateTimeWithS
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsColorDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsColorDTO_.customField);
 		}

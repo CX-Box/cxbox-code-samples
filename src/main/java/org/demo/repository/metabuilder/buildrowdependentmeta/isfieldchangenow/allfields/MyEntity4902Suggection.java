@@ -12,6 +12,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity4902Suggection extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 }

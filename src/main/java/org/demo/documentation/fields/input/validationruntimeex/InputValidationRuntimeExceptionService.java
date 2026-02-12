@@ -17,12 +17,12 @@ public class InputValidationRuntimeExceptionService extends
 		VersionAwareResponseService<InputValidationRuntimeExceptionDTO, InputValidationRuntimeException> {
 
 	private final InputValidationRuntimeExceptionRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputValidationRuntimeExceptionMeta> meta = InputValidationRuntimeExceptionMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputValidationRuntimeExceptionMeta> meta = InputValidationRuntimeExceptionMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputValidationRuntimeExceptionDTO> doCreateEntity(InputValidationRuntimeException entity,
-			BusinessComponent bc) {
+																			  BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -30,7 +30,7 @@ public class InputValidationRuntimeExceptionService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputValidationRuntimeExceptionDTO> doUpdateEntity(InputValidationRuntimeException entity,
-			InputValidationRuntimeExceptionDTO data, BusinessComponent bc) {
+																				 InputValidationRuntimeExceptionDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(InputValidationRuntimeExceptionDTO_.customField)) {
 			try {
 				//call custom function
@@ -47,7 +47,7 @@ public class InputValidationRuntimeExceptionService extends
 	@Override
 	public Actions<InputValidationRuntimeExceptionDTO> getActions() {
 		return Actions.<InputValidationRuntimeExceptionDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

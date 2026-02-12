@@ -9,23 +9,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3198Meta extends FieldMetaBuilder<MyExample3198DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3198DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3198DTO_.customFieldPickListPostActionId);
-        fields.setEnabled(MyExample3198DTO_.customFieldPickListPostAction);
-        fields.setEnabled(MyExample3198DTO_.customFieldPickListOnCancelId);
-        fields.setEnabled(MyExample3198DTO_.customFieldPickListOnCancel);
-        fields.setEnabled(MyExample3198DTO_.customFieldPickListId);
-        fields.setEnabled(MyExample3198DTO_.customFieldPickList);
-        fields.setEnabled(MyExample3198DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3198DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3198DTO_.customFieldPickListPostActionId);
+		fields.setEnabled(MyExample3198DTO_.customFieldPickListPostAction);
+		fields.setEnabled(MyExample3198DTO_.customFieldPickListOnCancelId);
+		fields.setEnabled(MyExample3198DTO_.customFieldPickListOnCancel);
+		fields.setEnabled(MyExample3198DTO_.customFieldPickListId);
+		fields.setEnabled(MyExample3198DTO_.customFieldPickList);
+		fields.setEnabled(MyExample3198DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3198DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3198DTO_.customFieldPickListPostAction);
-        fields.enableFilter(MyExample3198DTO_.customFieldPickListOnCancel);
-        fields.enableFilter(MyExample3198DTO_.customFieldPickList);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3198DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3198DTO_.customFieldPickListPostAction);
+		fields.enableFilter(MyExample3198DTO_.customFieldPickListOnCancel);
+		fields.enableFilter(MyExample3198DTO_.customFieldPickList);
+	}
 
 }

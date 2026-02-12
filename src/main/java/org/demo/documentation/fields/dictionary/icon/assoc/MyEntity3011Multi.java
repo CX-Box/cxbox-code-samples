@@ -15,10 +15,10 @@ import org.demo.documentation.fields.dictionary.icon.enums.CustomFieldDictionary
 @Setter
 @NoArgsConstructor
 public class MyEntity3011Multi extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

@@ -1,16 +1,14 @@
 package org.demo.documentation.other.equalsOfOne;
 
-import java.util.Arrays;
-
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Component;
-
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -18,7 +16,7 @@ public class MyExample3250Meta extends FieldMetaBuilder<MyExample3250DTO> {
 
 	@Override
 	public void buildRowDependentMeta(final RowDependentFieldsMeta<MyExample3250DTO> fields, final InnerBcDescription bcDescription, final Long id,
-																		final Long parentId) {
+									  final Long parentId) {
 
 	}
 

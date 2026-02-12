@@ -17,8 +17,8 @@ public class NumberColorConstMeta extends FieldMetaBuilder<NumberColorConstDTO> 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberColorConstDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberColorConstDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class NumberColorConstMeta extends FieldMetaBuilder<NumberColorConstDTO> 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberColorConstDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberColorConstDTO_.customField);
 		}

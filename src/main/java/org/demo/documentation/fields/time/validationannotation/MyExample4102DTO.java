@@ -1,5 +1,5 @@
 package org.demo.documentation.fields.time.validationannotation;
- 
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample4102DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = TimeValueProvider.class)
-    @NotNull(message = "Custom message about error")
-    private LocalDateTime customField;
+	@SearchParameter(name = "customField", provider = TimeValueProvider.class)
+	@NotNull(message = "Custom message about error")
+	private LocalDateTime customField;
 
-    public MyExample4102DTO(MyEntity4102 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyExample4102DTO(MyEntity4102 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 }

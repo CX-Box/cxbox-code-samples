@@ -18,40 +18,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3072Service extends VersionAwareResponseService<MyExample3072DTO, MyEntity3072> {
 
-    private final MyEntity3072Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3072Meta> meta = MyExample3072Meta.class;
-    @Autowired
-    private EntityManager entityManager;
+	private final MyEntity3072Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3072Meta> meta = MyExample3072Meta.class;
+	@Autowired
+	private EntityManager entityManager;
 
-    @Override
-    protected CreateResult<MyExample3072DTO> doCreateEntity(MyEntity3072 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3072DTO> doCreateEntity(MyEntity3072 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3072DTO> doUpdateEntity(MyEntity3072 entity, MyExample3072DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3072DTO_.customFieldInlinePicklistId)) {
-            entity.setCustomFieldInlinePicklistEntity(data.getCustomFieldInlinePicklistId() != null
-                    ? entityManager.getReference(MyEntity3072InlinePick.class, data.getCustomFieldInlinePicklistId())
-                    : null);
-        }
-        if (data.isFieldChanged(MyExample3072DTO_.customFieldId)) {
-            entity.setCustomFieldEntity(data.getCustomFieldId() != null
-                    ? entityManager.getReference(MyEntity3072Pick.class, data.getCustomFieldId())
-                    : null);
-        }
+	@Override
+	protected ActionResultDTO<MyExample3072DTO> doUpdateEntity(MyEntity3072 entity, MyExample3072DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3072DTO_.customFieldInlinePicklistId)) {
+			entity.setCustomFieldInlinePicklistEntity(data.getCustomFieldInlinePicklistId() != null
+					? entityManager.getReference(MyEntity3072InlinePick.class, data.getCustomFieldInlinePicklistId())
+					: null);
+		}
+		if (data.isFieldChanged(MyExample3072DTO_.customFieldId)) {
+			entity.setCustomFieldEntity(data.getCustomFieldId() != null
+					? entityManager.getReference(MyEntity3072Pick.class, data.getCustomFieldId())
+					: null);
+		}
 
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3072DTO> getActions() {
-        return Actions.<MyExample3072DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3072DTO> getActions() {
+		return Actions.<MyExample3072DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

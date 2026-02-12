@@ -1,11 +1,12 @@
 package org.demo.documentation.fields.dictionary.validationannotationcustom.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Arrays;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor

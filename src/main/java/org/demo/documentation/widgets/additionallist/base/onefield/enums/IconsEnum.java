@@ -7,9 +7,9 @@ import org.cxbox.api.data.dto.rowmeta.Icon;
 @RequiredArgsConstructor
 @Getter
 public enum IconsEnum implements Icon {
-    CHECK("check #42f578"),
-    CLOSE("close #f54242");
+	CHECK("check #42f578"),
+	CLOSE("close #f54242");
 
-    private final String icon;
+	private final String icon;
 
 }

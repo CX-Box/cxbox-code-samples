@@ -1,19 +1,14 @@
 package org.demo.documentation.fields.multipleselect.color;
 
-import java.util.HashSet;
-import java.util.Set;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.fields.multipleselect.color.enums.CustomFieldEnum;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter

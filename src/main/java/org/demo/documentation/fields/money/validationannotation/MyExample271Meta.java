@@ -17,16 +17,16 @@ public class MyExample271Meta extends FieldMetaBuilder<MyExample271DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample271DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample271DTO_.customField);
-		fields.setPlaceholder(MyExample271DTO_.customField,"More than 100 000.00");
+		fields.setPlaceholder(MyExample271DTO_.customField, "More than 100 000.00");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample271DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample271DTO_.customField);
 		}

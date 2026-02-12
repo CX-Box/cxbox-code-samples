@@ -14,23 +14,23 @@ import org.demo.documentation.widgets.property.sethidden.graph.inner.enums.Produ
 @NoArgsConstructor
 public class MyExample5020DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
+	@SearchParameter(name = "customField")
+	private String customField;
 
-    @SearchParameter(name = "clientName")
-    private String clientName;
+	@SearchParameter(name = "clientName")
+	private String clientName;
 
-    @SearchParameter(name = "productName", provider = EnumValueProvider.class)
-    private ProductNameEnum productName;
+	@SearchParameter(name = "productName", provider = EnumValueProvider.class)
+	private ProductNameEnum productName;
 
-    @SearchParameter(name = "sum", provider = BigDecimalValueProvider.class)
-    private Long sum;
+	@SearchParameter(name = "sum", provider = BigDecimalValueProvider.class)
+	private Long sum;
 
-    public MyExample5020DTO(MyEntity5020 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.clientName = entity.getClientName();
-        this.productName = entity.getProductName();
-        this.sum = entity.getSum();
-    }
+	public MyExample5020DTO(MyEntity5020 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.clientName = entity.getClientName();
+		this.productName = entity.getProductName();
+		this.sum = entity.getSum();
+	}
 }

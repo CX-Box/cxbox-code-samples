@@ -6,7 +6,10 @@ import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.widgets.form.base.allfields.MyExample3010Service;
-import org.demo.documentation.widgets.form.base.allfields.forfields.*;
+import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickService;
+import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiPickService;
+import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010PickPick0Service;
+import org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010PickPickService;
 import org.demo.documentation.widgets.form.base.onefield.MyExample3000Service;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +22,6 @@ public enum PlatformMyExample3000Controller implements EnumBcIdentifier {
 	myExampleBc3000(MyExample3000Service.class),
 	// --8<-- [end:bc]
 	myexample3010(MyExample3010Service.class), myEntity3010PickPick0(myexample3010, MyEntity3010PickPick0Service.class), myEntity3010PickPick(myexample3010, MyEntity3010PickPickService.class), myEntity3010MultiPick(myexample3010, MyEntity3010MultiPickService.class), myEntity3010MultiHoverPick(myexample3010, MyEntity3010MultiHoverPickService.class);
-
-
 
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample3000Controller> Holder = new Holder<>(

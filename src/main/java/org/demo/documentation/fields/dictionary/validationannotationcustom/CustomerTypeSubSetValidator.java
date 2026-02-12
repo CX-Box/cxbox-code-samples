@@ -1,9 +1,10 @@
 package org.demo.documentation.fields.dictionary.validationannotationcustom;
 
-import java.util.Arrays;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.demo.documentation.fields.dictionary.validationannotationcustom.enums.CustomFieldEnum;
+
+import java.util.Arrays;
 
 public class CustomerTypeSubSetValidator implements ConstraintValidator<CustomerTypeSubset, CustomFieldEnum> {
 

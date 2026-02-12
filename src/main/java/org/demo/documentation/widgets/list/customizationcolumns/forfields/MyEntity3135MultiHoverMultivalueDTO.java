@@ -10,11 +10,11 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyEntity3135MultiHoverMultivalueDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyEntity3135MultiHoverMultivalueDTO(MyEntity3135MultiHover entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyEntity3135MultiHoverMultivalueDTO(MyEntity3135MultiHover entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

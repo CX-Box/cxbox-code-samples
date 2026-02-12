@@ -14,23 +14,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyExample6500PostActionExportToExcelListDataLoadService {
 
-    private final JpaDao dao;
+	private final JpaDao dao;
 
-    private final InternalAuthorizationService authzService;
+	private final InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        int size = 1000;
-        List<MyExample6500PostActionExportToExcelListEntity> data = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            MyExample6500PostActionExportToExcelListEntity entity = new MyExample6500PostActionExportToExcelListEntity();
-            entity.setTestData("testData" + i);
-            data.add(entity);
-        }
-        dao.saveAll(data);
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		int size = 1000;
+		List<MyExample6500PostActionExportToExcelListEntity> data = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			MyExample6500PostActionExportToExcelListEntity entity = new MyExample6500PostActionExportToExcelListEntity();
+			entity.setTestData("testData" + i);
+			data.add(entity);
+		}
+		dao.saveAll(data);
+	}
 
 
 }

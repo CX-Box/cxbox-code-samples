@@ -13,10 +13,10 @@ import org.demo.documentation.other.savewithparent.example2.parent.MyEntity3131;
 @Setter
 @NoArgsConstructor
 public class MyEntity3130 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3131 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3131 customFieldEntity;
 }

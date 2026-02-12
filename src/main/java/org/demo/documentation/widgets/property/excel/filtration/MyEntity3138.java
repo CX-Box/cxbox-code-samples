@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.property.excel.filtration;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3138 extends BaseEntity {
 
-    @Column
-    private LocalDateTime customFieldDateTime;
-    @Column
-    private Long customFieldNumber;
-    @Column
-    private String customFieldInput;
-    @Column
-    private String customFieldText;
+	@Column
+	private LocalDateTime customFieldDateTime;
+	@Column
+	private Long customFieldNumber;
+	@Column
+	private String customFieldInput;
+	@Column
+	private String customFieldText;
 }

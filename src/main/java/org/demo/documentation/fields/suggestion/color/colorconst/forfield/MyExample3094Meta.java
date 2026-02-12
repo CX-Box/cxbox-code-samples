@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3094Meta extends FieldMetaBuilder<MyExample3094DTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3094DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3094DTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3094DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3094DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3094DTO_.customField);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3094DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+	}
 
 }

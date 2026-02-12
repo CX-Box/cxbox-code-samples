@@ -14,10 +14,10 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "MY_EXAMPLE6500_POST_ACTION_EXPORT_TO_EXCEL_LIST_ENTITY" )
+@Table(name = "MY_EXAMPLE6500_POST_ACTION_EXPORT_TO_EXCEL_LIST_ENTITY")
 public class MyExample6500PostActionExportToExcelListEntity extends BaseEntity {
 
-    @Column(name = "TEST_DATA" )
-    public String testData;
+	@Column(name = "TEST_DATA")
+	public String testData;
 
 }

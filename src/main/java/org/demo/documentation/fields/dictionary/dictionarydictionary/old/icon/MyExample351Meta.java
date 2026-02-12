@@ -19,28 +19,28 @@ import static org.demo.documentation.fields.dictionary.icon.enums.IconsEnum.WATE
 
 @Service
 public class MyExample351Meta extends FieldMetaBuilder<MyExample351DTO> {
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample351DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample351DTO_.customFieldDictionary);
-        fields.setEnabled(MyExample351DTO_.customField);
-    }
-    // --8<-- [end:buildRowDependentMeta]
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample351DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample351DTO_.customFieldDictionary);
+		fields.setEnabled(MyExample351DTO_.customField);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample351DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample351DTO_.customFieldDictionary);
-        fields.enableSort(MyExample351DTO_.customFieldDictionary);
-        fields.setDictionaryTypeWithAllValues(MyExample351DTO_.customFieldDictionary, REGIONS);
-        Map<LOV, Icon> valueIconMap = Map.of(
-                MOSCOW, ARROW_UP,
-                SAINT_PETERBURG, DOWN,
-                SYKTYVKAR, ARROW_UP_BLUE,
-                KOSTROMA, WATERMELON);
-        fields.setAllValuesWithIcons(MyExample351DTO_.customFieldDictionary, REGIONS, valueIconMap);
-        fields.setAllFilterValuesByLovType(MyExample351DTO_.customFieldDictionary, REGIONS);
-    }
-    // --8<-- [end:buildIndependentMeta]
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample351DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample351DTO_.customFieldDictionary);
+		fields.enableSort(MyExample351DTO_.customFieldDictionary);
+		fields.setDictionaryTypeWithAllValues(MyExample351DTO_.customFieldDictionary, REGIONS);
+		Map<LOV, Icon> valueIconMap = Map.of(
+				MOSCOW, ARROW_UP,
+				SAINT_PETERBURG, DOWN,
+				SYKTYVKAR, ARROW_UP_BLUE,
+				KOSTROMA, WATERMELON);
+		fields.setAllValuesWithIcons(MyExample351DTO_.customFieldDictionary, REGIONS, valueIconMap);
+		fields.setAllFilterValuesByLovType(MyExample351DTO_.customFieldDictionary, REGIONS);
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

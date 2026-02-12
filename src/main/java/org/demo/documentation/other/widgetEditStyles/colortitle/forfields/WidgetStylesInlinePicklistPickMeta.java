@@ -10,18 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class WidgetStylesInlinePicklistPickMeta extends FieldMetaBuilder<WidgetStylesInlinePicklistPickDTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesInlinePicklistPickDTO> fields, InnerBcDescription bcDescription,
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesInlinePicklistPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-        fields.setEnabled(WidgetStylesInlinePicklistPickDTO_.id);
-        fields.setEnabled(WidgetStylesInlinePicklistPickDTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<WidgetStylesInlinePicklistPickDTO> fields, InnerBcDescription bcDescription,
+		fields.setEnabled(WidgetStylesInlinePicklistPickDTO_.id);
+		fields.setEnabled(WidgetStylesInlinePicklistPickDTO_.customField);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<WidgetStylesInlinePicklistPickDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
 
-    }
+	}
 
 }

@@ -9,31 +9,31 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample106Meta extends FieldMetaBuilder<MyExample106DTO> {
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample106DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample106DTO_.customField);
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample106DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample106DTO_.customField);
 
-        fields.setEnabled(MyExample106DTO_.customFieldDictionary);
-        fields.setDictionaryValues(MyExample106DTO_.customFieldDictionary);
+		fields.setEnabled(MyExample106DTO_.customFieldDictionary);
+		fields.setDictionaryValues(MyExample106DTO_.customFieldDictionary);
 
-        fields.setEnabled(MyExample106DTO_.customFieldDictionaryExample);
-        fields.setDictionaryValues(MyExample106DTO_.customFieldDictionaryExample);
-    }
-    // --8<-- [end:buildRowDependentMeta]
+		fields.setEnabled(MyExample106DTO_.customFieldDictionaryExample);
+		fields.setDictionaryValues(MyExample106DTO_.customFieldDictionaryExample);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample106DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableSort(MyExample106DTO_.customFieldDictionary);
-        fields.enableSort(MyExample106DTO_.customFieldDictionaryExample);
-        fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionary);
-        fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionaryExample);
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample106DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableSort(MyExample106DTO_.customFieldDictionary);
+		fields.enableSort(MyExample106DTO_.customFieldDictionaryExample);
+		fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionary);
+		fields.setDictionaryFilterValues(MyExample106DTO_.customFieldDictionaryExample);
 
-        fields.enableFilter(MyExample106DTO_.customFieldDictionary);
-        fields.enableFilter(MyExample106DTO_.customFieldDictionaryExample);
+		fields.enableFilter(MyExample106DTO_.customFieldDictionary);
+		fields.enableFilter(MyExample106DTO_.customFieldDictionaryExample);
 
-    }
-    // --8<-- [end:buildIndependentMeta]
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

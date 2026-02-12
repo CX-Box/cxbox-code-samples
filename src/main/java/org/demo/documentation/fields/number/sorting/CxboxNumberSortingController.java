@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberSortingController implements EnumBcIdentifier {
 
 
-
 	numberSorting(NumberSortingService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberSortingController> Holder = new Holder<>(
 			CxboxNumberSortingController.class);

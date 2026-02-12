@@ -16,12 +16,12 @@ public class DateTimeWithSecondsColorService extends
 		VersionAwareResponseService<DateTimeWithSecondsColorDTO, DateTimeWithSecondsColorEntity> {
 
 	private final DateTimeWithSecondsColorEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsColorMeta> meta = DateTimeWithSecondsColorMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsColorMeta> meta = DateTimeWithSecondsColorMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsColorDTO> doCreateEntity(DateTimeWithSecondsColorEntity entity,
-			BusinessComponent bc) {
+																	   BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsColorService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsColorDTO> doUpdateEntity(DateTimeWithSecondsColorEntity entity,
-			DateTimeWithSecondsColorDTO data, BusinessComponent bc) {
+																		  DateTimeWithSecondsColorDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeWithSecondsColorDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -41,7 +41,7 @@ public class DateTimeWithSecondsColorService extends
 	@Override
 	public Actions<DateTimeWithSecondsColorDTO> getActions() {
 		return Actions.<DateTimeWithSecondsColorDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

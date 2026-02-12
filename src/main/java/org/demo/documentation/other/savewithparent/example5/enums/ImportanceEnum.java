@@ -11,17 +11,17 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum ImportanceEnum {
-    HIGH("High"),
-    MIDDLE("Middle"),
-    LOW("Low");
+	HIGH("High"),
+	MIDDLE("Middle"),
+	LOW("Low");
 
-    @JsonValue
-    private final String value;
+	@JsonValue
+	private final String value;
 
-    public static ImportanceEnum getByValue(@NonNull String value) {
-        return Arrays.stream(ImportanceEnum.values())
-                .filter(enm -> Objects.equals(enm.getValue(), value))
-                .findFirst()
-                .orElse(null);
-    }
+	public static ImportanceEnum getByValue(@NonNull String value) {
+		return Arrays.stream(ImportanceEnum.values())
+				.filter(enm -> Objects.equals(enm.getValue(), value))
+				.findFirst()
+				.orElse(null);
+	}
 }

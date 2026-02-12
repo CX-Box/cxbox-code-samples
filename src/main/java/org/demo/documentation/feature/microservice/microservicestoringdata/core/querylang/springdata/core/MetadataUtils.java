@@ -7,7 +7,6 @@ import jakarta.persistence.metamodel.Bindable.BindableType;
 import jakarta.persistence.metamodel.ManagedType;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.DtoToEntityFilterParameterMapper;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.EntityFieldFilterParameter;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.FilterParameters;
@@ -123,7 +122,7 @@ public class MetadataUtils {
 	}
 
 	private static List<EntityFieldFilterParameter> map(Class<?> dtoClazz, FilterParameters<?> filterParameters,
-			List<DtoToEntityFilterParameterMapper> filterParameterMappers) {
+														List<DtoToEntityFilterParameterMapper> filterParameterMappers) {
 		List<EntityFieldFilterParameter> result = new ArrayList<>();
 
 		if (filterParameters == null) {
@@ -159,7 +158,7 @@ public class MetadataUtils {
 	}
 
 	public Optional<DtoToEntityFilterParameterMapper> getFilterMapper(Field dtoField,
-			List<DtoToEntityFilterParameterMapper> filterParameterMappers) {
+																	  List<DtoToEntityFilterParameterMapper> filterParameterMappers) {
 
 		SearchParameter searchParam = dtoField.getDeclaredAnnotation(SearchParameter.class);
 		Class<? extends DtoToEntityFilterParameterMapper> provider;
@@ -173,14 +172,14 @@ public class MetadataUtils {
 	}
 
 	public static Predicate getAllSpecifications(CriteriaBuilder cb, Root<?> root,
-			List<EntityFieldFilterParameter> criteriaStrings) {
+												 List<EntityFieldFilterParameter> criteriaStrings) {
 		return cb.and(criteriaStrings.stream()
 				.map(criteria -> getSingleSpecification(cb, root, criteria))
 				.filter(Objects::nonNull).toArray(Predicate[]::new));
 	}
 
 	private static Predicate getSingleSpecification(CriteriaBuilder cb, Root<?> root,
-			EntityFieldFilterParameter criteria) {
+													EntityFieldFilterParameter criteria) {
 		return createPredicate(root, criteria, cb);
 
 	}

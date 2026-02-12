@@ -15,52 +15,51 @@ import org.springframework.stereotype.Component;
 public enum CxboxWidgetStylesController implements EnumBcIdentifier {
 
 
+	widgetStyles(WidgetStylesService.class),
+	widgetStylesPicklistPickListPopup(widgetStyles, WidgetStylesPicklistPickService.class),
+	widgetStylesInlinePicklistPickListPopup(widgetStyles, WidgetStylesInlinePicklistPickService.class),
+	widgetStylesMultiMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultiMultivalueService.class),
+	widgetStylesMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultivalueService.class),
+	widgetStylesNone(widgetStyles, WidgetStylesService.class),
+	widgetStylesInlinePicklistNonePickListPopup(widgetStylesNone, WidgetStylesInlinePicklistPickService.class),
+	widgetStylesPicklistPickListPopupNone(widgetStylesNone, WidgetStylesPicklistPickService.class);
 
-    widgetStyles(WidgetStylesService.class),
-        widgetStylesPicklistPickListPopup(widgetStyles, WidgetStylesPicklistPickService.class),
-        widgetStylesInlinePicklistPickListPopup(widgetStyles, WidgetStylesInlinePicklistPickService.class),
-    widgetStylesMultiMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultiMultivalueService.class),
-    widgetStylesMultiAssocListPopup(widgetStyles, WidgetStylesMultiMultivalueService.class),
-    widgetStylesNone(widgetStyles, WidgetStylesService.class),
-        widgetStylesInlinePicklistNonePickListPopup(widgetStylesNone, WidgetStylesInlinePicklistPickService.class),
-        widgetStylesPicklistPickListPopupNone(widgetStylesNone, WidgetStylesPicklistPickService.class);
+	public static final EnumBcIdentifier.Holder<CxboxWidgetStylesController> Holder = new Holder<>(
+			CxboxWidgetStylesController.class);
 
-    public static final EnumBcIdentifier.Holder<CxboxWidgetStylesController> Holder = new Holder<>(
-            CxboxWidgetStylesController.class);
+	private final BcDescription bcDescription;
 
-    private final BcDescription bcDescription;
+	CxboxWidgetStylesController(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    CxboxWidgetStylesController(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	CxboxWidgetStylesController(String parentName, Class<?> serviceClass) {
+		this(parentName, serviceClass, false);
+	}
 
-    CxboxWidgetStylesController(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
+	CxboxWidgetStylesController(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
 
-    CxboxWidgetStylesController(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
+	CxboxWidgetStylesController(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
 
-    CxboxWidgetStylesController(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
+	CxboxWidgetStylesController(Class<?> serviceClass, boolean refresh) {
+		this((String) null, serviceClass, refresh);
+	}
 
-    CxboxWidgetStylesController(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
+	CxboxWidgetStylesController(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-    CxboxWidgetStylesController(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<CxboxWidgetStylesController> {
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<CxboxWidgetStylesController> {
+		public BcSupplier() {
+			super(CxboxWidgetStylesController.Holder);
+		}
 
-        public BcSupplier() {
-            super(CxboxWidgetStylesController.Holder);
-        }
-
-    }
+	}
 
 }

@@ -78,8 +78,8 @@ public class ResponsibilitiesAdminService extends VersionAwareResponseService<Re
 
 	@Override
 	protected ActionResultDTO<ResponsibilitiesAdminDTO> doUpdateEntity(Responsibilities entity,
-			ResponsibilitiesAdminDTO data,
-			BusinessComponent bc) {
+																	   ResponsibilitiesAdminDTO data,
+																	   BusinessComponent bc) {
 		String role = data.getInternalRoleCD();
 		if (data.isFieldChanged(ResponsibilitiesAdminDTO_.internalRoleCD.getName())) {
 			entity.setInternalRoleCD(role);

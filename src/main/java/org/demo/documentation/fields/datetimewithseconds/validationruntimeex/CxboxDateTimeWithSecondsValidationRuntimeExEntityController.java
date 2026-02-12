@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeWithSecondsValidationRuntimeExEntityController implements EnumBcIdentifier {
 
 
-
 	dateTimeWithSecondsValidationRuntimeExEntity(DateTimeWithSecondsValidationRuntimeExEntityService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsValidationRuntimeExEntityController> Holder = new Holder<>(
@@ -24,7 +22,7 @@ public enum CxboxDateTimeWithSecondsValidationRuntimeExEntityController implemen
 	private final BcDescription bcDescription;
 
 	CxboxDateTimeWithSecondsValidationRuntimeExEntityController(String parentName, Class<?> serviceClass,
-			boolean refresh) {
+																boolean refresh) {
 		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
 	}
 
@@ -33,7 +31,7 @@ public enum CxboxDateTimeWithSecondsValidationRuntimeExEntityController implemen
 	}
 
 	CxboxDateTimeWithSecondsValidationRuntimeExEntityController(BcIdentifier parent, Class<?> serviceClass,
-			boolean refresh) {
+																boolean refresh) {
 		this(parent == null ? null : parent.getName(), serviceClass, refresh);
 	}
 

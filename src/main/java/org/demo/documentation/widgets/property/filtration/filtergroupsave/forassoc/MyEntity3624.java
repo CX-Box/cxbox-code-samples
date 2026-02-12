@@ -16,11 +16,11 @@ import org.demo.documentation.widgets.property.filtration.filtergroupsave.forass
 @Setter
 @NoArgsConstructor
 public class MyEntity3624 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldNew;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customField;
+	@Column
+	private String customFieldNew;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

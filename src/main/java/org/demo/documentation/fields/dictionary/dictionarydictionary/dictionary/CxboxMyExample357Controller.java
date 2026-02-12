@@ -12,36 +12,36 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample357Controller implements EnumBcIdentifier {
 
 
-    myexample356(MyExample356Service.class);
+	myexample356(MyExample356Service.class);
 
-    public static final EnumBcIdentifier.Holder<CxboxMyExample357Controller> Holder = new Holder<>(
-            CxboxMyExample357Controller.class);
+	public static final EnumBcIdentifier.Holder<CxboxMyExample357Controller> Holder = new Holder<>(
+			CxboxMyExample357Controller.class);
 
-    private final BcDescription bcDescription;
+	private final BcDescription bcDescription;
 
-    CxboxMyExample357Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	CxboxMyExample357Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    CxboxMyExample357Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
+	CxboxMyExample357Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
 
-    CxboxMyExample357Controller(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
+	CxboxMyExample357Controller(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
 
-    CxboxMyExample357Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	CxboxMyExample357Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample357Controller> {
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample357Controller> {
 
-        public BcSupplier() {
-            super(CxboxMyExample357Controller.Holder);
-        }
+		public BcSupplier() {
+			super(CxboxMyExample357Controller.Holder);
+		}
 
-    }
+	}
 
 }

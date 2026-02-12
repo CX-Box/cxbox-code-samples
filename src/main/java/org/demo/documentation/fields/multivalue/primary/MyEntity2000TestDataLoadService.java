@@ -1,12 +1,11 @@
 package org.demo.documentation.fields.multivalue.primary;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +13,10 @@ import java.util.List;
 public class MyEntity2000TestDataLoadService {
 
 	@Autowired
-    MyEntity2000Repository repository;
+	MyEntity2000Repository repository;
 
 	@Autowired
-    MyEntity2001Repository repository177;
+	MyEntity2001Repository repository177;
 
 	@Autowired
 	InternalAuthorizationService authzService;

@@ -8,12 +8,11 @@ import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyEntity3043 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 }

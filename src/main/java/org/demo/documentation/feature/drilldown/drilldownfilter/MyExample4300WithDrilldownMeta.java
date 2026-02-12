@@ -1,14 +1,6 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.data.dto.rowmeta.FieldDTO;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -19,6 +11,12 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class MyExample4300WithDrilldownMeta extends FieldMetaBuilder<MyExample43
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4300WithDrilldownDTO> fields, InnerBcDescription bcDescription,
-																		Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldHidden);
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldText);
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldDateTime);

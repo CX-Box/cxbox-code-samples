@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 public class MyExample146Service extends VersionAwareResponseService<MyExample146DTO, MyEntity146> {
 
 	private final MyEntity146Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample146Meta> meta = MyExample146Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample146Meta> meta = MyExample146Meta.class;
 
-    @Autowired
+	@Autowired
 	private EntityManager entityManager;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample146DTO> doCreateEntity(MyEntity146 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -34,7 +34,7 @@ public class MyExample146Service extends VersionAwareResponseService<MyExample14
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample146DTO> doUpdateEntity(MyEntity146 entity, MyExample146DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample146DTO_.customFieldId)) {
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
 					? entityManager.getReference(MyEntity147.class, data.getCustomFieldId())
@@ -49,7 +49,7 @@ public class MyExample146Service extends VersionAwareResponseService<MyExample14
 	@Override
 	public Actions<MyExample146DTO> getActions() {
 		return Actions.<MyExample146DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

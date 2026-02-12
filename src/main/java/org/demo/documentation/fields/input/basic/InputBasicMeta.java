@@ -17,7 +17,7 @@ public class InputBasicMeta extends FieldMetaBuilder<InputBasicDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputBasicDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputBasicDTO_.customField
 		);

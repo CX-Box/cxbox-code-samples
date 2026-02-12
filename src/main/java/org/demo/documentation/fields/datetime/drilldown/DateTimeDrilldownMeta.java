@@ -18,8 +18,8 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeDrilldownDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeDrilldownDTO_.customField
 		);
@@ -39,7 +39,7 @@ public class DateTimeDrilldownMeta extends FieldMetaBuilder<DateTimeDrilldownDTO
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeDrilldownDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeDrilldownDTO_.customField);
 		}

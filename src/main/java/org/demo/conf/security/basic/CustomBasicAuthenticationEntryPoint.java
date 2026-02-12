@@ -36,7 +36,7 @@ public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntr
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException {
+						 AuthenticationException authException) throws IOException {
 		HttpServletResponse httpResponse = response;
 		httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
 	}

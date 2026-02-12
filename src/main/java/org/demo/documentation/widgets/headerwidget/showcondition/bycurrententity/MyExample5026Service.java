@@ -14,30 +14,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5026Service extends VersionAwareResponseService<MyExample5026DTO, MyEntity5026> {
 
-    private final MyEntity5026Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample5026Meta> meta = MyExample5026Meta.class;
+	private final MyEntity5026Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample5026Meta> meta = MyExample5026Meta.class;
 
-    @Override
-    protected CreateResult<MyExample5026DTO> doCreateEntity(MyEntity5026 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample5026DTO> doCreateEntity(MyEntity5026 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample5026DTO> doUpdateEntity(MyEntity5026 entity, MyExample5026DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample5026DTO_.customField, entity::setCustomField);
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample5026DTO> doUpdateEntity(MyEntity5026 entity, MyExample5026DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample5026DTO_.customField, entity::setCustomField);
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    public Actions<MyExample5026DTO> getActions() {
-        return Actions.<MyExample5026DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .build();
-    }
+	@Override
+	public Actions<MyExample5026DTO> getActions() {
+		return Actions.<MyExample5026DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.build();
+	}
 
 }

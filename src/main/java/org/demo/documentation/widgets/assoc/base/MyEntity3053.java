@@ -17,14 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 public class MyEntity3053 extends BaseEntity {
 
-    @JoinTable(name = "MyEntity3053_MyEntity3053Multi",
-            joinColumns = @JoinColumn(name = "MyEntity3053_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3053Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3053Multi> customFieldList = new ArrayList<>();
-    @Column
-    private String customFieldNew;
+	@JoinTable(name = "MyEntity3053_MyEntity3053Multi",
+			joinColumns = @JoinColumn(name = "MyEntity3053_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3053Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3053Multi> customFieldList = new ArrayList<>();
+	@Column
+	private String customFieldNew;
 }

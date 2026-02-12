@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeWithSecondsPlaceholderController implements EnumBcIdentifier {
 
 
-
 	dateTimeWithSecondsPlaceholder(DateTimeWithSecondsPlaceholderService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsPlaceholderController> Holder = new Holder<>(
 			CxboxDateTimeWithSecondsPlaceholderController.class);

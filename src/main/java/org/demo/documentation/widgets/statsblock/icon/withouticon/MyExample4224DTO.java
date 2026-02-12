@@ -10,13 +10,13 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Setter
 @NoArgsConstructor
 public class MyExample4224DTO extends DataResponseDTO {
-    private String title;
+	private String title;
 
-    private Long value;
+	private Long value;
 
-    private String color;
+	private String color;
 
-    private String description;
+	private String description;
 
-    private String icon;
+	private String icon;
 }

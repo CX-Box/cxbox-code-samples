@@ -13,7 +13,7 @@ public class MyEntity145PickMeta extends FieldMetaBuilder<MyEntity145PickDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity145PickDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity145PickDTO_.id);
 		fields.setEnabled(MyEntity145PickDTO_.customField);
 	}
@@ -22,7 +22,7 @@ public class MyEntity145PickMeta extends FieldMetaBuilder<MyEntity145PickDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity145PickDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableSort(MyEntity145PickDTO_.id);
 		fields.enableSort(MyEntity145PickDTO_.customField);
 

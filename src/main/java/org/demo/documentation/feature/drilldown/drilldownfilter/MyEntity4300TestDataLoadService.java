@@ -1,24 +1,21 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.model.core.dao.JpaDao;
 import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
+import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 @Transactional
@@ -82,7 +79,7 @@ public class MyEntity4300TestDataLoadService {
 	}
 
 	private MyEntityWithDrilldown4300 buildEntity(int idx, List<MyEntity4300PickList> pls, List<MyEntity4300InlinePickList> ipls,
-																								List<MyEntity4300Multivalue> mvs, List<MyEntity4300MultivalueHover> mvh) {
+												  List<MyEntity4300Multivalue> mvs, List<MyEntity4300MultivalueHover> mvh) {
 
 		MyEntityWithDrilldown4300 build = MyEntityWithDrilldown4300.builder()
 				.customField("Field_" + idx)
@@ -116,7 +113,7 @@ public class MyEntity4300TestDataLoadService {
 	}
 
 	private MyEntity4300SecondEntity buildEntityWithDrillDown(int idx, List<MyEntity4300PickList> pls, List<MyEntity4300InlinePickList> ipls,
-																														List<MyEntity4300Multivalue> mvs, List<MyEntity4300MultivalueHover> mvh) {
+															  List<MyEntity4300Multivalue> mvs, List<MyEntity4300MultivalueHover> mvh) {
 
 		MyEntity4300SecondEntity build = MyEntity4300SecondEntity.builder()
 				.customField("Field_" + idx)

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class MyEntity3087OutServiceDTO implements Serializable {
 
 
-    private String id;
-    private String customFieldSuggestion;
-    private LocalDateTime customFieldSuggestionDate;
+	private String id;
+	private String customFieldSuggestion;
+	private LocalDateTime customFieldSuggestionDate;
 }

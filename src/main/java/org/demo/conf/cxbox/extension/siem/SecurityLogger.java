@@ -19,9 +19,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SecurityLogger {
 
-	private final LoggingProperties loggingProperties;
-
 	private static final String IP_REGEX = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+	private final LoggingProperties loggingProperties;
 
 	@Nullable
 	public static String getUserIp() {
@@ -39,13 +38,13 @@ public class SecurityLogger {
 	}
 
 	public void logSecurityEvent(@NonNull LogLevel level,
-			@NonNull String operation,
-			String endpoint,
-			String userIdentifier,
-			String userRole,
-			String sessionIdentifier,
-			String ipAddress,
-			String data) {
+								 @NonNull String operation,
+								 String endpoint,
+								 String userIdentifier,
+								 String userRole,
+								 String sessionIdentifier,
+								 String ipAddress,
+								 String data) {
 		String msg = "SIEM event. " +
 				"Operation: " + operation +
 				", endpoint (resource): " + endpoint +
@@ -68,7 +67,7 @@ public class SecurityLogger {
 			return LogLevel.ERROR;
 		} else {
 			return Optional.ofNullable(loggingProperties)
-					.filter(exc->!(exc instanceof LoggableBusinessException))
+					.filter(exc -> !(exc instanceof LoggableBusinessException))
 					.map(LoggingProperties::getGlobalHandler)
 					.map(LoggingProperties.GlobalHandler::getBusinessException)
 					.map(LoggingProperties.BusinessException::getLogLevel)

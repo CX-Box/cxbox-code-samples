@@ -1,5 +1,7 @@
 package org.demo.documentation.widgets.info.base;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.widgets.info.base.allfields.MyEntity3001;
 import org.demo.documentation.widgets.info.base.allfields.MyEntity3001Repository;
@@ -11,9 +13,6 @@ import org.demo.documentation.widgets.info.base.onefield.MyEntity3009;
 import org.demo.documentation.widgets.info.base.onefield.MyEntity3009Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class MyEntity3001TestDataLoadService {
 		List<MyEntity4222Multi2> list2 = new ArrayList<>();
 		list2.add(myEntity3);
 		list2.add(myEntity4);
-			MyEntity3001 myEntity3001new = new MyEntity3001().setCustomField("Test data")
+		MyEntity3001 myEntity3001new = new MyEntity3001().setCustomField("Test data")
 				.setCustomFieldCheckbox(true)
 				.setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH)
 				.setCustomFieldDateTime(LocalDateTime.now())
@@ -76,8 +75,7 @@ public class MyEntity3001TestDataLoadService {
 				.setCustomFieldRadio(CustomFieldRadioEnum.LOW)
 				.setCustomFieldPickListEntity(myEntityPick)
 				.setCustomFieldMultipleSelect(Collections.singleton(CustomFieldMultipleSelectEnum.LOW))
-				.setCustomFieldInlinePickListEntity(myEntityPick2)
-			;
+				.setCustomFieldInlinePickListEntity(myEntityPick2);
 		repository.save(myEntity3001new.setCustomFieldMultivalueHoverList(list).setCustomFieldMultivalueList(list2));
 
 

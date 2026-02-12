@@ -1,11 +1,11 @@
 package org.demo.documentation.fields.time.base;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 
 import java.time.LocalDateTime;
 
@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3500 extends BaseEntity {
 
-    @Column
-    private LocalDateTime customField;
-    @Column
-    private LocalDateTime customFieldhmm;
-    @Column
-    private LocalDateTime customFieldh;
-    @Column
-    private LocalDateTime customFieldhmmA;
-    @Column
-    private LocalDateTime customFieldhmmssA;
-    @Column
-    private LocalDateTime customFieldmm;
-    @Column
-    private LocalDateTime customFieldmmss;
-    @Column
-    private LocalDateTime customFieldss;
-    @Column
-    private LocalDateTime customFieldhA;
+	@Column
+	private LocalDateTime customField;
+	@Column
+	private LocalDateTime customFieldhmm;
+	@Column
+	private LocalDateTime customFieldh;
+	@Column
+	private LocalDateTime customFieldhmmA;
+	@Column
+	private LocalDateTime customFieldhmmssA;
+	@Column
+	private LocalDateTime customFieldmm;
+	@Column
+	private LocalDateTime customFieldmmss;
+	@Column
+	private LocalDateTime customFieldss;
+	@Column
+	private LocalDateTime customFieldhA;
 }

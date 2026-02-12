@@ -13,6 +13,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity3090Multi extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 }

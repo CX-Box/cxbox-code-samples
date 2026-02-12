@@ -17,7 +17,6 @@ public enum PlatformMyExample110Controller implements EnumBcIdentifier {
 	myEntity124PickListPopup(myExampleBc110, MyEntity124PickPickListService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample110Controller> Holder = new Holder<>(
 			PlatformMyExample110Controller.class);

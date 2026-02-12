@@ -13,10 +13,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputValidationController implements EnumBcIdentifier {
 
 
-
 	InputValidation(InputValidationService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxInputValidationController> Holder = new Holder<>(

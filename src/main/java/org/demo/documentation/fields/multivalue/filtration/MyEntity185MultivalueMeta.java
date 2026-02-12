@@ -18,8 +18,8 @@ public class MyEntity185MultivalueMeta extends FieldMetaBuilder<MyEntity185Multi
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity185MultivalueDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(org.demo.documentation.fields.multivalue.filtration.MyEntity185MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivalue.filtration.MyEntity185MultivalueDTO_.customField);
 	}
@@ -28,7 +28,7 @@ public class MyEntity185MultivalueMeta extends FieldMetaBuilder<MyEntity185Multi
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity185MultivalueDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyEntity185MultivalueDTO_.customField);
 		fields.enableSort(MyEntity185MultivalueDTO_.customField);
 		fields.enableSort(MyEntity185MultivalueDTO_.id);

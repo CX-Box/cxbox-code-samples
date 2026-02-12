@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputBasicService extends VersionAwareResponseService<InputBasicDTO, InputBasic> {
 
 	private final InputBasicRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputBasicMeta> meta = InputBasicMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputBasicMeta> meta = InputBasicMeta.class;
 
-    // --8<-- [start:doCreateEntity]
+	// --8<-- [start:doCreateEntity]
 	@Override
 	protected CreateResult<InputBasicDTO> doCreateEntity(InputBasic entity, BusinessComponent bc) {
 		repository.save(entity);
@@ -44,7 +44,7 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 	@Override
 	public Actions<InputBasicDTO> getActions() {
 		return Actions.<InputBasicDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

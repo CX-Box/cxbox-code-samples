@@ -10,11 +10,11 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class WidgetStylesMultiMultivalueDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public WidgetStylesMultiMultivalueDTO(WidgetStylesMulti entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public WidgetStylesMultiMultivalueDTO(WidgetStylesMulti entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

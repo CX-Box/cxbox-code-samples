@@ -1,17 +1,16 @@
 package org.demo.documentation.widgets.form.title;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 
 @Service
 public class MyEntity3003TestDataLoadService {
 
 	@Autowired
-    MyEntity3003Repository repository;
+	MyEntity3003Repository repository;
 
 	@Autowired
 	InternalAuthorizationService authzService;

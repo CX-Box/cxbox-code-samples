@@ -17,10 +17,10 @@ public class NumberPlaceholderService extends
 		VersionAwareResponseService<NumberPlaceholderDTO, NumberPlaceholderEntity> {
 
 	private final NumberPlaceholderEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberPlaceholderMeta> meta = NumberPlaceholderMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberPlaceholderMeta> meta = NumberPlaceholderMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberPlaceholderDTO> doCreateEntity(NumberPlaceholderEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -29,7 +29,7 @@ public class NumberPlaceholderService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberPlaceholderDTO> doUpdateEntity(NumberPlaceholderEntity entity,
-			NumberPlaceholderDTO data, BusinessComponent bc) {
+																   NumberPlaceholderDTO data, BusinessComponent bc) {
 		setIfChanged(data, NumberPlaceholderDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -39,7 +39,7 @@ public class NumberPlaceholderService extends
 	@Override
 	public Actions<NumberPlaceholderDTO> getActions() {
 		return Actions.<NumberPlaceholderDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

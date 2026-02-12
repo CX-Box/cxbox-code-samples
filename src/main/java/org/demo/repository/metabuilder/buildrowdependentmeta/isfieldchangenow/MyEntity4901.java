@@ -17,26 +17,26 @@ import org.demo.repository.metabuilder.buildrowdependentmeta.isfieldchangenow.en
 @Setter
 @NoArgsConstructor
 public class MyEntity4901 extends BaseEntity {
-    @Column
-    private String customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private RegionEnum region;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CountryEnum country;
-    @Column
-    private String product;
-    @Column
-    private String descriptionProduct;
-    @Column
-    private Long money;
-    @Column
-    private String street;
-    @Column
-    private Double customFieldDouble;
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private RegionEnum region;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CountryEnum country;
+	@Column
+	private String product;
+	@Column
+	private String descriptionProduct;
+	@Column
+	private Long money;
+	@Column
+	private String street;
+	@Column
+	private Double customFieldDouble;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private ProductTypeEnum productType;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private ProductTypeEnum productType;
 }

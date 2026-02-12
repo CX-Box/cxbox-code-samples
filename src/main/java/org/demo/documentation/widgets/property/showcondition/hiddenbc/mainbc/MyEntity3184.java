@@ -13,8 +13,8 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity3184 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private Boolean customFieldCheckbox = true;
+	@Column
+	private String customField;
+	@Column
+	private Boolean customFieldCheckbox = true;
 }

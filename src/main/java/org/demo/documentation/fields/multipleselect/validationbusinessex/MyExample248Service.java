@@ -1,7 +1,5 @@
 package org.demo.documentation.fields.multipleselect.validationbusinessex;
 
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,6 +11,8 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.fields.multipleselect.validationbusinessex.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -20,10 +20,10 @@ import org.springframework.stereotype.Service;
 public class MyExample248Service extends VersionAwareResponseService<MyExample248DTO, MyEntity248> {
 
 	private final MyEntity248Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample248Meta> meta = MyExample248Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample248Meta> meta = MyExample248Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample248DTO> doCreateEntity(MyEntity248 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -32,7 +32,7 @@ public class MyExample248Service extends VersionAwareResponseService<MyExample24
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample248DTO> doUpdateEntity(MyEntity248 entity, MyExample248DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample248DTO_.customField)) {
 			data.getCustomField().getValues()
 					.stream()
@@ -55,7 +55,7 @@ public class MyExample248Service extends VersionAwareResponseService<MyExample24
 	@Override
 	public Actions<MyExample248DTO> getActions() {
 		return Actions.<MyExample248DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

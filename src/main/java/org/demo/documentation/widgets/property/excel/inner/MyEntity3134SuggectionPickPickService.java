@@ -2,12 +2,12 @@ package org.demo.documentation.widgets.property.excel.inner;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134SuggectionPick;
-import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity3134SuggectionPick;
+import org.springframework.stereotype.Service;
 
 @SuppressWarnings("java:S1170")
 @Getter

@@ -12,11 +12,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MyExample4002ExternalDTO implements Serializable {
 
-    private String id;
-    private String customField;
+	private String id;
+	private String customField;
 
-    public MyExample4002ExternalDTO(MyEntity4002External entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyExample4002ExternalDTO(MyEntity4002External entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 }

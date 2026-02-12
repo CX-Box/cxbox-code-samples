@@ -10,18 +10,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class WidgetStylesMultiMultivalueMeta extends FieldMetaBuilder<WidgetStylesMultiMultivalueDTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesMultiMultivalueDTO> fields, InnerBcDescription bcDescription,
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesMultiMultivalueDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-        fields.setEnabled(WidgetStylesMultiMultivalueDTO_.id);
-        fields.setEnabled(WidgetStylesMultiMultivalueDTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<WidgetStylesMultiMultivalueDTO> fields, InnerBcDescription bcDescription,
+		fields.setEnabled(WidgetStylesMultiMultivalueDTO_.id);
+		fields.setEnabled(WidgetStylesMultiMultivalueDTO_.customField);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<WidgetStylesMultiMultivalueDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
 
-    }
+	}
 
 }

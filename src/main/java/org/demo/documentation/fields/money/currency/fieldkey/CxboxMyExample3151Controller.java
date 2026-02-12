@@ -10,48 +10,46 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxMyExample3151Controller implements EnumBcIdentifier {
 
-    
 
-    myexample3151(MyExample3151Service.class);
+	myexample3151(MyExample3151Service.class);
 
-    
 
-    public static final EnumBcIdentifier.Holder<CxboxMyExample3151Controller> Holder = new Holder<>(
-            CxboxMyExample3151Controller.class);
+	public static final EnumBcIdentifier.Holder<CxboxMyExample3151Controller> Holder = new Holder<>(
+			CxboxMyExample3151Controller.class);
 
-    private final BcDescription bcDescription;
+	private final BcDescription bcDescription;
 
-    CxboxMyExample3151Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	CxboxMyExample3151Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    CxboxMyExample3151Controller(String parentName, Class<?> serviceClass) {
-        this(parentName, serviceClass, false);
-    }
+	CxboxMyExample3151Controller(String parentName, Class<?> serviceClass) {
+		this(parentName, serviceClass, false);
+	}
 
-    CxboxMyExample3151Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-        this(parent == null ? null : parent.getName(), serviceClass, refresh);
-    }
+	CxboxMyExample3151Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
 
-    CxboxMyExample3151Controller(BcIdentifier parent, Class<?> serviceClass) {
-        this(parent, serviceClass, false);
-    }
+	CxboxMyExample3151Controller(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
 
-    CxboxMyExample3151Controller(Class<?> serviceClass, boolean refresh) {
-        this((String) null, serviceClass, refresh);
-    }
+	CxboxMyExample3151Controller(Class<?> serviceClass, boolean refresh) {
+		this((String) null, serviceClass, refresh);
+	}
 
-    CxboxMyExample3151Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	CxboxMyExample3151Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample3151Controller> {
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample3151Controller> {
 
-        public BcSupplier() {
-            super(CxboxMyExample3151Controller.Holder);
-        }
+		public BcSupplier() {
+			super(CxboxMyExample3151Controller.Holder);
+		}
 
-    }
+	}
 
 }

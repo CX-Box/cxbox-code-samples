@@ -11,21 +11,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3624PickMeta extends FieldMetaBuilder<MyEntity3624PickDTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3624PickDTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnumValues(MyEntity3624PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.setEnabled(MyEntity3624PickDTO_.customFieldDictionary);
-        fields.setEnabled(MyEntity3624PickDTO_.id);
-        fields.setEnabled(MyEntity3624PickDTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3624PickDTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnumValues(MyEntity3624PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.setEnabled(MyEntity3624PickDTO_.customFieldDictionary);
+		fields.setEnabled(MyEntity3624PickDTO_.id);
+		fields.setEnabled(MyEntity3624PickDTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyEntity3624PickDTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
-        fields.setEnumFilterValues(fields, MyEntity3624PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.enableFilter(MyEntity3624PickDTO_.customFieldDictionary);
-        fields.enableFilter(MyEntity3624PickDTO_.customField);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyEntity3624PickDTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
+		fields.setEnumFilterValues(fields, MyEntity3624PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.enableFilter(MyEntity3624PickDTO_.customFieldDictionary);
+		fields.enableFilter(MyEntity3624PickDTO_.customField);
+	}
 
 }

@@ -12,13 +12,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MyExample3900DTO implements Serializable {
 
-    private String id;
-    private String customField;
-    private String customFieldNew;
+	private String id;
+	private String customField;
+	private String customFieldNew;
 
-    public MyExample3900DTO(MyEntity3900 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldNew = entity.getCustomFieldNew();
-    }
+	public MyExample3900DTO(MyEntity3900 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldNew = entity.getCustomFieldNew();
+	}
 }

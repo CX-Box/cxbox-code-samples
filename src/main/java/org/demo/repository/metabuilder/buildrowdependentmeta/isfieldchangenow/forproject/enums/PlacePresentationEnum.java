@@ -11,17 +11,17 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum PlacePresentationEnum {
-    HIGH("High"),
-    MIDDLE("Middle"),
-    LOW("Low");
+	HIGH("High"),
+	MIDDLE("Middle"),
+	LOW("Low");
 
-    @JsonValue
-    private final String value;
+	@JsonValue
+	private final String value;
 
-    public static PlacePresentationEnum getByValue(@NonNull String value) {
-        return Arrays.stream(PlacePresentationEnum.values())
-                .filter(enm -> Objects.equals(enm.getValue(), value))
-                .findFirst()
-                .orElse(null);
-    }
+	public static PlacePresentationEnum getByValue(@NonNull String value) {
+		return Arrays.stream(PlacePresentationEnum.values())
+				.filter(enm -> Objects.equals(enm.getValue(), value))
+				.findFirst()
+				.orElse(null);
+	}
 }

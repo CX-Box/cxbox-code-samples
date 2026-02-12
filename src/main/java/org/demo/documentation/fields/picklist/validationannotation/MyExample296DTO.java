@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.picklist.validationannotation;
 
-import java.util.Optional;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,8 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+
+import java.util.Optional;
 
 import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 

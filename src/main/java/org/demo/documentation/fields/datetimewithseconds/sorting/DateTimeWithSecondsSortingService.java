@@ -16,12 +16,12 @@ public class DateTimeWithSecondsSortingService extends
 		VersionAwareResponseService<DateTimeWithSecondsSortingDTO, DateTimeWithSecondsSortingEntity> {
 
 	private final DateTimeWithSecondsSortingEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsSortingMeta> meta = DateTimeWithSecondsSortingMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsSortingMeta> meta = DateTimeWithSecondsSortingMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsSortingDTO> doCreateEntity(DateTimeWithSecondsSortingEntity entity,
-			BusinessComponent bc) {
+																		 BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsSortingService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsSortingDTO> doUpdateEntity(DateTimeWithSecondsSortingEntity entity,
-			DateTimeWithSecondsSortingDTO data, BusinessComponent bc) {
+																			DateTimeWithSecondsSortingDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeWithSecondsSortingDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -41,7 +41,7 @@ public class DateTimeWithSecondsSortingService extends
 	@Override
 	public Actions<DateTimeWithSecondsSortingDTO> getActions() {
 		return Actions.<DateTimeWithSecondsSortingDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -9,24 +9,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3069TestDataLoadService {
 
-    @Autowired
-    MyEntity3069Repository repository;
+	@Autowired
+	MyEntity3069Repository repository;
 
-    @Autowired
-    MyEntity3069PickRepository repositoryPick;
+	@Autowired
+	MyEntity3069PickRepository repositoryPick;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        MyEntity3069Pick myEntity3069Pick = new MyEntity3069Pick().setCustomFieldPick("Test data") ;
-        repositoryPick.save(myEntity3069Pick);
-        repository.save(new MyEntity3069().setCustomFieldEntity(myEntity3069Pick));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		MyEntity3069Pick myEntity3069Pick = new MyEntity3069Pick().setCustomFieldPick("Test data");
+		repositoryPick.save(myEntity3069Pick);
+		repository.save(new MyEntity3069().setCustomFieldEntity(myEntity3069Pick));
+	}
 
 
 }

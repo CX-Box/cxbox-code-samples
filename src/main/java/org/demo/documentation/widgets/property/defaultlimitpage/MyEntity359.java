@@ -16,17 +16,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity359 extends BaseEntity {
-    @Column
-    private String customField;
-    @JoinTable(name = "MyEntity359_MyEntity359AssocPick",
-            joinColumns = @JoinColumn(name = "MyEntity359_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity359Assoc_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity359Assoc> customFieldMultivalueList = new ArrayList<>();
-    @JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
-    @ManyToOne
-    private MyEntity359Pick customFieldPicklistEntity;
+	@Column
+	private String customField;
+	@JoinTable(name = "MyEntity359_MyEntity359AssocPick",
+			joinColumns = @JoinColumn(name = "MyEntity359_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity359Assoc_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity359Assoc> customFieldMultivalueList = new ArrayList<>();
+	@JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
+	@ManyToOne
+	private MyEntity359Pick customFieldPicklistEntity;
 }

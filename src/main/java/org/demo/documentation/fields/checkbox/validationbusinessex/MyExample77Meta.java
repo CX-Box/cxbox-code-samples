@@ -17,9 +17,9 @@ public class MyExample77Meta extends FieldMetaBuilder<MyExample77DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample77DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample77DTO_.customField);
-		fields.setPlaceholder(MyExample77DTO_.customField,"Can contain only 'True'");
+		fields.setPlaceholder(MyExample77DTO_.customField, "Can contain only 'True'");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

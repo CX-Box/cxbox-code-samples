@@ -35,7 +35,7 @@ public class ResponsibilitiesActionAdminMeta extends FieldMetaBuilder<Responsibi
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<ResponsibilitiesActionAdminDTO> fields,
-			InnerBcDescription bcDescription, Long id, Long parentId) {
+									  InnerBcDescription bcDescription, Long id, Long parentId) {
 		fields.setEnabled(internalRoleCD);
 		fields.setRequired(internalRoleCD);
 		fields.setConcreteValues(
@@ -91,7 +91,7 @@ public class ResponsibilitiesActionAdminMeta extends FieldMetaBuilder<Responsibi
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<ResponsibilitiesActionAdminDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableSort(internalRoleCD);
 		fields.enableFilter(internalRoleCD);
 		fields.setConcreteFilterValues(

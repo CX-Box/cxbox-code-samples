@@ -19,10 +19,10 @@ import static org.demo.documentation.fields.main.TextError.LESS_100000;
 public class MyExample67Service extends VersionAwareResponseService<MyExample67DTO, MyEntity67> {
 
 	private final MyEntity67Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample67Meta> meta = MyExample67Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample67Meta> meta = MyExample67Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample67DTO> doCreateEntity(MyEntity67 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample67Service extends VersionAwareResponseService<MyExample67D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample67DTO> doUpdateEntity(MyEntity67 entity, MyExample67DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample67DTO_.customField)) {
 			if (data.getCustomField() < 100000) {
 				throw new BusinessException().addPopup(LESS_100000);
@@ -46,7 +46,7 @@ public class MyExample67Service extends VersionAwareResponseService<MyExample67D
 	@Override
 	public Actions<MyExample67DTO> getActions() {
 		return Actions.<MyExample67DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

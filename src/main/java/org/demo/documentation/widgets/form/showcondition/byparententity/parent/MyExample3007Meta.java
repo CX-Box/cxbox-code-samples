@@ -12,28 +12,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MyExample3007Meta extends FieldMetaBuilder<MyExample3007DTO> {
 
-    private final DocumentConfig configuration;
+	private final DocumentConfig configuration;
 
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3007DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3007DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 
-        fields.setEnabled(MyExample3007DTO_.customField);
-    }
-    // --8<-- [end:buildRowDependentMeta]
+		fields.setEnabled(MyExample3007DTO_.customField);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3007DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3007DTO_.customFieldShowCondition);
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3007DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3007DTO_.customFieldShowCondition);
 
-        fields.enableFilter(MyExample3007DTO_.customField);
-        if (configuration.getForceActiveEnabled()) {
-            fields.setForceActive(MyExample3007DTO_.customField);
-            fields.setForceActive(MyExample3007DTO_.customFieldShowCondition);
-        }
-    }
-    // --8<-- [end:buildIndependentMeta]
+		fields.enableFilter(MyExample3007DTO_.customField);
+		if (configuration.getForceActiveEnabled()) {
+			fields.setForceActive(MyExample3007DTO_.customField);
+			fields.setForceActive(MyExample3007DTO_.customFieldShowCondition);
+		}
+	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

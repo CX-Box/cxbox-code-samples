@@ -9,28 +9,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3122TestDataLoadService {
 
-    @Autowired
-    MyEntity3122Repository repository;
+	@Autowired
+	MyEntity3122Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3122().setCustomField("test data"));
-        repository.save(new MyEntity3122().setCustomField("test data1"));
-        repository.save(new MyEntity3122().setCustomField("test data2"));
-        repository.save(new MyEntity3122().setCustomField("test data3"));
-        repository.save(new MyEntity3122().setCustomField("test data4"));
-        repository.save(new MyEntity3122().setCustomField("test data5"));
-        repository.save(new MyEntity3122().setCustomField("test data6"));
-        repository.save(new MyEntity3122().setCustomField("test data7"));
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3122().setCustomField("test data"));
+		repository.save(new MyEntity3122().setCustomField("test data1"));
+		repository.save(new MyEntity3122().setCustomField("test data2"));
+		repository.save(new MyEntity3122().setCustomField("test data3"));
+		repository.save(new MyEntity3122().setCustomField("test data4"));
+		repository.save(new MyEntity3122().setCustomField("test data5"));
+		repository.save(new MyEntity3122().setCustomField("test data6"));
+		repository.save(new MyEntity3122().setCustomField("test data7"));
 
 
-
-    }
+	}
 
 }

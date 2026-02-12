@@ -18,8 +18,8 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputPlaceholderDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputPlaceholderDTO_.customField
 		);
@@ -30,7 +30,7 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputPlaceholderDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputPlaceholderDTO_.customField);
 		}

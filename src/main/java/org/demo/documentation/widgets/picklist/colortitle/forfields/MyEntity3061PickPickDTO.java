@@ -1,20 +1,20 @@
 package org.demo.documentation.widgets.picklist.colortitle.forfields;
 
-import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyEntity3061PickPickDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyEntity3061PickPickDTO(MyEntity3061Pick entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyEntity3061PickPickDTO(MyEntity3061Pick entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

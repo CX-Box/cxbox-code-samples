@@ -2,9 +2,9 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.core
 
 import jakarta.persistence.EntityManager;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.DtoToEntityFilterParameterMapper;
+import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.filterMapper.AutoMapper;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springdata.core.QueryLanguageRepository;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springdata.core.QueryLanguageRepositoryImpl;
-import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.common.filterMapper.AutoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -21,7 +21,7 @@ public class SpringDataQueryLanguageConfiguration {
 	@ConditionalOnMissingBean(QueryLanguageRepository.class)
 	@Bean
 	public <T, I> QueryLanguageRepository<T, I> queryLanguageRepository(@Autowired EntityManager entityManager,
-			@Autowired List<DtoToEntityFilterParameterMapper> providers) {
+																		@Autowired List<DtoToEntityFilterParameterMapper> providers) {
 		return new QueryLanguageRepositoryImpl<>(entityManager, providers);
 	}
 

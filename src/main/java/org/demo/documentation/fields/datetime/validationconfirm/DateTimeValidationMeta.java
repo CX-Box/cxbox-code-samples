@@ -17,8 +17,8 @@ public class DateTimeValidationMeta extends FieldMetaBuilder<DateTimeValidationD
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeValidationDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeValidationDTO_.customField
 		);
@@ -28,7 +28,7 @@ public class DateTimeValidationMeta extends FieldMetaBuilder<DateTimeValidationD
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeValidationDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeValidationDTO_.customField);
 		}

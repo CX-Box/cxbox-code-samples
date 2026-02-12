@@ -1,24 +1,8 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
@@ -29,6 +13,13 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
+import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,16 +31,49 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 
 	private final MyEntity4300MultivalueRepository multivalueRepository;
 
+	@SneakyThrows
+	public static void setAllFieldsToNull(Object obj) {
+		if (obj == null) {
+			return;
+		}
+
+		Class<?> clazz = obj.getClass();
+		for (Field field : clazz.getDeclaredFields()) {
+			// Construct the setter method name
+			if (field.getName().equals("id")) {
+				continue;
+			}
+			String fieldName = field.getName();
+			String setterMethodName = "set" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
+			Method setter = clazz.getMethod(setterMethodName, field.getType());
+
+			if (Collection.class.isAssignableFrom(field.getType())) {
+				// Handle collections: set to empty instance
+				if (List.class.isAssignableFrom(field.getType())) {
+					setter.invoke(obj, new ArrayList<>());
+				} else if (Set.class.isAssignableFrom(field.getType())) {
+					setter.invoke(obj, new HashSet<>());
+				} else if (Map.class.isAssignableFrom(field.getType())) {
+					setter.invoke(obj, new HashMap<>()); // Assuming Map is also desired to be emptied
+				}
+				// Add more collection types as needed
+			} else if (!field.getType().isPrimitive()) {
+				// Handle reference types: set to null
+				setter.invoke(obj, (Object) null);
+			}
+		}
+	}
+
 	@Override
 	protected CreateResult<MyExample4300PostActionWithCustomBuilderDTO> doCreateEntity(final MyEntity4300PostActionWithCustomBuilder entity,
-																																										 final BusinessComponent bc) {
+																					   final BusinessComponent bc) {
 		throw new UnsupportedOperationException("doCreateEntity unsupported action");
 	}
 
 	@Override
 	protected ActionResultDTO<MyExample4300PostActionWithCustomBuilderDTO> doUpdateEntity(final MyEntity4300PostActionWithCustomBuilder entity,
-																																												final MyExample4300PostActionWithCustomBuilderDTO data,
-																																												final BusinessComponent bc) {
+																						  final MyExample4300PostActionWithCustomBuilderDTO data,
+																						  final BusinessComponent bc) {
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldHidden, entity::setCustomFieldHidden);
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldText, entity::setCustomFieldText);
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldDateTime, entity::setCustomFieldDateTime);
@@ -151,39 +175,6 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 						)
 				)
 				.build();
-	}
-
-	@SneakyThrows
-	public static void setAllFieldsToNull(Object obj) {
-		if (obj == null) {
-			return;
-		}
-
-		Class<?> clazz = obj.getClass();
-		for (Field field : clazz.getDeclaredFields()) {
-			// Construct the setter method name
-			if (field.getName().equals("id")) {
-				continue;
-			}
-			String fieldName = field.getName();
-			String setterMethodName = "set" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-			Method setter = clazz.getMethod(setterMethodName, field.getType());
-
-			if (Collection.class.isAssignableFrom(field.getType())) {
-				// Handle collections: set to empty instance
-				if (List.class.isAssignableFrom(field.getType())) {
-					setter.invoke(obj, new ArrayList<>());
-				} else if (Set.class.isAssignableFrom(field.getType())) {
-					setter.invoke(obj, new HashSet<>());
-				} else if (Map.class.isAssignableFrom(field.getType())) {
-					setter.invoke(obj, new HashMap<>()); // Assuming Map is also desired to be emptied
-				}
-				// Add more collection types as needed
-			} else if (!field.getType().isPrimitive()) {
-				// Handle reference types: set to null
-				setter.invoke(obj, (Object) null);
-			}
-		}
 	}
 
 }

@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity4902PickPickService extends VersionAwareResponseService<MyEntity4902PickPickDTO, MyEntity4902Pick> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity4902PickPickMeta> meta = MyEntity4902PickPickMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity4902PickPickMeta> meta = MyEntity4902PickPickMeta.class;
 
-    @Override
-    protected CreateResult<MyEntity4902PickPickDTO> doCreateEntity(MyEntity4902Pick entity, BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected CreateResult<MyEntity4902PickPickDTO> doCreateEntity(MyEntity4902Pick entity, BusinessComponent bc) {
+		return null;
+	}
 
-    @Override
-    protected ActionResultDTO<MyEntity4902PickPickDTO> doUpdateEntity(MyEntity4902Pick entity, MyEntity4902PickPickDTO data,
-                                                                      BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected ActionResultDTO<MyEntity4902PickPickDTO> doUpdateEntity(MyEntity4902Pick entity, MyEntity4902PickPickDTO data,
+																	  BusinessComponent bc) {
+		return null;
+	}
 
 
 }

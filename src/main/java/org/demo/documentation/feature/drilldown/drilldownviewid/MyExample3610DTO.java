@@ -12,13 +12,13 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyExample3610DTO extends DataResponseDTO {
 
-    private String customField;
-    @SearchParameter(name = "customFieldDrillDown")
-    private String customFieldDrillDown;
+	private String customField;
+	@SearchParameter(name = "customFieldDrillDown")
+	private String customFieldDrillDown;
 
-    public MyExample3610DTO(MyEntity3610 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldDrillDown = entity.getCustomFieldDrillDown();
-    }
+	public MyExample3610DTO(MyEntity3610 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldDrillDown = entity.getCustomFieldDrillDown();
+	}
 }

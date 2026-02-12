@@ -16,37 +16,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3070Service extends VersionAwareResponseService<MyExample3070DTO, MyEntity3070> {
 
-    private final MyEntity3070Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3070Meta> meta = MyExample3070Meta.class;
-    @Autowired
-    private EntityManager entityManager;
+	private final MyEntity3070Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3070Meta> meta = MyExample3070Meta.class;
+	@Autowired
+	private EntityManager entityManager;
 
-    @Override
-    protected CreateResult<MyExample3070DTO> doCreateEntity(MyEntity3070 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3070DTO> doCreateEntity(MyEntity3070 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3070DTO> doUpdateEntity(MyEntity3070 entity, MyExample3070DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3070DTO_.customFieldId)) {
-            entity.setCustomFieldEntity(data.getCustomFieldId() != null
-                    ? entityManager.getReference(MyEntity3070Pick.class, data.getCustomFieldId())
-                    : null);
-        }
+	@Override
+	protected ActionResultDTO<MyExample3070DTO> doUpdateEntity(MyEntity3070 entity, MyExample3070DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3070DTO_.customFieldId)) {
+			entity.setCustomFieldEntity(data.getCustomFieldId() != null
+					? entityManager.getReference(MyEntity3070Pick.class, data.getCustomFieldId())
+					: null);
+		}
 
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3070DTO> getActions() {
-        return Actions.<MyExample3070DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .create(crt -> crt)
-                .delete(dlt -> dlt)
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3070DTO> getActions() {
+		return Actions.<MyExample3070DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt)
+				.delete(dlt -> dlt)
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample45Controller implements EnumBcIdentifier {
 
-	
+
 	// --8<-- [start:bc]
 	myExampleBc45(MyExample45Service.class);
 	// --8<-- [end:bc]
-	
-	
+
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample45Controller> Holder = new Holder<>(
 			PlatformMyExample45Controller.class);

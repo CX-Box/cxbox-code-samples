@@ -14,34 +14,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3176Service extends VersionAwareResponseService<MyExample3176DTO, MyEntity3176> {
 
-    private final MyEntity3176Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3176Meta> meta = MyExample3176Meta.class;
+	private final MyEntity3176Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3176Meta> meta = MyExample3176Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3176DTO> doCreateEntity(MyEntity3176 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3176DTO> doCreateEntity(MyEntity3176 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3176DTO> doUpdateEntity(MyEntity3176 entity, MyExample3176DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3176DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
-        if (data.isFieldChanged(MyExample3176DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3176DTO> doUpdateEntity(MyEntity3176 entity, MyExample3176DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3176DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+		if (data.isFieldChanged(MyExample3176DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    public Actions<MyExample3176DTO> getActions() {
-        return Actions.<MyExample3176DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .build();
-    }
+	@Override
+	public Actions<MyExample3176DTO> getActions() {
+		return Actions.<MyExample3176DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.build();
+	}
 
 
 }

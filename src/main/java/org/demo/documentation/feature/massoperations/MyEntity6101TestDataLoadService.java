@@ -10,24 +10,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity6101TestDataLoadService {
 
-    @Autowired
-    MyEntity6101Repository repository;
+	@Autowired
+	MyEntity6101Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity6101().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.ERROR));
-        repository.save(new MyEntity6101().setCustomField("test data 2"));
-        repository.save(new MyEntity6101().setCustomField("test data 3"));
-        repository.save(new MyEntity6101().setCustomField("test data 4"));
-        repository.save(new MyEntity6101().setCustomField("test data 5"));
-        repository.save(new MyEntity6101().setCustomField("test data 6"));
-        repository.save(new MyEntity6101().setCustomField("test data 7"));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity6101().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.ERROR));
+		repository.save(new MyEntity6101().setCustomField("test data 2"));
+		repository.save(new MyEntity6101().setCustomField("test data 3"));
+		repository.save(new MyEntity6101().setCustomField("test data 4"));
+		repository.save(new MyEntity6101().setCustomField("test data 5"));
+		repository.save(new MyEntity6101().setCustomField("test data 6"));
+		repository.save(new MyEntity6101().setCustomField("test data 7"));
+	}
 
 }

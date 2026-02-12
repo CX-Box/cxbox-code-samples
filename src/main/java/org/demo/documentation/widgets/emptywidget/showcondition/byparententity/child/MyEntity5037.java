@@ -12,10 +12,10 @@ import org.demo.documentation.widgets.emptywidget.showcondition.byparententity.p
 @Setter
 @NoArgsConstructor
 public class MyEntity5037 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity5036 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity5036 customFieldEntity;
 }

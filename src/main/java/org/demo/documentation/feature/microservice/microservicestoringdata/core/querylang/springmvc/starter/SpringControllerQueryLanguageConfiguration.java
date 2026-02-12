@@ -1,7 +1,6 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springmvc.starter;
 
 import lombok.RequiredArgsConstructor;
-
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springdata.core.QueryLanguageRepository;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springmvc.core.FilterParameterArgumentResolver;
 import org.demo.documentation.feature.microservice.microservicestoringdata.core.querylang.springmvc.core.FilterParameterArgumentResolverImpl;

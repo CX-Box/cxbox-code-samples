@@ -29,104 +29,104 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class MyExample3233Service extends VersionAwareResponseService<MyExample3233DTO, MyEntity3233> {
-    private final IntegrationConfiguration integrationConfig;
+	private final IntegrationConfiguration integrationConfig;
 
-    private final RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 
-    private final MyEntity3233Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3233Meta> meta = MyExample3233Meta.class;
+	private final MyEntity3233Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3233Meta> meta = MyExample3233Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3233DTO> doCreateEntity(MyEntity3233 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3233DTO> doCreateEntity(MyEntity3233 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3233DTO> doUpdateEntity(MyEntity3233 entity, MyExample3233DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3233DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3233DTO> doUpdateEntity(MyEntity3233 entity, MyExample3233DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3233DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3233DTO> getActions() {
-        return Actions.<MyExample3233DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .action(act -> act
-                        .action("searchData", "Search data")
-                        .scope(ActionScope.RECORD)
-                        .invoker((bc, dto) -> {
-                            MyEntity3233 myEntity  = repository.findById(bc.getIdAsLong()).orElseThrow();
-                            myEntity.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity);
-                            findInExternalSystemAsync(bc, dto);
-                            return new ActionResultDTO<MyExample3233DTO>().setAction(
-                                    PostAction.waitUntil(
-                                                    MyExample3233DTO_.statusResponse,
-                                                    StatusEnum.DONE)
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .scope(ActionScope.RECORD)
-                        .action("gotofind", "Go to Find")
-                        .withoutAutoSaveBefore()
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3233DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3231/view/myexample3232allform"
-                                    ));
-                        })
-                )
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3233DTO> getActions() {
+		return Actions.<MyExample3233DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("searchData", "Search data")
+						.scope(ActionScope.RECORD)
+						.invoker((bc, dto) -> {
+							MyEntity3233 myEntity = repository.findById(bc.getIdAsLong()).orElseThrow();
+							myEntity.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity);
+							findInExternalSystemAsync(bc, dto);
+							return new ActionResultDTO<MyExample3233DTO>().setAction(
+									PostAction.waitUntil(
+													MyExample3233DTO_.statusResponse,
+													StatusEnum.DONE)
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.scope(ActionScope.RECORD)
+						.action("gotofind", "Go to Find")
+						.withoutAutoSaveBefore()
+						.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3233DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3231/view/myexample3232allform"
+									));
+						})
+				)
+				.build();
+	}
+	// --8<-- [end:getActions]
 
-    // --8<-- [start:findInExternalSystem]
-    protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3233DTO dto){
+	// --8<-- [start:findInExternalSystem]
+	protected void findInExternalSystemAsync(BusinessComponent bc, MyExample3233DTO dto) {
 
-        MyEntity3233 myEntity = repository.findById(bc.getIdAsLong()).orElseThrow();
-        Optional<MyEntity3233AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
-        myEntity.setCustomField("");
-        entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO -> myEntity.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
-        repository.save(myEntity);
-    }
-    // --8<-- [end:findInExternalSystem]
+		MyEntity3233 myEntity = repository.findById(bc.getIdAsLong()).orElseThrow();
+		Optional<MyEntity3233AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+		myEntity.setCustomField("");
+		entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO -> myEntity.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
+		repository.save(myEntity);
+	}
+	// --8<-- [end:findInExternalSystem]
 
-    // --8<-- [start:callService]
-    public Page<MyEntity3233AnySourceOutServiceDTO> callService(MyExample3233DTO dto) {
+	// --8<-- [start:callService]
+	public Page<MyEntity3233AnySourceOutServiceDTO> callService(MyExample3233DTO dto) {
 
-        Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
+		Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(
-                        integrationConfig.getDataServerUrl())
-                .queryParam("number", 1)
-                .queryParam("size", 1)
-                .queryParamIfPresent("filterEqualsCustomField", filter)
-                .encode()
-                .toUriString();
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(
+						integrationConfig.getDataServerUrl())
+				.queryParam("number", 1)
+				.queryParam("size", 1)
+				.queryParamIfPresent("filterEqualsCustomField", filter)
+				.encode()
+				.toUriString();
 
-        ResponseEntity<RestResponsePage<MyEntity3233AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
-                urlTemplate,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                },
-                filter
-        );
+		ResponseEntity<RestResponsePage<MyEntity3233AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
+				urlTemplate,
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<>() {
+				},
+				filter
+		);
 
-        return responseEntity.getBody();
+		return responseEntity.getBody();
 
-    }
-    // --8<-- [end:callService]
+	}
+	// --8<-- [end:callService]
 
 
 }

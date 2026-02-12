@@ -14,7 +14,7 @@ public class MyExample3165Meta extends FieldMetaBuilder<MyExample3165DTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3165DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnumValues(MyExample3165DTO_.customFieldDictionaryLevelTwo, CustomFieldDictionaryLevelTwoEnum.values());
 		fields.setEnabled(MyExample3165DTO_.customFieldDictionaryLevelTwo);
 		fields.setEnumValues(
@@ -30,7 +30,7 @@ public class MyExample3165Meta extends FieldMetaBuilder<MyExample3165DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3165DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.setEnumFilterValues(
 				fields,
 				MyExample3165DTO_.customFieldDictionaryLevelTwo,

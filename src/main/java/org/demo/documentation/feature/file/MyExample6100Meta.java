@@ -12,26 +12,27 @@ import java.util.List;
 @Service
 public class MyExample6100Meta extends FieldMetaBuilder<MyExample6100DTO> {
 
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-      fields.setEnumValues(MyExample6100DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-      fields.setEnabled(MyExample6100DTO_.customFieldDictionary);
-      fields.setEnabled(MyExample6100DTO_.customFieldFileId);
-      fields.setEnabled(MyExample6100DTO_.customFieldFile);
-      fields.setEnabled(MyExample6100DTO_.customField);
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnumValues(MyExample6100DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.setEnabled(MyExample6100DTO_.customFieldDictionary);
+		fields.setEnabled(MyExample6100DTO_.customFieldFileId);
+		fields.setEnabled(MyExample6100DTO_.customFieldFile);
+		fields.setEnabled(MyExample6100DTO_.customField);
 
-    }
-    // --8<-- [end:buildRowDependentMeta]
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-      fields.setEnumFilterValues(fields, MyExample6100DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-      fields.enableFilter(MyExample6100DTO_.customFieldDictionary);
-      fields.enableFilter(MyExample6100DTO_.customFieldFile);
-      fields.setFileAccept(MyExample6100DTO_.customFieldFile, List.of(".png",".pdf",".jpg",".jpeg"));
+	}
 
-    }
-    // --8<-- [end:buildIndependentMeta]
+	// --8<-- [end:buildRowDependentMeta]
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample6100DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.setEnumFilterValues(fields, MyExample6100DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.enableFilter(MyExample6100DTO_.customFieldDictionary);
+		fields.enableFilter(MyExample6100DTO_.customFieldFile);
+		fields.setFileAccept(MyExample6100DTO_.customFieldFile, List.of(".png", ".pdf", ".jpg", ".jpeg"));
+
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

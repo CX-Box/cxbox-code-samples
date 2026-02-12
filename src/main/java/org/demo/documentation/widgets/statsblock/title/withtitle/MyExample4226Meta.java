@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample4226Meta extends AnySourceFieldMetaBuilder<MyExample4226DTO> {
 
-    @Override  
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4226DTO> fields, BcDescription bc,
-                                      String id, String parentId) {
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample4226DTO> fields, BcDescription bc, String parentId) {
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4226DTO> fields, BcDescription bc,
+									  String id, String parentId) {
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample4226DTO> fields, BcDescription bc, String parentId) {
+	}
 
 }

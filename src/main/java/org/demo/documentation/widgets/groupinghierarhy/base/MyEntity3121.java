@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.groupinghierarhy.base;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,15 +16,15 @@ import org.demo.documentation.widgets.groupinghierarhy.base.enums.CustomFieldRad
 @Setter
 @NoArgsConstructor
 public class MyEntity3121 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
-    @Column
-    private Boolean customFieldCheckbox;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldRadioEnum customFieldRadio;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private Boolean customFieldCheckbox;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldRadioEnum customFieldRadio;
 }

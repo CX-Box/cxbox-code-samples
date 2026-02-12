@@ -1,12 +1,13 @@
 package org.demo.documentation.fields.multipleselect.filtration;
 
-import java.util.Collections;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.multipleselect.filtration.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class MyEntity256TestDataLoadService {

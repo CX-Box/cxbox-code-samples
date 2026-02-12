@@ -16,30 +16,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample4001Service extends AnySourceVersionAwareResponseService<MyExample4001DTO, MyEntity4001OutServiceDTO> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity4001Dao> dao = MyEntity4001Dao.class;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4001Meta> meta = MyExample4001Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity4001Dao> dao = MyEntity4001Dao.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4001Meta> meta = MyExample4001Meta.class;
 
-    @Override
-    protected CreateResult<MyExample4001DTO> doCreateEntity(MyEntity4001OutServiceDTO entity, BusinessComponent bc) {
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample4001DTO> doCreateEntity(MyEntity4001OutServiceDTO entity, BusinessComponent bc) {
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample4001DTO> doUpdateEntity(MyEntity4001OutServiceDTO entity, MyExample4001DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample4001DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample4001DTO> doUpdateEntity(MyEntity4001OutServiceDTO entity, MyExample4001DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample4001DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample4001DTO> getActions() {
-        return Actions.<MyExample4001DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample4001DTO> getActions() {
+		return Actions.<MyExample4001DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

@@ -1,8 +1,8 @@
 package org.demo.documentation.fields.suggestion.validationbusinessex;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 
 import java.time.LocalDateTime;
@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3112SuggestionDTO extends DataResponseDTO {
 
-    private String customFieldSuggestion;
-    private LocalDateTime customFieldSuggestionDate;
+	private String customFieldSuggestion;
+	private LocalDateTime customFieldSuggestionDate;
 
-    public MyExample3112SuggestionDTO(MyEntity3112OutServiceDTO entity) {
-        this.id = entity.getId().toString();
-        this.customFieldSuggestion = entity.getCustomFieldSuggestion();
-        this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
-    }
+	public MyExample3112SuggestionDTO(MyEntity3112OutServiceDTO entity) {
+		this.id = entity.getId().toString();
+		this.customFieldSuggestion = entity.getCustomFieldSuggestion();
+		this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
+	}
 }

@@ -17,11 +17,11 @@ import org.demo.documentation.fields.dictionary.sorting.enums.CustomFieldEnum;
 @NoArgsConstructor
 public class MyEntity90 extends BaseEntity {
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldEnum customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldEnum customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryCustomOrderEnum customFieldDictionaryCustomOrder;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryCustomOrderEnum customFieldDictionaryCustomOrder;
 }

@@ -3,7 +3,6 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.mapp
 import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample3137DTO;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3137;
 import org.mapstruct.Mapper;
-
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 

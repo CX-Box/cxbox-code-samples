@@ -1,9 +1,5 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.util.Arrays;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.data.dto.rowmeta.FieldDTO;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -13,13 +9,16 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class MyExample4300WithDriildownKeyMeta extends FieldMetaBuilder<MyExample4300WithDrilldownKeyDTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4300WithDrilldownKeyDTO> fields, InnerBcDescription bcDescription,
-																		Long id, Long parentId) {
+									  Long id, Long parentId) {
 		// not need implementation
 
 	}

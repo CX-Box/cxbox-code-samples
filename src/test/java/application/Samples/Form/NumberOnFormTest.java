@@ -429,16 +429,16 @@ public class NumberOnFormTest extends BaseTestForSamples {
 //@Disabled
 //    @Test
 //    void digits() {
-////        MainPages.click("Number digits");
-////        MainPages.FirstLevelMenu.click("Form");
-////        FormWidget form = $box.findFormWidgetByTitle("Form title");
-////        var customField = form.numberDigits("custom Field");
-////        assertThat(customField.getDigits()).isEqualTo(2);
-////        PlatformApp.screen("Number digits")
-////                .secondLevelView("Form")
-////                .form("Form title")
-////                .number("custom Field")
-////                .
+/// /        MainPages.click("Number digits");
+/// /        MainPages.FirstLevelMenu.click("Form");
+/// /        FormWidget form = $box.findFormWidgetByTitle("Form title");
+/// /        var customField = form.numberDigits("custom Field");
+/// /        assertThat(customField.getDigits()).isEqualTo(2);
+/// /        PlatformApp.screen("Number digits")
+/// /                .secondLevelView("Form")
+/// /                .form("Form title")
+/// /                .number("custom Field")
+/// /                .
 //    }
 //
 //    @Disabled

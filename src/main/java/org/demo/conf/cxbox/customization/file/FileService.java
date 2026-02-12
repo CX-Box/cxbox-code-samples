@@ -19,7 +19,7 @@ import java.util.UUID;
 public class FileService implements CxboxFileService {
 
 	public static final String FILENAME_FIELD = "filename";
-	public static final	int FIVE_MIB = 5242880;
+	public static final int FIVE_MIB = 5242880;
 
 	private final MinioClient minioClient;
 

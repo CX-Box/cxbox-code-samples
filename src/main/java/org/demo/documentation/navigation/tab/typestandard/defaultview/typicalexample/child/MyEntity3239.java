@@ -12,15 +12,15 @@ import org.demo.documentation.navigation.tab.typestandard.defaultview.typicalexa
 @Setter
 @NoArgsConstructor
 public class MyEntity3239 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3238 customFieldEntity;
-    @Column
-    private String fullName;
-    @Column
-    private String phoneNumber;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3238 customFieldEntity;
+	@Column
+	private String fullName;
+	@Column
+	private String phoneNumber;
 }

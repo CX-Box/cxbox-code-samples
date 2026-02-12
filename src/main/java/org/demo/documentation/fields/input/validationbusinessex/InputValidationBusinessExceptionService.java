@@ -21,12 +21,12 @@ public class InputValidationBusinessExceptionService extends
 		VersionAwareResponseService<InputValidationBusinessExceptionDTO, InputValidationBusinessExc> {
 
 	private final InputValidationBusinessExceptionRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputValidationBusinessExceptionMeta> meta = InputValidationBusinessExceptionMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputValidationBusinessExceptionMeta> meta = InputValidationBusinessExceptionMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputValidationBusinessExceptionDTO> doCreateEntity(InputValidationBusinessExc entity,
-			BusinessComponent bc) {
+																			   BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -34,7 +34,7 @@ public class InputValidationBusinessExceptionService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputValidationBusinessExceptionDTO> doUpdateEntity(InputValidationBusinessExc entity,
-			InputValidationBusinessExceptionDTO data, BusinessComponent bc) {
+																				  InputValidationBusinessExceptionDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(InputValidationBusinessExceptionDTO_.customField)) {
 			if (StringUtils.isNotEmpty(data.getCustomField())
 					&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
@@ -51,7 +51,7 @@ public class InputValidationBusinessExceptionService extends
 	@Override
 	public Actions<InputValidationBusinessExceptionDTO> getActions() {
 		return Actions.<InputValidationBusinessExceptionDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -21,72 +21,72 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3239Service extends VersionAwareResponseService<MyExample3239DTO, MyEntity3239> {
 
-    private final MyEntity3239Repository repository;
+	private final MyEntity3239Repository repository;
 
-    private final MyEntity3238Repository repositoryParent;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3239Meta> meta = MyExample3239Meta.class;
+	private final MyEntity3238Repository repositoryParent;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3239Meta> meta = MyExample3239Meta.class;
 
-    @Override
-    protected Specification<MyEntity3239> getParentSpecification(BusinessComponent bc) {
-        return (root, cq, cb) -> cb.and(
-                super.getParentSpecification(bc).toPredicate(root, cq, cb),
-                cb.equal(root.get(MyEntity3239_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
-        );
-    }
+	@Override
+	protected Specification<MyEntity3239> getParentSpecification(BusinessComponent bc) {
+		return (root, cq, cb) -> cb.and(
+				super.getParentSpecification(bc).toPredicate(root, cq, cb),
+				cb.equal(root.get(MyEntity3239_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
+		);
+	}
 
-    @Override
-    protected CreateResult<MyExample3239DTO> doCreateEntity(MyEntity3239 entity, BusinessComponent bc) {
-        MyEntity3238 myEntity = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
-        entity.setCustomFieldEntity(myEntity);
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity))
-                .setAction(PostAction.drillDown(
-                        DrillDownType.INNER,
-                        "/screen/myexample3238/view/myexample3239form/"
-                                + CxboxMyExample3238Controller.myexample3238 + "/"
-                                + entity.getCustomFieldEntity().getId()+ "/"
-                                + CxboxMyExample3238Controller.myexample3239 + "/"
-                                + entity.getId()));
-    }
+	@Override
+	protected CreateResult<MyExample3239DTO> doCreateEntity(MyEntity3239 entity, BusinessComponent bc) {
+		MyEntity3238 myEntity = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);
+		entity.setCustomFieldEntity(myEntity);
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity))
+				.setAction(PostAction.drillDown(
+						DrillDownType.INNER,
+						"/screen/myexample3238/view/myexample3239form/"
+								+ CxboxMyExample3238Controller.myexample3238 + "/"
+								+ entity.getCustomFieldEntity().getId() + "/"
+								+ CxboxMyExample3238Controller.myexample3239 + "/"
+								+ entity.getId()));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3239DTO> doUpdateEntity(MyEntity3239 entity, MyExample3239DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3239DTO_.phoneNumber, entity::setPhoneNumber);
-        setIfChanged(data, MyExample3239DTO_.fullName, entity::setFullName);
-        if (data.isFieldChanged(MyExample3239DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3239DTO> doUpdateEntity(MyEntity3239 entity, MyExample3239DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3239DTO_.phoneNumber, entity::setPhoneNumber);
+		setIfChanged(data, MyExample3239DTO_.fullName, entity::setFullName);
+		if (data.isFieldChanged(MyExample3239DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    public Actions<MyExample3239DTO> getActions() {
-        return Actions.<MyExample3239DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(act ->
-                        act.invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3239DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/"+  bc.getParentId()
-                                    ));
-                        })
-                )
-                .delete(dlt -> dlt.text("Delete"))
-                .action(act -> act
-                        .action("finish", "Save and Close")
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3239DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" +  bc.getParentId()
-                                    ));
-                        })
-                )
-                .build();
-    }
+	@Override
+	public Actions<MyExample3239DTO> getActions() {
+		return Actions.<MyExample3239DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(act ->
+						act.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3239DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" + bc.getParentId()
+									));
+						})
+				)
+				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("finish", "Save and Close")
+						.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3239DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3238/view/myexample3238form/" + CxboxMyExample3238Controller.myexample3238 + "/" + bc.getParentId()
+									));
+						})
+				)
+				.build();
+	}
 
 
 }

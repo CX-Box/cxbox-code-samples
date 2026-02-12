@@ -13,24 +13,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3145TestDataLoadService {
 
-    @Autowired
-    MyEntity3145Repository repository;
-    @Autowired
-    MyEntity3146Repository repositoryParent;
+	@Autowired
+	MyEntity3145Repository repository;
+	@Autowired
+	MyEntity3146Repository repositoryParent;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repositoryParent.deleteAll();
-        MyEntity3146 myEntity3146=new MyEntity3146().setCustomField(5L);
-        repositoryParent.save(myEntity3146);
-        repository.save(new MyEntity3145().setCustomField("test data").setCustomFieldEntity(myEntity3146));
-        repositoryParent.save(new MyEntity3146().setCustomField(8L));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repositoryParent.deleteAll();
+		MyEntity3146 myEntity3146 = new MyEntity3146().setCustomField(5L);
+		repositoryParent.save(myEntity3146);
+		repository.save(new MyEntity3145().setCustomField("test data").setCustomFieldEntity(myEntity3146));
+		repositoryParent.save(new MyEntity3146().setCustomField(8L));
+	}
 
 }

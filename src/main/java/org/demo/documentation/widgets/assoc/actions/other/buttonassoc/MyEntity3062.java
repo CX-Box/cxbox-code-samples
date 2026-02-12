@@ -16,14 +16,14 @@ import java.util.List;
 public class MyEntity3062 extends BaseEntity {
 
 
-    @JoinTable(name = "MyEntity3062_MyEntity3062Multi",
-            joinColumns = @JoinColumn(name = "MyEntity3062_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3062Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3062Multi> customFieldList = new ArrayList<>();
-    @Column
-    private String customFieldText;
+	@JoinTable(name = "MyEntity3062_MyEntity3062Multi",
+			joinColumns = @JoinColumn(name = "MyEntity3062_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3062Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3062Multi> customFieldList = new ArrayList<>();
+	@Column
+	private String customFieldText;
 }

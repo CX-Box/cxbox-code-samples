@@ -8,7 +8,6 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
-
 import org.demo.documentation.fields.multipleselect.color.enums.CustomFieldEnum;
 
 @Getter

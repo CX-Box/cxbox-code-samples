@@ -12,12 +12,10 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxInputFiltrationController implements EnumBcIdentifier {
 
-	
 
 	InputFiltration(InputFiltrationService.class);
 	// --8<-- [end:bc]
-	
-	
+
 
 	public static final EnumBcIdentifier.Holder<CxboxInputFiltrationController> Holder = new Holder<>(
 			CxboxInputFiltrationController.class);

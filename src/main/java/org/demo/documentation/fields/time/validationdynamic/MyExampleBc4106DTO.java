@@ -17,16 +17,16 @@ import java.util.Optional;
 public class MyExampleBc4106DTO extends DataResponseDTO {
 
 
-    @SearchParameter(name = "customField", provider = TimeValueProvider.class)
-    private LocalDateTime customField;
+	@SearchParameter(name = "customField", provider = TimeValueProvider.class)
+	private LocalDateTime customField;
 
-    @SearchParameter(name = "customFieldAdditional", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldAdditional;
+	@SearchParameter(name = "customFieldAdditional", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldAdditional;
 
-    public MyExampleBc4106DTO(MyExampleBc4106 entity) {
-        this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
-        this.customField = entity.getCustomField();
-        this.customFieldAdditional = entity.getCustomFieldAdditional();
-    }
+	public MyExampleBc4106DTO(MyExampleBc4106 entity) {
+		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
+		this.customField = entity.getCustomField();
+		this.customFieldAdditional = entity.getCustomFieldAdditional();
+	}
 
 }

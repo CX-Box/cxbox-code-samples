@@ -17,7 +17,7 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberSortingDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberSortingDTO_.customField
 		);
@@ -30,7 +30,7 @@ public class NumberSortingMeta extends FieldMetaBuilder<NumberSortingDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberSortingDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberSortingDTO_.customField);
 		}

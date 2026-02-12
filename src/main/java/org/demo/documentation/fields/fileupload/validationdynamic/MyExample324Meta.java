@@ -4,7 +4,6 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class MyExample324Meta extends FieldMetaBuilder<MyExample324DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample324DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample324DTO_.customFieldAdditionalId);
 		fields.setEnabled(MyExample324DTO_.customFieldAdditional);
 		fields.setEnabled(MyExample324DTO_.customFieldId);
@@ -29,10 +28,10 @@ public class MyExample324Meta extends FieldMetaBuilder<MyExample324DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample324DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyExample324DTO_.customFieldAdditional);
 		fields.enableFilter(MyExample324DTO_.customField);
-		fields.setFileAccept(MyExample324DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a",".txt"));
+		fields.setFileAccept(MyExample324DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a", ".txt"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

@@ -1,12 +1,11 @@
 package org.demo.documentation.fields.multivalue.primary;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
-
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

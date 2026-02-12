@@ -1,8 +1,8 @@
 package org.demo.documentation.fields.fileupload.types;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
@@ -13,14 +13,14 @@ import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 public class MyExample107DTO extends DataResponseDTO {
 
 
-    @SearchParameter(name = "customField", provider = StringValueProvider.class)
-    private String customField;
+	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	private String customField;
 
-    private String customFieldId;
+	private String customFieldId;
 
-    public MyExample107DTO(MyEntity107 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldId = entity.getCustomFieldId();
-    }
+	public MyExample107DTO(MyEntity107 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldId = entity.getCustomFieldId();
+	}
 }

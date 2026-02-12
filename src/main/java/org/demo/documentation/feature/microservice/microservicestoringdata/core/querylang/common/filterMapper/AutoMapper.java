@@ -28,7 +28,7 @@ public class AutoMapper implements DtoToEntityFilterParameterMapper {
 	}
 
 	private static EntityFieldFilterParameter mapFilterParam(FilterParameters.DtoFieldFilterParameter<?> dtoFieldFilterParameter,
-                                                             String path, Class<? extends DtoToEntityFilterParameterMapper> provider) {
+															 String path, Class<? extends DtoToEntityFilterParameterMapper> provider) {
 		return EntityFieldFilterParameter.builder()
 				.operator(dtoFieldFilterParameter.getOperation())
 				.provider(provider)
@@ -38,7 +38,7 @@ public class AutoMapper implements DtoToEntityFilterParameterMapper {
 
 	@Override
 	public List<EntityFieldFilterParameter> map(@NonNull Field dtoField, FilterParameters.DtoFieldFilterParameter<?> filterParam,
-			String path, Class<? extends DtoToEntityFilterParameterMapper> provider) {
+												String path, Class<? extends DtoToEntityFilterParameterMapper> provider) {
 		if (filterParam.getStringValue() == null) {
 			new ArrayList<>();
 		}

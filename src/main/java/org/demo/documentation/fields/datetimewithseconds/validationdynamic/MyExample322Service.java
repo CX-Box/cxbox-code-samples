@@ -1,7 +1,5 @@
 package org.demo.documentation.fields.datetimewithseconds.validationdynamic;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,6 +11,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -20,11 +20,11 @@ import org.springframework.stereotype.Service;
 public class MyExample322Service extends VersionAwareResponseService<MyExample322DTO, MyEntity322> {
 
 	private final MyEntity322Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample322Meta> meta = MyExample322Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample322Meta> meta = MyExample322Meta.class;
 
 
-    @Override
+	@Override
 	protected CreateResult<MyExample322DTO> doCreateEntity(MyEntity322 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -33,7 +33,7 @@ public class MyExample322Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample322DTO> doUpdateEntity(MyEntity322 entity, MyExample322DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample322DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
@@ -50,7 +50,7 @@ public class MyExample322Service extends VersionAwareResponseService<MyExample32
 	@Override
 	public Actions<MyExample322DTO> getActions() {
 		return Actions.<MyExample322DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -70,7 +70,7 @@ public class MyExample322Service extends VersionAwareResponseService<MyExample32
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

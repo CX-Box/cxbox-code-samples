@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.groupinghierarhy.title;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,11 +16,11 @@ import org.demo.documentation.widgets.groupinghierarhy.title.enums.CustomFieldDi
 @Setter
 @NoArgsConstructor
 public class MyEntity3139 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String iNFO_TEXT_EMPTY_TITLE;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customField;
+	@Column
+	private String iNFO_TEXT_EMPTY_TITLE;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

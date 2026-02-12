@@ -14,32 +14,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3628Service extends VersionAwareResponseService<MyExample3628DTO, MyEntity3628> {
 
-    private final MyEntity3628Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3628Meta> meta = MyExample3628Meta.class;
+	private final MyEntity3628Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3628Meta> meta = MyExample3628Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3628DTO> doCreateEntity(MyEntity3628 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3628DTO> doCreateEntity(MyEntity3628 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3628DTO> doUpdateEntity(MyEntity3628 entity, MyExample3628DTO data, BusinessComponent bc) {
-      setIfChanged(data, MyExample3628DTO_.customFieldCheckbox, entity::setCustomFieldCheckbox);
-      setIfChanged(data, MyExample3628DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
-      setIfChanged(data, MyExample3628DTO_.customField, entity::setCustomField);
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3628DTO> doUpdateEntity(MyEntity3628 entity, MyExample3628DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3628DTO_.customFieldCheckbox, entity::setCustomFieldCheckbox);
+		setIfChanged(data, MyExample3628DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+		setIfChanged(data, MyExample3628DTO_.customField, entity::setCustomField);
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    public Actions<MyExample3628DTO> getActions() {
-        return Actions.<MyExample3628DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .build();
-    }
+	@Override
+	public Actions<MyExample3628DTO> getActions() {
+		return Actions.<MyExample3628DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.build();
+	}
 
 }

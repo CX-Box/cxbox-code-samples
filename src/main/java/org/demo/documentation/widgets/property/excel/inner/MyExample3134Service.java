@@ -12,7 +12,6 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,8 +110,8 @@ public class MyExample3134Service extends VersionAwareResponseService<MyExample3
 				.delete(dlt -> dlt)
 				.action(act -> act
 						.scope(ActionScope.BC)
-						.withPreAction(PreAction.confirm(cf -> cf.text("Export to Excel?" )))
-						.action("customExportToExcel", "Custom export to excel" )
+						.withPreAction(PreAction.confirm(cf -> cf.text("Export to Excel?")))
+						.action("customExportToExcel", "Custom export to excel")
 						.invoker((bc, data) -> new ActionResultDTO<MyExample3134DTO>().setAction(PostAction.exportToExcel()))
 				).build();
 	}

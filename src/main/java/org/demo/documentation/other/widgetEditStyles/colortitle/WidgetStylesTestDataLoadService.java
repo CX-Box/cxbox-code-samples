@@ -18,53 +18,53 @@ import java.util.List;
 
 @Service
 public class WidgetStylesTestDataLoadService {
-    @Autowired
-    WidgetStylesRepository repository;
+	@Autowired
+	WidgetStylesRepository repository;
 
-    @Autowired
-    WidgetStylesPickRepository repositoryPick;
+	@Autowired
+	WidgetStylesPickRepository repositoryPick;
 
-    @Autowired
-    WidgetStylesInlineRepository repositoryPick2;
+	@Autowired
+	WidgetStylesInlineRepository repositoryPick2;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        WidgetStylesMulti myEntity1 = new WidgetStylesMulti().setCustomField(
-                "Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
-        WidgetStylesMulti myEntity2 = new WidgetStylesMulti().setCustomField(
-                "Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.");
-        List<WidgetStylesMulti> list = new ArrayList<>();
-        list.add(myEntity1);
-        list.add(myEntity2);
-        WidgetStylesPicklist myEntityPick = new WidgetStylesPicklist().setCustomField("Test data Pick");
-        WidgetStylesInlinePicklist myEntityPick2 = new WidgetStylesInlinePicklist().setCustomField("Test data Pick2");
-        repositoryPick.save(myEntityPick);
-        repositoryPick2.save(myEntityPick2);
-        WidgetStylesMultiMulti myEntity3 = new WidgetStylesMultiMulti().setCustomField("Test data 3");
-        WidgetStylesMultiMulti myEntity4 = new WidgetStylesMultiMulti().setCustomField("Test data 4");
-        List<WidgetStylesMultiMulti> list2 = new ArrayList<>();
-        list2.add(myEntity3);
-        list2.add(myEntity4);
-        WidgetStyles myEntity3050new = new WidgetStyles().setCustomField("Test data")
-                .setCustomFieldColorCheckbox(true)
-                .setCustomFieldColorDictionary(WidgetStylesColorDictionaryEnum.HIGH)
-                .setCustomFieldColorDateTime(LocalDateTime.now())
-                .setCustomFieldColorDateTimeWithSeconds(LocalDateTime.now())
-                .setCustomFieldColorDate(LocalDateTime.now())
-                .setCustomFieldColorText("Test data")
-                .setCustomFieldColorNumber(7L)
-                .setCustomFieldColorPercent(9L)
-                .setCustomFieldColorMoney(10000.0)
-                .setCustomFieldColorRadio(WidgetStylesColorRadioEnum.LOW)
-                .setCustomFieldColorPicklistEntity(myEntityPick)
-                .setCustomFieldColorInput("Test data")
-                .setCustomFieldColorInlinePicklistEntity(myEntityPick2);
-        repository.save(myEntity3050new.setCustomFieldColorMultivalueHoverList(list).setCustomFieldColorMultivalueList(list2));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		WidgetStylesMulti myEntity1 = new WidgetStylesMulti().setCustomField(
+				"Saturn's interior is thought to be composed of a rocky core, surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium");
+		WidgetStylesMulti myEntity2 = new WidgetStylesMulti().setCustomField(
+				"Despite consisting mostly of hydrogen and helium, most of Saturn's mass is not in the gas phase, because hydrogen becomes a non-ideal liquid when the density is above 0.01 g/cm3, which is reached at a radius containing 99.9% of Saturn's mass.");
+		List<WidgetStylesMulti> list = new ArrayList<>();
+		list.add(myEntity1);
+		list.add(myEntity2);
+		WidgetStylesPicklist myEntityPick = new WidgetStylesPicklist().setCustomField("Test data Pick");
+		WidgetStylesInlinePicklist myEntityPick2 = new WidgetStylesInlinePicklist().setCustomField("Test data Pick2");
+		repositoryPick.save(myEntityPick);
+		repositoryPick2.save(myEntityPick2);
+		WidgetStylesMultiMulti myEntity3 = new WidgetStylesMultiMulti().setCustomField("Test data 3");
+		WidgetStylesMultiMulti myEntity4 = new WidgetStylesMultiMulti().setCustomField("Test data 4");
+		List<WidgetStylesMultiMulti> list2 = new ArrayList<>();
+		list2.add(myEntity3);
+		list2.add(myEntity4);
+		WidgetStyles myEntity3050new = new WidgetStyles().setCustomField("Test data")
+				.setCustomFieldColorCheckbox(true)
+				.setCustomFieldColorDictionary(WidgetStylesColorDictionaryEnum.HIGH)
+				.setCustomFieldColorDateTime(LocalDateTime.now())
+				.setCustomFieldColorDateTimeWithSeconds(LocalDateTime.now())
+				.setCustomFieldColorDate(LocalDateTime.now())
+				.setCustomFieldColorText("Test data")
+				.setCustomFieldColorNumber(7L)
+				.setCustomFieldColorPercent(9L)
+				.setCustomFieldColorMoney(10000.0)
+				.setCustomFieldColorRadio(WidgetStylesColorRadioEnum.LOW)
+				.setCustomFieldColorPicklistEntity(myEntityPick)
+				.setCustomFieldColorInput("Test data")
+				.setCustomFieldColorInlinePicklistEntity(myEntityPick2);
+		repository.save(myEntity3050new.setCustomFieldColorMultivalueHoverList(list).setCustomFieldColorMultivalueList(list2));
+	}
 }

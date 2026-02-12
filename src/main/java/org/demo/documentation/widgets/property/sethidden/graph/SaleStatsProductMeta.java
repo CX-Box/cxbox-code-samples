@@ -14,20 +14,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SaleStatsProductMeta extends AnySourceFieldMetaBuilder<SalesProductDTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<SalesProductDTO> fields, BcDescription bc,
-                                      String id, String parentId) {
-        if (Objects.equals(fields.getCurrentValue(SalesProductDTO_.productName).orElse(null),
-                ProductNameEnum.EQUIPMENT)) {
-            fields.setHidden(SalesProductDTO_.clientName);
-        }
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<SalesProductDTO> fields, BcDescription bc,
+									  String id, String parentId) {
+		if (Objects.equals(fields.getCurrentValue(SalesProductDTO_.productName).orElse(null),
+				ProductNameEnum.EQUIPMENT)) {
+			fields.setHidden(SalesProductDTO_.clientName);
+		}
+	}
 
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<SalesProductDTO> fields, BcDescription bcDescription,
-                                     String parentId) {
-        // do nothing
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<SalesProductDTO> fields, BcDescription bcDescription,
+									 String parentId) {
+		// do nothing
+	}
 
 }

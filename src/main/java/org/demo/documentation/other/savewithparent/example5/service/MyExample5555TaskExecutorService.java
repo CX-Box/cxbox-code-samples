@@ -22,10 +22,10 @@ import org.springframework.stereotype.Service;
 public class MyExample5555TaskExecutorService extends VersionAwareResponseService<ExecutorDTO, Executor> {
 
 	private final ExecutorRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample5555TaskExecutorMeta> meta = MyExample5555TaskExecutorMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample5555TaskExecutorMeta> meta = MyExample5555TaskExecutorMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<ExecutorDTO> doCreateEntity(Executor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

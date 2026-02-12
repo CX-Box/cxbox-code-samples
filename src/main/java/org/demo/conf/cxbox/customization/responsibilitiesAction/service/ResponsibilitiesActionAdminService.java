@@ -33,19 +33,15 @@ public class ResponsibilitiesActionAdminService extends
 		VersionAwareResponseService<ResponsibilitiesActionAdminDTO, ResponsibilitiesAction> {
 
 	private final MetaAdminServiceExt metaAdminServiceExt;
-
-	private Map<String, WidgetSourceDTO> nameToWidget;
-
 	private final JpaDao jpaDao;
-
 	private final CxboxFileService cxboxFileService;
-
 	@Getter(onMethod_ = @Override)
 	private final Class<ResponsibilitiesActionAdminMeta> meta = ResponsibilitiesActionAdminMeta.class;
+	private Map<String, WidgetSourceDTO> nameToWidget;
 
 	@Override
 	protected CreateResult<ResponsibilitiesActionAdminDTO> doCreateEntity(ResponsibilitiesAction entity,
-			BusinessComponent bc) {
+																		  BusinessComponent bc) {
 		jpaDao.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -58,8 +54,8 @@ public class ResponsibilitiesActionAdminService extends
 
 	@Override
 	protected ActionResultDTO<ResponsibilitiesActionAdminDTO> doUpdateEntity(ResponsibilitiesAction entity,
-			ResponsibilitiesActionAdminDTO data,
-			BusinessComponent bc) {
+																			 ResponsibilitiesActionAdminDTO data,
+																			 BusinessComponent bc) {
 		String internalRoleCD = data.getInternalRoleCD();
 		if (data.isFieldChanged(internalRoleCD)) {
 			entity.setInternalRoleCD(internalRoleCD);

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MyEntity3115OutServiceDTO implements Serializable {
 
-    private String id;
-    private String customField;
+	private String id;
+	private String customField;
 
 }

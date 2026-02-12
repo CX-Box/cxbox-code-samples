@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity4102 extends BaseEntity {
 
-    @Column
-    private LocalDateTime customField;
+	@Column
+	private LocalDateTime customField;
 }

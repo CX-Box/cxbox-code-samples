@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MyEntity3231Repository extends JpaRepository<MyEntity3231, Long>, JpaSpecificationExecutor<MyEntity3231> {
 
-    List<MyEntity3231> findAllByStatusResponse(StatusEnum customField);
+	List<MyEntity3231> findAllByStatusResponse(StatusEnum customField);
 }
 

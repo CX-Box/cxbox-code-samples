@@ -17,7 +17,7 @@ public class MyExample65Meta extends FieldMetaBuilder<MyExample65DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample65DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample65DTO_.customField);
 		fields.setRequired(MyExample65DTO_.customField);
 	}

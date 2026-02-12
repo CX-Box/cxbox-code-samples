@@ -2,13 +2,11 @@ package org.demo.documentation.feature.drilldown.drilldownfilter;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +24,8 @@ public class MyExample4300MultivalueHoverService extends VersionAwareResponseSer
 
 	@Override
 	protected ActionResultDTO<MyExample4300MultivalueHoverDTO> doUpdateEntity(final MyEntity4300MultivalueHover entity,
-																																						final MyExample4300MultivalueHoverDTO data,
-																																						final BusinessComponent bc) {
+																			  final MyExample4300MultivalueHoverDTO data,
+																			  final BusinessComponent bc) {
 		return null;
 	}
 

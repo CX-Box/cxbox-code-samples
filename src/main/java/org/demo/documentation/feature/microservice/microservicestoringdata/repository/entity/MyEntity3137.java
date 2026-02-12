@@ -22,17 +22,17 @@ import java.time.LocalDateTime;
 @Entity
 public class MyEntity3137 extends BaseEntity {
 
-    private String customField;
-    private String customFieldNew;
-    private LocalDateTime customFieldDateTime;
-    private Double customFieldDouble;
-    private String parentId;
-    @Enumerated(value = EnumType.STRING)
-    private RegionEnum region;
-    @Enumerated(value = EnumType.STRING)
-    private CountryEnum country;
-    private String product;
-    private String descriptionProduct;
-    private Long money;
-    private String street;
+	private String customField;
+	private String customFieldNew;
+	private LocalDateTime customFieldDateTime;
+	private Double customFieldDouble;
+	private String parentId;
+	@Enumerated(value = EnumType.STRING)
+	private RegionEnum region;
+	@Enumerated(value = EnumType.STRING)
+	private CountryEnum country;
+	private String product;
+	private String descriptionProduct;
+	private Long money;
+	private String street;
 }

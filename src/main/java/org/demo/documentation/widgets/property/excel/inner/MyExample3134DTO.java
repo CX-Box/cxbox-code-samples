@@ -1,8 +1,8 @@
 package org.demo.documentation.widgets.property.excel.inner;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;

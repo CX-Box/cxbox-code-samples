@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class MyExample90Service extends VersionAwareResponseService<MyExample90DTO, MyEntity90> {
 
 	private final MyEntity90Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample90Meta> meta = MyExample90Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample90Meta> meta = MyExample90Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample90DTO> doCreateEntity(MyEntity90 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -42,7 +42,7 @@ public class MyExample90Service extends VersionAwareResponseService<MyExample90D
 	@Override
 	public Actions<MyExample90DTO> getActions() {
 		return Actions.<MyExample90DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

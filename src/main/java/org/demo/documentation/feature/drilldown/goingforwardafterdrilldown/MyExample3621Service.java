@@ -17,63 +17,63 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3621Service extends VersionAwareResponseService<MyExample3621DTO, MyEntity3621> {
 
-    private final MyEntity3621Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3621Meta> meta = MyExample3621Meta.class;
+	private final MyEntity3621Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3621Meta> meta = MyExample3621Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3621DTO> doCreateEntity(MyEntity3621 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3621DTO> doCreateEntity(MyEntity3621 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3621DTO> doUpdateEntity(MyEntity3621 entity, MyExample3621DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3621DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3621DTO> doUpdateEntity(MyEntity3621 entity, MyExample3621DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3621DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3621DTO> getActions() {
-        return Actions.<MyExample3621DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .action(act -> act
-                        .scope(ActionScope.RECORD)
-                        .action("gotolist", "Go to List")
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3621DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3621/"
-                                    ));
-                        })
-                )
-                .action(act -> act
-                        .scope(ActionScope.RECORD)
-                        .action("gotostep2", "Go to Step2")
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3621DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3621/view/myexample3621form/"
-                                    ));
-                        })
-                )
-                .action(act -> act
-                        .scope(ActionScope.RECORD)
-                        .action("gotostep3", "Go to Step3")
-                        .invoker((bc, dto) -> {
-                            return new ActionResultDTO<MyExample3621DTO>().setAction(
-                                    PostAction.drillDown(
-                                            DrillDownType.INNER,
-                                            "/screen/myexample3621/view/myexample3621info2"
-                                    ));
-                        })
-                )
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3621DTO> getActions() {
+		return Actions.<MyExample3621DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.scope(ActionScope.RECORD)
+						.action("gotolist", "Go to List")
+						.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3621DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3621/"
+									));
+						})
+				)
+				.action(act -> act
+						.scope(ActionScope.RECORD)
+						.action("gotostep2", "Go to Step2")
+						.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3621DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3621/view/myexample3621form/"
+									));
+						})
+				)
+				.action(act -> act
+						.scope(ActionScope.RECORD)
+						.action("gotostep3", "Go to Step3")
+						.invoker((bc, dto) -> {
+							return new ActionResultDTO<MyExample3621DTO>().setAction(
+									PostAction.drillDown(
+											DrillDownType.INNER,
+											"/screen/myexample3621/view/myexample3621info2"
+									));
+						})
+				)
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

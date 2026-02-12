@@ -13,12 +13,12 @@ import java.util.Optional;
 
 @Repository
 public interface MyEntity380ExternalRepository extends
-        JpaRepository<MyEntity380External, Long>, JpaSpecificationExecutor<MyEntity380External>,
-        QueryLanguageRepository<MyEntity380External, Long> {
+		JpaRepository<MyEntity380External, Long>, JpaSpecificationExecutor<MyEntity380External>,
+		QueryLanguageRepository<MyEntity380External, Long> {
 
-    List<MyEntity380External> findAllByType(String type);
+	List<MyEntity380External> findAllByType(String type);
 
-    Optional<MyEntity380External> findAllByTypeAndKey(String type, String key);
+	Optional<MyEntity380External> findAllByTypeAndKey(String type, String key);
 
 
 }

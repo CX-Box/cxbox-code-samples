@@ -17,7 +17,7 @@ public class DateRequiredMeta extends FieldMetaBuilder<DateRequiredDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateRequiredDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateRequiredDTO_.customField
 		);
@@ -30,7 +30,7 @@ public class DateRequiredMeta extends FieldMetaBuilder<DateRequiredDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateRequiredDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateRequiredDTO_.customField);
 		}

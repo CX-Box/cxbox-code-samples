@@ -17,16 +17,16 @@ public class MyExample168Meta extends FieldMetaBuilder<MyExample168DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample168DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample168DTO_.customField);
-		fields.setPlaceholder(MyExample168DTO_.customField,"Only 'True'");
+		fields.setPlaceholder(MyExample168DTO_.customField, "Only 'True'");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample168DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample168DTO_.customField);
 		}

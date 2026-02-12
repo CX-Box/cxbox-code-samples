@@ -1,16 +1,13 @@
 package org.demo.documentation.fields.multivaluehover.color;
 
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity

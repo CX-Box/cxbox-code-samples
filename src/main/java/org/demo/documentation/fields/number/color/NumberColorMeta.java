@@ -17,7 +17,7 @@ public class NumberColorMeta extends FieldMetaBuilder<NumberColorDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberColorDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberColorDTO_.customField
 		);

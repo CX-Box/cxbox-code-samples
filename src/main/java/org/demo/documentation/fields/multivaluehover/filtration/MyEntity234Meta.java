@@ -18,7 +18,7 @@ public class MyEntity234Meta extends FieldMetaBuilder<MyEntity234DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity234DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity234DTO_.id);
 		fields.setEnabled(MyEntity234DTO_.customField);
 	}
@@ -27,7 +27,7 @@ public class MyEntity234Meta extends FieldMetaBuilder<MyEntity234DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity234DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyEntity234DTO_.customField);
 		}

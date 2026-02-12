@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputSortService extends VersionAwareResponseService<InputSortDTO, InputSort> {
 
 	private final InputSortRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputSortMeta> meta = InputSortMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputSortMeta> meta = InputSortMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputSortDTO> doCreateEntity(InputSort entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -39,7 +39,7 @@ public class InputSortService extends VersionAwareResponseService<InputSortDTO, 
 	@Override
 	public Actions<InputSortDTO> getActions() {
 		return Actions.<InputSortDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

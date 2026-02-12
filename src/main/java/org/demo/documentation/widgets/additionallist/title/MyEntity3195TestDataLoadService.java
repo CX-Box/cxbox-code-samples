@@ -9,20 +9,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3195TestDataLoadService {
 
-    @Autowired
-    MyEntity3195Repository repository;
+	@Autowired
+	MyEntity3195Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3195().setCustomField("test data").setCustomFieldText("test data text"));
-        repository.save(new MyEntity3195().setCustomField("test data2").setCustomFieldText("test data text2"));
-        repository.save(new MyEntity3195().setCustomField("test data3").setCustomFieldText("test data text3"));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3195().setCustomField("test data").setCustomFieldText("test data text"));
+		repository.save(new MyEntity3195().setCustomField("test data2").setCustomFieldText("test data text2"));
+		repository.save(new MyEntity3195().setCustomField("test data3").setCustomFieldText("test data text3"));
+	}
 
 }

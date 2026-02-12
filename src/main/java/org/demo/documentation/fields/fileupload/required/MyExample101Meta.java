@@ -19,7 +19,7 @@ public class MyExample101Meta extends FieldMetaBuilder<MyExample101DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample101DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample101DTO_.customFieldId);
 		fields.setEnabled(MyExample101DTO_.customField);
 		fields.setRequired(MyExample101DTO_.customField);
@@ -29,12 +29,12 @@ public class MyExample101Meta extends FieldMetaBuilder<MyExample101DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample101DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample101DTO_.customField);
 		}
 		fields.enableFilter(MyExample101DTO_.customField);
-		fields.setFileAccept(MyExample101DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a",".txt"));
+		fields.setFileAccept(MyExample101DTO_.customField, List.of(".png", ".pdf", ".jpg", ".jpeg", ".mp3", ".wav", ".m4a", ".txt"));
 	}
 	// --8<-- [end:buildIndependentMeta]
 }

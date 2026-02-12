@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputSortController implements EnumBcIdentifier {
 
 
-
 	InputSort(InputSortService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxInputSortController> Holder = new Holder<>(

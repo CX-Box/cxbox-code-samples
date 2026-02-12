@@ -1,8 +1,8 @@
 package org.demo.documentation.widgets.form.actions.create.withview;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 
@@ -12,16 +12,16 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyExample3302DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
-    @SearchParameter(name = "customFieldText")
-    private String customFieldText;
+	@SearchParameter(name = "customField")
+	private String customField;
+	@SearchParameter(name = "customFieldText")
+	private String customFieldText;
 
-    private String iNFO_TEXT;
+	private String iNFO_TEXT;
 
-    public MyExample3302DTO(MyEntity3302 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldText = entity.getCustomFieldText();
-    }
+	public MyExample3302DTO(MyEntity3302 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldText = entity.getCustomFieldText();
+	}
 }

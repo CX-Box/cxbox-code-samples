@@ -13,18 +13,18 @@ public class MyExample323Meta extends FieldMetaBuilder<MyExample323DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample323DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample323DTO_.customField);
 		fields.setEnabled(MyExample323DTO_.customFieldAdditional);
-		fields.setPlaceholder(MyExample323DTO_.customField,"Only HIGH");
-		fields.setPlaceholder(MyExample323DTO_.customFieldAdditional,"Only HIGH");
+		fields.setPlaceholder(MyExample323DTO_.customField, "Only HIGH");
+		fields.setPlaceholder(MyExample323DTO_.customFieldAdditional, "Only HIGH");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample323DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.setEnumValues(MyExample323DTO_.customFieldAdditional);
 	}
 

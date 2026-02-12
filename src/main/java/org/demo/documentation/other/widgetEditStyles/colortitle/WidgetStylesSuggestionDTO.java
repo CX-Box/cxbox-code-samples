@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WidgetStylesSuggestionDTO extends DataResponseDTO {
 
-    private String customFieldSuggestion;
-    private LocalDateTime customFieldSuggestionDate;
-    public WidgetStylesSuggestionDTO(WidgetStylesOutServiceDTO entity) {
-        this.id = entity.getId().toString();
-        this.customFieldSuggestion = entity.getCustomFieldSuggestion();
-        this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
-    }
+	private String customFieldSuggestion;
+	private LocalDateTime customFieldSuggestionDate;
+
+	public WidgetStylesSuggestionDTO(WidgetStylesOutServiceDTO entity) {
+		this.id = entity.getId().toString();
+		this.customFieldSuggestion = entity.getCustomFieldSuggestion();
+		this.customFieldSuggestionDate = entity.getCustomFieldSuggestionDate();
+	}
 }

@@ -18,69 +18,69 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class MyExample4200Dao extends AbstractAnySourceBaseDAO<MyExample4200DTO> implements
-        AnySourceBaseDAO<MyExample4200DTO> {
+		AnySourceBaseDAO<MyExample4200DTO> {
 
-    public static final String COUNT_ROW_ID = "0";
+	public static final String COUNT_ROW_ID = "0";
 
-    public static final String SUM_CUSTOM_FIELD_NUM = "1";
+	public static final String SUM_CUSTOM_FIELD_NUM = "1";
 
 
-    private final MyEntity4201Repository repository;
+	private final MyEntity4201Repository repository;
 
-    @Override
-    public String getId(final MyExample4200DTO entity) {
-        return entity.getId();
-    }
+	@Override
+	public String getId(final MyExample4200DTO entity) {
+		return entity.getId();
+	}
 
-    @Override
-    public void setId(final String id, final MyExample4200DTO entity) {
-        entity.setId(id);
-    }
+	@Override
+	public void setId(final String id, final MyExample4200DTO entity) {
+		entity.setId(id);
+	}
 
-    @Override
-    public MyExample4200DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
-        return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
-    }
+	@Override
+	public MyExample4200DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
+		return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
+	}
 
-    @Override
-    public void delete(final BusinessComponent bc) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public void delete(final BusinessComponent bc) {
+		throw new IllegalStateException();
+	}
 
-    @Override
-    public Page<MyExample4200DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
-        return new PageImpl<>(getStats());
-    }
+	@Override
+	public Page<MyExample4200DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
+		return new PageImpl<>(getStats());
+	}
 
-    @Override
-    public MyExample4200DTO update(BusinessComponent bc, MyExample4200DTO entity) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public MyExample4200DTO update(BusinessComponent bc, MyExample4200DTO entity) {
+		throw new IllegalStateException();
+	}
 
-    @Override
-    public MyExample4200DTO create(final BusinessComponent bc, final MyExample4200DTO entity) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public MyExample4200DTO create(final BusinessComponent bc, final MyExample4200DTO entity) {
+		throw new IllegalStateException();
+	}
 
-    @NonNull
-    private List<MyExample4200DTO> getStats() {
-        List<MyExample4200DTO> result = new ArrayList<>();
-        MyExample4200DTO newRow = new MyExample4200DTO()
-                .setCustomFieldTitle("All record")
-                .setCustomFieldValue(String.valueOf(repository.count()))
-                .setCustomFieldIcon("team")
-                .setCustomFieldDescription("Count rows in table");
-        newRow.setId(COUNT_ROW_ID);
-        result.add(newRow);
-        MyExample4200DTO newSum = new MyExample4200DTO()
-                .setCustomFieldTitle("Custom Field Num Total")
-                .setCustomFieldValue(String.valueOf(repository.customTotal()))
-                .setCustomFieldIcon("team")
-                .setCustomFieldDescription("Sum customFieldNum");
-        newSum.setId(SUM_CUSTOM_FIELD_NUM);
-        result.add(newSum);
+	@NonNull
+	private List<MyExample4200DTO> getStats() {
+		List<MyExample4200DTO> result = new ArrayList<>();
+		MyExample4200DTO newRow = new MyExample4200DTO()
+				.setCustomFieldTitle("All record")
+				.setCustomFieldValue(String.valueOf(repository.count()))
+				.setCustomFieldIcon("team")
+				.setCustomFieldDescription("Count rows in table");
+		newRow.setId(COUNT_ROW_ID);
+		result.add(newRow);
+		MyExample4200DTO newSum = new MyExample4200DTO()
+				.setCustomFieldTitle("Custom Field Num Total")
+				.setCustomFieldValue(String.valueOf(repository.customTotal()))
+				.setCustomFieldIcon("team")
+				.setCustomFieldDescription("Sum customFieldNum");
+		newSum.setId(SUM_CUSTOM_FIELD_NUM);
+		result.add(newSum);
 
-        return result;
-    }
+		return result;
+	}
 
 }

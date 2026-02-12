@@ -19,10 +19,10 @@ import static org.demo.documentation.fields.main.TextError.ONLY_TRUE;
 public class MyExample77Service extends VersionAwareResponseService<MyExample77DTO, MyEntity77> {
 
 	private final MyEntity77Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample77Meta> meta = MyExample77Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample77Meta> meta = MyExample77Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample77DTO> doCreateEntity(MyEntity77 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample77Service extends VersionAwareResponseService<MyExample77D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample77DTO> doUpdateEntity(MyEntity77 entity, MyExample77DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample77DTO_.customField)) {
 			if (Boolean.FALSE.equals(data.getCustomField())) {
 				throw new BusinessException().addPopup(ONLY_TRUE);
@@ -47,7 +47,7 @@ public class MyExample77Service extends VersionAwareResponseService<MyExample77D
 	@Override
 	public Actions<MyExample77DTO> getActions() {
 		return Actions.<MyExample77DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

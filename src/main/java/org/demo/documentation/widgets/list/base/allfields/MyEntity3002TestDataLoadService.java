@@ -1,15 +1,15 @@
 package org.demo.documentation.widgets.list.base.allfields;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.list.base.allfields.enums.CustomFieldRadioEnum;
 import org.demo.documentation.widgets.list.base.allfields.forfields.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.List;
 public class MyEntity3002TestDataLoadService {
 
 	@Autowired
-    MyEntity3002Repository repository;
+	MyEntity3002Repository repository;
 
 	@Autowired
 	MyEntity3002PickRepository repositoryPick;

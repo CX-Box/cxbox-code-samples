@@ -10,7 +10,7 @@ public enum SearchOperation {
 	/**
 	 * Greater or equal
 	 */
-	GREATER_OR_EQUAL_THAN("greaterOrEqualThan",false),
+	GREATER_OR_EQUAL_THAN("greaterOrEqualThan", false),
 
 	/**
 	 * Less or equal

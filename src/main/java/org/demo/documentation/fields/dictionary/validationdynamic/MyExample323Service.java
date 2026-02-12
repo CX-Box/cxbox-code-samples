@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 public class MyExample323Service extends VersionAwareResponseService<MyExample323DTO, MyEntity323> {
 
 	private final MyEntity323Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample323Meta> meta = MyExample323Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample323Meta> meta = MyExample323Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample323DTO> doCreateEntity(MyEntity323 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample323DTO> doUpdateEntity(MyEntity323 entity, MyExample323DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -41,7 +41,7 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 	@Override
 	public Actions<MyExample323DTO> getActions() {
 		return Actions.<MyExample323DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -56,7 +56,7 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 			entity.addField(MyExample323DTO_.customFieldAdditional.getName(), "Custom message about error");
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

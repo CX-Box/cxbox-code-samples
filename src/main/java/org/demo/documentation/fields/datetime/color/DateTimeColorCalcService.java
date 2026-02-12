@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DateTimeColorCalcService extends VersionAwareResponseService<DateTimeColorCalcDTO, DateTimeColorCalc> {
 
 	private final DateTimeColorCalcRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeColorCalcMeta> meta = DateTimeColorCalcMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeColorCalcMeta> meta = DateTimeColorCalcMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeColorCalcDTO> doCreateEntity(DateTimeColorCalc entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DateTimeColorCalcService extends VersionAwareResponseService<DateTi
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeColorCalcDTO> doUpdateEntity(DateTimeColorCalc entity, DateTimeColorCalcDTO data,
-			BusinessComponent bc) {
+																   BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeColorCalcDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateTimeColorCalcService extends VersionAwareResponseService<DateTi
 	@Override
 	public Actions<DateTimeColorCalcDTO> getActions() {
 		return Actions.<DateTimeColorCalcDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

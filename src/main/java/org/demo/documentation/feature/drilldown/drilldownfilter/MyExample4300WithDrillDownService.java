@@ -1,18 +1,16 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class MyExample4300WithDrillDownService extends VersionAwareResponseServi
 
 	@Override
 	protected ActionResultDTO<MyExample4300WithDrilldownDTO> doUpdateEntity(MyEntityWithDrilldown4300 entity, MyExample4300WithDrilldownDTO data,
-																																					BusinessComponent bc) {
+																			BusinessComponent bc) {
 		setIfChanged(data, MyExample4300WithDrilldownDTO_.customFieldHidden, entity::setCustomFieldHidden);
 		setIfChanged(data, MyExample4300WithDrilldownDTO_.customFieldText, entity::setCustomFieldText);
 		setIfChanged(data, MyExample4300WithDrilldownDTO_.customFieldDateTime, entity::setCustomFieldDateTime);

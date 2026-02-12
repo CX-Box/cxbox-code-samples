@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicDTO, HiddenBasic> {
 
 	private final HiddenBasicRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<HiddenBasicMeta> meta = HiddenBasicMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<HiddenBasicMeta> meta = HiddenBasicMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<HiddenBasicDTO> doCreateEntity(HiddenBasic entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<HiddenBasicDTO> doUpdateEntity(HiddenBasic entity, HiddenBasicDTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(HiddenBasicDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class HiddenBasicService extends VersionAwareResponseService<HiddenBasicD
 	@Override
 	public Actions<HiddenBasicDTO> getActions() {
 		return Actions.<HiddenBasicDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

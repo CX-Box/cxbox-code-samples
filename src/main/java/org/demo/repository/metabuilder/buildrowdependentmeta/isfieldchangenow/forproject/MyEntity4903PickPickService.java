@@ -25,7 +25,7 @@ public class MyEntity4903PickPickService extends VersionAwareResponseService<MyE
 
 	@Override
 	protected ActionResultDTO<MyEntity4903PickPickDTO> doUpdateEntity(MyEntity4903Pick entity, MyEntity4903PickPickDTO data,
-                                                                      BusinessComponent bc) {
+																	  BusinessComponent bc) {
 		return null;
 	}
 

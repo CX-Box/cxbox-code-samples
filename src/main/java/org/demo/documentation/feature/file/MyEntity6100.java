@@ -1,7 +1,7 @@
 package org.demo.documentation.feature.file;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,16 +16,16 @@ import org.demo.documentation.feature.file.enums.CustomFieldDictionaryEnum;
 @Setter
 @NoArgsConstructor
 public class MyEntity6100 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Column
-    private String customFieldFile;
+	@Column
+	private String customFieldFile;
 
-    @Column
-    private String customFieldFileId;
+	@Column
+	private String customFieldFileId;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

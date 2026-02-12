@@ -5,7 +5,6 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.property.excel.inner.enums.CustomFieldRadioEnum;

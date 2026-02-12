@@ -17,7 +17,7 @@ public class MyExample4Meta extends FieldMetaBuilder<MyExample4DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

@@ -16,7 +16,6 @@ public enum PlatformMyExample235Controller implements EnumBcIdentifier {
 	myExampleBc235(MyExample235Service.class), myEntityMulti235Pick(myExampleBc235, MyEntityMulti235PickService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample235Controller> Holder = new Holder<>(
 			PlatformMyExample235Controller.class);

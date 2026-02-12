@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class NumberColorConstService extends VersionAwareResponseService<NumberColorConstDTO, NumberColorConstEntity> {
 
 	private final NumberColorConstEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberColorConstMeta> meta = NumberColorConstMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberColorConstMeta> meta = NumberColorConstMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberColorConstDTO> doCreateEntity(NumberColorConstEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class NumberColorConstService extends VersionAwareResponseService<NumberC
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberColorConstDTO> doUpdateEntity(NumberColorConstEntity entity, NumberColorConstDTO data,
-			BusinessComponent bc) {
+																  BusinessComponent bc) {
 		setIfChanged(data, NumberColorConstDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -38,7 +38,7 @@ public class NumberColorConstService extends VersionAwareResponseService<NumberC
 	@Override
 	public Actions<NumberColorConstDTO> getActions() {
 		return Actions.<NumberColorConstDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

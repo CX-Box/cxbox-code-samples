@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum MyExample6500PostActionExportToExcelList implements EnumBcIdentifier {
 
-    myexample6500PostActionExportToExcelList(MyExample6500PostActionExportToExcelListService.class)
-	;
+	myexample6500PostActionExportToExcelList(MyExample6500PostActionExportToExcelListService.class);
 
 	public static final Holder<MyExample6500PostActionExportToExcelList> Holder = new Holder<>(
-            MyExample6500PostActionExportToExcelList.class);
+			MyExample6500PostActionExportToExcelList.class);
 
 	private final BcDescription bcDescription;
 

@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5023Meta extends FieldMetaBuilder<MyExample5023DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5023DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample5023DTO_.customField);
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5023DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample5023DTO_.customField);
 
 
-        fields.setEnumValues(MyExample5023DTO_.editStep, StepsEnum.values());
-    }
+		fields.setEnumValues(MyExample5023DTO_.editStep, StepsEnum.values());
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample5023DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample5023DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+	}
 
 }

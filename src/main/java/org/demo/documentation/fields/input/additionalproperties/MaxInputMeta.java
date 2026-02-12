@@ -17,7 +17,7 @@ public class MaxInputMeta extends FieldMetaBuilder<MaxInputDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MaxInputDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				MaxInputDTO_.customField
 		);

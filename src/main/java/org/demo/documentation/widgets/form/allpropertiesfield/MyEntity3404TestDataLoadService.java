@@ -9,25 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3404TestDataLoadService {
 
-    @Autowired
-    MyEntity3404Repository repository;
+	@Autowired
+	MyEntity3404Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3404()
-                .setCustomField("test data")
-                .setCustomFieldColorSort("test data 6")
-                .setCustomFieldColorValidation("test data")
-                .setCustomFieldColorDrilldown("test data 2")
-                .setCustomFieldColorConst(60l)
-                .setCustomFieldRequired("test data")
-                .setCustomFieldColorConst(2L));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3404()
+				.setCustomField("test data")
+				.setCustomFieldColorSort("test data 6")
+				.setCustomFieldColorValidation("test data")
+				.setCustomFieldColorDrilldown("test data 2")
+				.setCustomFieldColorConst(60l)
+				.setCustomFieldRequired("test data")
+				.setCustomFieldColorConst(2L));
+	}
 
 }

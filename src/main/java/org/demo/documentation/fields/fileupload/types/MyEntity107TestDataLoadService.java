@@ -12,19 +12,17 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MyEntity107TestDataLoadService {
 
-    @Autowired
-    MyEntity107Repository repository;
+	private final CustomFileUploadServices customFileUploadServices;
+	@Autowired
+	MyEntity107Repository repository;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Autowired
-    InternalAuthorizationService authzService;
-
-    private final CustomFileUploadServices customFileUploadServices;
-
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+	}
 
 }

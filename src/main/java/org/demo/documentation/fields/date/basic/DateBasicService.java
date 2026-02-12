@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class DateBasicService extends VersionAwareResponseService<DateBasicDTO, DateBasic> {
-private final DateBasicRepository repository;
+	private final DateBasicRepository repository;
 	@Getter(onMethod_ = @Override)
 	private final Class<DateBasicMeta> meta = DateBasicMeta.class;
 

@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class DateTimeDrilldownService extends VersionAwareResponseService<DateTimeDrilldownDTO, DateTimeDrilldown> {
 
 	private final DateTimeDrilldownRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeDrilldownMeta> meta = DateTimeDrilldownMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeDrilldownMeta> meta = DateTimeDrilldownMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeDrilldownDTO> doCreateEntity(DateTimeDrilldown entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class DateTimeDrilldownService extends VersionAwareResponseService<DateTi
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeDrilldownDTO> doUpdateEntity(DateTimeDrilldown entity, DateTimeDrilldownDTO data,
-			BusinessComponent bc) {
+																   BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeDrilldownDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class DateTimeDrilldownService extends VersionAwareResponseService<DateTi
 	@Override
 	public Actions<DateTimeDrilldownDTO> getActions() {
 		return Actions.<DateTimeDrilldownDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

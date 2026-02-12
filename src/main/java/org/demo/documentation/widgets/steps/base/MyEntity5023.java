@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.steps.base;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -15,10 +15,10 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity5023 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    private StepsEnum editStep = StepsEnum.STEP_1;
+	@Enumerated(value = EnumType.STRING)
+	private StepsEnum editStep = StepsEnum.STEP_1;
 
 }

@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class NumberCreateEditService extends VersionAwareResponseService<NumberCreateEditDTO, NumberCreateEditEntity> {
 
 	private final NumberCreateEditEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberCreateEditMeta> meta = NumberCreateEditMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberCreateEditMeta> meta = NumberCreateEditMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberCreateEditDTO> doCreateEntity(NumberCreateEditEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberCreateEditDTO> doUpdateEntity(NumberCreateEditEntity entity, NumberCreateEditDTO data,
-			BusinessComponent bc) {
+																  BusinessComponent bc) {
 		if (data.isFieldChanged(NumberCreateEditDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class NumberCreateEditService extends VersionAwareResponseService<NumberC
 	@Override
 	public Actions<NumberCreateEditDTO> getActions() {
 		return Actions.<NumberCreateEditDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

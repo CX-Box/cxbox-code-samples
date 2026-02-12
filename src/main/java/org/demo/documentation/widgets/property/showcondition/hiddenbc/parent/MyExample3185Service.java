@@ -16,43 +16,44 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3185Service extends VersionAwareResponseService<MyExample3185DTO, MyEntity3185> {
 
-    private final MyEntity3185Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3185Meta> meta = MyExample3185Meta.class;
+	private final MyEntity3185Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3185Meta> meta = MyExample3185Meta.class;
 
-    @Override
-    protected Specification<MyEntity3185> getParentSpecification(BusinessComponent bc) {
-        return (root, cq, cb) -> cb.and(
-                super.getParentSpecification(bc).toPredicate(root, cq, cb),
-                cb.equal(root.get(MyEntity3185_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
-        );
-    }
+	@Override
+	protected Specification<MyEntity3185> getParentSpecification(BusinessComponent bc) {
+		return (root, cq, cb) -> cb.and(
+				super.getParentSpecification(bc).toPredicate(root, cq, cb),
+				cb.equal(root.get(MyEntity3185_.customFieldEntity).get(BaseEntity_.id), bc.getParentIdAsLong())
+		);
+	}
 
-    @Override
-    protected CreateResult<MyExample3185DTO> doCreateEntity(MyEntity3185 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3185DTO> doCreateEntity(MyEntity3185 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3185DTO> doUpdateEntity(MyEntity3185 entity, MyExample3185DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3185DTO_.customFieldCheckbox, entity::setCustomFieldCheckbox);
-        if (data.isFieldChanged(MyExample3185DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3185DTO> getActions() {
-        return Actions.<MyExample3185DTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .build();
-    }
-    // --8<-- [end:getActions]
+	@Override
+	protected ActionResultDTO<MyExample3185DTO> doUpdateEntity(MyEntity3185 entity, MyExample3185DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3185DTO_.customFieldCheckbox, entity::setCustomFieldCheckbox);
+		if (data.isFieldChanged(MyExample3185DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3185DTO> getActions() {
+		return Actions.<MyExample3185DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 
 }
 

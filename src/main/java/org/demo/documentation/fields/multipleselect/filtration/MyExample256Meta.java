@@ -1,7 +1,5 @@
 package org.demo.documentation.fields.multipleselect.filtration;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -12,6 +10,9 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.multipleselect.filtration.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample256Meta extends FieldMetaBuilder<MyExample256DTO> {
@@ -21,7 +22,7 @@ public class MyExample256Meta extends FieldMetaBuilder<MyExample256DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample256DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setConcreteValues(MyExample256DTO_.customField, Arrays.stream(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum.values())
 				.map(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
@@ -33,7 +34,7 @@ public class MyExample256Meta extends FieldMetaBuilder<MyExample256DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample256DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample256DTO_.customField);
 		}

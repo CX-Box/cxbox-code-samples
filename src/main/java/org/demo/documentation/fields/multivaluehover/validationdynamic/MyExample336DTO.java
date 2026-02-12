@@ -16,18 +16,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample336DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customFieldMultiHolderList.id", provider = LongValueProvider.class)
-    private MultivalueField customFieldMultiHolder;
-    private String customFieldMultiHolderDisplayedKey;
+	@SearchParameter(name = "customFieldMultiHolderList.id", provider = LongValueProvider.class)
+	private MultivalueField customFieldMultiHolder;
+	private String customFieldMultiHolderDisplayedKey;
 
-    public MyExample336DTO(MyEntity336 entity) {
-        this.id = entity.getId().toString();
-        this.customFieldMultiHolder = entity.getCustomFieldMultiHolderList().stream().collect(MultivalueField.toMultivalueField(
-                e -> String.valueOf(e.getId()),
-                e -> String.valueOf(e.getCustomField())
-        ));
-        this.customFieldMultiHolderDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultiHolderList().stream().map(MyEntity339::getCustomField
-        ).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
-    }
+	public MyExample336DTO(MyEntity336 entity) {
+		this.id = entity.getId().toString();
+		this.customFieldMultiHolder = entity.getCustomFieldMultiHolderList().stream().collect(MultivalueField.toMultivalueField(
+				e -> String.valueOf(e.getId()),
+				e -> String.valueOf(e.getCustomField())
+		));
+		this.customFieldMultiHolderDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultiHolderList().stream().map(MyEntity339::getCustomField
+		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+	}
 
 }

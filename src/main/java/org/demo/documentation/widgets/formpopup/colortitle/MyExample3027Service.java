@@ -2,7 +2,6 @@ package org.demo.documentation.widgets.formpopup.colortitle;
 
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
-
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
@@ -25,124 +24,124 @@ import java.util.Objects;
 @Service
 public class MyExample3027Service extends VersionAwareResponseService<MyExample3027DTO, MyEntity3027> {
 
-    private final MyEntity3027Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3027Meta> meta = MyExample3027Meta.class;
-    @Autowired
-    private EntityManager entityManager;
+	private final MyEntity3027Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3027Meta> meta = MyExample3027Meta.class;
+	@Autowired
+	private EntityManager entityManager;
 
-    @Override
-    protected CreateResult<MyExample3027DTO> doCreateEntity(MyEntity3027 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3027DTO> doCreateEntity(MyEntity3027 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3027DTO> doUpdateEntity(MyEntity3027 entity, MyExample3027DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorInput)) {
-            entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorText)) {
-            entity.setCustomFieldColorText(data.getCustomFieldColorText());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDateTime)) {
-            entity.setCustomFieldColorDateTime(data.getCustomFieldColorDateTime());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorCheckbox)) {
-            entity.setCustomFieldColorCheckbox(data.getCustomFieldColorCheckbox());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDate)) {
-            entity.setCustomFieldColorDate(data.getCustomFieldColorDate());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDateTimeWithSeconds)) {
-            entity.setCustomFieldColorDateTimeWithSeconds(data.getCustomFieldColorDateTimeWithSeconds());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDictionary)) {
-            entity.setCustomFieldColorDictionary(data.getCustomFieldColorDictionary());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorFileUploadeId)) {
-            entity.setCustomFieldColorFileUploadeId(data.getCustomFieldColorFileUploadeId());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorFileUploade)) {
-            entity.setCustomFieldColorFileUploade(data.getCustomFieldColorFileUploade());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorNumber)) {
-            entity.setCustomFieldColorNumber(data.getCustomFieldColorNumber());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorPercent)) {
-            entity.setCustomFieldColorPercent(data.getCustomFieldColorPercent());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMoney)) {
-            entity.setCustomFieldColorMoney(data.getCustomFieldColorMoney());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorRadio)) {
-            entity.setCustomFieldColorRadio(data.getCustomFieldColorRadio());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorPicklistId)) {
-            entity.setCustomFieldColorPicklistEntity(data.getCustomFieldColorPicklistId() != null
-                    ? entityManager.getReference(MyEntity3044.class, data.getCustomFieldColorPicklistId())
-                    : null);
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorInlinePicklistId)) {
-            entity.setCustomFieldColorInlinePicklistEntity(data.getCustomFieldColorInlinePicklistId() != null
-                    ? entityManager.getReference(MyEntity3043.class, data.getCustomFieldColorInlinePicklistId())
-                    : null);
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMultivalue)) {
-            entity.getCustomFieldColorMultivalueList().clear();
-            entity.getCustomFieldColorMultivalueList().addAll(data.getCustomFieldColorMultivalue().getValues().stream()
-                    .map(MultivalueFieldSingleValue::getId)
-                    .filter(Objects::nonNull)
-                    .map(Long::parseLong)
-                    .map(e -> entityManager.getReference(MyEntity3042.class, e))
-                    .toList());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMultivalueHover)) {
-            entity.getCustomFieldColorMultivalueHoverList().clear();
-            entity.getCustomFieldColorMultivalueHoverList().addAll(data.getCustomFieldColorMultivalueHover().getValues().stream()
-                    .map(MultivalueFieldSingleValue::getId)
-                    .filter(Objects::nonNull)
-                    .map(Long::parseLong)
-                    .map(e -> entityManager.getReference(MyEntity3041.class, e))
-                    .toList());
-        }
-        if (data.isFieldChanged(MyExample3027DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3027DTO> doUpdateEntity(MyEntity3027 entity, MyExample3027DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorInput)) {
+			entity.setCustomFieldColorInput(data.getCustomFieldColorInput());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorText)) {
+			entity.setCustomFieldColorText(data.getCustomFieldColorText());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDateTime)) {
+			entity.setCustomFieldColorDateTime(data.getCustomFieldColorDateTime());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorCheckbox)) {
+			entity.setCustomFieldColorCheckbox(data.getCustomFieldColorCheckbox());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDate)) {
+			entity.setCustomFieldColorDate(data.getCustomFieldColorDate());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDateTimeWithSeconds)) {
+			entity.setCustomFieldColorDateTimeWithSeconds(data.getCustomFieldColorDateTimeWithSeconds());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorDictionary)) {
+			entity.setCustomFieldColorDictionary(data.getCustomFieldColorDictionary());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorFileUploadeId)) {
+			entity.setCustomFieldColorFileUploadeId(data.getCustomFieldColorFileUploadeId());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorFileUploade)) {
+			entity.setCustomFieldColorFileUploade(data.getCustomFieldColorFileUploade());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorNumber)) {
+			entity.setCustomFieldColorNumber(data.getCustomFieldColorNumber());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorPercent)) {
+			entity.setCustomFieldColorPercent(data.getCustomFieldColorPercent());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMoney)) {
+			entity.setCustomFieldColorMoney(data.getCustomFieldColorMoney());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorRadio)) {
+			entity.setCustomFieldColorRadio(data.getCustomFieldColorRadio());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorPicklistId)) {
+			entity.setCustomFieldColorPicklistEntity(data.getCustomFieldColorPicklistId() != null
+					? entityManager.getReference(MyEntity3044.class, data.getCustomFieldColorPicklistId())
+					: null);
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorInlinePicklistId)) {
+			entity.setCustomFieldColorInlinePicklistEntity(data.getCustomFieldColorInlinePicklistId() != null
+					? entityManager.getReference(MyEntity3043.class, data.getCustomFieldColorInlinePicklistId())
+					: null);
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMultivalue)) {
+			entity.getCustomFieldColorMultivalueList().clear();
+			entity.getCustomFieldColorMultivalueList().addAll(data.getCustomFieldColorMultivalue().getValues().stream()
+					.map(MultivalueFieldSingleValue::getId)
+					.filter(Objects::nonNull)
+					.map(Long::parseLong)
+					.map(e -> entityManager.getReference(MyEntity3042.class, e))
+					.toList());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customFieldColorMultivalueHover)) {
+			entity.getCustomFieldColorMultivalueHoverList().clear();
+			entity.getCustomFieldColorMultivalueHoverList().addAll(data.getCustomFieldColorMultivalueHover().getValues().stream()
+					.map(MultivalueFieldSingleValue::getId)
+					.filter(Objects::nonNull)
+					.map(Long::parseLong)
+					.map(e -> entityManager.getReference(MyEntity3041.class, e))
+					.toList());
+		}
+		if (data.isFieldChanged(MyExample3027DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3027DTO> getActions() {
-        return Actions.<MyExample3027DTO>builder()
-                .action(act -> act
-                        .action("save-send-color-const-all", "Save and send on approval")
-                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConstAll", cfw -> cfw))
-                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3027DTO> getActions() {
+		return Actions.<MyExample3027DTO>builder()
+				.action(act -> act
+						.action("save-send-color-const-all", "Save and send on approval")
+						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConstAll", cfw -> cfw))
+						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
-                )
-                .action(act -> act
-                        .action("save-send-color-all", "Save and send on approval")
-                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
-                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+				)
+				.action(act -> act
+						.action("save-send-color-all", "Save and send on approval")
+						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
+						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
-                )
-                .action(act -> act
-                        .action("save-send-color-const", "Save and send on approval")
-                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConst", cfw -> cfw))
-                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+				)
+				.action(act -> act
+						.action("save-send-color-const", "Save and send on approval")
+						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConst", cfw -> cfw))
+						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
-                )
-                .action(act -> act
-                        .action("save-send-color", "Save and send on approval")
-                        .withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopup", cfw -> cfw))
-                        .invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
+				)
+				.action(act -> act
+						.action("save-send-color", "Save and send on approval")
+						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopup", cfw -> cfw))
+						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
-                )
-                .build();
+				)
+				.build();
 
-    }
+	}
 
 }
 

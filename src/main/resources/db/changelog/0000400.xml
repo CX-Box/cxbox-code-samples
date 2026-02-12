@@ -10,12 +10,13 @@
     <changeSet id="ADD CUSTOMIZATION COLUMN" author="cxbox">
         <sql>
             INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                                  removed_from_additional_fields)
+                                           removed_from_additional_fields)
             VALUES (1, '1101075', 'myexample3135listold', 'MyExample3135ListOldsFields', '[]',
                     '["customField","customFieldOld"]', '[]');
             INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                                  removed_from_additional_fields)
-            VALUES (2, '1101075', 'myexample3135listaddedfields', 'MyExample3135ListAddedFields', '["customFieldPercent","customField","customFieldRadio"]',
+                                           removed_from_additional_fields)
+            VALUES (2, '1101075', 'myexample3135listaddedfields', 'MyExample3135ListAddedFields',
+                    '["customFieldPercent","customField","customFieldRadio"]',
                     '[]', '[]');
         </sql>
     </changeSet>
@@ -23,12 +24,13 @@
     <changeSet id="ADD CUSTOMIZATION COLUMN GH" author="cxbox">
         <sql>
             INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                                  removed_from_additional_fields)
+                                           removed_from_additional_fields)
             VALUES (3, '1101075', 'myexample3175gholdfields', 'MyExample3175GHOldFields', '[]',
                     '["customField","customFieldOld","customFieldDictionary"]', '[]');
             INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                                  removed_from_additional_fields)
-            VALUES (4, '1101075', 'myexample3175ghaddfields', 'MyExample3175GHAddedFields', '["customFieldPercent","customFieldDictionary"]',
+                                           removed_from_additional_fields)
+            VALUES (4, '1101075', 'myexample3175ghaddfields', 'MyExample3175GHAddedFields',
+                    '["customFieldPercent","customFieldDictionary"]',
                     '[]', '[]');
         </sql>
     </changeSet>

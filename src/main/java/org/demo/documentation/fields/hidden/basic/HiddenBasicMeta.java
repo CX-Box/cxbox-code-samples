@@ -17,7 +17,7 @@ public class HiddenBasicMeta extends FieldMetaBuilder<HiddenBasicDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<HiddenBasicDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				HiddenBasicDTO_.customField
 		);

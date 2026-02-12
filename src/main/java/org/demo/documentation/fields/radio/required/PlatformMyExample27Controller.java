@@ -16,7 +16,6 @@ public enum PlatformMyExample27Controller implements EnumBcIdentifier {
 	myExampleBc27(MyExample27Service.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample27Controller> Holder = new Holder<>(
 			PlatformMyExample27Controller.class);

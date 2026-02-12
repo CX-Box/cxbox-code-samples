@@ -1,9 +1,8 @@
 package org.demo.documentation.other.equalsOfOne;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import com.fasterxml.jackson.annotation.JsonValue;
 
 @RequiredArgsConstructor
 @Getter

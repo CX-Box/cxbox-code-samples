@@ -113,7 +113,7 @@ public class ActionSuggestionAdminDao extends AbstractAnySourceBaseDAO<ActionSug
 								.description("(parent action group: " + ag.getKey() + ")")
 								.build())
 						.sorted(Comparator.comparing(ActionSuggestionAdminDTO::getValue))
-					.toList());
+						.toList());
 			});
 			return actionOptions.stream()
 					.distinct()
@@ -127,7 +127,6 @@ public class ActionSuggestionAdminDao extends AbstractAnySourceBaseDAO<ActionSug
 		}
 		return new ArrayList<>();
 	}
-
 
 
 }

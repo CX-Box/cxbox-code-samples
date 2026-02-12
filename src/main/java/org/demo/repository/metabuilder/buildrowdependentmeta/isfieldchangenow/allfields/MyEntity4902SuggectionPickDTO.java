@@ -10,11 +10,11 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyEntity4902SuggectionPickDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyEntity4902SuggectionPickDTO(MyEntity4902Suggection entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyEntity4902SuggectionPickDTO(MyEntity4902Suggection entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

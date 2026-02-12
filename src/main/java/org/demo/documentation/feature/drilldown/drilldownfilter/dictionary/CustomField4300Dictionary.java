@@ -1,11 +1,11 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter.dictionary;
 
+import org.cxbox.dictionary.Dictionary;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.cxbox.dictionary.Dictionary;
 
 public record CustomField4300Dictionary(String key) implements Dictionary {
 

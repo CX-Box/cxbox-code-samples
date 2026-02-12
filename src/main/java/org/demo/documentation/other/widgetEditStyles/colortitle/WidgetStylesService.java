@@ -27,12 +27,12 @@ import java.util.stream.Collectors;
 public class WidgetStylesService extends VersionAwareResponseService<WidgetStylesDTO, WidgetStyles> {
 
 	private final WidgetStylesRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<WidgetStylesMeta> meta = WidgetStylesMeta.class;
-    @Autowired
+	@Getter(onMethod_ = @Override)
+	private final Class<WidgetStylesMeta> meta = WidgetStylesMeta.class;
+	@Autowired
 	private EntityManager entityManager;
 
-    @Override
+	@Override
 	protected CreateResult<WidgetStylesDTO> doCreateEntity(WidgetStyles entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));

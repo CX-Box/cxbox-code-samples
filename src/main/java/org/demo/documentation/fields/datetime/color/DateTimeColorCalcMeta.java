@@ -17,8 +17,8 @@ public class DateTimeColorCalcMeta extends FieldMetaBuilder<DateTimeColorCalcDTO
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeColorCalcDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeColorCalcDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class DateTimeColorCalcMeta extends FieldMetaBuilder<DateTimeColorCalcDTO
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeColorCalcDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeColorCalcDTO_.customField);
 		}

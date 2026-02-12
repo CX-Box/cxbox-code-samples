@@ -20,10 +20,10 @@ import static org.demo.documentation.fields.main.TextError.ONLY_HIGH;
 public class MyExample29Service extends VersionAwareResponseService<MyExample29DTO, MyEntity29> {
 
 	private final MyEntity29Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample29Meta> meta = MyExample29Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample29Meta> meta = MyExample29Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample29DTO> doCreateEntity(MyEntity29 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -32,7 +32,7 @@ public class MyExample29Service extends VersionAwareResponseService<MyExample29D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample29DTO> doUpdateEntity(MyEntity29 entity, MyExample29DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample29DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (!data.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
@@ -48,7 +48,7 @@ public class MyExample29Service extends VersionAwareResponseService<MyExample29D
 	@Override
 	public Actions<MyExample29DTO> getActions() {
 		return Actions.<MyExample29DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

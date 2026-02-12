@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputColorConstService extends VersionAwareResponseService<InputColorConstDTO, InputColorConst> {
 
 	private final InputColorConstRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputColorConstMeta> meta = InputColorConstMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputColorConstMeta> meta = InputColorConstMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputColorConstDTO> doCreateEntity(InputColorConst entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputColorConstDTO> doUpdateEntity(InputColorConst entity, InputColorConstDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(InputColorConstDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 	@Override
 	public Actions<InputColorConstDTO> getActions() {
 		return Actions.<InputColorConstDTO>builder()
-                .save(sv -> sv.text("Save").available(bc -> true))
+				.save(sv -> sv.text("Save").available(bc -> true))
 				.build();
 	}
 

@@ -19,10 +19,10 @@ import static org.demo.documentation.fields.main.TextError.LESS_10;
 public class MyExample10Service extends VersionAwareResponseService<MyExample10DTO, MyEntity10> {
 
 	private final MyEntity10Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample10Meta> meta = MyExample10Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample10Meta> meta = MyExample10Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample10DTO> doCreateEntity(MyEntity10 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample10Service extends VersionAwareResponseService<MyExample10D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample10DTO> doUpdateEntity(MyEntity10 entity, MyExample10DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample10DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (data.getCustomField() < 10) {
@@ -46,7 +46,7 @@ public class MyExample10Service extends VersionAwareResponseService<MyExample10D
 	@Override
 	public Actions<MyExample10DTO> getActions() {
 		return Actions.<MyExample10DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

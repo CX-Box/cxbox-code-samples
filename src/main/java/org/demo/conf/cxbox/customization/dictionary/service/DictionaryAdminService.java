@@ -74,7 +74,7 @@ public class DictionaryAdminService extends VersionAwareResponseService<Dictiona
 
 	@Override
 	protected ActionResultDTO<DictionaryAdminDTO> doUpdateEntity(DictionaryItem entity, DictionaryAdminDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		setIfChanged(data, type, entity::setType);
 		if (data.isFieldChanged(dictionaryTypeId)) {
 			entity.setDictionaryTypeId(data.getDictionaryTypeId() != null

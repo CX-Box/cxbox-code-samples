@@ -1,8 +1,8 @@
 package org.demo.documentation.fields.suggestion.validationconfirm.forfield;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 
 @Getter
@@ -10,10 +10,10 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyExample3116DTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyExample3116DTO(MyEntity3116 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyExample3116DTO(MyEntity3116 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 }

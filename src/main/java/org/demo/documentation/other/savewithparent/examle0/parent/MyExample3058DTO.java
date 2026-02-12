@@ -1,8 +1,8 @@
 package org.demo.documentation.other.savewithparent.examle0.parent;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 
@@ -12,15 +12,15 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyExample3058DTO extends DataResponseDTO {
 
-    private String customField;
-    @SearchParameter(name = "customFieldRequired")
-    private String customFieldRequired;
+	private String customField;
+	@SearchParameter(name = "customFieldRequired")
+	private String customFieldRequired;
 
 
-    public MyExample3058DTO(MyEntity3058 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
+	public MyExample3058DTO(MyEntity3058 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
 
-        this.customFieldRequired = entity.getCustomFieldRequired();
-    }
+		this.customFieldRequired = entity.getCustomFieldRequired();
+	}
 }

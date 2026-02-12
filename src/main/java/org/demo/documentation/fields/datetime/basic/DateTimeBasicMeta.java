@@ -17,7 +17,7 @@ public class DateTimeBasicMeta extends FieldMetaBuilder<DateTimeBasicDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeBasicDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeBasicDTO_.customField
 		);
@@ -28,7 +28,7 @@ public class DateTimeBasicMeta extends FieldMetaBuilder<DateTimeBasicDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeBasicDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeBasicDTO_.customField);
 		}

@@ -24,67 +24,67 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class MyEntity3135 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldInput;
-    @Column
-    private LocalDateTime customFieldDate;
-    @Column
-    private Boolean customFieldCheckBox;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customField;
+	@Column
+	private String customFieldInput;
+	@Column
+	private LocalDateTime customFieldDate;
+	@Column
+	private Boolean customFieldCheckBox;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 
-    @Column
-    private String customFieldHint;
+	@Column
+	private String customFieldHint;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldRadioEnum customFieldRadio;
-    @Column
-    private Double customFieldMoney;
-    @JoinColumn(name = "CUSTOM_FIELD_INLINE_ID")
-    @ManyToOne
-    private MyEntity3135InlinePick customFieldInlineEntity;
-    @JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
-    @ManyToOne
-    private MyEntity3135Pick customFieldPickListEntity;
-    @Column
-    private Long customFieldPercent;
-    @Column
-    private Long customFieldNumber;
-    @Column
-    private String customFieldFileUpload;
-    @Column
-    private String customFieldFileUploadId;
-    @Column
-    private LocalDateTime customFieldDateTimeWithSeconds;
-    @Column
-    private LocalDateTime customFieldDateTime;
-    @Column
-    private String customFieldText;
-    @Column
-    private String customFieldHidden;
-    @JoinTable(name = "MyEntity3135_MyEntity3135Multi",
-            joinColumns = @JoinColumn(name = "MyEntity3135_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3135Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3135Multi> customFieldMultivalueList = new ArrayList<>();
-    @Enumerated(value = EnumType.STRING)
-    @CollectionTable(name = "CUSTOM_FIELD_MULTIPLE_SELECT_3135", joinColumns = @JoinColumn(name = "MyEntity3135_ID"))
-    @ElementCollection(targetClass = CustomFieldMultipleSelectEnum.class)
-    @Column(name = "VALUE", nullable = false)
-    private Set<CustomFieldMultipleSelectEnum> customFieldMultipleSelect = new HashSet<>();
-    @JoinTable(name = "MyEntity3135_MyEntity3135MultiHover",
-            joinColumns = @JoinColumn(name = "MyEntity3135_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3135MultiHover_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3135MultiHover> customFieldMultivalueHoverList = new ArrayList<>();
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldRadioEnum customFieldRadio;
+	@Column
+	private Double customFieldMoney;
+	@JoinColumn(name = "CUSTOM_FIELD_INLINE_ID")
+	@ManyToOne
+	private MyEntity3135InlinePick customFieldInlineEntity;
+	@JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
+	@ManyToOne
+	private MyEntity3135Pick customFieldPickListEntity;
+	@Column
+	private Long customFieldPercent;
+	@Column
+	private Long customFieldNumber;
+	@Column
+	private String customFieldFileUpload;
+	@Column
+	private String customFieldFileUploadId;
+	@Column
+	private LocalDateTime customFieldDateTimeWithSeconds;
+	@Column
+	private LocalDateTime customFieldDateTime;
+	@Column
+	private String customFieldText;
+	@Column
+	private String customFieldHidden;
+	@JoinTable(name = "MyEntity3135_MyEntity3135Multi",
+			joinColumns = @JoinColumn(name = "MyEntity3135_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3135Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3135Multi> customFieldMultivalueList = new ArrayList<>();
+	@Enumerated(value = EnumType.STRING)
+	@CollectionTable(name = "CUSTOM_FIELD_MULTIPLE_SELECT_3135", joinColumns = @JoinColumn(name = "MyEntity3135_ID"))
+	@ElementCollection(targetClass = CustomFieldMultipleSelectEnum.class)
+	@Column(name = "VALUE", nullable = false)
+	private Set<CustomFieldMultipleSelectEnum> customFieldMultipleSelect = new HashSet<>();
+	@JoinTable(name = "MyEntity3135_MyEntity3135MultiHover",
+			joinColumns = @JoinColumn(name = "MyEntity3135_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3135MultiHover_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3135MultiHover> customFieldMultivalueHoverList = new ArrayList<>();
 }

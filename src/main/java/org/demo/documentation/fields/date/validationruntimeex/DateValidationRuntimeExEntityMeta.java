@@ -17,8 +17,8 @@ public class DateValidationRuntimeExEntityMeta extends FieldMetaBuilder<DateVali
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateValidationRuntimeExEntityDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateValidationRuntimeExEntityDTO_.customField
 		);
@@ -28,7 +28,7 @@ public class DateValidationRuntimeExEntityMeta extends FieldMetaBuilder<DateVali
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateValidationRuntimeExEntityDTO> fields,
-			InnerBcDescription bcDescription, Long parentId) {
+									 InnerBcDescription bcDescription, Long parentId) {
 
 	}
 

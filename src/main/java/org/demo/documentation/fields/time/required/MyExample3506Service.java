@@ -15,31 +15,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3506Service extends VersionAwareResponseService<MyExample3506DTO, MyEntity3506> {
 
-    private final MyEntity3506Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3506Meta> meta = MyExample3506Meta.class;
+	private final MyEntity3506Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3506Meta> meta = MyExample3506Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3506DTO> doCreateEntity(MyEntity3506 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3506DTO> doCreateEntity(MyEntity3506 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3506DTO> doUpdateEntity(MyEntity3506 entity, MyExample3506DTO data, BusinessComponent bc) {
-      if (data.isFieldChanged(MyExample3506DTO_.customField)) {
-        entity.setCustomField(data.getCustomField());
-      }
+	@Override
+	protected ActionResultDTO<MyExample3506DTO> doUpdateEntity(MyEntity3506 entity, MyExample3506DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3506DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
 
-      return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3506DTO> getActions() {
-        return Actions.<MyExample3506DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3506DTO> getActions() {
+		return Actions.<MyExample3506DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

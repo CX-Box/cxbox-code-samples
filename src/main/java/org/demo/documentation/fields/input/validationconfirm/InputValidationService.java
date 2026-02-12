@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class InputValidationService extends VersionAwareResponseService<InputValidationDTO, InputValidation> {
 
 	private final InputValidationRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputValidationMeta> meta = InputValidationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputValidationMeta> meta = InputValidationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputValidationDTO> doCreateEntity(InputValidation entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -29,7 +29,7 @@ public class InputValidationService extends VersionAwareResponseService<InputVal
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputValidationDTO> doUpdateEntity(InputValidation entity, InputValidationDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(InputValidationDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}

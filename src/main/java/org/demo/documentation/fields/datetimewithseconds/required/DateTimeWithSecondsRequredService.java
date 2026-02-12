@@ -16,12 +16,12 @@ public class DateTimeWithSecondsRequredService extends
 		VersionAwareResponseService<DateTimeWithSecondsRequredDTO, DateTimeWithSecondsRequredEntity> {
 
 	private final DateTimeWithSecondsRequredEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsRequredMeta> meta = DateTimeWithSecondsRequredMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsRequredMeta> meta = DateTimeWithSecondsRequredMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsRequredDTO> doCreateEntity(DateTimeWithSecondsRequredEntity entity,
-			BusinessComponent bc) {
+																		 BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsRequredService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsRequredDTO> doUpdateEntity(DateTimeWithSecondsRequredEntity entity,
-			DateTimeWithSecondsRequredDTO data, BusinessComponent bc) {
+																			DateTimeWithSecondsRequredDTO data, BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeWithSecondsRequredDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -41,7 +41,7 @@ public class DateTimeWithSecondsRequredService extends
 	@Override
 	public Actions<DateTimeWithSecondsRequredDTO> getActions() {
 		return Actions.<DateTimeWithSecondsRequredDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -7,6 +7,7 @@ import lombok.NonNull;
 
 import java.util.Arrays;
 import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 public enum WidgetStylesTestEnum {

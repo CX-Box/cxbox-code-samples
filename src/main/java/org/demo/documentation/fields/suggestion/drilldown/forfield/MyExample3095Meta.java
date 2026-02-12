@@ -11,20 +11,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3095Meta extends FieldMetaBuilder<MyExample3095DTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3095DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3095DTO_.customField);
-        fields.setDrilldown(
-                MyExample3095DTO_.customField,
-                DrillDownType.INNER,
-                "/screen/myexample3080/view/myexample3091form/"
-        );
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3095DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3095DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3095DTO_.customField);
+		fields.setDrilldown(
+				MyExample3095DTO_.customField,
+				DrillDownType.INNER,
+				"/screen/myexample3080/view/myexample3091form/"
+		);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3095DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+	}
 
 }

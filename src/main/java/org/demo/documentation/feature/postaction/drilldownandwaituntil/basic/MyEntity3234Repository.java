@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface MyEntity3234Repository extends JpaRepository<MyEntity3234, Long>, JpaSpecificationExecutor<MyEntity3234> {
 
-    List<MyEntity3234> findAllByStatusResponse(StatusEnum customField);
+	List<MyEntity3234> findAllByStatusResponse(StatusEnum customField);
 }

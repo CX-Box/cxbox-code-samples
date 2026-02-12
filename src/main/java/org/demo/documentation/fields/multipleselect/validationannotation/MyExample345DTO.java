@@ -1,7 +1,6 @@
 package org.demo.documentation.fields.multipleselect.validationannotation;
 
 import jakarta.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

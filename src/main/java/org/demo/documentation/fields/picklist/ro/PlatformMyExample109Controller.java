@@ -18,7 +18,6 @@ public enum PlatformMyExample109Controller implements EnumBcIdentifier {
 	// --8<-- [end:bc]
 
 
-
 	public static final EnumBcIdentifier.Holder<PlatformMyExample109Controller> Holder = new Holder<>(
 			PlatformMyExample109Controller.class);
 

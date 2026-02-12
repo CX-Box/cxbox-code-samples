@@ -15,47 +15,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3008Service extends VersionAwareResponseService<MyExample3008DTO, MyEntity3008> {
 
-    private final MyEntity3008Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3008Meta> meta = MyExample3008Meta.class;
+	private final MyEntity3008Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3008Meta> meta = MyExample3008Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3008DTO> doCreateEntity(MyEntity3008 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3008DTO> doCreateEntity(MyEntity3008 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:doUpdateEntity]
-    @Override
-    protected ActionResultDTO<MyExample3008DTO> doUpdateEntity(MyEntity3008 entity, MyExample3008DTO data,
-                                                               BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3008DTO_.customField4)) {
-            entity.setCustomField4(data.getCustomField4());
-        }
-        if (data.isFieldChanged(MyExample3008DTO_.customField5)) {
-            entity.setCustomField5(data.getCustomField5());
-        }
-        if (data.isFieldChanged(MyExample3008DTO_.customField3)) {
-            entity.setCustomField3(data.getCustomField3());
-        }
-        if (data.isFieldChanged(MyExample3008DTO_.customField2)) {
-            entity.setCustomField2(data.getCustomField2());
-        }
-        if (data.isFieldChanged(MyExample3008DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
+	// --8<-- [start:doUpdateEntity]
+	@Override
+	protected ActionResultDTO<MyExample3008DTO> doUpdateEntity(MyEntity3008 entity, MyExample3008DTO data,
+															   BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3008DTO_.customField4)) {
+			entity.setCustomField4(data.getCustomField4());
+		}
+		if (data.isFieldChanged(MyExample3008DTO_.customField5)) {
+			entity.setCustomField5(data.getCustomField5());
+		}
+		if (data.isFieldChanged(MyExample3008DTO_.customField3)) {
+			entity.setCustomField3(data.getCustomField3());
+		}
+		if (data.isFieldChanged(MyExample3008DTO_.customField2)) {
+			entity.setCustomField2(data.getCustomField2());
+		}
+		if (data.isFieldChanged(MyExample3008DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
 
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
-    // --8<-- [end:doUpdateEntity]
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+	// --8<-- [end:doUpdateEntity]
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3008DTO> getActions() {
-        return Actions.<MyExample3008DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3008DTO> getActions() {
+		return Actions.<MyExample3008DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 
 }

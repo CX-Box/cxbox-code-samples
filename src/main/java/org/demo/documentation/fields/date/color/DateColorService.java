@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class DateColorService extends VersionAwareResponseService<DateColorDTO, dateColor> {
 
 	private final dateColorRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateColorMeta> meta = DateColorMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateColorMeta> meta = DateColorMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateColorDTO> doCreateEntity(dateColor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -39,7 +39,7 @@ public class DateColorService extends VersionAwareResponseService<DateColorDTO, 
 	@Override
 	public Actions<DateColorDTO> getActions() {
 		return Actions.<DateColorDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

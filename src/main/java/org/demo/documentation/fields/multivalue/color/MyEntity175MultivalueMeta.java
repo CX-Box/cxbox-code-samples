@@ -18,8 +18,8 @@ public class MyEntity175MultivalueMeta extends FieldMetaBuilder<MyEntity175Multi
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity175MultivalueDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(org.demo.documentation.fields.multivalue.color.MyEntity175MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivalue.color.MyEntity175MultivalueDTO_.customField);
 	}
@@ -28,7 +28,7 @@ public class MyEntity175MultivalueMeta extends FieldMetaBuilder<MyEntity175Multi
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity175MultivalueDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyEntity175MultivalueDTO_.customField);
 		}

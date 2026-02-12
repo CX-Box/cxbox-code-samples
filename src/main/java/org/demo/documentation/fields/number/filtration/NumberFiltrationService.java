@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class NumberFiltrationService extends VersionAwareResponseService<NumberFiltrationDTO, NumberFiltrationEntity> {
 
 	private final NumberFiltrationEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberFiltrationMeta> meta = NumberFiltrationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberFiltrationMeta> meta = NumberFiltrationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberFiltrationDTO> doCreateEntity(NumberFiltrationEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberFiltrationDTO> doUpdateEntity(NumberFiltrationEntity entity, NumberFiltrationDTO data,
-			BusinessComponent bc) {
+																  BusinessComponent bc) {
 		if (data.isFieldChanged(NumberFiltrationDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class NumberFiltrationService extends VersionAwareResponseService<NumberF
 	@Override
 	public Actions<NumberFiltrationDTO> getActions() {
 		return Actions.<NumberFiltrationDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

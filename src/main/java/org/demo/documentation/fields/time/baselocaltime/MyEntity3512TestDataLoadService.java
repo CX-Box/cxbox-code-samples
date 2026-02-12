@@ -12,24 +12,24 @@ import java.time.LocalTime;
 @Service
 public class MyEntity3512TestDataLoadService {
 
-    @Autowired
-    MyEntity3512Repository repository;
+	@Autowired
+	MyEntity3512Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3512()
-                .setCustomField(LocalTime.from(LocalDateTime.now()))
-                .setCustomFieldh(LocalTime.from(LocalDateTime.now()))
-                .setCustomFieldhmm(LocalTime.from(LocalDateTime.now()))
-                .setCustomFieldhmmA(LocalTime.from(LocalDateTime.now()))
-                .setCustomFieldhmmssA(LocalTime.from(LocalDateTime.now()))
-        );
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3512()
+				.setCustomField(LocalTime.from(LocalDateTime.now()))
+				.setCustomFieldh(LocalTime.from(LocalDateTime.now()))
+				.setCustomFieldhmm(LocalTime.from(LocalDateTime.now()))
+				.setCustomFieldhmmA(LocalTime.from(LocalDateTime.now()))
+				.setCustomFieldhmmssA(LocalTime.from(LocalDateTime.now()))
+		);
+	}
 
 }

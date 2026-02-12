@@ -31,7 +31,7 @@ public class MyExample332Service extends VersionAwareResponseService<MyExample33
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample332DTO> doUpdateEntity(MyEntity332 entity, MyExample332DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample332DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
@@ -48,7 +48,7 @@ public class MyExample332Service extends VersionAwareResponseService<MyExample33
 	@Override
 	public Actions<MyExample332DTO> getActions() {
 		return Actions.<MyExample332DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -66,7 +66,7 @@ public class MyExample332Service extends VersionAwareResponseService<MyExample33
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

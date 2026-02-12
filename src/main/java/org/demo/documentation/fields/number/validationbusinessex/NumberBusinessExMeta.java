@@ -17,8 +17,8 @@ public class NumberBusinessExMeta extends FieldMetaBuilder<NumberBusinessExDTO> 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberBusinessExDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberBusinessExDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class NumberBusinessExMeta extends FieldMetaBuilder<NumberBusinessExDTO> 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberBusinessExDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberBusinessExDTO_.customField);
 		}

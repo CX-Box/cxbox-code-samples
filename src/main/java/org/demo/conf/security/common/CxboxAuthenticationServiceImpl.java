@@ -57,7 +57,4 @@ public class CxboxAuthenticationServiceImpl implements CxboxAuthenticationServic
 	}
 
 
-
-
-
 }

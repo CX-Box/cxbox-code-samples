@@ -17,7 +17,6 @@ public enum PlatformMyExample190Controller implements EnumBcIdentifier {
 	myEntity191AssocListPopup(myExampleBc190, MyEntity191MultivalueService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample190Controller> Holder = new Holder<>(
 			PlatformMyExample190Controller.class);

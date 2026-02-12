@@ -9,23 +9,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3151TestDataLoadService {
 
-    @Autowired
-    MyEntity3151Repository repository;
+	@Autowired
+	MyEntity3151Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.deleteAll();
-        repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.78)));
-        repository.save(new MyEntity3151().setCustomField(Double.valueOf(87000.78)));
-        repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.32)));
-        repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.78)));
-        repository.save(new MyEntity3151().setCustomField(Double.valueOf(34567.00)));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.deleteAll();
+		repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.78)));
+		repository.save(new MyEntity3151().setCustomField(Double.valueOf(87000.78)));
+		repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.32)));
+		repository.save(new MyEntity3151().setCustomField(Double.valueOf(27000.78)));
+		repository.save(new MyEntity3151().setCustomField(Double.valueOf(34567.00)));
+	}
 
 }
