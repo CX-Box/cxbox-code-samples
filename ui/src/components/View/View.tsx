@@ -39,8 +39,7 @@ import Chart from '../widgets/Chart/Chart'
 import DebugViewInfoLabel from '@components/DebugViewInfoLabel/DebugViewInfoLabel'
 import FilePreview from '@components/widgets/FilePreview/FilePreview'
 import FilePreviewCard from '@components/FilePreviewCard/FilePreviewCard'
-import CalendarList from '@components/widgets/CalendarList/CalendarList'
-import CalendarYearList from '@components/widgets/CalendarList/CalendarYearList'
+import { CalendarList, CalendarYearList } from '@components/widgets/CalendarList'
 
 export const customFields = {
     [FieldType.number]: Number,
@@ -81,7 +80,8 @@ export const customWidgets: Partial<Record<CustomWidgetTypes | interfaces.Widget
     [CustomWidgetTypes.DualAxes2D]: { component: Chart, card: DashboardCard },
     [CustomWidgetTypes.FilePreview]: { component: FilePreview, card: FilePreviewCard },
     [CustomWidgetTypes.CalendarList]: { component: CalendarList, card: null },
-    [CustomWidgetTypes.CalendarYearList]: { component: CalendarYearList, card: null }
+    [CustomWidgetTypes.CalendarYearList]: { component: CalendarYearList, card: null },
+    [CustomWidgetTypes.RelationGraph]: { component: Chart, card: DashboardCard }
 }
 
 utils.extendPopupWidgetTypes(customWidgets)
