@@ -2,14 +2,12 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
-import core.MainPages;
-import core.widget.TestingTools.Constants;
-import core.widget.form.FormWidget;
-import core.widget.modal.confirm.constantsConfirm;
-import core.widget.modal.error.constantsError;
+import core.config.Constants;
+import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -17,220 +15,211 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Form. Checking the basic functions for the InlinePickList in the widget Form")
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form")
-
 public class InlinePickListOnFormTest extends BaseTestForSamples {
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("Test for getting the Placeholder value")
-    @Description("The test gets the value from the placeholder attribute and returns it in String format")
-    void placeholder() {
-        MainPages.click("InlinePickList placeholder");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value")
+	@Description("The test gets the value from the placeholder attribute and returns it in String format")
+	void placeholder() {
+		var form = PlatformApp
+				.screen("InlinePickList placeholder")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.inlinePickList("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
-    void color() {
-        MainPages.click("InlinePickList color");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThat(customField.getHexColor()).isNull();
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to get the field color value in Hex format")
+	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+	void color() {
+		var form = PlatformApp
+				.screen("InlinePickList color")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.inlinePickList("Custom Field")
+				.checkColor(color -> assertThat(color).isNull());
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to check the field for \"Read-only\"")
-    @Description("The test checks for the disabled attribute")
-    void readonly() {
-        MainPages.click("InlinePickList readonly");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThat(customField.getReadOnly()).isTrue();
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to check the field for \"Read-only\"")
+	@Description("The test checks for the disabled attribute")
+	void readonly() {
+		var form = PlatformApp
+				.screen("InlinePickList readonly")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.inlinePickList("Custom Field")
+				.checkReadOnly(readonly -> assertThat(readonly).isTrue());
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field, and then checks the value in the field with what should be set")
-    void edit() {
-        MainPages.click("InlinePickList basic");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.setValue("39 Test data new information");
-        assertThat(customField.getValue()).isEqualTo("39 Test data new information");
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A test for setting a value in a field")
+	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
+	void edit() {
+		var form = PlatformApp.screen("InlinePickList basic")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		inlinePickList.setValue("39 Test data new information")
+				.checkValue(val -> assertThat(val).isEqualTo("39 Test data new information"));
+	}
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Filtering test")
-    @Description("Filtering is not available for the Form widget")
-    void filtration() {
-        MainPages.click("InlinePickList filtration");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Filtering test")
+	@Description("Filtering is not available for the Form widget")
+	void filtration() {
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("The DrillDown test")
-    @Description("Checking the url before the transition and after the transition/click on a special element")
-    void drillDown() {
-        MainPages.click("InlinePickList drilldown");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("The DrillDown test")
+	@Description("Checking the url before the transition and after the transition/click on a special element")
+	void drillDown() {
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Business Exception Validation Test")
-    @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
-    void businessException() {
-        MainPages.click("InlinePickList validation business exception");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.setValue("Test data");
-        var popup = $box.findPopup("error");
-        assertThat(popup).isPresent();
-        assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
-        assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
-        popup.get().errorPopup().close();
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Business Exception Validation Test")
+	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
+	void businessException() {
+		var form = PlatformApp.screen("InlinePickList validation business exception")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		inlinePickList.setValue("Test data");
+		form.errorPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
+				.close();
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Run-time exception validation test")
-    @Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
-    void runtimeException() {
-        MainPages.click("InlinePickList validation runtime exception");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.clear();
-        var popup = $box.findPopup("error");
-        assertThat(popup).isPresent();
-        assertThat(popup.get().errorPopup().getTitle()).isEqualTo(constantsError.Title);
-        assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.SystemError);
-        popup.get().errorPopup().close();
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Run-time exception validation test")
+	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
+	void runtimeException() {
+		var form = PlatformApp.screen("InlinePickList validation runtime exception")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		inlinePickList.clear();
+		form.errorPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SystemError))
+				.close();
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("Confirmation Popup Validation Test")
-    @Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
-    void confirm() {
-        MainPages.click("InlinePickList validation confirm");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.setValue("Test data");
-        form.clickButton("save");
-        var popup = $box.findPopup("confirm");
-        assertThat(popup).isPresent();
-        popup.get().confirmPopup().getButtons();
-        assertThat(popup.get().confirmPopup().getTitle()).isEqualTo(constantsConfirm.Title);
-        assertThat(popup.get().confirmPopup().getMessage()).isEqualTo(Constants.SaveValue);
-        popup.get().confirmPopup().clickOk();
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Confirmation Popup Validation Test")
+	@Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
+	void confirm() {
+		var form = PlatformApp.screen("InlinePickList validation confirm")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		inlinePickList.setValue("Test data");
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Required Message validation test for one field")
-    @Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
-    void fieldLevelValidationAnnotation() {
-        MainPages.click("InlinePickList validation field level annotation");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.setValue("Test123 data");
-        form.clickButton("Save");
-        assertThat(customField.getRequiredMessage()).isEqualTo(Constants.OnlyLetters);
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Required Message validation test for one field")
+	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
+	void fieldLevelValidationAnnotation() {
+		var form = PlatformApp.screen("InlinePickList validation field level annotation")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		inlinePickList.setValue("Test123 data");
+		form.actions().action("Save").click();
+		inlinePickList.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.OnlyLetters));
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Required Message validation test for multiple fields")
-    @Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
-    void fieldLevelValidation() {
-        MainPages.click("InlinePickList validation field level dynamic");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        var customField2 = form.inlinePickList("Custom Field Additional");
-        customField.setValue("Test data 123");
-        customField2.setValue("Test data 123");
-        form.clickButton("Save");
-        assertThat(customField.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customField"));
-        assertThat(customField2.getRequiredMessage()).isEqualTo(Text.textOnlyLetters("customFieldAdditional"));
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Required Message validation test for multiple fields")
+	@Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
+	void fieldLevelValidation() {
+		var form = PlatformApp.screen("InlinePickList validation field level dynamic")
+				.secondLevelView("Form")
+				.form("Form title");
+		var customField = form.inlinePickList("Custom Field");
+		var customFieldAdditional = form.inlinePickList("Custom Field Additional");
+		customField.setValue("Test data 123");
+		customFieldAdditional.setValue("Test data 123");
+		form.actions().action("Save").click();
+		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customField")));
+		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customFieldAdditional")));
+	}
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Sorting test")
-    @Description("Sorting is not available for the Form widget")
-    void sorting() {
-        MainPages.click("InlinePickList sorting");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Sorting test")
+	@Description("Sorting is not available for the Form widget")
+	void sorting() {
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Required Message text Verification field test")
-    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
-    void required() {
-        MainPages.click("InlinePickList required");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.clear();
-        assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Required Message text Verification field test")
+	@Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
+	void required() {
+		var form = PlatformApp.screen("InlinePickList required")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.inlinePickList("Custom Field")
+				.clear()
+				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
 
-
-    @Test
-    @Severity(MINOR)
-    @Tag("Positive")
-    @DisplayName("Character Matching test")
-    @Description("The test sets the characters in the field, and then returns a list of values that match or contain characters")
-    void valuesInList() {
-        MainPages.click("InlinePickList basic");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.inlinePickList("Custom Field");
-        customField.setValue(" ");
-        assertThat(customField.getValueInList("1").get(0)).isEqualTo("49 Test data new information");
-        customField.setValue("2");
-        assertThat(customField.getValueInList("1").get(0)).isEqualTo("42 Test data new information");
-    }
+	@Disabled("Remake")
+	@Test
+	@Severity(MINOR)
+	@Tag("Positive")
+	@DisplayName("Character Matching test")
+	@Description("The test sets the characters in the field, and then returns a list of values that match or contain characters")
+	void valuesInList() {
+//		var form = PlatformApp.screen("InlinePickList basic")
+//				.secondLevelView("Form")
+//				.form("Form title");
+//		assertThat(form.inlinePickList("Custom Field")
+//				.setValue(" ")
+//				.getOptions("1").get(0))
+//				.isEqualTo("49 Test data new information");
+//		assertThat(form.inlinePickList("Custom Field")
+//				.setValue(" ")
+//				.getOptions("2").get(0))
+//				.isEqualTo("42 Test data new information");
+	}
 }

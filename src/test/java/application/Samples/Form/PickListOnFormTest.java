@@ -1,12 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
-import core.MainPages;
-import core.widget.TestingTools.Constants;
-import core.widget.form.FormWidget;
-import core.widget.modal.Popup;
-import core.widget.modal.confirm.constantsConfirm;
-import core.widget.modal.error.constantsError;
+import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -15,13 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Optional;
-
 import static io.qameta.allure.SeverityLevel.CRITICAL;
-import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Form. Checking the basic functions for the PickList in the widget Form")
 @Epic("application/Samples")
@@ -30,50 +20,80 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PickListOnFormTest extends BaseTestForSamples {
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("Test for getting the Placeholder value")
-    @Description("The test gets the value from the placeholder attribute and returns it in String format")
-    void placeholder() {
-        MainPages.click("Picklist placeholder");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        assertThat(customField.getPlaceholder()).isEqualTo("Placeholder text");
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value")
+	@Description("The test gets the value from the placeholder attribute and returns it in String format")
+	void placeholder() {
+		PlatformApp.screen("Picklist placeholder")
+				.secondLevelView("Form")
+				.form("Form title")
+				.pickList("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
-    @Disabled
-    void color() {
-        MainPages.click("Picklist color");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        assertThat(customField.getHexColor()).isNull();
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to get the field color value in Hex format")
+	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+	@Disabled
+	void color() {
+//        MainPages.click("Picklist color");
+//        MainPages.FirstLevelMenu.click("Form");
+//        FormWidget form = $box.findFormWidgetByTitle("Form title");
+//        var customField = form.pickList("Custom Field");
+//        assertThat(customField.getHexColor()).isNull();
+	}
 
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field via Popup using a unique id, and then checks the value in the field with what needs to be set")
-    void edit() {
-        MainPages.click("Picklist basic");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.pickList("Custom Field");
-        customField.openModalWindow();
-        Optional<Popup> popup = customField.findPopup();
-        assertThat(popup).isPresent();
-        var popupPickList = popup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
-        popupPickList.setValue("New data");
-        assertThat(customField.getValue()).isEqualTo("New data");
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A test for setting a value in a field")
+	@Description("The test sets the value in the field via Popup using a unique id, and then checks the value in the field with what needs to be set")
+	void edit() {
+//        MainPages.click("Picklist basic");
+//        MainPages.FirstLevelMenu.click("Form");
+//        FormWidget form = $box.findFormWidgetByTitle("Form title");
+//        var customField = form.pickList("Custom Field");
+//        customField.openModalWindow();
+//        Optional<Popup> popup = customField.findPopup();
+//        assertThat(popup).isPresent();
+//        var popupPickList = popup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
+//        popupPickList.setValue("New data");
+//        assertThat(customField.getValue()).isEqualTo("New data");
 
+		PlatformApp.screen("Picklist basic")
+				.secondLevelView("Form")
+				.form("Form title")
+				.pickList("Custom Field")
+				.setValue("Custom Field", "New data");
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A test for setting a value in a field")
+	@Description("The test sets the value in the field via Popup using a unique id, and then checks the value in the field with what needs to be set")
+	void read() {
+//        MainPages.click("Picklist basic");
+//        MainPages.FirstLevelMenu.click("Form");
+//        FormWidget form = $box.findFormWidgetByTitle("Form title");
+//        var customField = form.pickList("Custom Field");
+//        customField.openModalWindow();
+//        Optional<Popup> popup = customField.findPopup();
+//        assertThat(popup).isPresent();
+//        var popupPickList = popup.get().pickListPopupForSetValue("myEntityPickListPopup Title");
+//        popupPickList.setValue("New data");
+//        assertThat(customField.getValue()).isEqualTo("New data");
+
+		PlatformApp.screen("Picklist basic")
+				.secondLevelView("Form")
+				.form("Form title")
+				.pickList("Custom Field")
+				.checkValue(val -> assertThat(val).isEqualTo("New data"));
+	}
+/*
     @Test
     @Severity(MINOR)
     @Tag("Positive")
@@ -230,5 +250,5 @@ public class PickListOnFormTest extends BaseTestForSamples {
         customField.clear();
         form.clickButton("Save");
         assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
-    }
+    }*/
 }

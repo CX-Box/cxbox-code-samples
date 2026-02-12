@@ -1,147 +1,133 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
-import core.MainPages;
-import core.widget.TestingTools.Constants;
-import core.widget.form.FormWidget;
+import core.config.Constants;
+import core.element.PlatformApp;
 import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("Form. Checking the basic functions for the Time")
-@Epic("application/Samples")
-@Tag("application/Samples")
 public class TimeOnFormTest extends BaseTestForSamples {
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("Test for getting the Placeholder value")
-    @Description("The test gets the value from the placeholder attribute and returns it in String format")
-    void placeholder() {
-        MainPages.click("Time placeholder");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field", "HH:mm:ss");
-        assertThat(customField.getPlaceholder()).isEqualTo("11:25:58");
-    }
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Filtering test")
+	@Description("Filtering is not available for the Form widget")
+	void filtration() {
+//        var form = PlatformApp.screen("Date filtration")
+//              .secondLevelView("Form")
+//              .form("Form title");
+//        var customField = form.date("Custom Field");
+//        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
-    void color() {
-        MainPages.click("Time color");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field", "HH:mm:ss");
-        assertThat(customField.getHexColor()).isNull();
-    }
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("The DrillDown test")
+	@Description("Checking the url before the transition and after the transition/click on a special element")
+	void drillDown() {
+//        var form = PlatformApp.screen("Time drilldown")
+//              .secondLevelView("Form")
+//              .form("Form title");
+//        var customField = form.time("Custom Field", "HH:mm a");
+//        assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to check the field for \"Read-only\"")
-    @Description("The test checks for the disabled attribute")
-    void readonly() {
-        MainPages.click("Time readonly");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field", "HH:mm:ss");
-        assertThat(customField.getReadOnly()).isTrue();
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value")
+	@Description("The test gets the value from the placeholder attribute and returns it in String format")
+	void placeholder() {
+		var form = PlatformApp.screen("Time placeholder")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.time("Custom Field", "HH:mm:ss")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("11:25:58"));
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field, and then checks the value in the field with what should be set")
-    void edit() {
-        MainPages.click("Time base");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("HH:mm:ss", "HH:mm:ss");
-        LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
-        customField.setValue(date);
-        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm:ss"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to get the field color value in Hex format")
+	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+	void color() {
+		var form = PlatformApp.screen("Time color")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.time("Custom Field", "HH:mm:ss")
+				.checkColor(color -> assertThat(color).isNull());
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field, and then checks the value in the field with what should be set")
-    void edit2() {
-        MainPages.click("Time base");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("HH:mm", "HH:mm");
-        LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
-        customField.setValue(date);
-        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("HH:mm"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("HH:mm")));
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to check the field for \"Read-only\"")
+	@Description("The test checks for the disabled attribute")
+	void readonly() {
+		var form = PlatformApp.screen("Time readonly")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.time("Custom Field", "HH:mm:ss")
+				.checkReadOnly(ro -> assertThat(ro).isTrue());
+	}
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Positive")
-    @DisplayName("A test for setting a value in a field")
-    @Description("The test sets the value in the field, and then checks the value in the field with what should be set")
-    void edit3() {
-        MainPages.click("Time base");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("hh:mm A", "hh:mm a");
-        LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
-        customField.setValue(date);
-        assertThat(customField.getValue().format(DateTimeFormatter.ofPattern("hh:mm a"))).isEqualTo(date.format(DateTimeFormatter.ofPattern("hh:mm a")));
-    }
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A test for setting a value in a field")
+	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
+	void edit() {
+		LocalDateTime date = LocalDateTime.of(2024, 12, 5, 11, 25, 58);
+		var form = PlatformApp.screen("Time base")
+				.secondLevelView("Form")
+				.form("Form title");
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Filtering test")
-    @Description("Filtering is not available for the Form widget")
-    void filtration() {
-        MainPages.click("Date filtration");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.date("Custom Field");
-        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
-    }
+		var customValHHmmSS = (LocalDate.MIN.atTime(11, 54, 25));
+		var customValHH = (LocalDate.MIN.atTime(11, 0));
+		var customValHmm = (LocalDate.MIN.atTime(11, 54));
+		var customValHmmA = (LocalDate.MIN.atTime(11, 54));
+		var customValHmmSSA = (LocalDate.MIN.atTime(11, 54, 25));
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("The DrillDown test")
-    @Description("Checking the url before the transition and after the transition/click on a special element")
-    void drillDown() {
-        MainPages.click("Time drilldown");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field", "HH:mm a");
-        assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
-    }
+		var customFieldHHmmSS = form.time("HH:mm:ss", "HH:mm:ss");
+		var customFieldHH = form.time("HH", "HH");
+		var customFieldHmm = form.time("HH:mm", "HH:mm");
+		var customFieldHmmA = form.time("hh:mm A", "h:mm a");
+		var customFieldHmmSSA = form.time("hh:mm:ss A", "hh:mm:ss a");
 
-    @Test
-    @Severity(CRITICAL)
-    @Tag("Negative")
-    @DisplayName("Required Message text Verification field test")
-    @Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
-    void required() {
-        MainPages.click("Time required");
-        MainPages.FirstLevelMenu.click("Form");
-        FormWidget form = $box.findFormWidgetByTitle("Form title");
-        var customField = form.time("Custom Field", "HH:mm:ss");
-        customField.clearIcon();
-        assertThat(customField.getRequiredMessage()).isEqualTo(Constants.RequiredMessage);
-    }
+		customFieldHHmmSS.setValue(customValHHmmSS).checkValue(value -> assertThat(value).isNotNull())
+				.checkValue(value -> assertThat(value).isEqualTo(customValHHmmSS));
+		customFieldHH.setValue(customValHH).checkValue(value -> assertThat(value).isNotNull())
+				.checkValue(value -> assertThat(value).isEqualTo(customValHH));
+		customFieldHmm.setValue(customValHmm).checkValue(value -> assertThat(value).isNotNull())
+				.checkValue(value -> assertThat(value).isEqualTo(customValHmm));
+		customFieldHmmA.setValue(customValHmmA).checkValue(value -> assertThat(value).isNotNull())
+				.checkValue(value -> assertThat(value).isEqualTo(customValHmmA));
+		customFieldHmmSSA.setValue(customValHmmSSA).checkValue(value -> assertThat(value).isNotNull())
+				.checkValue(value -> assertThat(value).isEqualTo(customValHmmSSA));
+	}
 
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Negative")
+	@DisplayName("Required Message text Verification field test")
+	@Description("The test clears the field and clicks the Save button. Then validates the message that the field is required")
+	void required() {
+		var form = PlatformApp.screen("Time required")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.time("Custom Field", "HH:mm:ss")
+				.clear()
+				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
 }

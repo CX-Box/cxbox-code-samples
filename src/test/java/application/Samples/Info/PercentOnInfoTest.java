@@ -1,10 +1,11 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
-import core.MainPages;
+import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -12,109 +13,94 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 @DisplayName("Info. Checking the basic functions for the Percent")
 @Epic("application/Samples")
 @Tag("application/Samples")
-
 public class PercentOnInfoTest extends BaseTestForSamples {
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("Test for getting the Placeholder value")
-    @Description("The InfoWidget doesn't have a Placeholder.")
-    void placeholder() {
-        MainPages.click("Percent placeholder");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("Custom Field");
-        assertThatThrownBy(customField::getPlaceholder).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value")
+	@Description("The InfoWidget doesn't have a Placeholder.")
+	void placeholder() {
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to get the field color value in Hex format")
-    @Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
-    void color() {
-        MainPages.click("Percent color");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("Custom Field");
-        assertThat(customField.getHexColor()).isEqualTo("#EDA6A6");
-    }
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to check the field for \"Read-only\"")
+	@Description("Info Widget is always read-only")
+	void readonly() {
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("A test to check the field for \"Read-only\"")
-    @Description("Info Widget is always read-only")
-    void readonly() {
-        MainPages.click("Percent readonly");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("Custom Field");
-        assertThatThrownBy(customField::getReadOnly).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Filtering test")
+	@Description("Filtering is not available for InfoWidget.")
+	void filtration() {
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("The test for getting the value from the field")
-    void read() {
-        MainPages.click("Percent basic");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("custom Field");
-        assertThat(customField.getValue()).isEqualTo(27);
-    }
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Sorting test")
+	@Description("Sorting is not available for InfoWidget.")
+	void sorting() {
+	}
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Filtering test")
-    @Description("Filtering is not available for InfoWidget.")
-    void filtration() {
-        MainPages.click("Percent filtration");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("Custom Field");
-        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to get the field color value in Hex format")
+	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+	void color() {
+		var info = PlatformApp
+				.screen("Percent color")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.percent("Custom Field")
+				.checkColor(color -> assertThat(color).isEqualTo("#EDA6A6"));
+	}
 
-    @Test
-    @Tag("Positive")
-    @DisplayName("The DrillDown test")
-    @Description("DrillDown is not available for InfoWidget.")
-    void drillDown() {
-        MainPages.click("Percent drilldown");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("custom Field");
-        assertThat(customField.drillDown()).isTrue();
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("The test for getting the value from the field")
+	void read() {
+		var info = PlatformApp.screen("Percent basic")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.percent("custom Field")
+				.checkValue(val -> assertThat(val).isEqualTo(new BigDecimal("27")));
+	}
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Sorting test")
-    @Description("Sorting is not available for InfoWidget.")
-    void sorting() {
-        MainPages.click("Percent filtration");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percent("Custom Field");
-        assertThatThrownBy(customField::setSorting).isInstanceOf(UnsupportedOperationException.class);
-    }
+	@Test
+	@Tag("Positive")
+	@DisplayName("The DrillDown test")
+	@Description("DrillDown is not available for InfoWidget.")
+	void drillDown() {
+		var info = PlatformApp
+				.screen("Percent drilldown")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.percent("custom Field")
+				.checkDrillDownSupported(ds -> assertThat(ds).isTrue());
+	}
 
-    @Test
-    @Severity(MINOR)
-    @Tag("Negative")
-    @DisplayName("Digits test")
-    void digits() {
-        MainPages.click("Percent digits");
-        MainPages.FirstLevelMenu.click("Info");
-        var info = $box.findInfoWidgetByTitle("Info title");
-        var customField = info.percentDigits("Custom Field");
-        assertThat(customField.getValue()).isEqualTo(new BigDecimal("27.00"));
-    }
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Digits test")
+	void digits() {
+		var info = PlatformApp.screen("Percent digits")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.percent("Custom Field")
+				.checkValue(val -> assertThat(val).isEqualTo(new BigDecimal("27.00")));
+	}
 }

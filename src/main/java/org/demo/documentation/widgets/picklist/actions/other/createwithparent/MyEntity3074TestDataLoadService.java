@@ -14,6 +14,8 @@ public class MyEntity3074TestDataLoadService {
     MyEntity3074Repository repository;
 
     @Autowired
+    MyEntity3074PickRepository repositoryPick;
+    @Autowired
     InternalAuthorizationService authzService;
 
     @Transactional
@@ -21,6 +23,7 @@ public class MyEntity3074TestDataLoadService {
     public void load() {
         authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
         repository.deleteAll();
+        repositoryPick.save(new MyEntity3074Pick().setCustomField("test data"));
         repository.save(new MyEntity3074().setCustomFieldText("test data text"));
     }
 

@@ -45,6 +45,9 @@ services:
     restart: always
     depends_on:
       - cxbox-code-samples-postgres
+      - cxbox-code-samples-keycloak
+      - cxbox-code-samples-minio
+
   cxbox-code-samples-keycloak:
     image: maxird/keycloak:12.0.4
     command:
