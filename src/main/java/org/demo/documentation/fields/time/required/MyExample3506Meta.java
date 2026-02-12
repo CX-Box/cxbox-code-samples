@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3506Meta extends FieldMetaBuilder<MyExample3506DTO> {
-// --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3506DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3506DTO_.customField);
-        fields.setRequired(MyExample3506DTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-  
-   // --8<-- [start:buildIndependentMeta]
-  @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3506DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3506DTO_.customField);
-    }
-   // --8<-- [end:buildIndependentMeta]
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3506DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3506DTO_.customField);
+		fields.setRequired(MyExample3506DTO_.customField);
+	}
+	// --8<-- [end:buildRowDependentMeta]
+
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3506DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3506DTO_.customField);
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

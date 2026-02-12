@@ -1,14 +1,7 @@
 package org.demo.documentation.other.savewithparent.example5.service;
 
-import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
-
 import io.minio.MinioClient;
 import io.minio.StatObjectArgs;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -22,15 +15,22 @@ import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO_;
+import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.entity.TaskDocument;
 import org.demo.documentation.other.savewithparent.example5.entity.TaskDocument_;
-import org.demo.documentation.other.savewithparent.example5.entity.Task;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskDocumentRepository;
 import org.demo.documentation.other.savewithparent.example5.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
 @RequiredArgsConstructor
@@ -40,16 +40,16 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 	private final TaskRepository taskRepository;
 
 	private final TaskDocumentRepository documentRepository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample5555TaskDocumentMeta> meta = MyExample5555TaskDocumentMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample5555TaskDocumentMeta> meta = MyExample5555TaskDocumentMeta.class;
 
-    @Autowired
+	@Autowired
 	private MinioClient minioClient;
 
 	@Value("${minio.bucket.name}")
 	private String defaultBucketName;
 
-    @Override
+	@Override
 	protected CreateResult<TaskDocumentDTO> doCreateEntity(TaskDocument entity, BusinessComponent bc) {
 		Task task = taskRepository.getReferenceById(bc.getParentIdAsLong());
 		entity.setTask(task);
@@ -59,7 +59,7 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 
 	@Override
 	protected ActionResultDTO<TaskDocumentDTO> doUpdateEntity(TaskDocument entity, TaskDocumentDTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		setIfChanged(data, TaskDocumentDTO_.id, entity::setFileId);
 		setIfChanged(data, TaskDocumentDTO_.file, entity::setFile);
 		if (data.isFieldChanged(TaskDocumentDTO_.taskId)) {
@@ -73,18 +73,18 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
-    @Override
-    public Actions<TaskDocumentDTO> getActions() {
-        return Actions.<TaskDocumentDTO>builder()
-                .create(crt -> crt.text("Add"))
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .associate(ast -> ast
-                        .withCustomParameter(Map.of("subtype", "multiFileUpload"))
-                        .text("Add Files")
-                ).build();
-    }
+	@Override
+	public Actions<TaskDocumentDTO> getActions() {
+		return Actions.<TaskDocumentDTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.associate(ast -> ast
+						.withCustomParameter(Map.of("subtype", "multiFileUpload"))
+						.text("Add Files")
+				).build();
+	}
 
 	@Override
 	protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {

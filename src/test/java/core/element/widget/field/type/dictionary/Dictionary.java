@@ -61,19 +61,6 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	@Override
-	public String valueTag() {
-		if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
-			return "div[data-test-field-value=\"true\"]";
-		}
-		return "[data-test-field-dictionary-item=\"true\"]";
-	}
-
-	@Override
-	protected SelenideElement parentElement() {
-		return widget().element();
-	}
-
-	@Override
 	public SELF setValue(String value) {
 		return Allure.step("Setting the " + value + " in the field", step -> {
 			logTime(step);
@@ -89,6 +76,19 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 					.click();
 			return (SELF) this;
 		});
+	}
+
+	@Override
+	public String valueTag() {
+		if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
+			return "div[data-test-field-value=\"true\"]";
+		}
+		return "[data-test-field-dictionary-item=\"true\"]";
+	}
+
+	@Override
+	protected SelenideElement parentElement() {
+		return widget().element();
 	}
 
 	public List<String> getOptions() {

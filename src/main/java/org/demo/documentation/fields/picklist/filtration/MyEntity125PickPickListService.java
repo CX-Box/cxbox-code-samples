@@ -15,17 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity125PickPickListService extends VersionAwareResponseService<MyEntity125PickDTO, MyEntity125> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity125PickPickListMeta> meta = MyEntity125PickPickListMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity125PickPickListMeta> meta = MyEntity125PickPickListMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyEntity125PickDTO> doCreateEntity(MyEntity125 entity, BusinessComponent bc) {
 		return null;
 	}
 
 	@Override
 	protected ActionResultDTO<MyEntity125PickDTO> doUpdateEntity(MyEntity125 entity, MyEntity125PickDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(MyEntity125PickDTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
 		}

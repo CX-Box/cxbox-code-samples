@@ -15,20 +15,20 @@ import java.util.List;
 @NoArgsConstructor
 public class MyEntity3056 extends BaseEntity {
 
-    @JoinTable(name = "MyEntity3056_MyEntity3056MultiPick",
-            joinColumns = @JoinColumn(name = "MyEntity3056_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3056Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3056Multi> customFieldMultiList = new ArrayList<>();
-    @JoinTable(name = "MyEntity3056_MyEntity3056MultiPick0",
-            joinColumns = @JoinColumn(name = "MyEntity3056_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3056Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3056Multi> customFieldMultiConstList = new ArrayList<>();
+	@JoinTable(name = "MyEntity3056_MyEntity3056MultiPick",
+			joinColumns = @JoinColumn(name = "MyEntity3056_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3056Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3056Multi> customFieldMultiList = new ArrayList<>();
+	@JoinTable(name = "MyEntity3056_MyEntity3056MultiPick0",
+			joinColumns = @JoinColumn(name = "MyEntity3056_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3056Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3056Multi> customFieldMultiConstList = new ArrayList<>();
 }

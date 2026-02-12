@@ -12,20 +12,20 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity3405PickListPopup extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldColorSort;
-    @Column
-    private String customFieldRequired;
-    @Column
-    private String customFieldColorValidation;
-    @Column
-    private String customFieldDrilldown;
-    @Column
-    private Long customFieldColorConst;
-    @Column
-    private Long customFieldColor;
-    @Column
-    private String customFieldPlaceholder;
+	@Column
+	private String customField;
+	@Column
+	private String customFieldColorSort;
+	@Column
+	private String customFieldRequired;
+	@Column
+	private String customFieldColorValidation;
+	@Column
+	private String customFieldDrilldown;
+	@Column
+	private Long customFieldColorConst;
+	@Column
+	private Long customFieldColor;
+	@Column
+	private String customFieldPlaceholder;
 }

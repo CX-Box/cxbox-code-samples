@@ -11,18 +11,18 @@ import java.time.LocalDateTime;
 @Service
 public class MyEntity4106TestDataLoadService {
 
-    @Autowired
-    MyExampleBc4106Repository repository;
+	@Autowired
+	MyExampleBc4106Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyExampleBc4106().setCustomField(LocalDateTime.of(2024,12,5,5,58, 54)));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyExampleBc4106().setCustomField(LocalDateTime.of(2024, 12, 5, 5, 58, 54)));
+	}
 
 }

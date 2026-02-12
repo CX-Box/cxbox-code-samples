@@ -12,28 +12,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity5019TestDataLoadService {
 
-    @Autowired
-    MyEntity5019Repository repository;
+	@Autowired
+	MyEntity5019Repository repository;
 
-    @Autowired
-    MyEntity5019PickRepository repositoryPick;
+	@Autowired
+	MyEntity5019PickRepository repositoryPick;
 
-    @Autowired
-    MyEntity5019MultiRepository repositoryMulti;
+	@Autowired
+	MyEntity5019MultiRepository repositoryMulti;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repositoryPick.deleteAll();
-        repositoryMulti.deleteAll();
-        repository.save(new MyEntity5019().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
-        repositoryPick.save(new MyEntity5019Pick().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum2.HIGH));
-        repositoryMulti.save(new MyEntity5019Multi().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum1.HIGH));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repositoryPick.deleteAll();
+		repositoryMulti.deleteAll();
+		repository.save(new MyEntity5019().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
+		repositoryPick.save(new MyEntity5019Pick().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum2.HIGH));
+		repositoryMulti.save(new MyEntity5019Multi().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum1.HIGH));
+	}
 
 }

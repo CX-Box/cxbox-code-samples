@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 
-
 @Setter
 @Getter
 @SuperBuilder
@@ -17,9 +16,9 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class MyEntity380External extends BaseEntity {
 
-    private String type;
-    private String key;
-    private String value;
-    private Integer displayOrder;
+	private String type;
+	private String key;
+	private String value;
+	private Integer displayOrder;
 
 }

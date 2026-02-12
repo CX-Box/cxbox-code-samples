@@ -1,12 +1,11 @@
 package org.demo.documentation.widgets.form.showcondition.byparententity.child;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.form.showcondition.byparententity.parent.MyEntity3007;
-
-import jakarta.persistence.*;
 
 @Entity
 @Getter

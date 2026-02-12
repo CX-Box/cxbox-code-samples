@@ -17,12 +17,12 @@ public class DateTimeWithSecondsPlaceholderService extends
 		VersionAwareResponseService<DateTimeWithSecondsPlaceholderDTO, DateTimeWithSecondsPlaceholderEntity> {
 
 	private final DateTimeWithSecondsPlaceholderEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsPlaceholderMeta> meta = DateTimeWithSecondsPlaceholderMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsPlaceholderMeta> meta = DateTimeWithSecondsPlaceholderMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsPlaceholderDTO> doCreateEntity(DateTimeWithSecondsPlaceholderEntity entity,
-			BusinessComponent bc) {
+																			 BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -41,7 +41,7 @@ public class DateTimeWithSecondsPlaceholderService extends
 	@Override
 	public Actions<DateTimeWithSecondsPlaceholderDTO> getActions() {
 		return Actions.<DateTimeWithSecondsPlaceholderDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

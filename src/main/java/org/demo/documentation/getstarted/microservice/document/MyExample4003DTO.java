@@ -11,7 +11,7 @@ import org.demo.documentation.getstarted.microservice.MyEntity4001OutServiceDTO;
 @NoArgsConstructor
 public class MyExample4003DTO extends DataResponseDTO {
 
-    public MyExample4003DTO(MyEntity4001OutServiceDTO entity) {
-        this.id = entity.getId();
-    }
+	public MyExample4003DTO(MyEntity4001OutServiceDTO entity) {
+		this.id = entity.getId();
+	}
 }

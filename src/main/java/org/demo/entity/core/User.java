@@ -16,19 +16,16 @@
 
 package org.demo.entity.core;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.hibernate.envers.NotAudited;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "users")

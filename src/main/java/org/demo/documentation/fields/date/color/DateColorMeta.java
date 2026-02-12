@@ -17,7 +17,7 @@ public class DateColorMeta extends FieldMetaBuilder<DateColorDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateColorDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateColorDTO_.customField
 		);

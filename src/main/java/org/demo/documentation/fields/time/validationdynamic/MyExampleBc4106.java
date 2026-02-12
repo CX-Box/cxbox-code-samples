@@ -21,9 +21,9 @@ import java.time.LocalDateTime;
 public class MyExampleBc4106 extends BaseEntity {
 
 
-    @Column
-    private LocalDateTime customField;
+	@Column
+	private LocalDateTime customField;
 
-    @Column
-    private LocalDateTime customFieldAdditional;
+	@Column
+	private LocalDateTime customFieldAdditional;
 }

@@ -13,6 +13,7 @@ public class MyEntity401PickPickDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
 	private String customField;
+
 	public MyEntity401PickPickDTO(MyEntity401Pick entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();

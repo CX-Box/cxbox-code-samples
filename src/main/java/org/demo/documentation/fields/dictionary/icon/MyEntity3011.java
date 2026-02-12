@@ -19,33 +19,33 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity3011 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 
-    @JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
-    @ManyToOne
-    private MyEntity3012 customFieldPickListEntity;
-    @JoinColumn(name = "CUSTOM_FIELD_DICTIONARY_INLINE_PICK_LIST_ID")
-    @ManyToOne
-    private MyEntity3013 customFieldDictionaryInlinePickListEntity;
-    @JoinTable(name = "MyEntity3011_MyEntity3011MultiPick",
-            joinColumns = @JoinColumn(name = "MyEntity3011_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3011Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3011Multi> customFieldMultivalueList = new ArrayList<>();
-    @JoinTable(name = "MyEntity3011_MyEntity3012MultiPick",
-            joinColumns = @JoinColumn(name = "MyEntity3011_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3012Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3012Multi> customFieldMultivalueModeIconList = new ArrayList<>();
+	@JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
+	@ManyToOne
+	private MyEntity3012 customFieldPickListEntity;
+	@JoinColumn(name = "CUSTOM_FIELD_DICTIONARY_INLINE_PICK_LIST_ID")
+	@ManyToOne
+	private MyEntity3013 customFieldDictionaryInlinePickListEntity;
+	@JoinTable(name = "MyEntity3011_MyEntity3011MultiPick",
+			joinColumns = @JoinColumn(name = "MyEntity3011_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3011Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3011Multi> customFieldMultivalueList = new ArrayList<>();
+	@JoinTable(name = "MyEntity3011_MyEntity3012MultiPick",
+			joinColumns = @JoinColumn(name = "MyEntity3011_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3012Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3012Multi> customFieldMultivalueModeIconList = new ArrayList<>();
 }

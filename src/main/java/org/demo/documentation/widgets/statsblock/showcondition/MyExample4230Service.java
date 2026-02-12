@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
 public class MyExample4230Service extends AnySourceVersionAwareResponseService<MyExample4230DTO, MyExample4230DTO> {
 
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4230Meta> meta = MyExample4230Meta.class;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4230Dao> dao = MyExample4230Dao.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4230Meta> meta = MyExample4230Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4230Dao> dao = MyExample4230Dao.class;
 
-    @Override
-    protected CreateResult<MyExample4230DTO> doCreateEntity(MyExample4230DTO entity, BusinessComponent bc) {
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample4230DTO> doCreateEntity(MyExample4230DTO entity, BusinessComponent bc) {
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
 
-    @Override
-    protected ActionResultDTO<MyExample4230DTO> doUpdateEntity(MyExample4230DTO entity, MyExample4230DTO data, BusinessComponent bc) {
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample4230DTO> doUpdateEntity(MyExample4230DTO entity, MyExample4230DTO data, BusinessComponent bc) {
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
 
 }

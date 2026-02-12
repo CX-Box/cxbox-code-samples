@@ -18,7 +18,7 @@ public class MyExample64Meta extends FieldMetaBuilder<MyExample64DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample64DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample64DTO_.customField);
 		fields.setPlaceholder(MyExample64DTO_.customField, "100000.00");
 	}

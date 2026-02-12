@@ -1,7 +1,5 @@
 package org.demo.documentation.fields.date.validationdynamic;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -13,6 +11,8 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -20,10 +20,10 @@ import org.springframework.stereotype.Service;
 public class MyExample320Service extends VersionAwareResponseService<MyExample320DTO, MyEntity320> {
 
 	private final MyEntity320Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample320Meta> meta = MyExample320Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample320Meta> meta = MyExample320Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample320DTO> doCreateEntity(MyEntity320 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -32,7 +32,7 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample320DTO> doUpdateEntity(MyEntity320 entity, MyExample320DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample320DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
@@ -69,7 +69,7 @@ public class MyExample320Service extends VersionAwareResponseService<MyExample32
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

@@ -18,7 +18,7 @@ public class MyEntity297PickMeta extends FieldMetaBuilder<MyEntity297PickDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity297PickDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(org.demo.documentation.fields.picklist.validationannotation.MyEntity297PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picklist.validationannotation.MyEntity297PickDTO_.customField);
 	}
@@ -27,7 +27,7 @@ public class MyEntity297PickMeta extends FieldMetaBuilder<MyEntity297PickDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity297PickDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyEntity297PickDTO_.customField);
 		fields.enableSort(MyEntity297PickDTO_.customField);
 		fields.enableSort(MyEntity297PickDTO_.id);

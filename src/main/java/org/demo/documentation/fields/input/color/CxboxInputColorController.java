@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxInputColorController implements EnumBcIdentifier {
 
-	
 
 	InputColor(InputColorService.class);
 	// --8<-- [end:bc]
-	
 
 
 	public static final EnumBcIdentifier.Holder<CxboxInputColorController> Holder = new Holder<>(

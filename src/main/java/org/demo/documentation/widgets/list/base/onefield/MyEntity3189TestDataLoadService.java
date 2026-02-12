@@ -9,28 +9,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3189TestDataLoadService {
 
-    @Autowired
-    MyEntity3189Repository repository;
+	@Autowired
+	MyEntity3189Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3189().setCustomField("test data"));
-        repository.save(new MyEntity3189().setCustomField("test data2"));
-        repository.save(new MyEntity3189().setCustomField("test data3"));
-        repository.save(new MyEntity3189().setCustomField("test data4"));
-        repository.save(new MyEntity3189().setCustomField("test data5"));
-        repository.save(new MyEntity3189().setCustomField("test data6"));
-        repository.save(new MyEntity3189().setCustomField("test data7"));
-        repository.save(new MyEntity3189().setCustomField("test data8"));
-        repository.save(new MyEntity3189().setCustomField("test data9"));
-        repository.save(new MyEntity3189().setCustomField("test data10"));
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3189().setCustomField("test data"));
+		repository.save(new MyEntity3189().setCustomField("test data2"));
+		repository.save(new MyEntity3189().setCustomField("test data3"));
+		repository.save(new MyEntity3189().setCustomField("test data4"));
+		repository.save(new MyEntity3189().setCustomField("test data5"));
+		repository.save(new MyEntity3189().setCustomField("test data6"));
+		repository.save(new MyEntity3189().setCustomField("test data7"));
+		repository.save(new MyEntity3189().setCustomField("test data8"));
+		repository.save(new MyEntity3189().setCustomField("test data9"));
+		repository.save(new MyEntity3189().setCustomField("test data10"));
 
-    }
+	}
 
 }

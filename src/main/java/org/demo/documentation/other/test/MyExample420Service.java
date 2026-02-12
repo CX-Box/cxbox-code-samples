@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 public class MyExample420Service extends VersionAwareResponseService<MyExample420DTO, MyEntity420> {
 
 	private final MyEntity420Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample420Meta> meta = MyExample420Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample420Meta> meta = MyExample420Meta.class;
 
 
-    @Override
+	@Override
 	protected CreateResult<MyExample420DTO> doCreateEntity(MyEntity420 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -32,7 +32,7 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample420DTO> doUpdateEntity(MyEntity420 entity, MyExample420DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample420DTO_.customFieldForceActive2)) {
 			entity.setCustomFieldForceActive2(data.getCustomFieldForceActive2());
 		}
@@ -63,14 +63,14 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 	@Override
 	public Actions<MyExample420DTO> getActions() {
 		return Actions.<MyExample420DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .action(act -> act
-                        .action("check", "check")
-                        .invoker((bc, dto) -> {
-                            validateFields(bc, dto);
-                            return new ActionResultDTO<>();
-                        })
-                )
+				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.action("check", "check")
+						.invoker((bc, dto) -> {
+							validateFields(bc, dto);
+							return new ActionResultDTO<>();
+						})
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -112,7 +112,7 @@ public class MyExample420Service extends VersionAwareResponseService<MyExample42
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

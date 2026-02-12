@@ -6,7 +6,6 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
-
 import org.demo.documentation.fields.dictionary.validationannotationcustom.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +18,16 @@ public class MyExample169Meta extends FieldMetaBuilder<MyExample169DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample169DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample169DTO_.customField);
-		fields.setPlaceholder(MyExample169DTO_.customField,"any of 'High,Middle'");
+		fields.setPlaceholder(MyExample169DTO_.customField, "any of 'High,Middle'");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample169DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample169DTO_.customField);
 		}

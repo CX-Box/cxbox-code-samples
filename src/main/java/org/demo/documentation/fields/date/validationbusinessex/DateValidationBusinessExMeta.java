@@ -6,7 +6,6 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.document.DocumentConfig;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,8 +17,8 @@ public class DateValidationBusinessExMeta extends FieldMetaBuilder<DateValidatio
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateValidationBusinessExDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateValidationBusinessExDTO_.customField
 		);
@@ -30,7 +29,7 @@ public class DateValidationBusinessExMeta extends FieldMetaBuilder<DateValidatio
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateValidationBusinessExDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateValidationBusinessExDTO_.customField);
 		}

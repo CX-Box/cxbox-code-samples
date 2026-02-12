@@ -12,8 +12,8 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity4204 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private Integer customFieldNum = 0;
+	@Column
+	private String customField;
+	@Column
+	private Integer customFieldNum = 0;
 }

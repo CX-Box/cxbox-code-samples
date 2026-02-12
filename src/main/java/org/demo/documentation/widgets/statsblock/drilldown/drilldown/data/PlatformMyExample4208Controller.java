@@ -10,31 +10,30 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum PlatformMyExample4208Controller implements EnumBcIdentifier {
 
-    
-    myExampleBc4208(MyExample4208Service.class);
 
-    
+	myExampleBc4208(MyExample4208Service.class);
 
-    public static final EnumBcIdentifier.Holder<PlatformMyExample4208Controller> Holder = new Holder<>(
-            PlatformMyExample4208Controller.class);
 
-    private final BcDescription bcDescription;
+	public static final EnumBcIdentifier.Holder<PlatformMyExample4208Controller> Holder = new Holder<>(
+			PlatformMyExample4208Controller.class);
 
-    PlatformMyExample4208Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	private final BcDescription bcDescription;
 
-    PlatformMyExample4208Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	PlatformMyExample4208Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4208Controller> {
+	PlatformMyExample4208Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-        public BcSupplier() {
-            super(PlatformMyExample4208Controller.Holder);
-        }
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4208Controller> {
 
-    }
+		public BcSupplier() {
+			super(PlatformMyExample4208Controller.Holder);
+		}
+
+	}
 
 }

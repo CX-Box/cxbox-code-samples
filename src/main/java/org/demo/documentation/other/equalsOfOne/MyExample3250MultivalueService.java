@@ -2,13 +2,11 @@ package org.demo.documentation.other.equalsOfOne;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +22,7 @@ public class MyExample3250MultivalueService extends VersionAwareResponseService<
 
 	@Override
 	protected ActionResultDTO<MyExample3250MultivalueDTO> doUpdateEntity(final MyExample3250Multivalue entity, final MyExample3250MultivalueDTO data,
-																																			 final BusinessComponent bc) {
+																		 final BusinessComponent bc) {
 		return null;
 	}
 

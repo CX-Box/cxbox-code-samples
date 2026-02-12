@@ -1,9 +1,9 @@
 package org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.picklist;
 
-import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.MyEntity3092Pick;
 
 @Getter
@@ -11,11 +11,11 @@ import org.demo.documentation.widgets.picklist.actions.edit.picklistpopup.MyEnti
 @NoArgsConstructor
 public class MyEntity3092PickPickDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyEntity3092PickPickDTO(MyEntity3092Pick entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyEntity3092PickPickDTO(MyEntity3092Pick entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

@@ -2,7 +2,6 @@ package application.config;
 
 
 import application.config.props.Env;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -33,14 +32,11 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.selenide.videorecorder.core.RecordingMode;
 import org.selenide.videorecorder.core.VideoSaveMode;
 
-import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static core.element.widget.AbstractWidget.logTime;
 
 /**

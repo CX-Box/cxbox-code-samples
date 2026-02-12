@@ -10,16 +10,16 @@ import org.cxbox.core.util.filter.SearchParameter;
 @Setter
 @NoArgsConstructor
 public class MyExample5026DTO extends DataResponseDTO {
-    public static final String TEXT = "Сondition can include boolean expression depending on current entity fields. Field updates will trigger condition recalculation only on save or if field is force active";
-    public static final String TEXT2 = "Show condition - if CustomField  > 5 widget show.";
-    @SearchParameter(name = "customField")
-    private Long customField;
+	public static final String TEXT = "Сondition can include boolean expression depending on current entity fields. Field updates will trigger condition recalculation only on save or if field is force active";
+	public static final String TEXT2 = "Show condition - if CustomField  > 5 widget show.";
+	@SearchParameter(name = "customField")
+	private Long customField;
 
-    private Boolean customFieldShowCondition;
+	private Boolean customFieldShowCondition;
 
-    public MyExample5026DTO(MyEntity5026 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldShowCondition = entity.getCustomField() > 5;
-    }
+	public MyExample5026DTO(MyEntity5026 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldShowCondition = entity.getCustomField() > 5;
+	}
 }

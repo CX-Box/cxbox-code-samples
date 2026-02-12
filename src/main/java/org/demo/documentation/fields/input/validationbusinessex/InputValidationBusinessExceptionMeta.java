@@ -17,8 +17,8 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputValidationBusinessExceptionDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputValidationBusinessExceptionDTO_.customField
 		);
@@ -29,7 +29,7 @@ public class InputValidationBusinessExceptionMeta extends FieldMetaBuilder<Input
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputValidationBusinessExceptionDTO> fields,
-			InnerBcDescription bcDescription, Long parentId) {
+									 InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputValidationBusinessExceptionDTO_.customField);
 		}

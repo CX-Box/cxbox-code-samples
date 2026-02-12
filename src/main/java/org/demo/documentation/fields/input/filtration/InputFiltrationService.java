@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputFiltrationService extends VersionAwareResponseService<InputFiltrationDTO, InputFiltration> {
 
 	private final InputFiltrationRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputFiltrationMeta> meta = InputFiltrationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputFiltrationMeta> meta = InputFiltrationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputFiltrationDTO> doCreateEntity(InputFiltration entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputFiltrationDTO> doUpdateEntity(InputFiltration entity, InputFiltrationDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(InputFiltrationDTO_.brand)) {
 			entity.setBrand(data.getBrand());
 		}
@@ -43,7 +43,7 @@ public class InputFiltrationService extends VersionAwareResponseService<InputFil
 	@Override
 	public Actions<InputFiltrationDTO> getActions() {
 		return Actions.<InputFiltrationDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

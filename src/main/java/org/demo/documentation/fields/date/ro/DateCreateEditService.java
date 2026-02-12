@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DateCreateEditService extends VersionAwareResponseService<DateCreateEditDTO, DateCreateEditEntity> {
 
 	private final DateCreateEditEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateCreateEditMeta> meta = DateCreateEditMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateCreateEditMeta> meta = DateCreateEditMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateCreateEditDTO> doCreateEntity(DateCreateEditEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DateCreateEditService extends VersionAwareResponseService<DateCreat
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateCreateEditDTO> doUpdateEntity(DateCreateEditEntity entity, DateCreateEditDTO data,
-			BusinessComponent bc) {
+																BusinessComponent bc) {
 		if (data.isFieldChanged(DateCreateEditDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateCreateEditService extends VersionAwareResponseService<DateCreat
 	@Override
 	public Actions<DateCreateEditDTO> getActions() {
 		return Actions.<DateCreateEditDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

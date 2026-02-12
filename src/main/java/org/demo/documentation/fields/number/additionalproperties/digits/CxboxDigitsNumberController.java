@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxDigitsNumberController implements EnumBcIdentifier {
 
 
-
 	digitsNumber(DigitsNumberService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDigitsNumberController> Holder = new Holder<>(

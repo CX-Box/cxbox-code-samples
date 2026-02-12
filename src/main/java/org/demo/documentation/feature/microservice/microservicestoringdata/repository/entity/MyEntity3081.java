@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDateTime;
 
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 public class MyEntity3081 extends BaseEntity {
 
-    private String customFieldSuggestion;
-    private String customFieldNew;
-    private LocalDateTime customFieldSuggestionDate;
+	private String customFieldSuggestion;
+	private String customFieldNew;
+	private LocalDateTime customFieldSuggestionDate;
 }

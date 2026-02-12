@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3010MultiHoverPickMeta extends FieldMetaBuilder<org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO> fields, InnerBcDescription bcDescription,
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-        fields.setEnabled(org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO_.id);
-        fields.setEnabled(org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO_.customField);
-    }
+		fields.setEnabled(org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO_.id);
+		fields.setEnabled(org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO> fields, InnerBcDescription bcDescription,
+	@Override
+	public void buildIndependentMeta(FieldsMeta<org.demo.documentation.widgets.form.base.allfields.forfields.MyEntity3010MultiHoverPickDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
 
-    }
+	}
 
 }

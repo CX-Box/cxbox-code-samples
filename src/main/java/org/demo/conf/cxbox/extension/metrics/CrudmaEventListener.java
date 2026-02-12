@@ -26,6 +26,14 @@ public class CrudmaEventListener implements ApplicationListener<CrudmaEvent> {
 		registry.counter("platform-requests");
 	}
 
+	public static String getUserLogin() {
+		return Stream.of(SecurityContextHolder.getContext())
+				.map(SecurityContext::getAuthentication)
+				.map(Authentication::getName)
+				.findFirst()
+				.orElse(null);
+	}
+
 	@Override
 	public final void onApplicationEvent(final CrudmaEvent event) {
 		final CrudmaAction crudmaAction = event.getCrudmaAction();
@@ -39,14 +47,6 @@ public class CrudmaEventListener implements ApplicationListener<CrudmaEvent> {
 				"error", event.getException() == null ? "false" : "true"
 		);
 		counter.increment();
-	}
-
-	public static String getUserLogin() {
-		return Stream.of(SecurityContextHolder.getContext())
-				.map(SecurityContext::getAuthentication)
-				.map(Authentication::getName)
-				.findFirst()
-				.orElse(null);
 	}
 
 }

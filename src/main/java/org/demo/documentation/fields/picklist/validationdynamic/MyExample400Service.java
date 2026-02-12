@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 public class MyExample400Service extends VersionAwareResponseService<MyExample400DTO, MyEntity400> {
 
 	private final MyEntity400Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample400Meta> meta = MyExample400Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample400Meta> meta = MyExample400Meta.class;
 
-    @Autowired
+	@Autowired
 	private EntityManager entityManager;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample400DTO> doCreateEntity(MyEntity400 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -34,7 +34,7 @@ public class MyExample400Service extends VersionAwareResponseService<MyExample40
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample400DTO> doUpdateEntity(MyEntity400 entity, MyExample400DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample400DTO_.customFieldId)) {
 			entity.setCustomFieldEntity(data.getCustomFieldId() != null
@@ -50,7 +50,7 @@ public class MyExample400Service extends VersionAwareResponseService<MyExample40
 	@Override
 	public Actions<MyExample400DTO> getActions() {
 		return Actions.<MyExample400DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -68,7 +68,7 @@ public class MyExample400Service extends VersionAwareResponseService<MyExample40
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

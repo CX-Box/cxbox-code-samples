@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 public class MyExample325Service extends VersionAwareResponseService<MyExample325DTO, MyEntity325> {
 
 	private final MyEntity325Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample325Meta> meta = MyExample325Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample325Meta> meta = MyExample325Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample325DTO> doCreateEntity(MyEntity325 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -30,7 +30,7 @@ public class MyExample325Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample325DTO> doUpdateEntity(MyEntity325 entity, MyExample325DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -40,7 +40,7 @@ public class MyExample325Service extends VersionAwareResponseService<MyExample32
 	@Override
 	public Actions<MyExample325DTO> getActions() {
 		return Actions.<MyExample325DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -58,7 +58,7 @@ public class MyExample325Service extends VersionAwareResponseService<MyExample32
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

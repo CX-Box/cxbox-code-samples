@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3176Meta extends FieldMetaBuilder<MyExample3176DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3176DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3176DTO_.customFieldDictionary);
-        fields.setEnabled(MyExample3176DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3176DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3176DTO_.customFieldDictionary);
+		fields.setEnabled(MyExample3176DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3176DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.setEnumValues(MyExample3176DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.setEnumFilterValues(fields, MyExample3176DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-        fields.enableFilter(MyExample3176DTO_.customFieldDictionary);
-        fields.enableSort(MyExample3176DTO_.customFieldDictionary);
-        fields.enableSort(MyExample3176DTO_.customField);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3176DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.setEnumValues(MyExample3176DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.setEnumFilterValues(fields, MyExample3176DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
+		fields.enableFilter(MyExample3176DTO_.customFieldDictionary);
+		fields.enableSort(MyExample3176DTO_.customFieldDictionary);
+		fields.enableSort(MyExample3176DTO_.customField);
+	}
 
 }

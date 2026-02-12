@@ -16,38 +16,38 @@ import org.springframework.stereotype.Service;
 public class MyExample3136Service extends AnySourceVersionAwareResponseService<MyExample3136DTO, MyEntity3136OutServiceDTO> {
 
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3136Meta> meta = MyExample3136Meta.class;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity3136Dao> dao = MyEntity3136Dao.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3136Meta> meta = MyExample3136Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity3136Dao> dao = MyEntity3136Dao.class;
 
 
-    @Override
-    protected CreateResult<MyExample3136DTO> doCreateEntity(MyEntity3136OutServiceDTO entity, BusinessComponent bc) {
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3136DTO> doCreateEntity(MyEntity3136OutServiceDTO entity, BusinessComponent bc) {
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3136DTO> doUpdateEntity(MyEntity3136OutServiceDTO entity, MyExample3136DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3136DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
+	@Override
+	protected ActionResultDTO<MyExample3136DTO> doUpdateEntity(MyEntity3136OutServiceDTO entity, MyExample3136DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3136DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
 
-        if (data.isFieldChanged(MyExample3136DTO_.customFieldDateTime)) {
-            entity.setCustomFieldDateTime(data.getCustomFieldDateTime());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		if (data.isFieldChanged(MyExample3136DTO_.customFieldDateTime)) {
+			entity.setCustomFieldDateTime(data.getCustomFieldDateTime());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3136DTO> getActions() {
-        return Actions.<MyExample3136DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .create(crt -> crt)
-                .delete(dlt -> dlt)
-                .build();
-    }
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3136DTO> getActions() {
+		return Actions.<MyExample3136DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt)
+				.delete(dlt -> dlt)
+				.build();
+	}
 
-    // --8<-- [end:getActions]
+	// --8<-- [end:getActions]
 }

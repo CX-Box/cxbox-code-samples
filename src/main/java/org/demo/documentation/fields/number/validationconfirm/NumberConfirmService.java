@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class NumberConfirmService extends VersionAwareResponseService<NumberConfirmDTO, NumberConfirmEntity> {
 
 	private final NumberConfirmEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberConfirmMeta> meta = NumberConfirmMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberConfirmMeta> meta = NumberConfirmMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberConfirmDTO> doCreateEntity(NumberConfirmEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -29,7 +29,7 @@ public class NumberConfirmService extends VersionAwareResponseService<NumberConf
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberConfirmDTO> doUpdateEntity(NumberConfirmEntity entity, NumberConfirmDTO data,
-			BusinessComponent bc) {
+															   BusinessComponent bc) {
 		setIfChanged(data, NumberConfirmDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}

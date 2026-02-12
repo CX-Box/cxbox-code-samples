@@ -11,16 +11,16 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum CountryEnum {
-    BELARUS("Belarus"),
-    RUSSIA("Russia");
+	BELARUS("Belarus"),
+	RUSSIA("Russia");
 
-    @JsonValue
-    private final String value;
+	@JsonValue
+	private final String value;
 
-    public static CountryEnum getByValue(@NonNull String value) {
-        return Arrays.stream(CountryEnum.values())
-                .filter(enm -> Objects.equals(enm.getValue(), value))
-                .findFirst()
-                .orElse(null);
-    }
+	public static CountryEnum getByValue(@NonNull String value) {
+		return Arrays.stream(CountryEnum.values())
+				.filter(enm -> Objects.equals(enm.getValue(), value))
+				.findFirst()
+				.orElse(null);
+	}
 }

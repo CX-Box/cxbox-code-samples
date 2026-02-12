@@ -17,7 +17,7 @@ public class NumberConfirmMeta extends FieldMetaBuilder<NumberConfirmDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberConfirmDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberConfirmDTO_.customField
 		);
@@ -30,7 +30,7 @@ public class NumberConfirmMeta extends FieldMetaBuilder<NumberConfirmDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberConfirmDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberConfirmDTO_.customField);
 		}

@@ -15,17 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity179MultivalueService extends VersionAwareResponseService<MyEntity179MultivalueDTO, MyEntity179> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity179MultivalueMeta> meta = MyEntity179MultivalueMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity179MultivalueMeta> meta = MyEntity179MultivalueMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyEntity179MultivalueDTO> doCreateEntity(MyEntity179 entity, BusinessComponent bc) {
 		return null;
 	}
 
 	@Override
 	protected ActionResultDTO<MyEntity179MultivalueDTO> doUpdateEntity(MyEntity179 entity, MyEntity179MultivalueDTO data,
-			BusinessComponent bc) {
+																	   BusinessComponent bc) {
 		return null;
 	}
 

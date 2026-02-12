@@ -26,8 +26,8 @@ public class FilterParameterArgumentResolverImpl implements HandlerMethodArgumen
 
 	@Override
 	public Object resolveArgument(@NonNull final MethodParameter methodParameter,
-			final ModelAndViewContainer modelAndViewContainer,
-			final NativeWebRequest nativeWebRequest, final WebDataBinderFactory webDataBinderFactory) {
+								  final ModelAndViewContainer modelAndViewContainer,
+								  final NativeWebRequest nativeWebRequest, final WebDataBinderFactory webDataBinderFactory) {
 		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		nativeWebRequest.getParameterMap().forEach(
 				(parameter, values) -> parameters.addAll(parameter, Arrays.asList(values))

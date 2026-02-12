@@ -1,7 +1,7 @@
 package org.demo.repository.metabuilder.buildrowdependentmeta.sethidden.basic;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -17,10 +17,10 @@ import org.demo.repository.metabuilder.buildrowdependentmeta.sethidden.basic.enu
 @NoArgsConstructor
 public class MyEntity5010 extends BaseEntity {
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldEnum customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldEnum customField;
 
-    @Column
-    private String customFieldHidden;
+	@Column
+	private String customFieldHidden;
 }

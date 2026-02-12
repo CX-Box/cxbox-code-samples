@@ -9,20 +9,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3079Meta extends FieldMetaBuilder<MyExample3079DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3079DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3079DTO_.customFieldInlinePickListId);
-        fields.setEnabled(MyExample3079DTO_.customFieldInlinePickList);
-        fields.setEnabled(MyExample3079DTO_.customFieldPickListId);
-        fields.setEnabled(MyExample3079DTO_.customFieldPickList);
-        fields.setEnabled(MyExample3079DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3079DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3079DTO_.customFieldInlinePickListId);
+		fields.setEnabled(MyExample3079DTO_.customFieldInlinePickList);
+		fields.setEnabled(MyExample3079DTO_.customFieldPickListId);
+		fields.setEnabled(MyExample3079DTO_.customFieldPickList);
+		fields.setEnabled(MyExample3079DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3079DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3079DTO_.customFieldInlinePickList);
-        fields.enableFilter(MyExample3079DTO_.customFieldPickList);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3079DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3079DTO_.customFieldInlinePickList);
+		fields.enableFilter(MyExample3079DTO_.customFieldPickList);
+	}
 
 }

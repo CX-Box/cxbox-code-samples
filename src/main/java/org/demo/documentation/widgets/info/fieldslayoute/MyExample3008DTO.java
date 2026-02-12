@@ -7,7 +7,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 
 
-
 @Getter
 @Setter
 @NoArgsConstructor

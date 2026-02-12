@@ -54,6 +54,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Value("${spring.websocket.urlPath}")
 	private String urlPath;
 
+	@NotNull
+	public static String getUserNotificationsDestination(String prefix, String urlPath, IUser<Long> currentUser) {
+		return prefix + "/" + currentUser.getId() + urlPath;
+	}
+
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		if ("activemq".equalsIgnoreCase(brokerType)) {
@@ -96,10 +101,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 				return message;
 			}
 		});
-	}
-
-	@NotNull
-	public static String getUserNotificationsDestination(String prefix, String urlPath, IUser<Long> currentUser) {
-		return prefix + "/" + currentUser.getId() + urlPath;
 	}
 }

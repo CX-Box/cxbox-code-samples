@@ -32,40 +32,41 @@ import java.util.Comparator;
 @Configuration
 public class DictionaryConfig {
 
-    @Bean
-    public DictionaryProvider dictionaryProvider() {
-        return new DictionaryProvider() {
+	@Bean
+	public DictionaryProvider dictionaryProvider() {
+		return new DictionaryProvider() {
 
-            @Override
-            public <T extends Dictionary> T lookupName(@NonNull Class<T> type, @NonNull DictionaryValue value) {
-                var dictTmp = Dictionary.of(type, "");
-                var lov = DictionaryCache.dictionary().lookupName(value.getValue(), dictTmp.getDictionaryType());
-                return Dictionary.of(type, lov.getKey());
-            }
+			@Override
+			public <T extends Dictionary> T lookupName(@NonNull Class<T> type, @NonNull DictionaryValue value) {
+				var dictTmp = Dictionary.of(type, "");
+				var lov = DictionaryCache.dictionary().lookupName(value.getValue(), dictTmp.getDictionaryType());
+				return Dictionary.of(type, lov.getKey());
+			}
 
-            @Override
-            public <T extends Dictionary> SimpleDictionary lookupValue(@NonNull T dictionary) {
-                return DictionaryCache.dictionary().get(dictionary.getDictionaryType(), dictionary.key());
-            }
+			@Override
+			public <T extends Dictionary> SimpleDictionary lookupValue(@NonNull T dictionary) {
+				return DictionaryCache.dictionary().get(dictionary.getDictionaryType(), dictionary.key());
+			}
+
 			// --8<-- [start:getAll]
-            @Override
-            public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
-                if ( dictionaryType == CustomDictionarySortingExample.class
-                        || dictionaryType == CustomDictionaryFiltrationSecond.class) {
-                    return DictionaryCache.dictionary()
+			@Override
+			public <T extends Dictionary> Collection<T> getAll(@NonNull Class<T> dictionaryType) {
+				if (dictionaryType == CustomDictionarySortingExample.class
+						|| dictionaryType == CustomDictionaryFiltrationSecond.class) {
+					return DictionaryCache.dictionary()
 							.getAll(Dictionary.of(dictionaryType, "")
-							.getDictionaryType()).
+									.getDictionaryType()).
 							stream()
 							.sorted(Comparator.comparing(SimpleDictionary::getKey))
 							.map(e -> Dictionary.of(dictionaryType, e.getKey())).toList();
-                }
-                return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
-                        .stream()
-                        .map(e -> Dictionary.of(dictionaryType, e.getKey()))
-                        .toList();
-            }
+				}
+				return DictionaryCache.dictionary().getAll(Dictionary.of(dictionaryType, "").getDictionaryType())
+						.stream()
+						.map(e -> Dictionary.of(dictionaryType, e.getKey()))
+						.toList();
+			}
 			// --8<-- [end:getAll]
-        };
-    }
+		};
+	}
 
 }

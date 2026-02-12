@@ -1,12 +1,13 @@
 package org.demo.documentation.fields.multivalue.color;
 
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MyEntity174TestDataLoadService {

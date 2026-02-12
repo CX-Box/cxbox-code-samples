@@ -19,7 +19,7 @@ public class FullTextSearchExt {
 	 *
 	 * @param bc The BusinessComponent from which to retrieve the filter parameter.
 	 * @return An Optional<Specification<Client>> object containing the new Specification. If the "_fullTextSearch"
-	 *         parameter is not found, original Specification is returned.
+	 * parameter is not found, original Specification is returned.
 	 * <p>
 	 * Usage:
 	 * <pre>

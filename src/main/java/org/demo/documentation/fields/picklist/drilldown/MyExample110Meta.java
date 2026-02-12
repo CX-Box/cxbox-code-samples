@@ -18,7 +18,7 @@ public class MyExample110Meta extends FieldMetaBuilder<MyExample110DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample110DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample110DTO_.customFieldId);
 		fields.setEnabled(MyExample110DTO_.customField);
 		fields.setDrilldown(
@@ -32,7 +32,7 @@ public class MyExample110Meta extends FieldMetaBuilder<MyExample110DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample110DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample110DTO_.customField);
 		}

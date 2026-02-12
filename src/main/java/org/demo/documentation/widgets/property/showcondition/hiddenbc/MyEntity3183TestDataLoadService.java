@@ -15,38 +15,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3183TestDataLoadService {
 
-    @Autowired
-    MyEntity3183Repository repositoryChild;
+	@Autowired
+	MyEntity3183Repository repositoryChild;
 
-    @Autowired
-    MyEntity3184Repository repositoryMain;
+	@Autowired
+	MyEntity3184Repository repositoryMain;
 
-    @Autowired
-    MyEntity3185Repository repositoryParent;
+	@Autowired
+	MyEntity3185Repository repositoryParent;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repositoryChild.deleteAll();
-        repositoryMain.deleteAll();
-        repositoryParent.deleteAll();
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repositoryChild.deleteAll();
+		repositoryMain.deleteAll();
+		repositoryParent.deleteAll();
 
-        MyEntity3184 myEntity3184 = new MyEntity3184().setCustomField("test data");
-        repositoryMain.save(myEntity3184);
+		MyEntity3184 myEntity3184 = new MyEntity3184().setCustomField("test data");
+		repositoryMain.save(myEntity3184);
 
-        MyEntity3185 myEntity3185 = new MyEntity3185().setCustomField("test data").setCustomFieldCheckbox(true);
-        repositoryParent.save(myEntity3185.setCustomFieldEntity(myEntity3184));
+		MyEntity3185 myEntity3185 = new MyEntity3185().setCustomField("test data").setCustomFieldCheckbox(true);
+		repositoryParent.save(myEntity3185.setCustomFieldEntity(myEntity3184));
 
-        MyEntity3185 myEntity3185_2 = new MyEntity3185().setCustomField("test data2").setCustomFieldCheckbox(false);
-        repositoryParent.save(myEntity3185_2.setCustomFieldEntity(myEntity3184));
+		MyEntity3185 myEntity3185_2 = new MyEntity3185().setCustomField("test data2").setCustomFieldCheckbox(false);
+		repositoryParent.save(myEntity3185_2.setCustomFieldEntity(myEntity3184));
 
-        repositoryChild.save(new MyEntity3183().setCustomField("test data").setCustomFieldEntity(myEntity3185));
-        repositoryChild.save(new MyEntity3183().setCustomField("test data2").setCustomFieldEntity(myEntity3185_2));
+		repositoryChild.save(new MyEntity3183().setCustomField("test data").setCustomFieldEntity(myEntity3185));
+		repositoryChild.save(new MyEntity3183().setCustomField("test data2").setCustomFieldEntity(myEntity3185_2));
 
-    }
+	}
 
 }

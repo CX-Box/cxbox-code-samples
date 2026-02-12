@@ -1,11 +1,6 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.util.Arrays;
-
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.data.dto.rowmeta.FieldDTO;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
@@ -15,6 +10,9 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +20,8 @@ public class MyExample4300PostActionWithCustomBuilderMeta extends FieldMetaBuild
 
 	@Override
 	public void buildRowDependentMeta(final RowDependentFieldsMeta<MyExample4300PostActionWithCustomBuilderDTO> fields,
-																		final InnerBcDescription bcDescription, final Long id,
-																		final Long parentId) {
+									  final InnerBcDescription bcDescription, final Long id,
+									  final Long parentId) {
 		for (final FieldDTO field : fields) {
 			field.setDisabled(false);
 		}
@@ -31,7 +29,7 @@ public class MyExample4300PostActionWithCustomBuilderMeta extends FieldMetaBuild
 
 	@Override
 	public void buildIndependentMeta(final FieldsMeta<MyExample4300PostActionWithCustomBuilderDTO> fields, final InnerBcDescription bcDescription,
-																	 final Long parentId) {
+									 final Long parentId) {
 		fields.setConcreteValues(
 				MyExample4300PostActionWithCustomBuilderDTO_.customFieldMultipleSelect, Arrays.stream(CustomField4300MultipleSelectEnum.values())
 						.map(CustomField4300MultipleSelectEnum::getValue)

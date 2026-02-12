@@ -15,33 +15,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample4103Service extends VersionAwareResponseService<MyExample4103DTO, MyEntity4103> {
 
-    private final MyEntity4103Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4103Meta> meta = MyExample4103Meta.class;
+	private final MyEntity4103Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4103Meta> meta = MyExample4103Meta.class;
 
-    @Override
-    protected CreateResult<MyExample4103DTO> doCreateEntity(MyEntity4103 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample4103DTO> doCreateEntity(MyEntity4103 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample4103DTO> doUpdateEntity(MyEntity4103 entity, MyExample4103DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample4103DTO_.customField, entity::setCustomField);
+	@Override
+	protected ActionResultDTO<MyExample4103DTO> doUpdateEntity(MyEntity4103 entity, MyExample4103DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample4103DTO_.customField, entity::setCustomField);
 
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample4103DTO> getActions() {
-        return Actions.<MyExample4103DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm(cf -> cf
-                                .text("You want to save the value?")
-                        )))
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample4103DTO> getActions() {
+		return Actions.<MyExample4103DTO>builder()
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to save the value?")
+						)))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

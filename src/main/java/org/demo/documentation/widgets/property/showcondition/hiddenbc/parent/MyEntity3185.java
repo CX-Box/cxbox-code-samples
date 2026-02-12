@@ -12,11 +12,11 @@ import org.demo.documentation.widgets.property.showcondition.hiddenbc.mainbc.MyE
 @Setter
 @NoArgsConstructor
 public class MyEntity3185 extends BaseEntity {
-    @Column
-    private String customField;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3184 customFieldEntity;
-    @Column
-    private Boolean customFieldCheckbox = false;
+	@Column
+	private String customField;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3184 customFieldEntity;
+	@Column
+	private Boolean customFieldCheckbox = false;
 }

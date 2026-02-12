@@ -12,22 +12,22 @@ import org.cxbox.core.util.filter.SearchParameter;
 @NoArgsConstructor
 public class MyExample360DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customFieldAdditional")
-    private String customFieldAdditional;
-    private String informationField;
-    @SearchParameter(name = "customField")
-    private String customField;
-    @SearchParameter(name = "customFieldAdditionalMulti")
-    private String customFieldAdditionalMulti;
-    @SearchParameter(name = "customFieldMulti")
-    private String customFieldMulti;
+	@SearchParameter(name = "customFieldAdditional")
+	private String customFieldAdditional;
+	private String informationField;
+	@SearchParameter(name = "customField")
+	private String customField;
+	@SearchParameter(name = "customFieldAdditionalMulti")
+	private String customFieldAdditionalMulti;
+	@SearchParameter(name = "customFieldMulti")
+	private String customFieldMulti;
 
-    public MyExample360DTO(MyEntity360 entity) {
-        this.id = entity.getId().toString();
-        this.customFieldAdditional = entity.getCustomFieldAdditional();
-        this.informationField = entity.getInformationField();
-        this.customField = entity.getCustomField();
-        this.customFieldAdditionalMulti = entity.getCustomFieldAdditionalMulti();
-        this.customFieldMulti = entity.getCustomFieldMulti();
-    }
+	public MyExample360DTO(MyEntity360 entity) {
+		this.id = entity.getId().toString();
+		this.customFieldAdditional = entity.getCustomFieldAdditional();
+		this.informationField = entity.getInformationField();
+		this.customField = entity.getCustomField();
+		this.customFieldAdditionalMulti = entity.getCustomFieldAdditionalMulti();
+		this.customFieldMulti = entity.getCustomFieldMulti();
+	}
 }

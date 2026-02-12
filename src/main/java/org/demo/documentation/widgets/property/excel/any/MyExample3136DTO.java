@@ -1,8 +1,8 @@
 package org.demo.documentation.widgets.property.excel.any;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Getter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 
 import java.time.LocalDateTime;
@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3136DTO extends DataResponseDTO {
 
-    private String customField;
-    private LocalDateTime customFieldDateTime;
-    public MyExample3136DTO(MyEntity3136OutServiceDTO entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldDateTime = entity.getCustomFieldDateTime();
-    }
+	private String customField;
+	private LocalDateTime customFieldDateTime;
+
+	public MyExample3136DTO(MyEntity3136OutServiceDTO entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldDateTime = entity.getCustomFieldDateTime();
+	}
 }

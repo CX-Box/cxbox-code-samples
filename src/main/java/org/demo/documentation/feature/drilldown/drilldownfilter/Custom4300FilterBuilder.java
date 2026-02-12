@@ -1,5 +1,15 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.constgen.DtoField;
+import org.cxbox.core.dto.multivalue.MultivalueField;
+import org.cxbox.core.service.drilldown.filter.FB;
+import org.cxbox.dictionary.Dictionary;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,18 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.cxbox.api.data.dto.DataResponseDTO;
-import org.cxbox.constgen.DtoField;
-import org.cxbox.core.dto.multivalue.MultivalueField;
-import org.cxbox.core.service.drilldown.filter.FB;
-import org.cxbox.dictionary.Dictionary;
-
-import jakarta.validation.constraints.NotNull;
 
 /**
  * Example of extending the {@link FB} class to add custom field types.

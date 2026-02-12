@@ -1,30 +1,22 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
-import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
-import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
-import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
-import org.cxbox.core.util.filter.provider.impl.DictionaryValueProvider;
-import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
+import org.cxbox.core.util.filter.provider.impl.*;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider.BaseEnum;
-import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter

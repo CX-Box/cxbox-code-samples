@@ -17,8 +17,8 @@ public class DateTimeWithSecondsRequredMeta extends FieldMetaBuilder<DateTimeWit
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsRequredDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsRequredDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class DateTimeWithSecondsRequredMeta extends FieldMetaBuilder<DateTimeWit
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsRequredDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsRequredDTO_.customField);
 		}

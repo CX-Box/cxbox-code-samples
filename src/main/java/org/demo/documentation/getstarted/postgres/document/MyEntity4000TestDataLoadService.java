@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity4000TestDataLoadService {
 
-    @Autowired
-    MyEntity4000Repository repository;
+	@Autowired
+	MyEntity4000Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+	}
 
 }

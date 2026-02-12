@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3860OutServiceDTO implements Serializable {
 
-    private String id;
-    private String customField;
-    private LocalDateTime customFieldDateTime;
+	private String id;
+	private String customField;
+	private LocalDateTime customFieldDateTime;
 
 }

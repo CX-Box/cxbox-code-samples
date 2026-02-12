@@ -17,7 +17,7 @@ public class InputFiltrationMeta extends FieldMetaBuilder<InputFiltrationDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputFiltrationDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(InputFiltrationDTO_.brand);
 		fields.setEnabled(
 				InputFiltrationDTO_.customField
@@ -31,7 +31,7 @@ public class InputFiltrationMeta extends FieldMetaBuilder<InputFiltrationDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputFiltrationDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputFiltrationDTO_.customField);
 		}

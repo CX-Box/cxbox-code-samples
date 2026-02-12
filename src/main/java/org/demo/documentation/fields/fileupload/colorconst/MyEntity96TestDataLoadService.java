@@ -2,7 +2,6 @@ package org.demo.documentation.fields.fileupload.colorconst;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
-
 import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.core.file.dto.CxboxResponseDTO;
@@ -15,13 +14,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MyEntity96TestDataLoadService {
 
+	private final CustomFileUploadServices customFileUploadServices;
 	@Autowired
 	MyEntity96Repository repository;
-
 	@Autowired
 	InternalAuthorizationService authzService;
 
-	private final CustomFileUploadServices customFileUploadServices;
 	@Transactional
 	@PostConstruct
 	public void load() {

@@ -10,22 +10,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3140TestDataLoadService {
 
-    @Autowired
-    MyEntity3140Repository repository;
+	@Autowired
+	MyEntity3140Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3140().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
-        repository.save(new MyEntity3140().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
-        repository.save(new MyEntity3140().setCustomField("test data3").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
-        repository.save(new MyEntity3140().setCustomField("test data4").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3140().setCustomField("test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
+		repository.save(new MyEntity3140().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
+		repository.save(new MyEntity3140().setCustomField("test data3").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
+		repository.save(new MyEntity3140().setCustomField("test data4").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
 
-    }
+	}
 
 }

@@ -17,8 +17,8 @@ public class NumberCreateEditMeta extends FieldMetaBuilder<NumberCreateEditDTO> 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberCreateEditDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -26,7 +26,7 @@ public class NumberCreateEditMeta extends FieldMetaBuilder<NumberCreateEditDTO> 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberCreateEditDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberCreateEditDTO_.customField);
 		}

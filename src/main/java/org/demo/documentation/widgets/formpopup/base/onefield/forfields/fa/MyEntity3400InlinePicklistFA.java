@@ -14,8 +14,8 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity3400InlinePicklistFA extends BaseEntity {
 
-    @Column
-    private String customField;
-    @Column
-    private String customField2;
+	@Column
+	private String customField;
+	@Column
+	private String customField2;
 }

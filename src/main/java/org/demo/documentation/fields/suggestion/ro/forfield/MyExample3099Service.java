@@ -14,27 +14,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3099Service extends VersionAwareResponseService<MyExample3099DTO, MyEntity3099> {
 
-    private final MyEntity3099Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3099Meta> meta = MyExample3099Meta.class;
+	private final MyEntity3099Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3099Meta> meta = MyExample3099Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3099DTO> doCreateEntity(MyEntity3099 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3099DTO> doCreateEntity(MyEntity3099 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3099DTO> doUpdateEntity(MyEntity3099 entity, MyExample3099DTO data, BusinessComponent bc) {
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3099DTO> doUpdateEntity(MyEntity3099 entity, MyExample3099DTO data, BusinessComponent bc) {
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3099DTO> getActions() {
-        return Actions.<MyExample3099DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3099DTO> getActions() {
+		return Actions.<MyExample3099DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

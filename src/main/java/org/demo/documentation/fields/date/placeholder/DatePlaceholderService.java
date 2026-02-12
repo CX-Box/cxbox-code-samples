@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DatePlaceholderService extends VersionAwareResponseService<DatePlaceholderDTO, DatePlaceholderEntity> {
 
 	private final DatePlaceholderEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DatePlaceholderMeta> meta = DatePlaceholderMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DatePlaceholderMeta> meta = DatePlaceholderMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DatePlaceholderDTO> doCreateEntity(DatePlaceholderEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DatePlaceholderService extends VersionAwareResponseService<DatePlac
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DatePlaceholderDTO> doUpdateEntity(DatePlaceholderEntity entity, DatePlaceholderDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -37,7 +37,7 @@ public class DatePlaceholderService extends VersionAwareResponseService<DatePlac
 	@Override
 	public Actions<DatePlaceholderDTO> getActions() {
 		return Actions.<DatePlaceholderDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

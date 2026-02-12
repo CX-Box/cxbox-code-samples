@@ -12,45 +12,45 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MyExample3004Meta extends FieldMetaBuilder<MyExample3004DTO> {
 
-    private final DocumentConfig configuration;
+	private final DocumentConfig configuration;
 
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3004DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3004DTO_.customField10);
-        fields.setEnabled(MyExample3004DTO_.customField9);
-        fields.setEnabled(MyExample3004DTO_.customField8);
-        fields.setEnabled(MyExample3004DTO_.customField7);
-        fields.setEnabled(MyExample3004DTO_.customField6);
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3004DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3004DTO_.customField10);
+		fields.setEnabled(MyExample3004DTO_.customField9);
+		fields.setEnabled(MyExample3004DTO_.customField8);
+		fields.setEnabled(MyExample3004DTO_.customField7);
+		fields.setEnabled(MyExample3004DTO_.customField6);
 
-        fields.setEnabled(MyExample3004DTO_.customField5);
-        fields.setEnabled(MyExample3004DTO_.customField4);
-        fields.setEnabled(MyExample3004DTO_.customField3);
-        fields.setEnabled(MyExample3004DTO_.customField2);
-        fields.setEnabled(MyExample3004DTO_.customField);
-    }
-    // --8<-- [end:buildRowDependentMeta]
+		fields.setEnabled(MyExample3004DTO_.customField5);
+		fields.setEnabled(MyExample3004DTO_.customField4);
+		fields.setEnabled(MyExample3004DTO_.customField3);
+		fields.setEnabled(MyExample3004DTO_.customField2);
+		fields.setEnabled(MyExample3004DTO_.customField);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3004DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3004DTO_.customField10);
-        fields.enableFilter(MyExample3004DTO_.customField9);
-        fields.enableFilter(MyExample3004DTO_.customField8);
-        fields.enableFilter(MyExample3004DTO_.customField7);
-        fields.enableFilter(MyExample3004DTO_.customField6);
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3004DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3004DTO_.customField10);
+		fields.enableFilter(MyExample3004DTO_.customField9);
+		fields.enableFilter(MyExample3004DTO_.customField8);
+		fields.enableFilter(MyExample3004DTO_.customField7);
+		fields.enableFilter(MyExample3004DTO_.customField6);
 
-        fields.enableFilter(MyExample3004DTO_.customField5);
-        fields.enableFilter(MyExample3004DTO_.customField4);
-        fields.enableFilter(MyExample3004DTO_.customField3);
-        fields.enableFilter(MyExample3004DTO_.customField2);
-        fields.enableFilter(MyExample3004DTO_.customField);
-        if (configuration.getForceActiveEnabled()) {
-            fields.setForceActive(MyExample3004DTO_.customField);
-        }
-        fields.enableFilter(MyExample3004DTO_.customField);
-    }
-    // --8<-- [end:buildIndependentMeta]
+		fields.enableFilter(MyExample3004DTO_.customField5);
+		fields.enableFilter(MyExample3004DTO_.customField4);
+		fields.enableFilter(MyExample3004DTO_.customField3);
+		fields.enableFilter(MyExample3004DTO_.customField2);
+		fields.enableFilter(MyExample3004DTO_.customField);
+		if (configuration.getForceActiveEnabled()) {
+			fields.setForceActive(MyExample3004DTO_.customField);
+		}
+		fields.enableFilter(MyExample3004DTO_.customField);
+	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

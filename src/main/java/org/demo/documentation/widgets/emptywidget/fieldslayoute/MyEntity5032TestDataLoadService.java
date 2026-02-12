@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity5032TestDataLoadService {
 
-    @Autowired
-    MyEntity5032Repository repository;
+	@Autowired
+	MyEntity5032Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity5032().setCustomField("test data"));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity5032().setCustomField("test data"));
+	}
 
 }

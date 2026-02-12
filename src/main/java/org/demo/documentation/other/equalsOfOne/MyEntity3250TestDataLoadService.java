@@ -1,20 +1,17 @@
 package org.demo.documentation.other.equalsOfOne;
 
-import java.util.List;
-
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.model.core.dao.JpaDao;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOne;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneManyToMany;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToMany;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToOne;
+import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

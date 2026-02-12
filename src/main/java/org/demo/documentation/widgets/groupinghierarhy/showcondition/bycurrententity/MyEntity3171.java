@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.groupinghierarhy.showcondition.bycurrententity;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -17,9 +17,9 @@ import org.demo.documentation.widgets.groupinghierarhy.showcondition.bycurrenten
 @NoArgsConstructor
 public class MyEntity3171 extends BaseEntity {
 
-    @Column
-    private Long customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private Long customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

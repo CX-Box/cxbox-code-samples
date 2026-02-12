@@ -30,194 +30,194 @@ import java.util.Optional;
 @Service
 public class MyExample3232Service extends VersionAwareResponseService<MyExample3232DTO, MyEntity3232> {
 
-    private final IntegrationConfiguration integrationConfig;
+	private final IntegrationConfiguration integrationConfig;
 
-    private final RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 
-    private final MyEntity3232Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3232Meta> meta = MyExample3232Meta.class;
+	private final MyEntity3232Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3232Meta> meta = MyExample3232Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3232DTO> doCreateEntity(MyEntity3232 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3232DTO> doCreateEntity(MyEntity3232 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3232DTO> doUpdateEntity(MyEntity3232 entity, MyExample3232DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3232DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3232DTO> doUpdateEntity(MyEntity3232 entity, MyExample3232DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3232DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3232DTO> getActions() {
-        return Actions.<MyExample3232DTO>builder()
-                .save(sv -> sv.text("Save"))
-                .cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
-                .delete(dlt -> dlt.text("Delete"))
-                .action(act -> act
-                        .action("createAndSearchWithoutCustomMessageBoolean", "Create and search without custom message with boolean field")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponseFlag,
-                                                    true
-                                            )
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .action("createAndSearchWithoutCustomMessage", "Create and search without custom message")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponse,
-                                                    StatusEnum.DONE
-                                            )
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .action("createAndSearchWithCustomMessage", "Create and search with all custom message")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponse,
-                                                    StatusEnum.DONE
-                                            )
-                                            .inProgressMessage("In Progress custom message")
-                                            .successMessage("Success custom message")
-                                            .timeoutMessage("Timeout custom message")
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .action("createAndSearchWithSuccessCustomMessage", "Create and search with `Success` custom message")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponse,
-                                                    StatusEnum.DONE
-                                            )
-                                            .successMessage("Success custom message")
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .action("createAndSearchWithInProgressCustomMessage", "Create and search with `In progress` custom message")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponse,
-                                                    StatusEnum.DONE
-                                            )
-                                            .inProgressMessage("In Progress custom message")
-                                            .timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
-                        })
-                )
-                .action(act -> act
-                        .action("createAndSearchWithTimeoutCustomMessage", "Create and search with `Timeout` custom message")
-                        .scope(ActionScope.BC)
-                        .invoker((bc, dto) -> {
-                            MyEntity3232 myEntity3232 = new MyEntity3232();
-                            myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
-                            repository.save(myEntity3232);
-                            findInExternalSystemAsync(myEntity3232,dto);
-                            return new ActionResultDTO<MyExample3232DTO>().setAction(
-                                    PostAction.drillDownAndWaitUntil(
-                                                    "/screen/myexample3231/view/myexample3232resultform/" +
-                                                            CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
-                                                    CxboxMyExample3231Controller.myexample3232,
-                                                    MyExample3232DTO_.statusResponse,
-                                                    StatusEnum.DONE
-                                            )
-                                            .timeoutMessage("Timeout custom message")
-                                            .timeoutMaxRequests(1).timeout(Duration.ofSeconds(1)).build());
-                        })
-                )
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3232DTO> getActions() {
+		return Actions.<MyExample3232DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("createAndSearchWithoutCustomMessageBoolean", "Create and search without custom message with boolean field")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponseFlag,
+													true
+											)
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.action("createAndSearchWithoutCustomMessage", "Create and search without custom message")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponse,
+													StatusEnum.DONE
+											)
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.action("createAndSearchWithCustomMessage", "Create and search with all custom message")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponse,
+													StatusEnum.DONE
+											)
+											.inProgressMessage("In Progress custom message")
+											.successMessage("Success custom message")
+											.timeoutMessage("Timeout custom message")
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.action("createAndSearchWithSuccessCustomMessage", "Create and search with `Success` custom message")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponse,
+													StatusEnum.DONE
+											)
+											.successMessage("Success custom message")
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.action("createAndSearchWithInProgressCustomMessage", "Create and search with `In progress` custom message")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponse,
+													StatusEnum.DONE
+											)
+											.inProgressMessage("In Progress custom message")
+											.timeoutMaxRequests(6).timeout(Duration.ofSeconds(12)).build());
+						})
+				)
+				.action(act -> act
+						.action("createAndSearchWithTimeoutCustomMessage", "Create and search with `Timeout` custom message")
+						.scope(ActionScope.BC)
+						.invoker((bc, dto) -> {
+							MyEntity3232 myEntity3232 = new MyEntity3232();
+							myEntity3232.setStatusResponse(StatusEnum.IN_PROGRESS);
+							repository.save(myEntity3232);
+							findInExternalSystemAsync(myEntity3232, dto);
+							return new ActionResultDTO<MyExample3232DTO>().setAction(
+									PostAction.drillDownAndWaitUntil(
+													"/screen/myexample3231/view/myexample3232resultform/" +
+															CxboxMyExample3231Controller.myexample3232 + "/" + myEntity3232.getId(),
+													CxboxMyExample3231Controller.myexample3232,
+													MyExample3232DTO_.statusResponse,
+													StatusEnum.DONE
+											)
+											.timeoutMessage("Timeout custom message")
+											.timeoutMaxRequests(1).timeout(Duration.ofSeconds(1)).build());
+						})
+				)
+				.build();
+	}
+	// --8<-- [end:getActions]
 
-    // --8<-- [start:findInExternalSystem]
-    protected void findInExternalSystemAsync(MyEntity3232 myEntity3232, MyExample3232DTO dto) {
-        Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
-        myEntity3232.setCustomFieldForm("");
-        myEntity3232.setCustomField("");
-        entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO ->
-                myEntity3232.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
-        repository.save(myEntity3232);
-    }
-    // --8<-- [end:findInExternalSystem]
+	// --8<-- [start:findInExternalSystem]
+	protected void findInExternalSystemAsync(MyEntity3232 myEntity3232, MyExample3232DTO dto) {
+		Optional<MyEntity3231AnySourceOutServiceDTO> entityExternal = callService(dto).get().findFirst();
+		myEntity3232.setCustomFieldForm("");
+		myEntity3232.setCustomField("");
+		entityExternal.ifPresent(myEntity3231AnySourceOutServiceDTO ->
+				myEntity3232.setCustomField(myEntity3231AnySourceOutServiceDTO.getCustomField()));
+		repository.save(myEntity3232);
+	}
+	// --8<-- [end:findInExternalSystem]
 
-    // --8<-- [start:callService]
-    public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3232DTO dto) {
+	// --8<-- [start:callService]
+	public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3232DTO dto) {
 
-        Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
+		Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
-                .queryParam("number", 1)
-                .queryParam("size", 1)
-                .queryParamIfPresent("filterEqualsCustomField", filter)
-                .encode()
-                .toUriString();
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+				.queryParam("number", 1)
+				.queryParam("size", 1)
+				.queryParamIfPresent("filterEqualsCustomField", filter)
+				.encode()
+				.toUriString();
 
-        ResponseEntity<RestResponsePage<MyEntity3231AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
-                urlTemplate,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                },
-                filter
-        );
+		ResponseEntity<RestResponsePage<MyEntity3231AnySourceOutServiceDTO>> responseEntity = restTemplate.exchange(
+				urlTemplate,
+				HttpMethod.GET,
+				null,
+				new ParameterizedTypeReference<>() {
+				},
+				filter
+		);
 
-        return responseEntity.getBody();
-    }
-    // --8<-- [end:callService]
+		return responseEntity.getBody();
+	}
+	// --8<-- [end:callService]
 
 }
 

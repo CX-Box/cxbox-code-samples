@@ -10,21 +10,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3071PickPickMeta extends FieldMetaBuilder<MyEntity3071PickPickDTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3071PickPickDTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyEntity3071PickPickDTO_.id);
-        fields.setEnabled(MyEntity3071PickPickDTO_.customFieldPick);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyEntity3071PickPickDTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3071PickPickDTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyEntity3071PickPickDTO_.id);
+		fields.setEnabled(MyEntity3071PickPickDTO_.customFieldPick);
+	}
 
-        fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.id);
-        fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.customFieldPick);
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyEntity3071PickPickDTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
 
-    }
+		fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.id);
+		fields.enableSort(org.demo.documentation.widgets.picklist.title.calculatedtitle.MyEntity3071PickPickDTO_.customFieldPick);
+
+	}
 
 }

@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.fields.radio.filtration.enums.CustomFieldNewEnum;
 import org.demo.documentation.fields.radio.filtration.enums.CustomFieldEnum;
+import org.demo.documentation.fields.radio.filtration.enums.CustomFieldNewEnum;
 
 @Entity
 @Getter

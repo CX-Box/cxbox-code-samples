@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DateSortingService extends VersionAwareResponseService<DateSortingDTO, DateSortingEntity> {
 
 	private final DateSortingEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateSortingMeta> meta = DateSortingMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateSortingMeta> meta = DateSortingMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateSortingDTO> doCreateEntity(DateSortingEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DateSortingService extends VersionAwareResponseService<DateSortingD
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateSortingDTO> doUpdateEntity(DateSortingEntity entity, DateSortingDTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(DateSortingDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateSortingService extends VersionAwareResponseService<DateSortingD
 	@Override
 	public Actions<DateSortingDTO> getActions() {
 		return Actions.<DateSortingDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

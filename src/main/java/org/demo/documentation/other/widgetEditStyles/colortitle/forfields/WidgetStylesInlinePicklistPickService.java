@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class WidgetStylesInlinePicklistPickService extends VersionAwareResponseService<WidgetStylesInlinePicklistPickDTO, WidgetStylesInlinePicklist> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<WidgetStylesInlinePicklistPickMeta> meta = WidgetStylesInlinePicklistPickMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<WidgetStylesInlinePicklistPickMeta> meta = WidgetStylesInlinePicklistPickMeta.class;
 
-    @Override
-    protected CreateResult<WidgetStylesInlinePicklistPickDTO> doCreateEntity(WidgetStylesInlinePicklist entity, BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected CreateResult<WidgetStylesInlinePicklistPickDTO> doCreateEntity(WidgetStylesInlinePicklist entity, BusinessComponent bc) {
+		return null;
+	}
 
-    @Override
-    protected ActionResultDTO<WidgetStylesInlinePicklistPickDTO> doUpdateEntity(WidgetStylesInlinePicklist entity, WidgetStylesInlinePicklistPickDTO data,
-                                                                                BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected ActionResultDTO<WidgetStylesInlinePicklistPickDTO> doUpdateEntity(WidgetStylesInlinePicklist entity, WidgetStylesInlinePicklistPickDTO data,
+																				BusinessComponent bc) {
+		return null;
+	}
 
 
 }

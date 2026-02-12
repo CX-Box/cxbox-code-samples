@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class DateConfirmService extends VersionAwareResponseService<DateConfirmDTO, DateConfirmEntity> {
 
 	private final DateConfirmEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateConfirmMeta> meta = DateConfirmMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateConfirmMeta> meta = DateConfirmMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateConfirmDTO> doCreateEntity(DateConfirmEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class DateConfirmService extends VersionAwareResponseService<DateConfirmD
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateConfirmDTO> doUpdateEntity(DateConfirmEntity entity, DateConfirmDTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(DateConfirmDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}

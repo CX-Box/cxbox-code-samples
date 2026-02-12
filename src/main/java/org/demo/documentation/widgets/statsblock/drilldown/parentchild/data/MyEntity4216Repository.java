@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface MyEntity4216Repository extends JpaRepository<MyEntity4216, Long>, JpaSpecificationExecutor<MyEntity4216> {
 
-    List<MyEntity4216> findByStatus(ExampleStatus status);
+	List<MyEntity4216> findByStatus(ExampleStatus status);
 }

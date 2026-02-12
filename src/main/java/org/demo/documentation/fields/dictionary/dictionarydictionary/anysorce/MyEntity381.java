@@ -1,7 +1,7 @@
 package org.demo.documentation.fields.dictionary.dictionarydictionary.anysorce;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +12,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity381 extends BaseEntity {
-    @Column
-    private DictionaryType customField;
+	@Column
+	private DictionaryType customField;
 }

@@ -13,42 +13,43 @@ import java.net.URLEncoder;
 @Service
 public class MyExample3612Meta extends FieldMetaBuilder<MyExample3612DTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnumValues(MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());
-        fields.setEnabled(MyExample3612DTO_.customFieldFilterDictionary);
-        fields.setEnabled(MyExample3612DTO_.customFieldFilterDate);
-        fields.setEnabled(MyExample3612DTO_.customField);
-        fields.setRequired(MyExample3612DTO_.customField);
-        // --8<-- [start:urlBC]
-        String urlBC = "/screen/myexample3612/view/myexample3612list" + "/" + CxboxMyExample3612Controller.myexample3612;
-        // --8<-- [end:urlBC]
-        // --8<-- [start:urlFilter]
-        String urlFilterForField = URLEncoder.encode("customFieldFilterDictionary.equalsOneOf=%5B%22Low%22%2C%22Middle%22%5D");
-        String urlFilter = "?filters={\""
-                + CxboxMyExample3612Controller.myexample3612
-                + "\":\""
-                + urlFilterForField
-                + "\"}";
-        // --8<-- [end:urlFilter]
-        // --8<-- [start:url]
-        fields.setDrilldown(
-                MyExample3612DTO_.customField,
-                DrillDownType.INNER,
-                urlBC + urlFilter
-        );
-        // --8<-- [end:url]
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.setEnumFilterValues(fields, MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());
-        fields.enableFilter(MyExample3612DTO_.customFieldFilterDictionary);
-        fields.enableSort(MyExample3612DTO_.customFieldFilterDictionary);
-        fields.enableFilter(MyExample3612DTO_.customFieldFilterDate);
-        fields.enableSort(MyExample3612DTO_.customFieldFilterDate);
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnumValues(MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());
+		fields.setEnabled(MyExample3612DTO_.customFieldFilterDictionary);
+		fields.setEnabled(MyExample3612DTO_.customFieldFilterDate);
+		fields.setEnabled(MyExample3612DTO_.customField);
+		fields.setRequired(MyExample3612DTO_.customField);
+		// --8<-- [start:urlBC]
+		String urlBC = "/screen/myexample3612/view/myexample3612list" + "/" + CxboxMyExample3612Controller.myexample3612;
+		// --8<-- [end:urlBC]
+		// --8<-- [start:urlFilter]
+		String urlFilterForField = URLEncoder.encode("customFieldFilterDictionary.equalsOneOf=%5B%22Low%22%2C%22Middle%22%5D");
+		String urlFilter = "?filters={\""
+				+ CxboxMyExample3612Controller.myexample3612
+				+ "\":\""
+				+ urlFilterForField
+				+ "\"}";
+		// --8<-- [end:urlFilter]
+		// --8<-- [start:url]
+		fields.setDrilldown(
+				MyExample3612DTO_.customField,
+				DrillDownType.INNER,
+				urlBC + urlFilter
+		);
+		// --8<-- [end:url]
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3612DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.setEnumFilterValues(fields, MyExample3612DTO_.customFieldFilterDictionary, CustomFieldFilterDictionaryEnum.values());
+		fields.enableFilter(MyExample3612DTO_.customFieldFilterDictionary);
+		fields.enableSort(MyExample3612DTO_.customFieldFilterDictionary);
+		fields.enableFilter(MyExample3612DTO_.customFieldFilterDate);
+		fields.enableSort(MyExample3612DTO_.customFieldFilterDate);
+	}
 
 }

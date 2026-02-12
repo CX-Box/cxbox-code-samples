@@ -11,17 +11,17 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum UsersNameEnum {
-    USER_1("User 1"),
-    USER_2("User 2"),
-    USER_3("User 3");
+	USER_1("User 1"),
+	USER_2("User 2"),
+	USER_3("User 3");
 
-    @JsonValue
-    private final String value;
+	@JsonValue
+	private final String value;
 
-    public static UsersNameEnum getByValue(@NonNull String value) {
-        return Arrays.stream(UsersNameEnum.values())
-                .filter(enm -> Objects.equals(enm.getValue(), value))
-                .findFirst()
-                .orElse(null);
-    }
+	public static UsersNameEnum getByValue(@NonNull String value) {
+		return Arrays.stream(UsersNameEnum.values())
+				.filter(enm -> Objects.equals(enm.getValue(), value))
+				.findFirst()
+				.orElse(null);
+	}
 }

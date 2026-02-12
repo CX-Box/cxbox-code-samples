@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3135MultiHoverMultivalueService extends VersionAwareResponseService<MyEntity3135MultiHoverMultivalueDTO, MyEntity3135MultiHover> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<MyEntity3135MultiHoverMultivalueMeta> meta = MyEntity3135MultiHoverMultivalueMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyEntity3135MultiHoverMultivalueMeta> meta = MyEntity3135MultiHoverMultivalueMeta.class;
 
-    @Override
-    protected CreateResult<MyEntity3135MultiHoverMultivalueDTO> doCreateEntity(MyEntity3135MultiHover entity, BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected CreateResult<MyEntity3135MultiHoverMultivalueDTO> doCreateEntity(MyEntity3135MultiHover entity, BusinessComponent bc) {
+		return null;
+	}
 
-    @Override
-    protected ActionResultDTO<MyEntity3135MultiHoverMultivalueDTO> doUpdateEntity(MyEntity3135MultiHover entity, MyEntity3135MultiHoverMultivalueDTO data,
-                                                                                  BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected ActionResultDTO<MyEntity3135MultiHoverMultivalueDTO> doUpdateEntity(MyEntity3135MultiHover entity, MyEntity3135MultiHoverMultivalueDTO data,
+																				  BusinessComponent bc) {
+		return null;
+	}
 
 
 }

@@ -13,22 +13,22 @@ import org.demo.documentation.feature.file.enums.CustomFieldDictionaryEnum;
 @NoArgsConstructor
 public class MyExample6100DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
+	@SearchParameter(name = "customField")
+	private String customField;
 
-    @SearchParameter(name = "customFieldFile")
-    private String customFieldFile;
+	@SearchParameter(name = "customFieldFile")
+	private String customFieldFile;
 
-    private String customFieldFileId;
+	private String customFieldFileId;
 
-    @SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
+	private CustomFieldDictionaryEnum customFieldDictionary;
 
-    public MyExample6100DTO(MyEntity6100 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldFile = entity.getCustomFieldFile();
-        this.customFieldFileId = entity.getCustomFieldFileId();
-        this.customFieldDictionary = entity.getCustomFieldDictionary();
-    }
+	public MyExample6100DTO(MyEntity6100 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldFile = entity.getCustomFieldFile();
+		this.customFieldFileId = entity.getCustomFieldFileId();
+		this.customFieldDictionary = entity.getCustomFieldDictionary();
+	}
 }

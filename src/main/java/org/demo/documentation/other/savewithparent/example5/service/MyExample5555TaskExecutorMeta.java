@@ -15,7 +15,7 @@ public class MyExample5555TaskExecutorMeta extends FieldMetaBuilder<ExecutorDTO>
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<ExecutorDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(ExecutorDTO_.name);
 		fields.setRequired(ExecutorDTO_.name);
 		fields.setEnabled(ExecutorDTO_.role);

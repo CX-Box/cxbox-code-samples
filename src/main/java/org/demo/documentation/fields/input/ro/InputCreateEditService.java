@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputCreateEditService extends VersionAwareResponseService<InputCreateEditDTO, InputCreateEdit> {
 
 	private final InputCreateEditRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputCreateEditMeta> meta = InputCreateEditMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputCreateEditMeta> meta = InputCreateEditMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputCreateEditDTO> doCreateEntity(InputCreateEdit entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputCreateEditDTO> doUpdateEntity(InputCreateEdit entity, InputCreateEditDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(InputCreateEditDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 	@Override
 	public Actions<InputCreateEditDTO> getActions() {
 		return Actions.<InputCreateEditDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

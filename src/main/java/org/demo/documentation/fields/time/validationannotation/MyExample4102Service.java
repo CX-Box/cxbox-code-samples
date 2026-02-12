@@ -15,29 +15,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample4102Service extends VersionAwareResponseService<MyExample4102DTO, MyEntity4102> {
 
-    private final MyEntity4102Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample4102Meta> meta = MyExample4102Meta.class;
+	private final MyEntity4102Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample4102Meta> meta = MyExample4102Meta.class;
 
-    @Override
-    protected CreateResult<MyExample4102DTO> doCreateEntity(MyEntity4102 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample4102DTO> doCreateEntity(MyEntity4102 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample4102DTO> doUpdateEntity(MyEntity4102 entity, MyExample4102DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample4102DTO_.customField, entity::setCustomField);
+	@Override
+	protected ActionResultDTO<MyExample4102DTO> doUpdateEntity(MyEntity4102 entity, MyExample4102DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample4102DTO_.customField, entity::setCustomField);
 
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample4102DTO> getActions() {
-        return Actions.<MyExample4102DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample4102DTO> getActions() {
+		return Actions.<MyExample4102DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

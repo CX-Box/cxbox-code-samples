@@ -13,10 +13,10 @@ import org.demo.documentation.navigation.tab.other.example5.parent.MyEntity3161;
 @Setter
 @NoArgsConstructor
 public class MyEntity3163 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3161 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3161 customFieldEntity;
 }

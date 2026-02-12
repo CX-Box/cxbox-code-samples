@@ -1,10 +1,10 @@
 package org.demo.documentation.widgets.assoc.colortitle.allfields;
 
-import org.apache.commons.lang3.StringUtils;
-import org.cxbox.api.data.dto.DataResponseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyEntity3052MultiMultivalueDTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 	private String customFieldColor;
 	@SearchParameter(name = "customFieldColorMultivalueHoverList.id", provider = LongValueProvider.class)
 	private MultivalueField customFieldColorMultivalueHover;
@@ -65,9 +65,9 @@ public class MyEntity3052MultiMultivalueDTO extends DataResponseDTO {
 	private String customFieldColorInput;
 
 	public MyEntity3052MultiMultivalueDTO(MyEntity3052Multi entity) {
-        this.id = entity.getId().toString();
+		this.id = entity.getId().toString();
 		this.customFieldColor = "#eda6a6";
-        this.customField = entity.getCustomField();
+		this.customField = entity.getCustomField();
 		this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
 				MyEntity3052MultiAssoc::getCustomField

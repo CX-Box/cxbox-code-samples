@@ -19,12 +19,12 @@ import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.
 public class MyEntity4208 extends BaseEntity {
 
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldEnum customFieldStatus = CustomFieldEnum.NEW;
-    @Column
-    private String customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldRegion customFieldRegion;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldEnum customFieldStatus = CustomFieldEnum.NEW;
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldRegion customFieldRegion;
 }

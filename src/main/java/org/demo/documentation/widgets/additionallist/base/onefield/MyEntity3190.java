@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.additionallist.base.onefield;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,9 +16,9 @@ import org.demo.documentation.widgets.additionallist.base.onefield.enums.CustomF
 @Setter
 @NoArgsConstructor
 public class MyEntity3190 extends BaseEntity {
-    @Column
-    private String customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

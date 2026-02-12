@@ -17,8 +17,8 @@ public class DateTimeWithSecondsPlaceholderMeta extends FieldMetaBuilder<DateTim
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsPlaceholderDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsPlaceholderDTO_.customField
 		);
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsPlaceholderMeta extends FieldMetaBuilder<DateTim
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsPlaceholderDTO> fields,
-			InnerBcDescription bcDescription, Long parentId) {
+									 InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsPlaceholderDTO_.customField);
 		}

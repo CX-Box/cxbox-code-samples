@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component;
 @Getter
 public enum CxboxDateTimeWithSecondsColorController implements EnumBcIdentifier {
 
-	
 
 	dateTimeWithSecondsColor(DateTimeWithSecondsColorService.class);
 	// --8<-- [end:bc]
-	
 
 
 	public static final EnumBcIdentifier.Holder<CxboxDateTimeWithSecondsColorController> Holder = new Holder<>(

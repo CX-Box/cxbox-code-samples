@@ -10,10 +10,10 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyExample3145DTO extends DataResponseDTO {
 
-    private String customField;
+	private String customField;
 
-    public MyExample3145DTO(MyEntity3145 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyExample3145DTO(MyEntity3145 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 }

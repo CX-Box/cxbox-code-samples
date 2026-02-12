@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3147Meta extends FieldMetaBuilder<MyExample3147DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3147DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3147DTO_.customFieldNumber);
-        fields.setEnabled(MyExample3147DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3147DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3147DTO_.customFieldNumber);
+		fields.setEnabled(MyExample3147DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3147DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3147DTO_.customFieldNumber);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3147DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3147DTO_.customFieldNumber);
+	}
 
 }

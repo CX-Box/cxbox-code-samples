@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputPlaceholderService extends VersionAwareResponseService<InputPlaceholderDTO, InputPlaceholder> {
 
 	private final InputPlaceholderRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputPlaceholderMeta> meta = InputPlaceholderMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputPlaceholderMeta> meta = InputPlaceholderMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputPlaceholderDTO> doCreateEntity(InputPlaceholder entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -28,7 +28,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<InputPlaceholderDTO> doUpdateEntity(InputPlaceholder entity, InputPlaceholderDTO data,
-			BusinessComponent bc) {
+																  BusinessComponent bc) {
 		if (data.isFieldChanged(InputPlaceholderDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -40,7 +40,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 	@Override
 	public Actions<InputPlaceholderDTO> getActions() {
 		return Actions.<InputPlaceholderDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputValidationBusinessExceptionController implements EnumBcIdentifier {
 
 
-
 	InputValidationBusinessException(InputValidationBusinessExceptionService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<CxboxInputValidationBusinessExceptionController> Holder = new Holder<>(
 			CxboxInputValidationBusinessExceptionController.class);

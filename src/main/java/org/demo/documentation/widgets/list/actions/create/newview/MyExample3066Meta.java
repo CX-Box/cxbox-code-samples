@@ -10,20 +10,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3066Meta extends FieldMetaBuilder<MyExample3066DTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3066DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3066DTO_.customFieldText);
-        fields.setEnabled(MyExample3066DTO_.customField);
-        fields.setRequired(MyExample3066DTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3066DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3066DTO_.customFieldText);
-        fields.enableSort(MyExample3066DTO_.customFieldText);
-        fields.enableSort(MyExample3066DTO_.customField);
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3066DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3066DTO_.customFieldText);
+		fields.setEnabled(MyExample3066DTO_.customField);
+		fields.setRequired(MyExample3066DTO_.customField);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3066DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3066DTO_.customFieldText);
+		fields.enableSort(MyExample3066DTO_.customFieldText);
+		fields.enableSort(MyExample3066DTO_.customField);
+	}
 
 }

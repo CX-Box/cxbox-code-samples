@@ -15,13 +15,13 @@ import org.demo.documentation.widgets.groupinghierarhy.customizationcolumns.enum
 @Setter
 @NoArgsConstructor
 public class MyEntity3175InlinePick extends BaseEntity {
-    @Column
-    private String customField;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
-    @Column
-    private String customFieldText;
-    @Column
-    private Long customFieldPercent;
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
+	@Column
+	private String customFieldText;
+	@Column
+	private Long customFieldPercent;
 }

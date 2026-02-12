@@ -18,8 +18,8 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsValidationBusinessExDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsValidationBusinessExDTO_.customField
 		);
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsValidationBusinessExMeta extends
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsValidationBusinessExDTO> fields,
-			InnerBcDescription bcDescription, Long parentId) {
+									 InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsValidationBusinessExDTO_.customField);
 		}

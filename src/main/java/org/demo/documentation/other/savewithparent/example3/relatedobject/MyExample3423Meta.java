@@ -12,21 +12,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3423Meta extends FieldMetaBuilder<MyExample3423DTO> {
 
-    @Override  
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3423DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3423DTO_.customField);
-        fields.setRequired(MyExample3423DTO_.customField);
-        fields.setDrilldown(
-                MyExample3423DTO_.customField,
-                DrillDownType.INNER,
-                "/screen/myexample3422/view/agreementinfo/"+ CxboxMyExample3422Controller.myexample3422 +"/"+ parentId +"/"+ CxboxMyExample3422Controller.myexample3423 + "/" + id
-        );
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3423DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-    }
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3423DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3423DTO_.customField);
+		fields.setRequired(MyExample3423DTO_.customField);
+		fields.setDrilldown(
+				MyExample3423DTO_.customField,
+				DrillDownType.INNER,
+				"/screen/myexample3422/view/agreementinfo/" + CxboxMyExample3422Controller.myexample3422 + "/" + parentId + "/" + CxboxMyExample3422Controller.myexample3423 + "/" + id
+		);
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3423DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+	}
 
 }

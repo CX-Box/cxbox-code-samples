@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class MyExample78Service extends VersionAwareResponseService<MyExample78DTO, MyEntity78> {
 
 	private final MyEntity78Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample78Meta> meta = MyExample78Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample78Meta> meta = MyExample78Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample78DTO> doCreateEntity(MyEntity78 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -29,7 +29,7 @@ public class MyExample78Service extends VersionAwareResponseService<MyExample78D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample78DTO> doUpdateEntity(MyEntity78 entity, MyExample78DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample78DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}

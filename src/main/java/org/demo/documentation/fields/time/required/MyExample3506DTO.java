@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3506DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = TimeValueProvider.class)
-    private LocalDateTime customField;
+	@SearchParameter(name = "customField", provider = TimeValueProvider.class)
+	private LocalDateTime customField;
 
-    public MyExample3506DTO(MyEntity3506 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyExample3506DTO(MyEntity3506 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 }

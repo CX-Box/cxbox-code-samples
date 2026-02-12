@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputRequiredController implements EnumBcIdentifier {
 
 
-
 	InputRequired(InputRequiredService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<CxboxInputRequiredController> Holder = new Holder<>(
 			CxboxInputRequiredController.class);

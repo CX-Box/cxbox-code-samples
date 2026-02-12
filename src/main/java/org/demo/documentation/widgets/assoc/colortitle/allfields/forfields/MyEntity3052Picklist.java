@@ -16,14 +16,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity3052Picklist extends BaseEntity {
-    @Column
-    private String customField;
-    @JoinTable(name = "MyEntity3052_MyEntity3052Multi",
-            joinColumns = @JoinColumn(name = "MyEntity3052_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3052Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3052Multi> customFieldMultiList = new ArrayList<>();
+	@Column
+	private String customField;
+	@JoinTable(name = "MyEntity3052_MyEntity3052Multi",
+			joinColumns = @JoinColumn(name = "MyEntity3052_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3052Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3052Multi> customFieldMultiList = new ArrayList<>();
 }

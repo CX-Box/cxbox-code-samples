@@ -74,7 +74,7 @@ public class UserRoleService {
 	/**
 	 * Refresh the list of user roles
 	 *
-	 * @param userId User
+	 * @param userId             User
 	 * @param intUserRoleKeyList List of roles based on ESK groups
 	 */
 	public void upsertUserRoles(Long userId, List<String> intUserRoleKeyList) {
@@ -130,7 +130,7 @@ public class UserRoleService {
 	/**
 	 * Update main role (main role is last role selected by user)
 	 *
-	 * @param user user
+	 * @param user         user
 	 * @param mainUserRole main role
 	 */
 	public void updateMainUserRole(User user, String mainUserRole) {
@@ -150,7 +150,7 @@ public class UserRoleService {
 	/**
 	 * Update the list of user roles (including OPT_% options)
 	 *
-	 * @param user user
+	 * @param user               user
 	 * @param intUserRoleKeyList list of role codes from ESK
 	 * @return List
 	 */

@@ -12,11 +12,9 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberCreateEditController implements EnumBcIdentifier {
 
 
-
 	numberCreateEdit(NumberCreateEditService.class);
 	// --8<-- [end:bc]
 
-	
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberCreateEditController> Holder = new Holder<>(
 			CxboxNumberCreateEditController.class);

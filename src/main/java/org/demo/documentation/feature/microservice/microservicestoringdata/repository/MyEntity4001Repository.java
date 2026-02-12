@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyEntity4001Repository extends
- JpaRepository<MyEntity4001, Long>, JpaSpecificationExecutor<MyEntity4001>,
-        QueryLanguageRepository<MyEntity4001, Long> {
+		JpaRepository<MyEntity4001, Long>, JpaSpecificationExecutor<MyEntity4001>,
+		QueryLanguageRepository<MyEntity4001, Long> {
 }

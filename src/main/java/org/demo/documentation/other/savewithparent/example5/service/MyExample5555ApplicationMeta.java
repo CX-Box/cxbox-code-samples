@@ -18,7 +18,7 @@ public class MyExample5555ApplicationMeta extends FieldMetaBuilder<ApplicationEn
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<ApplicationEntityDTO> fields,
-			InnerBcDescription bcDescription, Long id, Long parentId) {
+									  InnerBcDescription bcDescription, Long id, Long parentId) {
 		fields.setEnabled(
 				ApplicationEntityDTO_.name,
 				ApplicationEntityDTO_.status
@@ -34,7 +34,7 @@ public class MyExample5555ApplicationMeta extends FieldMetaBuilder<ApplicationEn
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<ApplicationEntityDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableSort(ApplicationEntityDTO_.name);
 		fields.enableFilter(ApplicationEntityDTO_.name);
 		fields.enableSort(ApplicationEntityDTO_.id);

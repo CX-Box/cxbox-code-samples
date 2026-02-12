@@ -17,7 +17,7 @@ public class InputColorMeta extends FieldMetaBuilder<InputColorDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputColorDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputColorDTO_.customField
 		);

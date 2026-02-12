@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class InputColorService extends VersionAwareResponseService<InputColorDTO, InputColor> {
 
 	private final InputColorRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<InputColorMeta> meta = InputColorMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<InputColorMeta> meta = InputColorMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<InputColorDTO> doCreateEntity(InputColor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -39,7 +39,7 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 	@Override
 	public Actions<InputColorDTO> getActions() {
 		return Actions.<InputColorDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

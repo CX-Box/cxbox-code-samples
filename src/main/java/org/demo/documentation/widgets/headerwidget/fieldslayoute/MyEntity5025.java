@@ -1,7 +1,7 @@
 package org.demo.documentation.widgets.headerwidget.fieldslayoute;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +13,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class MyEntity5025 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 }

@@ -20,10 +20,10 @@ import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 public class MyExample49Service extends VersionAwareResponseService<MyExample49DTO, MyEntity49> {
 
 	private final MyEntity49Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample49Meta> meta = MyExample49Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample49Meta> meta = MyExample49Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample49DTO> doCreateEntity(MyEntity49 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -32,7 +32,7 @@ public class MyExample49Service extends VersionAwareResponseService<MyExample49D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample49DTO> doUpdateEntity(MyEntity49 entity, MyExample49DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample49DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 			if (StringUtils.isNotEmpty(data.getCustomField())
@@ -50,7 +50,7 @@ public class MyExample49Service extends VersionAwareResponseService<MyExample49D
 	@Override
 	public Actions<MyExample49DTO> getActions() {
 		return Actions.<MyExample49DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

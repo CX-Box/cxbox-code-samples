@@ -17,7 +17,7 @@ public class MyExample5555TaskMeta extends FieldMetaBuilder<TaskDTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<TaskDTO> fields, InnerBcDescription bcDescription, Long id,
-			Long parentId) {
+									  Long parentId) {
 		fields.setEnabled(
 				TaskDTO_.name,
 				TaskDTO_.status,

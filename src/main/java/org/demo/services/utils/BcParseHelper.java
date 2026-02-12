@@ -14,8 +14,12 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class BcParseHelper {
 
+	public static final Map<String, SearchOperation> OPERATIONS = EnumSet.allOf(SearchOperation.class).stream()
+			.collect(Collectors.toMap(
+					(Function<? super SearchOperation, ? extends String>) SearchOperation::getOperationName,
+					Function.identity()
+			));
 	private static final String DEFAULT_SORTING_FIELD_NAME = "created";
-
 	private static final String DEFAULT_SORTING = "desc";
 
 	public static Optional<Pair<String, String>> getFieldNameToSortType(final BusinessComponent bc) {
@@ -41,11 +45,5 @@ public class BcParseHelper {
 		});
 		return containsMap;
 	}
-
-	public static final Map<String, SearchOperation> OPERATIONS = EnumSet.allOf(SearchOperation.class).stream()
-			.collect(Collectors.toMap(
-					(Function<? super SearchOperation, ? extends String>) SearchOperation::getOperationName,
-					Function.identity()
-			));
 
 }

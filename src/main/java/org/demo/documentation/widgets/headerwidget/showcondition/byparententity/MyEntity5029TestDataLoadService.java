@@ -13,33 +13,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity5029TestDataLoadService {
 
-    @Autowired
-    MyEntity5029Repository repository;
+	@Autowired
+	MyEntity5029Repository repository;
 
-    @Autowired
-    MyEntity5030Repository repository5030;
+	@Autowired
+	MyEntity5030Repository repository5030;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository5030.deleteAll();
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository5030.deleteAll();
 
 
-        MyEntity5030 myEntity5030 =  new MyEntity5030().setCustomField(30L);
-        MyEntity5030 myEntity5030_1 =  new MyEntity5030().setCustomField(4L);
-        MyEntity5030 myEntity5030_2 =  new MyEntity5030().setCustomField(300L);
-        repository5030.save(myEntity5030);
-        repository5030.save(myEntity5030_1);
-        repository5030.save(myEntity5030_2);
+		MyEntity5030 myEntity5030 = new MyEntity5030().setCustomField(30L);
+		MyEntity5030 myEntity5030_1 = new MyEntity5030().setCustomField(4L);
+		MyEntity5030 myEntity5030_2 = new MyEntity5030().setCustomField(300L);
+		repository5030.save(myEntity5030);
+		repository5030.save(myEntity5030_1);
+		repository5030.save(myEntity5030_2);
 
-        repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030));
-        repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030_1));
-        repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030_2));
-    }
+		repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030));
+		repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030_1));
+		repository.save(new MyEntity5029().setCustomField("test data").setCustomFieldEntity(myEntity5030_2));
+	}
 
 }

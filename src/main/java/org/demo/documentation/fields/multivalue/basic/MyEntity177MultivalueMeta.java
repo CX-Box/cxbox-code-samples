@@ -18,15 +18,15 @@ public class MyEntity177MultivalueMeta extends FieldMetaBuilder<MyEntity177Multi
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity177MultivalueDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity177MultivalueDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyEntity177MultivalueDTO_.customField);
 		fields.enableSort(MyEntity177MultivalueDTO_.customField);
 		fields.enableSort(MyEntity177MultivalueDTO_.id);

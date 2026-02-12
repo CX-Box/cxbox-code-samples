@@ -7,7 +7,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
 
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,13 +14,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3861DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
-    @SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
-    private LocalDateTime customFieldDateTime;
-    public MyExample3861DTO(MyEntity3861OutServiceDTO entity) {
-        this.id = entity.getId();
-        this.customField = entity.getCustomField();
-        this.customFieldDateTime = entity.getCustomFieldDateTime();
-    }
+	@SearchParameter(name = "customField")
+	private String customField;
+	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
+	private LocalDateTime customFieldDateTime;
+
+	public MyExample3861DTO(MyEntity3861OutServiceDTO entity) {
+		this.id = entity.getId();
+		this.customField = entity.getCustomField();
+		this.customFieldDateTime = entity.getCustomFieldDateTime();
+	}
 }

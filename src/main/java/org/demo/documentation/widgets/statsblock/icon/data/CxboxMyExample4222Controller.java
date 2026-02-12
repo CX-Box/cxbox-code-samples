@@ -10,31 +10,29 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample4222Controller implements EnumBcIdentifier {
 
 
-
-    myexample4222(MyExample4222Service.class);
-
+	myexample4222(MyExample4222Service.class);
 
 
-    public static final EnumBcIdentifier.Holder<CxboxMyExample4222Controller> Holder = new Holder<>(
-            CxboxMyExample4222Controller.class);
+	public static final EnumBcIdentifier.Holder<CxboxMyExample4222Controller> Holder = new Holder<>(
+			CxboxMyExample4222Controller.class);
 
-    private final BcDescription bcDescription;
+	private final BcDescription bcDescription;
 
-    CxboxMyExample4222Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	CxboxMyExample4222Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    CxboxMyExample4222Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	CxboxMyExample4222Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample4222Controller> {
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<CxboxMyExample4222Controller> {
 
-        public BcSupplier() {
-            super(CxboxMyExample4222Controller.Holder);
-        }
+		public BcSupplier() {
+			super(CxboxMyExample4222Controller.Holder);
+		}
 
-    }
+	}
 
 }

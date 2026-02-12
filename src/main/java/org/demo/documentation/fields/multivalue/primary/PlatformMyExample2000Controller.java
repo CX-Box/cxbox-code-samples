@@ -5,19 +5,17 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-
 import org.springframework.stereotype.Component;
 
 
 @Getter
 public enum PlatformMyExample2000Controller implements EnumBcIdentifier {
 
-	
+
 	// --8<-- [start:bc]
 	myExampleBc2000(MyExample2000Service.class),
 	myEntity2001AssocListPopup(myExampleBc2000, MyEntity2001MultivalueService.class);
 	// --8<-- [end:bc]
-	
 
 
 	public static final EnumBcIdentifier.Holder<PlatformMyExample2000Controller> Holder = new Holder<>(

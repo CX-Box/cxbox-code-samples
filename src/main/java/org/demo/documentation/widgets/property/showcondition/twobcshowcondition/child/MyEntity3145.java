@@ -13,10 +13,10 @@ import org.demo.documentation.widgets.property.showcondition.twobcshowcondition.
 @NoArgsConstructor
 public class MyEntity3145 extends BaseEntity {
 
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private MyEntity3146 customFieldEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	private MyEntity3146 customFieldEntity;
 }

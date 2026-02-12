@@ -1,7 +1,7 @@
 package org.demo.documentation.feature.drilldown.advancedonebcfilter;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class MyEntity3612 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private LocalDateTime customFieldFilterDate;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldFilterDictionaryEnum customFieldFilterDictionary;
+	@Column
+	private String customField;
+	@Column
+	private LocalDateTime customFieldFilterDate;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldFilterDictionaryEnum customFieldFilterDictionary;
 }

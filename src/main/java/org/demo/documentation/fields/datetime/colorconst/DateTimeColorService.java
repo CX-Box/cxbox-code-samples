@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DateTimeColorService extends VersionAwareResponseService<DateTimeColorDTO, DateTimeColor> {
 
 	private final DateTimeColorRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeColorMeta> meta = DateTimeColorMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeColorMeta> meta = DateTimeColorMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeColorDTO> doCreateEntity(DateTimeColor entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DateTimeColorService extends VersionAwareResponseService<DateTimeCo
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeColorDTO> doUpdateEntity(DateTimeColor entity, DateTimeColorDTO data,
-			BusinessComponent bc) {
+															   BusinessComponent bc) {
 		if (data.isFieldChanged(DateTimeColorDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateTimeColorService extends VersionAwareResponseService<DateTimeCo
 	@Override
 	public Actions<DateTimeColorDTO> getActions() {
 		return Actions.<DateTimeColorDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

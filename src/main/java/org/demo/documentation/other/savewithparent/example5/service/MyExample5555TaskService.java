@@ -32,21 +32,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample5555TaskService extends VersionAwareResponseService<TaskDTO, Task> {
 
-	private static final String EXECUTOR = "/screen/autosave/view/executor";
-
 	public static final String LINK_TASK_DOCUMENT = "/screen/autosave/view/taskDocument";
-
 	public static final String NEXT = "Next";
-
+	private static final String EXECUTOR = "/screen/autosave/view/executor";
 	private final TaskRepository repository;
 
 	private final ApplicationRepository applicationRepository;
 
 	private final ExecutorRepository executorRepository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample5555TaskMeta> meta = MyExample5555TaskMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample5555TaskMeta> meta = MyExample5555TaskMeta.class;
 
-    @Override
+	private static PreAction confirmWithComment(@NonNull String actionText, @WidgetName @NonNull String widget) {
+		return ActionsExt.confirmWithCustomWidget(actionText, widget, "Done", "Cancel");
+	}
+
+	@Override
 	protected Specification<Task> getParentSpecification(BusinessComponent bc) {
 		return (root, cq, cb) -> cb.and(
 				super.getParentSpecification(bc).toPredicate(root, cq, cb),
@@ -148,10 +149,6 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 				.build();
 
 
-	}
-
-	private static PreAction confirmWithComment(@NonNull String actionText, @WidgetName @NonNull String widget) {
-		return ActionsExt.confirmWithCustomWidget(actionText, widget, "Done", "Cancel");
 	}
 
 	private ActionResultDTO<TaskDTO> withApproval() {

@@ -12,29 +12,29 @@ import java.util.Objects;
 @Service
 public class MyExample5010Meta extends FieldMetaBuilder<MyExample5010DTO> {
 
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5010DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        if (fields.isFieldChangedNow(fields, MyExample5010DTO_.customField)) {
-            if (Objects.equals(fields.getCurrentValue(MyExample5010DTO_.customField).orElse(null), CustomFieldEnum.HIGH)) {
-                fields.setHidden(MyExample5010DTO_.customFieldHidden);
-            }
-        }
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5010DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		if (fields.isFieldChangedNow(fields, MyExample5010DTO_.customField)) {
+			if (Objects.equals(fields.getCurrentValue(MyExample5010DTO_.customField).orElse(null), CustomFieldEnum.HIGH)) {
+				fields.setHidden(MyExample5010DTO_.customFieldHidden);
+			}
+		}
 
-        fields.setEnabled(MyExample5010DTO_.customFieldHidden);
-        fields.setEnumValues(MyExample5010DTO_.customField, CustomFieldEnum.values());
-        fields.setEnabled(MyExample5010DTO_.customField);
+		fields.setEnabled(MyExample5010DTO_.customFieldHidden);
+		fields.setEnumValues(MyExample5010DTO_.customField, CustomFieldEnum.values());
+		fields.setEnabled(MyExample5010DTO_.customField);
 
-    }
-    // --8<-- [end:buildRowDependentMeta]
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample5010DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample5010DTO_.customFieldHidden);
-        fields.setEnumFilterValues(fields, MyExample5010DTO_.customField, CustomFieldEnum.values());
-        fields.enableFilter(MyExample5010DTO_.customField);
-        fields.setForceActive(MyExample5010DTO_.customField);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample5010DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample5010DTO_.customFieldHidden);
+		fields.setEnumFilterValues(fields, MyExample5010DTO_.customField, CustomFieldEnum.values());
+		fields.enableFilter(MyExample5010DTO_.customField);
+		fields.setForceActive(MyExample5010DTO_.customField);
+	}
 
 }

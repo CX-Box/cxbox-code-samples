@@ -1,14 +1,7 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
@@ -16,6 +9,11 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.core.service.drilldown.PlatformDrilldownService;
 import org.cxbox.core.service.drilldown.filter.FC;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -98,7 +96,7 @@ public class MyExample4300WithDrilldownKeyService extends
 
 	@Override
 	protected ActionResultDTO<MyExample4300WithDrilldownKeyDTO> doUpdateEntity(MyEntity4300WithDriildownKey entity,
-																																						 MyExample4300WithDrilldownKeyDTO data, BusinessComponent bc) {
+																			   MyExample4300WithDrilldownKeyDTO data, BusinessComponent bc) {
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

@@ -9,7 +9,7 @@ import lombok.Getter;
 public enum EditStep {
 	NEXT_STEP("Next step", "screen/myexample3860/");
 
- 	@JsonValue
+	@JsonValue
 	private final String value;
 
 	private final String editView;

@@ -17,7 +17,7 @@ public class NumberBasicMeta extends FieldMetaBuilder<NumberBasicDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberBasicDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberBasicDTO_.customField
 		);

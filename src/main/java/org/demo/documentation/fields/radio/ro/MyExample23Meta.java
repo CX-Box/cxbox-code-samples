@@ -18,7 +18,7 @@ public class MyExample23Meta extends FieldMetaBuilder<MyExample23DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample23DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnumValues(MyExample23DTO_.customField, CustomFieldEnum.values());
 
 	}

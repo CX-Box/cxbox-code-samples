@@ -18,60 +18,60 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class MyExample4205Dao extends AbstractAnySourceBaseDAO<MyExample4205DTO> implements
-        AnySourceBaseDAO<MyExample4205DTO> {
+		AnySourceBaseDAO<MyExample4205DTO> {
 
-    public static final String COUNT_ROW_ID = "0";
+	public static final String COUNT_ROW_ID = "0";
 
-    private final MyEntity4204Repository repository;
+	private final MyEntity4204Repository repository;
 
-    @Override
-    public String getId(final MyExample4205DTO entity) {
-        return entity.getId();
-    }
+	@Override
+	public String getId(final MyExample4205DTO entity) {
+		return entity.getId();
+	}
 
-    @Override
-    public void setId(final String id, final MyExample4205DTO entity) {
-        entity.setId(id);
-    }
+	@Override
+	public void setId(final String id, final MyExample4205DTO entity) {
+		entity.setId(id);
+	}
 
-    @Override
-    public MyExample4205DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
-        return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
-    }
+	@Override
+	public MyExample4205DTO getByIdIgnoringFirstLevelCache(final BusinessComponent bc) {
+		return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
+	}
 
-    @Override
-    public void delete(final BusinessComponent bc) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public void delete(final BusinessComponent bc) {
+		throw new IllegalStateException();
+	}
 
-    @Override
-    public Page<MyExample4205DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
-        return new PageImpl<>(getStats());
-    }
+	@Override
+	public Page<MyExample4205DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
+		return new PageImpl<>(getStats());
+	}
 
-    @Override
-    public MyExample4205DTO update(BusinessComponent bc, MyExample4205DTO entity) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public MyExample4205DTO update(BusinessComponent bc, MyExample4205DTO entity) {
+		throw new IllegalStateException();
+	}
 
-    @Override
-    public MyExample4205DTO create(final BusinessComponent bc, final MyExample4205DTO entity) {
-        throw new IllegalStateException();
-    }
+	@Override
+	public MyExample4205DTO create(final BusinessComponent bc, final MyExample4205DTO entity) {
+		throw new IllegalStateException();
+	}
 
-    @NonNull
-    private List<MyExample4205DTO> getStats() {
-        List<MyExample4205DTO> result = new ArrayList<>();
-        MyExample4205DTO newRow = new MyExample4205DTO()
-                .setTitle("All record")
-                .setValue(repository.count())
-                .setIcon("team")
-                .setDescription("Count rows in table");
-        newRow.setId(COUNT_ROW_ID);
-        result.add(newRow);
+	@NonNull
+	private List<MyExample4205DTO> getStats() {
+		List<MyExample4205DTO> result = new ArrayList<>();
+		MyExample4205DTO newRow = new MyExample4205DTO()
+				.setTitle("All record")
+				.setValue(repository.count())
+				.setIcon("team")
+				.setDescription("Count rows in table");
+		newRow.setId(COUNT_ROW_ID);
+		result.add(newRow);
 
 
-        return result;
-    }
+		return result;
+	}
 
 }

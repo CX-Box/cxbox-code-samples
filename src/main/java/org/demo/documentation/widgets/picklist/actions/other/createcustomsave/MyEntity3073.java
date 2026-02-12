@@ -17,9 +17,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 public class MyEntity3073 extends BaseEntity {
 
 
-    @JoinColumn(name = "CUSTOM_FIELD_ID")
-    @ManyToOne
-    private MyEntity3073Pick customFieldEntity;
-    @Column
-    private String customFieldRequred;
+	@JoinColumn(name = "CUSTOM_FIELD_ID")
+	@ManyToOne
+	private MyEntity3073Pick customFieldEntity;
+	@Column
+	private String customFieldRequred;
 }

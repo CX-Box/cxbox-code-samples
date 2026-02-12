@@ -52,9 +52,10 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		});
 
 	}
+
 	/**
 	 * @deprecated Do not use.
-	 *             Use {@link #setValue(String, String)} instead.
+	 * Use {@link #setValue(String, String)} instead.
 	 */
 	@Deprecated
 	@Override
@@ -81,7 +82,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		});
 	}
 
-		public SELF setValue(String columnName, String value) {
+	public SELF setValue(String columnName, String value) {
 		return Allure.step("Set value on field", step -> {
 			logTime(step);
 

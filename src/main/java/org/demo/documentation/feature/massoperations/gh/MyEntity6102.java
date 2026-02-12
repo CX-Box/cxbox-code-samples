@@ -1,7 +1,7 @@
 package org.demo.documentation.feature.massoperations.gh;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -16,13 +16,13 @@ import org.demo.documentation.feature.massoperations.gh.enums.CustomFieldDiction
 @Setter
 @NoArgsConstructor
 public class MyEntity6102 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Column
-    private Boolean customFieldCheckbox;
+	@Column
+	private Boolean customFieldCheckbox;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

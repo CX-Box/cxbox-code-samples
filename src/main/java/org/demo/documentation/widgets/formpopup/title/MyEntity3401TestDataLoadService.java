@@ -1,27 +1,26 @@
 package org.demo.documentation.widgets.formpopup.title;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
-
 @Service
 public class MyEntity3401TestDataLoadService {
 
-    @Autowired
-    MyEntity3401Repository repository;
+	@Autowired
+	MyEntity3401Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3401().setCustomField("Test data").setCustomField2("Test data2"));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3401().setCustomField("Test data").setCustomField2("Test data2"));
+	}
 
 }

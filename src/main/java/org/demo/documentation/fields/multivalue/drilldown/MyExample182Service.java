@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.multivalue.drilldown;
 
-import java.util.Objects;
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,8 @@ import org.cxbox.core.service.action.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -20,13 +21,13 @@ import org.springframework.stereotype.Service;
 public class MyExample182Service extends VersionAwareResponseService<MyExample182DTO, MyEntity182> {
 
 	private final MyEntity182Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample182Meta> meta = MyExample182Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample182Meta> meta = MyExample182Meta.class;
 
-    @Autowired
+	@Autowired
 	private EntityManager entityManager;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample182DTO> doCreateEntity(MyEntity182 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -35,7 +36,7 @@ public class MyExample182Service extends VersionAwareResponseService<MyExample18
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample182DTO> doUpdateEntity(MyEntity182 entity, MyExample182DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample182DTO_.customField)) {
 			entity.getCustomFieldList().clear();
 			entity.getCustomFieldList().addAll(data.getCustomField().getValues().stream()
@@ -54,7 +55,7 @@ public class MyExample182Service extends VersionAwareResponseService<MyExample18
 	@Override
 	public Actions<MyExample182DTO> getActions() {
 		return Actions.<MyExample182DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -14,35 +14,35 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3504DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField", provider = TimeValueProvider.class)
-    private LocalDateTime customField;
-    @SearchParameter(name = "customFieldhmm", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldhmm;
-    @SearchParameter(name = "customFieldh", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldh;
-    @SearchParameter(name = "customFieldhmmA", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldhmmA;
-    @SearchParameter(name = "customFieldhmmssA", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldhmmssA;
-    @SearchParameter(name = "customFieldmm", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldmm;
-    @SearchParameter(name = "customFieldmmss", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldmmss;
-    @SearchParameter(name = "customFieldss", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldss;
-    @SearchParameter(name = "customFieldhA", provider = TimeValueProvider.class)
-    private LocalDateTime customFieldhA;
+	@SearchParameter(name = "customField", provider = TimeValueProvider.class)
+	private LocalDateTime customField;
+	@SearchParameter(name = "customFieldhmm", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldhmm;
+	@SearchParameter(name = "customFieldh", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldh;
+	@SearchParameter(name = "customFieldhmmA", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldhmmA;
+	@SearchParameter(name = "customFieldhmmssA", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldhmmssA;
+	@SearchParameter(name = "customFieldmm", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldmm;
+	@SearchParameter(name = "customFieldmmss", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldmmss;
+	@SearchParameter(name = "customFieldss", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldss;
+	@SearchParameter(name = "customFieldhA", provider = TimeValueProvider.class)
+	private LocalDateTime customFieldhA;
 
-    public MyExample3504DTO(MyEntity3504 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldhmm = entity.getCustomFieldhmm();
-        this.customFieldh = entity.getCustomFieldh();
-        this.customFieldhmmA = entity.getCustomFieldhmmA();
-        this.customFieldhmmssA = entity.getCustomFieldhmmssA();
-        this.customFieldmm = entity.getCustomFieldmm();
-        this.customFieldmmss = entity.getCustomFieldmmss();
-        this.customFieldss = entity.getCustomFieldss();
-        this.customFieldhA = entity.getCustomFieldhA();
-    }
+	public MyExample3504DTO(MyEntity3504 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldhmm = entity.getCustomFieldhmm();
+		this.customFieldh = entity.getCustomFieldh();
+		this.customFieldhmmA = entity.getCustomFieldhmmA();
+		this.customFieldhmmssA = entity.getCustomFieldhmmssA();
+		this.customFieldmm = entity.getCustomFieldmm();
+		this.customFieldmmss = entity.getCustomFieldmmss();
+		this.customFieldss = entity.getCustomFieldss();
+		this.customFieldhA = entity.getCustomFieldhA();
+	}
 }

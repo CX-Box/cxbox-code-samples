@@ -17,7 +17,7 @@ public class MyExample74Meta extends FieldMetaBuilder<MyExample74DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample74DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample74DTO_.customField);
 		fields.setPlaceholder(MyExample74DTO_.customField, "Text Placeholder");
 	}

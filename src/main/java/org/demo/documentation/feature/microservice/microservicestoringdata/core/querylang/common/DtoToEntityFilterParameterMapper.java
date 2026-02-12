@@ -9,7 +9,7 @@ import java.util.List;
 public interface DtoToEntityFilterParameterMapper {
 
 	/**
-	 * @param dtoField DTO field to search or sort by
+	 * @param dtoField    DTO field to search or sort by
 	 * @param filterParam Filter parameter that defines the type of operation and the values to filter
 	 * @return Classify Data Parameters for defining of predicates of searching data in Persistence Layer
 	 */

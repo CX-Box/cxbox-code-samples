@@ -17,7 +17,7 @@ public class InputColorConstMeta extends FieldMetaBuilder<InputColorConstDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<InputColorConstDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				InputColorConstDTO_.customField
 		);
@@ -30,7 +30,7 @@ public class InputColorConstMeta extends FieldMetaBuilder<InputColorConstDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<InputColorConstDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(InputColorConstDTO_.customField);
 		}

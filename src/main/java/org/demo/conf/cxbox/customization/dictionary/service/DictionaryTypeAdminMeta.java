@@ -7,7 +7,7 @@ import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO;
 import org.springframework.stereotype.Service;
 
-import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO_.*;
+import static org.demo.conf.cxbox.customization.dictionary.dto.DictionaryTypeAdminDTO_.type;
 
 @SuppressWarnings({"java:S6813"})
 @Service
@@ -15,15 +15,15 @@ public class DictionaryTypeAdminMeta extends FieldMetaBuilder<DictionaryTypeAdmi
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DictionaryTypeAdminDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(type);
 		fields.setRequired(type);
 	}
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DictionaryTypeAdminDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(type);
 		fields.enableSort(type);
 	}

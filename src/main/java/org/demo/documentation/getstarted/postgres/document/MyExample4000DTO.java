@@ -10,7 +10,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyExample4000DTO extends DataResponseDTO {
 
-    public MyExample4000DTO(MyEntity4000 entity) {
-        this.id = entity.getId().toString();
-    }
+	public MyExample4000DTO(MyEntity4000 entity) {
+		this.id = entity.getId().toString();
+	}
 }

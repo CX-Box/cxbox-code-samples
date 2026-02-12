@@ -17,15 +17,15 @@ public class RestResponsePage<T> extends PageImpl<T> implements Serializable {
 
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public RestResponsePage(@JsonProperty("content") List<T> content,
-                            @JsonProperty("number") int number,
-                            @JsonProperty("size") int size,
-                            @JsonProperty("totalElements") Long totalElements,
-                            @JsonProperty("pageable") JsonNode pageable,
-                            @JsonProperty("last") boolean last,
-                            @JsonProperty("totalPages") int totalPages,
-                            @JsonProperty("sort") JsonNode sort,
-                            @JsonProperty("first") boolean first,
-                            @JsonProperty("empty") boolean empty) {
+							@JsonProperty("number") int number,
+							@JsonProperty("size") int size,
+							@JsonProperty("totalElements") Long totalElements,
+							@JsonProperty("pageable") JsonNode pageable,
+							@JsonProperty("last") boolean last,
+							@JsonProperty("totalPages") int totalPages,
+							@JsonProperty("sort") JsonNode sort,
+							@JsonProperty("first") boolean first,
+							@JsonProperty("empty") boolean empty) {
 		super(content, PageRequest.of(number, size), totalElements);
 	}
 

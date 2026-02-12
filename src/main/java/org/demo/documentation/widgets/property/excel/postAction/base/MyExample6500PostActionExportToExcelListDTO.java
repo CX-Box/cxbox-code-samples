@@ -11,11 +11,11 @@ import java.util.Optional;
 @Setter
 @NoArgsConstructor
 public class MyExample6500PostActionExportToExcelListDTO extends DataResponseDTO {
-    private String testData;
+	private String testData;
 
-    public MyExample6500PostActionExportToExcelListDTO(MyExample6500PostActionExportToExcelListEntity entity) {
-        this.id = Optional.ofNullable(entity.getId()).map(String::valueOf).orElse(null);
-        this.testData = entity.getTestData();
-    }
+	public MyExample6500PostActionExportToExcelListDTO(MyExample6500PostActionExportToExcelListEntity entity) {
+		this.id = Optional.ofNullable(entity.getId()).map(String::valueOf).orElse(null);
+		this.testData = entity.getTestData();
+	}
 
 }

@@ -1,6 +1,5 @@
 package org.demo.documentation.fields.inlinepicklist.colorconst;
 
-import java.util.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +8,8 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.fields.inlinepicklist.colorconst.picklist.MyEntity137;
+
+import java.util.Optional;
 
 @Getter
 @Setter

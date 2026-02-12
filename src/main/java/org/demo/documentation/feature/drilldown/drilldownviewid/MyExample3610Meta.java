@@ -10,25 +10,26 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3610Meta extends FieldMetaBuilder<MyExample3610DTO> {
-    // --8<-- [start:buildRowDependentMeta]
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3610DTO_.customFieldDrillDown);
-        fields.setEnabled(MyExample3610DTO_.customField);
-        fields.setRequired(MyExample3610DTO_.customFieldDrillDown);
-        fields.setDrilldown(
-                MyExample3610DTO_.customFieldDrillDown,
-                DrillDownType.INNER,
-                "/screen/myexample3610/view/myexample3610form/" + CxboxMyExample3610Controller.myexample3610 + "/" + id
-        );
+	// --8<-- [start:buildRowDependentMeta]
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3610DTO_.customFieldDrillDown);
+		fields.setEnabled(MyExample3610DTO_.customField);
+		fields.setRequired(MyExample3610DTO_.customFieldDrillDown);
+		fields.setDrilldown(
+				MyExample3610DTO_.customFieldDrillDown,
+				DrillDownType.INNER,
+				"/screen/myexample3610/view/myexample3610form/" + CxboxMyExample3610Controller.myexample3610 + "/" + id
+		);
 
-    }
-    // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3610DTO_.customFieldDrillDown);
-        fields.enableSort(MyExample3610DTO_.customFieldDrillDown);
-    }
+	}
+
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3610DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3610DTO_.customFieldDrillDown);
+		fields.enableSort(MyExample3610DTO_.customFieldDrillDown);
+	}
 
 }

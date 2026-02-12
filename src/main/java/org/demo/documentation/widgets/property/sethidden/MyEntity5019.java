@@ -15,23 +15,23 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity5019 extends BaseEntity {
-    @Column
-    private String customField;
+	@Column
+	private String customField;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 
-    @JoinTable(name = "MyEntity5019_MyEntity5019MultiPick",
-            joinColumns = @JoinColumn(name = "MyEntity5019_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity5019Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity5019Multi> customFieldMVList = new ArrayList<>();
+	@JoinTable(name = "MyEntity5019_MyEntity5019MultiPick",
+			joinColumns = @JoinColumn(name = "MyEntity5019_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity5019Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity5019Multi> customFieldMVList = new ArrayList<>();
 
-    @JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
-    @ManyToOne
-    private MyEntity5019Pick customFieldPickListEntity;
+	@JoinColumn(name = "CUSTOM_FIELD_PICK_LIST_ID")
+	@ManyToOne
+	private MyEntity5019Pick customFieldPickListEntity;
 }

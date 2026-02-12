@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3861ForPickListpopupOutServiceDTO implements Serializable {
 
-    @Id
-    private String id;
-    private String customField;
-    private LocalDateTime customFieldDateTime;
+	@Id
+	private String id;
+	private String customField;
+	private LocalDateTime customFieldDateTime;
 
 }

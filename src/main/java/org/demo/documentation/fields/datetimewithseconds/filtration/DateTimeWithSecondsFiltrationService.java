@@ -16,12 +16,12 @@ public class DateTimeWithSecondsFiltrationService extends
 		VersionAwareResponseService<DateTimeWithSecondsFiltrationDTO, DateTimeWithSecondsFiltrationEntity> {
 
 	private final DateTimeWithSecondsFiltrationEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsFiltrationMeta> meta = DateTimeWithSecondsFiltrationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsFiltrationMeta> meta = DateTimeWithSecondsFiltrationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsFiltrationDTO> doCreateEntity(DateTimeWithSecondsFiltrationEntity entity,
-			BusinessComponent bc) {
+																			BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
 	}
@@ -29,7 +29,7 @@ public class DateTimeWithSecondsFiltrationService extends
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateTimeWithSecondsFiltrationDTO> doUpdateEntity(DateTimeWithSecondsFiltrationEntity entity,
-			DateTimeWithSecondsFiltrationDTO data, BusinessComponent bc) {
+																			   DateTimeWithSecondsFiltrationDTO data, BusinessComponent bc) {
 		setIfChanged(data, DateTimeWithSecondsFiltrationDTO_.customField, entity::setCustomField);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
@@ -39,7 +39,7 @@ public class DateTimeWithSecondsFiltrationService extends
 	@Override
 	public Actions<DateTimeWithSecondsFiltrationDTO> getActions() {
 		return Actions.<DateTimeWithSecondsFiltrationDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

@@ -20,28 +20,28 @@ import java.util.List;
 @NoArgsConstructor
 public class MyEntity3067 extends BaseEntity {
 
-    @JoinColumn(name = "CUSTOM_FIELD_ID")
-    @ManyToOne
-    private MyEntity3067Pick customFieldEntity;
-    @JoinColumn(name = "CUSTOM_FIELD_INLINE_PICK_LIST_ID")
-    @ManyToOne
-    private MyEntity3067Pick customFieldInlinePickListEntity;
-    @JoinTable(name = "MyEntity3067_MyEntity3067MultiPick",
-            joinColumns = @JoinColumn(name = "MyEntity3067_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3067Multi_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3067Multi> customFieldMultivalueList = new ArrayList<>();
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldRadioEnum customFieldRadio;
-    @Column
-    private String customFieldFileUploade;
-    @Column
-    private String customFieldFileUploadeId;
-    @Enumerated(value = EnumType.STRING)
-    @Column
-    private CustomFieldDictionaryEnum customFieldDictionary;
+	@JoinColumn(name = "CUSTOM_FIELD_ID")
+	@ManyToOne
+	private MyEntity3067Pick customFieldEntity;
+	@JoinColumn(name = "CUSTOM_FIELD_INLINE_PICK_LIST_ID")
+	@ManyToOne
+	private MyEntity3067Pick customFieldInlinePickListEntity;
+	@JoinTable(name = "MyEntity3067_MyEntity3067MultiPick",
+			joinColumns = @JoinColumn(name = "MyEntity3067_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3067Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3067Multi> customFieldMultivalueList = new ArrayList<>();
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldRadioEnum customFieldRadio;
+	@Column
+	private String customFieldFileUploade;
+	@Column
+	private String customFieldFileUploadeId;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

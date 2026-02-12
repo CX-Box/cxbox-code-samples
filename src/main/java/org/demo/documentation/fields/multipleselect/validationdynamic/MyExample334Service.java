@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 public class MyExample334Service extends VersionAwareResponseService<MyExample334DTO, MyEntity334> {
 
 	private final MyEntity334Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample334Meta> meta = MyExample334Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample334Meta> meta = MyExample334Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample334DTO> doCreateEntity(MyEntity334 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -33,7 +33,7 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample334DTO> doUpdateEntity(MyEntity334 entity, MyExample334DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample334DTO_.customField)) {
 			entity.setCustomField(
@@ -57,7 +57,7 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 	@Override
 	public Actions<MyExample334DTO> getActions() {
 		return Actions.<MyExample334DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -79,14 +79,14 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 					"Custom message about error"
 			);
 		}
-		if  (customFieldAdditionalFlg) {
+		if (customFieldAdditionalFlg) {
 			entity.addField(
 					MyExample334DTO_.customFieldAdditional.getName(),
 					"Custom message about error"
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

@@ -27,7 +27,7 @@ public class DateColorConstService extends VersionAwareResponseService<DateColor
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateColorConstDTO> doUpdateEntity(dateColorConstEntity entity, DateColorConstDTO data,
-			BusinessComponent bc) {
+																BusinessComponent bc) {
 		if (data.isFieldChanged(DateColorConstDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateColorConstService extends VersionAwareResponseService<DateColor
 	@Override
 	public Actions<DateColorConstDTO> getActions() {
 		return Actions.<DateColorConstDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

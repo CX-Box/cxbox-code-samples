@@ -3,6 +3,7 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.mapp
 import org.demo.documentation.feature.microservice.microservicestoringdata.dto.MyExample3910DTO;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3910;
 import org.mapstruct.Mapper;
+
 @Mapper(componentModel = "spring")
 public interface MyEntity3910Mapper {
 

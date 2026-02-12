@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-
 import org.springframework.stereotype.Component;
 
 
@@ -12,30 +11,29 @@ import org.springframework.stereotype.Component;
 public enum PlatformMyExample4205Controller implements EnumBcIdentifier {
 
 
-    myExampleBc4205(MyExample4205Service.class);
+	myExampleBc4205(MyExample4205Service.class);
 
 
+	public static final EnumBcIdentifier.Holder<PlatformMyExample4205Controller> Holder = new Holder<>(
+			PlatformMyExample4205Controller.class);
 
-    public static final EnumBcIdentifier.Holder<PlatformMyExample4205Controller> Holder = new Holder<>(
-            PlatformMyExample4205Controller.class);
+	private final BcDescription bcDescription;
 
-    private final BcDescription bcDescription;
+	PlatformMyExample4205Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
 
-    PlatformMyExample4205Controller(String parentName, Class<?> serviceClass, boolean refresh) {
-        this.bcDescription = buildDescription(parentName, serviceClass, refresh);
-    }
+	PlatformMyExample4205Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
 
-    PlatformMyExample4205Controller(Class<?> serviceClass) {
-        this((String) null, serviceClass, false);
-    }
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4205Controller> {
 
-    @Component
-    public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample4205Controller> {
+		public BcSupplier() {
+			super(PlatformMyExample4205Controller.Holder);
+		}
 
-        public BcSupplier() {
-            super(PlatformMyExample4205Controller.Holder);
-        }
-
-    }
+	}
 
 }

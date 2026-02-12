@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface MyEntity3126Repository extends JpaRepository<MyEntity3126, Long>, JpaSpecificationExecutor<MyEntity3126> {
 
-    List<MyEntity3126> findAllByLocationAndObject(String location,String object);
-    List<MyEntity3126> findAllByLocation(String location);
-    List<MyEntity3126> findAllByObject(String object);
+	List<MyEntity3126> findAllByLocationAndObject(String location, String object);
+
+	List<MyEntity3126> findAllByLocation(String location);
+
+	List<MyEntity3126> findAllByObject(String object);
 }

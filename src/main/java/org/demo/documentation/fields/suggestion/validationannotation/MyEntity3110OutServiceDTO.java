@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class MyEntity3110OutServiceDTO implements Serializable {
-    private String id;
-    private String customFieldSuggestion;
-    private LocalDateTime customFieldSuggestionDate;
+	private String id;
+	private String customFieldSuggestion;
+	private LocalDateTime customFieldSuggestionDate;
 }

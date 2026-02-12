@@ -5,11 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.other.savewithparent.example5.service.MyExample5555ApplicationService;
-import org.demo.documentation.other.savewithparent.example5.service.MyExample5555TaskDocumentService;
-import org.demo.documentation.other.savewithparent.example5.service.MyExample5555TaskExecutorService;
-import org.demo.documentation.other.savewithparent.example5.service.MyExample5555ExecutorService;
-import org.demo.documentation.other.savewithparent.example5.service.MyExample5555TaskService;
+import org.demo.documentation.other.savewithparent.example5.service.*;
 import org.springframework.stereotype.Component;
 
 @SuppressWarnings({"java:S115", "java:S1144"})

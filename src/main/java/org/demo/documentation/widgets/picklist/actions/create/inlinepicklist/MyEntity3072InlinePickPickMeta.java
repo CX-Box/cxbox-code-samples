@@ -10,23 +10,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3072InlinePickPickMeta extends FieldMetaBuilder<MyEntity3072InlinePickPickDTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3072InlinePickPickDTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyEntity3072InlinePickPickDTO_.id);
-        fields.setEnabled(MyEntity3072InlinePickPickDTO_.customFieldPick);
-    }
-   // --8<-- [end:buildRowDependentMeta]
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3072InlinePickPickDTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyEntity3072InlinePickPickDTO_.id);
+		fields.setEnabled(MyEntity3072InlinePickPickDTO_.customFieldPick);
+	}
+	// --8<-- [end:buildRowDependentMeta]
 
-    // --8<-- [start:buildIndependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyEntity3072InlinePickPickDTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
+	// --8<-- [start:buildIndependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyEntity3072InlinePickPickDTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
 
-        fields.enableSort(MyEntity3072InlinePickPickDTO_.id);
-        fields.enableSort(MyEntity3072InlinePickPickDTO_.customFieldPick);
+		fields.enableSort(MyEntity3072InlinePickPickDTO_.id);
+		fields.enableSort(MyEntity3072InlinePickPickDTO_.customFieldPick);
 
-    }
-    // --8<-- [end:buildIndependentMeta]
+	}
+	// --8<-- [end:buildIndependentMeta]
 }

@@ -22,7 +22,7 @@ public class MyExample87Meta extends FieldMetaBuilder<MyExample87DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample87DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnumValues(MyExample87DTO_.customFieldSecond, MIDDLE, LOW,HIGH);
+		fields.setEnumValues(MyExample87DTO_.customFieldSecond, MIDDLE, LOW, HIGH);
 		fields.setEnumValues(MyExample87DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumValues(MyExample87DTO_.customFieldNew, CustomFieldNewEnum.values());
 
@@ -36,7 +36,7 @@ public class MyExample87Meta extends FieldMetaBuilder<MyExample87DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample87DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 
-		fields.setEnumFilterValues(fields, MyExample87DTO_.customFieldSecond, LOW,HIGH,MIDDLE);
+		fields.setEnumFilterValues(fields, MyExample87DTO_.customFieldSecond, LOW, HIGH, MIDDLE);
 		fields.enableFilter(MyExample87DTO_.customFieldSecond);
 		if (Boolean.TRUE.equals(configuration.getForceActiveEnabled())) {
 			fields.setForceActive(MyExample87DTO_.customField);

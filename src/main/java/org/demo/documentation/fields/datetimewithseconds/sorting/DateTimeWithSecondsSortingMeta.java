@@ -17,8 +17,8 @@ public class DateTimeWithSecondsSortingMeta extends FieldMetaBuilder<DateTimeWit
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DateTimeWithSecondsSortingDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				DateTimeWithSecondsSortingDTO_.customField
 		);
@@ -31,7 +31,7 @@ public class DateTimeWithSecondsSortingMeta extends FieldMetaBuilder<DateTimeWit
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DateTimeWithSecondsSortingDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(DateTimeWithSecondsSortingDTO_.customField);
 		}

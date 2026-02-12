@@ -1,6 +1,5 @@
 package org.demo.repository.core.notification;
 
-import java.util.List;
 import org.demo.conf.cxbox.extension.notification.entity.NotificationEntity;
 import org.demo.entity.core.User;
 import org.springframework.data.domain.Page;
@@ -9,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
 

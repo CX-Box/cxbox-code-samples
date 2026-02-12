@@ -14,32 +14,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3021Service extends VersionAwareResponseService<MyExample3021DTO, MyEntity3021> {
 
-    private final MyEntity3021Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3021Meta> meta = MyExample3021Meta.class;
+	private final MyEntity3021Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3021Meta> meta = MyExample3021Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3021DTO> doCreateEntity(MyEntity3021 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3021DTO> doCreateEntity(MyEntity3021 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3021DTO> doUpdateEntity(MyEntity3021 entity, MyExample3021DTO data, BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3021DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected ActionResultDTO<MyExample3021DTO> doUpdateEntity(MyEntity3021 entity, MyExample3021DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3021DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3021DTO> getActions() {
-        return Actions.<MyExample3021DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .create(crt -> crt)
-                .delete(dlt -> dlt)
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3021DTO> getActions() {
+		return Actions.<MyExample3021DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt)
+				.delete(dlt -> dlt)
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

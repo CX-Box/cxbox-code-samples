@@ -21,10 +21,10 @@ public class MyExample5555ApplicationService extends
 		VersionAwareResponseService<ApplicationEntityDTO, ApplicationEntity> {
 
 	private final ApplicationRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample5555ApplicationMeta> meta = MyExample5555ApplicationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample5555ApplicationMeta> meta = MyExample5555ApplicationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<ApplicationEntityDTO> doCreateEntity(ApplicationEntity entity, BusinessComponent bc) {
 		entity.setStatus(StatusEnum.NEW);
 		repository.save(entity);
@@ -33,7 +33,7 @@ public class MyExample5555ApplicationService extends
 
 	@Override
 	protected ActionResultDTO<ApplicationEntityDTO> doUpdateEntity(ApplicationEntity entity, ApplicationEntityDTO data,
-			BusinessComponent bc) {
+																   BusinessComponent bc) {
 		setIfChanged(data, ApplicationEntityDTO_.name, entity::setName);
 		setIfChanged(data, ApplicationEntityDTO_.status, entity::setStatus);
 		setIfChanged(data, ApplicationEntityDTO_.createdDate, entity::setCreatedDate);

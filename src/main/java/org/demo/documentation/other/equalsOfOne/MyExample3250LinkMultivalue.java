@@ -1,19 +1,17 @@
 package org.demo.documentation.other.equalsOfOne;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneManyToMany;
-import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToMany;
-import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToOne;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneManyToMany;
+import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToMany;
+import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOneOneToOne;
 
 @Getter
 @Setter

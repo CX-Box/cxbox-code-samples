@@ -14,13 +14,13 @@ public class ActionSuggestionAdminMeta extends AnySourceFieldMetaBuilder<ActionS
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<ActionSuggestionAdminDTO> fields, BcDescription bc,
-			String id, String parentId) {
+									  String id, String parentId) {
 
 	}
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<ActionSuggestionAdminDTO> fields, BcDescription bcDescription,
-			String parentId) {
+									 String parentId) {
 
 	}
 

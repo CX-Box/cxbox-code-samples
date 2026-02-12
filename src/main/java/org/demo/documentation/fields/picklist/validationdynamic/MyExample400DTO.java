@@ -1,11 +1,12 @@
 package org.demo.documentation.fields.picklist.validationdynamic;
 
-import java.util.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+
+import java.util.Optional;
 
 @Getter
 @Setter

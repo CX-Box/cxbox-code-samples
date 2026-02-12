@@ -14,34 +14,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3139Service extends VersionAwareResponseService<MyExample3139DTO, MyEntity3139> {
 
-    private final MyEntity3139Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3139Meta> meta = MyExample3139Meta.class;
+	private final MyEntity3139Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3139Meta> meta = MyExample3139Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3139DTO> doCreateEntity(MyEntity3139 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3139DTO> doCreateEntity(MyEntity3139 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    @Override
-    protected ActionResultDTO<MyExample3139DTO> doUpdateEntity(MyEntity3139 entity, MyExample3139DTO data, BusinessComponent bc) {
-        setIfChanged(data, MyExample3139DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
+	@Override
+	protected ActionResultDTO<MyExample3139DTO> doUpdateEntity(MyEntity3139 entity, MyExample3139DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3139DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
 
-        if (data.isFieldChanged(MyExample3139DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
+		if (data.isFieldChanged(MyExample3139DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
 
-     // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3139DTO> getActions() {
-        return Actions.<MyExample3139DTO>builder()
-               .save(sv -> sv.text("Save"))
-                .create(crt -> crt)
-                .delete(dlt -> dlt)
-                .build();
-    }
-     // --8<-- [end:getActions]  
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3139DTO> getActions() {
+		return Actions.<MyExample3139DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt)
+				.delete(dlt -> dlt)
+				.build();
+	}
+	// --8<-- [end:getActions]
 }

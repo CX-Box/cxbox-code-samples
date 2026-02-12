@@ -2,14 +2,12 @@ package org.demo.documentation.feature.drilldown.drilldownfilter;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

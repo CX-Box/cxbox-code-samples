@@ -14,12 +14,10 @@ import java.io.Serial;
 @Setter
 @NoArgsConstructor
 public class MyEntity3431 extends BaseEntity {
-    @Column
-    private String customField;
-
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    private Long userId;
+	@Serial
+	private static final long serialVersionUID = 1L;
+	@Column
+	private String customField;
+	private Long userId;
 
 }

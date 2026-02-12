@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class WidgetStylesMultiMultiMultivalueService extends VersionAwareResponseService<WidgetStylesMultiMultiMultivalueDTO, WidgetStylesMultiMulti> {
 
-    @Getter(onMethod_ = @Override)
-    private final Class<WidgetStylesMultiMultiMultivalueMeta> meta = WidgetStylesMultiMultiMultivalueMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<WidgetStylesMultiMultiMultivalueMeta> meta = WidgetStylesMultiMultiMultivalueMeta.class;
 
-    @Override
-    protected CreateResult<WidgetStylesMultiMultiMultivalueDTO> doCreateEntity(WidgetStylesMultiMulti entity, BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected CreateResult<WidgetStylesMultiMultiMultivalueDTO> doCreateEntity(WidgetStylesMultiMulti entity, BusinessComponent bc) {
+		return null;
+	}
 
-    @Override
-    protected ActionResultDTO<WidgetStylesMultiMultiMultivalueDTO> doUpdateEntity(WidgetStylesMultiMulti entity, WidgetStylesMultiMultiMultivalueDTO data,
-                                                                                  BusinessComponent bc) {
-        return null;
-    }
+	@Override
+	protected ActionResultDTO<WidgetStylesMultiMultiMultivalueDTO> doUpdateEntity(WidgetStylesMultiMulti entity, WidgetStylesMultiMultiMultivalueDTO data,
+																				  BusinessComponent bc) {
+		return null;
+	}
 
 
 }

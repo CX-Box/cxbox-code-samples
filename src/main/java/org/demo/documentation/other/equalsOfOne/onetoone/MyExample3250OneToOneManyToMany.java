@@ -1,29 +1,18 @@
 package org.demo.documentation.other.equalsOfOne.onetoone;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.other.equalsOfOne.MyExample3250Dictionary;
 import org.demo.documentation.other.equalsOfOne.MyExample3250ElementCollectionData;
 import org.demo.documentation.other.equalsOfOne.MyExample3250Multivalue;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter

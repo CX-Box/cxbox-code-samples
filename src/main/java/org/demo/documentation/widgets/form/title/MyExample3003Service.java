@@ -15,39 +15,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3003Service extends VersionAwareResponseService<MyExample3003DTO, MyEntity3003> {
 
-    private final MyEntity3003Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample3003Meta> meta = MyExample3003Meta.class;
+	private final MyEntity3003Repository repository;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3003Meta> meta = MyExample3003Meta.class;
 
-    @Override
-    protected CreateResult<MyExample3003DTO> doCreateEntity(MyEntity3003 entity, BusinessComponent bc) {
-        repository.save(entity);
-        return new CreateResult<>(entityToDto(bc, entity));
-    }
+	@Override
+	protected CreateResult<MyExample3003DTO> doCreateEntity(MyEntity3003 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
 
-    // --8<-- [start:doUpdateEntity]
-    @Override
-    protected ActionResultDTO<MyExample3003DTO> doUpdateEntity(MyEntity3003 entity, MyExample3003DTO data,
-                                                               BusinessComponent bc) {
-        if (data.isFieldChanged(MyExample3003DTO_.customField2)) {
-            entity.setCustomField2(data.getCustomField2());
-        }
+	// --8<-- [start:doUpdateEntity]
+	@Override
+	protected ActionResultDTO<MyExample3003DTO> doUpdateEntity(MyEntity3003 entity, MyExample3003DTO data,
+															   BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3003DTO_.customField2)) {
+			entity.setCustomField2(data.getCustomField2());
+		}
 
-        if (data.isFieldChanged(MyExample3003DTO_.customField)) {
-            entity.setCustomField(data.getCustomField());
-        }
-        return new ActionResultDTO<>(entityToDto(bc, entity));
-    }
-    // --8<-- [end:doUpdateEntity]
+		if (data.isFieldChanged(MyExample3003DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+	// --8<-- [end:doUpdateEntity]
 
-    // --8<-- [start:getActions]
-    @Override
-    public Actions<MyExample3003DTO> getActions() {
-        return Actions.<MyExample3003DTO>builder()
-                .save(sv -> sv.text("Save"))
-                .create(crt -> crt.text("Add"))
-                .build();
-    }
-    // --8<-- [end:getActions]
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3003DTO> getActions() {
+		return Actions.<MyExample3003DTO>builder()
+				.save(sv -> sv.text("Save"))
+				.create(crt -> crt.text("Add"))
+				.build();
+	}
+	// --8<-- [end:getActions]
 
 }

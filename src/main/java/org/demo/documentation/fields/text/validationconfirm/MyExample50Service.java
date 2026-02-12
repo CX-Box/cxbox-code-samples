@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class MyExample50Service extends VersionAwareResponseService<MyExample50DTO, MyEntity50> {
 
 	private final MyEntity50Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample50Meta> meta = MyExample50Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample50Meta> meta = MyExample50Meta.class;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample50DTO> doCreateEntity(MyEntity50 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -29,7 +29,7 @@ public class MyExample50Service extends VersionAwareResponseService<MyExample50D
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample50DTO> doUpdateEntity(MyEntity50 entity, MyExample50DTO data,
-			BusinessComponent bc) {
+															 BusinessComponent bc) {
 		if (data.isFieldChanged(MyExample50DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -42,10 +42,10 @@ public class MyExample50Service extends VersionAwareResponseService<MyExample50D
 	@Override
 	public Actions<MyExample50DTO> getActions() {
 		return Actions.<MyExample50DTO>builder()
-                .action(act -> act
-                        .action("save", "save")
-                        .withPreAction(PreAction.confirm("You want to save the value?"))
-                )
+				.action(act -> act
+						.action("save", "save")
+						.withPreAction(PreAction.confirm("You want to save the value?"))
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]

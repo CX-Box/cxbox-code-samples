@@ -10,10 +10,10 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @NoArgsConstructor
 public class MyExample4200DTO extends DataResponseDTO {
 
-    private String customFieldTitle;
-    private String customFieldValue;
-    private String customFieldIcon;
-    private String customFieldDescription;
-    private String customField;
-    private String customFieldNum;
+	private String customFieldTitle;
+	private String customFieldValue;
+	private String customFieldIcon;
+	private String customFieldDescription;
+	private String customField;
+	private String customFieldNum;
 }

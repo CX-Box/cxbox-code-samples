@@ -32,7 +32,7 @@ public class DictionaryAdminMeta extends FieldMetaBuilder<DictionaryAdminDTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<DictionaryAdminDTO> fields, InnerBcDescription bcDescription,
-			Long rowId, Long parRowId) {
+									  Long rowId, Long parRowId) {
 		fields.setEnabled(
 				type,
 				dictionaryTypeId,
@@ -51,7 +51,7 @@ public class DictionaryAdminMeta extends FieldMetaBuilder<DictionaryAdminDTO> {
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<DictionaryAdminDTO> fields, InnerBcDescription bcDescription,
-			Long parRowId) {
+									 Long parRowId) {
 		fields.enableFilter(
 				type,
 				key,

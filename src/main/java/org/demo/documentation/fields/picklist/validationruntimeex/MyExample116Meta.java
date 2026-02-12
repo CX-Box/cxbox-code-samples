@@ -17,7 +17,7 @@ public class MyExample116Meta extends FieldMetaBuilder<MyExample116DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample116DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyExample116DTO_.customFieldId);
 		fields.setEnabled(MyExample116DTO_.customField);
 	}
@@ -26,7 +26,7 @@ public class MyExample116Meta extends FieldMetaBuilder<MyExample116DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample116DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample116DTO_.customField);
 		}

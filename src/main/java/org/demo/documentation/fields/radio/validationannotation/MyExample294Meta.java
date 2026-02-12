@@ -18,17 +18,17 @@ public class MyExample294Meta extends FieldMetaBuilder<MyExample294DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample294DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnumValues(MyExample294DTO_.customField, CustomFieldEnum.values());
 		fields.setEnabled(MyExample294DTO_.customField);
-		fields.setPlaceholder(MyExample294DTO_.customField,"Not null");
+		fields.setPlaceholder(MyExample294DTO_.customField, "Not null");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample294DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(MyExample294DTO_.customField);
 		}

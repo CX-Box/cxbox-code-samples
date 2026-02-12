@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyExample3239Meta extends FieldMetaBuilder<MyExample3239DTO> {
 
-    @Override
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3239DTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyExample3239DTO_.phoneNumber);
-        fields.setEnabled(MyExample3239DTO_.fullName);
-        fields.setEnabled(MyExample3239DTO_.customField);
-    }
+	@Override
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3239DTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3239DTO_.phoneNumber);
+		fields.setEnabled(MyExample3239DTO_.fullName);
+		fields.setEnabled(MyExample3239DTO_.customField);
+	}
 
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyExample3239DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-        fields.enableFilter(MyExample3239DTO_.phoneNumber);
-        fields.enableFilter(MyExample3239DTO_.fullName);
-    }
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyExample3239DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3239DTO_.phoneNumber);
+		fields.enableFilter(MyExample3239DTO_.fullName);
+	}
 
 }

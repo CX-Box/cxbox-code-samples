@@ -22,13 +22,13 @@ import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
 public class MyExample114Service extends VersionAwareResponseService<MyExample114DTO, MyEntity114> {
 
 	private final MyEntity114Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample114Meta> meta = MyExample114Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample114Meta> meta = MyExample114Meta.class;
 
-    @Autowired
+	@Autowired
 	private EntityManager entityManager;
 
-    @Override
+	@Override
 	protected CreateResult<MyExample114DTO> doCreateEntity(MyEntity114 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -37,7 +37,7 @@ public class MyExample114Service extends VersionAwareResponseService<MyExample11
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample114DTO> doUpdateEntity(MyEntity114 entity, MyExample114DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		if (StringUtils.isNotEmpty(data.getCustomField())
 				&& !String.valueOf(data.getCustomField()).matches("[A-Za-z]+")
 		) {
@@ -56,7 +56,7 @@ public class MyExample114Service extends VersionAwareResponseService<MyExample11
 	@Override
 	public Actions<MyExample114DTO> getActions() {
 		return Actions.<MyExample114DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

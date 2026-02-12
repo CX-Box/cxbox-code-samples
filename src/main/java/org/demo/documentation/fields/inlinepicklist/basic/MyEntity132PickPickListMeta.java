@@ -18,7 +18,7 @@ public class MyEntity132PickPickListMeta extends FieldMetaBuilder<MyEntity132Pic
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity132PickDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity132PickDTO_.id);
 		fields.setEnabled(MyEntity132PickDTO_.customField);
 	}
@@ -27,7 +27,7 @@ public class MyEntity132PickPickListMeta extends FieldMetaBuilder<MyEntity132Pic
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity132PickDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		fields.enableFilter(MyEntity132PickDTO_.customField);
 		fields.enableSort(MyEntity132PickDTO_.customField);
 		if (configuration.getForceActiveEnabled()) {

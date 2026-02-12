@@ -15,7 +15,7 @@ public class MyExample334Meta extends FieldMetaBuilder<MyExample334DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample334DTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setConcreteValues(MyExample334DTO_.customField, Arrays.stream(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum.values())
 				.map(org.demo.documentation.fields.multipleselect.basic.enums.CustomFieldEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
@@ -33,7 +33,7 @@ public class MyExample334Meta extends FieldMetaBuilder<MyExample334DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample334DTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 	}
 
 }

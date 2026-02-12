@@ -17,8 +17,8 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberFiltrationDTO> fields,
-			InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberFiltrationDTO_.customField
 		);
@@ -32,7 +32,7 @@ public class NumberFiltrationMeta extends FieldMetaBuilder<NumberFiltrationDTO> 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberFiltrationDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberFiltrationDTO_.customField);
 		}

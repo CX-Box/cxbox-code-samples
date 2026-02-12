@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class NumberRuntimeExService extends VersionAwareResponseService<NumberRuntimeExDTO, NumberRuntimeExEntity> {
 
 	private final NumberRuntimeExEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<NumberRuntimeExMeta> meta = NumberRuntimeExMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<NumberRuntimeExMeta> meta = NumberRuntimeExMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<NumberRuntimeExDTO> doCreateEntity(NumberRuntimeExEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class NumberRuntimeExService extends VersionAwareResponseService<NumberRu
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<NumberRuntimeExDTO> doUpdateEntity(NumberRuntimeExEntity entity, NumberRuntimeExDTO data,
-			BusinessComponent bc) {
+																 BusinessComponent bc) {
 		if (data.isFieldChanged(NumberRuntimeExDTO_.customField)) {
 			try {
 				//call custom function
@@ -44,7 +44,7 @@ public class NumberRuntimeExService extends VersionAwareResponseService<NumberRu
 	@Override
 	public Actions<NumberRuntimeExDTO> getActions() {
 		return Actions.<NumberRuntimeExDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

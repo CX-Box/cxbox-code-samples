@@ -2,15 +2,13 @@ package org.demo.documentation.other.equalsOfOne;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.demo.documentation.other.equalsOfOne.onetoone.MyExample3250OneToOne_;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

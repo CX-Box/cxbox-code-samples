@@ -16,6 +16,7 @@ public class FilterParameters<D> {
 	public static final String FILTER_FIELD_PREFIX = "_filter.field.";
 
 	private final List<DtoFieldFilterParameter<D>> parameters;
+
 	public static <T> FilterParameters<T> of(final MultiValueMap<String, String> parameters) {
 		return new FilterParameters<>(parameters.entrySet().stream()
 				.filter(params -> Objects.nonNull(params.getKey()))

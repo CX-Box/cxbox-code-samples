@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DateFiltrationService extends VersionAwareResponseService<DateFiltrationDTO, dateFiltrationEntity> {
 
 	private final dateFiltrationEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateFiltrationMeta> meta = DateFiltrationMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateFiltrationMeta> meta = DateFiltrationMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateFiltrationDTO> doCreateEntity(dateFiltrationEntity entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -27,7 +27,7 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<DateFiltrationDTO> doUpdateEntity(dateFiltrationEntity entity, DateFiltrationDTO data,
-			BusinessComponent bc) {
+																BusinessComponent bc) {
 		if (data.isFieldChanged(DateFiltrationDTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
@@ -39,7 +39,7 @@ public class DateFiltrationService extends VersionAwareResponseService<DateFiltr
 	@Override
 	public Actions<DateFiltrationDTO> getActions() {
 		return Actions.<DateFiltrationDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]

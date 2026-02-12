@@ -1,22 +1,22 @@
 package org.demo.documentation.widgets.headerwidget.colortitle.allfields;
 
-import org.cxbox.api.data.dto.DataResponseDTO;
-import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.util.filter.SearchParameter;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class MyEntity5028MultiPick0DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
+	@SearchParameter(name = "customField")
+	private String customField;
 
-    public MyEntity5028MultiPick0DTO(MyEntity5028Multi entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-    }
+	public MyEntity5028MultiPick0DTO(MyEntity5028Multi entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+	}
 
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 public class MyEntity4001 extends BaseEntity {
 
-    private String customField;
-    private String customFieldNew;
-    private LocalDateTime customFieldDateTime;
+	private String customField;
+	private String customFieldNew;
+	private LocalDateTime customFieldDateTime;
 }

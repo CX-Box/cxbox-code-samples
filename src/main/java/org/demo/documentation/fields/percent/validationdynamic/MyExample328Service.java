@@ -18,11 +18,11 @@ import org.springframework.stereotype.Service;
 public class MyExample328Service extends VersionAwareResponseService<MyExample328DTO, MyEntity328> {
 
 	private final MyEntity328Repository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<MyExample328Meta> meta = MyExample328Meta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample328Meta> meta = MyExample328Meta.class;
 
 
-    @Override
+	@Override
 	protected CreateResult<MyExample328DTO> doCreateEntity(MyEntity328 entity, BusinessComponent bc) {
 		repository.save(entity);
 		return new CreateResult<>(entityToDto(bc, entity));
@@ -31,7 +31,7 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample328DTO> doUpdateEntity(MyEntity328 entity, MyExample328DTO data,
-			BusinessComponent bc) {
+															  BusinessComponent bc) {
 		validateFields(bc, data);
 		if (data.isFieldChanged(MyExample328DTO_.customFieldAdditional)) {
 			entity.setCustomFieldAdditional(data.getCustomFieldAdditional());
@@ -48,7 +48,7 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 	@Override
 	public Actions<MyExample328DTO> getActions() {
 		return Actions.<MyExample328DTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
@@ -66,7 +66,7 @@ public class MyExample328Service extends VersionAwareResponseService<MyExample32
 			);
 		}
 		if (!entity.getFields().isEmpty()) {
-				throw new BusinessException().setEntity(entity);
+			throw new BusinessException().setEntity(entity);
 		}
 	}
 	// --8<-- [end:validateFields]

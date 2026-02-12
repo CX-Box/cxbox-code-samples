@@ -14,18 +14,18 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class MyEntity3078 extends BaseEntity {
-    @Column
-    private String customField;
-    @Column
-    private String customFieldTest;
-    @Column
-    private Long customFieldNumber;
-    @JoinTable(name = "MyEntity3078_MyEntity3078AssocPick",
-            joinColumns = @JoinColumn(name = "MyEntity3078_id"),
-            inverseJoinColumns = @JoinColumn(name = "MyEntity3078Assoc_id")
-    )
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    private List<MyEntity3078Assoc> customFieldMultivalueList = new ArrayList<>();
+	@Column
+	private String customField;
+	@Column
+	private String customFieldTest;
+	@Column
+	private Long customFieldNumber;
+	@JoinTable(name = "MyEntity3078_MyEntity3078AssocPick",
+			joinColumns = @JoinColumn(name = "MyEntity3078_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3078Assoc_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3078Assoc> customFieldMultivalueList = new ArrayList<>();
 }

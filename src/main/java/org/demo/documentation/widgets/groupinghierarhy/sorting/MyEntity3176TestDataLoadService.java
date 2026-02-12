@@ -10,23 +10,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3176TestDataLoadService {
 
-    @Autowired
-    MyEntity3176Repository repository;
+	@Autowired
+	MyEntity3176Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3176().setCustomField("1 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
-        repository.save(new MyEntity3176().setCustomField("2 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
-        repository.save(new MyEntity3176().setCustomField("3 test data"));
-        repository.save(new MyEntity3176().setCustomField("4 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.MIDDLE));
-        repository.save(new MyEntity3176().setCustomField("5 test data"));
-        repository.save(new MyEntity3176().setCustomField("6 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
-    }
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3176().setCustomField("1 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
+		repository.save(new MyEntity3176().setCustomField("2 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.LOW));
+		repository.save(new MyEntity3176().setCustomField("3 test data"));
+		repository.save(new MyEntity3176().setCustomField("4 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.MIDDLE));
+		repository.save(new MyEntity3176().setCustomField("5 test data"));
+		repository.save(new MyEntity3176().setCustomField("6 test data").setCustomFieldDictionary(CustomFieldDictionaryEnum.HIGH));
+	}
 
 }

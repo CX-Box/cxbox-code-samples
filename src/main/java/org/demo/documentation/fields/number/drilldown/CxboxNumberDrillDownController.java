@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberDrillDownController implements EnumBcIdentifier {
 
 
-
 	numberDrillDown(NumberDrillDownService.class);
 	// --8<-- [end:bc]
-
 
 
 	public static final EnumBcIdentifier.Holder<CxboxNumberDrillDownController> Holder = new Holder<>(

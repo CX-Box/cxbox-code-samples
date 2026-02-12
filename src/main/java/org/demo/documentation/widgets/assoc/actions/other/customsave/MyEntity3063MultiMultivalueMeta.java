@@ -10,20 +10,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3063MultiMultivalueMeta extends FieldMetaBuilder<MyEntity3063MultiMultivalueDTO> {
 
-    @Override
-   // --8<-- [start:buildRowDependentMeta]
-    public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
-                                      Long id, Long parentId) {
-        fields.setEnabled(MyEntity3063MultiMultivalueDTO_.id);
-        fields.setEnabled(MyEntity3063MultiMultivalueDTO_.customField);
-    }
-   // --8<-- [end:buildRowDependentMeta]
-    @Override
-    public void buildIndependentMeta(FieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
-                                     Long parentId) {
-        fields.enableSort(MyEntity3063MultiMultivalueDTO_.id);
-        fields.enableSort(MyEntity3063MultiMultivalueDTO_.customField);
+	@Override
+	// --8<-- [start:buildRowDependentMeta]
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
+									  Long id, Long parentId) {
+		fields.setEnabled(MyEntity3063MultiMultivalueDTO_.id);
+		fields.setEnabled(MyEntity3063MultiMultivalueDTO_.customField);
+	}
 
-    }
+	// --8<-- [end:buildRowDependentMeta]
+	@Override
+	public void buildIndependentMeta(FieldsMeta<MyEntity3063MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
+									 Long parentId) {
+		fields.enableSort(MyEntity3063MultiMultivalueDTO_.id);
+		fields.enableSort(MyEntity3063MultiMultivalueDTO_.customField);
+
+	}
 
 }

@@ -40,7 +40,7 @@ public class SecurityConfig {
 	private final AuthBasicConfigProperties authBasicConfigProperties;
 
 	public SecurityConfig(UserService userService, UIProperties uiProperties, MetaConfigurationProperties metaConfigurationProperties, @Qualifier("tokenConverterProperties") TokenConverterProperties properties, CxboxAuthUserRepository cxboxAuthUserRepository,
-			AuthBasicConfigProperties authBasicConfigProperties, UserRoleService userRoleService) {
+						  AuthBasicConfigProperties authBasicConfigProperties, UserRoleService userRoleService) {
 		this.uiProperties = uiProperties;
 		this.metaConfigurationProperties = metaConfigurationProperties;
 		this.authBasicConfigProperties = authBasicConfigProperties;

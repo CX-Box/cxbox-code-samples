@@ -12,30 +12,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyEntity3203TestDataLoadService {
 
-    @Autowired
-    MyEntity3203Repository repository;
+	@Autowired
+	MyEntity3203Repository repository;
 
-    @Autowired
-    InternalAuthorizationService authzService;
+	@Autowired
+	InternalAuthorizationService authzService;
 
-    @Transactional
-    @PostConstruct
-    public void load() {
-        authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
-        repository.deleteAll();
-        repository.save(new MyEntity3203().setCustomField("test data"));
-        repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+	@Transactional
+	@PostConstruct
+	public void load() {
+		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
+		repository.deleteAll();
+		repository.save(new MyEntity3203().setCustomField("test data"));
+		repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_MIDDLE).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
 
-        repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_HIGH).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_MIDDLE).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
 
-        repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
-        repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data7").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data1").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
+		repository.save(new MyEntity3203().setCustomField("test data2").setCustomFieldDictionary(CustomFieldDictionaryEnum.LEVEL_1_LOW).setCustomFieldDictionaryLevelTwo(CustomFieldDictionaryLevelTwoEnum.LEVEL_2_LOW).setCustomFieldDictionaryLevelThree(CustomFieldDictionaryLevelThreeEnum.LEVEL_3_MIDDLE));
 
-    }
+	}
 
 }

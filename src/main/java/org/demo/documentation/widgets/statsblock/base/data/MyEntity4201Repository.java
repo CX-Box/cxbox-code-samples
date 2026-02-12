@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyEntity4201Repository extends JpaRepository<MyEntity4201, Long>, JpaSpecificationExecutor<MyEntity4201> {
-    @Query("SELECT SUM(customFieldNum) FROM MyEntity4201")
-    Long customTotal();
+	@Query("SELECT SUM(customFieldNum) FROM MyEntity4201")
+	Long customTotal();
 
 
 }

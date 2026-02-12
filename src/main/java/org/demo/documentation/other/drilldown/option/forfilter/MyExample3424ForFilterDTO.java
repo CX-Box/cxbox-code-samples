@@ -9,6 +9,6 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Setter
 @NoArgsConstructor
 public class MyExample3424ForFilterDTO extends DataResponseDTO {
-    private String customField;
+	private String customField;
 
 }

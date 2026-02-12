@@ -18,7 +18,7 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<NumberDrillDownDTO> fields, InnerBcDescription bcDescription,
-			Long id, Long parentId) {
+									  Long id, Long parentId) {
 		fields.setEnabled(
 				NumberDrillDownDTO_.customField
 		);
@@ -36,7 +36,7 @@ public class NumberDrillDownMeta extends FieldMetaBuilder<NumberDrillDownDTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<NumberDrillDownDTO> fields, InnerBcDescription bcDescription,
-			Long parentId) {
+									 Long parentId) {
 		if (configuration.getForceActiveEnabled()) {
 			fields.setForceActive(NumberDrillDownDTO_.customField);
 		}

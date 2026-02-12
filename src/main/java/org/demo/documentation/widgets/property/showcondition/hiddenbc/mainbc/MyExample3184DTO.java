@@ -12,14 +12,14 @@ import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
 @NoArgsConstructor
 public class MyExample3184DTO extends DataResponseDTO {
 
-    @SearchParameter(name = "customField")
-    private String customField;
-    @SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
-    private Boolean customFieldCheckbox;
+	@SearchParameter(name = "customField")
+	private String customField;
+	@SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
+	private Boolean customFieldCheckbox;
 
-    public MyExample3184DTO(MyEntity3184 entity) {
-        this.id = entity.getId().toString();
-        this.customField = entity.getCustomField();
-        this.customFieldCheckbox = entity.getCustomFieldCheckbox();
-    }
+	public MyExample3184DTO(MyEntity3184 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldCheckbox = entity.getCustomFieldCheckbox();
+	}
 }

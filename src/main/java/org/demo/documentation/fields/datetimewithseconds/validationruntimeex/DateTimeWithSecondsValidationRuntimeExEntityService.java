@@ -16,10 +16,10 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 		VersionAwareResponseService<DateTimeWithSecondsValidationRuntimeExEntityDTO, DateTimeWithSecondsValidationRuntimeExEntity> {
 
 	private final DateTimeWithSecondsValidationRuntimeExEntityRepository repository;
-    @Getter(onMethod_ = @Override)
-    private final Class<DateTimeWithSecondsValidationRuntimeExEntityMeta> meta = DateTimeWithSecondsValidationRuntimeExEntityMeta.class;
+	@Getter(onMethod_ = @Override)
+	private final Class<DateTimeWithSecondsValidationRuntimeExEntityMeta> meta = DateTimeWithSecondsValidationRuntimeExEntityMeta.class;
 
-    @Override
+	@Override
 	protected CreateResult<DateTimeWithSecondsValidationRuntimeExEntityDTO> doCreateEntity(
 			DateTimeWithSecondsValidationRuntimeExEntity entity, BusinessComponent bc) {
 		repository.save(entity);
@@ -47,7 +47,7 @@ public class DateTimeWithSecondsValidationRuntimeExEntityService extends
 	@Override
 	public Actions<DateTimeWithSecondsValidationRuntimeExEntityDTO> getActions() {
 		return Actions.<DateTimeWithSecondsValidationRuntimeExEntityDTO>builder()
-               .save(sv -> sv.text("Save"))
+				.save(sv -> sv.text("Save"))
 				.build();
 	}
 	// --8<-- [end:getActions]
