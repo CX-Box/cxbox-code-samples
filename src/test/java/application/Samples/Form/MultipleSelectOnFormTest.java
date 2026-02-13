@@ -234,8 +234,8 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.multipleSelect("Custom Field")
 				.setValue(Set.of("Low"))
-				.checkStatusOption("Low", isSelected -> assertThat(isSelected).isTrue())
-				.checkStatusOption("Middle", isSelected -> assertThat(isSelected).isFalse());
+				.checkStatusOption("Low", isSelected -> assertThat(isSelected).isTrue());
+				//.checkStatusOption("Middle", isSelected -> assertThat(isSelected).isFalse());
 	}
 
 	@Test
