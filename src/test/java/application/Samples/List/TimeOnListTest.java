@@ -32,11 +32,12 @@ public class TimeOnListTest extends BaseTestForSamples {
 	@DisplayName("Filtering test")
 	@Description("Filtering by the specified column.")
 	void filtration() {
+		LocalTime BASE_NOW = LocalTime.of( 5, 12, 0, 0);
 		var list = PlatformApp.screen("Time filtration")
 				.secondLevelView("List")
 				.listInline("List title");
-		LocalDateTime from = LocalDateTime.of(LocalDate.MIN, LocalTime.now().minusHours(8));
-		LocalDateTime to = LocalDateTime.of(LocalDate.MIN, LocalTime.now().minusHours(6));
+		LocalDateTime from = LocalDateTime.of(LocalDate.MIN, BASE_NOW.minusHours(1));
+		LocalDateTime to = LocalDateTime.of(LocalDate.MIN, BASE_NOW.plusHours(1));
 		list.headers().filter(fb -> fb.timeFromTo("HH:mm", from, to, "HH:mm"));
 		var values = list.rows().streamCurrentPage()
 				.map(r -> r.time("HH:mm", "HH:mm").getValue())
