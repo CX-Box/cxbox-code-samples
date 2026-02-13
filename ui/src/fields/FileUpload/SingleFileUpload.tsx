@@ -89,13 +89,12 @@ const SingleFileUpload: React.FunctionComponent<SingleFileUploadProps> = ({
 
         downloadLink: (
             <div className={styles.downloadLink} title={`${t('Download')} ${fileName}`} key="download-lnk">
-                <Button className={styles.downloadButton} type="Link" onClick={handleDownload}>
+                <Button type="Link" onClick={handleDownload}>
                     <span className={styles.downloadLinkText}>{trimString(fileName)}</span>
                 </Button>
+                {fileIcon}
             </div>
-        ),
-
-        previewButton: fileIcon
+        )
     }
 
     return (
@@ -106,7 +105,7 @@ const SingleFileUpload: React.FunctionComponent<SingleFileUploadProps> = ({
             })}
         >
             {downloadUrl
-                ? [controls.downloadLink, controls.previewButton, controls.uploadButton, controls.deleteButton]
+                ? [controls.downloadLink, controls.uploadButton, controls.deleteButton]
                 : [controls.uploadLink, controls.uploadButton]}
         </div>
     )
