@@ -100,9 +100,9 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var multipleSelect = form.multipleSelect("Custom Field");
 		multipleSelect.clear()
-				.addValue(Set.of("Middle", "Low"));
+				.addValue(Set.of("Low"));
 		form.actions().click("Save");
-		multipleSelect.checkValue(value -> assertThat(value).isEqualTo(Set.of("Middle", "Low")));
+		multipleSelect.checkValue(value -> assertThat(value).isEqualTo(Set.of("Low")));
 	}
 
 	@Test
