@@ -250,7 +250,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 		form.multipleSelect("Custom Field")
 				.checkStatusOptions(Map.of(
 						"High", val -> assertThat(val).isFalse(),
-						"Middle", val -> assertThat(val).isTrue(),
+						"Middle", val -> assertThat(val).isFalse(),
 						"Low", val -> assertThat(val).isTrue()));
 	}
 
