@@ -6,7 +6,7 @@ import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.demo.documentation.other.relationGraph.Myexample6150DTO_;
-import org.demo.documentation.other.relationGraph.enums.TargetNodeTypeEnum;
+import org.demo.documentation.widgets.relationGraph.enums.TargetNodeTypeEnum;
 import org.springframework.stereotype.Service;
 
 @Service

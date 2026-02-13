@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.other.relationGraph.enums.TargetNodeTypeEnum;
+import org.demo.documentation.widgets.relationGraph.enums.TargetNodeTypeEnum;
 
 
 @Entity

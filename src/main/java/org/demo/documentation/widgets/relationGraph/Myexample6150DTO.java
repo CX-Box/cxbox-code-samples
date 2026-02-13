@@ -8,7 +8,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.other.relationGraph.enums.TargetNodeTypeEnum;
+import org.demo.documentation.widgets.relationGraph.enums.TargetNodeTypeEnum;
 
 import java.util.Optional;
 

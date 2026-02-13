@@ -3,7 +3,7 @@ package org.demo.documentation.widgets.relationGraph;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.other.relationGraph.enums.TargetNodeTypeEnum;
+import org.demo.documentation.widgets.relationGraph.enums.TargetNodeTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
