@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -58,22 +60,20 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			step.parameter("PickList", value);
 			clear();
 			element().click();
-			element()
-					.$(valueTag())
+			element().$(valueTag())
 					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
 					.setValue(value);
-			widget().getExpectations().getWaitAllElements(element());
+			widget().getExpectations().getWaitAllElements($("body"));
 			getValues()
 					.findBy(Condition.text(value))
 					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
 					.click();
-
-			$("div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]")
-					.$("ul[role=\"listbox\"]")
+			findDropdownElementByElementAriaControlsId()
 					.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
 			return (SELF) this;
 		});
 	}
+
 
 	@Override
 	public SelenideElement element() throws StaleElementReferenceException {
@@ -89,30 +89,28 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	protected ElementsCollection getValues() {
-		return $("div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]")
-				.$("ul[role=\"listbox\"]")
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+		return findDropdownElementByElementAriaControlsId()
+				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
+
 	}
 
 
 	//TODO >> remake
-//	public List<String> getOptions(String value) {
-//		return Allure.step("Getting a list of options", step -> {
-//			logTime(step);
-//			element()
-//					.$("div[class=\"ant-select-selection-selected-value\"]")
-//					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
-//					.click();
-//			var strings = new ArrayList<String>(getValues().filter(Condition.matchText(value)).texts());
-//			$("body").click();
-//			$("div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]")
-//					.$("ul[role=\"listbox\"]")
-//					.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
-//			log.info("value in list: " + strings);
-//			return strings;
-//		});
-//	}
+	public List<String> getOptions(String value) {
+		return Allure.step("Getting a list of options", step -> {
+			logTime(step);
+			element()
+					.$("div[class=\"ant-select-selection-selected-value\"]")
+					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.click();
+			var strings = new ArrayList<String>(getValues().filter(Condition.matchText(value)).texts());
+			$("body").click();
+			findDropdownElementByElementAriaControlsId()
+					.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
+			return strings;
+		});
+	}
 
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
@@ -142,4 +140,14 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			return (SELF) this;
 		});
 	}
+
+	private SelenideElement findDropdownElementByElementAriaControlsId() {
+		var dropdownId = element()
+				.$("div.ant-select-selection.ant-select-selection--single")
+				.getAttribute("aria-controls");
+		return $("div[id='" + dropdownId + "']")
+				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+				.$("ul[role=\"listbox\"]");
+	}
+
 }

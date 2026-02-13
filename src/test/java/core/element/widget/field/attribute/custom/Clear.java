@@ -28,6 +28,8 @@ public interface Clear<W extends AbstractWidget<ExpectationPattern, W>, VF, SELF
 				return (SELF) this;
 			}
 			element().$(valueTag()).sendKeys(Keys.chord(getModifierKey(), "a"), Keys.BACK_SPACE);
+//			TODO >> move to other interface
+//
 //			while (sizeText>0) {
 //				CharSequence[] sequence = new CharSequence[sizeText+1];
 //				Arrays.fill(sequence, 0, sizeText+1 , Keys.BACK_SPACE);

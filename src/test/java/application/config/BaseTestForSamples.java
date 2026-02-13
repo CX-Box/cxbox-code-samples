@@ -95,8 +95,6 @@ public abstract class BaseTestForSamples {
 		// Highlight current  element on page orange border
 		//SelenideHighlightSetup.registerAllHighlightedCommands();
 		AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
-
-
 	}
 
 

@@ -5,10 +5,10 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
+import core.exception.InvalidStateException;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
-import org.cxbox.core.exception.BusinessException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 
@@ -42,7 +42,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 				break;
 			}
 			if (isLastPage()) {
-				throw new BusinessException("No value " + value + " found for the field" + name);
+				throw new InvalidStateException("No value " + value + " found for the field" + name);
 			}
 			pressRight(1);
 		}

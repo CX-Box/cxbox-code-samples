@@ -211,16 +211,16 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 	@DisplayName("Character Matching test")
 	@Description("The test sets the characters in the field, and then returns a list of values that match or contain characters")
 	void valuesInList() {
-//		var form = PlatformApp.screen("InlinePickList basic")
-//				.secondLevelView("Form")
-//				.form("Form title");
-//		assertThat(form.inlinePickList("Custom Field")
-//				.setValue(" ")
-//				.getOptions("1").get(0))
-//				.isEqualTo("49 Test data new information");
-//		assertThat(form.inlinePickList("Custom Field")
-//				.setValue(" ")
-//				.getOptions("2").get(0))
-//				.isEqualTo("42 Test data new information");
+		var form = PlatformApp.screen("InlinePickList basic")
+				.secondLevelView("Form")
+				.form("Form title");
+		assertThat(form.inlinePickList("Custom Field")
+				.setValue(" ")
+				.getOptions("9").get(0))
+				.isEqualTo("49 Test data new information");
+		assertThat(form.inlinePickList("Custom Field")
+				.setValue(" ")
+				.getOptions("2").get(0))
+				.isEqualTo("42 Test data new information");
 	}
 }

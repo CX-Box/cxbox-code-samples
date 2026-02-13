@@ -17,7 +17,6 @@ public interface PlaceholderCheckable<W extends AbstractWidget<ExpectationPatter
 	default SELF checkPlaceholder(Consumer<V> expectedPlaceholder) {
 		Allure.step("Getting the Placeholder value", step -> {
 			logTime(step);
-			System.out.println("Checking placeholder " + valueTag());
 			V actualPlaceholder = (V) element()
 					.shouldBe(Condition.exist)
 					.$(valueTag())
