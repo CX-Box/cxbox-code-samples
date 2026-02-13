@@ -9,10 +9,6 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.other.relationGraph.Myexample6150DTO_;
-import org.demo.documentation.other.relationGraph.Myexample6150MetaBuilder;
-import org.demo.documentation.other.relationGraph.Myexample6150Repository;
-import org.demo.documentation.other.relationGraph.Myexample6150_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
