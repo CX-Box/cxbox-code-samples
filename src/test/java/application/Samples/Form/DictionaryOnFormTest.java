@@ -75,6 +75,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.setValue("Tver region");
 
 		form.dictionary("Custom Field").checkValue(val -> assertThat(val).isEqualTo("Tver region"));
+		form.dictionary("Custom Field").setValue("Kostroma region");
 
 	}
 
@@ -138,6 +139,14 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var dictionary = form.dictionary("Custom Field");
 		dictionary.setValue("Low");
+		form.actions().click("save");
+		form.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+
+		dictionary.setValue("High");
 		form.actions().click("save");
 		form.confirmPopup()
 				.checkTitleAndMessage(

@@ -106,6 +106,8 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 		row.multipleSelect("Custom Field")
 				.setValue(Set.of("High"))
 				.checkValue(values -> assertThat(values).isEqualTo(Set.of("High")));
+		row.multipleSelect("Custom Field")
+				.setValue(Set.of("Low"));
 	}
 
 	@Test

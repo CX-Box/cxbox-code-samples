@@ -74,6 +74,7 @@ public class SuggestionPickListOnListTest extends BaseTestForSamples {
 		row.suggestionPickList("customField")
 				.setValue("Test data9")
 				.checkValue(value -> assertThat(value).isEqualTo("Test data9"));
+		row.suggestionPickList("customField").clear();
 	}
 
 	@Test

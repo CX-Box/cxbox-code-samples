@@ -105,6 +105,11 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 		row.multivalue("Custom Field")
 				.setValue(List.of("Information7 data", "Information9 data", "Abs data"))
 				.checkValue(val -> assertThat(val).isEqualTo(List.of("Information9 data", "Information7 data", "Abs data")));
+		row.multivalue("Custom Field")
+				.setValue(List.of("Abs data", "Test data", "Information data", "Information2 data",
+						"Information3 data", "Information4 data", "Information5 data",
+						"Information6 data", "Information7 data", "Information8 data",
+						"Information9 data", "Information10 data"));
 	}
 
 	@Test

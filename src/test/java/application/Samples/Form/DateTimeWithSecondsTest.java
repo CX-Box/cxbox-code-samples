@@ -72,8 +72,10 @@ public class DateTimeWithSecondsTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateTimeField = form.dateTimeWithSecond("custom Field");
+		LocalDateTime defaultDateTime = dateTimeField.getValue();
 		dateTimeField.setValue(dateTime)
 				.checkValue(date -> assertThat(date).isEqualTo(dateTime));
+		dateTimeField.setValue(defaultDateTime);
 	}
 
 	@Test
@@ -135,7 +137,14 @@ public class DateTimeWithSecondsTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateTimeField = form.dateTimeWithSecond("custom Field");
+		LocalDateTime defaultDateTime = dateTimeField.getValue();
 		dateTimeField.setValue(dateTime);
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.close();
+		dateTimeField.setValue(defaultDateTime);
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))

@@ -111,6 +111,7 @@ public class TextOnFormTest extends BaseTestForSamples {
 		form.text("Custom Field")
 				.setValue("Text")
 				.checkValue(value -> assertThat(value).isEqualTo("Text"));
+		form.text("Custom Field").setValue("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
 	}
 
 	@Test
@@ -157,6 +158,13 @@ public class TextOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		form.text("Custom Field").setValue("Test");
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		form.text("Custom Field").setValue("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitleAndMessage(

@@ -112,6 +112,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		checkBox.setValue(true);
 		checkBox.setValue(false);
 		checkBox.checkValue(value -> assertThat(value).isFalse());
+		checkBox.setValue(true);
 
 	}
 
@@ -224,17 +225,26 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		var row = list
 				.rows()
 				.clickRow(0);
-		row
-				.checkBox("Custom Field")
+		row.checkBox("Custom Field")
 				.setValue(true);
-		list
-				.rows()
+		list.rows()
 				.row(0)
 				.burgerAction("save")
 				.click();
 
-		list
-				.confirmPopup()
+		list.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+
+		row.checkBox("Custom Field")
+				.setValue(false);
+		list.rows()
+				.row(0)
+				.burgerAction("save")
+				.click();
+		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))

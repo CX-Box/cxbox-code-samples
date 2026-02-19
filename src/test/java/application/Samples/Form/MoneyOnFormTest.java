@@ -70,12 +70,14 @@ public class MoneyOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
 		BigDecimal number = new BigDecimal("131343.23");
+		BigDecimal defaultMoney = new BigDecimal("27000.78");
 		var form = PlatformApp.screen("Money Basic")
 				.secondLevelView("Form")
 				.form("Form title");
 		var money = form.money("Custom Field");
 		money.setValue(number);
 		money.checkValue(an -> assertThat(an).isEqualTo(number));
+		money.setValue(defaultMoney);
 
 	}
 
@@ -141,11 +143,19 @@ public class MoneyOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated")
 	void confirm() {
 		BigDecimal number = new BigDecimal("131343.23");
+		BigDecimal defaultMoney = new BigDecimal("27000.78");
 		var form = PlatformApp.screen("Money validation confirm")
 				.secondLevelView("Form")
 				.form("Form title");
 		var money = form.money("Custom Field");
 		money.setValue(number);
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		money.setValue(defaultMoney);
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitleAndMessage(
@@ -232,11 +242,13 @@ public class MoneyOnFormTest extends BaseTestForSamples {
 	@DisplayName("A test for checking the possibility of an empty field")
 	@Description("The test clear the value in the field , and then checks the value in the field, it must be null.")
 	void nullable() {
+		BigDecimal defaultMoney = new BigDecimal("27000.78");
 		var form = PlatformApp.screen("Money nullable")
 				.secondLevelView("Form")
 				.form("Form title");
 		assertThat(form.money("Custom Field")
 				.clear()
 				.element().getValue()).isNull();
+		form.money("Custom Field").setValue(defaultMoney);
 	}
 }

@@ -87,6 +87,8 @@ public class TextOnListTest extends BaseTestForSamples {
 		row.text("Custom Field")
 				.setValue("Text")
 				.checkValue(value -> assertThat(value).isEqualTo("Text"));
+		row.text("Custom Field")
+				.setValue("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
 	}
 
 	@Test
@@ -184,6 +186,12 @@ public class TextOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.text("Custom Field").setValue("11111");
+		row.burgerAction("Save").click();
+		list.rows().clickRow(0)
+				.text("Custom Field")
+				.checkRequired(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
+
+		row.text("Custom Field").setValue("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
 		row.burgerAction("Save").click();
 		list.rows().clickRow(0)
 				.text("Custom Field")
