@@ -237,8 +237,8 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.clickOk();
-
-		row.checkBox("Custom Field")
+		var row2 = list.rows().clickRow(0);
+		row2.checkBox("Custom Field")
 				.setValue(false);
 		list.rows()
 				.row(0)

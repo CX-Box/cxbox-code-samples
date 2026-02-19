@@ -183,8 +183,9 @@ public class InputOnListTest extends BaseTestForSamples {
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.clickOk();
-		row.input("customField").setValue("test data");
-		row.burgerAction("save").click();
+		var row2 = list.rows().clickRow(0);
+		row2.input("customField").setValue("test data");
+		row2.burgerAction("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
