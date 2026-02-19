@@ -96,6 +96,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
 		var radio = form.radio("Custom Field");
 		radio.setValue("Low")
 				.checkValue(val -> assertThat(val).isEqualTo("Low"));
+		radio.setValue("Middle");
 	}
 
 	@Test

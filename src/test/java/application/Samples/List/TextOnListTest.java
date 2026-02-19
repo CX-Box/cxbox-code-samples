@@ -87,6 +87,8 @@ public class TextOnListTest extends BaseTestForSamples {
 		row.text("Custom Field")
 				.setValue("Text")
 				.checkValue(value -> assertThat(value).isEqualTo("Text"));
+		row.text("Custom Field")
+				.setValue("Unlike a digital typeface, a metal font would not include a single definition of each character, but commonly used characters (such as vowels and periods) would have more physical type-pieces included.");
 	}
 
 	@Test

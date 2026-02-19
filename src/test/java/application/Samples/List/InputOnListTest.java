@@ -97,6 +97,8 @@ public class InputOnListTest extends BaseTestForSamples {
 		row.input("customField")
 				.setValue("57")
 				.checkValue(val -> assertThat(val).isEqualTo("57"));
+		row.input("customField")
+				.setValue("test data");
 	}
 
 	@Test
@@ -176,6 +178,14 @@ public class InputOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.input("customField").setValue("5700");
 		row.burgerAction("save").click();
+		list.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		var row2 = list.rows().clickRow(0);
+		row2.input("customField").setValue("test data");
+		row2.burgerAction("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),

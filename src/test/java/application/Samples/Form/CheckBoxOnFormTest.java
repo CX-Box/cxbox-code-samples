@@ -78,6 +78,8 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 		checkbox.checkValue(act -> assertThat(act).isTrue());
 		checkbox.setValue(false)
 				.checkValue(act -> assertThat(act).isFalse());
+		checkbox.setValue(true)
+				.checkValue(act -> assertThat(act).isTrue());
 	}
 
 	@Test
@@ -131,6 +133,13 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var checkbox = form.checkbox("Custom Field");
 		checkbox.setValue(true);
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		checkbox.setValue(false);
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitleAndMessage(

@@ -112,7 +112,8 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 				.rows().clickRow(0)
 				.inlinePickList("Custom Field")
 				.setValue("39 Test data new information")
-				.checkValue(value -> assertThat(value).isEqualTo("39 Test data new information"));
+				.checkValue(value -> assertThat(value).isEqualTo("39 Test data new information"))
+				.setValue("Abs data");
 	}
 
 	@Test

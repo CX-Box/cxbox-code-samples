@@ -91,12 +91,14 @@ public class PercentOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
 		BigDecimal percent = new BigDecimal("57");
+		BigDecimal defaultNumber = new BigDecimal("27");
 		var form = PlatformApp.screen("Percent basic")
 				.secondLevelView("Form")
 				.form("Form title");
 		var percentField = form.percent("custom Field");
 		percentField.setValue(percent)
 				.checkValue(val -> assertThat(val).isEqualTo(percent));
+		percentField.setValue(defaultNumber);
 	}
 
 	@Test
@@ -146,6 +148,12 @@ public class PercentOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var percentField = form.percent("custom Field");
 		percentField.setValue(new BigDecimal("57"));
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		percentField.setValue(new BigDecimal("27"));
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
@@ -221,12 +229,14 @@ public class PercentOnFormTest extends BaseTestForSamples {
 	@DisplayName("Auto-completion test after cleaning")
 	@Description("The test deletes the value by checking the autocomplete in a blank field")
 	void nullable() {
-		BigDecimal value = new BigDecimal("123");
+		BigDecimal value = new BigDecimal("0");
+
 		var form = PlatformApp.screen("Percent nullable")
 				.secondLevelView("Form")
 				.form("Form title");
 		var percentField = form.percent("Custom Field");
 		percentField.setValue(value)
 				.checkValue(val -> assertThat(val).isEqualTo(value));
+		percentField.setValue(new BigDecimal("27"));
 	}
 }

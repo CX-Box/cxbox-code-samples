@@ -110,6 +110,8 @@ public class MoneyOnListTest extends BaseTestForSamples {
 		row.money("Custom Field")
 				.setValue(number)
 				.checkValue(av -> assertThat(av).isEqualTo(number));
+		row.money("Custom Field")
+				.setValue(new BigDecimal("27000.78"));
 	}
 
 	@Test
@@ -193,6 +195,13 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.money("Custom Field").setValue(number);
+		row.burgerAction("save").click();
+		list.confirmPopup()
+				.checkTitleAndMessage(
+						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
+						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.close();
+		row.money("Custom Field").setValue(new BigDecimal("27000.78"));
 		row.burgerAction("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(

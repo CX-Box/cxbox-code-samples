@@ -103,6 +103,8 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 		row.dictionary("Custom Field")
 				.setValue("Tver region")
 				.checkValue(val -> assertThat(val).isEqualTo("Tver region"));
+		row.dictionary("Custom Field")
+				.setValue("Kostroma region");
 	}
 
 	@Test
