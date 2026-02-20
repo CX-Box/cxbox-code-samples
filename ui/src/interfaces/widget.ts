@@ -37,9 +37,12 @@ export enum CustomWidgetTypes {
     Column2D = 'Column2D',
     Line2D = 'Line2D',
     DualAxes2D = 'DualAxes2D',
+    RelationGraph = 'RelationGraph',
     FilePreview = 'FilePreview',
     CalendarList = 'CalendarList',
-    CalendarYearList = 'CalendarYearList'
+    CalendarYearList = 'CalendarYearList',
+    CardList = 'CardList',
+    CardCarouselList = 'CardCarouselList'
 }
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
@@ -48,7 +51,10 @@ export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
     WidgetTypes.PickListPopup,
     WidgetTypes.AssocListPopup,
     CustomWidgetTypes.CalendarList,
-    CustomWidgetTypes.CalendarYearList
+    CustomWidgetTypes.CalendarYearList,
+    CustomWidgetTypes.CardList,
+    CustomWidgetTypes.CardCarouselList,
+    CustomWidgetTypes.RelationGraph
 ]
 
 export interface StepsWidgetMeta extends WidgetMeta {
@@ -122,6 +128,7 @@ export interface AppWidgetMeta extends WidgetMeta {
             title?: string
         }
 
+        read?: Pick<InternalWidgetOption, 'widget'>
         create?: InternalWidgetOption
         edit?: InternalWidgetOption
 
@@ -152,21 +159,20 @@ export interface AppWidgetMeta extends WidgetMeta {
             iconFieldKey?: string
             descriptionFieldKey?: string
         }
+        card?: { valueFieldKey?: string; titleFieldKey?: string; descriptionFieldKey?: string }
         buttons?: OperationInfo[]
         pagination?: {
             enabled?: boolean
             hideLimitOptions?: boolean
             availableLimitsList?: number[]
             type?: PaginationMode
+            alternativeType?: PaginationMode
         }
         groupingHierarchy?: {
             counterMode?: 'none' | 'always' | 'collapsed'
             fields: string[]
             aggFields?: IAggField[]
             aggLevels?: IAggLevel[]
-        }
-        read?: {
-            widget: string
         }
         dual2D?: Dual2DConfig
 
@@ -201,7 +207,11 @@ export interface SuggestionPickListField extends Omit<PickListFieldMeta, 'type'>
     type: CustomFieldTypes.SuggestionPickList
 }
 
+export type FilePreviewMode = 'popup' | 'side-panel' | 'inline'
+
 export type FileUploadFieldMeta = CoreFileUploadFieldMeta & {
+    width?: number
+    minRows?: number
     preview?: {
         /**
          * Enables file previews. Default false.
@@ -218,7 +228,7 @@ export type FileUploadFieldMeta = CoreFileUploadFieldMeta & {
         /**
          * Preview display mode: popup (default), side-panel.
          */
-        mode?: 'popup' | 'side-panel' | 'inline'
+        mode?: FilePreviewMode
         /**
          * Includes display of mini-previews for file types for which we can, for the rest there are icons with an eye.
          * The default is false (icons with an eye are shown for all files).
@@ -261,6 +271,8 @@ export interface AdditionalInfoWidgetMeta extends Omit<WidgetInfoMeta, 'type'> {
 }
 
 export interface AdditionalListWidgetMeta extends AppWidgetMeta {}
+
+export interface CardCarouselListWidgetMeta extends AppWidgetMeta {}
 
 export interface Chart1DConfig {
     valueFieldKey: string
@@ -311,4 +323,24 @@ export interface Dual2DConfig {
 
 export interface DualAxes2DWidgetMeta extends Omit<AppWidgetTableMeta, 'type'> {
     type: CustomWidgetTypes.DualAxes2D
+}
+
+export interface RelationGraphConfig {
+    mode?: 'TB' | 'BT' | 'LR' | 'RL'
+    dragNode?: boolean
+    nodes?: {
+        fieldKeys?: [string, string]
+        descriptionFieldKeys?: string[]
+    }
+    edges?: {
+        labelFieldKeys?: string[]
+        type?: 'polyline' | 'line' | 'arc' | 'quadratic'
+    }
+}
+
+export interface RelationGraphWidgetMeta extends Omit<AppWidgetTableMeta, 'type'> {
+    type: CustomWidgetTypes.RelationGraph
+    options: AppWidgetMeta['options'] & {
+        relationGraph?: RelationGraphConfig
+    }
 }
