@@ -67,7 +67,6 @@ const Operations: React.FC<OperationsProps> = ({ operations, getOperationProps, 
 
     const setting = settingOperations.some(hasVisibleOperationsInGroups) && (
         <DropdownSetting
-            buttonIcon={'menu'}
             buttonClassName={styles.setting}
             overlay={
                 <Menu>

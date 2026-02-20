@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
-import { isOperationGroup, WidgetTypes } from '@cxbox-ui/core'
+import React, { ReactNode, useEffect, useRef } from 'react'
+import { isOperationGroup, WidgetTypes, Operation, OperationGroup } from '@cxbox-ui/core'
 import { Icon } from 'antd'
 import { useAppSelector } from '@store'
 import styles from './Operations.less'
@@ -14,8 +14,7 @@ import TextSearchInput from '@components/Operations/components/TextSearchInput/T
 import { FileUpload } from '@components/Operations/components/FileUpload/FileUpload'
 import { actions } from '@actions'
 import { AVAILABLE_MASS_STEPS } from '@components/widgets/Table/massOperations/constants'
-import { Operation, OperationGroup } from '@interfaces/rowMeta'
-import { useStaleValueWhileRowMetaLoading } from '@hooks/useStaleValueWhileRowMetaLoading'
+import { selectBcUrlRowMeta } from '@selectors/selectors'
 
 export interface OperationsProps {
     className?: string
@@ -33,7 +32,7 @@ function Operations(props: OperationsProps) {
     const metaInProgress = useAppSelector(state => state.view.metaInProgress[bcName])
 
     const { defaultOperations, customOperations, isUploadDnDMode, hasOperations } = useWidgetOperationsMode(widgetMeta, operations)
-
+    const cachedOperations = useOperationsCache(defaultOperations, bcName)
     const isOperationInProgress = useOperationInProgress(bcName)
 
     const dispatch = useDispatch()
@@ -85,7 +84,7 @@ function Operations(props: OperationsProps) {
                 return null
             })}
             <div className={cn(styles.operations, className, { [styles.empty]: !defaultOperations?.length })}>
-                {defaultOperations.map((item: Operation | OperationGroup, index) => {
+                {cachedOperations.map((item: Operation | OperationGroup, index) => {
                     if (isOperationGroup(item)) {
                         return (
                             <OperationsGroup
@@ -96,7 +95,6 @@ function Operations(props: OperationsProps) {
                                 onClick={handleOperationClick}
                                 loading={metaInProgress}
                                 getButtonProps={getButtonProps}
-                                bgColor={item.customParameter?.platformBgColor}
                             />
                         )
                     }
@@ -113,13 +111,8 @@ function Operations(props: OperationsProps) {
                                 <Button
                                     key={item.type}
                                     data-test-widget-action-item={true}
-                                    type={getButtonType({
-                                        widgetType: widgetMeta.type,
-                                        index,
-                                        bgColor: item.customParameter?.platformBgColor
-                                    })}
+                                    type={getButtonType({ widgetType: widgetMeta.type, index })}
                                     loading={metaInProgress}
-                                    bgColor={item.customParameter?.platformBgColor}
                                     {...getButtonProps?.(item)}
                                 >
                                     {item.icon && <Icon type={item.icon} />}
@@ -136,7 +129,6 @@ function Operations(props: OperationsProps) {
                             type={getButtonType({ widgetType: widgetMeta.type, index })}
                             onClick={() => handleOperationClick(item)}
                             loading={metaInProgress || isOperationInProgress(item.type)}
-                            bgColor={item.customParameter?.platformBgColor}
                             {...getButtonProps(item)}
                         >
                             {item.icon && <Icon type={item.icon} />}
@@ -161,21 +153,7 @@ function Operations(props: OperationsProps) {
 
 export default React.memo(Operations)
 
-const getButtonType = ({
-    widgetType,
-    index,
-    defaultType,
-    bgColor
-}: {
-    widgetType?: string
-    defaultType?: string
-    index: number
-    bgColor?: string
-}) => {
-    if (bgColor) {
-        return customTypes.customDefault
-    }
-
+const getButtonType = ({ widgetType, index, defaultType }: { widgetType?: string; defaultType?: string; index: number }) => {
     const isFormWidget = widgetType === WidgetTypes.Form
 
     if (isFormWidget && index !== 0) {
@@ -207,14 +185,33 @@ const useWidgetOperationsMode = (widget: AppWidgetMeta, operations: (Operation |
         return FILE_UPLOAD_DND_MODE.includes(mode as OperationCustomMode)
     }
 
-    const cachedDefaultOperations = useStaleValueWhileRowMetaLoading(defaultOperations, widget.bcName)
-    const cachedCustomOperations = useStaleValueWhileRowMetaLoading(customOperations, widget.bcName)
-    const cachedHasOperations = !!(cachedCustomOperations?.length || cachedDefaultOperations?.length)
+    const hasOperations = !!(customOperations?.length || defaultOperations?.length)
 
     return {
-        hasOperations: cachedHasOperations,
-        defaultOperations: cachedDefaultOperations,
-        customOperations: cachedCustomOperations,
+        hasOperations,
+        defaultOperations,
+        customOperations,
         isUploadDnDMode
     }
+}
+/**
+ *  Решает проблему с потерей состояния FileUpload из-за metaInProgress, исчезновения rowMeta при перезагрузке страницы и хука useWidgetOperations, который всегда возвращает массив вместо undefined.
+ */
+export const useOperationsCache = (operations: (OperationGroup | Operation)[], bcName: string) => {
+    const metaInProgress = useAppSelector(state => state.view.metaInProgress[bcName])
+    const rowMeta = useAppSelector(state => selectBcUrlRowMeta(state, bcName))
+
+    const cached = useRef<(OperationGroup | Operation)[] | null>(null)
+
+    useEffect(() => {
+        if (!metaInProgress) {
+            cached.current = operations ?? null
+        }
+    }, [operations, metaInProgress])
+
+    if (!rowMeta && metaInProgress && cached.current) {
+        return cached.current
+    }
+
+    return operations
 }

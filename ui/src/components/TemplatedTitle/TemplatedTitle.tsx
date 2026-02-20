@@ -8,10 +8,9 @@ interface TemplatedTitleProps {
     className?: string
     title: string
     widgetName: string
-    opacity?: number
 }
 
-export const TemplatedTitle: FunctionComponent<TemplatedTitleProps> = ({ widgetName, title, opacity, className, id }) => {
+export const TemplatedTitle: FunctionComponent<TemplatedTitleProps> = ({ widgetName, title, className, id }) => {
     const widget = useAppSelector(state => {
         return state.view.widgets.find(item => item.name === widgetName)
     })
@@ -25,7 +24,7 @@ export const TemplatedTitle: FunctionComponent<TemplatedTitleProps> = ({ widgetN
     })
     const widgetFields = widget?.fields as WidgetField[] | undefined
 
-    return <InnerTemplatedTitle title={title} dataItem={dataItem} fields={widgetFields} className={className} opacity={opacity} />
+    return <InnerTemplatedTitle title={title} dataItem={dataItem} fields={widgetFields} className={className} />
 }
 
 export default TemplatedTitle

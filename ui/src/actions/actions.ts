@@ -8,7 +8,6 @@ import { FilterGroup } from '@interfaces/filters'
 import { FileViewerPopupOptions, WsNotificationPopupOptions } from '@interfaces/view'
 import { DataItem } from '@cxbox-ui/core'
 import { ViewerModeMass } from '../reducers/screen'
-import { PaginationMode } from '@constants/pagination'
 
 export const SSO_AUTH = createAction('SSO_AUTH')
 
@@ -142,5 +141,3 @@ export const setMassResultFilterEnabled = createAction<{
     bcName: string
     enabled: boolean
 }>('setMassResultFilterEnabled')
-
-export const setAlternativePaginationType = createAction<{ widgetName: string; type: PaginationMode }>('setAlternativePaginationType')

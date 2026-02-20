@@ -9,7 +9,6 @@ import { NumberInputFormat } from '@components/ui/NumberInput/formaters'
 import { DateFieldMeta, DateTimeFieldMeta, DateTimeWithSecondsFieldMeta } from '@cxbox-ui/core'
 import { ITimePickerFieldMeta } from '../../fields/TimePicker/TimePickerField'
 import { AppNumberFieldMeta, CustomFieldTypes } from '@interfaces/widget'
-import { addAlphaToHex } from '@utils/color'
 
 // Token format: '${fieldName:defaultValue}'
 const TAG_PLACEHOLDER_VALUE = /\${([^{}]+)}/
@@ -61,14 +60,8 @@ export function normalizeFieldValue(value: DataValue | undefined, fieldMeta?: Wi
  * @param templatedString Patterned string
  * @param item An object in the fields of which tokens should be searched
  * @param fields
- * @param options
  */
-const convertTemplatedString = (
-    templatedString: string,
-    item: Omit<DataItem, 'vstamp'> | undefined,
-    fields?: WidgetField[],
-    options?: { opacity?: number }
-): ReactNode => {
+const convertTemplatedString = (templatedString: string, item: Omit<DataItem, 'vstamp'> | undefined, fields?: WidgetField[]): ReactNode => {
     if (!templatedString) {
         return ''
     }
@@ -93,10 +86,7 @@ const convertTemplatedString = (
                             <span
                                 key={index}
                                 className={cn({ [styles.tag]: bgColor })}
-                                style={{
-                                    display: 'inline-block',
-                                    backgroundColor: bgColor && options?.opacity ? addAlphaToHex(bgColor, options?.opacity) : bgColor
-                                }}
+                                style={{ display: 'inline-block', backgroundColor: bgColor }}
                             >
                                 {normalizedValue}
                             </span>
@@ -122,9 +112,9 @@ const isTemplate = (templatedString: string): boolean => {
     return templatedString.match(TAG_PLACEHOLDER_FULL) !== null
 }
 
-export function getWidgetTitle(str: string, record?: Omit<DataItem, 'vstamp'>, fields?: WidgetField[], options?: { opacity?: number }) {
+export function getWidgetTitle(str: string, record?: Omit<DataItem, 'vstamp'>, fields?: WidgetField[]) {
     if (isTemplate(str)) {
-        return convertTemplatedString(str, record, fields, options)
+        return convertTemplatedString(str, record, fields)
     } else {
         return <>{str}</>
     }

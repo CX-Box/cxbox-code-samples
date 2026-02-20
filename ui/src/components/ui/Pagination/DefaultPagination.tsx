@@ -1,20 +1,17 @@
 import React from 'react'
 import { Pagination as AntPagination } from 'antd'
-import Limit from '@components/ui/Pagination/components/Limit'
-import AlternativePaginationButton from './components/AlternativePaginationButton/AlternativePaginationButton'
-import { useWidgetPaginationLimit } from './hooks/useWidgetPaginationLimit'
-import { usePagination } from '@hooks/usePagination'
-import { PaginationMode } from '@constants/pagination'
-import { AppWidgetMeta } from '@interfaces/widget'
 import styles from './DefaultPagination.less'
+import { interfaces } from '@cxbox-ui/core'
+import Limit from '@components/ui/Pagination/components/Limit'
+import { useWidgetPaginationLimit } from '@components/ui/Pagination/hooks/useWidgetPaginationLimit'
+import { usePagination } from '@hooks/usePagination'
 
 export interface DefaultPaginationProps {
-    meta: AppWidgetMeta
-    alternativeType?: PaginationMode
+    meta: interfaces.WidgetMeta
     disabledLimit?: boolean
 }
 
-function DefaultPagination({ meta, alternativeType, disabledLimit }: DefaultPaginationProps) {
+function DefaultPagination({ meta, disabledLimit }: DefaultPaginationProps) {
     const { changePage, page: bcPage, limit: bcLimit, total } = usePagination(meta.name)
 
     const limit = meta.limit || bcLimit
@@ -36,21 +33,16 @@ function DefaultPagination({ meta, alternativeType, disabledLimit }: DefaultPagi
                 total={total}
                 onChange={changePage}
             />
-
             {!hideLimitOptions && (
-                <>
-                    <Limit
-                        className={styles.limits}
-                        classNameContainer={styles.limitContainer}
-                        disabled={disabledLimit}
-                        value={pageLimit}
-                        onChange={changePageLimit}
-                        total={total}
-                        options={options}
-                    />
-
-                    {alternativeType && <AlternativePaginationButton widgetName={meta.name} alternativeType={alternativeType} />}
-                </>
+                <Limit
+                    className={styles.limits}
+                    classNameContainer={styles.limitContainer}
+                    disabled={disabledLimit}
+                    value={pageLimit}
+                    onChange={changePageLimit}
+                    total={total}
+                    options={options}
+                />
             )}
         </div>
     )

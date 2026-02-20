@@ -3,7 +3,6 @@ import { actions } from '@actions'
 import { createReducer, isAnyOf } from '@reduxjs/toolkit'
 import { FilterGroup } from '@interfaces/filters'
 import { MassStepType } from '@components/widgets/Table/massOperations/constants'
-import { PaginationMode } from '@constants/pagination'
 
 export type ViewerModeMass = {
     mode: 'mass'
@@ -25,7 +24,6 @@ export interface ScreenState extends interfaces.ScreenState {
         [bcName: string]: ViewerModeMass | undefined
     }
     collapsedWidgets: { [viewName: string]: string[] }
-    alternativePagination: { [widgetName: string]: PaginationMode }
 }
 
 const initialState: ScreenState = {
@@ -33,8 +31,7 @@ const initialState: ScreenState = {
     menuCollapsed: false,
     pagination: {},
     viewerMode: {},
-    collapsedWidgets: {},
-    alternativePagination: {}
+    collapsedWidgets: {}
 }
 
 const screenReducerBuilder = reducers
@@ -132,11 +129,6 @@ const screenReducerBuilder = reducers
 
         state.viewerMode[bcName] = state.viewerMode[bcName] ?? ({} as (typeof state.viewerMode)[string])
         state.viewerMode[bcName]!.resultFilterEnabled = enabled
-    })
-    .addCase(actions.setAlternativePaginationType, (state, action) => {
-        const { widgetName, type } = action.payload
-
-        state.alternativePagination = { ...state.alternativePagination, [widgetName]: type }
     })
     // TODO delete after execution CXBOX-1090
     .replaceCase(actions.selectScreen, (state, action) => {

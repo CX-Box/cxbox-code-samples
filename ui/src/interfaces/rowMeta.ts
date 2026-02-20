@@ -1,9 +1,4 @@
-import {
-    Operation as CoreOperation,
-    OperationGroup as CoreOperationGroup,
-    RowMeta as CoreRowMeta,
-    RowMetaField as CoreRowMetaField
-} from '@cxbox-ui/core'
+import { RowMeta as CoreRowMeta, RowMetaField as CoreRowMetaField } from '@cxbox-ui/core'
 import { EmptyNodeLevel } from '@components/widgets/Table/groupingHierarchy'
 
 export interface RowMetaField extends CoreRowMetaField {
@@ -18,16 +13,6 @@ export interface RowMetaField extends CoreRowMetaField {
     }
 }
 
-export interface Operation extends CoreOperation {
-    customParameter?: { platformBgColor?: string }
-}
-
-export interface OperationGroup extends CoreOperationGroup {
-    customParameter?: { platformBgColor?: string }
-    actions: Operation[]
-}
-
 export interface RowMeta extends CoreRowMeta {
     fields: RowMetaField[]
-    actions: (Operation | OperationGroup)[]
 }

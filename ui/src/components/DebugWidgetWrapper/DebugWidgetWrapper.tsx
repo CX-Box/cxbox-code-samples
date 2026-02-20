@@ -6,17 +6,16 @@ import { useAppSelector } from '@store'
 import styles from './DebugWidgetWrapper.less'
 
 interface Props {
-    className?: string
     children?: React.ReactNode
     meta: WidgetMeta | WidgetMetaAny
 }
 
-const DebugWidgetWrapper: FC<Props> = ({ className, children, meta }) => {
+const DebugWidgetWrapper: FC<Props> = ({ children, meta }) => {
     const debugMode = useAppSelector(state => state.session.debugMode || false)
 
     return (
         <div
-            className={cn(className, {
+            className={cn({
                 [styles.debugWidgetWrapper]: debugMode
             })}
         >

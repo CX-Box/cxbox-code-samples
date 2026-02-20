@@ -1,23 +1,21 @@
-import React, { CSSProperties, forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
-import { fileViewerType, FileViewerType } from '@utils/fileViewer'
-import cn from 'classnames'
-import styles from './FileViewer.less'
-import { DOCUMENT_PAGE_WIDTH } from '@constants/fileViewer'
+import React, { CSSProperties, forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ImageControl, useImageControl } from '@hooks/image'
+import { fileViewerType, FileViewerType, getExtension } from '@utils/fileViewer'
+import cn from 'classnames'
+import { PdfViewer } from '@components/FileViewer/PdfViewer'
+import { DOCUMENT_PAGE_WIDTH } from '@components/FileViewer/PdfViewer/constants'
+import Empty from '@components/FileViewer/Empty/Empty'
+import Image from './Image/Image'
+import { CxBoxApiInstance } from '../../api'
+import { actions, utils } from '@cxbox-ui/core'
 import { useAppDispatch } from '@store'
-import { actions } from '@actions'
-import { useFileUrl } from '@components/FileViewer/core/useFileUrl'
-import { getFileViewer } from './core/registry'
-import { PreviewMode, ViewType } from '@components/FileViewer/core/viewerTypes'
-
-const darkView: ViewType[] = ['full']
+import styles from './FileViewer.less'
+import { Audio } from '@components/FileViewer/Audio/Audio'
 
 export interface FileViewerProps {
     fileName: string
     url?: string
-    view: ViewType
-    previewMode?: PreviewMode
+    view: 'compact' | 'full'
     alt?: string
     width: string | number
     height: string | number
@@ -26,111 +24,108 @@ export interface FileViewerProps {
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
     className?: string
     style?: CSSProperties
-    imageControlEnabled?: boolean
-    footer?: (params: { displayType: FileViewerType; imageControl?: ImageControl }) => JSX.Element | null
 }
 
-export type FileViewerRef = {
-    displayType: FileViewerType
+export type FileViewerHandlers = {
     download: () => void
-    imageControl: ImageControl
 }
 
-const FileViewer = forwardRef<FileViewerRef | undefined, FileViewerProps>(
+const FileViewer = forwardRef<FileViewerHandlers | undefined, FileViewerProps>(
     (
-        {
-            alt,
-            url = '',
-            height,
-            width,
-            onDoubleClick,
-            onClick,
-            style = {},
-            className,
-            view,
-            previewMode = 'auto',
-            fileName,
-            pageWidth = DOCUMENT_PAGE_WIDTH,
-            imageControlEnabled = false,
-            footer
-        },
+        { alt, url = '', height, width, onDoubleClick, onClick, style = {}, className, view, fileName, pageWidth = DOCUMENT_PAGE_WIDTH },
         ref
     ) => {
-        const isIconOnlyPreview = view === 'preview' && previewMode === 'iconOnly'
-
-        const displayType = useMemo(() => {
-            if (isIconOnlyPreview) {
-                return fileViewerType()
-            }
-
-            return url ? fileViewerType(fileName) : fileViewerType()
-        }, [isIconOnlyPreview, url, fileName])
-
         const dispatch = useAppDispatch()
-
-        const handleDownload = React.useCallback(() => {
-            if (url) {
-                dispatch(
-                    actions.downloadFileByUrl({
-                        url,
-                        name: fileName
-                    })
-                )
-            }
-        }, [dispatch, url, fileName])
-
-        const imageRef = useRef<HTMLImageElement>(null)
-
-        const { blobUrl, loading } = useFileUrl(url)
-
-        const imageControl = useImageControl(imageRef, imageControlEnabled, blobUrl)
 
         useImperativeHandle(
             ref,
-            () => ({
-                displayType,
-                get imageControl() {
-                    return imageControl as ImageControl
-                },
-                download: handleDownload
-            }),
-            [displayType, handleDownload, imageControl]
+            () => {
+                return {
+                    download: () => {
+                        if (url) {
+                            dispatch(
+                                actions.downloadFileByUrl({
+                                    url,
+                                    name: fileName
+                                })
+                            )
+                        }
+                    }
+                }
+            },
+            [dispatch, fileName, url]
         )
 
+        const displayType = url ? fileViewerType(fileName) : fileViewerType()
+
         const { t } = useTranslation()
+        const isCompact = view === 'compact'
+        const viewerMode = isCompact ? 'light' : 'dark'
 
-        const viewerMode = darkView.includes(view) ? 'dark' : 'light'
+        const [blobUrl, setBlobUrl] = useState<string>('')
 
-        const Viewer = useMemo(() => getFileViewer(displayType), [displayType])
+        useEffect(() => {
+            let currentBlobUrl: string = ''
 
-        const wrapperHeightStyle: Pick<CSSProperties, 'height' | 'maxHeight'> = displayType === 'audio' ? { maxHeight: height } : { height }
-        const wrapperStyle: CSSProperties = { ...style, width, ...wrapperHeightStyle }
+            if (url) {
+                CxBoxApiInstance.getBlob(url, { preview: true })
+                    .then(response => {
+                        currentBlobUrl = URL.createObjectURL(response.data)
+                        setBlobUrl(currentBlobUrl)
+                    })
+                    .catch(error => {
+                        setBlobUrl('')
+                        const apiErrorAction = utils.createApiError(error)
+
+                        if (apiErrorAction) {
+                            dispatch(apiErrorAction)
+                        }
+                    })
+            }
+
+            return () => {
+                if (currentBlobUrl) {
+                    URL.revokeObjectURL(currentBlobUrl)
+                    setBlobUrl('')
+                }
+            }
+        }, [dispatch, url])
+
+        const viewerMap: Record<FileViewerType, JSX.Element | null> = {
+            image: <Image alt={alt} src={blobUrl} mode={viewerMode} />,
+            pdf: blobUrl ? (
+                <PdfViewer
+                    displayMode="inline"
+                    src={blobUrl}
+                    width={width}
+                    height={height}
+                    hideToolbar={isCompact}
+                    mode={viewerMode}
+                    pageWidth={pageWidth}
+                />
+            ) : null,
+            audio: <Audio src={blobUrl} />,
+            other: (
+                <Empty
+                    type={getExtension(fileName)}
+                    size="big"
+                    mode={viewerMode}
+                    text={t(blobUrl ? 'This file type cannot be viewed' : 'There is no file in this row')}
+                />
+            )
+        }
 
         return (
             <div
-                className={cn(styles.root, className, styles[view], styles[displayType])}
+                className={cn(styles.root, className, styles[view])}
                 onDoubleClick={onDoubleClick}
                 onClick={onClick}
-                style={wrapperStyle}
+                style={{ ...style, width, maxHeight: height }}
             >
-                {(
-                    <Viewer
-                        viewerRef={imageRef}
-                        fileName={fileName}
-                        url={blobUrl}
-                        loading={loading}
-                        view={view}
-                        width={width}
-                        height={height}
-                        alt={alt}
-                        pageWidth={pageWidth}
-                        viewerMode={viewerMode}
-                    />
-                ) ?? <div>{t('This file type cannot be viewed')}</div>}
-                {footer?.({ displayType, imageControl })}
+                {viewerMap[displayType]}
             </div>
         )
     }
 )
 
-export default React.memo(FileViewer)
+export default FileViewer
