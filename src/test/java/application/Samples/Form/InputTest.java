@@ -75,6 +75,7 @@ public class InputTest extends BaseTestForSamples {
 				.checkValue(value -> assertThat(value).isEqualTo("5700"))
 				.setValue("200")
 				.checkValue(value -> assertThat(value).isEqualTo("200"));
+		input.setValue("test data");
 	}
 
 	@Disabled
@@ -144,6 +145,12 @@ public class InputTest extends BaseTestForSamples {
 				.form("Form");
 		var input = form.input("customField");
 		input.setValue("5700");
+		form.actions().action("save").click();
+		form.confirmPopup()
+				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.clickOk();
+		input.setValue("test data");
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))

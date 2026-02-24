@@ -96,6 +96,8 @@ public class NumberOnListTest extends BaseTestForSamples {
 		row.number("custom Field")
 				.setValue(number)
 				.checkValue(value -> assertThat(value).isEqualTo(number));
+		row.number("custom Field")
+				.setValue(new BigDecimal("123456"));
 	}
 
 	@Test
@@ -198,6 +200,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.number("Customer Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.InvalidNumber));
+
 	}
 
 	@Test

@@ -104,6 +104,8 @@ public class RadioOnListTest extends BaseTestForSamples {
 		row.radio("Custom Field")
 				.setValue("Low")
 				.checkValue(value -> assertThat(value).isEqualTo("Low"));
+		row.radio("Custom Field")
+				.setValue("Middle");
 	}
 
 	@Test

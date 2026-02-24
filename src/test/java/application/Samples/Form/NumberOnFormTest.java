@@ -98,12 +98,15 @@ public class NumberOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
 		BigDecimal number = new BigDecimal("1234.00");
+		BigDecimal defaultNumber = new BigDecimal("123456.00");
 		var form = PlatformApp.screen("Number basic")
 				.secondLevelView("Form")
 				.form("Form title");
 		var numberField = form.number("custom Field");
 		numberField.setValue(number)
 				.checkValue(val -> assertThat(val).isEqualTo(number));
+		numberField.setValue(defaultNumber);
+
 	}
 
 	@Test
@@ -157,6 +160,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.clickOk();
+		numberField.setValue(new BigDecimal("123456"));
 	}
 
 	@Test
@@ -226,6 +230,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
 		form.number("Custom Field")
 				.clear()
 				.checkValue(val -> assertThat(val).isNull());
+		form.number("Custom Field").setValue(new BigDecimal("27000"));
 	}
 }
 

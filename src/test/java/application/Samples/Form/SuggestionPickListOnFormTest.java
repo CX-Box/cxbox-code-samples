@@ -72,6 +72,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 		var suggestionPickList = form.suggestionPickList("customField");
 		suggestionPickList.setValue("Test data8")
 				.checkValue(val -> assertThat(val).isEqualTo("Test data8"));
+		suggestionPickList.clear();
 	}
 
 	@Test
@@ -126,6 +127,7 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.clickOk();
+		suggestionPickList.clear();
 	}
 
 	@Test

@@ -158,6 +158,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.clickOk();
+		multipleSelect.clear().addValue(Set.of("High"));
 	}
 
 	@Test
@@ -221,6 +222,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.setValue(Set.of("Middle"))
 				.checkValue(value -> assertThat(value).isEqualTo(Set.of("Middle")))
 				.checkOptions(value -> assertThat(value).isEqualTo(Set.of("High", "Middle", "Low")));
+		form.multipleSelect("Custom Field").setValue(Set.of("Low"));
 	}
 
 	@Test

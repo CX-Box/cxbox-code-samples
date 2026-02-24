@@ -73,6 +73,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 		var inlinePickList = form.inlinePickList("Custom Field");
 		inlinePickList.setValue("39 Test data new information")
 				.checkValue(val -> assertThat(val).isEqualTo("39 Test data new information"));
+		inlinePickList.setValue("Abs data");
 	}
 
 	@Disabled
