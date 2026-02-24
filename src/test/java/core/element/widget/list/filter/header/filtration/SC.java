@@ -33,7 +33,6 @@ public class SC<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout())
 				.hover()
 				.$("div[data-test-widget-list-header-column-sort=\"true\"] i.anticon-caret-down")
-				.shouldBe(Condition.exist, widget.getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 				.click();
 	}

@@ -34,7 +34,8 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		RequiredCheckable<W, String, String, SELF>,
 		MaxInputCheckable<W, String, Integer, SELF> {
 
-	protected final String MENU_OPTIONS = "div[class=\"ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottomLeft \"]";
+	protected final String MENU_OPTIONS ="div.ant-select-dropdown.ant-select-dropdown--single" +
+			"[class*='ant-select-dropdown-placement-']";
 
 	@Getter(value = AccessLevel.PROTECTED)
 	private final String title;
@@ -112,7 +113,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	private ElementsCollection getOptionsDictionary() {
 		return $(MENU_OPTIONS)
-				.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
 	}
 
