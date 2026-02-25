@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useMemo } from 'react'
 import { ColumnProps, TableProps as AntdTableProps } from 'antd/es/table'
 import { useExpandableForm } from './hooks/useExpandableForm'
-import styles from './Table.less'
+import styles from './Table.module.less'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { useAppSelector } from '@store'
 import { useTableSetting, useTableSettingReset, useTableSettingResultedFields } from '@components/widgets/Table/hooks/useTableSetting'
@@ -48,7 +48,7 @@ import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
 import FieldBaseThemeWrapper from '@components/FieldBaseThemeWrapper/FieldBaseThemeWrapper'
 import ResultColumnCell from '@components/widgets/Table/massOperations/ResultColumnCell'
 import Button from '@components/ui/Button/Button'
-import { ReactComponent as HierarchySVG } from '@assets/icons/hierarchy.svg'
+import HierarchySVG from '@assets/icons/hierarchy.svg?react'
 
 const ROW_KEY = FIELDS.TECHNICAL.ID
 
@@ -280,12 +280,6 @@ function Table<T extends CustomDataItem>({
                                         </Menu.Item>
                                     </Menu.ItemGroup>
                                 )}
-                                {enabledGrouping && (
-                                    <Menu.ItemGroup key={'grouping'} title={t('Grouping')}>
-                                        <Menu.Item onClick={clearParentExpand}>{t('Collapse all')}</Menu.Item>
-                                        {/*<Menu.Item onClick={clearParentExpand}>{t('Expand')}</Menu.Item>*/}
-                                    </Menu.ItemGroup>
-                                )}
                                 {isGroupingHierarchy && (
                                     <Menu.ItemGroup key={'mode'} title={t('Mode')}>
                                         <Menu.Item
@@ -312,6 +306,12 @@ function Table<T extends CustomDataItem>({
                                             <Icon type="table" />
                                             {t('Table')}
                                         </Menu.Item>
+                                    </Menu.ItemGroup>
+                                )}
+                                {enabledGrouping && (
+                                    <Menu.ItemGroup key={'grouping'} title={t('Grouping')}>
+                                        <Menu.Item onClick={clearParentExpand}>{t('Collapse all')}</Menu.Item>
+                                        {/*<Menu.Item onClick={clearParentExpand}>{t('Expand')}</Menu.Item>*/}
                                     </Menu.ItemGroup>
                                 )}
                             </Menu>
