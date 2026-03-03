@@ -69,6 +69,7 @@ public class Myexample6103Service extends VersionAwareResponseService<Myexample6
 				.save(sv -> sv.text(LocalizationFormatter.uiMessage("action.save")))
 				.cancelCreate(ccr -> ccr.text(LocalizationFormatter.uiMessage("action.cancel")).available(bc -> true))
 				.create(crt -> crt.text(LocalizationFormatter.uiMessage("action.add")))
+				.delete(dlt -> dlt.text(LocalizationFormatter.uiMessage("action.delete")))
 				.build();
 	}
 

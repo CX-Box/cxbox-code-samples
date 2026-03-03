@@ -31,6 +31,8 @@ public class Myexample6103MetaBuilder extends FieldMetaBuilder<Myexample6103DTO>
 		fields.setEnabled(
 				org.demo.documentation.feature.locale.Myexample6103DTO_.id
 		);
+		fields.setRequired(Myexample6103DTO_.importance);
+		fields.setRequired(Myexample6103DTO_.fullName);
 	}
 
 	@Override
