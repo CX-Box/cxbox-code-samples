@@ -60,6 +60,7 @@
             <column header="DISPLAY_ORDER" name="DISPLAY_ORDER" type="NUMERIC"/>
             <column header="KEY" name="KEY" type="STRING"/>
             <column header="VALUE" name="VALUE" type="STRING"/>
+            <column header="VALUE_FR" name="VALUE_FR" type="STRING"/>
             <column header="DESCRIPTION" name="DESCRIPTION" type="STRING"/>
             <column header="ACTIVE" name="ACTIVE" type="NUMERIC" defaultValue="true"/>
             <column header="ID" name="ID" type="NUMERIC" defaultValue="${app_seq_next_val}"/>
@@ -76,9 +77,10 @@
         </sql>
 
         <sql>
-            insert into DICTIONARY_ITEM_TR (ID, LANGUAGE, VALUE)
-            select ID, 'en' as LANGUAGE, VALUE as VALUE
-            from DICTIONARY_ITEM;
+            insert into dictionary_item_tr (id, language, value)
+            select id, 'en', value from dictionary_item
+            union all
+            select id, 'fr', value_fr from dictionary_item;
         </sql>
     </changeSet>
 
