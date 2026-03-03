@@ -43,6 +43,8 @@ public class Myexample6103DTO extends DataResponseDTO {
 	@SearchParameter(name = "dateStart", provider = DateValueProvider.class)
 	private LocalDateTime dateStart;
 
+	private String color;
+
 	public Myexample6103DTO(Myexample6103 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.fullName = entity.getFullName();
@@ -51,6 +53,8 @@ public class Myexample6103DTO extends DataResponseDTO {
 		this.importance = entity.getImportance();
 		this.status = entity.getStatus();
 		this.dateStart = entity.getDateStart();
+		this.color = Optional.ofNullable(entity.getImportance()).map(ClientImportance.colors::get).orElse(null);
+
 	}
 
 }

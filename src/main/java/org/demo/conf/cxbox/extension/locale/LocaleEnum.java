@@ -1,4 +1,6 @@
-package org.demo.conf.locale;
+package org.demo.conf.cxbox.extension.locale;
+
+import org.demo.conf.cxbox.customization.locale.PlatformLocaleEnum;
 
 import java.util.Locale;
 import java.util.Map;

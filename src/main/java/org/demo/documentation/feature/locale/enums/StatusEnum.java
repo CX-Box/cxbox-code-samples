@@ -2,7 +2,7 @@ package org.demo.documentation.feature.locale.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.demo.conf.locale.LocaleEnum;
+import org.demo.conf.cxbox.extension.locale.LocaleEnum;
 
 @Getter
 @AllArgsConstructor

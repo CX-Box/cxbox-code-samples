@@ -10,7 +10,7 @@ import org.cxbox.meta.MetaApplicationConfig;
 import org.cxbox.meta.metahotreload.conf.MetaHotReloadConfiguration;
 import org.cxbox.model.core.config.PersistenceJPAConfig;
 import org.cxbox.model.core.tx.CxboxJpaTransactionManagerForceActiveAware;
-import org.demo.conf.locale.DynamicLocaleResolver;
+import org.demo.conf.cxbox.extension.locale.DynamicLocaleResolver;
 import org.demo.documentation.feature.microservice.conf.IntegrationConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
