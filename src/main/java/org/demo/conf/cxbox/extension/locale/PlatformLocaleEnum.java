@@ -1,8 +1,7 @@
-package org.demo.conf.cxbox.customization.locale;
+package org.demo.conf.cxbox.extension.locale;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.demo.conf.cxbox.extension.locale.LocaleEnumUtil;
 
 import java.util.Locale;
 import java.util.Map;

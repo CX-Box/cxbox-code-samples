@@ -1,7 +1,6 @@
 package org.demo.conf.cxbox.extension.locale;
 
 import lombok.NonNull;
-import org.demo.conf.cxbox.customization.locale.PlatformLocaleEnum;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.HashMap;
