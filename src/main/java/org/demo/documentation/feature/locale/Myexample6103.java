@@ -10,6 +10,7 @@ import org.demo.documentation.feature.locale.dictionary.ClientImportance;
 import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
 import org.demo.documentation.feature.locale.enums.StatusEnum;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,4 +42,7 @@ public class Myexample6103 extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	@Column
 	private StatusEnum status;
+
+	@Column
+	private LocalDateTime dateStart;
 }

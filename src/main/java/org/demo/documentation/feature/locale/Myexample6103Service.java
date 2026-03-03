@@ -6,17 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.cxbox.api.util.i18n.LocalizationFormatter;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
-import org.cxbox.core.dto.DrillDownType;
-import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
-import org.cxbox.core.dto.rowmeta.PreAction;
-import org.cxbox.core.service.action.ActionAvailableChecker;
-import org.cxbox.core.service.action.ActionScope;
+import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.customization.icon.ActionIcon;
-import org.demo.controller.CxboxRestController;
 import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -24,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 
 @Service
 @Getter
@@ -46,8 +42,17 @@ public class Myexample6103Service extends VersionAwareResponseService<Myexample6
 		return new CreateResult<>(entityToDto(bc, myexample6103Repository.save(entity)));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<Myexample6103DTO> doUpdateEntity(Myexample6103 entity, Myexample6103DTO data, BusinessComponent bc) {
+
+		if (data.isFieldChanged(Myexample6103DTO_.dateStart)) {
+			LocalDateTime sysdate = LocalDateTime.now();
+			if (data.getDateStart() != null && sysdate.compareTo(data.getDateStart()) > 0) {
+				throw new BusinessException().addPopup(LocalizationFormatter.uiMessage("business.exception.less.current.date"));
+			}
+			entity.setDateStart(data.getDateStart());
+		}
 		setIfChanged(data, Myexample6103DTO_.status, entity::setStatus);
 		setIfChanged(data, Myexample6103DTO_.importance, entity::setImportance);
 		setIfChanged(data, Myexample6103DTO_.address, entity::setAddress);
@@ -62,7 +67,9 @@ public class Myexample6103Service extends VersionAwareResponseService<Myexample6
 		return new ActionResultDTO<>(entityToDto(bc, myexample6103Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));
 	}
+ 	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<Myexample6103DTO> getActions() {
 		return Actions.<Myexample6103DTO>builder()
@@ -72,7 +79,6 @@ public class Myexample6103Service extends VersionAwareResponseService<Myexample6
 				.delete(dlt -> dlt.text(LocalizationFormatter.uiMessage("action.delete")))
 				.build();
 	}
-
-
+	// --8<-- [end:getActions]
 
 }
