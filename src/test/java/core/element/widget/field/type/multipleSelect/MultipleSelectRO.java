@@ -61,6 +61,6 @@ public class MultipleSelectRO<W extends AbstractWidget<ExpectationPattern, W>, S
 
 	@Override
 	public String valueTag() {
-		return "div[class*=\"MultipleSelectField\"]";
+		return "div[class*=\"MultipleSelect\"]";
 	}
 }
