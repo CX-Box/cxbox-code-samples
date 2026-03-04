@@ -49,7 +49,7 @@ public class ListMultipleSelect
 	@Override
 	public String valueTag() {
 		if (row instanceof RowInline<?, ?, ?> ri && !ri.getIsEdit()) {
-			return "div[class*='MultipleSelectField__readOnly']";
+			return "div[class*='MultipleSelect__readOnly']";
 		}
 		return super.valueTag();
 	}
@@ -57,7 +57,7 @@ public class ListMultipleSelect
 	@Override
 	public ListMultipleSelect<W, RR, R> addValue(@NonNull Set<String> values) {
 		values.forEach(value -> {
-			boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+			boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelect__dropDownMenu']")
 					.is(Condition.visible, widget().getExpectations().getTimeout());
 			if (doesNotExist) {
 				element().click();
@@ -68,7 +68,7 @@ public class ListMultipleSelect
 						.click();
 			}
 			$("body").sendKeys(Keys.ESCAPE);
-			$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+			$("div[class^='ant-select-dropdown MultipleSelect__dropDownMenu']")
 					.is(Condition.hidden, widget().getExpectations().getTimeout());
 		});
 
