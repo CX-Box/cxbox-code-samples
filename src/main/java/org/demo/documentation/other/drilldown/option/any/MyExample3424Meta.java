@@ -23,6 +23,9 @@ public class MyExample3424Meta extends AnySourceFieldMetaBuilder<MyExample3424DT
 	public void buildIndependentMeta(FieldsMeta<MyExample3424DTO> fields, BcDescription bcDescription, String parentId) {
 		fields.enableFilter(MyExample3424DTO_.fileName);
 		fields.enableFilter(MyExample3424DTO_.customField);
+		fields.setForceActive(
+				MyExample3424DTO_.fileName
+		);
 	}
 
 }
