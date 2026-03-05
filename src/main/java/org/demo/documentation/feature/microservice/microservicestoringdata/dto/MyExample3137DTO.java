@@ -3,6 +3,7 @@ package org.demo.documentation.feature.microservice.microservicestoringdata.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3137;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.CountryEnum;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.RegionEnum;
@@ -27,6 +28,9 @@ public class MyExample3137DTO implements Serializable {
 	private LocalDateTime customFieldDateTime;
 	private Double customFieldDouble;
 	private String parentId;
+	private String fileName;
+	private String fileNameId;
+	private MultivalueField files;
 
 	public MyExample3137DTO(MyEntity3137 entity) {
 		this.id = entity.getId().toString();
@@ -41,5 +45,8 @@ public class MyExample3137DTO implements Serializable {
 		this.descriptionProduct = entity.getDescriptionProduct();
 		this.money = entity.getMoney();
 		this.street = entity.getStreet();
+		this.fileName = entity.getFileName();
+		this.fileNameId = entity.getFileNameId();
+		this.files = entity.getFiles();
 	}
 }

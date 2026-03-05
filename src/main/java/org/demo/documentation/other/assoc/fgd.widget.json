@@ -1,0 +1,45 @@
+{
+  "name": "fgd",
+  "title": "Title",
+  "type": "Form",
+  "bc": "legalCaseDocuments",
+  "fields": [
+    {
+      "label": "Файл",
+      "key": "fileName",
+      "type": "fileUpload",
+      "fileIdKey": "fileNameId"
+    },
+    {
+      "label": "Файлы",
+      "key": "files",
+      "type": "multivalue",
+      "popupBcName": "myEntity3421Pick",
+      "assocValueKey": "customField",
+      "displayedKey": "filesDisplayedKey"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "fileName",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "files",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

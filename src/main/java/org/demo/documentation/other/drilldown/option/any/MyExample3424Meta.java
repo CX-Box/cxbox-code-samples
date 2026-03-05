@@ -13,11 +13,15 @@ public class MyExample3424Meta extends AnySourceFieldMetaBuilder<MyExample3424DT
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3424DTO> fields, BcDescription bcDescription,
 									  String id, String parentId) {
+		fields.setEnabled(MyExample3424DTO_.fileNameId);
+		fields.setEnabled(MyExample3424DTO_.fileName);
 		fields.setEnabled(MyExample3424DTO_.customField);
+		fields.setEnabled(MyExample3424DTO_.files);
 	}
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3424DTO> fields, BcDescription bcDescription, String parentId) {
+		fields.enableFilter(MyExample3424DTO_.fileName);
 		fields.enableFilter(MyExample3424DTO_.customField);
 	}
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.AnySourceVersionAwareResponseService;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
@@ -29,6 +30,9 @@ public class MyExample3424Service extends AnySourceVersionAwareResponseService<M
 
 	@Override
 	protected ActionResultDTO<MyExample3424DTO> doUpdateEntity(MyEntity3424OutServiceDTO entity, MyExample3424DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3424DTO_.fileNameId, entity::setFileNameId);
+		setIfChanged(data, MyExample3424DTO_.fileName, entity::setFileName);
+		//entity.setFiles(null);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

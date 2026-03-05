@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.CountryEnum;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.RegionEnum;
 
@@ -35,4 +36,7 @@ public class MyEntity3137 extends BaseEntity {
 	private String descriptionProduct;
 	private Long money;
 	private String street;
+	private String fileName;
+	private String fileNameId;
+	private MultivalueField files;
 }

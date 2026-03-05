@@ -54,7 +54,7 @@ public class MyExample3053Service extends VersionAwareResponseService<MyExample3
 					.map(e -> entityManager.getReference(MyEntity3053Multi.class, e))
 					.toList());
 		}
-
+		entity.setCustomFieldList(null);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

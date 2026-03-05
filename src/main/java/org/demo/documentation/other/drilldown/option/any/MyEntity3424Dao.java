@@ -73,7 +73,7 @@ public class MyEntity3424Dao extends AbstractAnySourceBaseDAO<MyEntity3424OutSer
 		//Filter
 		List<String> filterCustomField = getFilterFieldName(queryParameters, "customField", "contains");
 		Optional<String> filter = filterCustomField.isEmpty() ? Optional.empty() : Optional.of(filterCustomField.get(0));
-		if (filter.isPresent()) {
+		if (!filter.isPresent()) {
 			//Sorting
 			List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
 			Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
