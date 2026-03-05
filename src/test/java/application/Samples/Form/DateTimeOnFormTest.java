@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the DateTime in the widget Form")
 @Epic("application/Samples")
@@ -180,5 +181,10 @@ public class DateTimeOnFormTest extends BaseTestForSamples {
 		form.dateTime("custom Field")
 				.clear()
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Datetime basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

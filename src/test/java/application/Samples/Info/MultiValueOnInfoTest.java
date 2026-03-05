@@ -14,6 +14,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the MultiValue")
 @Epic("Samples")
@@ -108,5 +109,10 @@ public class MultiValueOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.multivalue("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo(expectedValue));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("MultiValue basic").secondLevelView("Info").info("Info title").checkPosition(302, 95));
 	}
 }

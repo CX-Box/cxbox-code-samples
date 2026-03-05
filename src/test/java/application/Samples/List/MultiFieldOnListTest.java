@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the MultiField in the widget List")
 @Epic("Samples")
@@ -56,5 +57,10 @@ public class MultiFieldOnListTest extends BaseTestForSamples {
 		List<List<MultifieldContainer>> expectedData = new ArrayList<>();
 		expectedData.add(List.of(new MultifieldContainer("input", "Test data 2"), new MultifieldContainer("hint", "Information data 2")));
 		assertThat(actualData).isEqualTo(expectedData);
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

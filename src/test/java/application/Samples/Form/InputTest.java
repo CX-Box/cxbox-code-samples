@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Input in the widget Form")
 @Epic("application/Samples")
@@ -235,5 +236,10 @@ public class InputTest extends BaseTestForSamples {
 		form.actions().checkExistButtons();
 		form.input("customField")
 				.checkValue(val -> assertThat(val).isEqualTo("test data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Input basic").secondLevelView("Form").form("Form").checkPosition(302, 94));
 	}
 }

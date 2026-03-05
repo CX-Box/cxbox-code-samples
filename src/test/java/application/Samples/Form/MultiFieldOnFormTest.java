@@ -13,6 +13,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultiField in the widget Form")
 @Epic("Samples")
@@ -44,5 +45,10 @@ public class MultiFieldOnFormTest extends BaseTestForSamples {
 		form.multifield("Custom multifield")
 				.checkValue(val -> assertThat(val).isEqualTo(
 						List.of(new MultifieldContainer("input", "Additional data multi"), new MultifieldContainer("input", "Data multi"))));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Multifield basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

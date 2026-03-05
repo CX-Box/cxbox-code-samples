@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PercentOnFormTest extends BaseTestForSamples {
 
@@ -228,5 +229,10 @@ public class PercentOnFormTest extends BaseTestForSamples {
 		var percentField = form.percent("Custom Field");
 		percentField.setValue(value)
 				.checkValue(val -> assertThat(val).isEqualTo(value));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Percent basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

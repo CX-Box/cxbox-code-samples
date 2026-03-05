@@ -18,6 +18,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultiValue in the widget Form")
 @Epic("Samples")
@@ -283,5 +284,10 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.clear(true)
 				.setValue(List.of("Abs data"))
 				.checkValue(v -> assertThat(v).isEqualTo(List.of("Abs data")));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("MultiValue basic").secondLevelView("Form").form("Form title").checkPosition(302, 95));
 	}
 }

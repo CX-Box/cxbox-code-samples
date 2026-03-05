@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Date")
 @Epic("application/Samples")
@@ -66,6 +67,11 @@ public class DateOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.date("custom Field")
 				.checkDrillDownSupported(ds -> assertThat(ds).isTrue());
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Date basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }
 

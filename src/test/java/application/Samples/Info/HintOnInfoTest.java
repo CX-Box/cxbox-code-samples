@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Hint")
 @Epic("Samples")
@@ -69,5 +70,10 @@ public class HintOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.hint("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo("Information data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Hint basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

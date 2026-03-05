@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the CheckBox")
 @Epic("application/Samples")
@@ -198,5 +199,10 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.actions().action("Save").click();
 		form.checkbox("Custom Field").checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Checkbox basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

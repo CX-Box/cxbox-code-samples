@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultiValueHover in the widget Form")
 @Epic("application/Samples")
@@ -62,5 +63,10 @@ public class MultiValueHoverOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.multivalueHover("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo(expectedValue));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("MultiValueHover basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @DisplayName("Info. Checking the basic functions for the Percent")
@@ -102,5 +103,10 @@ public class PercentOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.percent("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo(new BigDecimal("27.00")));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Percent basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimeOnFormTest extends BaseTestForSamples {
 
@@ -129,5 +130,10 @@ public class TimeOnFormTest extends BaseTestForSamples {
 		form.time("Custom Field", "HH:mm:ss")
 				.clear()
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Time base").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }
