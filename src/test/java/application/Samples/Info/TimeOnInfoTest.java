@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Time")
 @Epic("application/Samples")
@@ -86,5 +87,10 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 //              .info("Info title");
 //        info.time("Custom Field", "HH:mm:ss")
 //              .checkReadOnly(ro -> assertThat(ro).isFalse());
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Time base").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

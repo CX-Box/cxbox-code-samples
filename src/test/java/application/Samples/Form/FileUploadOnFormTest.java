@@ -22,6 +22,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the FileUpload in the widget Form")
 @Epic("application/Samples")
@@ -278,5 +279,10 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 		} else {
 			return new File(resource.getFile());
 		}
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("FileUpload basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("unchecked")
 
@@ -265,5 +266,10 @@ public class DateOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.date("custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Date basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

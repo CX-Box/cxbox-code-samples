@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TextOnListTest extends BaseTestForSamples {
 
@@ -249,5 +250,10 @@ public class TextOnListTest extends BaseTestForSamples {
 		list.rows().clickRow(0)
 				.text("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Text basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @DisplayName("List. Checking the basic functions for the CheckBox")
@@ -367,5 +368,10 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		row.checkBox("Custom Field")
 				.checkRequired(rt -> assertThat(rt).isEqualTo(Constants.RequiredMessage));
 
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Checkbox basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

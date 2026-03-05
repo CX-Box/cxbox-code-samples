@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SuggestionPickListOnListTest extends BaseTestForSamples {
 
@@ -157,5 +158,10 @@ public class SuggestionPickListOnListTest extends BaseTestForSamples {
 		var customField = row.suggestionPickList("customField");
 		customField.clear();
 		customField.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("SuggestionPicklist basic").thirdLevelView("List").listInline("List Widget with suggestionPickList basic").checkPosition(302, 146));
 	}
 }

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the Input in the widget List")
 @Epic("Samples")
@@ -298,5 +299,10 @@ public class InputOnListTest extends BaseTestForSamples {
 		input.clear();
 		input.setValue("td");
 		input.checkMaxInput(maxLen -> assertThat(maxLen).isEqualTo(2));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Input basic").secondLevelView("List").listInline("List").checkPosition(302, 94));
 	}
 }

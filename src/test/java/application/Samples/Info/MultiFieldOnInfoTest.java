@@ -15,6 +15,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the MultiField")
 @Epic("Samples")
@@ -52,5 +53,10 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.multiField("Custom multifield hint")
 				.checkValue(actualValue -> assertThat(actualValue).isEqualTo(expectedContainers));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("MultiField basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

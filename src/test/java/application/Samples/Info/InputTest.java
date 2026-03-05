@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Input")
 @Epic("application/Samples")
@@ -97,5 +98,10 @@ public class InputTest extends BaseTestForSamples {
 				.info("Info");
 		info.input("customField")
 				.drilldown(dr -> assertThat(dr).contains("screen/InputDrilldown/view/InputDrilldownform/InputDrilldown"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Input basic").secondLevelView("Info").info("Info").checkPosition(302, 94));
 	}
 }

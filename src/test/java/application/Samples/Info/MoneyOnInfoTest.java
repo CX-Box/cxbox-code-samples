@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Money")
 @Epic("application/Samples")
@@ -104,5 +105,10 @@ public class MoneyOnInfoTest extends BaseTestForSamples {
 				.info("Info constant currency money");
 		info.money("Custom Field")
 				.checkCurrencyValue(cv -> assertThat(cv).contains("₽"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Money basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

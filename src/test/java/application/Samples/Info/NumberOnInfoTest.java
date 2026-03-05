@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Number")
 @Epic("application/Samples")
@@ -107,5 +108,10 @@ public class NumberOnInfoTest extends BaseTestForSamples {
 					assertThat(split[1]).isNotBlank();
 					assertThat(split[1].length()).isEqualTo(2);
 				});
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Number basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

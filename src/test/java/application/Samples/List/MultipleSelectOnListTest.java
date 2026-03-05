@@ -17,6 +17,7 @@ import java.util.Set;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the MultipleSelect in the widget List")
 @Epic("Samples")
@@ -290,5 +291,10 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 						"High", isSelected -> assertThat(isSelected).isFalse(),
 						"Middle", isSelected -> assertThat(isSelected).isTrue(),
 						"Low", isSelected -> assertThat(isSelected).isFalse()));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("MultipleSelect basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

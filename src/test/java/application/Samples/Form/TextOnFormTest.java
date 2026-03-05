@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Text in the widget Form")
 @Epic("application/Samples")
@@ -219,5 +220,10 @@ public class TextOnFormTest extends BaseTestForSamples {
 		form.actions().action("Save").click();
 		form.text("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Text basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

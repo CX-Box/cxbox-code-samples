@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. New Api.  Checking the basic functions for the CheckBox")
 @Epic("application/Samples")
@@ -81,5 +82,10 @@ public class CheckboxTest extends BaseTestForSamples {
 				.info("Info title");
 		info.checkbox("Custom Field")
 				.checkDrillDownSupported(isDrilldown -> assertThat(isDrilldown).isFalse());
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Checkbox basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

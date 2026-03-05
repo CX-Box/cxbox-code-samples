@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Suggestion PickList in the widget Form")
 @Epic("application/Samples")
@@ -174,5 +175,10 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 				.form("Form");
 		form.suggestionPickList("customField")
 				.checkReadOnly(ro -> assertThat(ro).isTrue());
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("SuggestionPicklist basic").thirdLevelView("Form").form("Form Widget with suggestionPickList basic").checkPosition(302, 147));
 	}
 }

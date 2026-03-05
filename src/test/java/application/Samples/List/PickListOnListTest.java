@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the PickList in the widget List")
 @Epic("Samples")
@@ -283,5 +284,10 @@ public class PickListOnListTest extends BaseTestForSamples {
 		row.burgerAction("Save").click();
 	}
 
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Picklist basic").secondLevelView("List").listInline("List title").checkPosition(302, 95));
+	}
 }
 

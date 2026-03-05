@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the InlinePickList in the widget Form")
 @Epic("application/Samples")
@@ -222,5 +223,10 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 				.setValue(" ")
 				.getOptions("2").get(0))
 				.isEqualTo("42 Test data new information");
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("InlinePickList basic").secondLevelView("Form").form("Form title").checkPosition(302, 95));
 	}
 }
