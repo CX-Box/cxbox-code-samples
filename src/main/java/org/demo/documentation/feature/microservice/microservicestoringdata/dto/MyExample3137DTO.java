@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3137;
+import org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity.MyEntity3137Files;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.CountryEnum;
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.RegionEnum;
+import org.demo.documentation.fields.multivalue.basic.MyEntityMultivalue177;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class MyExample3137DTO implements Serializable {
 	private String fileName;
 	private String fileNameId;
 	private MultivalueField files;
+	private MultivalueField filesMV;
 
 	public MyExample3137DTO(MyEntity3137 entity) {
 		this.id = entity.getId().toString();
@@ -47,6 +50,9 @@ public class MyExample3137DTO implements Serializable {
 		this.street = entity.getStreet();
 		this.fileName = entity.getFileName();
 		this.fileNameId = entity.getFileNameId();
-		this.files = entity.getFiles();
+		this.filesMV = entity.getFilesMV().stream().collect(MultivalueField.toMultivalueField(
+				e -> String.valueOf(e.getId()),
+				MyEntity3137Files::getFileName
+		));;
 	}
 }

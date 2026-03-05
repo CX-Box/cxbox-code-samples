@@ -1,8 +1,6 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata.repository.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +11,8 @@ import org.demo.documentation.feature.microservice.microservicestoringdata.repos
 import org.demo.documentation.feature.microservice.microservicestoringdata.repository.enums.RegionEnum;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Setter
@@ -39,4 +39,11 @@ public class MyEntity3137 extends BaseEntity {
 	private String fileName;
 	private String fileNameId;
 	private MultivalueField files;
+	@JoinTable(name = "MyEntity3137_MyEntity3137Files",
+			joinColumns = @JoinColumn(name = "MyEntity3137_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3137Files_id")
+	)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<MyEntity3137Files> filesMV = new ArrayList<>();
+
 }

@@ -1,10 +1,13 @@
 package org.demo.documentation.other.drilldown.option.any;
 
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.AnySourceFieldMetaBuilder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 
 @Service
@@ -17,6 +20,8 @@ public class MyExample3424Meta extends AnySourceFieldMetaBuilder<MyExample3424DT
 		fields.setEnabled(MyExample3424DTO_.fileName);
 		fields.setEnabled(MyExample3424DTO_.customField);
 		fields.setEnabled(MyExample3424DTO_.files);
+		fields.setCurrentValue(MyExample3424DTO_.files, new MultivalueField(Collections.emptyList()));
+
 	}
 
 	@Override
