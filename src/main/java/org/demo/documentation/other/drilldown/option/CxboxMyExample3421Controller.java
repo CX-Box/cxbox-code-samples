@@ -16,7 +16,7 @@ public enum CxboxMyExample3421Controller implements EnumBcIdentifier {
 	// @formatter:on
 	myexample3424ForFilter(MyExample3424ForFilterService.class),
 	myexample3424(MyExample3424Service.class),
-	myEntity3421Pickpopup(myexample3424, MyEntity3421PickService.class),
+		myEntity3421Pickpopup(myexample3424, MyExample3424Service.class),
 	myexample3421(MyExample3421Service.class);
 
 	// @formatter:on
