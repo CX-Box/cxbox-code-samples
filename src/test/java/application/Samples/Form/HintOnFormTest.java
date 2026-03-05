@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Hint in the widget Form")
 @Epic("Samples")
@@ -66,5 +67,10 @@ public class HintOnFormTest extends BaseTestForSamples {
 	@DisplayName("The DrillDown test")
 	@Description("The transition/Redirect is not available")
 	void drillDown() {
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Hint basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

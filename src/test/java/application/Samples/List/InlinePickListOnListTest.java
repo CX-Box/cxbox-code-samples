@@ -20,6 +20,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the InlinePickList in the widget List")
 @Epic("Samples")
@@ -322,6 +323,11 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage))
 				.widget().rows().row(0).burgerActionClick("Save")
 				.row(0).inlinePickList("Custom Field").checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("InlinePickList basic").secondLevelView("List").listInline("List title").checkPosition(302, 95));
 	}
 /*
 

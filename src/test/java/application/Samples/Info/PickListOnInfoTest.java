@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the PickList")
 @Epic("application/Samples")
@@ -82,6 +83,11 @@ public class PickListOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.pickList("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo("New data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Picklist basic").secondLevelView("Info").info("Info title").checkPosition(302, 95));
 	}
 }
 

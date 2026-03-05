@@ -16,6 +16,7 @@ import java.util.Map;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RadioOnFormTest extends BaseTestForSamples {
 
@@ -195,5 +196,10 @@ public class RadioOnFormTest extends BaseTestForSamples {
 		form.radio("Custom Field")
 				.setValue("Low").checkOption(
 						values -> assertThat(values).isEqualTo(Map.of("High", false, "Low", true, "Middle", false)));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Radio basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

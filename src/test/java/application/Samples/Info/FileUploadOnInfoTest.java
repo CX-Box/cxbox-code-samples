@@ -17,6 +17,7 @@ import java.net.URL;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the FileUp")
 @Epic("application/Samples")
@@ -133,5 +134,10 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 		} else {
 			return new File(resource.getFile());
 		}
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Fileupload basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

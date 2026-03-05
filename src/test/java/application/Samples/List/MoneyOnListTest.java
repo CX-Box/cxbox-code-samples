@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the Money in the widget List")
 @Epic("Samples")
@@ -319,5 +320,10 @@ public class MoneyOnListTest extends BaseTestForSamples {
 		list.rows().clickRow(0);
 		money.setValue(number);
 		row.burgerAction("Save").click();
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Money basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
 	}
 }

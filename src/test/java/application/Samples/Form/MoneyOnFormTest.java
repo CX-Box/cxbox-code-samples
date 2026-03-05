@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Money in the widget Form")
 @Epic("application/Samples")
@@ -250,5 +251,10 @@ public class MoneyOnFormTest extends BaseTestForSamples {
 				.clear()
 				.element().getValue()).isNull();
 		form.money("Custom Field").setValue(defaultMoney);
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Money basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
 	}
 }

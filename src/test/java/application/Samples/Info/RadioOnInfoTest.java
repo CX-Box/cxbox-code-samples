@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RadioOnInfoTest extends BaseTestForSamples {
 
@@ -78,5 +79,10 @@ public class RadioOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.radio("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo("Middle"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Radio basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

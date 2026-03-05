@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Dictionary")
 @Epic("application/Samples")
@@ -103,5 +104,10 @@ public class DictionaryOnInfoTest extends BaseTestForSamples {
 //                .info("Info Mode Icon");
 //        info2.dictionary("Custom Field Dictionary")
 //                .checkValue(val -> assertThat(val).isEqualTo("High"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(PlatformApp.screen("Dictionary enum basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
 	}
 }

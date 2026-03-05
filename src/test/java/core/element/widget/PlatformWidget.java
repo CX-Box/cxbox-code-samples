@@ -60,5 +60,11 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		});
 	}
 
+	public Boolean checkPosition (int x, int y) {
+		System.out.println(element().getLocation().getX());
+		System.out.println(element().getLocation().getY());
+        return element().getLocation().getX() == x && element().getLocation().getY() == y;
+    }
+
 
 }
