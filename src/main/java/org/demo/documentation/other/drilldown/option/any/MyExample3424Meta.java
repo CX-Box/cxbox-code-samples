@@ -20,8 +20,9 @@ public class MyExample3424Meta extends AnySourceFieldMetaBuilder<MyExample3424DT
 		fields.setEnabled(MyExample3424DTO_.fileName);
 		fields.setEnabled(MyExample3424DTO_.customField);
 		fields.setEnabled(MyExample3424DTO_.files);
-		fields.setCurrentValue(MyExample3424DTO_.files, new MultivalueField(Collections.emptyList()));
-
+		fields.setEnabled(MyExample3424DTO_.filesMV);
+		fields.setCurrentValue(MyExample3424DTO_.files, null);
+		fields.setCurrentValue(MyExample3424DTO_.filesMV, new MultivalueField(Collections.emptyList()));
 	}
 
 	@Override

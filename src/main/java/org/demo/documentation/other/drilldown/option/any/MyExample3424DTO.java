@@ -18,11 +18,14 @@ public class MyExample3424DTO extends DataResponseDTO {
 
 	private MultivalueField files;
 
+	private MultivalueField filesMV;
+
 	public MyExample3424DTO(MyEntity3424OutServiceDTO entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.fileName = entity.getFileName();
 		this.fileNameId = entity.getFileNameId();
 		this.files = entity.getFiles();
+		this.filesMV = entity.getFilesMV();
 	}
 }

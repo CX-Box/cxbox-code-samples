@@ -33,6 +33,7 @@ public class MyExample3424Service extends AnySourceVersionAwareResponseService<M
 		setIfChanged(data, MyExample3424DTO_.fileNameId, entity::setFileNameId);
 		setIfChanged(data, MyExample3424DTO_.fileName, entity::setFileName);
 		entity.setFiles(new MultivalueField());
+		entity.setFilesMV(new MultivalueField());
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

@@ -21,4 +21,6 @@ public class MyEntity3424OutServiceDTO implements Serializable {
 	private String fileNameId;
 
 	private MultivalueField files;
+
+	private MultivalueField filesMV;
 }
