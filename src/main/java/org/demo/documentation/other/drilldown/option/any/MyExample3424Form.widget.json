@@ -1,0 +1,79 @@
+{
+  "name": "MyExample3424Form",
+  "title": "Form Result",
+  "type": "Form",
+  "bc": "myexample3424",
+  "fields": [
+    {
+      "label": "customField",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Файл",
+      "key": "fileName",
+      "type": "fileUpload",
+      "fileIdKey": "fileNameId"
+    },
+    {
+      "label": "Файлы",
+      "key": "files",
+      "type": "multivalue",
+      "popupBcName": "myEntity3421Pickpopup",
+      "assocValueKey": "customField",
+      "displayedKey": "fileName"
+    },
+    {
+      "label": "Файлы",
+      "key": "filesMV",
+      "type": "multivalue",
+      "popupBcName": "myEntity3421Pickpopup",
+      "assocValueKey": "customField",
+      "displayedKey": "fileName"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "filesMV",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "files",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileName",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    }
+  }
+}
+
