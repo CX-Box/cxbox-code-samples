@@ -17,4 +17,7 @@ public class MyEntity3205 extends BaseEntity {
 	private String customField;
 	@Column
 	private Boolean customFieldCheckBox = false;
+
+	@Column
+	private String customFieldNew;
 }
