@@ -29,7 +29,7 @@ public class MyEntity3045TestDataLoadService {
 		repositoryChild.deleteAll();
 		repository.deleteAll();
 
-		MyExampleBc3045 myExampleBc3045 = new MyExampleBc3045().setCustomField(50L);
+		MyExampleBc3045 myExampleBc3045 = new MyExampleBc3045().setCustomField(50L).setCustomFieldDrilldown("Test data 1");
 		repository.save(myExampleBc3045);
 		repositoryChild.save(new MyExampleBc3045Child().setMyExampleBc3045(myExampleBc3045).setCustomField("test1"));
 		repositoryChild.save(new MyExampleBc3045Child().setMyExampleBc3045(myExampleBc3045).setCustomField("test2"));

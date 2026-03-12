@@ -22,7 +22,7 @@ public class MyExampleBc3045MetaBuilder extends FieldMetaBuilder<MyExampleBc3045
 		);
 		fields.setDrilldown(MyExampleBc3045DTO_.customFieldDrilldown,
 				DrillDownType.INNER,
-				"/screen/myexample3045/view/myexample3045list/" + PlatformMyExample3045Controller.myExampleBc3045 + "/" + id
+				"/screen/myexample3045/view/myexample3045form/" + PlatformMyExample3045Controller.myExampleBc3045 + "/" + id
 		);
 	}
 
