@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
-import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 
 import java.util.Optional;
@@ -23,7 +21,7 @@ public class MyExampleBc3045DTO extends DataResponseDTO {
 
 	private Boolean customFieldShowCondition;
 
-	@SearchParameter(name = "customFieldDrilldown", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldDrilldown")
 	private String customFieldDrilldown;
 
 	public MyExampleBc3045DTO(MyExampleBc3045 entity) {
