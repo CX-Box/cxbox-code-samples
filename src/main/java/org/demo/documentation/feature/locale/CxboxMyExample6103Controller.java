@@ -1,11 +1,9 @@
 package org.demo.documentation.feature.locale;
 
 import lombok.Getter;
-import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.feature.locale.Myexample6103Service;
 import org.springframework.stereotype.Component;
 
 @SuppressWarnings({"java:S115", "java:S1144"})

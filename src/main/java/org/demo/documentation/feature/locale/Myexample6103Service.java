@@ -14,12 +14,8 @@ import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import static org.demo.documentation.fields.main.TextError.LESS_CURRENT_DATE;
 
 @Service
 @Getter

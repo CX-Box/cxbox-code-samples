@@ -9,7 +9,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.MultiFieldValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.locale.dictionary.ClientImportance;
 import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
@@ -24,14 +23,14 @@ import java.util.Optional;
 public class Myexample6103DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "fullName", provider = StringValueProvider.class)
+	@SearchParameter(name = "fullName")
 	private String fullName;
 
 	@SearchParameter(name = "fieldOfActivity", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	@EnumValueProvider.BaseEnum(value = FieldOfActivityEnum.class)
 	private MultivalueField fieldOfActivity;
 
-	@SearchParameter(name = "address", provider = StringValueProvider.class)
+	@SearchParameter(name = "address")
 	private String address;
 
 	@SearchParameter(name = "importance", provider = EnumValueProvider.class)
