@@ -191,7 +191,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.pickList("Custom Field").setValue("Test data");
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -211,7 +211,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		var customField = row.pickList("Custom Field");
 		customField.setValue("Test data 123");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		row.editRow();// TODO >> front bag >> set value picklist break edit mode
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo("The field 'customField' can contain only letters."));
@@ -223,7 +223,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		row.pickList("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo("The field 'customField' can contain only letters."));
 		row.pickList("Custom Field Additional")
@@ -261,7 +261,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		var customField = row.pickList("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
 	}
@@ -280,7 +280,7 @@ public class PickListOnListTest extends BaseTestForSamples {
 		form.pickList("Custom Field").setValue("Custom Field", "test data");
 
 		var row = list.rows().clickRow(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 	}
 
 }

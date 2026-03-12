@@ -167,7 +167,7 @@ public class TextOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.text("Custom Field").setValue("Test");
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -186,7 +186,7 @@ public class TextOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.text("Custom Field").setValue("11111");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().clickRow(0)
 				.text("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
@@ -206,7 +206,7 @@ public class TextOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.text("Custom FieldAdditional");
 		customField.setValue("123");
 		customFieldAdditional.setValue("123");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		var editRow = list.rows().row(0);
 		editRow.text("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Text.textOnlyLetters("customField")));
@@ -245,7 +245,7 @@ public class TextOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.text("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().clickRow(0)
 				.text("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));

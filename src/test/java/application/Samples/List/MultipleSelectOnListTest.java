@@ -176,7 +176,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multipleSelect("Custom Field").addValue(Set.of("Low"));
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -195,7 +195,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multipleSelect("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().clickRow(0)
 				.multipleSelect("Custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
@@ -211,7 +211,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		var editRow = list.rows().row(0).editRow();
 		var customField = editRow.multipleSelect("Custom Field");
 		var customFieldAdditional = editRow.multipleSelect("Custom Field Additional");
@@ -234,7 +234,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.checkValue(values -> assertThat(values).isEqualTo(Set.of("Low")))
 				.clear()
 				.checkValue(values -> assertThat(values).isEqualTo(Set.of()));
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.multipleSelect("Custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));

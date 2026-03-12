@@ -169,7 +169,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTime("custom Field").setValue(dateTime);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -189,7 +189,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTime("Custom Field").setValue(dateTime);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.dateTime("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate));
@@ -210,7 +210,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.dateTime("Custom Field Additional");
 		customField.setValue(dateTime);
 		customFieldAdditional.setValue(dateTime);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customField")));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional")));
 	}
@@ -265,7 +265,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTime("custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.dateTime("custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));

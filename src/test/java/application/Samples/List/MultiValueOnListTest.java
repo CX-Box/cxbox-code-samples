@@ -159,7 +159,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalue("Custom Field").setAllModal(true);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -177,7 +177,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.multivalue("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
@@ -193,7 +193,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		var editRow = list.rows().row(0);
 		var customField = editRow.multivalue("Custom Field");
 		var customFieldAdditional = editRow.multivalue("Custom Field Additional");
@@ -212,7 +212,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalue("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.multivalue("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
@@ -229,7 +229,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalue("Custom Field").clearWithModal(true);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.multivalue("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));

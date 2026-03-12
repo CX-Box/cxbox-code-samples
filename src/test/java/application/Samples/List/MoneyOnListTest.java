@@ -195,14 +195,14 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.money("Custom Field").setValue(number);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))
 				.close();
 		row.money("Custom Field").setValue(new BigDecimal("27000.78"));
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -222,7 +222,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.money("Custom Field").setValue(number);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.money("Custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.InvalidNumberDigits));
@@ -243,7 +243,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.money("Custom Field Additional");
 		customField.setValue(number);
 		customFieldAdditional.setValue(number);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textInvalidMoney("customField")));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textInvalidMoney("customFieldAdditional")));
 	}
@@ -290,7 +290,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.money("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.money("Custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
@@ -309,15 +309,15 @@ public class MoneyOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		var money = row.money("Custom Field");
 		money.setValue(number);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().clickRow(0);
 		money.clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.money("Custom Field")
 				.checkValue(val -> assertThat(val).isNull());
 		list.rows().clickRow(0);
 		money.setValue(number);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 	}
 }

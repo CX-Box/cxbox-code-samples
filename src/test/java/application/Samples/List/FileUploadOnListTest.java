@@ -185,7 +185,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close();
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -207,7 +207,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var customField = row.fileUpload("Custom Field");
 		customField
 				.setValue(fileFromResource).popup().close();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
 	}
@@ -228,7 +228,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.fileUpload("Custom Field Additional");
 		customField.setValue(fileFromResource).popup().close();
 		customFieldAdditional.setValue(fileFromResource0).popup().close();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(message -> assertThat(message).isEqualTo(Text.textOnlyLetters("customField")));
 		customFieldAdditional.checkRequired(message -> assertThat(message).isEqualTo(Text.textOnlyLetters("customFieldAdditional")));
 	}
@@ -273,7 +273,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		var customField = row.fileUpload("Custom Field");
 		customField.clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
 	}

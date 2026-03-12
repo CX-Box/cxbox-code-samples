@@ -46,7 +46,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 //              .secondLevelView("List")
 //              .listInline("List title");
 //        var row = list.rows().clickRow(0);
-//        row.burgerAction("Save").click();
+//        row.burgerActionWithSleep("Save").click();
 //        list.rows().row(0)
 //              .radio("Custom Field")
 //              .checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
@@ -184,7 +184,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.radio("Custom Field").setValue("Middle");
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -203,7 +203,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.radio("Custom Field").setValue("Low");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.radio("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
@@ -223,7 +223,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.radio("Custom Field Additional");
 		customField.setValue("Low");
 		customFieldAdditional.setValue("Low");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		var editRow = list.rows().row(0);
 		editRow.radio("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
@@ -263,7 +263,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.radio("Custom Field").setValue("Middle");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.radio("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo("Middle"));
