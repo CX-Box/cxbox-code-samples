@@ -53,7 +53,7 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 	}
 
 	public BurgerAction<SELF, ROWS, WIDGET> burgerActionWithSleep(String label) {
-		Selenide.sleep(Duration.ofMillis(500L).toMillis());//for work FA field
+		Selenide.sleep(Duration.ofMillis(5000L).toMillis());//for work FA field
 		return burgerAction(label);
 	}
 
