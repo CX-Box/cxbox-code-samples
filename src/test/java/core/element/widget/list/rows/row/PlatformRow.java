@@ -1,5 +1,6 @@
 package core.element.widget.list.rows.row;
 
+import com.codeborne.selenide.Selenide;
 import core.element.widget.action.BurgerAction;
 import core.element.widget.field.type.checkbox.ListCheckBox;
 import core.element.widget.field.type.date.ListDate;
@@ -29,6 +30,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
+
 @Slf4j
 @Getter(AccessLevel.PROTECTED)
 public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, ROWS extends PlatformRows<ROWS, WIDGET, SELF>, WIDGET extends ListWidget<WIDGET, ROWS, SELF>> extends Row<SELF, PlatformRows<ROWS, WIDGET, SELF>, WIDGET> {
@@ -50,6 +53,7 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 	}
 
 	public BurgerAction<SELF, ROWS, WIDGET> burgerAction(String label) {
+		Selenide.sleep(Duration.ofMillis(500L).toMillis());//for work FA field
 		return new BurgerAction<>(self(), parent.widget(), label);
 	}
 
