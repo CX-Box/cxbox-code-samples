@@ -159,7 +159,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.number("custom Field").clear();
-		row.burgerActionWithSleepClick("Save");
+		row.burgerActionClick("Save");
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
