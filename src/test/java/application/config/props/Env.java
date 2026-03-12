@@ -25,7 +25,7 @@ public class Env {
 		var url = System.getenv("APP_URL");
 
 		if (!isValidURL(url)) {
-			return new URI("http://code-samples.cxbox.org/ui/#/");
+			return new URI("http://localhost:8080/ui/#/");
 		}
 		return new URI(url);
 	}
