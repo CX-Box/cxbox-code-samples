@@ -133,7 +133,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTimeWithSec("Custom Field").setValue(dateTime);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
@@ -171,7 +171,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTimeWithSec("custom Field").setValue(dateTime);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -194,7 +194,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.dateTimeWithSec("Custom Field Additional");
 		customField.setValue(dateTime);
 		customFieldAdditional.setValue(dateTime);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customField")));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional")));
 	}
@@ -249,7 +249,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dateTimeWithSec("custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.dateTimeWithSec("custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));

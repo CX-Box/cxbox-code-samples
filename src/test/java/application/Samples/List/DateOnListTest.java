@@ -146,7 +146,7 @@ public class DateOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.date("custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
@@ -166,7 +166,7 @@ public class DateOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.date("custom Field").setValue(date);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -186,7 +186,7 @@ public class DateOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.date("Custom Field").setValue(date);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.date("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate));
@@ -207,7 +207,7 @@ public class DateOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.date("Custom Field Additional");
 		customField.setValue(date);
 		customFieldAdditional.setValue(date);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customField")));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textMoreThatCurrentDate("customFieldAdditional")));
 	}
@@ -261,7 +261,7 @@ public class DateOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.date("custom Field").clear();
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.rows().row(0)
 				.date("custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));

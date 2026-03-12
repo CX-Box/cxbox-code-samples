@@ -220,7 +220,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 				.rows().clickRow(0)
 				.inlinePickList("Custom Field")
 				.setValue("Test data")
-				.widget().rows().row(0).burgerActionClick("save")
+				.widget().rows().row(0).burgerActionWithSleepClick("save")
 				.widget().confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -251,7 +251,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 				.rows().clickRow(0)
 				.inlinePickList("Custom Field")
 				.setValue("Test123 data")
-				.widget().rows().row(0).burgerActionClick("Save")
+				.widget().rows().row(0).burgerActionWithSleepClick("Save")
 				.row(0).inlinePickList("Custom Field").checkRequired(rm -> assertThat(rm).isEqualTo(Constants.OnlyLetters));
 	}
 
@@ -277,7 +277,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 		PlatformApp.screen("InlinePickList validation field level dynamic")
 				.secondLevelView("List")
 				.listInline("List title")
-				.rows().row(0).burgerActionClick("Save")
+				.rows().row(0).burgerActionWithSleepClick("Save")
 				.row(0).editRow().inlinePickList("Custom Field").checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customField")))
 				.widget().rows().row(0).inlinePickList("Custom Field Additional").checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customFieldAdditional")));
 	}
@@ -320,7 +320,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 				.secondLevelView("List").listInline("List title")
 				.rows().clickRow(0).inlinePickList("Custom Field").clear()
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage))
-				.widget().rows().row(0).burgerActionClick("Save")
+				.widget().rows().row(0).burgerActionWithSleepClick("Save")
 				.row(0).inlinePickList("Custom Field").checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
 	}
 /*

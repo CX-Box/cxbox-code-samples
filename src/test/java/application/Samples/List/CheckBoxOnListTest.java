@@ -229,7 +229,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 				.setValue(true);
 		list.rows()
 				.row(0)
-				.burgerAction("save")
+				.burgerActionWithSleep("save")
 				.click();
 
 		list.confirmPopup()
@@ -242,7 +242,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 				.setValue(false);
 		list.rows()
 				.row(0)
-				.burgerAction("save")
+				.burgerActionWithSleep("save")
 				.click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
@@ -270,7 +270,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		checkBox.setValue(false);
 		checkBox.setValue(true);
 		checkBox.setValue(false);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		checkBox.checkRequired(rt -> assertThat(rt).isEqualTo(Text.textOnly("'True'")));
 	}
 
@@ -301,7 +301,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		customFieldAdditional.setValue(false);
 		customFieldAdditional.setValue(true);
 		customFieldAdditional.setValue(false);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField
 				.checkRequired(rt -> assertThat(rt).isEqualTo(Text.textOnlyTrue("customField")));
 		customFieldAdditional
@@ -362,7 +362,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 		var row = list
 				.rows()
 				.row(0);
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 
 		row.checkBox("Custom Field")
 				.checkRequired(rt -> assertThat(rt).isEqualTo(Constants.RequiredMessage));

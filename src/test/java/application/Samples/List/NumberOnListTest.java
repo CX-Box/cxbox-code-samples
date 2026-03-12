@@ -159,7 +159,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.number("custom Field").clear();
-		row.burgerActionClick("Save");
+		row.burgerActionWithSleepClick("Save");
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
@@ -177,7 +177,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -196,7 +196,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.number("Customer Field").setValue(new BigDecimal(123));
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.number("Customer Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.InvalidNumber));
@@ -217,7 +217,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.number("Custom Field Additional");
 		customField.setValue(new BigDecimal(123));
 		customFieldAdditional.setValue(new BigDecimal(123));
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		var editRow = list.rows().row(0);
 		editRow.number("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo("The field 'customField' cannot be less than 100 000."));
@@ -265,7 +265,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.number("custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.number("custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));

@@ -52,8 +52,12 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 		this.rowKey = rowKey;
 	}
 
-	public BurgerAction<SELF, ROWS, WIDGET> burgerAction(String label) {
+	public BurgerAction<SELF, ROWS, WIDGET> burgerActionWithSleep(String label) {
 		Selenide.sleep(Duration.ofMillis(500L).toMillis());//for work FA field
+		return burgerAction(label);
+	}
+
+	public BurgerAction<SELF, ROWS, WIDGET> burgerAction(String label) {
 		return new BurgerAction<>(self(), parent.widget(), label);
 	}
 

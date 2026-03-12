@@ -50,7 +50,7 @@ public class TestLogic extends BaseTestForSamples {
 				.input("Custom Field")
 				.setValue("test 123");
 //		formWidget.actions().action("Cancel").click()
-//				.row().burgerAction();
+//				.row().burgerActionWithSleep();
 
 		var row = PlatformApp.screen("List widget action create inline-form")
 				.view()

@@ -170,7 +170,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dictionary("Custom Field").setValue("Low");
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -189,7 +189,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dictionary("Custom Field");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.dictionary("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
@@ -207,7 +207,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		var customField = row.dictionary("Custom Field");
 		var customFieldAdditional = row.dictionary("Custom Field Additional");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
 	}
@@ -244,7 +244,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.dictionary("Custom Field").clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.dictionary("Custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));

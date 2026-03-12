@@ -177,7 +177,7 @@ public class InputOnListTest extends BaseTestForSamples {
 				.listInline("List");
 		var row = list.rows().clickRow(0);
 		row.input("customField").setValue("5700");
-		row.burgerAction("save").click();
+		row.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -185,7 +185,7 @@ public class InputOnListTest extends BaseTestForSamples {
 				.clickOk();
 		var row2 = list.rows().clickRow(0);
 		row2.input("customField").setValue("test data");
-		row2.burgerAction("save").click();
+		row2.burgerActionWithSleep("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
@@ -204,7 +204,7 @@ public class InputOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.input("Custom Field ").setValue("123");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		list.rows().row(0)
 				.input("Custom Field ")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
@@ -224,7 +224,7 @@ public class InputOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = row.input("Custom Field Additional");
 		customField.setValue("123");
 		customFieldAdditional.setValue("123");
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customField")));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Text.textOnlyLetters("customFieldAdditional")));
 	}
@@ -280,7 +280,7 @@ public class InputOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		var customField = row.input("customField");
 		customField.clear();
-		row.burgerAction("Save").click();
+		row.burgerActionWithSleep("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
 	}
 
