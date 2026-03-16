@@ -103,7 +103,7 @@ public abstract class BaseTestForSamples {
 		String envApp = String.valueOf(Env.uri());
 
 		var options = new ChromeOptions().addArguments(
-
+				"--headless",
 				"--enable-automation",
 				"--remote-allow-origins=*",
 				"--disable-features=InsecureDownloadWarnings",
