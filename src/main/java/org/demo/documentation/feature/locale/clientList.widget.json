@@ -1,0 +1,59 @@
+{
+  "name": "clientList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample6103",
+  "fields": [
+    {
+      "title": "{{ui.client.name}}",
+      "key": "fullName",
+      "type": "input",
+      "width": 300
+    },
+    {
+      "title": "{{ui.address}}",
+      "key": "address",
+      "type": "input",
+      "width": 300
+    },
+    {
+      "title": "{{ui.importance}}",
+      "key": "importance",
+      "type": "dictionary",
+      "width": 300
+    },
+    {
+      "title": "{{ui.status}}",
+      "key": "status",
+      "type": "dictionary",
+      "width": 300
+    },
+    {
+      "title": "{{ui.client.date.start}}",
+      "key": "dateStart",
+      "type": "date"
+    }
+  ],
+  "options": {
+    "export": {
+      "enabled": true,
+      "title": "{{ui.client}}"
+    },
+    "fullTextSearch": {
+      "enabled": true,
+      "placeholder": "{{ui.client.find.placeholder}}"
+    },
+    "filterSetting": {
+      "enabled": true
+    },
+    "actionGroups": {
+      "include": [
+        "delete",
+        "create",
+        "save"
+      ]
+    }
+  }
+
+}
+
