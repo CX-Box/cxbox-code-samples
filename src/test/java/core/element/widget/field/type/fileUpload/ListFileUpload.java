@@ -129,7 +129,7 @@ public class ListFileUpload<
 	@Override
 	public String valueTag() {
 		if (row instanceof PlatformListRowInline ri && !ri.getIsEdit()) {
-			return "button[class*='FileUpload__readOnlyFileButton']";
+			return "button[class*='FileUpload-module__readOnlyFileButton']";
 		}
 		return super.valueTag();
 	}
