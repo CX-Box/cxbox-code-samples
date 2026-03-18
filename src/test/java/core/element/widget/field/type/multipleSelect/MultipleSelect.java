@@ -93,7 +93,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			step.parameter("values", values);
 
 			values.forEach(value -> {
-				boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+				boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelectField-module__dropDownMenu']")
 						.is(Condition.visible, widget().getExpectations().getTimeout());
 				if (doesNotExist) {
 					element().click();
@@ -104,7 +104,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 							.click();
 				}
 				$("body").sendKeys(Keys.ESCAPE);
-				$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+				$("div[class^='ant-select-dropdown MultipleSelectField-module__dropDownMenu']")
 						.is(Condition.hidden, widget().getExpectations().getTimeout());
 			});
 		});
@@ -158,7 +158,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	protected ElementsCollection getOptionsMultipleSelect() {
-		return $("div[class^=\"ant-select-dropdown MultipleSelectField__dropDownMenu\"]")
+		return $("div[class^=\"ant-select-dropdown MultipleSelectField-module__dropDownMenu\"]")
 				.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
