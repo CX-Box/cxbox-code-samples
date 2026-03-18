@@ -253,7 +253,7 @@ public class Calendar {
 						var val = value.get(i);
 						var isExist = $("div[class*='ant-time-picker-panel']").is(Condition.exist, expectationPattern.getTimeout());
 						if (!isExist) {
-							$("div[class*='TimeRangePicker__container']").$$("span[class='ant-time-picker']").get(i).click();
+							$("div[class*='TimeRangePicker-module__container']").$$("span[class='ant-time-picker']").get(i).click();
 						}
 						setTimeField(val, true);
 						$("div[class*='ant-time-picker-panel']").is(Condition.not(Condition.exist), expectationPattern.getTimeout());

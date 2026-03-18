@@ -23,7 +23,7 @@ public class ListMultivalueHover
 	}
 
 	public ListMultivalueHover<W, RR, R> checkShortText(Consumer<String> shortText) {
-		String text = element().$("p[class*='MultivalueHover__displayedValue']").text();
+		String text = element().$("p[class*='MultivalueHover-module__displayedValue']").text();
 		shortText.accept(text);
 		return this;
 	}
