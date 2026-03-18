@@ -131,7 +131,7 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	@Override
 	public String valueTag() {
 		if (widget() instanceof PlatformInfoWidget) {
-			return "span[class*='ReadOnlyField__readOnlyField']";
+			return "span[class*='ReadOnlyField-module__readOnlyField']";
 		}
 		return super.valueTag();
 	}

@@ -89,7 +89,7 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 	@Override
 	public String valueTag() {
 		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
-			return "span[class*='ReadOnlyField__readOnlyField']";
+			return "span[class*='ReadOnlyField-module__readOnlyField']";
 		}
 		return super.valueTag();
 	}
