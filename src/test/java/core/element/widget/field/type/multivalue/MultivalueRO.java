@@ -38,7 +38,7 @@ public class MultivalueRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 	@Override
 	public List<String> getValue() {
 		return element()
-//				.$("div[class*=\"InfoCell__fieldData\"]")
+//				.$("div[class*=\"InfoCell-module__fieldData\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(valueTag())
 				.texts();
@@ -61,7 +61,7 @@ public class MultivalueRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.$("div[class*=\"InfoCell__fieldData\"]")
+				.$("div[class*=\"InfoCell-module__fieldData\"]")
 				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
 	}
 

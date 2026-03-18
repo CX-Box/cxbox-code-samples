@@ -49,7 +49,7 @@ public class ListMultipleSelect
 	@Override
 	public String valueTag() {
 		if (row instanceof RowInline<?, ?, ?> ri && !ri.getIsEdit()) {
-			return "div[class*='MultipleSelectField__readOnly']";
+			return "div[class*='MultipleSelectField-module__readOnly']";
 		}
 		return super.valueTag();
 	}
