@@ -10,8 +10,6 @@ import org.demo.documentation.feature.locale.dictionary.ClientImportance;
 import org.demo.documentation.feature.locale.enums.StatusEnum;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
