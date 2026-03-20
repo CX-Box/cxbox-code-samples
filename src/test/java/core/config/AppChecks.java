@@ -2,6 +2,7 @@ package core.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -9,7 +10,9 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import net.jcip.annotations.ThreadSafe;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Request.Builder;
+import okhttp3.Response;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -17,6 +20,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
@@ -26,10 +30,11 @@ public class AppChecks {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 
+	// TODO >> cxbox >> need universal logic for auth
 	@NonNull
 	@SneakyThrows
-	public static String logoutAndRedirectToLoginPageUri(@NonNull URI uri) {
-		log.debug("app server url: {}", uri);
+	public static String logout(@NonNull URI uri) {
+		log.info("app server url: {}", uri);
 		var authConfigUri = new Builder()
 				.url(uri.getScheme() + "://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "")
 						+ "/api/v1/auth/oidc.json")
@@ -38,14 +43,34 @@ public class AppChecks {
 		try (var rs = client.newCall(authConfigUri).execute()) {
 			if (rs.body() != null) {
 				var cfg = objectMapper.readValue(rs.body().string(), AuthConfig.class);
-				log.debug("Auth server url: {}", cfg.authServerUrl());
-				var authUri = new URI(cfg.authServerUrl());
-				String logoutUri =
-						authUri.getScheme() + "://" + authUri.getHost() + (authUri.getPort() != -1 ? ":" + authUri.getPort() : "")
-								+ "/auth/realms/" + cfg.realm() + "/protocol/openid-connect/logout"
-								+ "?redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8);
-				log.debug("logout uri: {}", logoutUri);
-				return logoutUri;
+				log.info("Auth server url: {}", cfg.authority());
+				var authUri = new URI(cfg.authority());
+				Request request = new Request.Builder()
+						.url(authUri + "/.well-known/openid-configuration")
+						.build();
+				try (Response response = new OkHttpClient().newCall(request).execute()) {
+					JsonNode json = objectMapper.readTree(response.body().string());
+					String endSessionEndpoint = json.get("end_session_endpoint").asText(); // get
+					var logoutUrl = endSessionEndpoint
+							+ "?client_id=" + cfg.clientId
+							+ "&post_logout_redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8)
+							+ "&redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8);
+					try {
+						String sessionUserData = executeJavaScript("""
+								    var key = Object.keys(localStorage).find(k => k.startsWith('oidc.user:'));
+								    return key ? localStorage.getItem(key) : null;
+								""");
+						if (sessionUserData != null) {
+							String idToken = objectMapper.readTree(sessionUserData).path("id_token").asText();
+							if (!idToken.isEmpty()) {
+								logoutUrl += "&id_token_hint=" + idToken;
+							}
+						}
+					} catch (Exception e) {
+						log.error("Cannot find session data from storage");
+					}
+					return logoutUrl;
+				}
 			}
 		}
 		throw new IllegalStateException("cannot determine authUri");
@@ -106,9 +131,9 @@ public class AppChecks {
 		return false;
 	}
 
-
+	// TODO >> this config related which version used ( oidc standard  or old oidc keyclock conf on application.yaml)
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	public record AuthConfig(String realm, @JsonProperty("auth-server-url") String authServerUrl) {
+	public record AuthConfig(@JsonProperty("authority") String authority, @JsonProperty("client_id") String clientId) {
 
 	}
 
