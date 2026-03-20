@@ -11,11 +11,9 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @Service
 @Getter
@@ -52,13 +50,6 @@ public class Myexample6103Service extends VersionAwareResponseService<Myexample6
 		setIfChanged(data, Myexample6103DTO_.status, entity::setStatus);
 		setIfChanged(data, Myexample6103DTO_.importance, entity::setImportance);
 		setIfChanged(data, Myexample6103DTO_.address, entity::setAddress);
-		if (data.isFieldChanged(Myexample6103DTO_.fieldOfActivity)) {
-			entity.setFieldOfActivity(
-					data.getFieldOfActivity().getValues()
-							.stream()
-							.map(v -> FieldOfActivityEnum.getByValue(v.getValue()))
-							.collect(Collectors.toSet()));
-		}
 		setIfChanged(data, Myexample6103DTO_.fullName, entity::setFullName);
 		return new ActionResultDTO<>(entityToDto(bc, myexample6103Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));

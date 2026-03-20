@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.locale.dictionary.ClientImportance;
-import org.demo.documentation.feature.locale.enums.FieldOfActivityEnum;
 import org.demo.documentation.feature.locale.enums.StatusEnum;
 
 import java.time.LocalDateTime;
@@ -26,12 +25,6 @@ public class Myexample6103 extends BaseEntity {
 
 	@Column
 	private String fullName;
-
-	@Enumerated(value = EnumType.STRING)
-	@CollectionTable(name = "FIELD_OF_ACTIVITY_MYEXAMPLE6103", joinColumns = @JoinColumn(name = "Myexample6103_ID"))
-	@ElementCollection(targetClass = FieldOfActivityEnum.class)
-	@Column(name = "VALUE", nullable = false)
-	private Set<FieldOfActivityEnum> fieldOfActivity = new HashSet<>();
 
 	@Column
 	private String address;
