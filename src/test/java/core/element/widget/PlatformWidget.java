@@ -11,6 +11,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.codeborne.selenide.Selenide.$;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 // TODO add attribute which show which value tag we must use
 // Like  INFO, FORM, LIST(LIST_EDIT? -> must be in list)
@@ -61,10 +64,28 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 	}
 
 	public Boolean checkPosition (int x, int y) {
-		System.out.println(element().getLocation().getX());
-		System.out.println(element().getLocation().getY());
         return element().getLocation().getX() == x && element().getLocation().getY() == y;
     }
 
+	public Boolean checkDistanceFromElement (int x) {
+		SelenideElement leftSlider = $("aside[data-test='LEFT_SIDER']")
+				.$("ul[data-test='MAIN_MENU']");
+		return element().getLocation().getX() - leftSlider.getLocation().getX() + leftSlider.getSize().width == x;
+	}
 
+	public void checkPositionAtElement (SIDE side, SelenideElement element) {
+		switch (side) {
+			case BOTTOM -> assertThat(element().getLocation().getY()).isGreaterThan(element.getLocation().getY());
+			case TOP -> assertThat(element.getLocation().getY()).isGreaterThan(element().getLocation().getY());
+			case LEFT -> assertThat(element.getLocation().getX()).isGreaterThan(element().getLocation().getX());
+			case RIGHT -> assertThat(element().getLocation().getX()).isGreaterThan(element.getLocation().getX());
+		}
+	}
+
+	enum SIDE {
+		RIGHT,
+		LEFT,
+		TOP,
+		BOTTOM
+	}
 }
