@@ -91,6 +91,7 @@ public abstract class BaseTestForSamples {
 						.screenshots(true)
 						.savePageSource(true)
 		);
+
 		// Disabled  ( catch error in debug running mod)
 		// Highlight current  element on page orange border
 		//SelenideHighlightSetup.registerAllHighlightedCommands();
