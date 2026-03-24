@@ -79,6 +79,6 @@ public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F 
 		return popup
 				.$("div[data-test-file-upload-prgress-list=\"true\"]")
 				.shouldBe(Condition.visible, cxBoxExpectations.getTimeout())
-				.$$("div[class*=\"UploadList__fileRow\"]");
+				.$$("div[class*=\"UploadList-module__fileRow\"]");
 	}
 }
