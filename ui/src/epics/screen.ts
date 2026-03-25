@@ -1,12 +1,16 @@
 import { catchError, concat, EMPTY, filter, from, mergeMap, of, switchMap } from 'rxjs'
 import { OperationPreInvokeCustom, OperationPreInvokeSubType, OperationPreInvokeTypeCustom } from '@interfaces/operation'
-import { interfaces, utils, ViewMetaResponse } from '@cxbox-ui/core'
-import { CustomWidgetTypes } from '@interfaces/widget'
+import { FieldType, interfaces, utils, ViewMetaResponse } from '@cxbox-ui/core'
+import { AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { actions, processPreInvoke, sendOperationSuccess, showViewPopup } from '@actions'
 import { RootEpic } from '@store'
 import { isAnyOf } from '@reduxjs/toolkit'
 import { getRouteFromString } from '@router'
 import { getDefaultVisibleView } from '@components/ViewNavigation/tab/standard/utils/getDefaultVisibleView'
+import { exportTable } from '@utils/export'
+import { EFeatureSettingKey } from '@interfaces/session'
+import { calculateFieldsOrder, calculateHiddenFields, createSettingPath } from '@utils/tableSettings'
+import { isFilterGroupTempId } from '@components/widgets/Table/filterGroup'
 
 const findFormPopupWidget = (operationType: string, widgets: interfaces.WidgetMeta[], calleeBcName: string, widgetName?: string) => {
     const formPopupWidget = widgetName
@@ -86,18 +90,18 @@ export const replaceTemporaryIdOnSavingEpic: RootEpic = action$ =>
 const addFilterGroupEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
         filter(actions.addFilterGroup.match),
-        switchMap(action => {
-            const newFilterGroup = action.payload
+        mergeMap(action => {
+            const filterGroup = action.payload
 
-            return api.saveFilterGroup({ filterGroups: [newFilterGroup] }).pipe(
+            return api.saveFilterGroup({ filterGroups: [filterGroup] }).pipe(
                 switchMap(response =>
                     concat(
                         ...(response.data ?? []).map(({ id }) =>
                             of(
                                 actions.updateIdForFilterGroup({
-                                    id: id,
-                                    bc: newFilterGroup.bc,
-                                    name: newFilterGroup.name
+                                    newId: id,
+                                    bc: filterGroup.bc,
+                                    prevId: filterGroup.id
                                 })
                             )
                         )
@@ -107,7 +111,7 @@ const addFilterGroupEpic: RootEpic = (action$, state$, { api }) =>
                     console.error('addFilterGroup failed')
 
                     return concat(
-                        of(actions.removeFilterGroup({ bc: newFilterGroup.bc, name: newFilterGroup.name })),
+                        of(actions.removeFilterGroup({ bc: filterGroup.bc, id: filterGroup.id })),
                         utils.createApiErrorObservable(error)
                     )
                 })
@@ -118,10 +122,10 @@ const addFilterGroupEpic: RootEpic = (action$, state$, { api }) =>
 const deleteFilterGroupEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
         filter(actions.removeFilterGroup.match),
-        switchMap(action => {
+        mergeMap(action => {
             const { id } = action.payload
 
-            if (id) {
+            if (!isFilterGroupTempId(id)) {
                 api.deleteFilterGroup(+id)
             }
 
@@ -199,6 +203,69 @@ export const downloadFileByUrlEpic: RootEpic = (action$, state$, { api }) =>
         })
     )
 
+const exportToExcelEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(isAnyOf(actions.processPostInvoke)),
+        filter(action => action.payload.postInvoke.type === 'exportToExcel'),
+        mergeMap(action => {
+            const state = state$.value
+            const widgetMeta = state.view.widgets.find(widget => widget.name === action.payload.widgetName) as AppWidgetTableMeta
+            const exportConfig = widgetMeta?.options?.export
+            const bcName = action.payload.bcName
+            const bc = state.screen.bo.bc[bcName]
+            const additionalFields = widgetMeta?.options?.additional?.fields
+            const tableSetting =
+                state.session.tableSettings?.[createSettingPath({ view: state.view.name, widget: widgetMeta.name }) as string]
+
+            const screenName = state.screen.screenName
+            const fields = calculateFieldsOrder(
+                calculateHiddenFields(
+                    additionalFields || [],
+                    tableSetting?.addedToAdditionalFields,
+                    tableSetting?.removedFromAdditionalFields
+                ),
+                widgetMeta?.fields?.filter(field => !field.hidden && field.type !== FieldType.hidden),
+                tableSetting?.orderFields
+            )
+
+            const title = exportConfig?.title || widgetMeta.title
+            const exportWithDate = false
+            const hasData = state.data[bcName]?.length > 0
+            const exportExcelLimit =
+                state.session.featureSettings?.find(setting => setting.key === EFeatureSettingKey.appExportExcelLimit)?.value || ''
+            const total = state.view.bcRecordsCount[bcName]?.count
+            const tableFilters = state.screen.filters[bcName]
+            const tableSorters = state.screen.sorters[bcName]
+            const exportOptions = {
+                page: bc?.page,
+                limit: bc?.limit
+            }
+            const selectedRows = state.view.selectedRows[bcName]
+
+            return from(
+                exportTable(
+                    screenName,
+                    bcName,
+                    fields,
+                    title,
+                    exportWithDate,
+                    hasData,
+                    exportExcelLimit,
+                    total,
+                    tableFilters,
+                    tableSorters,
+                    exportOptions,
+                    undefined,
+                    selectedRows,
+                    undefined
+                )
+            ).pipe(
+                mergeMap(() => EMPTY),
+                catchError(error => utils.createApiErrorObservable(error))
+            )
+        })
+    )
+
 export const screenEpics = {
     replaceTemporaryIdOnSavingEpic,
     processPreInvokeConfirmEpic,
@@ -206,5 +273,6 @@ export const screenEpics = {
     deleteFilterGroupEpic,
     changeScreen: selectScreen,
     downloadFileByUrlEpic,
-    downloadFileEpic
+    downloadFileEpic,
+    exportToExcelEpic
 }

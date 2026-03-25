@@ -1,17 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { AppWidgetMeta, AppWidgetTableMeta } from '@interfaces/widget'
 import Operations from '@components/Operations/Operations'
 import { useAppSelector } from '@store'
-import Calendar, { CalendarYearApiHandle } from '@components/widgets/CalendarList/CalendarYear'
-import ListToggleButton from '@components/widgets/CalendarList/ListToggleButton'
+import CalendarYear, { CalendarYearApiHandle } from '@components/widgets/CalendarList/components/views/CalendarYear'
 import { useCheckLimit } from '@hooks/useCheckLimit'
 import { useTranslation } from 'react-i18next'
 import Table from '@components/widgets/Table/Table'
-import Filters from '@components/widgets/CalendarList/Filters'
-import { mapRefinerKeyToFieldKey } from '@components/widgets/CalendarList/interfaces'
+import Filters from '@components/widgets/CalendarList/components/filters/Filters'
+import { mapRefinerKeyToFieldKey } from '@components/widgets/CalendarList/constants'
 import { useWidgetOperations } from '@hooks/useWidgetOperations'
 import { selectBcRecordForm } from '@selectors/selectors'
 import { useCalendarYearDataCheck } from '@components/widgets/CalendarList/hooks/useCalendarYearDataCheck'
+import { Icon, Menu, Tooltip } from 'antd'
+import DropdownSetting from '@components/widgets/Table/components/DropdownSetting'
 
 interface CalendarYearListProps {
     meta: AppWidgetMeta
@@ -27,10 +28,6 @@ const CalendarYearList: React.FC<CalendarYearListProps> = ({ meta: widget }) => 
     const [isList, setIsList] = useState(false)
     const { bcPageLimit, isIncorrectLimit, bcCountForShowing } = useCheckLimit(widget.bcName)
     const { isIncorrectData } = useCalendarYearDataCheck(widget.name)
-
-    const toggleWidgetView = useCallback(() => {
-        setIsList(prev => !prev)
-    }, [])
 
     useEffect(() => {
         if (prevIsListRef.current && !isList) {
@@ -65,13 +62,31 @@ const CalendarYearList: React.FC<CalendarYearListProps> = ({ meta: widget }) => 
 
     const togglerDisabled = isIncorrectLimit || isIncorrectData
 
+    const selectedKeys = useMemo(() => {
+        if (isList) {
+            return ['list']
+        }
+        return ['calendar']
+    }, [isList])
+
     const listToggleButton = (
-        <ListToggleButton
-            widgetIcon="calendar"
-            tooltipTitle={togglerErrorMessage}
-            disabled={togglerDisabled}
-            isList={enabledListMode}
-            onClick={toggleWidgetView}
+        <DropdownSetting
+            overlay={
+                <Menu selectedKeys={selectedKeys}>
+                    <Menu.ItemGroup key={'mode'} title={t('Mode')}>
+                        <Menu.Item key={'calendar'} onClick={() => setIsList(false)} disabled={togglerDisabled}>
+                            <Tooltip title={togglerErrorMessage}>
+                                <Icon type={'calendar'} />
+                                {t('Calendar')}
+                            </Tooltip>
+                        </Menu.Item>
+                        <Menu.Item key={'list'} onClick={() => setIsList(true)}>
+                            <Icon type={'table'} />
+                            {t('Table')}
+                        </Menu.Item>
+                    </Menu.ItemGroup>
+                </Menu>
+            }
         />
     )
 
@@ -84,15 +99,12 @@ const CalendarYearList: React.FC<CalendarYearListProps> = ({ meta: widget }) => 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: 'var(--text-color)' }}>
             {enabledListMode ? (
-                <>
-                    {listToggleButton}
-                    <Table meta={widget as AppWidgetTableMeta} />
-                </>
+                <Table meta={widget as AppWidgetTableMeta} settingsComponent={listToggleButton} />
             ) : (
                 <>
                     {operations?.length ? <Operations widgetMeta={widget} bcName={widget.bcName} operations={operations} /> : null}
                     <Filters widgetName={widget.name} ignoreFieldNames={ignoreFieldNames} />
-                    <Calendar ref={calendarRef} meta={widget} toggleButton={listToggleButton} />
+                    <CalendarYear ref={calendarRef} meta={widget} toggleButton={listToggleButton} />
                 </>
             )}
         </div>
