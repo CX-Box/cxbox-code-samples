@@ -3,6 +3,7 @@ package org.demo.conf.security.oidc;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.service.session.CxboxUserDetailsInterface;
 import org.cxbox.core.config.properties.UIProperties;
+import org.cxbox.core.exception.BusinessException;
 import org.demo.conf.cxbox.customization.role.UserRoleService;
 import org.demo.conf.cxbox.customization.role.UserService;
 import org.demo.entity.core.User;
@@ -48,7 +49,9 @@ public class OidcJwtTokenConverter implements Converter<Jwt, OidcAuthenticationT
 				.flatMap(Collection::stream)
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
-
+		if(roles.isEmpty()) {
+			throw  new BusinessException().addPopup("Нет ни одной роли");
+		}
 		Set<GrantedAuthority> authorities = Stream
 				.concat(jwtGrantedAuthoritiesConverter.convert(jwt).stream(), roles.stream())
 				.collect(Collectors.toSet());
