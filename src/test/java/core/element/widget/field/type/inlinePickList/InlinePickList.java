@@ -61,12 +61,12 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			clear();
 			element().click();
 			element().$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.setValue(value);
 			widget().getExpectations().getWaitAllElements($("body"));
 			getValues()
 					.findBy(Condition.text(value))
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			findDropdownElementByElementAriaControlsId()
 					.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
@@ -80,7 +80,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		return parentElement().$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + title + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 
 	}
 
@@ -90,7 +90,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	protected ElementsCollection getValues() {
 		return findDropdownElementByElementAriaControlsId()
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
 
 	}

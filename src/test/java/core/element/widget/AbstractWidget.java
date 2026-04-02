@@ -34,13 +34,13 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 	protected SelenideElement getWidgetElementByTitle(TypeWidget type, String title) {
 		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-title='" + title
 				+ "']")
-				.shouldBe(Condition.enabled, expectations.getTimeout());
+				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
 	}
 
 	protected SelenideElement getWidgetElementByName(TypeWidget type, String name) {
 		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-name='" + name
 				+ "']")
-				.shouldBe(Condition.enabled, expectations.getTimeout());
+				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
 	}
 
 

@@ -32,7 +32,6 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		this.modal = $("div[data-test-widget-type=\"PickListPopup\"]")
 				.shouldBe(visible, widget.getExpectations().getTimeout())
 				.shouldBe(exist, widget.getExpectations().getTimeout());
-		;
 	}
 
 	public void setValue(String name, String value) {
@@ -67,7 +66,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	private boolean isLastPage() {
 		return this.modal
 				.$("li[title=\"Next Page\"][aria-disabled=\"true\"]")
-				.is(Condition.anyOf(Condition.visible, Condition.enabled));
+				.is(Condition.anyOf(Condition.visible, Condition.interactable));
 	}
 
 	private void pressRight(int number) {
@@ -158,6 +157,6 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	private SelenideElement getSelectionRow(SelenideElement row) {
 		return row.$(By.cssSelector("td[class='ant-table-selection-column']"))
 				.$(By.tagName("input"))
-				.shouldBe(Condition.enabled);
+				.shouldBe(Condition.interactable);
 	}
 }

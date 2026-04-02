@@ -79,7 +79,7 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 					.hover()
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			return (SELF) this;
 		});
@@ -104,7 +104,7 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 			logTime(step);
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 		});
 	}

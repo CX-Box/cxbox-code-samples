@@ -4,10 +4,10 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.element.screen.view.*;
+import core.expectation.CxBoxExpectations;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.Duration;
 import java.util.function.Supplier;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -17,7 +17,7 @@ import static core.element.widget.AbstractWidget.logTime;
 public class PlatformScreen extends AbstractScreen {
 
 	public PlatformScreen(String name) {
-		super();
+		super(new CxBoxExpectations());
 		Allure.step("Selecting the screen " + name, step -> {
 			step.parameter("screen", name);
 			logTime(step);
@@ -27,13 +27,12 @@ public class PlatformScreen extends AbstractScreen {
 					.find(Condition.exactText(name))
 					.shouldBe(Condition.enabled).click();
 			checkPageLoaded();
-			;
 		});
 
 	}
 
 	public PlatformScreen() {
-		super();
+		super(new CxBoxExpectations());
 		// need for check loaded page
 		element();
 		checkPageLoaded();
@@ -64,7 +63,8 @@ public class PlatformScreen extends AbstractScreen {
 		return Allure.step("Checking page loaded", step -> {
 			SelenideElement element = $("div[data-test-loading=\"true\"]");
 			log.debug("data-test-loading=true check -> started. exists:  {}", element.exists());
-			element.shouldNotBe(Condition.exist, Duration.ofSeconds(2));
+			// TODO >> need see and maybe change
+			element.shouldNotBe(Condition.exist, getPattern().getTimeout());
 			log.debug("data-test-loading=true check -> finished. exists: {}", element.exists());
 			return this;
 		});

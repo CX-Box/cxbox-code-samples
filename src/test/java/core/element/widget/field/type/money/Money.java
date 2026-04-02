@@ -92,7 +92,7 @@ public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-					.shouldBe(Condition.editable, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.setValue(str);
 			$("body").click();
 			return (SELF) this;

@@ -53,16 +53,16 @@ public class ListInput<
 	public String getValue() {
 		return getUniversalText(element().$(valueTag())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout()));
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout()));
 	}
 
 	@Override
 	public ListInput<W, RR, R> setValue(String value) {
 		element().$(fieldType().getValueTagFocused())
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 				.clear();
 		element().$(fieldType().getValueTagFocused())
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 				.setValue(value)
 				.shouldNot(Condition.empty)
 				.sendKeys(Keys.TAB);
@@ -75,7 +75,7 @@ public class ListInput<
 				.$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + name + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class ListInput<
 			logTime(step);
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			// It needs for work on different OS
 			int sizeText = ((String) getValue()).length() + 1;
@@ -127,7 +127,7 @@ public class ListInput<
 			Arrays.fill(sequence, 0, sizeText, Keys.BACK_SPACE);
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.sendKeys(sequence);
 			return this;
 		});

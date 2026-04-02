@@ -65,16 +65,16 @@ public class Input<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public SELF setValue(String value) {
-		element().shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+		element().shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 		element().click();
 		element()
 				.$(valueTag())
-				.shouldBe(Condition.enabled)
+				.shouldBe(Condition.interactable)
 				.clear();
 		element()
 				.$(valueTag())
-				.shouldBe(Condition.enabled)
+				.shouldBe(Condition.interactable)
 				.setValue(value);
 		element()
 				.$(valueTag())

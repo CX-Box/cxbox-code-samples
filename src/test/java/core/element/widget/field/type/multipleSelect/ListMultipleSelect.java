@@ -64,7 +64,7 @@ public class ListMultipleSelect
 			}
 			if (!isOptionSelected(value)) {
 				getOption(value)
-						.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+						.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 						.click();
 			}
 			$("body").sendKeys(Keys.ESCAPE);

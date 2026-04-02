@@ -62,7 +62,7 @@ public class MultivalueRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.$("div[class*=\"InfoCell__fieldData\"]")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 	}
 
 

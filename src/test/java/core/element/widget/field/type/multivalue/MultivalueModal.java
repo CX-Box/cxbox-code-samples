@@ -30,13 +30,13 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	public MultivalueModal(W widget) {
 		this.widget = widget;
 		this.modal = $("div[data-test-widget-type=\"AssocListPopup\"]")
-				.shouldBe(visible, widget.getExpectations().getTimeout())
-				.shouldBe(exist, widget.getExpectations().getTimeout());
-		;
+				.shouldBe(visible, widget.getExpectations().getOverTimeout())
+				.shouldBe(exist, widget.getExpectations().getOverTimeout());
 	}
 
 	public void setValues(String name, List<String> values) {
 		while (true) {
+			Selenide.sleep(1000); //TODO >> After adding skeleton at multivalue popup add popup wait
 			setValuesOnCurrentPage(name, values, true);
 			if (isLastPage()) {
 				break;
@@ -60,7 +60,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			for (int i = 0; i < number; i++) {
 				if (getPages() > 1) {
 					this.modal.$("i[class=\"anticon anticon-right\"]")
-							.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
+							.shouldBe(Condition.visible, widget.getExpectations().getOverTimeout())
 							.click();
 				}
 
@@ -73,7 +73,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			logTime(step);
 
 			return modal.$("div[data-test-widget-list-pagination=\"true\"]")
-					.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
+					.shouldBe(Condition.visible, widget.getExpectations().getOverTimeout())
 					.$$("li[tabindex=\"0\"]").size();
 		});
 	}
