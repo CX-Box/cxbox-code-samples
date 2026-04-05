@@ -39,7 +39,7 @@ public class ListNumber
 	@Override
 	public String valueTag() {
 		if (row instanceof RowInline<?, ?, ?> pri && !pri.getIsEdit()) {
-			return "span[class*='ReadOnlyField__readOnlyField']";
+			return "span[class*='ReadOnlyField-module__readOnlyField']";
 		}
 		return super.valueTag();
 	}
