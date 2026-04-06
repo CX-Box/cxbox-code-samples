@@ -104,6 +104,7 @@ public abstract class BaseTestForSamples {
 
 		var options = new ChromeOptions().addArguments(
 				"--headless",
+//				"--auto-open-devtools-for-tabs", // show devtools on start browser
 				"--enable-automation",
 				"--remote-allow-origins=*",
 				"--disable-features=InsecureDownloadWarnings",
@@ -124,7 +125,7 @@ public abstract class BaseTestForSamples {
 				"--no-first-run",
 				"--no-default-browser-check",
 				"--disable-translate",
-				"--disable-features=OptimizationHints,OptimizationGuideModelDownloading"
+				"--disable-features=OptimizationHints,OptimizationGuideModelDownloading,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable"
 		);
 		options.setAcceptInsecureCerts(true);
 		if (Env.logEnabled()) {
