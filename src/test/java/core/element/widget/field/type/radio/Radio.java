@@ -74,7 +74,7 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 			step.parameter("Radio name", value);
 
 			getRadio(value)
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			getRadio(value)
 					.isSelected();

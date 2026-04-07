@@ -2,6 +2,7 @@ package core.element.widget.field.type.multipleSelect;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
@@ -180,6 +181,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			}
 			$("body").sendKeys(Keys.ESCAPE);
 		});
+		Selenide.sleep(1000) ;//TODO >> After adding skeleton at multivalue popup add popup wait
 		return (SELF) this;
 	}
 }

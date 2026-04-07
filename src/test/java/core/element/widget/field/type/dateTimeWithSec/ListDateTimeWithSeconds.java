@@ -79,7 +79,7 @@ public class ListDateTimeWithSeconds<
 			step.parameter("LocalDateTime with sec", value);
 			PANEL_CALENDAR
 					.$("input")
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 
 					.click();
 			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
@@ -87,7 +87,7 @@ public class ListDateTimeWithSeconds<
 			}
 			PANEL_CALENDAR
 					.$("input")
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 
 					.setValue(formattedDateTimeWithSecond(value));
 			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
@@ -95,14 +95,14 @@ public class ListDateTimeWithSeconds<
 			}
 			PANEL_CALENDAR
 					.$("input")
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.shouldHave(Condition.value(formattedDateTimeWithSecond(value)));
 			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
 				return;
 			}
 			PANEL_CALENDAR
 					.$("input")
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.sendKeys(Keys.ENTER);
 		});
 		return this;
@@ -118,7 +118,7 @@ public class ListDateTimeWithSeconds<
 			logTime(step);
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 		});
 	}
@@ -162,7 +162,7 @@ public class ListDateTimeWithSeconds<
 					.$("i[aria-label=\"icon: close-circle\"]")
 
 					.hover()
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			return this;
 		});
@@ -175,7 +175,7 @@ public class ListDateTimeWithSeconds<
 					.$("i[aria-label=\"icon: close-circle\"]")
 
 					.hover()
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			return this;
 		});

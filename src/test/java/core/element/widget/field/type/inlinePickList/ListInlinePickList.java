@@ -51,12 +51,12 @@ public class ListInlinePickList<
 					.click();
 			element()
 					.$("input[class=\"ant-select-search__field\"]")
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.setValue(value);
 			widget().getExpectations().getWaitAllElements(element());
 			getValues()
 					.findBy(Condition.text(value))
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			return this;
 		});

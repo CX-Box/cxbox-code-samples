@@ -127,7 +127,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 					.hover()
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.click();
 			return (SELF) this;
 		});

@@ -52,7 +52,7 @@ public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 		return parentElement().$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + title + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 	}
 
 	@Override

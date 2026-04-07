@@ -13,6 +13,10 @@ public interface ExpectationPattern {
 	 */
 	Duration getTimeout();
 
+	Duration getOverTimeout();
+
+	Integer getPoolingRate();
+
 	/**
 	 * Number of repetitions
 	 *

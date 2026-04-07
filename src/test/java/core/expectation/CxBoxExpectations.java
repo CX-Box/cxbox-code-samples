@@ -1,11 +1,12 @@
 package core.expectation;
 
-import com.codeborne.selenide.*;
+import application.config.props.Env;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import core.config.ContextUtils;
 import io.qameta.allure.Allure;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.TimeoutException;
 
 import java.time.Duration;
 
@@ -15,12 +16,32 @@ import static core.element.widget.AbstractWidget.logTime;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 @Slf4j
-@RequiredArgsConstructor
 public class CxBoxExpectations implements ExpectationPattern {
+
+	private final Duration timeout;
+	private final Duration overTimeout;
+	private final Integer poolingRate;
+
+
+	public CxBoxExpectations() {
+		this.timeout = Env.timeout();
+		this.overTimeout = Env.overTimeout();
+		this.poolingRate = Env.poolingRate();
+	}
 
 	@Override
 	public Duration getTimeout() {
-		return Duration.ofSeconds(3);
+		return timeout;
+	}
+
+	@Override
+	public Duration getOverTimeout() {
+		return overTimeout;
+	}
+
+	@Override
+	public Integer getPoolingRate() {
+		return poolingRate;
 	}
 
 	@Override
@@ -42,23 +63,16 @@ public class CxBoxExpectations implements ExpectationPattern {
 			logTime(step);
 
 			String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-			SelenideElement widgetElement = $(widget);
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					log.debug("Waiting for the widget '{}', trying {} from {}", title, i, getRetryNumber());
-					widgetElement.shouldBe(Condition.exist, Duration.ofMillis(getTimeout().toMillis() * getRetryNumber()));
-					widgetElement.shouldHave(Condition.visible, getTimeout());
-					log.debug("Widget '{}' loaded successfully.\"", title);
-					return;
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for the widget '{}' has been exceeded. An attempt {} from {}.", title, i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for the widget to be visible '" + title + "' after " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+			Selenide.Wait()
+					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))
+					.pollingEvery(getTimeout().multipliedBy(getRetryNumber()).dividedBy(getPoolingRate()))
+					.withMessage("Widget '" + title + "' loaded failure")
+					.until(driver -> {
+						SelenideElement el = $(widget);
+						return el.exists() && el.isDisplayed();
+					});
+
+			log.debug("Widget '{}' loaded successfully.", title);
 		});
 
 	}
@@ -69,31 +83,25 @@ public class CxBoxExpectations implements ExpectationPattern {
 		Allure.step("Waiting for all rows to be visible for the widget " + title, step -> {
 			logTime(step);
 
-			String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+			String widgetSelector = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
 			String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					SelenideElement widgetElement = $(widget).shouldBe(Condition.visible, getTimeout());
-					ElementsCollection rowsElement = widgetElement.$$(rowSelector);
-					for (SelenideElement row : rowsElement.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-						row.shouldBe(Condition.exist, getTimeout());
-						row.shouldBe(Condition.visible, getTimeout());
-						for (SelenideElement s : row.$$("td").shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-							s.shouldBe(Condition.exist, getTimeout());
-							s.shouldBe(Condition.visible, getTimeout());
-						}
-					}
-					log.debug("All lines of the widget '{}' loaded successfully.", title);
-					return;
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for rows for the widget '{}' has been exceeded. An attempt {} from {}.", title, i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for the widget lines to load '" + title + "' after " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+			Selenide.Wait()
+					.withTimeout(getTimeout())
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.until(driver -> {
+						SelenideElement widget = $(widgetSelector);
+						if (!widget.isDisplayed()) return false;
+
+						ElementsCollection rows = widget.$$(rowSelector);
+						if (rows.isEmpty()) return false;
+
+						SelenideElement firstRow = rows.first();
+						ElementsCollection cells = firstRow.$$("td");
+
+						return cells.size() > 0 && cells.first().isDisplayed();
+					});
+
+			log.debug("All rows and cells for widget '{}' are verified and visible.", title);
 		});
 	}
 
@@ -104,24 +112,19 @@ public class CxBoxExpectations implements ExpectationPattern {
 			logTime(step);
 
 			String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					ElementsCollection fields = $$(fieldsSelector);
-					for (SelenideElement f : fields.shouldHave(CollectionCondition.sizeGreaterThan(0))) {
-						f.shouldBe(Condition.exist, getTimeout());
-						f.shouldBe(Condition.visible, getTimeout());
-					}
-					log.debug("All fields have been uploaded successfully.");
-					return;
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for fields has been exceeded. An attempt {} from {}.", i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for fields to load " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+			Selenide.Wait()
+					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.until(driver -> {
+						ElementsCollection fields = $$(fieldsSelector);
+
+						if (fields.isEmpty()) return false;
+
+						return fields.asFixedIterable().stream()
+								.allMatch(f -> f.isDisplayed() && f.getSize().getHeight() > 0);
+					});
+
+			log.debug("All fields have been uploaded successfully.");
 		});
 	}
 
@@ -132,22 +135,43 @@ public class CxBoxExpectations implements ExpectationPattern {
 			logTime(step);
 
 			String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					SelenideElement element = $(elementSelector);
-					element.shouldBe(Condition.visible, getTimeout());
-					element.shouldBe(Condition.exist, getTimeout());
-					log.debug("The element with the type '{}' and the name '{}' loaded successfully.", type, title);
-					return;
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for the item type has been exceeded. An attempt {} from {}.", i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for the item to load " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+
+			Selenide.Wait()
+					.withTimeout(getTimeout())
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.withMessage("The element with the type '" + type + "' and the name '" + title + "' loaded failure")
+					.until(driver -> {
+						SelenideElement el = $(elementSelector);
+						if (!el.isDisplayed()) return false;
+						boolean hasContent = el.$$("*").size() > 0;
+						boolean isNotCollapsed = el.getSize().getHeight() > 0;
+						return hasContent && isNotCollapsed;
+					});
+
+			log.debug("The element with the type '{}' and the name '{}' loaded successfully.", type, title);
+		});
+	}
+
+
+	public void getWaitElementWithText(String type, String title) {
+		Allure.step("Waiting for an element to be visible by type " + type + " and by heading " + title, step -> {
+			logTime(step);
+
+			String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
+
+			Selenide.Wait()
+					.withTimeout(getTimeout())
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.withMessage("The element with the type '" + type + "' and the name '" + title + "' loaded failure")
+					.until(driver -> {
+						SelenideElement el = $(elementSelector);
+
+						if (!el.isDisplayed()) return false;
+
+						return el.isEnabled() && !el.getOwnText().isEmpty();
+					});
+
+			log.debug("The element '{}' with title '{}' is fully loaded with data.", type, title);
 		});
 	}
 
@@ -155,23 +179,18 @@ public class CxBoxExpectations implements ExpectationPattern {
 	@Override
 	public void getWaitAllElements(SelenideElement webElement) {
 
-		Allure.step("Waiting for all Webelement elements to be visible " + webElement, step -> {
+		Allure.step("Waiting for all WebElement elements to be visible " + webElement, step -> {
 			logTime(step);
 
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					webElement.shouldBe(Condition.exist, getTimeout());
-					webElement.shouldBe(Condition.visible, getTimeout());
-					log.debug("WebElement {} \n uploaded successfully", webElement);
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for WebElement has been exceeded. Attempt {} from {}.", i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for WebElement to load " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+			Selenide.Wait()
+					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.withMessage("Element " + webElement.getSearchCriteria() + " loaded failure")
+					.until(driver -> {
+						return webElement.exists() && webElement.isDisplayed();
+					});
+
+			log.debug("WebElement '{}' uploaded successfully", webElement.getSearchCriteria());
 		});
 	}
 
@@ -181,21 +200,16 @@ public class CxBoxExpectations implements ExpectationPattern {
 		Allure.step("Waiting for all elements to be visible by Css Selector " + cssSelector, step -> {
 			logTime(step);
 
-			for (int i = 1; i <= getRetryNumber(); i++) {
-				try {
-					SelenideElement element = $(cssSelector);
-					element.shouldBe(Condition.exist, getTimeout());
-					element.shouldBe(Condition.visible, getTimeout());
-					log.debug("элемент по {} загружен успешно", cssSelector);
-				} catch (TimeoutException e) {
-					log.warn("The waiting time for WebElement has been exceeded. Attempt {} from {}.", i, getRetryNumber());
-					if (i < getRetryNumber()) {
-						Selenide.sleep(Duration.ofMillis(500L).toMillis());
-					} else {
-						throw new RuntimeException("Couldn't wait for the item to load " + getRetryNumber() + " attempts.", e);
-					}
-				}
-			}
+			Selenide.Wait()
+					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))
+					.pollingEvery(getTimeout().dividedBy(getPoolingRate()))
+					.withMessage("Element by Selector '" + cssSelector + "' loaded failure")
+					.until(driver -> {
+						SelenideElement el = $(cssSelector);
+						return el.exists() && el.isDisplayed();
+					});
+
+			log.debug("WebElement by selector '{}' uploaded successfully", cssSelector);
 		});
 	}
 }

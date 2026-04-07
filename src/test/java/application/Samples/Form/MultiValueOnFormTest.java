@@ -237,23 +237,23 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 	@DisplayName("Test to set all values in the field")
 	@Description("The test sets all the values in the field, then checks the list with the expected value.")
 	void test_set_all() {
-		List<String> expected = List.of("Abs data",
-				"Test data",
-				"Information data",
-				"Information2 data",
-				"Information3 data",
-				"Information4 data",
-				"Information5 data",
-				"Information6 data",
-				"Information7 data",
-				"Information8 data",
+		List<String> expected = List.of("Information10 data",
 				"Information9 data",
-				"Information10 data");
+				"Information8 data",
+				"Information7 data",
+				"Information6 data",
+				"Information5 data",
+				"Information4 data",
+				"Information3 data",
+				"Information2 data",
+				"Information data",
+				"Test data",
+				"Abs data"
+		);
 		var form = PlatformApp.screen("MultiValue basic")
 				.secondLevelView("Form")
 				.form("Form title");
 		form.field((w) -> new Multivalue<>(w, "Custom Field"))
-				.clear(true)
 				.setAll(true)
 				.checkValue(v -> assertThat(v).isEqualTo(expected));
 	}
@@ -270,7 +270,6 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		form.field((w) -> new Multivalue<>(w, "Custom Field"))
-				.clear(true)
 				.setValue(value)
 				.checkValue(v -> assertThat(v).isEqualTo(expected));
 	}
@@ -285,7 +284,6 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		form.field((w) -> new Multivalue<>(w, "Custom Field"))
-				.clear(true)
 				.setValue(List.of("Abs data"))
 				.checkValue(v -> assertThat(v).isEqualTo(List.of("Abs data")));
 	}

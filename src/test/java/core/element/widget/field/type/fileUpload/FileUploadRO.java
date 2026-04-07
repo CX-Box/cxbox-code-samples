@@ -58,7 +58,7 @@ public class FileUploadRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 	}
 
 	public FileUploadRO<W> checkFileName(Consumer<String> value) {

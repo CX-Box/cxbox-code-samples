@@ -67,11 +67,11 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 			element().click();
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.clear();
 			element()
 					.$(valueTag())
-					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.setValue(String.valueOf(value));
 			element()
 					.$(valueTag())

@@ -70,7 +70,7 @@ public class ListFileUpload<
 				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
-				.shouldBe(Condition.enabled, widget().getExpectations().getTimeout());
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
 	}
 
 	public R row() {

@@ -1,7 +1,7 @@
 package core.element.widget.field.type.multivalue;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
@@ -14,6 +14,7 @@ import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -59,15 +60,28 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 	public Multivalue<W> setValue(List<String> value) {
 		return Allure.step("Set value on field", step -> {
 			logTime(step);
-			ElementsCollection icons = element()
-					.shouldBe(exist, widget().getExpectations().getTimeout())
-					.$$("i[class=\"anticon anticon-close\"]");
-			for (SelenideElement i : icons) {
-				i.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-				widget().getExpectations().getWaitAllElements(i);
-				i.click();
-				i.shouldBe(Condition.disappear, widget().getExpectations().getTimeout());
+			SelenideElement container = element().shouldBe(exist, widget().getExpectations().getTimeout());
+			int multivalueElementCount = container.$$("i.anticon-close").size();
+			if (multivalueElementCount > 0) {
+				Selenide.Wait()
+						.withTimeout(Duration.ofSeconds(multivalueElementCount *
+								widget().getExpectations().getTimeout().toSeconds()).plus(widget().getExpectations().getTimeout()))
+						.pollingEvery(Duration.ofMillis(multivalueElementCount *
+								widget().getExpectations().getTimeout().toSeconds()).dividedBy(widget().getExpectations().getPoolingRate()))
+						.until(driver -> {
+							SelenideElement closeIcon = container.$("i.anticon-close");
+
+							if (!closeIcon.exists()) {
+								return true;
+							}
+
+							if (closeIcon.isDisplayed()) {
+								closeIcon.click();
+							}
+							return false;
+						});
 			}
+
 			element()
 					.$("div[data-test-field-multivalue-icon=\"true\"]")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
