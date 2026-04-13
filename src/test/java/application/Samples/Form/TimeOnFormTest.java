@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -134,6 +135,6 @@ public class TimeOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Time base").secondLevelView("Form").form("Form title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

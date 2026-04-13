@@ -1,6 +1,7 @@
 package application.Samples.List;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -233,6 +234,6 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("MultiValue basic").secondLevelView("List").listInline("List title").checkPosition(302, 95));
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

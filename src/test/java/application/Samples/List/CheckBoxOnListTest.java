@@ -3,6 +3,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.checkbox.CheckBox;
@@ -362,6 +363,7 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Checkbox basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Checkbox basic").secondLevelView("List").listInline("List title").element()));
 	}
+
 }

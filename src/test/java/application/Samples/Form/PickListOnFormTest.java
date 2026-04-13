@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -97,7 +98,7 @@ public class PickListOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Picklist basic").secondLevelView("Form").form("Form title").checkPosition(302, 95));
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("Picklist basic").secondLevelView("Form").form("Form title").element()));
 	}
 /*
     @Test

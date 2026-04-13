@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -274,6 +275,6 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Datetime basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Datetime basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

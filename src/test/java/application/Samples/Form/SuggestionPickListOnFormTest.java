@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -177,6 +178,6 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("SuggestionPicklist basic").thirdLevelView("Form").form("Form Widget with suggestionPickList basic").checkPosition(302, 147));
+		assertTrue(Position.checkPosition(302, 147, PlatformApp.screen("SuggestionPicklist basic").secondLevelView("Form").form("Form Widget with suggestionPickList basic").element()));
 	}
 }

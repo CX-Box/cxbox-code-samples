@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.inlinePickList.InlinePickList;
@@ -326,7 +327,7 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("InlinePickList basic").secondLevelView("List").listInline("List title").checkPosition(302, 95));
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("InlinePickList basic").secondLevelView("List").listInline("List title").element()));
 	}
 /*
 

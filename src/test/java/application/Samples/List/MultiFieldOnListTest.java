@@ -1,6 +1,7 @@
 package application.Samples.List;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import core.element.widget.field.type.multifield.MultifieldContainer;
 import io.qameta.allure.Epic;
@@ -61,6 +62,6 @@ public class MultiFieldOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").element()));
 	}
 }
