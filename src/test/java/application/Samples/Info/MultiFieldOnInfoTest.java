@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import core.element.widget.field.type.multifield.MultifieldContainer;
 import io.qameta.allure.Description;
@@ -57,6 +58,6 @@ public class MultiFieldOnInfoTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("MultiField basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultiField basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

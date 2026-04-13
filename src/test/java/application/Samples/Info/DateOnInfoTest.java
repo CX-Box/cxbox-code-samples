@@ -1,9 +1,11 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -71,7 +73,8 @@ public class DateOnInfoTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Date basic").secondLevelView("Info").info("Info title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Date basic").secondLevelView("Info").info("Info title").element()));
+
 	}
 }
 

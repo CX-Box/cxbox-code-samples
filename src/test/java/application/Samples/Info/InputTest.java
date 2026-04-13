@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -102,6 +103,6 @@ public class InputTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Input basic").secondLevelView("Info").info("Info").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Input basic").secondLevelView("Info").info("Info").element()));
 	}
 }

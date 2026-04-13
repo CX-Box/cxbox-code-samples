@@ -11,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.codeborne.selenide.Selenide.$;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
@@ -61,16 +60,6 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 			logTime(step);
 			return new ConfirmPopup<>(widget());
 		});
-	}
-
-	public Boolean checkPosition (int x, int y) {
-        return element().getLocation().getX() == x && element().getLocation().getY() == y;
-    }
-
-	public Boolean checkDistanceFromElement (int x) {
-		SelenideElement leftSlider = $("aside[data-test='LEFT_SIDER']")
-				.$("ul[data-test='MAIN_MENU']");
-		return element().getLocation().getX() - leftSlider.getLocation().getX() + leftSlider.getSize().width == x;
 	}
 
 	public void checkPositionAtElement (SIDE side, SelenideElement element) {

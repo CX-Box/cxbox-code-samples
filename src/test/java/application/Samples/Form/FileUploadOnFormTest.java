@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.fileUpload.FileUpload;
@@ -283,6 +284,6 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("FileUpload basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("FileUpload basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

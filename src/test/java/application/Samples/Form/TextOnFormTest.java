@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -224,6 +225,6 @@ public class TextOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(PlatformApp.screen("Text basic").secondLevelView("Form").form("Form title").checkPosition(302, 94));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Text basic").secondLevelView("Form").form("Form title").element()));
 	}
 }
