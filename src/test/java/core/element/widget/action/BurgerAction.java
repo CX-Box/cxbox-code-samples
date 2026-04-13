@@ -47,6 +47,8 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 				.hover()
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 				.click();
+
+		// TODO: see why without this collect failded burger menu
 		String collect = $("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]")
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())

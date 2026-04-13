@@ -93,6 +93,5 @@ public class StatsBlockWidget extends AbstractWidget<ExpectationPattern, StatsBl
 				blockValues.get(1).text(),
 				e.$("i[class*='StatsBlock__itemIcon']").getAttribute("aria-label"),
 				e);
-
 	}
 }

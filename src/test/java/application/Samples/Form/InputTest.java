@@ -241,7 +241,7 @@ public class InputTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("Input basic")
 				.secondLevelView("Form")
 				.form("Form");
-		form.actions().checkExistButtons();
+		form.actions().checkExistActionsBlocks();
 		form.input("customField")
 				.checkValue(val -> assertThat(val).isEqualTo("test data"));
 	}

@@ -96,7 +96,7 @@ public abstract class BaseTestForSamples {
 		);
 		// Disabled  ( catch error in debug running mod)
 		// Highlight current  element on page orange border
-		//SelenideHighlightSetup.registerAllHighlightedCommands();
+//		SelenideHighlightSetup.registerAllHighlightedCommands();
 		AppChecks.waitAppLoginPageReady(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
 	}
 

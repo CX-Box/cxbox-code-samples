@@ -3,7 +3,7 @@ package core.element.widget.form;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
-import core.element.widget.action.Actions;
+import core.element.widget.action.Action;
 import core.element.widget.field.type.checkbox.CheckBox;
 import core.element.widget.field.type.date.Date;
 import core.element.widget.field.type.dateTime.DateTime;
@@ -98,8 +98,8 @@ public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormW
 	}
 
 
-	public Actions<PlatformInlineFormWidget> actions() {
-		return new Actions<>(this);
+	public Action<PlatformInlineFormWidget> actions() {
+		return new Action<>(this);
 	}
 
 	@Override
