@@ -32,7 +32,6 @@ public class MyEntity4903TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.deleteAll();
 		repositoryOCP.deleteAll();
 		repositoryPick.deleteAll();
 		myEntity4903FilePickRepository.deleteAll();
