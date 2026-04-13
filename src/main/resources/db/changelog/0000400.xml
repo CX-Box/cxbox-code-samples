@@ -8,30 +8,54 @@
     <property name="now" value="sysdate" dbms="oracle"/>
 
     <changeSet id="ADD CUSTOMIZATION COLUMN" author="cxbox">
-        <sql>
-            INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                           removed_from_additional_fields)
-            VALUES (1, '1101075', 'myexample3135listold', 'MyExample3135ListOldsFields', '[]',
-                    '["customField","customFieldOld"]', '[]');
-            INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                           removed_from_additional_fields)
-            VALUES (2, '1101075', 'myexample3135listaddedfields', 'MyExample3135ListAddedFields',
-                    '["customFieldPercent","customField","customFieldRadio"]',
-                    '[]', '[]');
-        </sql>
+        <insert tableName="ADDITIONAL_FIELDS">
+            <column name="id" valueNumeric="1"/>
+            <column name="user_id" value="1101075"/>
+            <column name="view_name" value="myexample3135listold"/>
+            <column name="widget" value="MyExample3135ListOldsFields"/>
+            <column name="order_fields" value="[]"/>
+            <column name="added_to_additional_fields"
+                    value='["customField","customFieldOld"]'/>
+            <column name="removed_from_additional_fields" value="[]"/>
+        </insert>
+
+        <insert tableName="ADDITIONAL_FIELDS">
+            <column name="id" valueNumeric="2"/>
+            <column name="user_id" value="1101075"/>
+            <column name="view_name" value="myexample3135listaddedfields"/>
+            <column name="widget" value="MyExample3135ListAddedFields"/>
+            <column name="order_fields"
+                    value='["customFieldPercent","customField","customFieldRadio"]'/>
+            <column name="added_to_additional_fields" value="[]"/>
+            <column name="removed_from_additional_fields" value="[]"/>
+        </insert>
+
     </changeSet>
 
+
     <changeSet id="ADD CUSTOMIZATION COLUMN GH" author="cxbox">
-        <sql>
-            INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                           removed_from_additional_fields)
-            VALUES (3, '1101075', 'myexample3175gholdfields', 'MyExample3175GHOldFields', '[]',
-                    '["customField","customFieldOld","customFieldDictionary"]', '[]');
-            INSERT INTO ADDITIONAL_FIELDS (id, user_id, view, widget, order_fields, added_to_additional_fields,
-                                           removed_from_additional_fields)
-            VALUES (4, '1101075', 'myexample3175ghaddfields', 'MyExample3175GHAddedFields',
-                    '["customFieldPercent","customFieldDictionary"]',
-                    '[]', '[]');
-        </sql>
+
+        <insert tableName="ADDITIONAL_FIELDS">
+            <column name="id" valueNumeric="3"/>
+            <column name="user_id" value="1101075"/>
+            <column name="view_name" value="myexample3175gholdfields"/>
+            <column name="widget" value="MyExample3175GHOldFields"/>
+            <column name="order_fields" value="[]"/>
+            <column name="added_to_additional_fields"
+                    value='["customField","customFieldOld","customFieldDictionary"]'/>
+            <column name="removed_from_additional_fields" value="[]"/>
+        </insert>
+
+        <insert tableName="ADDITIONAL_FIELDS">
+            <column name="id" valueNumeric="4"/>
+            <column name="user_id" value="1101075"/>
+            <column name="view_name" value="myexample3175ghaddfields"/>
+            <column name="widget" value="MyExample3175GHAddedFields"/>
+            <column name="order_fields"
+                    value='["customFieldPercent","customFieldDictionary"]'/>
+            <column name="added_to_additional_fields" value="[]"/>
+            <column name="removed_from_additional_fields" value="[]"/>
+        </insert>
+
     </changeSet>
 </databaseChangeLog>
