@@ -41,7 +41,7 @@ public class UserRole extends BaseEntity {
 	@Column
 	private Boolean active;
 
-	@Column
+	@Column(name = "main_flg")
 	private Boolean main;
 
 }

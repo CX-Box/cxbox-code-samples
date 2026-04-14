@@ -33,7 +33,7 @@ public class MyEntity4903 extends BaseEntity {
 	@JoinColumn(name = "INSTANCE_ID")
 	@ManyToOne
 	private MyEntity4903Instance instanceEntity;
-	@Column
+	@Column(name="FILE_NAME")
 	private String file;
 	@Column
 	private String fileId;

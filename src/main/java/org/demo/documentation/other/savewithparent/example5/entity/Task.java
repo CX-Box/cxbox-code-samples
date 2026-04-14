@@ -31,7 +31,7 @@ public class Task extends BaseEntity {
 	@Column
 	private StatusEnum status;
 
-	@Column
+	@Column(name = "comment_task")
 	private String comment;
 
 	@JoinColumn(name = "executor_id")

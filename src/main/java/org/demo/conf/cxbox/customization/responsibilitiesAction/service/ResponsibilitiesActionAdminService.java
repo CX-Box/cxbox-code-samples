@@ -112,7 +112,7 @@ public class ResponsibilitiesActionAdminService extends
 	@NotNull
 	private FileDownloadDto toCsv() {
 		String name = "RESPONSIBILITIES_ACTION.csv";
-		var header = List.of("INTERNAL_ROLE_CD;ACTION;VIEW;WIDGET;ID");
+		var header = List.of("INTERNAL_ROLE_CD;ACTION;VIEW_NAME;WIDGET;ID");
 		var body = jpaDao.getList(ResponsibilitiesAction.class).stream()
 				.sorted(Comparator.comparing(ResponsibilitiesAction::getInternalRoleCD)
 						.thenComparing(ResponsibilitiesAction::getAction)
