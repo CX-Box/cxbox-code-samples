@@ -1,7 +1,7 @@
 version: '2.1'
 
 services:
-  oracle:
+  cxbox-code-samples-oracle:
     image: gvenzl/oracle-xe:latest
     environment:
       - ORACLE_PASSWORD=PASSWORD
@@ -13,7 +13,7 @@ services:
       - "5501:5500"
     expose:
       -  1521
-  keycloak:
+  cxbox-code-samples-keycloak:
     image: maxird/keycloak:12.0.4
     command:
       [
@@ -37,7 +37,7 @@ services:
       - "9080:9080"
       - "9443:9443"
       - "10990:10990"
-  cxbox_minio:
+  cxbox-code-samples-minio:
     image: bitnamilegacy/minio:2022.2.12
     expose:
       - 9000
