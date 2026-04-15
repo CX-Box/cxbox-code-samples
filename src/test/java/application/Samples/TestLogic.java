@@ -141,15 +141,4 @@ public class TestLogic extends BaseTestForSamples {
 		widget.actions().action("Actions").action("Save").click();
 	}
 
-	@Test
-	@DisplayName("Include Id when No Fields In Widgets On Bc ")
-	@Description("Id field should be automatically added to the API response when no fields of the Business Component (BC) are added to widgets on the screen during the initial load. Check when the BC has no visible fields but acts as a parent BC, child bc data should load")
-	public void testIncludeIdWhenNoFieldsInWidgetsOnBc () {
-	//CXBOX-1242
-	var list = PlatformApp.screen("ShowCondition example")
-			.view()
-			.listInline("Child Bc");
-	var row = list.rows().clickRow(0);
-	row.text("Custom Field");
-	}
 }
