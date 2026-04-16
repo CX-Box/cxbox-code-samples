@@ -140,4 +140,5 @@ public class TestLogic extends BaseTestForSamples {
 		var widget = view.form("Form title");
 		widget.actions().action("Actions").action("Save").click();
 	}
+
 }
