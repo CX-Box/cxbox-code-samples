@@ -42,6 +42,11 @@ public class Actions<W extends AbstractWidget<ExpectationPattern, W>> implements
 	@Setter(AccessLevel.PROTECTED)
 	private String iconName;
 
+	// needly for find for chain
+	@Getter(AccessLevel.PROTECTED)
+	@Setter(AccessLevel.PROTECTED)
+	private Predicate<WebElement> condition;
+
 	public Actions(W widget) {
 		this.widget = widget;
 		this.parent = null;
@@ -54,81 +59,59 @@ public class Actions<W extends AbstractWidget<ExpectationPattern, W>> implements
 		wAction.setParent(current);
 		wAction.setName(name);
 		wAction.setCurrent(wAction);
+		wAction.setCondition(el-> el.getText().equals(name));
 		return wAction;
 	}
 
 	@SneakyThrows
-	public Actions<W> actionByIcon(String iconName) {
+	public Actions<W> action(String name, String iconName) {
+		Action<W> wAction = new Action<>(this.widget);
+		wAction.setParent(current);
+		wAction.setName(name);
+		wAction.setIconName(iconName);
+		wAction.setCurrent(wAction);
+		wAction.setCondition(el-> el.getText().equals(name) && el.findElement(By.cssSelector("i[aria-label='icon: '" + iconName)).isEnabled());
+		return wAction;
+	}
+
+	@SneakyThrows
+	public Actions<W> actionWithIcon(String iconName) {
 		Action<W> wAction = new Action<>(this.widget);
 		wAction.setParent(current);
 		wAction.setIconName(iconName);
 		wAction.setCurrent(wAction);
+		wAction.setCondition(el->el.findElement(By.cssSelector("i[aria-label='icon: '" + iconName)).isEnabled());
 		return wAction;
 	}
 
 
 	public W click() {
-		Predicate<WebElement> predicate = null;
-		if (iconName != null) {
-			predicate = el -> el.findElement(By.cssSelector("i[aria-label='icon: " + iconName + "]")).isEnabled();
-		}
-		if (name == null) {
-            assert predicate != null;
-            element().findAll(by("type", "button"))
-					.shouldHave(CollectionCondition.sizeGreaterThan(0)).find(Condition.match("check icon name: " + iconName, predicate))
-					.click();
-			return this.widget;
-		}
-
+		Actions<W> currentActions = this.current;
 		if (this.parent == null) {
-			Predicate<WebElement> webElementPredicate = b -> b.getText().equals(name);
 			element().findAll(by("type", "button"))
-					.shouldHave(CollectionCondition.sizeGreaterThan(0)).find(Condition.match("check action name: " + name, webElementPredicate))
+					.shouldHave(CollectionCondition.sizeGreaterThan(0)).find(Condition.match("check action name: " + name, currentActions.condition))
 					.click();
 			return this.widget;
 		}
 		Deque<Actions<W>> deque = new LinkedList<>();
-		Actions<W> currentActions = this.current;
 		while (currentActions.parent != null) {
 			deque.push(currentActions);
 			currentActions = currentActions.parent;
 		}
-		;
-		Actions<W> rootAction = currentActions;
-		SelenideElement elementAction;
-		if (name == null) {
-			elementAction = element().findAll(by("type", "button"))
-					.shouldHave(CollectionCondition.sizeGreaterThan(0))
-					.find(Condition.match("check action icon name: " + currentActions.getIconName(), b -> b.getText().equals(rootAction.getIconName())));
+		SelenideElement elementAction = element().findAll(by("type", "button"))
+				.shouldHave(CollectionCondition.sizeGreaterThan(0))
+				.find(Condition.match("check action name: " + currentActions.getName(), currentActions.condition));
+		elementAction.click();
+		var actionsIterator = deque.descendingIterator();
+		// TODO check logic  inner group action on group action (group lay inner other group)
+		elementAction = $("div[class*='OperationsGroup__overlayContainer']");
+		//
+		while (actionsIterator.hasNext()) {
+			Actions<W> parentAction = actionsIterator.next();
+			elementAction = elementAction.$$("li[class*='ant-menu-item OperationsGroup__subOperation']").find(Condition.match("check action name: " + parentAction.getName(), parentAction.condition));
 			elementAction.click();
-			var actionsIterator = deque.descendingIterator();
-			// TODO check logic  inner group action on group action (group lay inner other group)
-			elementAction = $("div[class*='OperationsGroup__overlayContainer']");
-			//
-			while (actionsIterator.hasNext()) {
-				Actions<W> wAction2 = actionsIterator.next();
-				elementAction = elementAction.$$("li[class*='ant-menu-item OperationsGroup__subOperation']").find(Condition.match("check action icon name: " + wAction2.getIconName(), b -> b.getText().equals(wAction2.getIconName())));
-				elementAction.click();
-			}
-			return widget;
-		} else {
-			elementAction = element().findAll(by("type", "button"))
-					.shouldHave(CollectionCondition.sizeGreaterThan(0))
-					.find(Condition.match("check action name: " + currentActions.getName(), b -> b.getText().equals(rootAction.getName())));
-			elementAction.click();
-			var actionsIterator = deque.descendingIterator();
-			// TODO check logic  inner group action on group action (group lay inner other group)
-			elementAction = $("div[class*='OperationsGroup__overlayContainer']");
-			//
-			while (actionsIterator.hasNext()) {
-				Actions<W> wAction2 = actionsIterator.next();
-				elementAction = elementAction.$$("li[class*='ant-menu-item OperationsGroup__subOperation']").find(Condition.match("check action name: " + wAction2.getName(), b -> b.getText().equals(wAction2.getName())));
-				elementAction.click();
-			}
-			return widget;
 		}
-
-
+		return widget;
 	}
 
 	public W click(String name) {
