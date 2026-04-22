@@ -7,10 +7,13 @@ import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -20,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("application/Samples")
 @Tag("application/Samples")
 @Tag("Form")
+@Slf4j
 public class InlinePickListOnFormTest extends BaseTestForSamples {
 
 	@Test
@@ -74,6 +78,31 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 		inlinePickList.setValue("39 Test data new information")
 				.checkValue(val -> assertThat(val).isEqualTo("39 Test data new information"));
 		inlinePickList.setValue("Abs data");
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A test for get all options from the field")
+	@Description("The test for getting all options from the field")
+	void getOptions() {
+		var form = PlatformApp.screen("InlinePickList basic")
+				.secondLevelView("Form")
+				.form("Form title");
+		var inlinePickList = form.inlinePickList("Custom Field");
+		List<String> options = List.of("49 Test data new information", "48 Test data new information"
+				, "47 Test data new information", "46 Test data new information", "45 Test data new information"
+				, "44 Test data new information", "43 Test data new information", "42 Test data new information"
+				, "41 Test data new information", "40 Test data new information", "39 Test data new information"
+				, "38 Test data new information", "37 Test data new information", "36 Test data new information"
+				, "35 Test data new information", "34 Test data new information", "33 Test data new information"
+				, "32 Test data new information", "31 Test data new information", "30 Test data new information"
+				, "29 Test data new information", "28 Test data new information", "27 Test data new information"
+				, "26 Test data new information", "25 Test data new information", "24 Test data new information"
+				, "23 Test data new information", "22 Test data new information", "21 Test data new information"
+				, "20 Test data new information");
+
+		assertThat(inlinePickList.getOptions().equals(options));
 	}
 
 	@Disabled
@@ -204,23 +233,5 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
 	}
 
-	@Disabled("Remake")
-	@Test
-	@Severity(MINOR)
-	@Tag("Positive")
-	@DisplayName("Character Matching test")
-	@Description("The test sets the characters in the field, and then returns a list of values that match or contain characters")
-	void valuesInList() {
-		var form = PlatformApp.screen("InlinePickList basic")
-				.secondLevelView("Form")
-				.form("Form title");
-		assertThat(form.inlinePickList("Custom Field")
-				.setValue(" ")
-				.getOptions("9").get(0))
-				.isEqualTo("49 Test data new information");
-		assertThat(form.inlinePickList("Custom Field")
-				.setValue(" ")
-				.getOptions("2").get(0))
-				.isEqualTo("42 Test data new information");
-	}
+
 }

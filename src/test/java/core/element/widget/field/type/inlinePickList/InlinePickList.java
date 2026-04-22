@@ -95,19 +95,14 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	}
 
-
-	//TODO >> remake
-	public List<String> getOptions(String value) {
+	public List<String> getOptions() {
 		return Allure.step("Getting a list of options", step -> {
 			logTime(step);
 			element()
 					.$("div[class=\"ant-select-selection-selected-value\"]")
 					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
 					.click();
-			var strings = new ArrayList<String>(getValues().filter(Condition.matchText(value)).texts());
-			$("body").click();
-			findDropdownElementByElementAriaControlsId()
-					.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
+			List<String> strings = getValues().texts();
 			return strings;
 		});
 	}
