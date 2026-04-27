@@ -234,6 +234,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").element()));
+
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

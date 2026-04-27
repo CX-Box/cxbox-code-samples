@@ -92,6 +92,6 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time basic").secondLevelView("Info").info("Info title").element()));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time base").secondLevelView("Info").info("Info title").element()));
 	}
 }

@@ -178,6 +178,6 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(Position.checkPosition(302, 147, PlatformApp.screen("SuggestionPicklist basic").secondLevelView("Form").form("Form Widget with suggestionPickList basic").element()));
+		assertTrue(Position.checkPosition(302, 147, PlatformApp.screen("SuggestionPicklist basic").thirdLevelView("Form").form("Form Widget with suggestionPickList basic").element()));
 	}
 }
