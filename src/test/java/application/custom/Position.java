@@ -18,4 +18,12 @@ public class Position {
         return element.getLocation().getX() - leftSlider.getLocation().getX() + leftSlider.getSize().width == x;
     }
 
+    public static Integer getX(SelenideElement element) {
+        return element.getLocation().getX();
+    }
+
+    public static Integer getY(SelenideElement element) {
+        return element.getLocation().getY();
+    }
+
 }

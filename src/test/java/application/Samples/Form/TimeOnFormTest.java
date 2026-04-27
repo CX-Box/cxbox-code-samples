@@ -135,6 +135,6 @@ public class TimeOnFormTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time basic").secondLevelView("Form").form("Form title").element()));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time base").secondLevelView("Form").form("Form title").element()));
 	}
 }

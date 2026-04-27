@@ -186,6 +186,6 @@ public class TimeOnListTest extends BaseTestForSamples {
 
 	@Test
 	void position() {
-		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time basic").secondLevelView("List").listInline("List title").element()));
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time base").secondLevelView("List").listInline("List title").element()));
 	}
 }
