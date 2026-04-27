@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Input in the widget Form")
 @Epic("application/Samples")
@@ -242,5 +244,10 @@ public class InputTest extends BaseTestForSamples {
 		form.actions().checkExistButtons();
 		form.input("customField")
 				.checkValue(val -> assertThat(val).isEqualTo("test data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Input basic").secondLevelView("Form").form("Form").element()));
 	}
 }

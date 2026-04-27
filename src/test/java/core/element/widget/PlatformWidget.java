@@ -11,6 +11,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 // TODO add attribute which show which value tag we must use
 // Like  INFO, FORM, LIST(LIST_EDIT? -> must be in list)
@@ -60,5 +62,19 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		});
 	}
 
+	public void checkPositionAtElement (SIDE side, SelenideElement element) {
+		switch (side) {
+			case BOTTOM -> assertThat(element().getLocation().getY()).isGreaterThan(element.getLocation().getY());
+			case TOP -> assertThat(element.getLocation().getY()).isGreaterThan(element().getLocation().getY());
+			case LEFT -> assertThat(element.getLocation().getX()).isGreaterThan(element().getLocation().getX());
+			case RIGHT -> assertThat(element().getLocation().getX()).isGreaterThan(element.getLocation().getX());
+		}
+	}
 
+	enum SIDE {
+		RIGHT,
+		LEFT,
+		TOP,
+		BOTTOM
+	}
 }

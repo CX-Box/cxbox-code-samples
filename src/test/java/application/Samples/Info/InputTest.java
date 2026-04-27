@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Input")
 @Epic("application/Samples")
@@ -97,5 +99,10 @@ public class InputTest extends BaseTestForSamples {
 				.info("Info");
 		info.input("customField")
 				.drilldown(dr -> assertThat(dr).contains("screen/InputDrilldown/view/InputDrilldownform/InputDrilldown"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Input basic").secondLevelView("Info").info("Info").element()));
 	}
 }

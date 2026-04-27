@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PercentOnFormTest extends BaseTestForSamples {
 
@@ -238,5 +240,10 @@ public class PercentOnFormTest extends BaseTestForSamples {
 		percentField.setValue(value)
 				.checkValue(val -> assertThat(val).isEqualTo(value));
 		percentField.setValue(new BigDecimal("27"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Percent basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the PickList in the widget Form")
 @Epic("application/Samples")
@@ -92,6 +94,11 @@ public class PickListOnFormTest extends BaseTestForSamples {
 				.form("Form title")
 				.pickList("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo("New data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("Picklist basic").secondLevelView("Form").form("Form title").element()));
 	}
 /*
     @Test

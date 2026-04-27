@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the DateTimeWithSeconds")
 @Epic("application/Samples")
@@ -99,5 +101,10 @@ public class DateTimeWithSecondsTest extends BaseTestForSamples {
 				.info("Info title");
 		info.dateTimeWithSeconds("custom Field")
 				.checkDrillDownSupported(drillDown -> assertThat(drillDown).isTrue());
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("DateTimeWithSeconds basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

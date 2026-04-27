@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the Number")
 @Epic("application/Samples")
@@ -107,5 +109,10 @@ public class NumberOnInfoTest extends BaseTestForSamples {
 					assertThat(split[1]).isNotBlank();
 					assertThat(split[1].length()).isEqualTo(2);
 				});
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Number basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

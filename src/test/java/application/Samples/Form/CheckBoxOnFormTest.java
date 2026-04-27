@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.form.PlatformFormWidget;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the CheckBox")
 @Epic("application/Samples")
@@ -207,5 +209,10 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.actions().action("Save").click();
 		form.checkbox("Custom Field").checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Checkbox basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

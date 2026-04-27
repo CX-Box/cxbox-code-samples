@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -21,6 +22,7 @@ import java.util.stream.Stream;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("unchecked")
 
@@ -265,5 +267,10 @@ public class DateOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.date("custom Field")
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Date basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

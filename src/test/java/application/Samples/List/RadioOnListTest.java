@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RadioOnListTest extends BaseTestForSamples {
 
@@ -267,5 +269,10 @@ public class RadioOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.radio("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo("Middle"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Radio basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

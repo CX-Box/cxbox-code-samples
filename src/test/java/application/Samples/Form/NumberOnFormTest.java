@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Number in the widget Form")
 @Epic("application/Samples")
@@ -231,6 +233,11 @@ public class NumberOnFormTest extends BaseTestForSamples {
 				.clear()
 				.checkValue(val -> assertThat(val).isNull());
 		form.number("Custom Field").setValue(new BigDecimal("27000"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Number basic").secondLevelView("Form").form("Form title").element()));
 	}
 }
 

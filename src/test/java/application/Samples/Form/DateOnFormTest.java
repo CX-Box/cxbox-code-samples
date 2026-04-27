@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Date in the widget Form")
 @Epic("application/Samples")
@@ -209,5 +211,10 @@ public class DateOnFormTest extends BaseTestForSamples {
 		form.date("custom Field")
 				.clear()
 				.checkRequired(requried -> assertThat(requried).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Date basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -17,6 +18,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Dictionary in the widget Form")
 @Epic("application/Samples")
@@ -244,5 +246,10 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.form("Form Mode default");
 		assertThat(form1.dictionary("Custom Field Dictionary").getOptions())
 				.isEqualTo(List.of("High", "Upper middle", "Middle", "Low"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Dictionary enum basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimeOnFormTest extends BaseTestForSamples {
 
@@ -129,5 +131,10 @@ public class TimeOnFormTest extends BaseTestForSamples {
 		form.time("Custom Field", "HH:mm:ss")
 				.clear()
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Time base").secondLevelView("Form").form("Form title").element()));
 	}
 }
