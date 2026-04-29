@@ -2,14 +2,14 @@
   "realm" : "cxbox",
   "users" : [ {
     "id" : "f6810c3d-b027-407a-92b3-50dd479b6bb7",
-    "createdTimestamp" : 1631869680337,
     "username" : "demo",
-    "enabled" : true,
-    "totp" : false,
-    "emailVerified" : false,
     "firstName" : "John",
     "lastName" : "Snow",
     "email" : "demo@local.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1631869680337,
+    "totp" : false,
     "credentials" : [ {
       "id" : "646ecbba-567e-4dd9-8043-6e7fd2e581ad",
       "type" : "password",
@@ -21,41 +21,39 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "uma_authorization", "offline_access" ],
     "clientRoles" : {
-      "account" : [ "view-profile", "manage-account" ],
-      "cxbox-oidc-client" : [ "CXBOX_USER" ]
+      "cxbox-oidc-client" : [ "CXBOX_USER" ],
+      "account" : [ "view-profile", "manage-account" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
-  },
-    {
-      "id" : "5230b1b7-8494-432a-8ae5-1c73ccdb4909",
-      "createdTimestamp" : 1631869680337,
-      "username" : "demo_fr",
-      "enabled" : true,
-      "totp" : false,
-      "emailVerified" : false,
-      "firstName" : "John",
-      "lastName" : "Snow",
-      "email" : "demo_fr@local.com",
-      "credentials" : [ {
-        "id" : "55e5685c-c0e3-48a9-91a8-05cc91528c4f",
-        "type" : "password",
-        "createdDate" : 1631869698399,
-        "secretData" : "{\"value\":\"E6uRVF+cAKK9fGBJEbbU1b5FoByU5Dk/2TJOtfSfk1DAWJNLFsIABPSrTGGZuJjE4B28V41i5rNcvEo+z5xxEw==\",\"salt\":\"Abv5gg1GveqwfjkN5pb09A==\",\"additionalParameters\":{}}",
-        "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
-      } ],
-      "disableableCredentialTypes" : [ ],
-      "requiredActions" : [ ],
-      "realmRoles" : [ "uma_authorization", "offline_access" ],
-      "clientRoles" : {
-        "account" : [ "view-profile", "manage-account" ],
-        "cxbox-oidc-client" : [ "CXBOX_FR_USER" ]
-      },
-      "notBefore" : 0,
-      "groups" : [ ],
-      "attributes": {
-        "locale": ["fr"]
-      }
-    }
-  ]
+  }, {
+    "id" : "5230b1b7-8494-432a-8ae5-1c73ccdb4909",
+    "username" : "demo_fr",
+    "firstName" : "John",
+    "lastName" : "Snow",
+    "email" : "demo_fr@local.com",
+    "emailVerified" : false,
+    "attributes" : {
+      "locale" : [ "fr" ]
+    },
+    "enabled" : true,
+    "createdTimestamp" : 1631869680337,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "55e5685c-c0e3-48a9-91a8-05cc91528c4f",
+      "type" : "password",
+      "createdDate" : 1631869698399,
+      "secretData" : "{\"value\":\"E6uRVF+cAKK9fGBJEbbU1b5FoByU5Dk/2TJOtfSfk1DAWJNLFsIABPSrTGGZuJjE4B28V41i5rNcvEo+z5xxEw==\",\"salt\":\"Abv5gg1GveqwfjkN5pb09A==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "cxbox-oidc-client" : [ "CXBOX_FR_USER" ],
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
 }
