@@ -55,7 +55,6 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 			if (valueTag().contains("span")) {
 				return getUniversalText(element().$(valueTag()));
 			}
-			log.info(valueTag());
 			int size = getContainersActions().size();
 			for (int i = 0; i < size; i++) {
 				if (getContainersActions().get(i).$(valueTag()).isSelected()) {

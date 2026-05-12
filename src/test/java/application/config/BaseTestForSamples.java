@@ -12,6 +12,7 @@ import core.config.TestApplicationContext;
 import core.config.allure.AbstractAllureDescAppender;
 import core.config.junit.AllurePerTestLog;
 import core.config.selenide.AbstractLoggingProxyServer;
+import core.config.selenide.AllureScreenshotExtension;
 import core.config.selenide.AllureVideoRecorder;
 import core.page.auth.keycloak.KeycloackAuthPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,6 +23,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +39,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static core.element.widget.AbstractWidget.logTime;
 
 /**
@@ -45,7 +48,7 @@ import static core.element.widget.AbstractWidget.logTime;
 @Slf4j
 @ExtendWith({AllureJunit5.class})
 @DisplayName("Setup for Samples Tests")
-@ExtendWith({AllureVideoRecorder.class})
+@ExtendWith({AllureVideoRecorder.class, AllureScreenshotExtension.class})
 public abstract class BaseTestForSamples {
 
 	/**
@@ -140,10 +143,26 @@ public abstract class BaseTestForSamples {
 	@BeforeEach
 	public void beforeEach() {
 		Allure.step(
-				"Logout and login from scratch", step -> {
+				"Login", step -> {
 					logTime(step);
-					Selenide.open(AppChecks.logoutAndRedirectToLoginPageUri(Env.uri()));
+					Selenide.open(Env.uri().toString());
 					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
+				}
+		);
+	}
+
+	/**
+	 * Direct link logout faster x3 than logout with UI button
+	 */
+	@AfterEach
+	public void afterEach() {
+		Allure.step(
+				"Logout", step -> {
+					logTime(step);
+					String logoutUrl = AppChecks.logout(Env.uri());
+					executeJavaScript("sessionStorage.clear(); localStorage.clear();");
+					Selenide.open(logoutUrl);
+					Selenide.clearBrowserCookies();
 				}
 		);
 	}
