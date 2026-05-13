@@ -64,9 +64,8 @@ services:
     command: start-dev --import-realm --features=scripts
     volumes:
       - ./docker/keycloak-config:/opt/keycloak/data/import/
-    ports:
-      - "127.0.0.1:9080:9080"
-      - "127.0.0.1:9443:9443"
+    expose:
+      - 9080
 
   cxbox-code-samples-postgres:
     image: postgres:17.4
