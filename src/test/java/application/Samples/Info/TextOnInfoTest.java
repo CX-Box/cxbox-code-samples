@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TextOnInfoTest extends BaseTestForSamples {
 
@@ -83,5 +85,10 @@ public class TextOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.text("Custom Field")
 				.drilldown(url -> assertThat(url).isNotEmpty());
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Text basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

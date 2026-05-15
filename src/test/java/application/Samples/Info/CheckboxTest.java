@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. New Api.  Checking the basic functions for the CheckBox")
 @Epic("application/Samples")
@@ -81,5 +83,10 @@ public class CheckboxTest extends BaseTestForSamples {
 				.info("Info title");
 		info.checkbox("Custom Field")
 				.checkDrillDownSupported(isDrilldown -> assertThat(isDrilldown).isFalse());
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Checkbox basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

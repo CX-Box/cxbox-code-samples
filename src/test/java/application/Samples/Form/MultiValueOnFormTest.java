@@ -1,6 +1,7 @@
 package application.Samples.Form;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.multivalue.Multivalue;
@@ -18,6 +19,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultiValue in the widget Form")
 @Epic("Samples")
@@ -286,5 +288,10 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 		form.field((w) -> new Multivalue<>(w, "Custom Field"))
 				.setValue(List.of("Abs data"))
 				.checkValue(v -> assertThat(v).isEqualTo(List.of("Abs data")));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("MultiValue basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

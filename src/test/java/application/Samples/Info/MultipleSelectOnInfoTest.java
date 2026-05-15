@@ -1,11 +1,13 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Flaky;
 import io.qameta.allure.Severity;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the MultiplySelect")
 @Epic("application/Samples")
@@ -79,5 +82,10 @@ public class MultipleSelectOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.multipleSelect("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo("Low"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultipleSelect basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

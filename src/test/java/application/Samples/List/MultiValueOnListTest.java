@@ -1,6 +1,7 @@
 package application.Samples.List;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -16,6 +17,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the MultiValue in the widget List")
 @Epic("Samples")
@@ -233,5 +235,11 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.multivalue("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Multifield basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

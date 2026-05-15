@@ -2,6 +2,7 @@ package application.Samples.Form;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the DateTimeWithSeconds in the widget Form")
 @Epic("application/Samples")
@@ -199,5 +201,10 @@ public class DateTimeWithSecondsTest extends BaseTestForSamples {
 		form.dateTimeWithSecond("custom Field")
 				.clear()
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("DateTimeWithSeconds basic").secondLevelView("Form").form("Form title").element()));
 	}
 }

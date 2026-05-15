@@ -1,6 +1,7 @@
 package application.Samples.List;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the Hint in the widget List")
 @Epic("Samples")
@@ -98,5 +100,10 @@ public class HintOnListTest extends BaseTestForSamples {
 				.map(r -> r.hint("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(actualData).isEqualTo(List.of("Test data", "Test data"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Hint basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

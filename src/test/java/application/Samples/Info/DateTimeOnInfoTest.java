@@ -1,6 +1,7 @@
 package application.Samples.Info;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the DateTime")
 @Epic("application/Samples")
@@ -80,5 +82,10 @@ public class DateTimeOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.dateTime("custom Field")
 				.checkDrillDownSupported(ds -> assertThat(ds).isTrue());
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("DateTime basic").secondLevelView("Info").info("Info title").element()));
 	}
 }

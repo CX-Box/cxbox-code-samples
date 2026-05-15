@@ -1,6 +1,7 @@
 package application.Samples.List;
 
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the MultiValueHover in the widget List")
 @Epic("Samples")
@@ -103,5 +105,10 @@ public class MultiValueHoverOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.multivalueHover("Custom Field")
 				.checkShortText(value -> assertThat(value).isEqualTo("Despite c..."));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultivalueHover basic").secondLevelView("List").listInline("List title").element()));
 	}
 }

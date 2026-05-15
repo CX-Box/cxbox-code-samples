@@ -2,6 +2,7 @@ package application.Samples.List;
 
 import application.common.Text;
 import application.config.BaseTestForSamples;
+import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the Dictionary in the widget List")
 @Epic("Samples")
@@ -298,5 +300,10 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.map(r -> r.dictionary("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(actualData2).isEqualTo(List.of("High", "Low", "Low", "Middle"));
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Dictionary enum basic").secondLevelView("List").listInline("List title").element()));
 	}
 }
