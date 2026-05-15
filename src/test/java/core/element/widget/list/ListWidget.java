@@ -2,7 +2,7 @@ package core.element.widget.list;
 
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
-import core.element.widget.action.Actions;
+import core.element.widget.action.Action;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
 
@@ -27,8 +27,8 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 		return (SELF) this;
 	}
 
-	public Actions<SELF> actions() {
-		return new Actions<>(self());
+	public Action<SELF> actions() {
+		return new Action<>(self());
 	}
 
 }

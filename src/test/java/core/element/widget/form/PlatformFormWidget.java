@@ -2,7 +2,7 @@ package core.element.widget.form;
 
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
-import core.element.widget.action.Actions;
+import core.element.widget.action.Action;
 import core.element.widget.field.type.checkbox.CheckBox;
 import core.element.widget.field.type.date.Date;
 import core.element.widget.field.type.dateTime.DateTime;
@@ -114,8 +114,8 @@ public class PlatformFormWidget extends PlatformWidget<PlatformFormWidget> {
 		return new FileUpload<>(this, title);
 	}
 
-	public Actions<PlatformFormWidget> actions() {
-		return new Actions<>(this);
+	public Action<PlatformFormWidget> actions() {
+		return new Action<>(this);
 	}
 
 
