@@ -6,12 +6,14 @@ export type MenuDivider = {
 
 export type MenuActionItem = {
     type?: never
-    icon: string
+    icon: React.ReactNode
     title: string
-    action: () => void
+    action?: () => void
     isActiveName?: string
     isActiveAttrs?: Record<string, unknown>
     style?: CSSProperties
+    groupName?: string
+    items?: MenuActionItem[]
 }
 
 export type MenuItemType = MenuDivider | MenuActionItem

@@ -1,6 +1,7 @@
 /* Basic editor styles */
 :global {
   .tiptap {
+    height: 100%;
     outline: none;
 
     > * + * {
@@ -87,6 +88,7 @@
   }
 
   .editor {
+    line-height: 1.5;
     border: 1px solid var(--field-border-color);
     border-radius: var(--field-radius);
     font-size: var(--field-font-size);
@@ -95,10 +97,17 @@
 
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
-  .editor:not(.readOnly) {
-    min-height: 300px;
+  .editor:has(:global(.editor__content[disabled])) {
+    background: var(--field-disabled-bg-color);
+    color: var(--field-disabled-color);
+    cursor: not-allowed;
+
+    .editor__content {
+      color: var(--field-disabled-color);
+    }
   }
 
   .editor__header {
@@ -120,6 +129,13 @@
     overflow-y: auto;
     padding: 4px 11px;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .readOnly {
+    padding: 0;
+
+    font-size: var(--field-read-font-size);
+    color: var(--field-read-color);
   }
 
   /* Table styles */
@@ -181,7 +197,7 @@
 }
 
 @colors: {
-  black: #000;
+  defaule: var(--field-color);
   gray: #808080;
   yellow: #ffd700;
   orange: #f80;

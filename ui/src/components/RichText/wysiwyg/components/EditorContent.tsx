@@ -1,25 +1,20 @@
 import React from 'react'
 import { EditorContent as TiptapEditorContent, Editor } from '@tiptap/react'
+import cn from 'classnames'
 
 interface Props {
     readOnly?: boolean
     editor: Editor
+    disabled?: boolean
+    placeholder?: string
 }
 
-const EditorContent: React.FC<Props> = ({ editor, readOnly }) => {
+const EditorContent: React.FC<Props> = ({ editor, readOnly, disabled, placeholder }) => {
     if (readOnly) {
-        return (
-            <div className="editor" style={{ background: 'transparent', border: 'none', height: 'auto' }}>
-                <TiptapEditorContent className="editor__content" style={{ padding: 0 }} editor={editor} />
-            </div>
-        )
+        return <TiptapEditorContent className={cn('editor__content', 'readOnly')} editor={editor} disabled={true} />
     }
 
-    return (
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-            <TiptapEditorContent className="editor__content" editor={editor} />
-        </div>
-    )
+    return <TiptapEditorContent className="editor__content" editor={editor} disabled={disabled} placeholder={placeholder} />
 }
 
 export default EditorContent

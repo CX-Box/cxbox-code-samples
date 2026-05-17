@@ -1,9 +1,13 @@
 import React, { Suspense } from 'react'
 import { UniversalEditorProps } from './types'
+import { BaseFieldProps } from '@components/Field/Field'
 
 const EditorLazy = React.lazy(() => import('./common/index'))
 
-export interface RichTextEditorProps extends UniversalEditorProps {}
+export interface RichTextEditorProps extends UniversalEditorProps, BaseFieldProps {
+    minRows?: number
+    maxRows?: number
+}
 
 export const RichTextEditor: React.FC<RichTextEditorProps> = props => {
     const EditorComponent = EditorLazy

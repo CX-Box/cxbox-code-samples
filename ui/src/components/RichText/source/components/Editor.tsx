@@ -5,12 +5,15 @@ import './Editor.module.less'
 import MenuBar from '@components/RichText/source/components/MenuBar'
 import { ViewMode } from '@components/RichText/common/types'
 import SourceEditor from '@components/RichText/source/components/EditorContent'
+import { BaseFieldProps } from '@components/Field/Field'
 
-interface Props extends UniversalEditorProps {
+interface Props extends UniversalEditorProps, BaseFieldProps {
+    wrapperRef?: (instance: HTMLDivElement | null) => void
+    wrapperStyle?: React.CSSProperties
     onViewModeChange: (mode: ViewMode) => void
 }
 
-const Editor: React.FC<Props> = ({ value, onChange, readOnly, onViewModeChange }) => {
+const Editor: React.FC<Props> = ({ wrapperRef, wrapperStyle, value, onChange, readOnly, onViewModeChange, disabled, placeholder }) => {
     const cmRef = React.useRef<ReactCodeMirrorRef>(null)
 
     const handleViewModeChange = useCallback(
@@ -21,11 +24,9 @@ const Editor: React.FC<Props> = ({ value, onChange, readOnly, onViewModeChange }
     )
 
     return (
-        <div className={'editor'}>
-            <MenuBar onViewModeChange={handleViewModeChange} />
-            <div style={{ display: 'flex', alignItems: 'stretch', position: 'relative', height: '100%' }}>
-                <SourceEditor ref={cmRef} value={value} readOnly={readOnly} onChange={onChange} />
-            </div>
+        <div ref={wrapperRef} className={'editor'} style={wrapperStyle}>
+            <MenuBar onViewModeChange={handleViewModeChange} toolbarDisabled={readOnly || disabled} />
+            <SourceEditor ref={cmRef} value={value} readOnly={readOnly} onChange={onChange} placeholder={placeholder} disabled={disabled} />
         </div>
     )
 }

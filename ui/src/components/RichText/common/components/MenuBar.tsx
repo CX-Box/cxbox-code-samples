@@ -1,28 +1,29 @@
 import { Fragment } from 'react'
-import MenuItem from './MenuItem'
+import MenuItem, { MenuBarItem } from './MenuItem'
 import './MenuBar.module.less'
-import { MenuActionItem } from '@components/RichText/common/types'
-
-export interface MenuBarItem extends Partial<Omit<MenuActionItem, 'type' | 'action'>> {
-    type?: 'divider' | string
-    action?: () => void
-    isActive?: boolean
-}
+import { EDITOR_TOOLBAR_HEIGHT_RESERVE, EDITOR_TOOLBAR_WIDTH_RESERVE } from '@components/RichText/constants'
 
 export interface Props {
     items?: MenuBarItem[]
     rightButton: MenuBarItem
     className?: string
     style?: React.CSSProperties
+    toolbarDisabled?: boolean
 }
 
-export default function MenuBar({ items = [], rightButton, className = '', style = {} }: Props) {
+export default function MenuBar({ toolbarDisabled, items = [], rightButton, className = '', style = {} }: Props) {
     return (
         <div
             className={`editor__header ${className}`}
-            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...style }}
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                minHeight: EDITOR_TOOLBAR_HEIGHT_RESERVE,
+                ...style
+            }}
         >
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', minWidth: EDITOR_TOOLBAR_WIDTH_RESERVE }}>
                 {items.map((item, idx) => (
                     <Fragment key={idx}>
                         {item.type === 'divider' ? (
@@ -34,13 +35,24 @@ export default function MenuBar({ items = [], rightButton, className = '', style
                                 action={item.action}
                                 isActive={item.isActive ?? false}
                                 style={item.style}
+                                items={item.items}
+                                disabled={toolbarDisabled || item.disabled}
+                                groupName={item.groupName}
                             />
                         )}
                     </Fragment>
                 ))}
             </div>
             <div style={{ marginLeft: 'auto', paddingRight: '8px' }}>
-                <MenuItem icon={rightButton.icon} title={rightButton.title} action={rightButton.action} style={rightButton.style} />
+                <MenuItem
+                    icon={rightButton.icon}
+                    title={rightButton.title}
+                    action={rightButton.action}
+                    style={rightButton.style}
+                    items={rightButton.items}
+                    disabled={toolbarDisabled || rightButton.disabled}
+                    hideArrow={true}
+                />
             </div>
         </div>
     )

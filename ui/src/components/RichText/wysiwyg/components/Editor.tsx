@@ -6,12 +6,26 @@ import EditorContent from '@components/RichText/wysiwyg/components/EditorContent
 import { useRichTextEditor } from '@components/RichText/wysiwyg/hooks'
 import { ViewMode } from '@components/RichText/common/types'
 import cn from 'classnames'
+import { BaseFieldProps } from '@components/Field/Field'
 
-interface Props extends UniversalEditorProps {
+interface Props extends UniversalEditorProps, BaseFieldProps {
+    wrapperRef?: (instance: HTMLDivElement | null) => void
+    wrapperStyle?: React.CSSProperties
     onViewModeChange: (mode: ViewMode) => void
 }
 
-const Editor: React.FC<Props> = ({ value, onChange, readOnly, onBlur, onFocus, onViewModeChange }) => {
+const Editor: React.FC<Props> = ({
+    wrapperRef,
+    wrapperStyle,
+    value,
+    disabled,
+    placeholder,
+    onChange,
+    readOnly,
+    onBlur,
+    onFocus,
+    onViewModeChange
+}) => {
     const { editor } = useRichTextEditor({ value, onChange, readOnly, onBlur, onFocus })
 
     const handleViewModeChange = useCallback(
@@ -29,11 +43,9 @@ const Editor: React.FC<Props> = ({ value, onChange, readOnly, onBlur, onFocus, o
     }
 
     return (
-        <div className={cn('editor', { readOnly })}>
-            <MenuBar editor={editor} onViewModeChange={handleViewModeChange} />
-            <div style={{ display: 'flex', alignItems: 'stretch', position: 'relative', height: '100%' }}>
-                <EditorContent editor={editor} />
-            </div>
+        <div ref={wrapperRef} style={wrapperStyle} className={cn('editor', { readOnly })}>
+            <MenuBar editor={editor} onViewModeChange={handleViewModeChange} toolbarDisabled={disabled} />
+            <EditorContent editor={editor} disabled={disabled} placeholder={placeholder} />
         </div>
     )
 }
