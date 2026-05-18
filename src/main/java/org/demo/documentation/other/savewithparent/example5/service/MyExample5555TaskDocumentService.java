@@ -11,6 +11,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.documentation.other.savewithparent.example5.dto.TaskDocumentDTO;
@@ -82,7 +83,11 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 				.delete(dlt -> dlt.text("Delete"))
 				.associate(ast -> ast
 						.withCustomParameter(Map.of("subtype", "multiFileUpload"))
-						.text("Add Files")
+						.available(bc -> true)
+						.text("Загрузить несколько")
+						.withPreAction(PreAction.confirmWithWidget("taskDocument1Form",
+								cfw -> cfw))
+						.invoker((bc, dto) -> new ActionResultDTO<TaskDocumentDTO>())
 				).build();
 	}
 
