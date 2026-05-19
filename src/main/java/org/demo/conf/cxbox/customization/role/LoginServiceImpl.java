@@ -194,6 +194,10 @@ public class LoginServiceImpl implements LoginService {
 						feature(
 								UIProperties.SEASONAL_EFFECTS_ENABLED,
 								uiProperties.isSeasonalEffectsEnabled()
+						),
+						feature(
+								UIProperties.BROWSER_NAVIGATION_WARN_ENABLED,
+								uiProperties.isBrowserNavigationWarnEnabled()
 						)
 				)
 				.filter(Objects::nonNull)
