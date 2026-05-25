@@ -17,7 +17,7 @@ on:
        type: choice
        description: Run at
        options:
-         - 'http://code-samples.cxbox.org/'
+         - 'https://code-samples.cxbox.org/'
          - Branch in docker
      video_tags:
        description: "Record failed video"
@@ -35,7 +35,7 @@ on:
        required: false
 
 env:
-  APP_URL: http://code-samples.cxbox.org/ui/#/
+  APP_URL: https://code-samples.cxbox.org/ui/#/
   CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
 
@@ -143,7 +143,7 @@ jobs:
 
 
   build-qa_manual:
-    if: inputs.docker_run == 'http://code-samples.cxbox.org/'
+    if: inputs.docker_run == 'https://code-samples.cxbox.org/'
     runs-on: ubuntu-latest
     strategy:
       matrix:
