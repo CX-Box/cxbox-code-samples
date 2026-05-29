@@ -80,7 +80,7 @@ public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041
 				index = 1;
 			}
 			MyExampleBc5041DTO newRow = new MyExampleBc5041DTO()
-					.setValue(sum)
+					.setValue(entity.getCustomFieldNum())
 					.setIcon("team")
 					.setColor(COLOR_LIST.get(index))
 					.setAmount(entity.getCustomFieldNum())
