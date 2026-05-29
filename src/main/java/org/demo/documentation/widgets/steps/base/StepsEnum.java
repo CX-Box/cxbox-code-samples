@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import org.cxbox.api.data.dto.rowmeta.OptionsMeta;
+import org.cxbox.api.data.dto.rowmeta.OptionsMetadata;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 @Getter
 @AllArgsConstructor
-public enum StepsEnum {
+public enum StepsEnum implements OptionsMetadata {
 	STEP_1("Step 1", "It's step 1", "screen/myexample5023/view/myexample5023step1/"),
 	STEP_2("Step 2", "It's step 2", "screen/myexample5023/view/myexample5023step2/"),
 	STEP_3("Step 3", "It's step 3", "screen/myexample5023/view/myexample5023step3/");
@@ -34,5 +36,12 @@ public enum StepsEnum {
 		return Arrays.stream(StepsEnum.values())
 				.filter(v -> v.ordinal() < stepEntity.getEditStep().ordinal())
 				.min((v1, v2) -> Integer.compare(v2.ordinal(), v1.ordinal()));
+	}
+
+	@Override
+	public OptionsMeta metadata() {
+		return OptionsMeta.builder()
+				.description(description)
+				.build();
 	}
 }
