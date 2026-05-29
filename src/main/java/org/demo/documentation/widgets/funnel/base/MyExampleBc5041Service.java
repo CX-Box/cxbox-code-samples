@@ -30,6 +30,8 @@ public class MyExampleBc5041Service extends AnySourceVersionAwareResponseService
 
 	@Override
 	protected ActionResultDTO<MyExampleBc5041DTO> doUpdateEntity(MyExampleBc5041DTO entity, MyExampleBc5041DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExampleBc5041DTO_.funnelKey, entity::setFunnelKey);
+		setIfChanged(data, MyExampleBc5041DTO_.amount, entity::setAmount);
 		return new ActionResultDTO<>(entityToDto(bc, getBaseDao().update(bc, entity)))
 				.setAction(PostAction.refreshBc(bc));
 	}
