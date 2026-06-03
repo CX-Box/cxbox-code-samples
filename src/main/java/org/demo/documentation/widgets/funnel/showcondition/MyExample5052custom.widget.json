@@ -1,0 +1,37 @@
+﻿{
+    "name":  "MyExample5052custom",
+    "title":  "Funnel 1",
+    "type":  "Funnel",
+    "bc":  "myExampleBc5052",
+    "fields":  [
+                   {
+                       "label":  "Custom Field Show Condition",
+                       "key":  "customFieldShowCondition",
+                       "type":  "checkbox"
+                   },
+                   {
+                       "key":  "funnelKey",
+                       "type":  "input"
+                   },
+                   {
+                       "key":  "amount",
+                       "type":  "number"
+                   },
+                   {
+                       "key":  "color",
+                       "type":  "number"
+                   }
+               ],
+    "options":  {
+                    "funnelOptions":  {
+                                          "dataKey":  "amount"
+                                      }
+                },
+    "showCondition":  {
+                          "params":  {
+                                         "fieldKey":  "customFieldShowCondition",
+                                         "value":  true
+                                     },
+                          "bcName":  "myExampleBc5052"
+                      }
+}
