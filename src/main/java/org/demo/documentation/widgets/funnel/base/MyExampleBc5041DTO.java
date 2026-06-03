@@ -22,4 +22,7 @@ public class MyExampleBc5041DTO extends DataResponseDTO {
 
 	private String icon;
 
+	private Long amount;
+
+	private String funnelKey;
 }

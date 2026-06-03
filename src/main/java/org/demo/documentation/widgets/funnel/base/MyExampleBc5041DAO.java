@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
+import org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042;
 import org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,17 +13,23 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
 public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041DTO> {
 
+	public static final Map<Number, String> COLOR_LIST = Map.ofEntries(
+			Map.entry(1, "#E6E6FA"),
+			Map.entry(2, "#D8B4FE"),
+			Map.entry(3, "#C4B5FD"),
+			Map.entry(4, "#A78BFA"),
+			Map.entry(5, "#8B5CF6"),
+			Map.entry(6, "#7C6AFF")
+	);
+
 	@Autowired
 	MyExampleBc5042Repository repository;
-
-	public static final String COUNT_ROW_ID = "0";
-
-	public static final String SUM_CUSTOM_FIELD_NUM = "1";
 
 	@Override
 	public String getId(MyExampleBc5041DTO entity) {
@@ -42,7 +49,8 @@ public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041
 
 	@Override
 	public Page<MyExampleBc5041DTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
-		return new PageImpl<>(getStats());}
+		return new PageImpl<>(getStats());
+	}
 
 	@Override
 	public MyExampleBc5041DTO create(BusinessComponent bc, MyExampleBc5041DTO entity) {
@@ -61,22 +69,26 @@ public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041
 
 	@NonNull
 	private List<MyExampleBc5041DTO> getStats() {
+		long count = repository.count();
+		Long sum = repository.customTotal();
+		List<MyExampleBc5042> myExampleBc5042 = repository.findAll();
 		List<MyExampleBc5041DTO> result = new ArrayList<>();
-		MyExampleBc5041DTO newRow = new MyExampleBc5041DTO()
-				.setTitle("All record")
-				.setValue(repository.count())
-				.setIcon("team")
-				.setDescription("Count rows in table");
-		newRow.setId(COUNT_ROW_ID);
-		result.add(newRow);
-		MyExampleBc5041DTO newSum = new MyExampleBc5041DTO()
-				.setTitle("Custom Field Num Total")
-				.setValue(repository.customTotal())
-				.setIcon("team")
-				.setDescription("Custom Field Num Total");
-		newRow.setId(COUNT_ROW_ID);
-		newSum.setId(SUM_CUSTOM_FIELD_NUM);
-		result.add(newSum);
+		AtomicInteger num = new AtomicInteger(1);
+		myExampleBc5042.forEach(entity -> {
+			int index = num.getAndIncrement() % COLOR_LIST.size();
+			if (index > count) {
+				index = 1;
+			}
+			MyExampleBc5041DTO newRow = new MyExampleBc5041DTO()
+					.setValue(sum)
+					.setIcon("team")
+					.setColor(COLOR_LIST.get(index))
+					.setAmount(entity.getCustomFieldNum())
+					.setDescription("Count rows in table");
+			newRow.setFunnelKey(entity.getId().toString());
+			newRow.setId(entity.getId().toString());
+			result.add(newRow);
+		});
 
 		return result;
 	}
