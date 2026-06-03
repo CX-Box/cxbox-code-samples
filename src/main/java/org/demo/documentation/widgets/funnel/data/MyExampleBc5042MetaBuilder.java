@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.funnel.base.data;
+package org.demo.documentation.widgets.funnel.data;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
@@ -13,7 +13,7 @@ public class MyExampleBc5042MetaBuilder extends FieldMetaBuilder<MyExampleBc5042
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExampleBc5042DTO> fields, InnerBcDescription bcDescription, Long id, Long parentId) {
 		fields.setEnabled(MyExampleBc5042DTO_.customFieldNum);
 		fields.setEnabled(
-				org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042DTO_.id
+				MyExampleBc5042DTO_.id
 		);
 	}
 
@@ -21,10 +21,10 @@ public class MyExampleBc5042MetaBuilder extends FieldMetaBuilder<MyExampleBc5042
 	public void buildIndependentMeta(FieldsMeta<MyExampleBc5042DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExampleBc5042DTO_.customFieldNum);
 		fields.enableFilter(
-				org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042DTO_.id
+				MyExampleBc5042DTO_.id
 		);
 		fields.enableSort(
-				org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042DTO_.id
+				MyExampleBc5042DTO_.id
 		);
 	}
 

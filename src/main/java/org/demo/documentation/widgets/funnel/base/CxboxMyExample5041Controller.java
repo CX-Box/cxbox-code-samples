@@ -5,7 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
-import org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042Service;
+import org.demo.documentation.widgets.funnel.data.MyExampleBc5042Service;
 import org.springframework.stereotype.Component;
 
 @SuppressWarnings({"java:S115", "java:S1144"})

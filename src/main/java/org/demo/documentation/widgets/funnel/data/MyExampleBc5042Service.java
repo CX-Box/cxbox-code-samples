@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.funnel.base.data;
+package org.demo.documentation.widgets.funnel.data;
 
 
 import lombok.Getter;
