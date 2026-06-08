@@ -1,0 +1,62 @@
+{
+  "name": "MyExample3711DetachedForm",
+  "title": "",
+  "type": "Form",
+  "bc": "myexample3711",
+  "fields": [
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "label": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "sign",
+        "signaturePackage": "detached",
+        "actionName": "documentSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentSign"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 12
+            }
+          ]
+        } ,
+        {
+          "cols": [
+            {
+              "fieldKey": "fileSignRO",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
