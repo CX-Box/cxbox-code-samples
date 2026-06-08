@@ -1,0 +1,67 @@
+{
+  "name": "MyExample3711SignForm",
+  "title": "Support for signing documents using a Qualified Electronic Signature (QES) with CryptoPro software.",
+  "type": "Form",
+  "bc": "myexample3711",
+  "fields": [
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "label": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    },
+    {
+      "label": "File Signed",
+      "key": "fileSign",
+      "type": "hidden",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileSignRO",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "cryptoGenerator": [
+      {
+        "type": "sign",
+        "actionName": "documentSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentSign"
+      ]
+    }
+  }
+}

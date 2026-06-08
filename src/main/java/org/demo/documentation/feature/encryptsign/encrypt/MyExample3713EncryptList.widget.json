@@ -1,0 +1,95 @@
+{
+  "name": "MyExample3713EncryptList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3713",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "File Encrypt and Sign",
+      "key": "fileEncryptAndSign",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptAndSignId"
+    },
+    {
+      "title": "File Encrypted",
+      "key": "fileEncrypt",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
+      "title": "File Signed",
+      "key": "fileSign",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "signAndEncrypt",
+        "signatureType": "CADES_BES",
+        "actionName": "documentEncryptSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt",
+        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT",
+        "signatureFileBaseNameKey": "NAME_FILE_OVERRIDE_SIGN"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentEncryptSign",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileEncryptAndSign",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileSign",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileEncrypt",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

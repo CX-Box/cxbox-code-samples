@@ -1,0 +1,62 @@
+{
+  "name": "MyExample3713SignAttachedForm",
+  "title": "",
+  "type": "Form",
+  "bc": "myexample3713",
+  "fields": [
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "label": "File Encrypted",
+      "key": "fileEncrypt",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "Encrypt",
+        "actionName": "documentEncrypt",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentEncrypt",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileEncrypt",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
