@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.funnel.base;
+package org.demo.documentation.widgets.funnel.color.colorconst;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
-public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041DTO> {
+public class MyExampleBc5045DAO extends AbstractAnySourceBaseDAO<MyExampleBc5045DTO> {
 
 	public static final Map<Number, String> COLOR_LIST = Map.ofEntries(
 			Map.entry(1, "#E6E6FA"),
@@ -32,33 +32,33 @@ public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041
 	MyExampleBc5042Repository repository;
 
 	@Override
-	public String getId(MyExampleBc5041DTO entity) {
+	public String getId(MyExampleBc5045DTO entity) {
 		return entity.getId();
 	}
 
 
 	@Override
-	public void setId(String id, MyExampleBc5041DTO entity) {
+	public void setId(String id, MyExampleBc5045DTO entity) {
 		entity.setId(id);
 	}
 
 	@Override
-	public MyExampleBc5041DTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
+	public MyExampleBc5045DTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
 		return getStats().stream().filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
 	}
 
 	@Override
-	public Page<MyExampleBc5041DTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
+	public Page<MyExampleBc5045DTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
 		return new PageImpl<>(getStats());
 	}
 
 	@Override
-	public MyExampleBc5041DTO create(BusinessComponent bc, MyExampleBc5041DTO entity) {
+	public MyExampleBc5045DTO create(BusinessComponent bc, MyExampleBc5045DTO entity) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public MyExampleBc5041DTO update(BusinessComponent bc, MyExampleBc5041DTO entity) {
+	public MyExampleBc5045DTO update(BusinessComponent bc, MyExampleBc5045DTO entity) {
 		throw new IllegalStateException();
 	}
 
@@ -68,18 +68,18 @@ public class MyExampleBc5041DAO extends AbstractAnySourceBaseDAO<MyExampleBc5041
 	}
 
 	@NonNull
-	private List<MyExampleBc5041DTO> getStats() {
+	private List<MyExampleBc5045DTO> getStats() {
 		long count = repository.count();
 		Long sum = repository.customTotal();
 		List<MyExampleBc5042> myExampleBc5042 = repository.findAll();
-		List<MyExampleBc5041DTO> result = new ArrayList<>();
+		List<MyExampleBc5045DTO> result = new ArrayList<>();
 		AtomicInteger num = new AtomicInteger(1);
 		myExampleBc5042.forEach(entity -> {
 			int index = num.getAndIncrement() % COLOR_LIST.size();
 			if (index > count) {
 				index = 1;
 			}
-			MyExampleBc5041DTO newRow = new MyExampleBc5041DTO()
+			MyExampleBc5045DTO newRow = new MyExampleBc5045DTO()
 					.setValue(entity.getCustomFieldNum())
 					.setIcon("team")
 					.setColor(COLOR_LIST.get(index))

@@ -3,8 +3,8 @@ package org.demo.documentation.widgets.funnel.base;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042;
-import org.demo.documentation.widgets.funnel.base.data.MyExampleBc5042Repository;
+import org.demo.documentation.widgets.funnel.data.MyExampleBc5042;
+import org.demo.documentation.widgets.funnel.data.MyExampleBc5042Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
