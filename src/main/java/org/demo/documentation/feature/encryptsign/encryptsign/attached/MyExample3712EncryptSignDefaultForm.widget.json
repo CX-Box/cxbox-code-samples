@@ -1,5 +1,5 @@
 {
-  "name": "MyExample3712SignCadesTForm",
+  "name": "MyExample3712EncryptSignDefaultForm",
   "title": "",
   "type": "Form",
   "bc": "myexample3712",
@@ -36,22 +36,20 @@
     "cryptoGenerator": [
       {
         "type": "signAndEncrypt",
-        "signatureType": "CADES_BES",
         "actionName": "documentEncryptSign",
         "documentFileIdKey": "fileId",
         "documentFileNameKey": "file",
         "signatureFileIdKey": "fileSignId",
         "signatureFileNameKey": "fileSign",
         "encryptedFileIdKey": "fileEncryptId",
-        "encryptedFileNameKey": "fileEncrypt",
-        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT",
-        "signatureFileBaseNameKey": "NAME_FILE_OVERRIDE_SIGN"
+        "encryptedFileNameKey": "fileEncrypt"
       }
     ],
     "actionGroups": {
       "include": [
         "save",
-        "documentEncryptSign"
+        "documentEncryptSign",
+        "cancel-create"
       ]
     },
     "layout": {
