@@ -1,8 +1,8 @@
 {
-  "name": "MyExample3712BaseNameForm",
+  "name": "MyExample3713BaseNameForm",
   "title": "",
   "type": "Form",
-  "bc": "myexample3712",
+  "bc": "myexample3713",
   "fields": [
     {
       "label": "File",
@@ -14,27 +14,10 @@
       }
     },
     {
-      "label": "File Encrypt and Sign",
-      "key": "fileEncryptAndSign",
-      "type": "fileUpload",
-      "fileIdKey": "fileEncryptAndSignId"
-    },
-    {
       "label": "File Encrypted",
       "key": "fileEncrypt",
       "type": "fileUpload",
       "fileIdKey": "fileEncryptId"
-    },
-    {
-      "label": "File Signed",
-      "key": "fileSign",
-      "type": "fileUpload",
-      "fileIdKey": "fileSignId"
-    },
-    {
-      "label": "File Signed Name",
-      "key": "NAME_FILE_OVERRIDE_SIGN",
-      "type": "hidden"
     },
     {
       "label": "File Encrypt Name",
@@ -45,23 +28,19 @@
   "options": {
     "cryptoGenerator": [
       {
-        "type": "encryptAndsign",
-        "actionName": "documentEncryptSign",
+        "type": "Encrypt",
+        "actionName": "documentEncrypt",
         "documentFileIdKey": "fileId",
         "documentFileNameKey": "file",
-        "signatureFileIdKey": "fileSignId",
-        "signatureFileNameKey": "fileSign",
         "encryptedFileIdKey": "fileEncryptId",
         "encryptedFileNameKey": "fileEncrypt",
-        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT",
-        "signatureFileBaseNameKey": "NAME_FILE_OVERRIDE_SIGN"
-
+        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT"
       }
     ],
     "actionGroups": {
       "include": [
         "save",
-        "documentEncryptSign",
+        "documentEncrypt",
         "cancel-create"
       ]
     },
