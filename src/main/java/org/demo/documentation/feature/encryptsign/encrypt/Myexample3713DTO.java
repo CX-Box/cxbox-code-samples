@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.encryptsign.encrypt.enums.StatusEncryptEnum;
 import org.demo.documentation.feature.encryptsign.encryptsign.enums.StatusEncryptSignEnum;
@@ -46,7 +45,7 @@ public class Myexample3713DTO extends DataResponseDTO {
 		this.fileEncryptRO = entity.getFileEncrypt();
 		this.fileEncryptId = entity.getFileEncryptId();
 		this.status = entity.getStatus();
-		this.color = Optional.ofNullable(entity.getStatus()).map(StatusEncryptSignEnum.colors::get).orElse(null);
+		this.color = Optional.ofNullable(entity.getStatus()).map(StatusEncryptEnum.colors::get).orElse(null);
 	}
 
 }
