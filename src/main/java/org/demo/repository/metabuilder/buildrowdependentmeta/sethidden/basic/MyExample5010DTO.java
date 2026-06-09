@@ -19,7 +19,7 @@ public class MyExample5010DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
 	private CustomFieldEnum customField;
 
-	@SearchParameter(name = "customFieldHidden", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldHidden")
 	private String customFieldHidden;
 
 	public MyExample5010DTO(MyEntity5010 entity) {

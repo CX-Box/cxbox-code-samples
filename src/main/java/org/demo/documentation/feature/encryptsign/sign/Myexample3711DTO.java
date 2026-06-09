@@ -19,17 +19,17 @@ public class Myexample3711DTO extends DataResponseDTO {
 
 	public static final String NAME_FILE_OVERRIDE_SIGN = "MySign";
 
-	@SearchParameter(name = "file", provider = StringValueProvider.class)
+	@SearchParameter(name = "file")
 	private String file;
 
 	private String fileId;
 
-	@SearchParameter(name = "fileSign", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileSign")
 	private String fileSign;
 
 	private String fileSignId;
 
-	@SearchParameter(name = "fileSign", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileSign")
 	private String fileSignRO;
 
 	private String color;

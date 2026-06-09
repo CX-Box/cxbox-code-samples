@@ -20,15 +20,15 @@ public class Myexample3713DTO extends DataResponseDTO {
 
 	public static final String NAME_FILE_OVERRIDE_ENCRYPT = "MyEncrypt";
 
-	@SearchParameter(name = "file", provider = StringValueProvider.class)
+	@SearchParameter(name = "file")
 	private String file;
 
 	private String fileId;
 
-	@SearchParameter(name = "fileEncrypt", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileEncrypt")
 	private String fileEncrypt;
 
-	@SearchParameter(name = "fileEncrypt", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileEncrypt")
 	private String fileEncryptRO;
 
 	private String fileEncryptId;

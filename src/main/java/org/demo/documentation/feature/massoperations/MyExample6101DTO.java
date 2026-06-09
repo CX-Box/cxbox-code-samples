@@ -15,7 +15,7 @@ import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionary
 @NoArgsConstructor
 public class MyExample6101DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)

@@ -13,7 +13,7 @@ import org.demo.documentation.widgets.property.excel.inner.forfields.MyEntity313
 @NoArgsConstructor
 public class MyEntity3134SuggectionPickPickDTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	public MyEntity3134SuggectionPickPickDTO(MyEntity3134SuggectionPick entity) {

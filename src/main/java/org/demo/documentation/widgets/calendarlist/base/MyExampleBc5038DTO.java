@@ -18,7 +18,7 @@ import java.util.Optional;
 public class MyExampleBc5038DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "startDateTime", provider = DateTimeValueProvider.class)

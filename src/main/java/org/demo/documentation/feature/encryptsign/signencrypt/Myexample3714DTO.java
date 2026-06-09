@@ -17,32 +17,32 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Myexample3714DTO extends DataResponseDTO {
 
-	public static final String NAME_FILE_OVERRIDE_SIGN = "MySign";
+	public static final String NAME_FILE_OVERRIDE_SIGN_3714 = "MySign";
 
-	public static final String NAME_FILE_OVERRIDE_ENCRYPT = "MyEncrypt";
+	public static final String NAME_FILE_OVERRIDE_ENCRYPT_3714 = "MyEncrypt";
 
-	@SearchParameter(name = "file", provider = StringValueProvider.class)
+	@SearchParameter(name = "file")
 	private String file;
 
 	private String fileId;
 
-	@SearchParameter(name = "fileEncryptAndSign", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileEncryptAndSign")
 	private String fileEncryptAndSign;
 
 	private String fileEncryptAndSignId;
 
-	@SearchParameter(name = "fileEncrypt", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileEncrypt")
 	private String fileEncrypt;
 
-	@SearchParameter(name = "fileEncrypt", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileEncrypt")
 	private String fileEncryptRO;
 
 	private String fileEncryptId;
 
-	@SearchParameter(name = "fileSign", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileSign")
 	private String fileSign;
 
-	@SearchParameter(name = "fileSign", provider = StringValueProvider.class)
+	@SearchParameter(name = "fileSign")
 	private String fileSignRO;
 
 	private String fileSignId;

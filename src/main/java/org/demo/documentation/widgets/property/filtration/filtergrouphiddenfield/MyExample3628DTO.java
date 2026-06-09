@@ -15,7 +15,7 @@ import org.demo.documentation.widgets.property.filtration.filtergrouphiddenfield
 @NoArgsConstructor
 public class MyExample3628DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)

@@ -8,13 +8,9 @@ import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
-import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.cxbox.core.service.action.PreActionSpecifier;
 import org.demo.documentation.feature.encryptsign.sign.enums.StatusSignEnum;
-import org.demo.documentation.fields.dictionary.validationannotation.MyExample293DTO_;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,7 +39,6 @@ public class Myexample3711Service extends VersionAwareResponseService<Myexample3
 		setIfChanged(data, Myexample3711DTO_.fileSign, entity::setFileSign);
 		setIfChanged(data, Myexample3711DTO_.fileId, entity::setFileId);
 		setIfChanged(data, Myexample3711DTO_.file, entity::setFile);
-		myexample3711Repository.save(entity);
 		return new ActionResultDTO<>(entityToDto(bc, myexample3711Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));
 	}

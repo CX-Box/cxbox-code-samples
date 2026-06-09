@@ -15,7 +15,7 @@ import org.demo.documentation.feature.massoperations.gh.enums.CustomFieldDiction
 @NoArgsConstructor
 public class MyExample6102DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)

@@ -14,7 +14,7 @@ import org.demo.documentation.widgets.statsblock.drilldown.parentchild.data.enum
 @NoArgsConstructor
 public class MyExample4216DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "status", provider = EnumValueProvider.class)

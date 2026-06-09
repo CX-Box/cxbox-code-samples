@@ -18,29 +18,29 @@ import java.util.Optional;
 public class Myexample6150DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "sourceNodeId", provider = StringValueProvider.class)
+	@SearchParameter(name = "sourceNodeId")
 	private String sourceNodeId;
 
-	@SearchParameter(name = "targetNodeId", provider = StringValueProvider.class)
+	@SearchParameter(name = "targetNodeId")
 	private String targetNodeId;
 
-	@SearchParameter(name = "targetNodeBgColorKey", provider = StringValueProvider.class)
+	@SearchParameter(name = "targetNodeBgColorKey")
 	private String targetNodeBgColorKey;
 
 	@SearchParameter(name = "targetNodeType", provider = EnumValueProvider.class)
 	private TargetNodeTypeEnum targetNodeType;
 
-	@SearchParameter(name = "targetNodeName", provider = StringValueProvider.class)
+	@SearchParameter(name = "targetNodeName")
 	private String targetNodeName;
 
-	@SearchParameter(name = "edgeDescription", provider = StringValueProvider.class)
+	@SearchParameter(name = "edgeDescription")
 	private String edgeDescription;
 
 	private String edgeValue;
 
 	private String edgeValueBgColorKey;
 
-	@SearchParameter(name = "targetNodeDescription", provider = StringValueProvider.class)
+	@SearchParameter(name = "targetNodeDescription")
 	private String targetNodeDescription;
 
 	public Myexample6150DTO(Myexample6150 entity) {

@@ -16,7 +16,7 @@ import java.util.Optional;
 public class MyExampleBc5040DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	public MyExampleBc5040DTO(MyExampleBc5040 entity) {
