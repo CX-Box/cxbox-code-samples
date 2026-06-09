@@ -1,5 +1,6 @@
 package org.demo.documentation.fields.dictionary.validationannotation;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import org.demo.documentation.fields.dictionary.validationannotation.enums.Custo
 public class MyExample293DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
-	@NotNull(message = "Custom message about error")
+	@NotBlank(message = "Custom message about error")
 	private CustomFieldEnum customField;
 
 	public MyExample293DTO(MyEntity293 entity) {

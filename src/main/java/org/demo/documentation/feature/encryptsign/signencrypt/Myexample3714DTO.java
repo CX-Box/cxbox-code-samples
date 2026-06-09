@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.encryptsign.signencrypt.enums.StatusSignEncryptEnum;
 
 import java.util.Optional;
 
@@ -45,6 +47,11 @@ public class Myexample3714DTO extends DataResponseDTO {
 
 	private String fileSignId;
 
+	private String color;
+
+	@SearchParameter(name = "status", provider = EnumValueProvider.class)
+	private StatusSignEncryptEnum status;
+
 	public Myexample3714DTO(Myexample3714 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.file = entity.getFile();
@@ -57,6 +64,8 @@ public class Myexample3714DTO extends DataResponseDTO {
 		this.fileSign = entity.getFileSign();
 		this.fileSignRO = entity.getFileSign();
 		this.fileSignId = entity.getFileSignId();
+		this.color = Optional.ofNullable(entity.getStatus()).map(StatusSignEncryptEnum.colors::get).orElse(null);
+		this.status = entity.getStatus();
 	}
 
 }

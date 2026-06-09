@@ -1,13 +1,12 @@
 package org.demo.documentation.feature.encryptsign.signencrypt;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.encryptsign.signencrypt.enums.StatusSignEncryptEnum;
 
 
 @Entity
@@ -42,4 +41,8 @@ public class Myexample3714 extends BaseEntity {
 
 	@Column
 	private String fileSignId;
+
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private StatusSignEncryptEnum status = StatusSignEncryptEnum.NO_SIGN_ENCRYPT;
 }

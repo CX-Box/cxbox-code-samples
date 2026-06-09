@@ -1,11 +1,11 @@
 {
-  "name": "MyExample3713EncryptList",
+  "name": "MyExample3714ZipForm",
   "title": "",
-  "type": "List",
-  "bc": "myexample3713",
+  "type": "Form",
+  "bc": "myexample3714",
   "fields": [
     {
-      "title": "File",
+      "label": "File",
       "key": "file",
       "type": "fileUpload",
       "fileIdKey": "fileId",
@@ -13,45 +13,43 @@
         "enabled": true
       }
     },
+
     {
-      "title": "File Encrypt and Sign",
-      "key": "fileEncryptAndSign",
-      "type": "fileUpload",
-      "fileIdKey": "fileEncryptAndSignId"
-    },
-    {
-      "title": "File Encrypted",
+      "label": "File Encrypted",
       "key": "fileEncrypt",
-      "type": "fileUpload",
+      "type": "hidden",
       "fileIdKey": "fileEncryptId"
     },
     {
-      "title": "File Signed",
+      "label": "File Signed",
       "key": "fileSign",
-      "type": "fileUpload",
+      "type": "hidden",
       "fileIdKey": "fileSignId"
+    },
+    {
+      "label": "File Encrypt and Sign",
+      "key": "fileEncryptAndSign",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptAndSignId"
     }
   ],
   "options": {
     "cryptoGenerator": [
       {
         "type": "signAndEncrypt",
-        "signatureType": "CADES_BES",
-        "actionName": "documentEncryptSign",
+        "actionName": "documentSignEncrypt",
         "documentFileIdKey": "fileId",
         "documentFileNameKey": "file",
         "signatureFileIdKey": "fileSignId",
         "signatureFileNameKey": "fileSign",
         "encryptedFileIdKey": "fileEncryptId",
-        "encryptedFileNameKey": "fileEncrypt",
-        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT",
-        "signatureFileBaseNameKey": "NAME_FILE_OVERRIDE_SIGN"
+        "encryptedFileNameKey": "fileEncrypt"
       }
     ],
     "actionGroups": {
       "include": [
         "save",
-        "documentEncryptSign",
+        "documentSignEncrypt",
         "cancel-create"
       ]
     },
@@ -69,22 +67,6 @@
           "cols": [
             {
               "fieldKey": "fileEncryptAndSign",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "fileSign",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "fileEncrypt",
               "span": 12
             }
           ]

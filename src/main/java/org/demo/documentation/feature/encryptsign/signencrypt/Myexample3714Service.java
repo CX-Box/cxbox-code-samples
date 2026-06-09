@@ -25,6 +25,7 @@ import java.util.zip.ZipOutputStream;
 @Service
 @Getter
 @RequiredArgsConstructor
+@SuppressWarnings("java:S1170")
 public class Myexample3714Service extends VersionAwareResponseService<Myexample3714DTO, Myexample3714> {
 
 	@Getter(onMethod_ = @Override)
@@ -46,6 +47,7 @@ public class Myexample3714Service extends VersionAwareResponseService<Myexample3
 
 	@Override
 	protected ActionResultDTO<Myexample3714DTO> doUpdateEntity(Myexample3714 entity, Myexample3714DTO data, BusinessComponent bc) {
+		setIfChanged(data, Myexample3714DTO_.status, entity::setStatus);
 		setIfChanged(data, Myexample3714DTO_.fileSignId, entity::setFileSignId);
 		setIfChanged(data, Myexample3714DTO_.fileSign, entity::setFileSign);
 		setIfChanged(data, Myexample3714DTO_.fileEncryptId, entity::setFileEncryptId);

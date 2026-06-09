@@ -13,21 +13,27 @@
         "enabled": true
       }
     },
+       {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
     {
       "title": "File Encrypt and Sign",
       "key": "fileEncryptAndSign",
       "type": "fileUpload",
       "fileIdKey": "fileEncryptAndSignId"
     },
-    {
-      "title": "File Encrypted",
-      "key": "fileEncrypt",
+       {
+      "label": "File Encrypted",
+      "key": "fileEncryptRO",
       "type": "fileUpload",
       "fileIdKey": "fileEncryptId"
     },
     {
-      "title": "File Signed",
-      "key": "fileSign",
+      "label": "File Signed",
+      "key": "fileSignRO",
       "type": "fileUpload",
       "fileIdKey": "fileSignId"
     },
@@ -58,42 +64,6 @@
         "save",
         "documentEncryptSign",
         "cancel-create"
-      ]
-    },
-    "layout": {
-      "rows": [
-        {
-          "cols": [
-            {
-              "fieldKey": "file",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "fileEncryptAndSign",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "fileSign",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "fileEncrypt",
-              "span": 12
-            }
-          ]
-        }
       ]
     }
   }
