@@ -133,7 +133,6 @@ const DeprecatedFields: React.FC<DeprecatedFieldProps> = props => {
         onChange,
         onDrillDown
     } = props.deprecatedFieldProps
-    console.log(widgetFieldMeta)
     const { t } = useTranslation()
     const [localValue, setLocalValue] = React.useState<string | null>(null)
 
@@ -204,6 +203,10 @@ const DeprecatedFields: React.FC<DeprecatedFieldProps> = props => {
             delete commonInputProps[key]
         }
     })
+
+    /**
+     * Temporary solution until all fields are reworked to fit the file structure
+     */
 
     const showTime = [FieldType.dateTime, FieldType.dateTimeWithSeconds].includes(widgetFieldMeta.type)
     const showSeconds = widgetFieldMeta.type === FieldType.dateTimeWithSeconds
@@ -426,9 +429,6 @@ const Field: FunctionComponent<FieldProps> = props => {
         return <HistoryField fieldMeta={widgetFieldMeta} data={data} bcName={bcName} cursor={cursor} widgetName={widgetName} />
     }
 
-    /**
-     * Temporary solution until all fields are reworked to fit the file structure
-     */
     const resultField = (
         <Suspense fallback={<span>Loading...</span>}>
             <FieldComponent
