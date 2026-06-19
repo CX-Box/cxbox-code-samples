@@ -7,7 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BooleanValueProvider;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
 
 @Getter
