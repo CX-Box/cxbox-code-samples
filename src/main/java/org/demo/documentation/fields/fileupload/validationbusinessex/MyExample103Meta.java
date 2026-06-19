@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.demo.documentation.fields.main.TextError.LESS_SIZE;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
@@ -22,7 +24,7 @@ public class MyExample103Meta extends FieldMetaBuilder<MyExample103DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample103DTO_.customFieldId);
 		fields.setEnabled(MyExample103DTO_.customField);
-		fields.setPlaceholder(MyExample103DTO_.customField, "Only letters");
+		fields.setPlaceholder(MyExample103DTO_.customField, LESS_SIZE);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

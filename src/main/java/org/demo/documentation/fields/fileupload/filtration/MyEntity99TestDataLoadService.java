@@ -25,7 +25,7 @@ public class MyEntity99TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("1");
+		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadPdf("1");
 		repository.save(new MyEntity99().setCustomField(file.getData().getName())
 				.setCustomFieldId(file.getData().getId()));
 		CxboxResponseDTO<FileUploadDto> file2 = customFileUploadServices.uploadTxt("2");

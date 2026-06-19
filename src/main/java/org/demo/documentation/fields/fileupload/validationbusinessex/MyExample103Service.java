@@ -10,8 +10,7 @@ import org.cxbox.core.exception.BusinessException;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
-import static org.demo.documentation.fields.main.TextError.ONLY_LETTER;
-
+import static org.demo.documentation.fields.main.TextError.LESS_SIZE;
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -37,8 +36,8 @@ public class MyExample103Service extends VersionAwareResponseService<MyExample10
 		}
 		if (data.isFieldChanged(MyExample103DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
-			if (!String.valueOf(data.getCustomField()).matches("[A-Za-z]+")) {
-				throw new BusinessException().addPopup(ONLY_LETTER);
+			if (data.getCustomField().getBytes().length > 9 * 1024) {
+				throw new BusinessException().addPopup(LESS_SIZE);
 			}
 		}
 
