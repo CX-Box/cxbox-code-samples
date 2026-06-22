@@ -208,7 +208,9 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		var customField = row.dictionary("Custom Field");
+		customField.setValue("Low");
 		var customFieldAdditional = row.dictionary("Custom Field Additional");
+		customFieldAdditional.setValue("Low");
 		row.burgerAction("Save").click();
 		customField.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
 		customFieldAdditional.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
