@@ -8,7 +8,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.feature.encryptsign.encrypt.enums.StatusEncryptEnum;
-import org.demo.documentation.feature.encryptsign.encryptsign.enums.StatusEncryptSignEnum;
 
 import java.util.Optional;
 
