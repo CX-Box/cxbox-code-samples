@@ -4,6 +4,7 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.fields.dictionary.validationdynamic.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
@@ -25,7 +26,8 @@ public class MyExample323Meta extends FieldMetaBuilder<MyExample323DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample323DTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
-		fields.setEnumValues(MyExample323DTO_.customFieldAdditional);
+		fields.setEnumValues(MyExample323DTO_.customField, CustomFieldEnum.values());
+		fields.setEnumValues(MyExample323DTO_.customFieldAdditional,CustomFieldEnum.values());
 	}
 
 }
