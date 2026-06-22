@@ -91,7 +91,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("A test to compare the source file with the downloaded one")
 	void compare() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var info = PlatformApp.screen("Fileupload basic")
 				.secondLevelView("Info")
 				.info("Info title");

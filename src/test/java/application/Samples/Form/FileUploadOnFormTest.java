@@ -77,7 +77,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("A test for setting a value in a field")
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
-		File upload = getFileFromResource("FILE_1.txt");
+		File upload = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -174,7 +174,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for one field")
 	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
 	void fieldLevelValidationAnnotation() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload validation field level annotation")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -192,7 +192,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for multiple fields")
 	@Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
 	void fieldLevelValidation() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload validation field level dynamic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -235,7 +235,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("The test for deleting a file from a field")
 	@Description("The test verifies that after clearing the field, it is empty")
 	void clear() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -254,8 +254,8 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("A test to compare the downloaded file with the template")
 	@Description("The test checks the downloaded file with the template file that is contained in the resources")
 	void compare() {
-		File expected = getFileFromResource("FILE_1.txt");
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File expected = getFileFromResource("FILE_1.pdf");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
