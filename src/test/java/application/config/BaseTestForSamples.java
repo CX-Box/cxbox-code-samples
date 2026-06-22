@@ -106,7 +106,7 @@ public abstract class BaseTestForSamples {
 		String envApp = String.valueOf(Env.uri());
 
 		var options = new ChromeOptions().addArguments(
-				"--headless",
+
 //				"--auto-open-devtools-for-tabs", // show devtools on start browser
 				"--enable-automation",
 				"--remote-allow-origins=*",

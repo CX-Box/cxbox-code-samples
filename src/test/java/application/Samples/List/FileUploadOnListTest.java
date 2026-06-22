@@ -118,7 +118,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var actualData = list.rows().streamCurrentPage()
 				.map(r -> r.fileUpload("Custom Field").getFileNameInField())
 				.collect(Collectors.toList());
-		assertThat(actualData).isEqualTo(List.of("FILE_1.txt"));
+		assertThat(actualData).isEqualTo(List.of("FILE_1.pdf"));
 	}
 
 	@Test
@@ -293,7 +293,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var customField = row.fileUpload("Custom Field");
 		customField
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt"));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf"));
 		customField.clear()
 				.checkFieldIsEmpty(ie -> assertThat(ie).isTrue());
 	}
@@ -323,7 +323,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt"));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf"));
 	}
 
 	@Test

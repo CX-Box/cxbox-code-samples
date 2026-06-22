@@ -99,7 +99,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 		fileUpload.checkValue(file -> assertThat(file)
 				.isFile()
 				.hasContent("Test data"));
-		fileUpload.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+		fileUpload.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+				.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileNameInField(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+				.checkFileNameInField(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@SneakyThrows
