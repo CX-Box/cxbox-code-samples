@@ -24,6 +24,7 @@ public class CustomFileUploadServices {
 
 	public static final String FILENAME_FIELD = "filename";
 
+	public static final long FIVE_MIB = 5242880L;
 	private final MinioClient minioClient;
 	private final String defaultBucketName;
 

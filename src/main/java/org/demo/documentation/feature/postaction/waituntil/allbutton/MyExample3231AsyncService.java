@@ -47,7 +47,7 @@ public class MyExample3231AsyncService {
 	public Page<MyEntity3231AnySourceOutServiceDTO> callService(MyExample3231DTO dto) {
 		Optional<String> filter = Optional.ofNullable(dto.getCustomField());
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getDataServerUrl())
 				.queryParam("number", 1)
 				.queryParam("size", 1)
 				.queryParamIfPresent("filterCustomField", filter)

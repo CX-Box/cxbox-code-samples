@@ -67,7 +67,7 @@ public class MyEntity3076Dao extends AbstractAnySourceBaseDAO<MyEntity3076OutSer
 		String limit = bc.getParameters().getParameter("_limit");
 
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.encode()

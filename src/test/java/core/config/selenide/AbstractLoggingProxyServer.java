@@ -94,7 +94,7 @@ public abstract class AbstractLoggingProxyServer implements SelenideProxyServerF
 		this.loggers = loggers;
 	}
 
-	@NotNull
+	@NonNull
 	@Override
 	public SelenideProxyServer create(@NonNull Config config, @Nullable Proxy userProvidedProxy) {
 		var proxy = new SelenideProxyServer(config, userProvidedProxy);

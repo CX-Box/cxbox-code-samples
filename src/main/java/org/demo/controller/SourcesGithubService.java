@@ -87,7 +87,7 @@ public class SourcesGithubService {
 		} catch (HttpStatusCodeException e) {
 			log.error(e.getMessage());
 			return ResponseEntity
-					.status(e.getRawStatusCode())
+					.status(e.getStatusCode().value())
 					.headers(e.getResponseHeaders())
 					.body(e.getResponseBodyAsString());
 		}

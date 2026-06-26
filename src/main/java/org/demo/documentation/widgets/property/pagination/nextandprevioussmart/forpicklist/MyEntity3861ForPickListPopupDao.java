@@ -76,7 +76,7 @@ public class MyEntity3861ForPickListPopupDao extends AbstractAnySourceBaseDAO<My
 		List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
 		Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getNextAndPreviousMicroservicesDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getNextAndPreviousMicroservicesDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterCustomField", filter)

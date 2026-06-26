@@ -106,7 +106,7 @@ public class MyExample3233Service extends VersionAwareResponseService<MyExample3
 
 		Optional<String> filter = Optional.ofNullable(dto.getCustomFieldForm());
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(
+		String urlTemplate = UriComponentsBuilder.fromUriString(
 						integrationConfig.getDataServerUrl())
 				.queryParam("number", 1)
 				.queryParam("size", 1)

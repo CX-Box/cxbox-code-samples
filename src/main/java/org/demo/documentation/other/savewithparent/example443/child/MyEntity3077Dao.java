@@ -71,7 +71,7 @@ public class MyEntity3077Dao extends AbstractAnySourceBaseDAO<MyEntity3077OutSer
 		String filterParentId = bc.getParentId();
 		Optional<String> filter = filterParentId.isEmpty() ? Optional.empty() : Optional.of(filterParentId);
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterParentId", filter)
