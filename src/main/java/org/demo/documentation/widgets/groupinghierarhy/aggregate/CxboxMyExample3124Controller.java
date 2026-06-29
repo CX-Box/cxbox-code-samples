@@ -1,7 +1,6 @@
 package org.demo.documentation.widgets.groupinghierarhy.aggregate;
 
 import lombok.Getter;
-import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
@@ -31,7 +30,7 @@ public enum CxboxMyExample3124Controller implements EnumBcIdentifier {
 	}
 
 	CxboxMyExample3124Controller(Class<?> serviceClass) {
-		this((String) null, serviceClass, false);
+		this(null, serviceClass, false);
 	}
 
 	@Component
