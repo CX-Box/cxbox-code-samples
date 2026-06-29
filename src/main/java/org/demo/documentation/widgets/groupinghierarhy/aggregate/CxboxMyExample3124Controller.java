@@ -30,22 +30,6 @@ public enum CxboxMyExample3124Controller implements EnumBcIdentifier {
 		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
 	}
 
-	CxboxMyExample3124Controller(String parentName, Class<?> serviceClass) {
-		this(parentName, serviceClass, false);
-	}
-
-	CxboxMyExample3124Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
-		this(parent == null ? null : parent.getName(), serviceClass, refresh);
-	}
-
-	CxboxMyExample3124Controller(BcIdentifier parent, Class<?> serviceClass) {
-		this(parent, serviceClass, false);
-	}
-
-	CxboxMyExample3124Controller(Class<?> serviceClass, boolean refresh) {
-		this((String) null, serviceClass, refresh);
-	}
-
 	CxboxMyExample3124Controller(Class<?> serviceClass) {
 		this((String) null, serviceClass, false);
 	}
