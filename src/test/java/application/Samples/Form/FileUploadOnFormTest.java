@@ -84,7 +84,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 		form.fileUpload("Custom Field")
 				.setValue(upload)
 				.popup()
-				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of("FILE_1.txt", "done"))))
+				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of("FILE_1.pdf", "done"))))
 				.close();
 	}
 
@@ -120,7 +120,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
 		form.errorPopup()
@@ -139,7 +139,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
 		form.errorPopup()
@@ -158,7 +158,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
 		form.actions().action("save").click();
@@ -243,7 +243,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 		fileUpload.setValue(uploadFile)
 				.popup()
 				.close()
-				.checkFileName(ffn -> assertThat(ffn).isEqualTo("FILE_1.txt"))
+				.checkFileName(ffn -> assertThat(ffn).isEqualTo("FILE_1.pdf"))
 				.clear()
 				.checkNoFileInField();
 	}
@@ -265,7 +265,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.close()
 				.checkValue(af -> assertThat(af)
 						.isFile()
-						.hasFileName("FILE_1.txt")
+						.hasFileName("FILE_1.pdf")
 						.hasContent("Test data")
 						.hasSameBinaryContentAs(expected)
 						.hasSameBinaryContentAs(uploadFile));

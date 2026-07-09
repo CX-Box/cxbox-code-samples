@@ -16,7 +16,7 @@ public class MyExample323DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
 	private CustomFieldEnum customField;
 
-	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
+	@SearchParameter(name = "customFieldAdditional", provider = EnumValueProvider.class)
 	private CustomFieldEnum customFieldAdditional;
 
 	public MyExample323DTO(MyEntity323 entity) {

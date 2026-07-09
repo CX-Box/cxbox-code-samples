@@ -43,7 +43,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 //        var list = $box.findListWidgetByTitle("List title");
 //        List<String> listRows = list.getNoFocusValues("Custom Field");
 //        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).fileUpload();
-//        assertThat(customField.compareRows("FILE_1.txt")).isTrue();
+//        assertThat(customField.compareRows("FILE_1.pdf")).isTrue();
 	}
 
 	@Test
@@ -98,10 +98,10 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource)
-				.popup().checkFileNameAndStatusUpload(lfs -> assertThat(lfs).isEqualTo(List.of(Pair.of("FILE_1.txt", "done")))).close()
+				.popup().checkFileNameAndStatusUpload(lfs -> assertThat(lfs).isEqualTo(List.of(Pair.of("FILE_1.pdf", "done")))).close()
 				.checkValue(af -> assertThat(af)
 						.isFile()
-						.hasFileName("FILE_1.txt")
+						.hasFileName("FILE_1.pdf")
 						.hasSameBinaryContentAs(fileFromResource));
 	}
 
@@ -311,7 +311,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt").hasSameBinaryContentAs(fileFromResource));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf").hasSameBinaryContentAs(fileFromResource));
 	}
 
 	@Test

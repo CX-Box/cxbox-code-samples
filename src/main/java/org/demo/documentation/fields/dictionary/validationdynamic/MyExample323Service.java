@@ -34,7 +34,7 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 															  BusinessComponent bc) {
 		validateFields(bc, data);
 		setIfChanged(data, MyExample323DTO_.customField, entity::setCustomField);
-		setIfChanged(data, MyExample323DTO_.customFieldAdditional, entity::setCustomField);
+		setIfChanged(data, MyExample323DTO_.customFieldAdditional, entity::setCustomFieldAdditional);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

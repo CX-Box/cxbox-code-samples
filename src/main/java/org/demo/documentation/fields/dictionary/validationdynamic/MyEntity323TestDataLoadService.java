@@ -21,8 +21,8 @@ public class MyEntity323TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity323().setCustomField(CustomFieldEnum.HIGH)
-				.setCustomFieldAdditional(CustomFieldEnum.HIGH));
+		repository.save(new MyEntity323().setCustomField(CustomFieldEnum.LOW)
+				.setCustomFieldAdditional(CustomFieldEnum.LOW));
 	}
 
 }
