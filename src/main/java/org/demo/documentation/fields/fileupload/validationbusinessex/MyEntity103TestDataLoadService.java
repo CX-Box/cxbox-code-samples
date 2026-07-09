@@ -5,13 +5,12 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.services.CustomFileUploadServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class MyEntity103TestDataLoadService { 
+public class MyEntity103TestDataLoadService {
 
 	@Autowired
 	MyEntity103Repository repository;
