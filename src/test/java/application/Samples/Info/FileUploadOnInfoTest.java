@@ -83,7 +83,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileNameInField(file -> assertThat(file).isEqualTo("FILE_1.txt"));
+				.checkFileNameInField(file -> assertThat(file).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
