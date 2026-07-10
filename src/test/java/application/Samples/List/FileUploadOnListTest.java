@@ -150,7 +150,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
-						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
+						message -> assertThat(message).isEqualTo(Constants.LessSize))
 				.close();
 	}
 

@@ -125,7 +125,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.close();
 		form.errorPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
-				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.LessSize))
 				.close();
 	}
 
