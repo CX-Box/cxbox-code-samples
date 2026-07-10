@@ -1,22 +1,20 @@
-package org.demo.documentation.widgets.ringprogress.base;
+package org.demo.documentation.widgets.ringprogress.showcondition;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.cxbox.api.data.dto.DataResponseDTO;
-
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample4207DTO extends DataResponseDTO {
+@Accessors(chain = true)
+public class MyExample4215DTO extends DataResponseDTO {
+
 	private String title;
 
 	private Long value;
 
-	private String color;
-
 	private String description;
-
-	private String icon;
 }

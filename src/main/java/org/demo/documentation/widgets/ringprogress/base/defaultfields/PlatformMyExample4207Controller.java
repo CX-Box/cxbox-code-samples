@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.ringprogress.base;
+package org.demo.documentation.widgets.ringprogress.base.defaultfields;
 
 import lombok.Getter;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
@@ -6,15 +6,12 @@ import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.springframework.stereotype.Component;
 
-
 @Getter
 public enum PlatformMyExample4207Controller implements EnumBcIdentifier {
 
-
 	myExampleBc4207(MyExample4207Service.class);
 
-
-	public static final Holder<PlatformMyExample4207Controller> Holder = new Holder<>(
+	public static final EnumBcIdentifier.Holder<PlatformMyExample4207Controller> Holder = new Holder<>(
 			PlatformMyExample4207Controller.class);
 
 	private final BcDescription bcDescription;
@@ -33,7 +30,5 @@ public enum PlatformMyExample4207Controller implements EnumBcIdentifier {
 		public BcSupplier() {
 			super(PlatformMyExample4207Controller.Holder);
 		}
-
 	}
-
 }
