@@ -123,6 +123,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
+		form.actions().action("Save").click();
 		form.errorPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.LessSize))

@@ -147,6 +147,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close();
+		row.burgerAction("Save").click();
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
