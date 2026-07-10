@@ -1,0 +1,29 @@
+{
+  "name": "MyExample4215Pie",
+  "title": "Sales count per client",
+  "type": "Pie1D",
+  "bc": "myExampleBc4215",
+  "fields": [
+    {
+      "title": "value",
+      "key": "value",
+      "type": "number",
+      "drillDown": true
+    },
+    {
+      "title": "title",
+      "key": "title",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart1D": {
+      "valueFieldKey": "value",
+      "titleFieldKey": "title",
+      "total": {
+        "func": "sum",
+        "description": "Total "
+      }
+    }
+  }
+}
