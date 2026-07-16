@@ -30,7 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.demo.services.CustomFileUploadServices.FILENAME_FIELD;
+import static org.demo.conf.cxbox.customization.file.FileService.FILENAME_FIELD;
+
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
 @RequiredArgsConstructor

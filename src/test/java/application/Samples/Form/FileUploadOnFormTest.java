@@ -77,14 +77,14 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("A test for setting a value in a field")
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set")
 	void edit() {
-		File upload = getFileFromResource("FILE_1.txt");
+		File upload = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
 		form.fileUpload("Custom Field")
 				.setValue(upload)
 				.popup()
-				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of("FILE_1.txt", "done"))))
+				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of("FILE_1.pdf", "done"))))
 				.close();
 	}
 
@@ -120,12 +120,13 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
+		form.actions().action("Save").click();
 		form.errorPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
-				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.LessSize))
 				.close();
 	}
 
@@ -139,7 +140,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
 		form.errorPopup()
@@ -158,7 +159,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.txt"))
+		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
 				.popup()
 				.close();
 		form.actions().action("save").click();
@@ -174,7 +175,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for one field")
 	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
 	void fieldLevelValidationAnnotation() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload validation field level annotation")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -192,7 +193,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for multiple fields")
 	@Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
 	void fieldLevelValidation() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload validation field level dynamic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -235,7 +236,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("The test for deleting a file from a field")
 	@Description("The test verifies that after clearing the field, it is empty")
 	void clear() {
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -243,7 +244,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 		fileUpload.setValue(uploadFile)
 				.popup()
 				.close()
-				.checkFileName(ffn -> assertThat(ffn).isEqualTo("FILE_1.txt"))
+				.checkFileName(ffn -> assertThat(ffn).isEqualTo("FILE_1.pdf"))
 				.clear()
 				.checkNoFileInField();
 	}
@@ -254,8 +255,8 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 	@DisplayName("A test to compare the downloaded file with the template")
 	@Description("The test checks the downloaded file with the template file that is contained in the resources")
 	void compare() {
-		File expected = getFileFromResource("FILE_1.txt");
-		File uploadFile = getFileFromResource("FILE_1.txt");
+		File expected = getFileFromResource("FILE_1.pdf");
+		File uploadFile = getFileFromResource("FILE_1.pdf");
 		var form = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("Form")
 				.form("Form title");
@@ -265,8 +266,7 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.close()
 				.checkValue(af -> assertThat(af)
 						.isFile()
-						.hasFileName("FILE_1.txt")
-						.hasContent("Test data")
+						.hasFileName("FILE_1.pdf")
 						.hasSameBinaryContentAs(expected)
 						.hasSameBinaryContentAs(uploadFile));
 	}

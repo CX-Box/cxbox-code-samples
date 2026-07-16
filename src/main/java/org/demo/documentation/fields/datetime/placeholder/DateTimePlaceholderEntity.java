@@ -10,7 +10,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 
-//dateTimePlaceholder
 @Entity
 @Table(name = "DateTimePlaceholderEntity")
 @Getter

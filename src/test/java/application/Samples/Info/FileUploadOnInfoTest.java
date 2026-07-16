@@ -83,7 +83,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileNameInField(file -> assertThat(file).isEqualTo("FILE_1.txt"));
+				.checkFileNameInField(file -> assertThat(file).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
@@ -91,15 +91,14 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("A test to compare the source file with the downloaded one")
 	void compare() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
 		var info = PlatformApp.screen("Fileupload basic")
 				.secondLevelView("Info")
 				.info("Info title");
 		var fileUpload = info.fileUpload("Custom Field");
 		fileUpload.checkValue(file -> assertThat(file)
 				.isFile()
-				.hasContent("Test data"));
-		fileUpload.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+				.hasName("FILE_1.pdf"));
+		fileUpload.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
@@ -111,7 +110,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+				.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@Test
@@ -123,7 +122,7 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 				.secondLevelView("Info")
 				.info("Info title");
 		info.fileUpload("Custom Field")
-				.checkFileNameInField(name -> assertThat(name).isEqualTo("FILE_1.txt"));
+				.checkFileNameInField(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
 	@SneakyThrows

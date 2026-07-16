@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.repository.metabuilder.buildrowdependentmeta.sethidden.basic.enums.CustomFieldEnum;
 
 @Getter
@@ -19,7 +19,7 @@ public class MyExample5010DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
 	private CustomFieldEnum customField;
 
-	@SearchParameter(name = "customFieldHidden", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldHidden")
 	private String customFieldHidden;
 
 	public MyExample5010DTO(MyEntity5010 entity) {

@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.demo.documentation.widgets.statsblock.drilldown.parentchild.data.enums.ExampleStatus;
 
 @Getter
@@ -14,7 +14,7 @@ import org.demo.documentation.widgets.statsblock.drilldown.parentchild.data.enum
 @NoArgsConstructor
 public class MyExample4216DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "status", provider = EnumValueProvider.class)

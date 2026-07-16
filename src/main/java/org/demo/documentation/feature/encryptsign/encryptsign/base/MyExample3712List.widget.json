@@ -1,0 +1,56 @@
+{
+  "name": "MyExample3712List",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3712",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "title": "File Encrypted",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
+      "title": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "encryptAndsign",
+        "actionName": "documentEncryptSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentEncryptSign",
+        "cancel-create"
+      ]
+    }
+  }
+}

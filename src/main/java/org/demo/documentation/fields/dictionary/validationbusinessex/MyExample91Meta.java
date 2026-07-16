@@ -9,6 +9,8 @@ import org.demo.conf.document.DocumentConfig;
 import org.demo.documentation.fields.dictionary.validationbusinessex.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import static org.demo.documentation.fields.main.TextError.ONLY_HIGH;
+
 @Service
 @RequiredArgsConstructor
 public class MyExample91Meta extends FieldMetaBuilder<MyExample91DTO> {
@@ -20,7 +22,7 @@ public class MyExample91Meta extends FieldMetaBuilder<MyExample91DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample91DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample91DTO_.customField);
-		fields.setPlaceholder(MyExample91DTO_.customField, "Not null");
+		fields.setPlaceholder(MyExample91DTO_.customField, ONLY_HIGH);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

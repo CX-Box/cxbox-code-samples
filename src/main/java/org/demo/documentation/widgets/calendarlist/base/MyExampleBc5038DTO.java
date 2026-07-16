@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+
 import org.cxbox.model.core.entity.BaseEntity;
 
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class MyExampleBc5038DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "startDateTime", provider = DateTimeValueProvider.class)

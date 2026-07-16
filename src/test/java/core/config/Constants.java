@@ -19,6 +19,7 @@ public class Constants {
 	public static final String OnlyLetters = "The field can contain only letters.";
 	public static final String RequiredField = "Custom message about required field";
 	public static final String FormatForRgb = "#%02X%02X%02X";
+	public static final String LessSize = "The file cannot be more 9 KB";
 	public static List<String> list = List.of(
 			"This field is mandatory",
 			"Custom message about error"

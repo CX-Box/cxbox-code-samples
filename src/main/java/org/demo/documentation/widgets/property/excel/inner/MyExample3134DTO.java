@@ -76,7 +76,7 @@ public class MyExample3134DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldMoneyWithCurrencyDynamic", provider = BigDecimalValueProvider.class)
 	private Double customFieldMoneyWithCurrencyDynamic;
 
-	@SearchParameter(name = "customFieldSuggectionPickListEntity.customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldSuggectionPickListEntity.customField")
 	private String customFieldSuggectionPickList;
 
 	@SearchParameter(name = "customFieldSuggectionPickListEntity.id", provider = LongValueProvider.class)

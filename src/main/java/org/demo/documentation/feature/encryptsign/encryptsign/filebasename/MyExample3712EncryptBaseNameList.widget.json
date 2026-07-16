@@ -1,0 +1,68 @@
+{
+  "name": "MyExample3712EncryptBaseNameList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3712",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "title": "File Encrypted",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
+      "title": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    },
+    {
+      "title": "File Signed Name",
+      "key": "NAME_FILE_OVERRIDE_SIGN",
+      "type": "hidden"
+    },
+    {
+      "title": "File Encrypt Name",
+      "key": "NAME_FILE_OVERRIDE_ENCRYPT",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "encryptAndsign",
+        "actionName": "documentEncryptSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt",
+        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT",
+        "signatureFileBaseNameKey": "NAME_FILE_OVERRIDE_SIGN"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentEncryptSign",
+        "cancel-create"
+      ]
+    }
+  }
+}

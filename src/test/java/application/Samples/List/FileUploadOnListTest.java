@@ -43,7 +43,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 //        var list = $box.findListWidgetByTitle("List title");
 //        List<String> listRows = list.getNoFocusValues("Custom Field");
 //        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).fileUpload();
-//        assertThat(customField.compareRows("FILE_1.txt")).isTrue();
+//        assertThat(customField.compareRows("FILE_1.pdf")).isTrue();
 	}
 
 	@Test
@@ -91,17 +91,17 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("A test for setting a value in a field")
 	@Description("The test sets the value in the field, and then checks the value in the field with what should be set.")
 	void edit() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource)
-				.popup().checkFileNameAndStatusUpload(lfs -> assertThat(lfs).isEqualTo(List.of(Pair.of("FILE_1.txt", "done")))).close()
+				.popup().checkFileNameAndStatusUpload(lfs -> assertThat(lfs).isEqualTo(List.of(Pair.of("FILE_1.pdf", "done")))).close()
 				.checkValue(af -> assertThat(af)
 						.isFile()
-						.hasFileName("FILE_1.txt")
+						.hasFileName("FILE_1.pdf")
 						.hasSameBinaryContentAs(fileFromResource));
 	}
 
@@ -118,7 +118,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var actualData = list.rows().streamCurrentPage()
 				.map(r -> r.fileUpload("Custom Field").getFileNameInField())
 				.collect(Collectors.toList());
-		assertThat(actualData).isEqualTo(List.of("FILE_1.txt"));
+		assertThat(actualData).isEqualTo(List.of("FILE_1.pdf"));
 	}
 
 	@Test
@@ -140,17 +140,18 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("Business Exception Validation Test")
 	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated.")
 	void businessException() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload validation business exception")
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close();
+		row.burgerAction("Save").click();
 		list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
-						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
+						message -> assertThat(message).isEqualTo(Constants.LessSize))
 				.close();
 	}
 
@@ -160,7 +161,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("Run-time exception validation test")
 	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated.")
 	void runtimeException() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload validation runtime exception")
 				.secondLevelView("List")
 				.listInline("List title");
@@ -180,7 +181,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("Confirmation Popup Validation Test")
 	@Description("The test sets the value in the field. After approval, by clicking on the save button, the popup window, the title, the text in it, and the buttons are validated.")
 	void confirm() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload validation confirm")
 				.secondLevelView("List")
 				.listInline("List title");
@@ -201,7 +202,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for one field")
 	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
 	void fieldLevelValidationAnnotation() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload validation field level annotation")
 				.secondLevelView("List")
 				.listInline("List title");
@@ -220,7 +221,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("Required Message validation test for multiple fields")
 	@Description("The test sets a value with the wrong data type in several fields for different widgets. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
 	void fieldLevelValidation() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		File fileFromResource0 = getFileFromResource("FILE_7405.txt");
 		var list = PlatformApp.screen("FileUpload validation field level dynamic")
 				.secondLevelView("List")
@@ -285,7 +286,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("The test for deleting a file from a field")
 	@Description("The test verifies that after clearing the field, it is empty.")
 	void clear() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("List")
 				.listInline("List title");
@@ -293,7 +294,7 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 		var customField = row.fileUpload("Custom Field");
 		customField
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt"));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf"));
 		customField.clear()
 				.checkFieldIsEmpty(ie -> assertThat(ie).isTrue());
 	}
@@ -304,26 +305,26 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 	@DisplayName("A test to compare the downloaded file with the template")
 	@Description("The test checks the downloaded file with the template file that is contained in the resources")
 	void compare() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt").hasSameBinaryContentAs(fileFromResource));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf").hasSameBinaryContentAs(fileFromResource));
 	}
 
 	@Test
 	void setValueGetValue() {
-		File fileFromResource = getFileFromResource("FILE_1.txt");
+		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var list = PlatformApp.screen("FileUpload basic")
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.fileUpload("Custom Field")
 				.setValue(fileFromResource).popup().close()
-				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.txt"));
+				.checkValue(file -> assertThat(file).isFile().hasFileName("FILE_1.pdf"));
 	}
 
 	@Test

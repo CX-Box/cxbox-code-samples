@@ -33,6 +33,8 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 	protected ActionResultDTO<MyExample323DTO> doUpdateEntity(MyEntity323 entity, MyExample323DTO data,
 															  BusinessComponent bc) {
 		validateFields(bc, data);
+		setIfChanged(data, MyExample323DTO_.customField, entity::setCustomField);
+		setIfChanged(data, MyExample323DTO_.customFieldAdditional, entity::setCustomFieldAdditional);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]
@@ -49,10 +51,10 @@ public class MyExample323Service extends VersionAwareResponseService<MyExample32
 	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample323DTO dto) {
 		BusinessError.Entity entity = new BusinessError.Entity(bc);
-		if (!dto.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
+		if (dto.getCustomField()!= null && !dto.getCustomField().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
 			entity.addField(MyExample323DTO_.customField.getName(), "Custom message about error");
 		}
-		if (!dto.getCustomFieldAdditional().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
+		if (dto.getCustomFieldAdditional()!= null && !dto.getCustomFieldAdditional().getValue().equals(CustomFieldEnum.HIGH.getValue())) {
 			entity.addField(MyExample323DTO_.customFieldAdditional.getName(), "Custom message about error");
 		}
 		if (!entity.getFields().isEmpty()) {
