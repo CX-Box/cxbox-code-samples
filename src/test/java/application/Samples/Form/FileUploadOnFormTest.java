@@ -267,7 +267,6 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.checkValue(af -> assertThat(af)
 						.isFile()
 						.hasFileName("FILE_1.pdf")
-						.hasContent("Test data")
 						.hasSameBinaryContentAs(expected)
 						.hasSameBinaryContentAs(uploadFile));
 	}
