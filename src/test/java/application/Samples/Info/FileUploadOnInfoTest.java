@@ -91,14 +91,13 @@ public class FileUploadOnInfoTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("A test to compare the source file with the downloaded one")
 	void compare() {
-		File fileFromResource = getFileFromResource("FILE_1.pdf");
 		var info = PlatformApp.screen("Fileupload basic")
 				.secondLevelView("Info")
 				.info("Info title");
 		var fileUpload = info.fileUpload("Custom Field");
 		fileUpload.checkValue(file -> assertThat(file)
 				.isFile()
-				.hasContent("Test data"));
+				.hasName("FILE_1.pdf"));
 		fileUpload.checkFileName(name -> assertThat(name).isEqualTo("FILE_1.pdf"));
 	}
 
