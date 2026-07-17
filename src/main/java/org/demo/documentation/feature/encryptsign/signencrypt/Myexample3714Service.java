@@ -13,12 +13,14 @@ import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.encryptsign.signencrypt.enums.StatusSignEncryptEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -75,15 +77,20 @@ public class Myexample3714Service extends VersionAwareResponseService<Myexample3
 				.delete(dlt -> dlt.text("Delete"))
 				.save(sv -> sv.text("Save"))
 				.action(act -> act
-						.action("documentSignEncrypt", "Document Encrypt Sign")
+						.action("documentSignEncrypt", "Document Sign Encrypt")
 						.scope(ActionScope.RECORD)
 						.available(bc -> {
 							return true;
 						})
 						.invoker((bc, dto) -> {
+							Optional<Myexample3714> myexample = myexample3714Repository.findById(Long.valueOf(dto.getId()));
+							myexample.ifPresent(e -> {
+								e.setStatus(StatusSignEncryptEnum.SIGN_ENCRYPT);
+								myexample3714Repository.save(myexample.get());
+							});
 							return new ActionResultDTO<Myexample3714DTO>()
 									.setAction(PostAction.showMessage(
-											MessageType.INFO, "Action documentSignEncrypt was invoked"
+											MessageType.INFO, "Action documentEncryptSign was invoked"
 									));
 						})
 				)

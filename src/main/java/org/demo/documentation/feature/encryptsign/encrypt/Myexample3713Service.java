@@ -11,7 +11,10 @@ import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.encryptsign.encrypt.enums.StatusEncryptEnum;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Getter
@@ -51,10 +54,17 @@ public class Myexample3713Service extends VersionAwareResponseService<Myexample3
 						.action("documentEncrypt", "Document Encrypt")
 						.scope(ActionScope.RECORD)
 						.available(bc -> true)
-						.invoker((bc, dto) -> new ActionResultDTO<Myexample3713DTO>()
-								.setAction(PostAction.showMessage(
-										MessageType.INFO, "Action documentEncrypt was invoked"
-								)))
+						.invoker((bc, dto) -> {
+							Optional<Myexample3713> myexample = myexample3713Repository.findById(Long.valueOf(dto.getId()));
+							myexample.ifPresent(e -> {
+								e.setStatus(StatusEncryptEnum.ENCRYPT);
+								myexample3713Repository.save(myexample.get());
+							});
+							return new ActionResultDTO<Myexample3713DTO>()
+									.setAction(PostAction.showMessage(
+											MessageType.INFO, "Action documentSign was invoked"
+									));
+						})
 				)
 				.cancelCreate(ccr -> ccr.text("Cancel"))
 				.build();
