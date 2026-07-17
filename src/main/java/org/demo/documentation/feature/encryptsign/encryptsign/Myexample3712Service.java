@@ -45,6 +45,7 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 		return new CreateResult<>(entityToDto(bc, myexample3712Repository.save(entity)));
 	}
 
+	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<Myexample3712DTO> doUpdateEntity(Myexample3712 entity, Myexample3712DTO data, BusinessComponent bc) {
 		setIfChanged(data, Myexample3712DTO_.status, entity::setStatus);
@@ -67,7 +68,9 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 		return new ActionResultDTO<>(entityToDto(bc, myexample3712Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));
 	}
+	// --8<-- [end:doUpdateEntity]
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<Myexample3712DTO> getActions() {
 		return Actions.<Myexample3712DTO>builder()
@@ -90,7 +93,9 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 				.cancelCreate(ccr -> ccr.text("Cancel"))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
+	// --8<-- [start:createAndUploadZip]
 	public String createAndUploadZip(Myexample3712DTO dto, Myexample3712 entity, String zipName) {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -114,7 +119,9 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 			throw new RuntimeException(e);
 		}
 	}
+	// --8<-- [end:createAndUploadZip]
 
+	// --8<-- [start:addFile]
 	private void addFile(ZipOutputStream zipOut, String fileName, byte[] content) throws IOException {
 		if (content == null || content.length == 0) {
 			return;
@@ -127,4 +134,5 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 		zipOut.closeEntry();
 	}
 
+	// --8<-- [end:addFile]
 }
