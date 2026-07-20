@@ -13,7 +13,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 public class MyEntity40 extends BaseEntity {
 
-	@Column
+	@Column(length = 10000)
 	private String customField;
 
 }

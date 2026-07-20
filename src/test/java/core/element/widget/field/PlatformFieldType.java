@@ -34,6 +34,7 @@ public enum PlatformFieldType implements FieldType {
 	RADIO("radio", "input"),
 	SUGGESTION_PICK_LIST("suggestionPickList", "input"),
 	TEXT("text", "textarea"),
+	RICH_TEXT("richText", "div[contenteditable=\"true\"]"),
 	;
 
 	private final String type;
