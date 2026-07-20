@@ -13,12 +13,14 @@ import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.feature.encryptsign.encryptsign.enums.StatusEncryptSignEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -84,6 +86,11 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 							return true;
 						})
 						.invoker((bc, dto) -> {
+							Optional<Myexample3712> myexample = myexample3712Repository.findById(Long.valueOf(dto.getId()));
+							myexample.ifPresent(e -> {
+								e.setStatus(StatusEncryptSignEnum.SIGN_ENCRYPT);
+								myexample3712Repository.save(myexample.get());
+							});
 							return new ActionResultDTO<Myexample3712DTO>()
 									.setAction(PostAction.showMessage(
 											MessageType.INFO, "Action documentEncryptSign was invoked"

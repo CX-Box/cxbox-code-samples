@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Getter
 @AllArgsConstructor
 public enum StatusEncryptEnum {
-	NO_ENCRYPT("Not encrypt"),
-	ENCRYPT("encrypt");
+	NO_ENCRYPT("Not encrypted"),
+	ENCRYPT("Encrypted");
 
 	public static final Map<StatusEncryptEnum, String> colors = Map.of(
 			NO_ENCRYPT, "#ec3f3f",
