@@ -1,5 +1,5 @@
 package org.demo.documentation.fields.dictionary.validationannotation;
- 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
