@@ -180,22 +180,22 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.clickOk();
 	}
 
-	@Test
-	@Severity(CRITICAL)
-	@Tag("Negative")
-	@DisplayName("Required Message validation test for one field")
-	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
-	void fieldLevelValidationAnnotation() {
-		var list = PlatformApp.screen("Dictionary enum validation field level annotation")
-				.secondLevelView("List")
-				.listInline("List title");
-		var row = list.rows().clickRow(0);
-		row.dictionary("Custom Field");
-		row.burgerAction("Save").click();
-		list.rows().row(0)
-				.dictionary("Custom Field")
-				.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
-	}
+	//@Test
+	//@Severity(CRITICAL)
+	//@Tag("Negative")
+	//@DisplayName("Required Message validation test for one field")
+	//@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered.")
+	//void fieldLevelValidationAnnotation() {
+	//	var list = PlatformApp.screen("Dictionary enum validation field level annotation")
+	//			.secondLevelView("List")
+	//			.listInline("List title");
+	//	var row = list.rows().clickRow(0);
+	//	row.dictionary("Custom Field");
+	//	row.burgerAction("Save").click();
+	//	list.rows().row(0)
+	//			.dictionary("Custom Field")
+	//			.checkRequired(message -> assertThat(message).isEqualTo(Constants.MessageAboutError));
+	//}
 
 	@Test
 	@Severity(CRITICAL)

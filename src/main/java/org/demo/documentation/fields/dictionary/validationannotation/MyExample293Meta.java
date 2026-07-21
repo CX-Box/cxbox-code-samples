@@ -28,9 +28,7 @@ public class MyExample293Meta extends FieldMetaBuilder<MyExample293DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample293DTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
-		if (configuration.getForceActiveEnabled()) {
-			fields.setForceActive(MyExample293DTO_.customField);
-		}
+
 		fields.setEnumValues(MyExample293DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumFilterValues(fields, MyExample293DTO_.customField, CustomFieldEnum.values());
 		fields.enableFilter(MyExample293DTO_.customField);
