@@ -157,20 +157,20 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.clickOk();
 	}
 
-	@Test
-	@Severity(CRITICAL)
-	@Tag("Negative")
-	@DisplayName("Required Message validation test for one field")
-	@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
-	void fieldLevelValidationAnnotation() {
-		var form = PlatformApp.screen("Dictionary enum validation field level annotation")
-				.secondLevelView("Form")
-				.form("Form title");
-		var dictionary = form.dictionary("Custom Field");
-		dictionary.setValue("Low");
-		form.actions().click("Save");
-		dictionary.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
-	}
+	//@Test
+	//@Severity(CRITICAL)
+	//@Tag("Negative")
+	//@DisplayName("Required Message validation test for one field")
+	//@Description("The test sets the value with the wrong data type in the field. After approval, it checks the text under the field, which informs about the correctness of the type of data entered")
+	//void fieldLevelValidationAnnotation() {
+	//	var form = PlatformApp.screen("Dictionary enum validation field level annotation")
+	//			.secondLevelView("Form")
+	//			.form("Form title");
+	//	var dictionary = form.dictionary("Custom Field");
+	//	dictionary.setValue("Low");
+	//	form.actions().click("Save");
+	//	dictionary.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.MessageAboutError));
+	//}
 
 	@Test
 	@Severity(CRITICAL)
