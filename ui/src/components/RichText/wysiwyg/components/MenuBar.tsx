@@ -26,14 +26,16 @@ import {
 } from '@gravity-ui/icons'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { canApplyInlineMark } from '@components/RichText/wysiwyg/canApplyInlineMark'
 
 interface Props {
+    className?: string
     editor: Editor
     onViewModeChange: (mode: ViewMode) => void
     toolbarDisabled?: boolean
 }
 
-export default function MenuBar({ editor, onViewModeChange, toolbarDisabled }: Props) {
+export default function MenuBar({ editor, onViewModeChange, toolbarDisabled, className }: Props) {
     const { t } = useTranslation()
 
     const items: readonly MenuItemType[] = useMemo(
@@ -320,6 +322,18 @@ export default function MenuBar({ editor, onViewModeChange, toolbarDisabled }: P
                 'Lift Item': !(ctx.editor?.can().liftListItem('listItem') ?? false)
             }
 
+            // An inline mark can't wrap a selection whose edge touches a parenthesis without producing
+            // markdown that won't parse back (CommonMark flanking) — grey out the affected buttons so
+            // the user can't create that broken state. We gate the same marks as Yandex-Wiki (all
+            // inline marks except colour) for compatibility; toggling an already-applied mark off stays
+            // allowed. See canApplyInlineMark.ts.
+            const canInline = ctx.editor ? canApplyInlineMark(ctx.editor.state) : true
+            disabledStates.Bold = !canInline && !(ctx.editor?.isActive('bold') ?? false)
+            disabledStates.Italic = !canInline && !(ctx.editor?.isActive('italic') ?? false)
+            disabledStates.Underline = !canInline && !(ctx.editor?.isActive('underline') ?? false)
+            disabledStates.Strikethrough = !canInline && !(ctx.editor?.isActive('strike') ?? false)
+            disabledStates['Inline code'] = !canInline && !(ctx.editor?.isActive('code') ?? false)
+
             return {
                 activeStates,
                 disabledStates
@@ -352,7 +366,9 @@ export default function MenuBar({ editor, onViewModeChange, toolbarDisabled }: P
 
     return (
         <CommonMenuBar
+            className={className}
             toolbarDisabled={toolbarDisabled}
+            settingDisabled={false}
             items={menuItems}
             rightButton={{
                 key: 'Settings',

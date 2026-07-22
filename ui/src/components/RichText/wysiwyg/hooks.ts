@@ -7,6 +7,10 @@ import Link from '@tiptap/extension-link'
 import { Markdown } from '@tiptap/markdown'
 import HardBreak from '@tiptap/extension-hard-break'
 import { Colorify } from '@components/RichText/wysiwyg/extensions/Colorify'
+import { HardBreakMarkFix } from '@components/RichText/wysiwyg/extensions/HardBreakMarkFix'
+import { CrossedMarkReopenFix } from '@components/RichText/wysiwyg/extensions/CrossedMarkReopenFix'
+import { BoldItalicOverlapFix } from '@components/RichText/wysiwyg/extensions/BoldItalicOverlapFix'
+import { MarkNestingOrderFix } from '@components/RichText/wysiwyg/extensions/MarkNestingOrderFix'
 import { Bold } from '@tiptap/extension-bold'
 import { Italic } from '@tiptap/extension-italic'
 import { Code } from '@tiptap/extension-code'
@@ -23,6 +27,16 @@ import { Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
 import { ListKeymap } from '@tiptap/extension-list'
 import { Text } from '@tiptap/extension-text'
 import { isDefined } from '@utils/isDefined'
+import { marked } from 'marked'
+
+marked.use({
+    tokenizer: {
+        // Don't treat indented text (4 spaces / tab) as a code block; fenced ``` still works.
+        code() {
+            return undefined
+        }
+    }
+})
 
 const getExtensions = () => [
     Document,
@@ -46,6 +60,10 @@ const getExtensions = () => [
     CustomStrike,
     Underline,
     HardBreak,
+    HardBreakMarkFix,
+    CrossedMarkReopenFix,
+    BoldItalicOverlapFix,
+    MarkNestingOrderFix,
     Image.configure({ inline: true, allowBase64: true }),
     Link.configure({
         openOnClick: false,
@@ -53,6 +71,7 @@ const getExtensions = () => [
         protocols: ['http', 'https', 'mailto']
     }),
     Markdown.configure({
+        marked,
         markedOptions: {
             gfm: false,
             breaks: true
@@ -64,18 +83,21 @@ interface UseRichTextEditorProps {
     value: string
     onChange: (markdown: string) => void
     readOnly?: boolean
+    disabled?: boolean
     onBlur?: () => void
     onFocus?: () => void
 }
 
 const DEBOUNCE_MS = 120
 
-export const useRichTextEditor = ({ value, onChange, readOnly = false, onBlur, onFocus }: UseRichTextEditorProps) => {
+export const useRichTextEditor = ({ value, onChange, readOnly = false, disabled = false, onBlur, onFocus }: UseRichTextEditorProps) => {
     const extensions = useMemo(() => getExtensions(), [])
 
     const lastEmittedRef = useRef(value)
     const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const onChangeRef = useRef(onChange)
+
+    const isEditable = readOnly ? false : !disabled
 
     useEffect(() => {
         onChangeRef.current = onChange
@@ -85,10 +107,18 @@ export const useRichTextEditor = ({ value, onChange, readOnly = false, onBlur, o
         extensions,
         content: value,
         contentType: 'markdown',
-        editable: !readOnly,
+        editable: isEditable,
         onBlur,
         onFocus
     })
+
+    useEffect(() => {
+        if (!editor || editor.isDestroyed) {
+            return
+        }
+
+        editor.setEditable(isEditable)
+    }, [editor, isEditable])
 
     useEffect(() => {
         if (!editor) {

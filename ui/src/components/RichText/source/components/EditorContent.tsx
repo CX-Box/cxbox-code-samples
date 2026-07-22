@@ -1,5 +1,5 @@
 import React, { forwardRef, ForwardRefRenderFunction, useRef, useState, useEffect, useCallback } from 'react'
-import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror'
+import CodeMirror, { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { useMergeRefs } from '@hooks/useMergeRefs'
 
@@ -82,15 +82,18 @@ const EditorContent: ForwardRefRenderFunction<ReactCodeMirrorRef, Props> = ({ va
         }
     ])
 
+    const editable = !(disabled || readOnly)
+
     return (
         <CodeMirror
             ref={setRefs}
             placeholder={placeholder}
             value={localValue || ''}
             height="100%"
-            extensions={[markdown({ base: markdownLanguage, completeHTMLTags: false })]}
+            extensions={[markdown({ base: markdownLanguage, completeHTMLTags: false }), EditorView.lineWrapping]}
             onChange={handleEditorChange}
-            readOnly={disabled || readOnly}
+            readOnly={!editable}
+            editable={editable}
             className="markdown-source-editor"
             basicSetup={{
                 lineNumbers: false,
