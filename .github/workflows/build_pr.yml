@@ -15,15 +15,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-pr:
+  validate-title:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: ['17','21']
     steps:
-      - name: Setup checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Validate MR title
         shell: bash
         env:
@@ -120,9 +115,15 @@ jobs:
           ;;
           esac
                   echo "✅ MR title is valid."
-
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['17','21']
+    needs: [validate-title]
+    steps:
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: "yarn"
