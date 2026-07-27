@@ -20,12 +20,9 @@ public class Myexample3261MetaBuilder extends FieldMetaBuilder<Myexample3261DTO>
 	@Override
 	public void buildIndependentMeta(FieldsMeta<Myexample3261DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(Myexample3261DTO_.department);
-		fields.enableFilter(
-				org.demo.documentation.widgets.picktreepopup.tree.Myexample3261DTO_.id
-		);
-		fields.enableSort(
-				org.demo.documentation.widgets.picktreepopup.tree.Myexample3261DTO_.id
-		);
+		fields.enableFilter(Myexample3261DTO_.parentId);
+		fields.enableFilter(Myexample3261DTO_.id);
+
 	}
 
 }
