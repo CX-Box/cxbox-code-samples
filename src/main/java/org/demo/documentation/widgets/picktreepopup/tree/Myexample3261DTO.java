@@ -19,11 +19,13 @@ public class Myexample3261DTO extends DataResponseDTO {
 	@SearchParameter(name = "department")
 	private String department;
 	private Long parentId;
+	private Boolean	isLeaf;
 
 	public Myexample3261DTO(Myexample3261 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.department = entity.getDepartment();
 		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getIsLeaf();
 	}
 
 }
