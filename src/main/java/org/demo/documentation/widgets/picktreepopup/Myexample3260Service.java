@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.widgets.picktreepopup.tree.Myexample3261;
 import org.demo.repository.core.Myexample3260Repository;
@@ -70,6 +72,7 @@ public class Myexample3260Service extends VersionAwareResponseService<Myexample3
 				.create(crt -> crt.text("Create"))
 				.delete(dlt -> dlt.text("Delete"))
 				.save(sv -> sv.text("Save"))
+				.associate(assoc -> assoc.text("Associate"))
 				.build();
 	}
 
