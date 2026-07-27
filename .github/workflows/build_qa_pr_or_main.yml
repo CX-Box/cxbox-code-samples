@@ -24,6 +24,7 @@ jobs:
     strategy:
       matrix:
         java: ['17','21']
+    name: QA tests Java ${{ matrix.java }}
 
     steps:
       # -------------------------
@@ -106,8 +107,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
-          destination_dir: pull_request
+          publish_dir: allure-history-${{ matrix.java }}
+          destination_dir: pull_request-${{ matrix.java }}
           keep_files: false
           force_orphan: true
       - name: Generate and add report URL to Job Summary
