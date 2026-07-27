@@ -18,7 +18,13 @@ import org.cxbox.model.core.entity.BaseEntity;
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample3261 extends BaseEntity {
 
-
 	@Column
 	private String department;
+
+	@Column
+	private Long parentId;
+
+	@Column
+	private Boolean isLeaf;
+
 }

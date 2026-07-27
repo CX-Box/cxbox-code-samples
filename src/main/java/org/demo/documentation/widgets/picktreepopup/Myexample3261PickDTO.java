@@ -7,8 +7,6 @@ import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.widgets.picktreepopup.tree.Myexample3261;
 
 @Getter
@@ -18,10 +16,12 @@ public class Myexample3261PickDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "department")
 	private String department;
+	private Long parentId;
 
 	public Myexample3261PickDTO(Myexample3261 entity) {
- 		this.id = entity.getId().toString();
+		this.id = entity.getId().toString();
 		this.department = entity.getDepartment();
+		this.parentId = entity.getParentId();
 	}
 
 }
