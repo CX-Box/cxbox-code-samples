@@ -17,6 +17,7 @@ public enum CxboxMyExample3260Controller implements EnumBcIdentifier {
 	myexample3261(Myexample3261Service.class),
 	myexample3260(Myexample3260Service.class),
 		myexample3261Pick0(myexample3260, Myexample3261Pick0Service.class),
+		myexample3260Assoc(myexample3260, Myexample3261Pick0Service.class),
 		myexample3261Pick(myexample3260, Myexample3261PickService.class);
 	// @formatter:on
 
