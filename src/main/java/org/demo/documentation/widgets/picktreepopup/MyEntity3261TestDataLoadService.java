@@ -26,61 +26,67 @@ public class MyEntity3261TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository3261.deleteAll();
 		repository3260.deleteAll();
-		repository3261.save(new Myexample3261()
-				.setDepartment("IT Department")
-				.setIsLeaf(false));
 
-		repository3261.save(new Myexample3261()
-				.setParentId(1L)
+		  Myexample3261 myexample1 = new Myexample3261()
+				  .setDepartment("IT Department")
+				  .setIsLeaf(false);
+		repository3261.save(myexample1);
+		Myexample3261 myexample2 = new Myexample3261()
+				.setParentId(myexample1.getId())
 				.setDepartment("Development team")
-				.setIsLeaf(false));
-
-		repository3261.save(new Myexample3261()
-				.setParentId(2L)
+				.setIsLeaf(false);
+		repository3261.save(myexample2);
+		Myexample3261 myexample3 = new Myexample3261()
+				.setParentId(myexample2.getId())
 				.setDepartment("John Smith")
-				.setIsLeaf(true));
+				.setIsLeaf(true);
+		repository3261.save(myexample3);
 
 		repository3261.save(new Myexample3261()
-				.setParentId(2L)
+				.setParentId(myexample2.getId())
 				.setDepartment("Peter Brown")
 				.setIsLeaf(true));
 
-		repository3261.save(new Myexample3261()
-				.setParentId(1L)
+		Myexample3261 myexample5 = new Myexample3261()
+				.setParentId(myexample1.getId())
 				.setDepartment("QA team")
-				.setIsLeaf(false));
+				.setIsLeaf(false);
 
-		repository3261.save(new Myexample3261()
-				.setParentId(5L)
+		repository3261.save(myexample5);
+		Myexample3261 myexample6 =
+		 new Myexample3261()
+				.setParentId(myexample5.getId())
 				.setDepartment("Anna White")
-				.setIsLeaf(true));
+				.setIsLeaf(true);
+		repository3261.save(myexample6);
 
-		repository3261.save(new Myexample3261()
-				.setParentId(1L)
+		Myexample3261 myexample7 = new Myexample3261()
+				.setParentId(myexample1.getId())
 				.setDepartment("Support team")
-				.setIsLeaf(false));
+				.setIsLeaf(false);
+		repository3261.save(myexample7);
 
 		repository3261.save(new Myexample3261()
-				.setParentId(7L)
+				.setParentId(myexample7.getId())
 				.setDepartment("Kim Foster")
 				.setIsLeaf(true));
 
-		repository3261.save(new Myexample3261()
+		Myexample3261 myexample9 = new Myexample3261()
 				.setDepartment("Finance Department")
-				.setIsLeaf(false));
-
-		repository3261.save(new Myexample3261()
-				.setParentId(9L)
+				.setIsLeaf(false);
+		repository3261.save(myexample9);
+		Myexample3261 myexample10 = new Myexample3261()
+				.setParentId(myexample9.getId())
 				.setDepartment("Accounting team")
-				.setIsLeaf(false));
-
+				.setIsLeaf(false);
+		repository3261.save(myexample10);
 		repository3261.save(new Myexample3261()
-				.setParentId(10L)
+				.setParentId(myexample10.getId())
 				.setDepartment("Robert Clark")
 				.setIsLeaf(true));
 
 		repository3261.save(new Myexample3261()
-				.setParentId(10L)
+				.setParentId(myexample10.getId())
 				.setDepartment("Maria Lopez")
 				.setIsLeaf(true));
 		
