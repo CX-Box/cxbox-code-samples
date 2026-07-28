@@ -22,6 +22,7 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         java: ['17','21']
     name: QA tests Java ${{ matrix.java }}
@@ -85,6 +86,11 @@ jobs:
           ref: gh-pages
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+      - name: Prepare Allure history
+        if: always()
+        run: |
+          mkdir -p gh-pages/pull_request/java-${{ matrix.java }}/last-history
+          mkdir -p target/allure-results
 
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.13
