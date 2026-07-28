@@ -75,7 +75,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.TestLogic\
+            -Dtest=application.Samples.Form.**\
             test
 
       - name: Save test result
@@ -106,6 +106,11 @@ jobs:
           mkdir -p target/allure-results
           mkdir -p gh-pages/pull_request/java-${{ matrix.java }}/last-history
           mkdir -p gh-pages/pull_request/java-${{ matrix.java }}/history
+      - name: Check allure results
+        if: always()
+        run: |
+          ls -la target/allure-results
+          find target/allure-results -type f | head
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.13
         if: always()
