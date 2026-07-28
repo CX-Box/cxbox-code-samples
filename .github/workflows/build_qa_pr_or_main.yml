@@ -26,7 +26,6 @@ jobs:
       matrix:
         java: ['17','21']
     name: QA tests Java ${{ matrix.java }}
-
     steps:
       # -------------------------
       # BASE
@@ -77,6 +76,18 @@ jobs:
             -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
+      - name: Save test result
+        if: always()
+        run: |
+          echo "${{ matrix.java }}=${{ steps.run_tests.outcome }}" > test-result-${{ matrix.java }}.txt
+
+      - name: Upload test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-result-${{ matrix.java }}
+          path: test-result-${{ matrix.java }}.txt
+
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -113,12 +124,29 @@ jobs:
     if: always()
 
     steps:
-      - name: Add report links to Job Summary
+      - name: Download results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-result-*
+          merge-multiple: true
+      - name: Prepare PR comment
+        if: always()
+        id: comment
         run: |
-          echo "## Allure Reports" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- ☕ Java 17: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
-          echo "- ☕ Java 21: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          JAVA17=$(cat test-result-17.txt)
+          JAVA21=$(cat test-result-21.txt)
+          
+          if [ "$JAVA17" = "success" ]; then
+            echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
+          else
+            echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ "$JAVA21" = "success" ]; then
+            echo "java21=☕ Java 21 ✅ Passed" >> $GITHUB_OUTPUT
+          else
+            echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
+          fi
 
       - name: Comment on Pull Request
         if: always()
@@ -127,13 +155,14 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. 
+            ### QA autotests result
 
-            - **Java 17**  
-              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}
+            ${{ steps.comment.outputs.java17 }}
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}
 
-            - **Java 21**  
-              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}
+            ${{ steps.comment.outputs.java21 }}
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}
+ 
 
       - name: Remove only created docker containers
         if: always()
@@ -184,11 +213,24 @@ jobs:
           sudo docker images
           sudo docker compose -f docker-compose-test.yml up -d
 
-      - name: Run tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test
+
+      # -------------------------
+      # TESTS
+      # -------------------------
+      - name: Run Tests
+        id: run_tests
+        run: |
+          mvn --batch-mode \
+            -DrunTests=true \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.forkCount=3 \
+            -Dsurefire.threadCount=1 \
+            -Dsurefire.reuseForks=true \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
+            test
 
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -196,6 +238,11 @@ jobs:
           ref: gh-pages
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+      - name: Prepare Allure history
+        if: always()
+        run: |
+          mkdir -p gh-pages/pull_request/java-${{ matrix.java }}/last-history
+          mkdir -p target/allure-results
 
       - name: Test here and host elsewhere
         uses: simple-elf/allure-report-action@v1.13
@@ -203,33 +250,42 @@ jobs:
         id: allure-report
         with:
           allure_results: target/allure-results
-          gh_pages: gh-pages/main
-          allure_report: allure-report
-          allure_history: allure-history
+          gh_pages: gh-pages/pull_request/java-${{ matrix.java }}
+          allure_report: allure-report/java-${{ matrix.java }}
+          allure_history: allure-history/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
-          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-${{ matrix.java }}
           keep_reports: 20
 
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          external_repository: CX-Box/cxbox-code-samples-allure
-          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
-          destination_dir: main
-          keep_files: false
-          force_orphan: true
-      - name: Generate and add report URL to Job Summary
-        if: always()
+  publish-summary2:
+    name: Publish Report Links
+    runs-on: ubuntu-latest
+    needs: build-qa-main-and-check-autotests
+    if: always()
+
+    steps:
+      - name: Add report links to Job Summary
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/main/${{ github.run_number}}"
-          echo "Report URL: $REPORT_URL"
-          echo "::notice::Report URL: $REPORT_URL"
-          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
+          echo "## Allure Reports" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ☕ Java 17: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ☕ Java 21: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on Pull Request
+        if: always()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. 
+
+            - **Java 17**  
+              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}
+
+            - **Java 21**  
+              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}
 
       # -------------------------
       # CLEANUP
