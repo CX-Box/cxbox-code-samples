@@ -56,7 +56,7 @@ jobs:
 
       - name: Start isolated docker environment
         run: |
-          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}"
+          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}${{ matrix.java }}"
           sudo chmod -R 777 ./docker
           sudo docker images
           docker compose -f docker-compose-test.yml up -d
