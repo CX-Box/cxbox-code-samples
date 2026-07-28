@@ -114,7 +114,7 @@ jobs:
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.run_number}}"
+          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-${{ matrix.java }}/${{ github.run_number }}"
           echo "Report URL: $REPORT_URL"
           echo "::notice::Report URL: $REPORT_URL"
           echo "### Report URL" >> $GITHUB_STEP_SUMMARY
@@ -216,8 +216,8 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           destination_dir: main
-          keep_files: false
-          force_orphan: true
+          force_orphan: false
+          keep_files: true
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
