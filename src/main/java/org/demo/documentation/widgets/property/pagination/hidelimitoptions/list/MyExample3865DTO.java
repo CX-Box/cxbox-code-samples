@@ -34,7 +34,7 @@ public class MyExample3865DTO extends DataResponseDTO {
 
 	private String customFieldMultivalue2DisplayedKey;
 
-	@SearchParameter(name = "customFieldPickList2Entity.customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldPickList2Entity.customField")
 	private String customFieldPickList2;
 
 	@SearchParameter(name = "customFieldPickList2Entity.id", provider = LongValueProvider.class)
