@@ -58,6 +58,7 @@ jobs:
 
       - name: Start isolated docker environment
         run: |
+          export $COMPOSE_PROJECT_NAME 
           sudo chmod -R 777 ./docker
           sudo docker images
           docker compose -f docker-compose-test.yml up -d
@@ -75,7 +76,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.Form.**\
+            -Dtest=application.Samples.BugFixTests\
             test
 
       - name: Save test result
@@ -174,8 +175,6 @@ jobs:
       - name: Remove only created docker containers
         if: always()
         run: |
-            export COMPOSE_PROJECT_NAME="${{ env.COMPOSE_PROJECT_NAME }}"
-  
             echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
             docker compose -f docker-compose-test.yml down --remove-orphans
   
