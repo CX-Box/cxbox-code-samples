@@ -1,0 +1,52 @@
+{
+  "name": "MyExample3865MultivalueSwitchForm",
+  "title": "AssoclistPopup",
+  "type": "Form",
+  "bc": "myexample3865",
+  "fields": [
+    {
+      "label": "Custom Field Multivalue with switch true",
+      "key": "customFieldMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueDisplayedKey",
+      "popupBcName": "myEntity3865MultiPickSwitch",
+      "assocValueKey": "customField"
+    },
+    {
+      "label": "Custom Field Multivalue with switch false",
+      "key": "customFieldMultivalue2",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalue2DisplayedKey",
+      "popupBcName": "myEntity3865MultiPick0",
+      "assocValueKey": "customField"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultivalue",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldMultivalue2",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

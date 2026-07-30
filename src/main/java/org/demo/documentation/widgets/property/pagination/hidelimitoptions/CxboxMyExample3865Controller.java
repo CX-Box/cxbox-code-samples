@@ -5,6 +5,8 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.property.pagination.hidelimitoptions.picklistpopup.MyEntity3865PickPick0Service;
+import org.demo.documentation.widgets.property.pagination.hidelimitoptions.multivalue.MyEntity3865MultiPick0Service;
 import org.demo.documentation.widgets.property.pagination.hidelimitoptions.list.MyExample3865Service;
 import org.demo.documentation.widgets.property.pagination.hidelimitoptions.multivalue.MyEntity3865MultiPickService;
 import org.demo.documentation.widgets.property.pagination.hidelimitoptions.picklistpopup.MyEntity3865PickPickService;
@@ -15,9 +17,12 @@ public enum CxboxMyExample3865Controller implements EnumBcIdentifier {
 
 	// @formatter:on
 
-	myexample3865(MyExample3865Service.class),
-	myEntity3865MultiPick(myexample3865, MyEntity3865MultiPickService.class),
-	myEntity3865PickPick(myexample3865, MyEntity3865PickPickService.class);
+	myexample3865(MyExample3865Service.class), myEntity3865PickPick0(myexample3865, MyEntity3865PickPick0Service.class),
+		myEntity3865MultiPick0(myexample3865, MyEntity3865MultiPick0Service.class),
+		myEntity3865MultiPick(myexample3865, MyEntity3865MultiPickService.class),
+		myEntity3865MultiPickSwitch(myexample3865, MyEntity3865MultiPickService.class),
+		myEntity3865SwitchPick(myexample3865, MyEntity3865PickPickService.class),
+		myEntity3865PickPick(myexample3865, MyEntity3865PickPickService.class);
 
 	// @formatter:on
 

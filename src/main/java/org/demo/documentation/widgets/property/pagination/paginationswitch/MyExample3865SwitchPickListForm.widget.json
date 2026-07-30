@@ -1,0 +1,56 @@
+{
+  "name": "MyExample3865SwitchPickListForm",
+  "title": "PickListPopup",
+  "type": "Form",
+  "bc": "myexample3865",
+  "fields": [
+    {
+      "label": "Custom Field PickList with switch true",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity3865SwitchPick",
+      "pickMap": {
+        "customFieldPickList": "customField",
+        "customFieldPickListId": "id"
+      }
+    },
+    {
+      "label": "Custom Field PickList with switch false",
+      "key": "customFieldPickList2",
+      "type": "pickList",
+      "popupBcName": "myEntity3865PickPick0",
+      "pickMap": {
+        "customFieldPickList2": "customField",
+        "customFieldPickList2Id": "id"
+      }
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList2",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+

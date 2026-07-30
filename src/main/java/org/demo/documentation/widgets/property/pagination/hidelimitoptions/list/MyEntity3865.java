@@ -30,4 +30,17 @@ public class MyEntity3865 extends BaseEntity {
 			{CascadeType.PERSIST,
 					CascadeType.MERGE})
 	private List<MyEntity3865Multi> customFieldMultivalueList = new ArrayList<>();
+
+	@JoinTable(name = "MyEntity3865_MyEntity3865MultiPick0",
+			joinColumns = @JoinColumn(name = "MyEntity3865_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3865Multi_id")
+	)
+	@ManyToMany(cascade =
+			{CascadeType.PERSIST,
+					CascadeType.MERGE})
+	private List<MyEntity3865Multi> customFieldMultivalue2List = new ArrayList<>();
+
+	@JoinColumn(name = "CUSTOM_FIELD_PICK_LIST2_ID")
+	@ManyToOne
+	private MyEntity3865Pick customFieldPickList2Entity;
 }
