@@ -82,7 +82,7 @@ jobs:
       - name: Save test result
         if: always()
         run: |
-          echo "${{ matrix.java }}=${{ steps.run_tests.outcome }}" > test-result-${{ matrix.java }}.txt
+          echo "JAVA${{ matrix.java }}=${{ steps.run_tests.outcome }}" > test-result-${{ matrix.java }}.txt
 
       - name: Upload test result
         if: always()
