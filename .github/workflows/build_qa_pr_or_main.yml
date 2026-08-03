@@ -215,6 +215,13 @@ jobs:
       # =========================
       # CLEANUP
       # =========================
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-${{ matrix.java }}
+          path: publish
+        # Загружаем нашу папку
 
       - name: Clean up containers
         if: always()
@@ -265,9 +272,14 @@ jobs:
         with:
           pattern: test-result-*
           merge-multiple: true
-
         # Загружает результаты тестов Java 17 и Java 21.
 
+      - name: Download Allure reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-report-*
+          merge-multiple: true
+        # скачать Allure отчёты из Upload Allure report
 
       - name: Prepare PR comment
         id: comment
@@ -304,9 +316,8 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: publish
           destination_dir: pull_request
-          keep_files: false
 
         # Публикует Allure отчёты в отдельный GitHub Pages репозиторий.
 
@@ -324,11 +335,10 @@ jobs:
 
             ${{ steps.comment.outputs.java17 }}
 
-            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/${{ github.run_number }}
-
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17
             ${{ steps.comment.outputs.java21 }}
 
-            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/${{ github.run_number }}
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21
 
 
         # Добавляет комментарий в Pull Request:
