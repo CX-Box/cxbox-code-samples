@@ -315,6 +315,17 @@ jobs:
           destination_dir: pull_request
           keep_files: true
 
+      - name: Debug publish directory
+        run: |
+          echo "Current directory:"
+          pwd
+          
+          echo "Files:"
+          find . -maxdepth 4 -type f | sort
+          
+          echo "Directories:"
+          find . -maxdepth 4 -type d | sort
+
       # Adds Pull Request comment containing:
       # - Java 17 test status
       # - Java 17 Allure report link
