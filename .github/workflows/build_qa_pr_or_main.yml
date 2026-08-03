@@ -1,55 +1,55 @@
-name: QA # Название GitHub Actions workflow
+name: QA # GitHub Actions workflow name
 
-# Триггеры запуска workflow
+# Workflow triggers
 on:
   push:
     branches:
-      - main # Запуск при push в main
+      - main # Runs workflow when changes are pushed to main branch
   pull_request:
     branches:
-      - main # Запуск при создании/обновлении Pull Request в main
-  workflow_dispatch: # Возможность ручного запуска workflow из GitHub UI
+      - main # Runs workflow when Pull Request is created or updated against main branch
+  workflow_dispatch: # Allows manual workflow execution from GitHub UI
 
 
-# Управление параллельными запусками
+# Controls concurrent workflow executions
 concurrency:
-  # Для одного PR или ветки запускается только один workflow.
-  # Новый запуск отменяет предыдущий незавершенный запуск.
+  # Only one workflow runs for the same PR or branch.
+  # A new run cancels the previous unfinished run.
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 
-# Общие переменные окружения workflow
+# Global workflow environment variables
 env:
-  APP_URL: http://localhost:81/ui/#/ # URL тестового приложения
+  APP_URL: http://localhost:81/ui/#/ # Test application URL
 
 
 jobs:
 
   build-qa-pr-and-check-autotests:
-    # Запускаем job только для Pull Request.
-    # Push в main и ручной запуск эту job не выполнят.
+    # Run this job only for Pull Requests.
+    # It will not run for pushes to main or manual workflow execution.
     if: github.event_name == 'pull_request'
 
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
-      # Если один вариант matrix упал, остальные продолжают выполняться
+      # Continue running remaining matrix jobs if one of them fails
 
       matrix:
-        # Запускаем тесты два раза:
-        # один раз на Java 17 и один раз на Java 21
+        # Run tests twice:
+        # once with Java 17 and once with Java 21
         java: ['17','21']
 
-    # Имя job будет:
+    # Job names:
     # QA tests Java 17
     # QA tests Java 21
     name: QA tests Java ${{ matrix.java }}
 
     env:
-      # Уникальное имя docker compose проекта.
-      # Нужно, чтобы контейнеры Java 17 и Java 21 не конфликтовали между собой.
+      # Unique docker compose project name.
+      # Prevents Docker containers from Java 17 and Java 21 jobs from conflicting.
       COMPOSE_PROJECT_NAME: pr_${{ github.run_id }}_${{ matrix.java }}
 
 
@@ -61,7 +61,7 @@ jobs:
 
       - name: Checkout source code
         uses: actions/checkout@v4
-        # Клонирует код репозитория в runner
+        # Clones repository source code into the GitHub runner
 
 
       - name: Set up JDK ${{ matrix.java }}
@@ -70,8 +70,8 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: 'maven'
-        # Устанавливает нужную версию Java.
-        # Включает Maven cache для ускорения следующих сборок.
+        # Installs required Java version.
+        # Enables Maven dependency caching to speed up builds.
 
 
       - name: Setup Node
@@ -80,8 +80,8 @@ jobs:
           node-version: '18'
           cache: 'yarn'
           cache-dependency-path: ui/yarn.lock
-        # Устанавливает Node.js для сборки frontend.
-        # Кэширует зависимости Yarn.
+        # Installs Node.js required for frontend build.
+        # Enables Yarn dependency caching.
 
 
       # =========================
@@ -90,9 +90,9 @@ jobs:
 
       - name: Build backend + UI
         run: mvn clean install -U -PUI
-        # Собирает backend Maven.
-        # Собирает frontend через Maven UI profile.
-        # -U обновляет snapshot зависимости.
+        # Builds backend with Maven.
+        # Builds frontend using Maven UI profile.
+        # -U forces update of snapshot dependencies.
 
 
       # =========================
@@ -102,10 +102,10 @@ jobs:
       - name: Start isolated docker environment
         run: |
           docker compose -f docker-compose-test.yml up -d
-          # Поднимает тестовое окружение в Docker:
-          # database, backend, frontend и другие сервисы.
+          # Starts isolated Docker test environment:
+          # database, backend, frontend, and other required services.
           #
-          # -d запускает контейнеры в фоне.
+          # -d runs containers in detached mode.
 
 
       # =========================
@@ -125,22 +125,22 @@ jobs:
             -Dtest=application.Samples.BugFixTests \
             test
 
-        # Запускает автотесты Maven.
+        # Runs Maven automated tests.
         #
         # runTests=true:
-        # включает запуск тестового профиля.
+        # enables test execution profile.
         #
         # surefire.parallel=classes:
-        # параллельный запуск тестовых классов.
+        # runs test classes in parallel.
         #
         # forkCount=3:
-        # создаёт 3 JVM процесса для тестов.
+        # creates 3 separate JVM processes for tests.
         #
         # threadCount=1:
-        # внутри каждого процесса один поток.
+        # uses one thread inside each JVM process.
         #
         # continue-on-error:
-        # workflow продолжает выполнение даже если тесты упали.
+        # allows workflow execution to continue if tests fail.
 
 
       - name: Save test result
@@ -148,9 +148,9 @@ jobs:
         run: |
           echo "${{ steps.run_tests.outcome }}" > test-result-${{ matrix.java }}.txt
 
-        # Сохраняет результат тестов:
+        # Saves test execution result:
         # success / failure / cancelled
-        # в отдельный файл для Java версии.
+        # into a separate file for each Java version.
 
 
       - name: Upload test result
@@ -160,12 +160,12 @@ jobs:
           name: test-result-${{ matrix.java }}
           path: test-result-${{ matrix.java }}.txt
 
-        # Загружает результат тестов как artifact.
-        # Потом job publish-summary сможет его скачать.
+        # Uploads test result as workflow artifact.
+        # It will be downloaded later by publish-summary job.
 
 
       # =========================
-      # ALLURE HISTORY
+      # ALLURE REPORT
       # =========================
 
       - name: Get Allure history
@@ -178,24 +178,25 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
-        # Забирает предыдущие Allure отчёты из отдельного репозитория.
-        # Нужно для сохранения истории тестов.
+        # Downloads previous Allure reports from separate repository.
+        # Required to keep Allure history between runs.
+
 
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.15
         if: always()
         with:
           allure_results: target/allure-results
-          # Папка с результатами тестов
+          # Directory containing test results
 
           gh_pages: gh-pages/pull_request/java-${{ matrix.java }}
-          # Куда сохранять историю отчётов
+          # Location where Allure history is stored
 
           allure_report: allure-report/java-${{ matrix.java }}
-          # Путь для нового отчёта
+          # Directory for generated Allure report
 
           allure_history: allure-history/java-${{ matrix.java }}
-          # Путь для истории Allure
+          # Directory for Allure history data
 
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
@@ -203,25 +204,31 @@ jobs:
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-${{ matrix.java }}
 
           keep_reports: 40
-          # Хранить последние 40 отчётов
+          # Keeps last 40 generated reports
+
 
       - name: Prepare reports for publishing
         if: always()
         run: |
           mkdir -p publish/java-${{ matrix.java }}
           cp -r allure-report/java-${{ matrix.java }}/. publish/java-${{ matrix.java }}/
-        # Собрать отчёты в одну папку
+        # Copies generated reports into a common publishing directory
 
-      # =========================
-      # CLEANUP
-      # =========================
+
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
           path: publish
-        # Загружаем нашу папку
+
+        # Uploads generated Allure report.
+        # It will be downloaded later in publish-summary job.
+
+
+      # =========================
+      # CLEANUP
+      # =========================
 
       - name: Clean up containers
         if: always()
@@ -231,19 +238,19 @@ jobs:
 
           docker compose -f docker-compose-test.yml down --remove-orphans
 
-          # Останавливает контейнеры docker compose.
+          # Stops Docker Compose containers.
 
 
           docker container prune -f \
             --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
 
-          # Удаляет оставшиеся контейнеры текущего compose проекта.
+          # Removes remaining containers from current compose project.
 
 
           docker network prune -f \
             --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
 
-          # Удаляет docker networks текущего запуска.
+          # Removes Docker networks created for current compose project.
 
 
   # =========================
@@ -257,12 +264,12 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: [build-qa-pr-and-check-autotests]
-    # Запускается после завершения обеих matrix job:
-    # Java 17 и Java 21.
+    # Runs after both matrix jobs:
+    # Java 17 and Java 21.
 
 
     if: always()
-    # Выполняется даже если тесты упали.
+    # Runs even if previous jobs failed.
 
 
     steps:
@@ -272,14 +279,18 @@ jobs:
         with:
           pattern: test-result-*
           merge-multiple: true
-        # Загружает результаты тестов Java 17 и Java 21.
+
+        # Downloads test results from Java 17 and Java 21 jobs.
+
 
       - name: Download Allure reports
         uses: actions/download-artifact@v4
         with:
           pattern: allure-report-*
           merge-multiple: true
-        # скачать Allure отчёты из Upload Allure report
+
+        # Downloads Allure reports uploaded by matrix jobs.
+
 
       - name: Prepare PR comment
         id: comment
@@ -288,7 +299,7 @@ jobs:
           JAVA17=$(cat test-result-17.txt)
           JAVA21=$(cat test-result-21.txt)
 
-          # Читает результаты тестов.
+          # Reads test execution results.
 
 
           if [ "$JAVA17" = "success" ]; then
@@ -297,7 +308,7 @@ jobs:
             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
           fi
 
-          # Формирует статус Java 17.
+          # Creates Java 17 test status message.
 
 
           if [ "$JAVA21" = "success" ]; then
@@ -306,7 +317,7 @@ jobs:
             echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
           fi
 
-          # Формирует статус Java 21.
+          # Creates Java 21 test status message.
 
 
       - name: Publish test report
@@ -319,7 +330,7 @@ jobs:
           publish_dir: publish
           destination_dir: pull_request
 
-        # Публикует Allure отчёты в отдельный GitHub Pages репозиторий.
+        # Publishes Allure reports to separate GitHub Pages repository.
 
 
       - name: Comment on Pull Request
@@ -336,13 +347,14 @@ jobs:
             ${{ steps.comment.outputs.java17 }}
 
             https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17
+
             ${{ steps.comment.outputs.java21 }}
 
             https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21
 
 
-        # Добавляет комментарий в Pull Request:
-        # - статус Java 17
-        # - ссылку на Allure Java 17
-        # - статус Java 21
-        # - ссылку на Allure Java 21
+        # Adds Pull Request comment containing:
+        # - Java 17 test status
+        # - Java 17 Allure report link
+        # - Java 21 test status
+        # - Java 21 Allure report link
