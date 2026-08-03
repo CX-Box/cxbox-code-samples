@@ -59,40 +59,39 @@ jobs:
       # BASE SETUP
       # =========================
 
+      # Clones repository source code into the GitHub runner
       - name: Checkout source code
         uses: actions/checkout@v4
-        # Clones repository source code into the GitHub runner
 
 
+      # Installs required Java version.
+      # Enables Maven dependency caching to speed up builds.
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: 'maven'
-        # Installs required Java version.
-        # Enables Maven dependency caching to speed up builds.
 
-
+      # Installs Node.js required for frontend build.
+      # Enables Yarn dependency caching.
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
           cache-dependency-path: ui/yarn.lock
-        # Installs Node.js required for frontend build.
-        # Enables Yarn dependency caching.
-
 
       # =========================
       # BUILD BACKEND + FRONTEND
       # =========================
 
+      # Builds backend with Maven.
+      # Builds frontend using Maven UI profile.
+      # -U forces update of snapshot dependencies.
       - name: Build backend + UI
         run: mvn clean install -U -PUI
-        # Builds backend with Maven.
-        # Builds frontend using Maven UI profile.
-        # -U forces update of snapshot dependencies.
+
 
 
       # =========================
@@ -112,6 +111,22 @@ jobs:
       # RUN AUTOTESTS
       # =========================
 
+      # Runs Maven automated tests.
+      #
+      # runTests=true:
+      # enables test execution profile.
+      #
+      # surefire.parallel=classes:
+      # runs test classes in parallel.
+      #
+      # forkCount=3:
+      # creates 3 separate JVM processes for tests.
+      #
+      # threadCount=1:
+      # uses one thread inside each JVM process.
+      #
+      # continue-on-error:
+      # allows workflow execution to continue if tests fail.
       - name: Run Tests
         id: run_tests
         continue-on-error: true
@@ -125,24 +140,6 @@ jobs:
             -Dtest=application.Samples.BugFixTests \
             test
 
-        # Runs Maven automated tests.
-        #
-        # runTests=true:
-        # enables test execution profile.
-        #
-        # surefire.parallel=classes:
-        # runs test classes in parallel.
-        #
-        # forkCount=3:
-        # creates 3 separate JVM processes for tests.
-        #
-        # threadCount=1:
-        # uses one thread inside each JVM process.
-        #
-        # continue-on-error:
-        # allows workflow execution to continue if tests fail.
-
-
       - name: Save test result
         if: always()
         run: |
@@ -152,7 +149,8 @@ jobs:
         # success / failure / cancelled
         # into a separate file for each Java version.
 
-
+      # Uploads test result as workflow artifact.
+      # It will be downloaded later by publish-summary job.
       - name: Upload test result
         if: always()
         uses: actions/upload-artifact@v4
@@ -160,14 +158,12 @@ jobs:
           name: test-result-${{ matrix.java }}
           path: test-result-${{ matrix.java }}.txt
 
-        # Uploads test result as workflow artifact.
-        # It will be downloaded later by publish-summary job.
-
-
       # =========================
       # ALLURE REPORT
       # =========================
 
+      # Downloads previous Allure reports from separate repository.
+      # Required to keep Allure history between runs.
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -177,10 +173,6 @@ jobs:
           ref: gh-pages
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-
-        # Downloads previous Allure reports from separate repository.
-        # Required to keep Allure history between runs.
-
 
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.15
@@ -206,25 +198,21 @@ jobs:
           keep_reports: 40
           # Keeps last 40 generated reports
 
-
+      # Copies generated reports into a common publishing directory
       - name: Prepare reports for publishing
         if: always()
         run: |
           mkdir -p publish/java-${{ matrix.java }}
           cp -r allure-report/java-${{ matrix.java }}/. publish/java-${{ matrix.java }}/
-        # Copies generated reports into a common publishing directory
 
-
+      # Uploads generated Allure report.
+      # It will be downloaded later in publish-summary job.
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
           path: publish
-
-        # Uploads generated Allure report.
-        # It will be downloaded later in publish-summary job.
-
 
       # =========================
       # CLEANUP
@@ -274,23 +262,19 @@ jobs:
 
     steps:
 
+      # Downloads test results from Java 17 and Java 21 jobs.
       - name: Download results
         uses: actions/download-artifact@v4
         with:
           pattern: test-result-*
           merge-multiple: true
 
-        # Downloads test results from Java 17 and Java 21 jobs.
-
-
+      # Downloads Allure reports uploaded by matrix jobs.
       - name: Download Allure reports
         uses: actions/download-artifact@v4
         with:
           pattern: allure-report-*
           merge-multiple: true
-
-        # Downloads Allure reports uploaded by matrix jobs.
-
 
       - name: Prepare PR comment
         id: comment
@@ -319,7 +303,7 @@ jobs:
 
           # Creates Java 21 test status message.
 
-
+      # Publishes Allure reports to separate GitHub Pages repository.
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -329,10 +313,13 @@ jobs:
           publish_branch: gh-pages
           publish_dir: publish
           destination_dir: pull_request
+          keep_files: true
 
-        # Publishes Allure reports to separate GitHub Pages repository.
-
-
+      # Adds Pull Request comment containing:
+      # - Java 17 test status
+      # - Java 17 Allure report link
+      # - Java 21 test status
+      # - Java 21 Allure report link
       - name: Comment on Pull Request
         if: always()
         uses: peter-evans/create-or-update-comment@v4
@@ -346,15 +333,8 @@ jobs:
 
             ${{ steps.comment.outputs.java17 }}
 
-            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-17/
 
             ${{ steps.comment.outputs.java21 }}
 
-            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21
-
-
-        # Adds Pull Request comment containing:
-        # - Java 17 test status
-        # - Java 17 Allure report link
-        # - Java 21 test status
-        # - Java 21 Allure report link
+            https://cx-box.github.io/cxbox-code-samples-allure/pull_request/java-21/
