@@ -70,7 +70,7 @@ jobs:
         run: |
           git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set branch variable
         run: echo "BRANCH=${{ github.event.inputs.branch }}" >> $GITHUB_ENV

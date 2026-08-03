@@ -36,6 +36,20 @@ public class MyExample3865Service extends VersionAwareResponseService<MyExample3
 
 	@Override
 	protected ActionResultDTO<MyExample3865DTO> doUpdateEntity(MyEntity3865 entity, MyExample3865DTO data, BusinessComponent bc) {
+		if (data.isFieldChanged(MyExample3865DTO_.customFieldPickList2Id)) {
+			entity.setCustomFieldPickList2Entity(data.getCustomFieldPickList2Id() != null
+					? entityManager.getReference(MyEntity3865Pick.class, data.getCustomFieldPickList2Id())
+					: null);
+		}
+		if (data.isFieldChanged(MyExample3865DTO_.customFieldMultivalue2)) {
+			entity.getCustomFieldMultivalue2List().clear();
+			entity.getCustomFieldMultivalue2List().addAll(data.getCustomFieldMultivalue2().getValues().stream()
+					.map(MultivalueFieldSingleValue::getId)
+					.filter(Objects::nonNull)
+					.map(Long::parseLong)
+					.map(e -> entityManager.getReference(MyEntity3865Multi.class, e))
+					.collect(Collectors.toList()));
+		}
 		if (data.isFieldChanged(MyExample3865DTO_.customFieldMultivalue)) {
 			entity.getCustomFieldMultivalueList().clear();
 			entity.getCustomFieldMultivalueList().addAll(data.getCustomFieldMultivalue().getValues().stream()

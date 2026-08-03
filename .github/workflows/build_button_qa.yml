@@ -49,13 +49,13 @@ jobs:
         matrix:
           java: [ '17' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build docker image
         run: docker compose build
 
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
@@ -89,7 +89,7 @@ jobs:
         run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test
 
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -99,7 +99,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.13
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
@@ -149,9 +149,9 @@ jobs:
       matrix:
         java: [ '17' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
@@ -181,7 +181,7 @@ jobs:
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest, application.Samples.Feature.** test       
 
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -191,7 +191,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.13
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
@@ -236,13 +236,13 @@ jobs:
       matrix:
         java: [ '17' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build docker image
         run: docker compose build
 
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
@@ -292,7 +292,7 @@ jobs:
           mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test       
 
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
@@ -302,7 +302,7 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.13
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
