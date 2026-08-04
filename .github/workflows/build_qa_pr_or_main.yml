@@ -212,21 +212,6 @@ jobs:
           #      └── java-17
           #       └── history
 
-      # Копирует сгенерированный HTML-отчет в общую директорию чтобы потом дать единую ссылку
-      # те копируем файлы из allure-report в allure-history
-      - name: Prepare reports for publishing
-        if: always()
-        run: |
-          mkdir -p allure-history/java-${{ matrix.java }}
-          cp -r allure-report/java-${{ matrix.java }}/. allure-history/java-${{ matrix.java }}/
-        #  workspace
-        #  │
-        #  └── allure-history
-        #   │
-        #   └── java-17
-        #     ├── index.html
-        #     └── history
-
         # Загружает готовый Allure-отчет как артефакт GitHub Actions.
         # В следующем job этот артефакт будем качать и публиковать
       - name: Upload Allure report
@@ -234,10 +219,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
-          path: allure-history
+          path: allure-report
         #  workspace
         #  │
-        #  └── allure-history
+        #  └── allure-report
         #   │
         #   └── java-17
         #     ├── index.html
@@ -292,13 +277,29 @@ jobs:
     steps:
 
       # Downloads Allure reports uploaded by matrix jobs.
-      # Загружаются только отчеты текущего джоба
+      # ищем файлы нужные нам в  allure-report в который мы выше загрузили
       - name: Download Allure reports
         uses: actions/download-artifact@v4
         with:
           pattern: allure-report-*
-          path: allure-history
+          path: allure-report
+          # параметр нужен чтобы обядинить папки
           merge-multiple: true
+        #             workspace
+        #             │
+        #             └── allure-report
+        #             │
+        #             ├── java-17
+        #             │   ├── index.html
+        #             │   ├── data
+        #             │   └── history
+        #             │
+        #             └── java-21
+        #                 ├── index.html
+        #                 ├── data
+        #                 └── history
+
+
       # Downloads test results from Java 17 and Java 21 jobs
       # для шага Prepare PR comment
       - name: Download results
@@ -342,7 +343,7 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
           destination_dir: pull_request
           keep_files: false
           force_orphan: true
