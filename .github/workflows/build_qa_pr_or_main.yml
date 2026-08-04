@@ -348,7 +348,16 @@ jobs:
           publish_dir: allure-report
           destination_dir: pull_request
           keep_files: true
-          force_orphan: true
+          # with keep_files: true = gh-pages
+          #└── pull_request
+          #    ├── 125
+          #    ├── 126
+          #    └── 127
+          #with keep_files: false  = gh-pages
+          #└── pull_request
+          #    └── 127
+          force_orphan: false #delete history commit in gh-pages
+
         #cxbox-code-samples-allure
         #└── gh-pages
         #  |
