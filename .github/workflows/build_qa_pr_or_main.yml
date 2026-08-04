@@ -320,10 +320,10 @@ jobs:
           
           if [ "$JAVA17" = "success" ]; then
             echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
-          elif [ "$JAVA17" = "cancelled" ]; then
-            echo "java17=☕ Java 17 ⚪ Cancelled" >> $GITHUB_OUTPUT
+          elif [ "$JAVA17" = "failure" ]; then
+             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
           else
-            echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
+            echo "java17=☕ Java 17 ⚪ Cancelled" >> $GITHUB_OUTPUT
           fi
           
           
@@ -331,10 +331,10 @@ jobs:
           
           if [ "$JAVA21" = "success" ]; then
             echo "java21=☕ Java 21 ✅ Passed" >> $GITHUB_OUTPUT
-          elif [ "$JAVA21" = "cancelled" ]; then
-            echo "java21=☕ Java 21 ⚪ Cancelled" >> $GITHUB_OUTPUT
-          else
+          elif [ "$JAVA21" = "failure" ]; then
             echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
+          else
+            echo "java21=☕ Java 21 ⚪ Cancelled" >> $GITHUB_OUTPUT
           fi
 
       # Publishes Allure reports to separate GitHub Pages repository.
