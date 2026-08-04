@@ -40,7 +40,7 @@ jobs:
       matrix:
         # Run tests twice:
         # once with Java 17 and once with Java 21
-        java: ['17','21']
+        java: [ '17','21' ]
 
     # Job names:
     # QA tests Java 17
@@ -265,7 +265,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: [build-qa-pr-and-check-autotests]
+    needs: [ build-qa-pr-and-check-autotests ]
     # Runs after both matrix jobs:
     # Java 17 and Java 21.
 
@@ -322,6 +322,8 @@ jobs:
 
           if [ "$JAVA17" = "success" ]; then
             echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
+          if [ "$JAVA17" = "cancelled" ]; then
+           echo "java17=☕ Java 17 ❌ Cancelled" >> $GITHUB_OUTPUT
           else
             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
           fi
@@ -331,6 +333,8 @@ jobs:
 
           if [ "$JAVA21" = "success" ]; then
             echo "java21=☕ Java 21 ✅ Passed" >> $GITHUB_OUTPUT
+          if [ "$JAVA21" = "cancelled" ]; then
+           echo "java21=☕ Java 21 ❌ Cancelled" >> $GITHUB_OUTPUT
           else
             echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
           fi
@@ -407,5 +411,5 @@ jobs:
              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-17/
 
             ${{ steps.comment.outputs.java21 }}
-  
+            
              https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-21/
