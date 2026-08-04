@@ -201,15 +201,31 @@ jobs:
 
           keep_reports: 5
           # Keeps last 40 generated reports
+          #  workspace
+          #  │
+          #  ├── allure-report
+          #  │   └── java-17
+          #  │       ├── index.html
+          #  │       └── ...
+          #  │
+          #  └── allure-history
+          #      └── java-17
+          #       └── history
 
-      # Копирует сгенерированный HTML-отчет в общую директорию publish.
-      # Это позволяет затем загрузить отчеты для Java 17 и Java 21
-      # как отдельные артефакты
+      # Копирует сгенерированный HTML-отчет в общую директорию .
+      # те переносим файлы из allure-report в allure-history
       - name: Prepare reports for publishing
         if: always()
         run: |
-          mkdir -p publish/java-${{ matrix.java }}
-          cp -r allure-report/java-${{ matrix.java }}/. publish/java-${{ matrix.java }}/
+          mkdir -p allure-history/java-${{ matrix.java }}
+          cp -r allure-report/java-${{ matrix.java }}/. allure-history/java-${{ matrix.java }}/
+        #  workspace
+        #  │
+        #  └── allure-history
+        #   │
+        #   └── java-17
+        #     ├── index.html
+        #     └── history
 
         # Загружает готовый Allure-отчет как артефакт GitHub Actions.
         # В следующем job этот артефакт будем качать и публиковать
@@ -218,7 +234,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
-          path: publish/
+          path: allure-history
+        #  workspace
+        #  │
+        #  └── allure-history
+        #   │
+        #   └── java-17
+        #     ├── index.html
+        #     └── history
 
       # =========================
       # CLEANUP
@@ -274,10 +297,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: allure-report-*
-          path: publish/
-          # объединит содержимое скачанных файлов в указанной папке publish.
+          path: allure-history
           merge-multiple: true
-
       # Downloads test results from Java 17 and Java 21 jobs
       # для шага Prepare PR comment
       - name: Download results
