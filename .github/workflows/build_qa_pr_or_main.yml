@@ -309,37 +309,33 @@ jobs:
         with:
           pattern: test-result-*
           merge-multiple: true
-
       - name: Prepare PR comment
         id: comment
         run: |
-
+          
           JAVA17=$(cat test-result-17.txt)
           JAVA21=$(cat test-result-21.txt)
-
-          # Reads test execution results.
-
-
+          
+          # Reads Java 17 test execution result.
+          
           if [ "$JAVA17" = "success" ]; then
             echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
-          if [ "$JAVA17" = "cancelled" ]; then
-           echo "java17=☕ Java 17 ❌ Cancelled" >> $GITHUB_OUTPUT
+          elif [ "$JAVA17" = "cancelled" ]; then
+            echo "java17=☕ Java 17 ⚪ Cancelled" >> $GITHUB_OUTPUT
           else
             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
           fi
-
-          # Creates Java 17 test status message.
-
-
+          
+          
+          # Reads Java 21 test execution result.
+          
           if [ "$JAVA21" = "success" ]; then
             echo "java21=☕ Java 21 ✅ Passed" >> $GITHUB_OUTPUT
-          if [ "$JAVA21" = "cancelled" ]; then
-           echo "java21=☕ Java 21 ❌ Cancelled" >> $GITHUB_OUTPUT
+          elif [ "$JAVA21" = "cancelled" ]; then
+            echo "java21=☕ Java 21 ⚪ Cancelled" >> $GITHUB_OUTPUT
           else
             echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
           fi
-
-          # Creates Java 21 test status message.
 
       # Publishes Allure reports to separate GitHub Pages repository.
       - name: Publish test report
