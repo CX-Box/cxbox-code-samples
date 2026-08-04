@@ -311,10 +311,10 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: .
+          publish_dir: allure-history
           destination_dir: pull_request
-          keep_files: true
-
+          keep_files: false
+          force_orphan: true
       - name: Debug publish directory
         run: |
           echo "Current directory:"
