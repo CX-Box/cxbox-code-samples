@@ -1,69 +1,135 @@
-name: QA
+name: QA # GitHub Actions workflow name
 
+# Workflow triggers
 on:
   push:
     branches:
-      - main
+      - main # Runs workflow when changes are pushed to main branch
   pull_request:
-     branches:
-      - main
-  workflow_dispatch:
+    branches:
+      - main # Runs workflow when Pull Request is created or updated against main branch
+  workflow_dispatch: # Allows manual workflow execution from GitHub UI
 
+
+# Controls concurrent workflow executions
 concurrency:
+  # Only one workflow runs for the same PR or branch.
+  # A new run cancels the previous unfinished run.
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+
+# Global workflow environment variables
 env:
-  APP_URL: http://localhost:81/ui/#/
-  CXBOX_LOGGER:  true
+  APP_URL: http://localhost:81/ui/#/ # Test application URL
+
 
 jobs:
+
   build-qa-pr-and-check-autotests:
+    # Run this job only for Pull Requests.
+    # It will not run for pushes to main or manual workflow execution.
     if: github.event_name == 'pull_request'
+
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      # Continue running remaining matrix jobs if one of them fails
+
+      matrix:
+        # Run tests twice:
+        # once with Java 17 and once with Java 21
+        java: [ '17','21' ]
+
+    # Job names:
+    # QA tests Java 17
+    # QA tests Java 21
+    name: QA tests Java ${{ matrix.java }}
+
+    env:
+      # Unique docker compose project name.
+      # Prevents Docker containers from Java 17 and Java 21 jobs from conflicting.
+      COMPOSE_PROJECT_NAME: pr_${{ github.run_id }}_${{ matrix.java }}
+
+
     steps:
-      # -------------------------
-      # BASE
-      # -------------------------
-      - name: Checkout
+
+      # =========================
+      # BASE SETUP
+      # =========================
+
+      # Clones repository source code into the GitHub runner
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Set up JDK '17'
+
+      # Installs required Java version.
+      # Enables Maven dependency caching to speed up builds.
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: ${{ matrix.java }}
           distribution: 'temurin'
-          cache: "maven"
+          cache: 'maven'
 
+      # Installs Node.js required for frontend build.
+      # Enables Yarn dependency caching.
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: "yarn"
+          cache: 'yarn'
           cache-dependency-path: ui/yarn.lock
-      # -------------------------
-      # BUILD BACK + FRONT
-      # -------------------------
+
+      # =========================
+      # BUILD BACKEND + FRONTEND
+      # =========================
+
+      # Builds backend with Maven.
+      # Builds frontend using Maven UI profile.
+      # -U forces update of snapshot dependencies.
       - name: Build backend + UI
         run: mvn clean install -U -PUI
 
-      # -------------------------
-      # START DOCKER
-      # -------------------------
+
+
+      # =========================
+      # START TEST ENVIRONMENT
+      # =========================
 
       - name: Start isolated docker environment
         run: |
-          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}"
-          sudo chmod -R 777 ./docker
-          sudo docker images
           docker compose -f docker-compose-test.yml up -d
+          # Starts isolated Docker test environment:
+          # database, backend, frontend, and other required services.
+          #
+          # -d runs containers in detached mode.
 
-      # -------------------------
-      # TESTS
-      # -------------------------
+
+      # =========================
+      # RUN AUTOTESTS
+      # =========================
+
+      # Runs Maven automated tests.
+      #
+      # runTests=true:
+      # enables test execution profile.
+      #
+      # surefire.parallel=classes:
+      # runs test classes in parallel.
+      #
+      # forkCount=3:
+      # creates 3 separate JVM processes for tests.
+      #
+      # threadCount=1:
+      # uses one thread inside each JVM process.
+      #
+      # continue-on-error:
+      # allows workflow execution to continue if tests fail.
       - name: Run Tests
         id: run_tests
+        continue-on-error: true
         run: |
           mvn --batch-mode \
             -DrunTests=true \
@@ -74,6 +140,29 @@ jobs:
             -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
+        # Saves test execution result:
+        # success / failure / cancelled
+        # into a separate file for each Java version.
+      - name: Save test result
+        if: always()
+        run: |
+          echo "${{ steps.run_tests.outcome }}" > test-result-${{ matrix.java }}.txt
+
+      # Uploads test result as workflow artifact.
+      # It will be downloaded later by publish-summary job.
+      - name: Upload test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-result-${{ matrix.java }}
+          path: test-result-${{ matrix.java }}.txt
+
+      # =========================
+      # ALLURE REPORT
+      # =========================
+
+      # Downloads previous Allure reports from separate repository.
+      # Required to keep Allure history between runs.
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -83,21 +172,172 @@ jobs:
           ref: gh-pages
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          fetch-depth: 1
 
-      - name: Test here and host elsewhere
+      # Generates a new Allure report based on test results.
+      # Also loads previous history from gh-pages
+      # to preserve trends and statistics between workflow runs.
+      - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
           allure_results: target/allure-results
+          # Directory containing old test results  - all pr
           gh_pages: gh-pages/pull_request
-          allure_report: allure-report
-          allure_history: allure-history
+
+          # Location where Allure history is stored
+          # for the current pull request and Java version.
+          allure_report: allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          # Directory for Allure history data
+          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
-          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request
-          keep_reports: 20
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          # How many last Allure runs should be stored inside the `history` of a single report.
+          keep_reports: 5
 
+          #  workspace
+          #  │
+          #  ├── allure-report
+          #    └── 123
+          #    │   └── java-17
+          #    │       ├── index.html
+          #    │       └── ...
+          #    │
+          #  └── allure-history
+          #    └── 123
+          #      └── java-17
+          #       └── history
+
+      # Uploads generated Allure report as workflow artifact.
+      # Each matrix job uploads its own report:
+      # allure-report-17 and allure-report-21.
+      # They will be downloaded later in publish-summary job.
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-${{ matrix.java }}
+          path: allure-report
+        #  workspace
+        #  │
+        #  └── allure-report
+        #   └── 123
+        #    └── java-17
+        #     ├── index.html
+        #     └── history
+
+      # =========================
+      # CLEANUP
+      # =========================
+
+      - name: Clean up containers
+        if: always()
+        run: |
+
+          echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
+
+          docker compose -f docker-compose-test.yml down --remove-orphans
+
+          # Stops Docker Compose containers.
+
+
+          docker container prune -f \
+            --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+
+          # Removes remaining containers from current compose project.
+
+
+          docker network prune -f \
+            --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+
+          # Removes Docker networks created for current compose project.
+
+
+  # =========================
+  # PUBLISH SUMMARY
+  # =========================
+
+  publish-summary:
+
+    name: Publish Report Links
+
+    runs-on: ubuntu-latest
+
+    needs: [ build-qa-pr-and-check-autotests ]
+    # Runs after both matrix jobs:
+    # Java 17 and Java 21.
+
+
+    if: always()
+    # Runs even if previous jobs failed.
+
+
+    steps:
+
+      # Downloads Allure reports uploaded by matrix jobs.
+      # The reports are restored into the allure-report directory,
+      # which will be published to GitHub Pages.
+      - name: Download Allure reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-report-*
+          path: allure-report
+          # merge-multiple- Merges downloaded artifact contents into a single directory.
+          merge-multiple: true
+        #         workspace
+        #         │
+        #         └── allure-report
+        #             ├── 125
+        #             │
+        #             ├── java-17
+        #             │   ├── index.html
+        #             │   ├── data
+        #             │   └── history
+        #             │
+        #             └── java-21
+        #                 ├── index.html
+        #                 ├── data
+        #                 └── history
+
+
+      # Downloads test results from Java 17 and Java 21 jobs
+      # Required for the Prepare PR comment step.
+      - name: Download results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-result-*
+          merge-multiple: true
+      - name: Prepare PR comment
+        id: comment
+        run: |
+          
+          JAVA17=$(cat test-result-17.txt)
+          JAVA21=$(cat test-result-21.txt)
+          
+          # Reads Java 17 test execution result.
+          
+          if [ "$JAVA17" = "success" ]; then
+            echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
+          elif [ "$JAVA17" = "failure" ]; then
+             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
+          else
+            echo "java17=☕ Java 17 ⚪ Cancelled" >> $GITHUB_OUTPUT
+          fi
+          
+          
+          # Reads Java 21 test execution result.
+          
+          if [ "$JAVA21" = "success" ]; then
+            echo "java21=☕ Java 21 ✅ Passed" >> $GITHUB_OUTPUT
+          elif [ "$JAVA21" = "failure" ]; then
+            echo "java21=☕ Java 21 ❌ Failed" >> $GITHUB_OUTPUT
+          else
+            echo "java21=☕ Java 21 ⚪ Cancelled" >> $GITHUB_OUTPUT
+          fi
+
+      # Publishes Allure reports to separate GitHub Pages repository.
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -105,80 +345,156 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
           destination_dir: pull_request
-          keep_files: false
-          force_orphan: true
-      - name: Generate and add report URL to Job Summary
-        if: always()
-        run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.run_number}}"
-          echo "Report URL: $REPORT_URL"
-          echo "::notice::Report URL: $REPORT_URL"
-          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY      
+          keep_files: true
+          # with keep_files: true = gh-pages
+          #└── pull_request
+          #    ├── 125
+          #    ├── 126
+          #    └── 127
+          #with keep_files: false  = gh-pages
+          #└── pull_request
+          #    └── 127
+          force_orphan: false #delete history commit in gh-pages
 
-      - name: Post link to PR
+        #cxbox-code-samples-allure
+        #└── gh-pages
+        #  |
+        #  └── pull_request
+        #    |
+        #    ├── 125
+        #    │   ├── java-17
+        #    │   │   └── index.html
+        #    │   │
+        #    │   └── java-21
+        #    │       └── index.html
+        #    │
+        #    └── 126
+        #        ├── java-17
+        #        └── java-21
+
+      # Adds Pull Request comment containing:
+      # - Java 17 test status
+      # - Java 17 Allure report link
+      # - Java 21 test status
+      # - Java 21 Allure report link
+      - name: Comment on Pull Request
         if: always()
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ### ${{ steps.run_tests.outcome == 'success' && '✅ Tested' || '❌ Test Failed' }}. [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{github.run_number}})
 
-      - name: Remove only created docker containers
-        if: always()
-        run: |
-            export COMPOSE_PROJECT_NAME="${{ env.COMPOSE_PROJECT_NAME }}"
-  
-            echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
-            docker compose -f docker-compose-test.yml down --remove-orphans
-  
-            echo "Removing containers by label..."
-            docker container prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
-  
-            echo "Removing networks by label..."
-            docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
-  
-            echo "Done!"
+          body: |
+
+            ### QA autotests result
+
+            ${{ steps.comment.outputs.java17 }}
+            
+            
+            [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-17/)
+
+            ${{ steps.comment.outputs.java21 }}
+            
+            [Allure Report]( https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-21/)
 
   build-qa-main-and-check-autotests:
+    # Run workflow only after push to main branch.
+    # Does not run for Pull Requests.
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       actions: write
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up JDK '17'
+    strategy:
+      fail-fast: false
+
+      matrix:
+        # Run tests with both Java versions.
+        java: ['17', '21']
+
+
+    name: QA main tests Java ${{ matrix.java }}
+
+
+    env:
+      # Unique Docker Compose project name.
+      # Prevents Java 17 and Java 21 containers from conflicting.
+      COMPOSE_PROJECT_NAME: main_${{ github.run_id }}_${{ matrix.java }}
+
+
+    steps:
+
+      # =========================
+      # BASE SETUP
+      # =========================
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: ${{ matrix.java }}
           distribution: 'temurin'
-          cache: "maven"
+          cache: 'maven'
+
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: "yarn"
+          cache: 'yarn'
           cache-dependency-path: ui/yarn.lock
-      - name: Load target
+
+
+      # =========================
+      # BUILD BACKEND + FRONTEND
+      # =========================
+
+      - name: Build backend + UI
         run: mvn clean install -U -PUI
 
 
+
+      # =========================
+      # START DOCKER
+      # =========================
+
       - name: Start isolated docker environment
         run: |
-          export COMPOSE_PROJECT_NAME="pr_${GITHUB_RUN_ID}"
-          sudo chmod -R 777 ./docker
-          sudo docker images
-          sudo docker compose -f docker-compose-test.yml up -d
+          docker compose -f docker-compose-test.yml up -d
 
-      - name: Run tests
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=3 -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test
 
+
+      # =========================
+      # RUN TESTS
+      # =========================
+
+      - name: Run Tests
+        id: run_tests
+        continue-on-error: true
+        run: |
+          mvn --batch-mode \
+            -DrunTests=true \
+            -Dsurefire.parallel=classes \
+            -Dsurefire.forkCount=3 \
+            -Dsurefire.threadCount=1 \
+            -Dsurefire.reuseForks=true \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
+            test
+
+
+
+      # =========================
+      # ALLURE REPORT
+      # =========================
+
+
+      # Downloads previous main branch Allure history.
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -188,61 +504,99 @@ jobs:
           ref: gh-pages
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          fetch-depth: 1
 
-      - name: Test here and host elsewhere
+
+
+      # Generates Allure report for main branch.
+      - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
+
           allure_results: target/allure-results
+          # Existing history location for main branch.
           gh_pages: gh-pages/main
-          allure_report: allure-report
-          allure_history: allure-history
+          # Generated report location.
+          allure_report: allure-report/java-${{ matrix.java }}
+          # Allure history storage.
+          allure_history: allure-history/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
-          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main
-          keep_reports: 20
+          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main/java-${{ matrix.java }}
+          # Keep last 5 runs inside history.
+          keep_reports: 5
 
-      - name: Publish test report
+
+
+      # Upload report for publish job.
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-main-report-${{ matrix.java }}
+          path: allure-report
+
+
+
+      # =========================
+      # CLEANUP
+      # =========================
+
+      - name: Clean up containers
+        if: always()
+        run: |
+
+          echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
+
+          docker compose -f docker-compose-test.yml down --remove-orphans
+
+
+          docker container prune -f \
+            --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+
+
+          docker network prune -f \
+            --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
+
+  publish-main-report:
+
+    name: Publish Main Allure Report
+
+    runs-on: ubuntu-latest
+
+    needs:
+      - build-qa-main-and-check-autotests
+
+    if: always()
+
+
+    steps:
+
+      - name: Download Allure reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-main-report-*
+          path: allure-report
+          merge-multiple: true
+
+      - name: Publish main Allure report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
           destination_dir: main
-          keep_files: false
-          force_orphan: true
+          keep_files: true
+          force_orphan: false
+
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
-          REPORT_URL="https://cx-box.github.io/cxbox-code-samples-allure/main/${{ github.run_number}}"
-          echo "Report URL: $REPORT_URL"
-          echo "::notice::Report URL: $REPORT_URL"
-          echo "### Report URL" >> $GITHUB_STEP_SUMMARY
-          echo "The report is available at: $REPORT_URL" >> $GITHUB_STEP_SUMMARY 
-
-      # -------------------------
-      # CLEANUP
-      # -------------------------
-
-      - name: Remove only created docker containers
-        if: always()
-        run: |
-          export COMPOSE_PROJECT_NAME="${{ env.COMPOSE_PROJECT_NAME }}"
-          
-          echo "Stopping containers for $COMPOSE_PROJECT_NAME..."
-          docker compose -f docker-compose-test.yml down --remove-orphans
-          
-          echo "Removing containers by label..."
-          docker container prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
-          
-          echo "Removing networks by label..."
-          docker network prune -f --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
-          
-          echo "Done!"
-
-      - name: Check disk after cleanup
-        if: always()
-        run: df -h
+          echo "### Allure Reports" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Java 17: https://cx-box.github.io/cxbox-code-samples-allure/main/java-17/" >> $GITHUB_STEP_SUMMARY
+          echo "Java 21: https://cx-box.github.io/cxbox-code-samples-allure/main/java-21/" >> $GITHUB_STEP_SUMMARY

@@ -36,13 +36,17 @@ jobs:
           | sort -nr | head -n 20
       - name: Check diag permissions
         run: |
-          ls -ld /home/runner/actions-runner/cached/_diag
-          ls -l /home/runner/actions-runner/cached/_diag | head
-
-      - name: Test write into _diag
-        run: |
-          echo "Testing write..." > /home/runner/actions-runner/cached/_diag/test.log
-          echo "Write OK"
+          DIAG_DIR="/home/runner/actions-runner/cached/_diag"
+          
+          if [ -d "$DIAG_DIR" ]; then
+            echo "Directory exists: $DIAG_DIR"
+            ls -ld "$DIAG_DIR"
+            ls -l "$DIAG_DIR" | head
+            echo "Testing write..." > /home/runner/actions-runner/cached/_diag/test.log
+            echo "Write OK"
+          else
+            echo "Directory does not exist: $DIAG_DIR"
+          fi
       - name: Check kernel errors
         run: |
           dmesg | tail -n 30
@@ -65,12 +69,3 @@ jobs:
       - name: Check auth token length
         run: |
           echo "TOKEN LENGTH: ${#GITHUB_TOKEN}"
-
-      - name: Check git remote access
-        run: |
-          git ls-remote https://github.com/CX-Box/cxbox-code-samples-allure.git
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set branch variable
-        run: echo "BRANCH=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
