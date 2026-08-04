@@ -174,6 +174,9 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
+      # Генерирует новый Allure-отчет на основе результатов тестов.
+      # Также подгружает предыдущую историю из gh-pages,
+      # чтобы сохранить графики и статистику между запусками.
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.15
         if: always()
@@ -199,21 +202,23 @@ jobs:
           keep_reports: 5
           # Keeps last 40 generated reports
 
-      # Copies generated reports into a common publishing directory
+      # Копирует сгенерированный HTML-отчет в общую директорию publish.
+      # Это позволяет затем загрузить отчеты для Java 17 и Java 21
+      # как отдельные артефакты
       - name: Prepare reports for publishing
         if: always()
         run: |
           mkdir -p publish/java-${{ matrix.java }}
           cp -r allure-report/java-${{ matrix.java }}/. publish/java-${{ matrix.java }}/
 
-      # Uploads generated Allure report.
-      # It will be downloaded later in publish-summary job.
+        # Загружает готовый Allure-отчет как артефакт GitHub Actions.
+        # В следующем job этот артефакт будем качать и публиковать
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
-          path: .
+          path: publish/
 
       # =========================
       # CLEANUP
@@ -263,18 +268,22 @@ jobs:
 
     steps:
 
-      # Downloads test results from Java 17 and Java 21 jobs.
-      - name: Download results
-        uses: actions/download-artifact@v4
-        with:
-          pattern: test-result-*
-          merge-multiple: true
-
       # Downloads Allure reports uploaded by matrix jobs.
+      # Загружаются только отчеты текущего джоба
       - name: Download Allure reports
         uses: actions/download-artifact@v4
         with:
           pattern: allure-report-*
+          path: publish/
+          # объединит содержимое скачанных файлов в указанной папке publish.
+          merge-multiple: true
+
+      # Downloads test results from Java 17 and Java 21 jobs
+      # для шага Prepare PR comment
+      - name: Download results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-result-*
           merge-multiple: true
 
       - name: Prepare PR comment
