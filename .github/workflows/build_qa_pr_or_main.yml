@@ -270,7 +270,8 @@ jobs:
     # Java 17 and Java 21.
 
 
-    if: always()
+    if: always() &&
+      github.event_name == 'pull_request'
     # Runs even if previous jobs failed.
 
 
@@ -569,7 +570,8 @@ jobs:
     needs:
       - build-qa-main-and-check-autotests
 
-    if: always()
+    if: always() &&
+      github.event_name == 'push'
 
 
     steps:
