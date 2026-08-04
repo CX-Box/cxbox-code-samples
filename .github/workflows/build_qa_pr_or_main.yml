@@ -212,8 +212,8 @@ jobs:
           #      └── java-17
           #       └── history
 
-      # Копирует сгенерированный HTML-отчет в общую директорию .
-      # те переносим файлы из allure-report в allure-history
+      # Копирует сгенерированный HTML-отчет в общую директорию чтобы потом дать единую ссылку
+      # те копируем файлы из allure-report в allure-history
       - name: Prepare reports for publishing
         if: always()
         run: |
