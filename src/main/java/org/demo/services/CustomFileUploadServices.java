@@ -24,7 +24,6 @@ public class CustomFileUploadServices {
 
 	public static final String FILENAME_FIELD = "filename";
 
-	public static final long FIVE_MIB = 5242880L;
 	private final MinioClient minioClient;
 	private final String defaultBucketName;
 
@@ -92,8 +91,8 @@ public class CustomFileUploadServices {
 						.userMetadata(Map.of(FILENAME_FIELD, fileName))
 						.stream(
 								new ByteArrayInputStream(content),
-								content.length,
-								-1
+								Long.valueOf(content.length),
+								-1L
 						)
 						.build()
 		);
