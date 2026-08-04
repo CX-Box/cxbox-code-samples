@@ -183,32 +183,30 @@ jobs:
         id: allure-report
         with:
           allure_results: target/allure-results
-          # Directory containing test results
-          gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          # Directory containing old test results  - all pr
+          gh_pages: gh-pages/pull_request
 
           # Location where Allure history is stored
           # for the current pull request and Java version.
-          allure_report: allure-report/java-${{ matrix.java }}
-          # Directory for generated Allure report
-
-          allure_history: allure-history/java-${{ matrix.java }}
+          allure_report: allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
           # Directory for Allure history data
-
+          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
-
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-
+          # How many last Allure runs should be stored inside the `history` of a single report.
           keep_reports: 5
-          # Keeps last 40 generated reports
+
           #  workspace
           #  │
           #  ├── allure-report
-          #  │   └── java-17
-          #  │       ├── index.html
-          #  │       └── ...
-          #  │
+          #    └── 123
+          #    │   └── java-17
+          #    │       ├── index.html
+          #    │       └── ...
+          #    │
           #  └── allure-history
+          #    └── 123
           #      └── java-17
           #       └── history
 
@@ -221,12 +219,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
-          path: allure-report
+          path: allure-report/${{ github.event.pull_request.number }}
         #  workspace
         #  │
         #  └── allure-report
-        #   │
-        #   └── java-17
+        #   └── 123
+        #    └── java-17
         #     ├── index.html
         #     └── history
 
@@ -288,9 +286,10 @@ jobs:
           path: allure-report
           # merge-multiple- Merges downloaded artifact contents into a single directory.
           merge-multiple: true
-        #             workspace
-        #             │
-        #             └── allure-report
+        #         workspace
+        #         │
+        #         └── allure-report
+        #             ├── 125
         #             │
         #             ├── java-17
         #             │   ├── index.html
@@ -348,7 +347,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-report
           destination_dir: pull_request
-          keep_files: false
+          keep_files: true
           force_orphan: true
         #cxbox-code-samples-allure
         #└── gh-pages
