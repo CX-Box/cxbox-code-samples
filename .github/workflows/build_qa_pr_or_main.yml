@@ -161,8 +161,8 @@ jobs:
       # ALLURE REPORT
       # =========================
 
-      # Downloads previous Allure reports from separate repository.
-      # Required to keep Allure history between runs.
+      # create /home/runner/work/cxbox-code-samples/cxbox-code-samples/gh-pages
+      # git clone gh-pages
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
@@ -173,6 +173,22 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           fetch-depth: 1
+        # ├── gh-pages/
+        # │   └── pull_request/
+        # │     └── 125/
+        # │         ├── java-17/
+         #│         │   ├── index.html
+         #│         │   ├── data/
+         #│         │   └── history/
+         #│         │       ├── history.json
+         #│         │       ├── trend.json
+         #│         │       └── retries-trend.json
+         #│         │
+         #│         └── java-21/
+         #│            ├── index.html
+         #│            └── history/
+
+
 
       # Generates a new Allure report based on test results.
       # Also loads previous history from gh-pages
@@ -184,7 +200,7 @@ jobs:
         with:
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
-          gh_pages: gh-pages/pull_request/java-${{ matrix.java }}
+          gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
 
           # Location where Allure history is stored
           # for the current pull request and Java version.
@@ -197,45 +213,61 @@ jobs:
           # How many last Allure runs should be stored inside the `history` of a single report.
           keep_reports: 5
 
-          #  workspace
-          #  │
-          #  ├── allure-report
-          #    └── 123
-          #    │   └── java-17
-          #    │       ├── index.html
-          #    │       └── ...
-          #    │
-          #  └── allure-history
-          #      └── java-17
-          #       └── history
+        # workspace
+        # ├── allure-history/
+        # │   └── java-${{ matrix.java }}/
+        # │       └── history/
+        # │           ├── history.json
+        # │           ├── trend.json
+        # │           └── retries-trend.json
+        # │
+        # └── allure-report/
+        #     └── ${{ github.event.pull_request.number }}/
+        #         └── java-${{ matrix.java }}/
+        #             ├── index.html
+        #             ├── data/
+        #             ├── widgets/
+        #             └── history/
+        #                 ├── history.json
+        #                 ├── trend.json
+        #                 └── retries-trend.json
+        #
+
       - name: Copy trend history
         if: always()
         run: |
           mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
           
-          cp -r gh-pages/pull_request/java-${{ matrix.java }}/history/* \
+          cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
                 allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
 
-      # Uploads generated Allure report as workflow artifact.
-      # Each matrix job uploads its own report:
-      # allure-report-17 and allure-report-21.
-      # They will be downloaded later in publish-summary job.
+        # Uploads generated Allure report as workflow artifact.
+      # To prevent reports from different Java matrix jobs from overwriting each other,
+      # the artifact name is made unique by adding the Java version:
+      # allure-report -> allure-report-${{ matrix.java }}
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.java }}
           path: allure-report
-        #  workspace
-        #  │
-        #  └── allure-report
-        #   └── 123
-        #    └── java-17
-        #     ├── index.html
-        #     └── history
-        #       ├── history.json
-        #       ├── trend.json
-        #       └── retries-trend.json
+        # GitHub Actions Artifact Storage:
+        #
+        # allure-report-17
+        # └── allure-report/
+        #     └── 125/
+        #         └── java-17/
+        #             ├── index.html
+        #             └── history/
+        #
+        #
+        # allure-report-21
+        # └── allure-report/
+        #     └── 125/
+        #         └── java-21/
+        #             ├── index.html
+        #             └── history/
+        #
 
       # =========================
       # CLEANUP
@@ -296,19 +328,24 @@ jobs:
           path: allure-report
           # merge-multiple- Merges downloaded artifact contents into a single directory.
           merge-multiple: true
-        #         workspace
+        # workspace after download-artifact
+        #
+        # /home/runner/work/cxbox-code-samples/cxbox-code-samples
+        #
+        # └── allure-report/
+        #     └── 125/
+        #         ├── java-17/
+        #         │   ├── index.html
+        #         │   ├── data/
+        #         │   └── history/
+        #         │       ├── history.json
+        #         │       ├── trend.json
+        #         │       └── retries-trend.json
         #         │
-        #         └── allure-report
-        #             ├── 125
-        #             │
-        #             ├── java-17
-        #             │   ├── index.html
-        #             │   ├── data
-        #             │
-        #             └── java-21
-        #                 ├── index.html
-        #                 ├── data
-
+        #         └── java-21/
+        #             ├── index.html
+        #             └── history/
+        #
 
 
       # Downloads test results from Java 17 and Java 21 jobs
@@ -367,21 +404,25 @@ jobs:
           #    └── 127
           force_orphan: false #delete history commit in gh-pages
 
-        #cxbox-code-samples-allure
-        #└── gh-pages
-        #  |
-        #  └── pull_request
-        #    |
-        #    ├── 125
-        #    │   ├── java-17
-        #    │   │   └── index.html
-        #    │   │
-        #    │   └── java-21
-        #    │       └── index.html
-        #    │
-        #    └── 126
-        #        ├── java-17
-        #        └── java-21
+        # external repository after publish:
+        #
+        # CX-Box/cxbox-code-samples-allure
+        # branch: gh-pages
+        #
+        # gh-pages/
+        # └── pull_request/
+        #     └── 125/
+        #         ├── java-17/
+        #         │   ├── index.html
+        #         │   └── history/
+        #         │       ├── trend.json
+        #         │       └── history.json
+        #         │
+        #         └── java-21/
+        #             ├── index.html
+        #             └── history/
+        #
+
 
       # Adds Pull Request comment containing:
       # - Java 17 test status
