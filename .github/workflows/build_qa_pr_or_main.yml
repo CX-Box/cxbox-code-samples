@@ -196,7 +196,14 @@ jobs:
           
           cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
                 allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
-
+        # workspace
+        # allure-report/
+        # └── 125/                         # Pull Request number
+        #     └── java-17/                  # Java version used for test execution
+        #         └── history/              # Previous Allure history data
+        #             ├── history.json      # Test execution history (previous runs)
+        #             ├── trend.json        # Trend data for Allure Trend widget
+        #             └── retries-trend.json # Retry statistics history
 
       # Generates a new Allure report based on test results.
       # Also loads previous history from gh-pages
