@@ -137,7 +137,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest= application.Samples.BugFixTests \
+            -Dtest=application.Samples.Feature.** \
             test
 
         # Saves test execution result:
@@ -184,13 +184,13 @@ jobs:
         with:
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
-          gh_pages: gh-pages/history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          gh_pages: gh-pages/pull_request/java-${{ matrix.java }}
 
           # Location where Allure history is stored
           # for the current pull request and Java version.
           allure_report: allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
           # Directory for Allure history data
-          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          allure_history: allure-history/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
@@ -206,7 +206,6 @@ jobs:
           #    │       └── ...
           #    │
           #  └── allure-history
-          #    └── 123
           #      └── java-17
           #       └── history
 
@@ -214,6 +213,12 @@ jobs:
       # Each matrix job uploads its own report:
       # allure-report-17 and allure-report-21.
       # They will be downloaded later in publish-summary job.
+      - name: Copy Allure history
+        if: always()
+        run: |
+          cp -r allure-history/java-${{ matrix.java }}/history \
+                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history || true
+
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
@@ -227,6 +232,9 @@ jobs:
         #    └── java-17
         #     ├── index.html
         #     └── history
+        #       ├── history.json
+        #       ├── trend.json
+        #       └── retries-trend.json
 
       # =========================
       # CLEANUP
