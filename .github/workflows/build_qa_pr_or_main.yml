@@ -137,7 +137,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.BugFixTests \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
         # Saves test execution result:
@@ -184,7 +184,7 @@ jobs:
         with:
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
-          gh_pages: gh-pages/pull_request
+          gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
 
           # Location where Allure history is stored
           # for the current pull request and Java version.
@@ -225,7 +225,8 @@ jobs:
         #  └── allure-report
         #   └── 123
         #    └── java-17
-        #     └── index.html
+        #     ├── index.html
+        #     └── history
 
       # =========================
       # CLEANUP
@@ -345,7 +346,7 @@ jobs:
           external_repository: CX-Box/cxbox-code-samples-allure
           personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-report
           destination_dir: pull_request
           keep_files: true
           # with keep_files: true = gh-pages
@@ -372,23 +373,8 @@ jobs:
         #    │
         #    └── 126
         #        ├── java-17
-        #        │    └── index.html
         #        └── java-21
-        #             └── index.html
-        #  └── history
-        #    |
-        #    ├── 125
-        #    │   ├── java-17
-        #    │   │   └── history
-        #    │   │
-        #    │   └── java-21
-        #    │       └── history
-        #    │
-        #    └── 126
-        #        ├── java-17
-        #        │    └── history
-        #        └── java-21
-        #             └── history
+
       # Adds Pull Request comment containing:
       # - Java 17 test status
       # - Java 17 Allure report link
