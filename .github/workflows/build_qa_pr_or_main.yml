@@ -188,6 +188,14 @@ jobs:
          #│            ├── index.html
          #│            └── history/
 
+        # trend visual file ->/history/history-trend.json
+      - name: Copy trend history
+        if: always()
+        run: |
+          mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
+          
+          cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
+                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
 
 
       # Generates a new Allure report based on test results.
@@ -201,12 +209,8 @@ jobs:
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
           gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-
-          # Location where Allure history is stored
-          # for the current pull request and Java version.
           allure_report: allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-          # Directory for Allure history data
-          allure_history: allure-history/java-${{ matrix.java }}
+          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
@@ -231,15 +235,6 @@ jobs:
         #                 ├── history.json
         #                 ├── trend.json
         #                 └── retries-trend.json
-        #
-
-      - name: Copy trend history
-        if: always()
-        run: |
-          mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
-          
-          cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
-                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
 
         # Uploads generated Allure report as workflow artifact.
       # To prevent reports from different Java matrix jobs from overwriting each other,
