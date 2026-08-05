@@ -76,7 +76,7 @@ public class MyEntity3082Dao extends AbstractAnySourceBaseDAO<MyEntity3082OutSer
 		List<String> sortCustomField = getSortFieldName(queryParameters, MyExample3082SuggestionDTO_.customFieldSuggestion.getName());
 		Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getSuggestionMicroservicesDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getSuggestionMicroservicesDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterCustomFieldSuggestion", filter)

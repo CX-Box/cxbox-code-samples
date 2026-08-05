@@ -110,7 +110,7 @@ public class MyExample5555TaskDocumentService extends VersionAwareResponseServic
 					.object(fileId)
 					.build()
 			);
-			var fileName = statObjectResponse.userMetadata().get(FILENAME_FIELD);
+			var fileName = statObjectResponse.userMetadata().getFirst(FILENAME_FIELD);
 			documents.setFile(fileName);
 			Optional.of(taskRepository.getReferenceById(bc.getParentIdAsLong()))
 					.ifPresent(documents::setTask);

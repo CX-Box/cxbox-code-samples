@@ -27,6 +27,6 @@ public class GitHubApi {
 		uri = UriComponentsBuilder.fromUri(uri)
 				.build(true)
 				.toUri();
-		return proxyRestTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(null), Resource.class);
+		return proxyRestTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, Resource.class);
 	}
 }

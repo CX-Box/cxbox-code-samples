@@ -90,7 +90,7 @@ public class MyEntity3435Dao extends AbstractAnySourceBaseDAO<MyEntity3435OutSer
 		List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
 		Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterCustomField", filter)

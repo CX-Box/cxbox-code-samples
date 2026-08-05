@@ -2,6 +2,7 @@ package org.demo.conf.cxbox.customization.responsibilitiesAction.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.core.crudma.bc.BusinessComponent;
@@ -19,7 +20,6 @@ import org.cxbox.model.core.dao.JpaDao;
 import org.demo.conf.cxbox.customization.metaAdmin.MetaAdminServiceExt;
 import org.demo.conf.cxbox.customization.responsibilitiesAction.dto.ResponsibilitiesActionAdminDTO;
 import org.demo.util.CSVUtils;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -109,7 +109,7 @@ public class ResponsibilitiesActionAdminService extends
 	}
 
 	@SneakyThrows
-	@NotNull
+	@NonNull
 	private FileDownloadDto toCsv() {
 		String name = "RESPONSIBILITIES_ACTION.csv";
 		var header = List.of("INTERNAL_ROLE_CD;ACTION;VIEW_NAME;WIDGET;ID");

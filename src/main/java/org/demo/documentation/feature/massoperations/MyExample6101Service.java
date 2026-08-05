@@ -11,7 +11,6 @@ import org.cxbox.core.dto.rowmeta.*;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -133,7 +132,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 				.build();
 	}
 
-	@NotNull
+	@NonNull
 	private Set<MassDTO> getMassDTO(@NonNull MyExample6101DTO data, Set<String> ids, boolean onlyCheckboxChange) {
 		return ids.stream()
 				.map(id -> {

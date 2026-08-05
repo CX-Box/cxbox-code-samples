@@ -1,7 +1,7 @@
 package org.demo.conf.cxbox.extension.locale;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -11,9 +11,9 @@ import java.util.Locale;
 
 public class DynamicLocaleResolver extends AcceptHeaderLocaleResolver {
 
-	@NotNull
+	@NonNull
 	@Override
-	public Locale resolveLocale(@NotNull HttpServletRequest request) {
+	public Locale resolveLocale(@NonNull HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null || !(authentication.getPrincipal() instanceof Jwt jwt)) {
 			return SupportedLanguages.getDefaultLocale();

@@ -5,9 +5,9 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.FileAppender;
 import io.qameta.allure.Allure;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import net.jcip.annotations.ThreadSafe;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -77,7 +77,7 @@ public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 		return input.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
 	}
 
-	@NotNull
+	@NonNull
 	private static FileAppender<ILoggingEvent> getILoggingEventFileAppender(String perTestFileName) {
 		var logFile = new File("target/log/", perTestFileName + UUID.randomUUID() + ".log");
 
@@ -104,7 +104,7 @@ public class AllurePerTestLog implements BeforeEachCallback, AfterEachCallback {
 		return logger;
 	}
 
-	@NotNull
+	@NonNull
 	private String getPerTestUniqueAppenderName(ExtensionContext context) {
 		return loggerName + sanitizeFileName(format("-%s", context.getUniqueId()));
 	}

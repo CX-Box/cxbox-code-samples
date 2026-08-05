@@ -1,13 +1,12 @@
 package org.demo.conf.cxbox.customization.file;
 
 import io.minio.*;
+import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.UUID;
 public class FileService implements CxboxFileService {
 
 	public static final String FILENAME_FIELD = "filename";
-	public static final int FIVE_MIB = 5242880;
+	public static final long FIVE_MIB = 5242880L;
 
 	private final MinioClient minioClient;
 
@@ -37,7 +36,7 @@ public class FileService implements CxboxFileService {
 				.object(UUID.randomUUID().toString())
 				.contentType(contentType)
 				.userMetadata(Collections.singletonMap(FILENAME_FIELD, name))
-				.stream(file.getContent().get(), -1, FIVE_MIB)
+				.stream(file.getContent().get(), -1L, FIVE_MIB)
 				.build()
 		);
 		return objectWriteResponse.object();
@@ -54,13 +53,13 @@ public class FileService implements CxboxFileService {
 		);
 		return new FileDownloadDto(
 				() -> getObject(id), statObjectResponse.size(),
-				statObjectResponse.userMetadata().get(FILENAME_FIELD),
+				statObjectResponse.userMetadata().getFirst(FILENAME_FIELD),
 				statObjectResponse.contentType()
 		);
 	}
 
 	@SneakyThrows
-	private GetObjectResponse getObject(@NotNull String id) {
+	private GetObjectResponse getObject(@NonNull String id) {
 		return minioClient.getObject(GetObjectArgs
 				.builder()
 				.bucket(defaultBucketName)

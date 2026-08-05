@@ -91,8 +91,8 @@ public class CustomFileUploadServices {
 						.userMetadata(Map.of(FILENAME_FIELD, fileName))
 						.stream(
 								new ByteArrayInputStream(content),
-								content.length,
-								-1
+								Long.valueOf(content.length),
+								-1L
 						)
 						.build()
 		);

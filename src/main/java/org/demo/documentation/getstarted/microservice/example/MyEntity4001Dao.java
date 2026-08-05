@@ -74,7 +74,7 @@ public class MyEntity4001Dao extends AbstractAnySourceBaseDAO<MyEntity4001OutSer
 		List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
 		Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(integrationConfig.getGetStartedMicroservicesDataServerUrl())
+		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getGetStartedMicroservicesDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterCustomField", filter)

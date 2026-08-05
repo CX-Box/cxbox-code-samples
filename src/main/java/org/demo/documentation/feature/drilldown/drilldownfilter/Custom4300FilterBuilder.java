@@ -1,7 +1,6 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.cxbox.api.data.dto.DataResponseDTO;
@@ -53,7 +52,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		};
 	}
 
-	public <T extends Dictionary> Custom4300FilterBuilder<D> customDictionary(@NotNull final DtoField<? super D, T> field, final T value) {
+	public <T extends Dictionary> Custom4300FilterBuilder<D> customDictionary(@NonNull final DtoField<? super D, T> field, final T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -61,7 +60,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().dictionary(field, value));
 	}
 
-	public Custom4300FilterBuilder<D> customInput(@NotNull final DtoField<? super D, String> field, final String value) {
+	public Custom4300FilterBuilder<D> customInput(@NonNull final DtoField<? super D, String> field, final String value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -171,7 +170,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().percentFromTo(field, from, to));
 	}
 
-	public <T extends Enum<?>> Custom4300FilterBuilder<D> customRadio(@NotNull DtoField<? super D, T> field, Collection<T> values) {
+	public <T extends Enum<?>> Custom4300FilterBuilder<D> customRadio(@NonNull DtoField<? super D, T> field, Collection<T> values) {
 		log.info(LOG_MESSAGE, field.getName(), Optional.ofNullable(values).orElse(List.of()).stream().map(Enum::name).collect(Collectors.joining(",")));
 		if (values == null || values.isEmpty()) {
 			return self();
@@ -179,7 +178,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().radio(field, values));
 	}
 
-	public Custom4300FilterBuilder<D> customCheckbox(@NotNull DtoField<? super D, Boolean> field, Boolean value) {
+	public Custom4300FilterBuilder<D> customCheckbox(@NonNull DtoField<? super D, Boolean> field, Boolean value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -187,7 +186,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().checkbox(field, value));
 	}
 
-	public <T extends Number> Custom4300FilterBuilder<D> customMoney(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Number> Custom4300FilterBuilder<D> customMoney(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -195,7 +194,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().money(field, value));
 	}
 
-	public <T extends Number> Custom4300FilterBuilder<D> customMoneyFromTo(@NotNull DtoField<? super D, T> field, T from, T to) {
+	public <T extends Number> Custom4300FilterBuilder<D> customMoneyFromTo(@NonNull DtoField<? super D, T> field, T from, T to) {
 		log.info(LOG_MESSAGE_RANGE, field.getName(), from, to);
 		if (from == null && to == null) {
 			return self();
@@ -204,7 +203,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 
 	}
 
-	public <T extends Serializable> Custom4300FilterBuilder<D> customFileUpload(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Serializable> Custom4300FilterBuilder<D> customFileUpload(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -212,7 +211,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().fileUpload(field, value));
 	}
 
-	public <T extends Serializable> Custom4300FilterBuilder<D> customPickList(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Serializable> Custom4300FilterBuilder<D> customPickList(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -220,7 +219,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().pickList(field, value));
 	}
 
-	public <T extends Serializable> Custom4300FilterBuilder<D> customInlinePickList(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Serializable> Custom4300FilterBuilder<D> customInlinePickList(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -228,7 +227,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().inlinePickList(field, value));
 	}
 
-	public <T extends Serializable> Custom4300FilterBuilder<D> customMultifield(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Serializable> Custom4300FilterBuilder<D> customMultifield(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -236,7 +235,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().multifield(field, value));
 	}
 
-	public <T extends Serializable> Custom4300FilterBuilder<D> customSuggestionPickList(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends Serializable> Custom4300FilterBuilder<D> customSuggestionPickList(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -244,7 +243,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().suggestionPickList(field, value));
 	}
 
-	public <T extends MultivalueField> Custom4300FilterBuilder<D> customMultivalueHover(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends MultivalueField> Custom4300FilterBuilder<D> customMultivalueHover(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
@@ -252,7 +251,7 @@ public class Custom4300FilterBuilder<D extends DataResponseDTO> extends FB<D, Cu
 		return this.add(getPlatformDrilldownFilterService().multivalueHover(field, value));
 	}
 
-	public <T extends MultivalueField> Custom4300FilterBuilder<D> customMultipleSelect(@NotNull DtoField<? super D, T> field, T value) {
+	public <T extends MultivalueField> Custom4300FilterBuilder<D> customMultipleSelect(@NonNull DtoField<? super D, T> field, T value) {
 		log.info(LOG_MESSAGE, field.getName(), value);
 		if (value == null) {
 			return self();
