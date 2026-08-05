@@ -1,9 +1,19 @@
-import { RefObject, useCallback, useRef } from 'react'
+import { RefObject, useCallback, useRef, useEffect } from 'react'
 import { useResizeObserver } from '@hooks/useResizeObserver'
 
-export const useDebouncedWidthResize = (ref: RefObject<HTMLElement>, onResize: () => void, delay: number = 100) => {
+export const useDebouncedWidthResize = (
+    ref: RefObject<HTMLElement>,
+    onResize: (width: number, entry: ResizeObserverEntry) => void,
+    delay: number = 100,
+    tolerance: number = 1
+) => {
     const prevWidth = useRef<number>(0)
     const resizeTimer = useRef<ReturnType<typeof setTimeout>>()
+    const onResizeRef = useRef(onResize)
+
+    useEffect(() => {
+        onResizeRef.current = onResize
+    }, [onResize])
 
     const handleResize = useCallback<ResizeObserverCallback>(
         entries => {
@@ -16,7 +26,7 @@ export const useDebouncedWidthResize = (ref: RefObject<HTMLElement>, onResize: (
             const width = entry.contentRect.width
 
             // Ignore changes if the width has not changed.
-            if (Math.abs(prevWidth.current - width) < 1) {
+            if (Math.abs(prevWidth.current - width) < tolerance) {
                 return
             }
 
@@ -28,12 +38,20 @@ export const useDebouncedWidthResize = (ref: RefObject<HTMLElement>, onResize: (
 
             resizeTimer.current = setTimeout(() => {
                 window.requestAnimationFrame(() => {
-                    onResize()
+                    onResizeRef.current(width, entry)
                 })
             }, delay)
         },
-        [delay, onResize]
+        [delay, tolerance]
     )
 
     useResizeObserver(ref, handleResize)
+
+    useEffect(() => {
+        return () => {
+            if (resizeTimer.current) {
+                clearTimeout(resizeTimer.current)
+            }
+        }
+    }, [])
 }
