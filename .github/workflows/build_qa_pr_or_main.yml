@@ -208,17 +208,18 @@ jobs:
           #  └── allure-history
           #      └── java-17
           #       └── history
+      - name: Copy trend history
+        if: always()
+        run: |
+          mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
+          
+          cp -r gh-pages/pull_request/java-${{ matrix.java }}/history/* \
+                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
 
       # Uploads generated Allure report as workflow artifact.
       # Each matrix job uploads its own report:
       # allure-report-17 and allure-report-21.
       # They will be downloaded later in publish-summary job.
-      - name: Copy Allure history
-        if: always()
-        run: |
-          cp -r allure-history/java-${{ matrix.java }}/history \
-                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history || true
-
       - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
@@ -303,12 +304,11 @@ jobs:
         #             ├── java-17
         #             │   ├── index.html
         #             │   ├── data
-        #             │   └── history
         #             │
         #             └── java-21
         #                 ├── index.html
         #                 ├── data
-        #                 └── history
+
 
 
       # Downloads test results from Java 17 and Java 21 jobs
