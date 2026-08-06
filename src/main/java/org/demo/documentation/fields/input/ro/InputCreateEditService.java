@@ -4,8 +4,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.dto.rowmeta.PreAction;
+import org.cxbox.core.service.action.ActionAvailableChecker;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +46,22 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 	public Actions<InputCreateEditDTO> getActions() {
 		return Actions.<InputCreateEditDTO>builder()
 				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.action("activateFormPopup", "Activate FormPopup")
+						.scope(ActionScope.BC)
+						.available(ActionAvailableChecker.ALWAYS_TRUE)
+						.withPreAction(PreAction.confirmWithWidget(
+								"InputCreateEditFormPopup",
+								cfw -> cfw
+										.title("CustomTitleText")
+										.yesText("CustomYesText")
+										.noText("CustomNoText")
+						))
+						.invoker((bc, dto) ->
+								new ActionResultDTO<InputCreateEditDTO>().setAction(PostAction.showMessage(
+										MessageType.INFO, "Action activateFormPopup was invoked"
+								)))
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]

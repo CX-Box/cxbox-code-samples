@@ -5,9 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.exception.BusinessException;
+import org.cxbox.core.service.action.ActionAvailableChecker;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +57,22 @@ public class InputValidationBusinessExceptionService extends
 	public Actions<InputValidationBusinessExceptionDTO> getActions() {
 		return Actions.<InputValidationBusinessExceptionDTO>builder()
 				.save(sv -> sv.text("Save"))
+				.action(act -> act
+						.action("activateFormPopup", "Activate FormPopup")
+						.scope(ActionScope.BC)
+						.available(ActionAvailableChecker.ALWAYS_TRUE)
+						.withPreAction(PreAction.confirmWithWidget(
+								"InputValidationBusinessExceptionFormPopup",
+								cfw -> cfw
+										.title("CustomTitleText")
+										.yesText("CustomYesText")
+										.noText("CustomNoText")
+						))
+						.invoker((bc, dto) ->
+								new ActionResultDTO<InputValidationBusinessExceptionDTO>().setAction(PostAction.showMessage(
+										MessageType.INFO, "Action activateFormPopup was invoked"
+								)))
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
