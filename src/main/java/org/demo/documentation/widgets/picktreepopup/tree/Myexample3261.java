@@ -1,8 +1,7 @@
-package org.demo.documentation.other.savewithparent.example5.entity;
+package org.demo.documentation.widgets.picktreepopup.tree;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,20 +9,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
 
+
 @Entity
+@Table(name = "MYEXAMPLE3261")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "DOCUMENT")
 @EqualsAndHashCode(of = {}, callSuper = true)
-public class TaskDocument extends BaseEntity {
+public class Myexample3261 extends BaseEntity {
 
 	@Column
-	private String fileId;
+	private String department;
 
-	@Column(name = "file_name")
-	private String file;
+	@Column
+	private Long parentId;
 
-	@ManyToOne
-	private Task task;
+	@Column
+	private Boolean isLeaf;
+
 }
