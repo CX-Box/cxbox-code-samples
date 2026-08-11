@@ -5,38 +5,31 @@ import styles from './Table.less'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { useAppSelector } from '@store'
 import { useTableSetting, useTableSettingReset, useTableSettingResultedFields } from '@components/widgets/Table/hooks/useTableSetting'
-import { useVisibility } from '@components/widgets/Table/hooks/useVisibility'
+import { useVisibility } from '@hooks/useVisibility'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { actions } from '@actions'
 import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
-import { Icon, Menu, Popover, Tooltip } from 'antd'
+import { Icon, Menu, Tooltip } from 'antd'
 import DropdownSetting from './components/DropdownSetting'
 import Operations from '../../Operations/Operations'
 import FilterSettingModal from './components/FilterSettingModal'
 import { usePresetFilterSettings } from './hooks/usePresetFilterSettings'
-import cn from 'classnames'
-import Field from '@components/Field/Field'
 import { useRowMenu } from '@hooks/useRowMenu'
 import { DataItem, FieldType, IdItemResponse } from '@cxbox-ui/core'
 import { TableEventListeners } from 'antd/lib/table/interface'
 import { ExpandIconProps } from 'antd/lib/table'
 import { WidgetListField } from '@cxbox-ui/schema'
-import { interfaces } from '@cxbox-ui/core'
 import ColumnTitle from '@components/ColumnTitle/ColumnTitle'
-import ExpandIcon from '@components/widgets/Table/components/ExpandIcon'
+import { RowMetaField } from '@interfaces/rowMeta'
 import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { GroupingHierarchyCommonNode } from '@components/widgets/Table/groupingHierarchy'
 import {
     fieldShowCondition,
     getGroupingHierarchyRowKey,
-    getInternalGroupPath,
     rowShowCondition,
     useGroupingHierarchy
 } from '@components/widgets/Table/groupingHierarchy'
-import { numberFieldTypes } from '@constants/field'
-import { aggCellBgColorRgba, totalRowKey } from './groupingHierarchy/constants'
-import { getAggCellBgOpacity } from './groupingHierarchy/utils/aggregation'
 import { selectBc, selectBcData } from '@selectors/selectors'
 import ColumnOrderSettingModal from '@components/widgets/Table/components/ColumnOrderSettingModal'
 import StandardTable from '@components/widgets/Table/StandardTable'
@@ -45,13 +38,12 @@ import { useRowSelection } from '@components/widgets/Table/massOperations/hooks/
 import ResultColumnTitle from '@components/widgets/Table/massOperations/ColumnTitle'
 import { FIELDS } from '@constants'
 import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
-import FieldBaseThemeWrapper from '@components/FieldBaseThemeWrapper/FieldBaseThemeWrapper'
 import ResultColumnCell from '@components/widgets/Table/massOperations/ResultColumnCell'
 import Button from '@components/ui/Button/Button'
 import { ReactComponent as HierarchySVG } from '@assets/icons/hierarchy.svg'
 import StickyTable from '@components/widgets/Table/StickyTable'
-
-const ROW_KEY = FIELDS.TECHNICAL.ID
+import { TableCell } from '@components/widgets/Table/TableCell'
+import { ROW_KEY } from '@components/widgets/Table/constants'
 
 interface TableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -531,124 +523,29 @@ function Table<T extends CustomDataItem>({
                             onClose={hideColumn}
                             widgetName={widgetName}
                             widgetMeta={item as WidgetListField}
-                            rowMeta={fieldRowMeta as interfaces.RowMetaField}
+                            rowMeta={fieldRowMeta as RowMetaField}
                         />
                     ),
                     key: item.key,
                     dataIndex: item.key,
                     width: item.width,
-                    render: (text: string, dataItem: T & GroupingHierarchyCommonNode) => {
-                        const editMode =
-                            isGroupingHierarchy && enabledGrouping
-                                ? isEditMode(dataItem) && !needHideActions(dataItem)
-                                : isEditMode(dataItem)
-
-                        const expandRowId = isGroupingHierarchy
-                            ? getInternalGroupPath(item.key, dataItem, sortedGroupKeys)
-                            : dataItem[ROW_KEY]
-                        const expanded = expandedParentRowKeys?.includes(expandRowId) ?? false
-
-                        const isGroupingField = !!processedMeta?.options?.groupingHierarchy?.fields?.includes(item.key)
-                        const aggFunction = dataItem._aggFunctions?.[item.key]
-                        const groupLevel = dataItem._groupLevel
-                        let showReadonlyField
-
-                        if (groupingHierarchyModeAggregate) {
-                            showReadonlyField = enabledGrouping
-                                ? (groupLevel && (sortedGroupKeys[groupLevel - 1] === item.key || aggFunction)) ||
-                                  (!groupLevel && (!sortedGroupKeys.includes(item.key) || !dataItem._parentGroupPath))
-                                : true
-                        } else {
-                            showReadonlyField =
-                                isGroupingHierarchy && enabledGrouping
-                                    ? fieldShowCondition(item.key, dataItem, sortedGroupKeys, expandedParentRowKeys)
-                                    : true
-                        }
-
-                        const showExpandIcon =
-                            isGroupingField && dataItem[item.key] && enabledGrouping && showReadonlyField && !!dataItem.children
-                        const fieldGroupLevel = sortedGroupKeys.findIndex(sortedGroupKey => sortedGroupKey === item.key) + 1
-                        const countOfRecords = dataItem._countOfRecordsPerLevel?.[fieldGroupLevel] ?? 0
-                        const counterMode = processedMeta?.options?.groupingHierarchy?.counterMode || 'none'
-                        const showCounter =
-                            showExpandIcon &&
-                            fieldGroupLevel &&
-                            !editMode &&
-                            (counterMode === 'always' || (counterMode === 'collapsed' && !expanded))
-                        const showField = !!showReadonlyField || editMode
-                        const rightAlignment = numberFieldTypes.includes(item.type) && {
-                            justifyContent: 'flex-end'
-                        }
-
-                        const field = showField && (
-                            <FieldBaseThemeWrapper
-                                data-test="FIELD"
-                                data-test-field-type={item.type}
-                                data-test-field-title={item.label || item.title}
-                                data-test-field-key={item.key}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 4,
-                                    ...rightAlignment
-                                }}
-                            >
-                                {showExpandIcon && (
-                                    <ExpandIcon
-                                        className={styles.parentExpandIcon}
-                                        expanded={expanded}
-                                        onClick={event => {
-                                            event.preventDefault()
-                                            onParentExpand?.(!expanded, expandRowId)
-                                        }}
-                                        openIcon="up"
-                                        openRotate={90}
-                                        closeIcon="down"
-                                    />
-                                )}
-                                <Field
-                                    data={dataItem as DataItem}
-                                    bcName={bcName}
-                                    cursor={dataItem.id}
-                                    widgetName={widgetName}
-                                    widgetFieldMeta={item as WidgetListField}
-                                    readonly={!editMode}
-                                    forceFocus={editMode}
-                                    className={cn(editMode ? styles.fullWidth : styles.fitContentWidth)}
-                                />
-                                {showCounter ? <span className={styles.counter}>({countOfRecords})</span> : null}
-                            </FieldBaseThemeWrapper>
-                        )
-
-                        if (groupingHierarchyModeAggregate) {
-                            const backgroundEnabled =
-                                groupLevel &&
-                                (!sortedGroupKeys.slice(0, groupLevel).includes(item.key) || dataItem.id === totalRowKey) &&
-                                !!dataItem._aggFunctions
-                            const fieldElement = backgroundEnabled ? (
-                                <div
-                                    className={styles.aggCell}
-                                    style={{
-                                        backgroundColor: `rgba(${aggCellBgColorRgba}, ${getAggCellBgOpacity(dataItem.id, groupLevel)})`
-                                    }}
-                                >
-                                    {field}
-                                </div>
-                            ) : (
-                                field
-                            )
-
-                            return aggFunction ? (
-                                <Popover content={aggFunction} trigger="hover">
-                                    {fieldElement}
-                                </Popover>
-                            ) : (
-                                fieldElement
-                            )
-                        }
-
-                        return field
-                    },
+                    render: (text: string, dataItem: T & GroupingHierarchyCommonNode) => (
+                        <TableCell
+                            item={item}
+                            dataItem={dataItem}
+                            isGroupingHierarchy={isGroupingHierarchy}
+                            enabledGrouping={enabledGrouping}
+                            isEditMode={isEditMode}
+                            needHideActions={needHideActions}
+                            sortedGroupKeys={sortedGroupKeys}
+                            expandedParentRowKeys={expandedParentRowKeys}
+                            groupingHierarchyModeAggregate={groupingHierarchyModeAggregate}
+                            processedMeta={processedMeta}
+                            bcName={bcName}
+                            widgetName={widgetName}
+                            onParentExpand={onParentExpand}
+                        />
+                    ),
                     onHeaderCell: () => {
                         return {
                             'data-test-widget-list-header-column-title': item?.title,
@@ -662,9 +559,7 @@ function Table<T extends CustomDataItem>({
     }, [
         resultedFields,
         bcRowMeta?.fields,
-        processedMeta?.type,
-        processedMeta?.options?.groupingHierarchy?.fields,
-        processedMeta?.options?.groupingHierarchy?.counterMode,
+        processedMeta,
         closeButton.visibility,
         hideColumn,
         widgetName,
