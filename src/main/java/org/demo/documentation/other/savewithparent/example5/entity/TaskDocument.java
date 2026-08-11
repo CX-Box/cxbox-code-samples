@@ -21,7 +21,7 @@ public class TaskDocument extends BaseEntity {
 	@Column
 	private String fileId;
 
-	@Column
+	@Column(name = "file_name")
 	private String file;
 
 	@ManyToOne
