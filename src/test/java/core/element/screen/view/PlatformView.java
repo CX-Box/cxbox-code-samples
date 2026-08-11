@@ -5,6 +5,7 @@ import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.form.PlatformFormWidget;
+import core.element.widget.formpopup.PlatformFormPopupWidget;
 import core.element.widget.info.PlatformAdditionalInfoWidget;
 import core.element.widget.info.PlatformInfoWidget;
 import core.element.widget.list.realization.form.gh.PlatformGHWidgetInlineForm;
@@ -87,6 +88,18 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public StatsBlockWidget statBlockByName(String name) {
 		return new StatsBlockWidget(new CxBoxExpectations(), name, PlatformIdentifier.NAME);
+	}
+
+	public PlatformFormPopupWidget formPopup() {
+		return new PlatformFormPopupWidget(PlatformIdentifier.NAME, "");
+	}
+
+	public PlatformFormPopupWidget formPopup(String title) {
+		return new PlatformFormPopupWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformFormPopupWidget formPopupByName(String name) {
+		return new PlatformFormPopupWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {

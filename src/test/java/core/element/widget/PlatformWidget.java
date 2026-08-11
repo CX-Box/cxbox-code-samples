@@ -2,7 +2,9 @@ package core.element.widget;
 
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
+import core.element.widget.formpopup.PlatformFormPopupWidget;
 import core.element.widget.modal.ConfirmPopup;
+import core.element.widget.modal.ConfirmWithWidgetPopup;
 import core.element.widget.modal.ErrorPopup;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
@@ -23,6 +25,7 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 	@Getter(AccessLevel.PROTECTED)
 	private final Identifier identifier;
 
+	@Getter(AccessLevel.PROTECTED)
 	private final String textIdentifier;
 
 	public PlatformWidget(Identifier identifier, String textIdentifier) {
@@ -59,6 +62,13 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		return Allure.step("Confirm popup", step -> {
 			logTime(step);
 			return new ConfirmPopup<>(widget());
+		});
+	}
+
+	public ConfirmWithWidgetPopup confirmWithWidgetPopup(PlatformFormPopupWidget platformFormPopupWidget) {
+		return Allure.step("Confirm with widget popup", step -> {
+			logTime(step);
+			return new ConfirmWithWidgetPopup(platformFormPopupWidget);
 		});
 	}
 
