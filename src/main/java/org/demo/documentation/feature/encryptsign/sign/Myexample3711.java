@@ -18,7 +18,7 @@ import org.demo.documentation.feature.encryptsign.sign.enums.StatusSignEnum;
 public class Myexample3711 extends BaseEntity {
 
 
-	@Column
+	@Column(name = "file_name")
 	private String file;
 
 	@Column

@@ -17,7 +17,7 @@ import org.demo.documentation.feature.encryptsign.encrypt.enums.StatusEncryptEnu
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample3713 extends BaseEntity {
 
-	@Column
+	@Column(name = "file_name")
 	private String file;
 
 	@Column
