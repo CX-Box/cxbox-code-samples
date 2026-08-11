@@ -17,4 +17,5 @@ const mergedEpics = {
     ...dataEpics,
     ...routerEpics
 }
+
 export const rootEpic = combineEpics(...Object.values(mergedEpics))

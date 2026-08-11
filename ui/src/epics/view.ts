@@ -1,5 +1,5 @@
 import { RootEpic, RootState } from '@store'
-import { catchError, concat, EMPTY, filter, mergeMap, of, switchMap } from 'rxjs'
+import { catchError, concat, EMPTY, filter, from, mergeMap, of, switchMap } from 'rxjs'
 import { isAnyOf, nanoid } from '@reduxjs/toolkit'
 import {
     OperationError,
@@ -10,7 +10,8 @@ import {
     OperationTypeCrud,
     PendingValidationFailsFormat,
     PopupWidgetTypes,
-    utils
+    utils,
+    WidgetMeta
 } from '@cxbox-ui/core'
 import { EMPTY_ARRAY, FIELDS } from '@constants'
 import { actions, sendOperationSuccess, setBcCount } from '@actions'
@@ -21,15 +22,19 @@ import { AppWidgetGroupingHierarchyMeta, AppWidgetMeta } from '@interfaces/widge
 import { getGroupingHierarchyWidget } from '@utils/groupingHierarchy'
 import { DataItem } from '@cxbox-ui/schema'
 import { postInvokeHasRefreshBc } from '@utils/postInvokeHasRefreshBc'
-import { findWidgetHasCount } from '@components/ui/Pagination/utils'
 import { getInternalWidgets } from '@utils/getInternalWidgets'
 import { closePopupRules } from './utils/closePopup'
 import { isDefined } from '@utils/isDefined'
 import { SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT } from '@constants/pagination'
+import { getUniqueValues, pick, treeActions } from '@slices/tree'
+import { isTreeWidget } from '@constants/widget'
+import { findWidgetHasCount } from '@features/pagination/utils/common'
+import { getTreeFieldKeys } from '@utils/tree'
+import { DEFAULT_SEARCH_MODE } from '@constants/tree'
 
 const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
     const { widgets, pendingDataChanges } = state.view
-    const bcDictionary: { [bcName: string]: AppWidgetMeta } = {}
+    const bcDictionary: { [bcName: string]: WidgetMeta } = {}
 
     widgets.forEach(widget => {
         if (
@@ -77,7 +82,7 @@ const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
             const state = state$.value
 
             if (actions.selectView.match(action)) {
-                const widgets = state.view.widgets
+                const widgets = state.view.widgets as AppWidgetMeta[]
                 const alternativePagination = state.screen.alternativePagination
                 const data = state.data
                 const bcList = [...new Set(widgets.map(widget => widget.bcName))]
@@ -98,16 +103,16 @@ const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
             }
 
             let widgetWithCount = null
+            const widgets = state.view.widgets as AppWidgetMeta[]
             if (
                 actions.setAlternativePaginationType.match(action) &&
                 action.payload.type === SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT
             ) {
-                const widgets: AppWidgetMeta[] = state.view.widgets
                 widgetWithCount = widgets?.find(item => item.name === action.payload.widgetName)
             }
 
             if (actions.bcFetchDataSuccess.match(action)) {
-                widgetWithCount = findWidgetHasCount(action.payload.bcName, state.view.widgets, state.screen.alternativePagination)
+                widgetWithCount = findWidgetHasCount(action.payload.bcName, widgets, state.screen.alternativePagination)
             }
 
             if (widgetWithCount) {
@@ -505,7 +510,7 @@ const checkWidgetsEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
         filter(actions.selectView.match),
         mergeMap(() => {
-            const widgets = state$.value.view.widgets
+            const widgets = state$.value.view.widgets as AppWidgetMeta[]
             const widgetsMap = widgets.reduce((acc, widget) => {
                 acc[widget.name] = widget
                 return acc
@@ -539,6 +544,38 @@ const checkWidgetsEpic: RootEpic = (action$, state$, { api }) =>
         })
     )
 
+export const initTreeEpic: RootEpic = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(actions.selectView.match),
+        mergeMap(action => {
+            const state = state$.value
+            const widgets = state.view.widgets as AppWidgetMeta[] | undefined
+            const treeWidgets = widgets?.filter(isTreeWidget)
+
+            if (!treeWidgets || treeWidgets.length === 0) {
+                return EMPTY
+            }
+
+            const treeBcNames = getUniqueValues(treeWidgets.map(w => w.bcName).filter(Boolean))
+
+            const initActions = treeBcNames.flatMap(bcName => {
+                const treeWidget = treeWidgets.find(widget => widget.bcName === bcName)
+                const treeFieldKeys = getTreeFieldKeys(treeWidget)
+
+                return [
+                    treeActions.initTree({
+                        bcName,
+                        nodeState: pick(state.screen.bo.bc[bcName], ['loading', 'page', 'hasNext']),
+                        searchMode: treeWidget?.options?.tree?.searchMode ?? DEFAULT_SEARCH_MODE,
+                        ...treeFieldKeys
+                    })
+                ]
+            })
+
+            return from(initActions)
+        })
+    )
+
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
@@ -549,5 +586,6 @@ export const viewEpics = {
     updateRowMetaForRelatedBcEpic,
     applyPendingPostInvokeEpic,
     collapseWidgetsByDefaultEpic,
-    checkWidgetsEpic
+    checkWidgetsEpic,
+    initTreeEpic
 }

@@ -1,9 +1,10 @@
 import { CustomWidgetTypes } from '@interfaces/widget'
 import { WidgetTypes } from '@cxbox-ui/core'
 
-export const DEFAULT_PAGE_LIMIT = 5
+export const DEFAULT_PAGE = 1
+export const DEFAULT_PAGE_LIMIT = 1
 
-export const AVAILABLE_LIMITS_LIST = [5, 10, 15, 20]
+export const AVAILABLE_LIMITS_LIST = [1, 5, 10, 15, 20]
 
 export const PAGINATION_MODES = {
     nextAndPreviousWithHasNext: 'nextAndPreviousWithHasNext',
@@ -25,6 +26,9 @@ export const SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT = PAGINATION_MODES.nex
 
 export const WIDGETS_WITH_SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT: (WidgetTypes | CustomWidgetTypes)[] = [
     WidgetTypes.List,
+    // CustomWidgetTypes.Tree,
+    // CustomWidgetTypes.AssocTreePopup,
+    // CustomWidgetTypes.PickTreePopup,
     CustomWidgetTypes.GroupingHierarchy,
     CustomWidgetTypes.DashboardList,
     WidgetTypes.AssocListPopup,

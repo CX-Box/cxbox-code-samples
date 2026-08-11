@@ -44,7 +44,10 @@ export enum CustomWidgetTypes {
     CalendarList = 'CalendarList',
     CalendarYearList = 'CalendarYearList',
     CardList = 'CardList',
-    CardCarouselList = 'CardCarouselList'
+    CardCarouselList = 'CardCarouselList',
+    Tree = 'Tree',
+    AssocTreePopup = 'AssocTreePopup',
+    PickTreePopup = 'PickTreePopup'
 }
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
@@ -52,6 +55,8 @@ export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
     CustomWidgetTypes.GroupingHierarchy,
     WidgetTypes.PickListPopup,
     WidgetTypes.AssocListPopup,
+    CustomWidgetTypes.PickTreePopup,
+    CustomWidgetTypes.AssocTreePopup,
     CustomWidgetTypes.CalendarList,
     CustomWidgetTypes.CalendarYearList,
     CustomWidgetTypes.CardList,
@@ -135,6 +140,8 @@ export type CryptoGeneratorItem = {
     encryptedFileBaseNameKey?: string
 }
 
+export type TreeSearchModes = 'highlight' | 'hide' | 'collapse'
+
 export interface AppWidgetMeta extends WidgetMeta {
     personalFields?: TableSettingsItem | null // TODO make mandatory
     options?: WidgetOptions & {
@@ -199,6 +206,13 @@ export interface AppWidgetMeta extends WidgetMeta {
 
         calendar?: CalendarOption
         cryptoGenerator?: CryptoGeneratorItem[]
+        tree?: {
+            parentFieldKey?: string // default: parentId
+            isLeafFieldKey?: string // default: isLeaf
+            searchMode?: TreeSearchModes
+            selection?: 'node' | 'nodeAndLeaf' | 'leaf'
+            dataLossWarning?: 'hiddenOnly' | 'always' | 'never'
+        }
     }
 }
 
