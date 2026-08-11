@@ -1,9 +1,11 @@
 services:
 
   cxbox-code-samples-postgres:
-    image: postgres:17.4
+    image: msvobodin/postgres-ru:13.8
     environment:
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_PASSWORD: postgres
+      LANG: ru_RU.UTF-8
+      LC_MESSAGES: ru_RU.UTF-8
     expose:
       - 5432
     ports:
