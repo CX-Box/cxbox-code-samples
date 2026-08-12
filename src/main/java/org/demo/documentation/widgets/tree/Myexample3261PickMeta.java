@@ -20,7 +20,7 @@ public class Myexample3261PickMeta extends FieldMetaBuilder<Myexample3261PickDTO
 	@Override
 	public void buildIndependentMeta(FieldsMeta<Myexample3261PickDTO> fields, InnerBcDescription bcDescription,
 	                                 Long parentId) {
-
+		fields.enableFilter(Myexample3261PickDTO_.parentId);
 	}
 
 }
