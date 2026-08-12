@@ -1,4 +1,4 @@
-package org.demo.repository.core;
+package org.demo.documentation.widgets.tree;
 
 import org.demo.documentation.feature.encryptsign.sign.Myexample3711;
 import org.springframework.data.jpa.repository.JpaRepository;
