@@ -5,6 +5,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.widgets.tree.tree.Myexample3261;
 
@@ -15,6 +16,7 @@ public class Myexample3261Pick0DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "department", provider = StringValueProvider.class)
 	private String department;
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
 	private Long parentId;
 	private Boolean	isLeaf;
 
