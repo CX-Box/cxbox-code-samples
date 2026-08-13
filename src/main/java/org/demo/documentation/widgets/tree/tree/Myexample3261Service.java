@@ -9,9 +9,11 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.tree.Myexample3261Repository;
+import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 @Service
 @Getter
@@ -21,13 +23,9 @@ public class Myexample3261Service extends VersionAwareResponseService<Myexample3
 	@Getter(onMethod_ = @Override)
 	private final Class<Myexample3261MetaBuilder> meta = Myexample3261MetaBuilder.class;
 
-	private final Myexample3261Repository myexample3261Repository;
+	private final MyEntity3261Repository myexample3261Repository;
 
 
-	@Override
-	protected Specification<Myexample3261> getSpecification(BusinessComponent bc) {
-		return super.getSpecification(bc);
-	}
 
 	@Override
 	protected CreateResult<Myexample3261DTO> doCreateEntity(Myexample3261 entity, BusinessComponent bc) {
@@ -48,6 +46,12 @@ public class Myexample3261Service extends VersionAwareResponseService<Myexample3
 				.delete(dlt -> dlt.text("Delete"))
 				.save(sv -> sv.text("Save"))
 				.build();
+	}
+	@Override
+	protected Specification<Myexample3261> getSpecification(BusinessComponent bc) {
+		var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
+		var specification = super.getSpecification(bc);
+		return fullTextSearchFilterParam.map(e -> and(myexample3261Repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
 	}
 
 }

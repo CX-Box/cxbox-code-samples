@@ -1,21 +1,21 @@
 {
   "name": "MyExample3260List",
   "title": "List",
-  "type": "List",
+  "type": "Form",
   "bc": "myexample3260",
   "fields": [
     {
-      "title": "Department Pick",
+      "label": "Department Pick",
       "key": "department",
       "type": "pickList",
       "popupBcName": "myexample3261Pick",
       "pickMap": {
-        "department": "department",
-        "departmentId": "id"
+        "departmentId": "id",
+        "department": "department"
       }
     },
     {
-      "title": "Departments Assoc",
+      "label": "Departments Assoc",
       "key": "departments",
       "type": "multivalue",
       "displayedKey": "departmentsDisplayedKey",
@@ -24,6 +24,26 @@
     }
   ],
   "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "department",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "departments",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
     "actionGroups": {
       "include": [
         "associate"

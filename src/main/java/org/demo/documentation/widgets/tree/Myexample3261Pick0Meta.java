@@ -21,6 +21,9 @@ public class Myexample3261Pick0Meta extends FieldMetaBuilder<Myexample3261Pick0D
 	public void buildIndependentMeta(FieldsMeta<Myexample3261Pick0DTO> fields, InnerBcDescription bcDescription,
 	                                 Long parentId) {
 		fields.enableFilter(Myexample3261Pick0DTO_.parentId);
+		fields.enableFilter(Myexample3261Pick0DTO_.id);
+		fields.enableFilter(Myexample3261Pick0DTO_.isLeaf);
+		fields.enableFilter(Myexample3261Pick0DTO_.department);
 	}
 
 }

@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 public class Myexample3260DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "departmentEntity.id", provider = LongValueProvider.class)
-	private Long department;
+	@SearchParameter(name = "departmentEntity.department")
+	private String department;
 
 	@SearchParameter(name = "departmentEntity.id", provider = LongValueProvider.class)
 	private Long departmentId;
@@ -37,7 +37,7 @@ public class Myexample3260DTO extends DataResponseDTO {
 				.map(e -> e.getId())
 				.orElse(null);
 		this.department = Optional.ofNullable(entity.getDepartmentEntity())
-				.map(e -> e.getId())
+				.map(e -> e.getDepartment())
 				.orElse(null);
 		this.departments = entity.getDepartmentsList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
