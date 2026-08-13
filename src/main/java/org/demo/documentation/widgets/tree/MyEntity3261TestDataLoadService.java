@@ -27,9 +27,9 @@ public class MyEntity3261TestDataLoadService {
 		repository3261.deleteAll();
 		repository3260.deleteAll();
 
-		  Myexample3261 myexample1 = new Myexample3261()
-				  .setDepartment("IT Department")
-				  .setIsLeaf(false);
+		Myexample3261 myexample1 = new Myexample3261()
+				.setDepartment("IT Department")
+				.setIsLeaf(false);
 		repository3261.save(myexample1);
 		Myexample3261 myexample2 = new Myexample3261()
 				.setParentId(myexample1.getId())
@@ -54,10 +54,10 @@ public class MyEntity3261TestDataLoadService {
 
 		repository3261.save(myexample5);
 		Myexample3261 myexample6 =
-		 new Myexample3261()
-				.setParentId(myexample5.getId())
-				.setDepartment("Anna White")
-				.setIsLeaf(true);
+				new Myexample3261()
+						.setParentId(myexample5.getId())
+						.setDepartment("Anna White")
+						.setIsLeaf(true);
 		repository3261.save(myexample6);
 
 		Myexample3261 myexample7 = new Myexample3261()
@@ -89,7 +89,64 @@ public class MyEntity3261TestDataLoadService {
 				.setParentId(myexample10.getId())
 				.setDepartment("Maria Lopez")
 				.setIsLeaf(true));
-		
+
+
+		Myexample3261 parent1 = new Myexample3261()
+				.setDepartment("IT Department")
+				.setIsLeaf(false);
+
+		repository3261.save(parent1);
+
+		int parent1Teams = 20;
+		int employeesPerTeam = 14;
+
+		for (int teamIndex = 1; teamIndex <= parent1Teams; teamIndex++) {
+
+			Myexample3261 team = new Myexample3261()
+					.setParentId(parent1.getId())
+					.setDepartment("IT Team " + teamIndex)
+					.setIsLeaf(false);
+
+			repository3261.save(team);
+
+			for (int employeeIndex = 1; employeeIndex <= employeesPerTeam; employeeIndex++) {
+
+				repository3261.save(new Myexample3261()
+						.setParentId(team.getId())
+						.setDepartment("IT Employee " + teamIndex + "-" + employeeIndex)
+						.setIsLeaf(true));
+			}
+		}
+
+
+		Myexample3261 parent2 = new Myexample3261()
+				.setDepartment("Finance Department")
+				.setIsLeaf(false);
+
+		repository3261.save(parent2);
+
+		int parent2Teams = 20;
+		int financeEmployeesPerTeam = 9;
+
+
+		for (int teamIndex = 1; teamIndex <= parent2Teams; teamIndex++) {
+
+			Myexample3261 team = new Myexample3261()
+					.setParentId(parent2.getId())
+					.setDepartment("Finance Team " + teamIndex)
+					.setIsLeaf(false);
+
+			repository3261.save(team);
+
+			for (int employeeIndex = 1; employeeIndex <= financeEmployeesPerTeam; employeeIndex++) {
+
+				repository3261.save(new Myexample3261()
+						.setParentId(team.getId())
+						.setDepartment("Finance Employee " + teamIndex + "-" + employeeIndex)
+						.setIsLeaf(true));
+			}
+		}
+
 		repository3260.save(new Myexample3260());
 	}
 
