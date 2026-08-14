@@ -5,6 +5,8 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.tree.any.Myexample3261AnyService;
+import org.demo.documentation.widgets.tree.any.data.departments.MydepartmentsService;
 import org.demo.documentation.widgets.tree.tree.Myexample3261Service;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,9 @@ public enum CxboxMyExample3260Controller implements EnumBcIdentifier {
 	myexample3260(Myexample3260Service.class),
 		myexample3261Pick0(myexample3260, Myexample3261Pick0Service.class),
 		myexample3260Assoc(myexample3260, Myexample3261Pick0Service.class),
-		myexample3261Pick(myexample3260, Myexample3261PickService.class);
+		myexample3261Pick(myexample3260, Myexample3261PickService.class),
+	myexample3261any(Myexample3261AnyService.class),
+	mydepartments(MydepartmentsService.class);
 	// @formatter:on
 
 	public static final Holder<CxboxMyExample3260Controller> Holder = new Holder<>(CxboxMyExample3260Controller.class);

@@ -26,7 +26,6 @@ public class Myexample3261Service extends VersionAwareResponseService<Myexample3
 	private final MyEntity3261Repository myexample3261Repository;
 
 
-
 	@Override
 	protected CreateResult<Myexample3261DTO> doCreateEntity(Myexample3261 entity, BusinessComponent bc) {
 		return new CreateResult<>(entityToDto(bc, myexample3261Repository.save(entity)));
@@ -34,6 +33,9 @@ public class Myexample3261Service extends VersionAwareResponseService<Myexample3
 
 	@Override
 	protected ActionResultDTO<Myexample3261DTO> doUpdateEntity(Myexample3261 entity, Myexample3261DTO data, BusinessComponent bc) {
+		setIfChanged(data, Myexample3261DTO_.mnemonic, entity::setMnemonic);
+		setIfChanged(data, Myexample3261DTO_.code, entity::setCode);
+		setIfChanged(data, Myexample3261DTO_.description, entity::setDescription);
 		setIfChanged(data, Myexample3261DTO_.department, entity::setDepartment);
 		return new ActionResultDTO<>(entityToDto(bc, myexample3261Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));
@@ -47,6 +49,7 @@ public class Myexample3261Service extends VersionAwareResponseService<Myexample3
 				.save(sv -> sv.text("Save"))
 				.build();
 	}
+
 	@Override
 	protected Specification<Myexample3261> getSpecification(BusinessComponent bc) {
 		var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);

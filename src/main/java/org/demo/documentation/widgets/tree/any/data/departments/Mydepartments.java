@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.tree;
+package org.demo.documentation.widgets.tree.any.data.departments;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,28 +11,14 @@ import org.cxbox.model.core.entity.BaseEntity;
 
 
 @Entity
-@Table(name = "MYEXAMPLE3261")
+@Table(name = "MYDEPARTMENTS")
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
-public class Myexample3261 extends BaseEntity {
+public class Mydepartments extends BaseEntity {
+
 
 	@Column
-	private String department;
-
-	@Column
-	private Long parentId;
-
-	@Column
-	private Boolean isLeaf;
-
-	@Column
-	private String description;
-
-	@Column
-	private String code;
-
-	@Column
-	private String mnemonic;
+	private String departmentName;
 }

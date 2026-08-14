@@ -24,13 +24,25 @@ public class Myexample3261DTO extends DataResponseDTO {
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
 	private Long parentId;
 
-	private Boolean	isLeaf;
+	private Boolean isLeaf;
+
+	@SearchParameter(name = "description", provider = StringValueProvider.class)
+	private String description;
+
+	@SearchParameter(name = "code", provider = StringValueProvider.class)
+	private String code;
+
+	@SearchParameter(name = "mnemonic", provider = StringValueProvider.class)
+	private String mnemonic;
 
 	public Myexample3261DTO(Myexample3261 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.department = entity.getDepartment();
 		this.parentId = entity.getParentId();
 		this.isLeaf = entity.getIsLeaf();
+		this.description = entity.getDescription();
+		this.code = entity.getCode();
+		this.mnemonic = entity.getMnemonic();
 	}
 
 }
