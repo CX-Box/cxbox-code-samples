@@ -1,40 +1,36 @@
-import React from 'react'
-import { ColumnProps, TableProps as AntdTableProps } from 'antd/es/table'
-import styles from './Table.less'
-import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
-import Operations from '../../Operations/Operations'
-import { WidgetListField } from '@cxbox-ui/schema'
-import ColumnTitle from '@components/ColumnTitle/ColumnTitle'
-import { RowMetaField } from '@interfaces/rowMeta'
-import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
-import StandardTable from '@components/widgets/Table/StandardTable'
-import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
-import { TableCell } from '@components/widgets/Table/TableCell'
-import { RESTORE_ANCESTORS_ID, ROW_KEY, TREE_ROOT_ID } from '@components/widgets/Table/constants'
-import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
-import { Spin, Typography, Checkbox, Icon } from 'antd'
-import { useTranslation } from 'react-i18next'
-import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
-import { useWidgetPaginationLimit } from '@features/pagination/hooks/useWidgetPaginationLimit'
-import Limit from '@components/ui/Pagination/components/Limit'
-import Button from '@components/ui/Button/Button'
-import { isDefined } from '@utils/isDefined'
-import { useAppSelector } from '@store'
-import { selectBc } from '@selectors/selectors'
-import { useDispatch } from 'react-redux'
-import { actions } from '@actions'
+import React, { ReactNode, useCallback, useMemo } from 'react'
+import { TableProps as AntdTableProps } from 'antd/es/table'
 import { TableEventListeners } from 'antd/lib/table/interface'
+import { actions } from '@actions'
+import Operations from '@components/Operations/Operations'
+import { RESTORE_ANCESTORS_ID, ROW_KEY, TREE_SEARCH_MODES } from '@components/widgets/Table/constants'
+import StandardTable from '@components/widgets/Table/StandardTable'
+import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
+import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
+import { buildTreeTableColumns } from '@components/widgets/Table/tree/utils/buildTreeTableColumns'
+import { useWidgetPaginationLimit } from '@features/pagination/hooks/useWidgetPaginationLimit'
+import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
+import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta } from '@interfaces/widget'
+import { selectBc, selectBcTree } from '@selectors/selectors'
+import { useAppSelector } from '@store'
+import { useDispatch } from 'react-redux'
+import styles from './Table.less'
+import ColumnOrderSettingModal from '@components/widgets/Table/components/ColumnOrderSettingModal'
+import FilterSettingModal from '@components/widgets/Table/components/FilterSettingModal'
+import { useVisibility } from '@hooks/useVisibility'
+import { useTableSetting, useTableSettingReset, useTableSettingResultedFields } from '@components/widgets/Table/hooks/useTableSetting'
+import { usePresetFilterSettings } from '@components/widgets/Table/hooks/usePresetFilterSettings'
+import TableSettings from '@components/widgets/Table/components/TableSettings'
+import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
+import { treeActions } from '@slices/tree'
+import { Lookup } from '@utils/Lookup'
 
 interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
     treeRowSelection?: ReturnType<typeof useTreeRowSelection>
     disableRowSelection?: boolean
-}
-
-const INDENT_SIZE = 20
-
-const getLevel = (dataItem: any): number => {
-    return dataItem._level ?? 0
+    settingsComponent?: ReactNode
 }
 
 function TreeTable<T extends CustomDataItem>({
@@ -42,22 +38,43 @@ function TreeTable<T extends CustomDataItem>({
     onRow,
     rowSelection,
     treeRowSelection,
-    disableRowSelection,
+    disableRowSelection = true,
     rowClassName,
+    settingsComponent: outerSettingsComponent,
     ...rest
 }: TreeTableProps<T>) {
-    const { t } = useTranslation()
     const { bcName, name: widgetName } = widget
     const bc = useAppSelector(state => selectBc(state, bcName))
     const dispatch = useDispatch()
     const bcRowMeta = useRowMetaWithCache(bcName, true)
+    const parentRef = React.useRef()
+    const currentSearchMode = useAppSelector(state => selectBcTree(state, bcName)?.searchMode)
 
     const { dataSource, handleExpand, expandedRowKeys, createFetchNodesHandler, restoreAncestorPaths } = useTableTree(widget)
     const defaultTreeRowSelection = useTreeRowSelection(widgetName)
     const { selectNode, getNodeSelectionState } = treeRowSelection ?? defaultTreeRowSelection
-    const parentRef = React.useRef()
-
     const { changePageLimit, hideLimitOptions, value: pageLimit, options } = useWidgetPaginationLimit(widget)
+    const showColumnSettings = !!widget?.options?.additional?.enabled
+    const resetSetting = useTableSettingReset(widget)
+    const firstColumn = widget?.fields?.[0] ?? undefined
+    const blockedFields = firstColumn.key ? [] : []
+
+    const closeButton = useVisibility(false)
+    const transfer = useVisibility(false)
+    const filterSetting = useVisibility(false)
+
+    const controlColumns = useMemo(() => {
+        return []
+    }, [])
+
+    const { resultedFields } = useTableSettingResultedFields(widget, blockedFields)
+
+    const handleHeaderRow = useCallback(() => {
+        return {
+            'data-test-widget-tree-header': true,
+            onDoubleClick: showColumnSettings ? closeButton.toggleVisibility : undefined
+        }
+    }, [showColumnSettings, closeButton?.toggleVisibility])
 
     const handleRow = React.useCallback(
         (record: T, index: number) => {
@@ -85,241 +102,119 @@ function TreeTable<T extends CustomDataItem>({
         [bc?.cursor, bc?.name, dispatch, onRow]
     )
 
-    const columns: Array<ColumnProps<any>> = React.useMemo(() => {
-        const showSelection = !disableRowSelection
-
-        return (
-            widget.fields?.map((item, index) => {
-                const fieldRowMeta = bcRowMeta?.fields?.find(field => field.key === item.key)
-                const isGroupingHierarchy = (widget?.type as string) === CustomWidgetTypes.GroupingHierarchy
-
-                const isFirstColumn = index === 0
-
-                let titleContent: React.ReactNode = (
-                    <ColumnTitle
-                        showCloseButton={false}
-                        widgetName={widgetName}
-                        widgetMeta={item as WidgetListField}
-                        rowMeta={fieldRowMeta as RowMetaField}
-                    />
-                )
-
-                const { checked, indeterminate, implicit } = getNodeSelectionState(TREE_ROOT_ID)
-
-                if (isFirstColumn && showSelection) {
-                    titleContent = (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Checkbox
-                                style={{ marginRight: 8 }}
-                                className={implicit ? styles.implicitCheckboxMuted : ''}
-                                checked={checked}
-                                indeterminate={indeterminate}
-                                onChange={e => selectNode(TREE_ROOT_ID, e.target.checked)}
-                                onClick={e => e.stopPropagation()}
-                            />
-                            {titleContent}
-                        </div>
-                    )
-                }
-
-                return {
-                    title: titleContent,
-                    key: item.key,
-                    dataIndex: item.key,
-                    width: item.width,
-                    render: (text: string, dataItem: T & TableTreeNode) => {
-                        const level = getLevel(dataItem)
-                        const paddingLeft = level * INDENT_SIZE
-
-                        const renderPrefix = () => {
-                            if (!isFirstColumn) {
-                                return null
-                            }
-
-                            const isExpanded = expandedRowKeys.includes(dataItem.id as string)
-
-                            let expandIcon = null
-                            if (!dataItem._treeIsLeaf && dataItem._recordType === 'node') {
-                                expandIcon = (
-                                    <Icon
-                                        type={isExpanded ? 'down' : 'right'}
-                                        style={{ marginRight: 8, cursor: 'pointer' }}
-                                        onClick={e => {
-                                            e.stopPropagation()
-                                            handleExpand(!isExpanded, dataItem as any)
-                                        }}
-                                    />
-                                )
-                            } else {
-                                expandIcon = <span style={{ display: 'inline-block', width: 22 }} />
-                            }
-
-                            const { checked, indeterminate, implicit, disabled } = getNodeSelectionState(dataItem)
-
-                            let checkbox = null
-
-                            if (showSelection && dataItem._recordType === 'node') {
-                                checkbox = (
-                                    <Checkbox
-                                        style={{ marginRight: 8 }}
-                                        className={implicit ? styles.implicitCheckboxMuted : ''}
-                                        checked={checked}
-                                        indeterminate={indeterminate}
-                                        disabled={disabled}
-                                        onChange={e => selectNode(dataItem as any, e.target.checked)}
-                                        onClick={e => e.stopPropagation()}
-                                    />
-                                )
-                            }
-
-                            return (
-                                <span style={{ paddingLeft, display: 'flex', alignItems: 'center' }}>
-                                    {expandIcon}
-                                    {checkbox}
-                                </span>
-                            )
-                        }
-
-                        if (
-                            dataItem._recordType === 'loading' ||
-                            dataItem._recordType === 'show-more' ||
-                            dataItem._recordType === 'empty' ||
-                            dataItem._recordType === 'restore-ancestors'
-                        ) {
-                            if (isFirstColumn) {
-                                let content = null
-
-                                const { checked, indeterminate, implicit, disabled } = getNodeSelectionState(dataItem)
-
-                                let checkbox = null
-
-                                if (showSelection && dataItem._recordType === 'show-more') {
-                                    checkbox = (
-                                        <Checkbox
-                                            style={{ marginRight: 8 }}
-                                            className={implicit ? styles.implicitCheckboxMuted : ''}
-                                            checked={checked}
-                                            indeterminate={indeterminate}
-                                            disabled={disabled}
-                                            onChange={e => selectNode(dataItem as any, e.target.checked)}
-                                            onClick={e => e.stopPropagation()}
-                                        />
-                                    )
-                                }
-
-                                if (dataItem._recordType === 'loading') {
-                                    content = (
-                                        <span data-pseudo-row={true}>
-                                            <Spin size="small" />
-                                        </span>
-                                    )
-                                } else if (dataItem._recordType === 'empty') {
-                                    content = (
-                                        <span data-pseudo-row={true}>
-                                            <Typography.Text type="secondary">{t('No Data')}</Typography.Text>
-                                        </span>
-                                    )
-                                } else if (dataItem._recordType === 'show-more') {
-                                    content = (
-                                        <span data-pseudo-row={true}>
-                                            {checkbox}
-                                            <Button
-                                                type="default"
-                                                size="small"
-                                                disabled={dataItem._disabled}
-                                                loading={dataItem._loading}
-                                                onClick={createFetchNodesHandler(dataItem.parentId, true)}
-                                            >
-                                                ...
-                                            </Button>
-                                        </span>
-                                    )
-                                } else if (dataItem._recordType === 'restore-ancestors') {
-                                    content = (
-                                        <span data-pseudo-row={true} style={{ color: '#fa8c16' }}>
-                                            <Button
-                                                style={{ marginLeft: -22, marginRight: 8 }}
-                                                type="default"
-                                                size="small"
-                                                disabled={dataItem._disabled}
-                                                loading={dataItem._loading}
-                                                onClick={event => {
-                                                    event.stopPropagation()
-                                                    restoreAncestorPaths(
-                                                        dataItem?.children?.map(i => i._treeParentId).filter(isDefined) ?? []
-                                                    )
-                                                }}
-                                            >
-                                                <Icon type="search" style={{ color: '#fa8c16' }} />
-                                            </Button>
-                                            {t('Path not fully restored')}
-                                        </span>
-                                    )
-                                }
-
-                                return (
-                                    <div style={{ display: 'flex', alignItems: 'center' }} data-pseudo-row={true}>
-                                        <span style={{ paddingLeft: paddingLeft + 22 }} />
-                                        {content}
-                                    </div>
-                                )
-                            }
-
-                            return null
-                        }
-
-                        const cellContent = (
-                            <TableCell
-                                item={item}
-                                dataItem={dataItem as any}
-                                isGroupingHierarchy={isGroupingHierarchy}
-                                enabledGrouping={false}
-                                isEditMode={() => false}
-                                needHideActions={() => false}
-                                sortedGroupKeys={[]}
-                                expandedParentRowKeys={[]}
-                                groupingHierarchyModeAggregate={false}
-                                processedMeta={widget}
-                                bcName={bcName}
-                                widgetName={widgetName}
-                            />
-                        )
-
-                        if (isFirstColumn) {
-                            return (
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    {renderPrefix()}
-                                    {cellContent}
-                                </div>
-                            )
-                        }
-
-                        return cellContent
-                    },
-                    onHeaderCell: () => {
-                        return {
-                            'data-test-widget-list-header-column-title': item?.title,
-                            'data-test-widget-list-header-column-type': item?.type,
-                            'data-test-widget-list-header-column-key': item?.key
-                        }
-                    }
-                }
-            }) ?? []
-        )
-    }, [
+    const { allFields, currentAdditionalFields, changeOrder, changeColumnsVisibility } = useTableSetting(
         widget,
-        bcRowMeta?.fields,
-        widgetName,
-        bcName,
-        expandedRowKeys,
-        getNodeSelectionState,
-        handleExpand,
-        selectNode,
-        t,
-        createFetchNodesHandler,
-        restoreAncestorPaths,
-        disableRowSelection
-    ])
+        blockedFields,
+        rowSelection?.type,
+        controlColumns
+    )
+
+    const hideColumn = useCallback((fieldKey: string) => changeColumnsVisibility([fieldKey], false), [changeColumnsVisibility])
+
+    const { saveCurrentFiltersAsGroup, filterGroups, removeFilterGroup, filtersExist } = usePresetFilterSettings(bcName)
+
+    const handleSaveFilterGroup = useCallback(
+        (values: { name: string }) => {
+            saveCurrentFiltersAsGroup(values.name)
+        },
+        [saveCurrentFiltersAsGroup]
+    )
+
+    const exportConfig = widget.options?.export
+    const showExport = exportConfig?.enabled
+    const showSaveFiltersButton = widget.options?.filterSetting?.enabled
+    const showPaginationLimit = !hideLimitOptions
+    const showSettings = showSaveFiltersButton || showColumnSettings || showExport || showPaginationLimit
+
+    const { exportTable } = useExportTable({
+        bcName: bcName,
+        fields: resultedFields,
+        title: exportConfig?.title ?? widget.title
+    })
+
+    const handleChangeSearchMode = useCallback(
+        (searchMode: string) => {
+            if (!Lookup.has(TREE_SEARCH_MODES, searchMode)) {
+                return
+            }
+
+            dispatch(treeActions.changeSearchMode({ bcName, searchMode }))
+        },
+        [bcName, dispatch]
+    )
+
+    const settings =
+        outerSettingsComponent || showSettings ? (
+            <TableSettings
+                showSearchMode={true}
+                searchMode={currentSearchMode}
+                onChangeSearchMode={handleChangeSearchMode}
+                customSettings={outerSettingsComponent}
+                showSettings={showSettings}
+                showColumnSettings={showColumnSettings}
+                showExport={showExport}
+                showSaveFiltersButton={showSaveFiltersButton}
+                enabledGrouping={false}
+                isGroupingHierarchy={false}
+                isIncorrectLimit={false}
+                bcPageLimit={0}
+                bcCountForShowing={0}
+                showUp={false}
+                onChangeColumns={transfer.toggleVisibility}
+                onResetColumns={resetSetting}
+                onExport={exportTable}
+                onSaveFilters={filterSetting.toggleVisibility}
+                onCollapseAll={() => false}
+                onChangeGroupingMode={() => false}
+                onScrollToTop={() => false}
+                showPaginationLimit={showPaginationLimit}
+                availableLimitsList={options}
+                paginationLimit={pageLimit}
+                onChangePaginationLimit={changePageLimit}
+            />
+        ) : null
+
+    const columns = React.useMemo(
+        () =>
+            buildTreeTableColumns<T>({
+                showCloseButton: closeButton.visibility,
+                hideColumn: hideColumn,
+                fields: resultedFields,
+                widget,
+                rowMetaFields: bcRowMeta?.fields,
+                expandedRowKeys,
+                showSelection: !disableRowSelection,
+                selectNode,
+                getNodeSelectionState,
+                handleExpand,
+                createFetchNodesHandler,
+                restoreAncestorPaths
+            }),
+        [
+            bcRowMeta?.fields,
+            closeButton.visibility,
+            createFetchNodesHandler,
+            disableRowSelection,
+            expandedRowKeys,
+            getNodeSelectionState,
+            handleExpand,
+            hideColumn,
+            restoreAncestorPaths,
+            resultedFields,
+            selectNode,
+            widget
+        ]
+    )
+
+    const getRowClassName = React.useCallback(
+        (record: T, index: number) => {
+            const originalClassName = rowClassName?.(record, index)
+            const filterMatchClassName = (record as unknown as TableTreeNode)._matchesFilter ? styles.treeFilterMatch : ''
+
+            return [originalClassName, filterMatchClassName].filter(Boolean).join(' ')
+        },
+        [rowClassName]
+    )
 
     return (
         <div className={styles.tableContainer}>
@@ -330,23 +225,37 @@ function TreeTable<T extends CustomDataItem>({
                 expandedRowKeys={[RESTORE_ANCESTORS_ID, ...expandedRowKeys]}
                 wrapperRef={parentRef as any}
                 widgetName={widgetName}
+                onColumnDragEnd={showColumnSettings ? changeOrder : undefined}
                 columns={columns}
                 dataSource={dataSource as unknown as T[]}
                 rowKey={ROW_KEY}
                 expandIconColumnIndex={-1}
                 hidePagination={true}
                 indentSize={0}
-                rowSelection={undefined}
-                rowClassName={(record, index) => {
-                    const originalClassName = rowClassName?.(record, index)
-                    return [originalClassName, (record as unknown as TableTreeNode)._matchesFilter ? styles.treeFilterMatch : '']
-                        .filter(Boolean)
-                        .join(' ')
-                }}
+                rowSelection={rowSelection}
+                rowClassName={getRowClassName}
                 onRow={handleRow}
+                settingsRender={settings}
+                onHeaderRow={handleHeaderRow}
                 {...rest}
             />
-            {!hideLimitOptions && <Limit disabled={false} value={pageLimit} onChange={changePageLimit} total={null} options={options} />}
+
+            <ColumnOrderSettingModal
+                visible={transfer.visibility}
+                onCancel={transfer.toggleVisibility}
+                dataSource={allFields}
+                targetKeys={currentAdditionalFields}
+                onChange={changeColumnsVisibility}
+            />
+
+            <FilterSettingModal
+                filtersExist={filtersExist}
+                onDelete={removeFilterGroup}
+                filterGroups={filterGroups}
+                visible={filterSetting.visibility}
+                onCancel={filterSetting.toggleVisibility}
+                onSubmit={handleSaveFilterGroup}
+            />
         </div>
     )
 }

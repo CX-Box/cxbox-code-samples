@@ -47,7 +47,7 @@ function PassiveAssocTreePopup({ meta }: AssocTreePopupProps) {
                 </div>
             }
         >
-            <TreeTable meta={meta} treeRowSelection={{ selectNode, ...treeRowSelection }} />
+            <TreeTable meta={meta} treeRowSelection={{ selectNode, ...treeRowSelection }} disableRowSelection={false} />
         </Popup>
     )
 }
@@ -111,7 +111,7 @@ function ActiveAssocTreePopup({ meta }: AssocTreePopupProps) {
                 </div>
             }
         >
-            <TreeTable meta={meta} treeRowSelection={treeRowSelection} />
+            <TreeTable meta={meta} treeRowSelection={treeRowSelection} disableRowSelection={false} />
         </Popup>
     )
 }

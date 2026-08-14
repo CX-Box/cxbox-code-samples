@@ -16,6 +16,7 @@ import { TableSettingsItem } from '@interfaces/tableSettings'
 import { IAggField, IAggLevel } from '@interfaces/groupingHierarchy'
 import { PaginationMode } from '@constants/pagination'
 import { SignaturePackage, SignatureType } from '@constants/cadesPlugin'
+import { TREE_SEARCH_MODES } from '@components/widgets/Table/constants'
 
 export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect',
@@ -140,7 +141,7 @@ export type CryptoGeneratorItem = {
     encryptedFileBaseNameKey?: string
 }
 
-export type TreeSearchModes = 'highlight' | 'hide' | 'collapse'
+export type TreeSearchModes = ValueOf<typeof TREE_SEARCH_MODES>
 
 export interface AppWidgetMeta extends WidgetMeta {
     personalFields?: TableSettingsItem | null // TODO make mandatory
