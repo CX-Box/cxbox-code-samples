@@ -1,0 +1,24 @@
+package org.demo.documentation.widgets.tree.any;
+
+import jakarta.persistence.Column;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.cxbox.api.data.dto.DataResponseDTO;
+
+@Getter
+@Setter
+@SuperBuilder
+@NoArgsConstructor
+public class Myexample3261AnyDTO extends DataResponseDTO {
+
+
+	private String department;
+
+	private Long parentId;
+
+	private Boolean isLeaf;
+
+
+}

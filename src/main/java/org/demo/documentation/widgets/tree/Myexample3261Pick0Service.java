@@ -11,6 +11,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 @SuppressWarnings("java:S1170")
@@ -31,7 +32,10 @@ public class Myexample3261Pick0Service extends VersionAwareResponseService<Myexa
 
 	@Override
 	protected ActionResultDTO<Myexample3261Pick0DTO> doUpdateEntity(Myexample3261 entity, Myexample3261Pick0DTO data,
-	                                                                                                             BusinessComponent bc) {
+	                                                                BusinessComponent bc) {
+		setIfChanged(data, Myexample3261Pick0DTO_.mnemonic, entity::setMnemonic);
+		setIfChanged(data, Myexample3261Pick0DTO_.code, entity::setCode);
+		setIfChanged(data, Myexample3261Pick0DTO_.description, entity::setDescription);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

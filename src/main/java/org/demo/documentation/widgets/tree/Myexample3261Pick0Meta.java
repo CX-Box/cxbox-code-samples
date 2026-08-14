@@ -3,7 +3,7 @@ package org.demo.documentation.widgets.tree;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
-import org.cxbox.core.service.rowmeta.FieldMetaBuilder; 
+import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("EmptyMethod")
@@ -13,6 +13,9 @@ public class Myexample3261Pick0Meta extends FieldMetaBuilder<Myexample3261Pick0D
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3261Pick0DTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
+		fields.setEnabled(Myexample3261Pick0DTO_.mnemonic);
+		fields.setEnabled(Myexample3261Pick0DTO_.code);
+		fields.setEnabled(Myexample3261Pick0DTO_.description);
 		fields.setEnabled(Myexample3261Pick0DTO_.id);
 		fields.setEnabled(Myexample3261Pick0DTO_.department);
 	}
@@ -20,10 +23,14 @@ public class Myexample3261Pick0Meta extends FieldMetaBuilder<Myexample3261Pick0D
 	@Override
 	public void buildIndependentMeta(FieldsMeta<Myexample3261Pick0DTO> fields, InnerBcDescription bcDescription,
 	                                 Long parentId) {
+		fields.enableFilter(Myexample3261Pick0DTO_.mnemonic);
+		fields.enableFilter(Myexample3261Pick0DTO_.code);
+		fields.enableFilter(Myexample3261Pick0DTO_.description);
 		fields.enableFilter(Myexample3261Pick0DTO_.parentId);
 		fields.enableFilter(Myexample3261Pick0DTO_.id);
 		fields.enableFilter(Myexample3261Pick0DTO_.isLeaf);
 		fields.enableFilter(Myexample3261Pick0DTO_.department);
+
 	}
 
 }

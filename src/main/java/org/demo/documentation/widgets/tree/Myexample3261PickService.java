@@ -33,7 +33,10 @@ public class Myexample3261PickService extends VersionAwareResponseService<Myexam
 
 	@Override
 	protected ActionResultDTO<Myexample3261PickDTO> doUpdateEntity(Myexample3261 entity, Myexample3261PickDTO data,
-	                                                                                                            BusinessComponent bc) {
+	                                                               BusinessComponent bc) {
+		setIfChanged(data, Myexample3261PickDTO_.mnemonic, entity::setMnemonic);
+		setIfChanged(data, Myexample3261PickDTO_.code, entity::setCode);
+		setIfChanged(data, Myexample3261PickDTO_.description, entity::setDescription);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
