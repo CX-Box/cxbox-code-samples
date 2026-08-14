@@ -1,12 +1,30 @@
 {
   "name": "myexample3261DataTreeList",
   "title": "Department Data",
-  "type": "List",
+  "type": "Tree",
   "bc": "mydepartments",
   "fields": [
     {
+      "label": "Full Name",
+      "key": "fullName",
+      "type": "multivalue",
+      "displayedKey": "fullNameDisplayedKey",
+      "popupBcName": "my3261UsersPick",
+      "assocValueKey": "fullName"
+    },
+    {
       "title": "Department Name",
       "key": "departmentName",
+      "type": "input"
+    },
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentId",
       "type": "input"
     }
   ],
