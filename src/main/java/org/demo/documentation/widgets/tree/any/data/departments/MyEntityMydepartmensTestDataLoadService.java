@@ -22,155 +22,155 @@ public class MyEntityMydepartmensTestDataLoadService {
 
 		repository.deleteAll();
 		Mydepartments rootGov = new Mydepartments()
-				.setDepartmentName("Правительство");
+				.setDepartmentName("Government");
 		repository.save(rootGov);
 
 		Mydepartments structure = new Mydepartments()
 				.setParentId(rootGov.getId())
-				.setDepartmentName("Структура федеральных органов исполнительной власти");
+				.setDepartmentName("Structure of Federal Executive Authorities");
 		repository.save(structure);
 
 		Mydepartments chairman = new Mydepartments()
 				.setParentId(structure.getId())
-				.setDepartmentName("Председатель Правительства");
+				.setDepartmentName("Prime Minister");
 		repository.save(chairman);
 
 		Mydepartments deputies = new Mydepartments()
 				.setParentId(chairman.getId())
-				.setDepartmentName("Заместители Председателя Правительства");
+				.setDepartmentName("Deputy Prime Ministers");
 		repository.save(deputies);
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Руководитель Аппарата Правительства – Министр"));
+				.setDepartmentName("Head of the Government Office – Minister"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по надзору в сфере здравоохранения"));
+				.setDepartmentName("Federal Service for Surveillance in Healthcare"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное медико-биологическое агентство"));
+				.setDepartmentName("Federal Medical-Biological Agency"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по туризму"));
+				.setDepartmentName("Federal Agency for Tourism"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по надзору в сфере образования и науки"));
+				.setDepartmentName("Federal Service for Supervision in Education and Science"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по делам молодежи"));
+				.setDepartmentName("Federal Agency for Youth Affairs"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по гидрометеорологии и мониторингу окружающей среды"));
+				.setDepartmentName("Federal Service for Hydrometeorology and Environmental Monitoring"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по надзору в сфере природопользования"));
+				.setDepartmentName("Federal Service for Supervision of Natural Resources"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство водных ресурсов"));
+				.setDepartmentName("Federal Agency for Water Resources"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство лесного хозяйства"));
+				.setDepartmentName("Federal Agency for Forestry"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по недропользованию"));
+				.setDepartmentName("Federal Agency for Subsoil Use"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по техническому регулированию и метрологии"));
+				.setDepartmentName("Federal Agency for Technical Regulation and Metrology"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций"));
+				.setDepartmentName("Federal Service for Supervision of Communications, Information Technology and Mass Media"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по печати и массовым коммуникациям"));
+				.setDepartmentName("Federal Agency for Press and Mass Communications"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство связи"));
+				.setDepartmentName("Federal Communications Agency"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по ветеринарному и фитосанитарному надзору"));
+				.setDepartmentName("Federal Service for Veterinary and Phytosanitary Surveillance"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по рыболовству"));
+				.setDepartmentName("Federal Agency for Fisheries"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральная служба по надзору в сфере транспорта"));
+				.setDepartmentName("Federal Service for Supervision in Transport"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство воздушного транспорта"));
+				.setDepartmentName("Federal Air Transport Agency"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное дорожное агентство"));
+				.setDepartmentName("Federal Road Agency"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное железнодорожное агентство"));
+				.setDepartmentName("Federal Railway Agency"));
 
 		repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Федеральное агентство по морскому и речному транспорту"));
+				.setDepartmentName("Federal Agency for Maritime and River Transport"));
 
 		Mydepartments rootPresident = new Mydepartments()
-				.setDepartmentName("Президент");
+				.setDepartmentName("President");
 		repository.save(rootPresident);
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Министерство внутренних дел"));
+				.setDepartmentName("Ministry of Internal Affairs"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Министерство по делам гражданской обороны, чрезвычайным ситуациям и ликвидации последствий стихийных бедствий"));
+				.setDepartmentName("Ministry for Civil Defense, Emergencies and Disaster Relief"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Министерство иностранных дел"));
+				.setDepartmentName("Ministry of Foreign Affairs"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Федеральное агентство по делам СНГ, соотечественников, проживающих за рубежом и по международному гуманитарному сотрудничеству"));
+				.setDepartmentName("Federal Agency for CIS Affairs, Compatriots Living Abroad, and International Humanitarian Cooperation"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Министерство обороны"));
+				.setDepartmentName("Ministry of Defense"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Федеральная служба по военно-техническому сотрудничеству"));
+				.setDepartmentName("Federal Service for Military-Technical Cooperation"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Федеральная служба по техническому и экспортному контролю"));
+				.setDepartmentName("Federal Service for Technical and Export Control"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Министерство юстиции"));
+				.setDepartmentName("Ministry of Justice"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Федеральная служба исполнения наказаний"));
+				.setDepartmentName("Federal Penitentiary Service"));
 
 		repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Федеральная служба судебных приставов"));
+				.setDepartmentName("Federal Bailiff Service"));
 	}
 
 }
