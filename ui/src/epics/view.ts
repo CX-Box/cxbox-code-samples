@@ -26,11 +26,7 @@ import { getInternalWidgets } from '@utils/getInternalWidgets'
 import { closePopupRules } from './utils/closePopup'
 import { isDefined } from '@utils/isDefined'
 import { SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT } from '@constants/pagination'
-import { getUniqueValues, pick, treeActions } from '@slices/tree'
-import { isTreeWidget } from '@constants/widget'
 import { findWidgetHasCount } from '@features/pagination/utils/common'
-import { getTreeFieldKeys } from '@utils/tree'
-import { DEFAULT_SEARCH_MODE } from '@constants/tree'
 
 const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
     const { widgets, pendingDataChanges } = state.view
@@ -544,38 +540,6 @@ const checkWidgetsEpic: RootEpic = (action$, state$, { api }) =>
         })
     )
 
-export const initTreeEpic: RootEpic = (action$, state$, { api }) =>
-    action$.pipe(
-        filter(actions.selectView.match),
-        mergeMap(action => {
-            const state = state$.value
-            const widgets = state.view.widgets as AppWidgetMeta[] | undefined
-            const treeWidgets = widgets?.filter(isTreeWidget)
-
-            if (!treeWidgets || treeWidgets.length === 0) {
-                return EMPTY
-            }
-
-            const treeBcNames = getUniqueValues(treeWidgets.map(w => w.bcName).filter(Boolean))
-
-            const initActions = treeBcNames.flatMap(bcName => {
-                const treeWidget = treeWidgets.find(widget => widget.bcName === bcName)
-                const treeFieldKeys = getTreeFieldKeys(treeWidget)
-
-                return [
-                    treeActions.initTree({
-                        bcName,
-                        nodeState: pick(state.screen.bo.bc[bcName], ['loading', 'page', 'hasNext']),
-                        searchMode: treeWidget?.options?.tree?.searchMode ?? DEFAULT_SEARCH_MODE,
-                        ...treeFieldKeys
-                    })
-                ]
-            })
-
-            return from(initActions)
-        })
-    )
-
 export const viewEpics = {
     bcFetchCountEpic,
     sendOperationEpic,
@@ -586,6 +550,5 @@ export const viewEpics = {
     updateRowMetaForRelatedBcEpic,
     applyPendingPostInvokeEpic,
     collapseWidgetsByDefaultEpic,
-    checkWidgetsEpic,
-    initTreeEpic
+    checkWidgetsEpic
 }

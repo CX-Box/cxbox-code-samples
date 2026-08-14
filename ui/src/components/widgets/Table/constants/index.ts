@@ -1,5 +1,6 @@
 import { RowSelectionType } from 'antd/es/table'
 import { FIELDS } from '@constants'
+import { Lookup } from '@utils/Lookup'
 
 export const ROW_SELECTION_TYPES: RowSelectionType[] = ['checkbox', 'radio']
 
@@ -9,4 +10,6 @@ export const TREE_ROOT_ID = String(null)
 
 export const RESTORE_ANCESTORS_ID = '__restore-ancestors__'
 
-export const TREE_PATH_RESTORE_MAX_REQUESTS = 1
+export const TREE_PATH_RESTORE_MAX_REQUESTS = 3
+
+export const TREE_SEARCH_MODES = Lookup.create(['highlight', 'hide', 'collapse'])

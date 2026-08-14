@@ -31,13 +31,13 @@ type NodeRecordOrId = NodeId | Record<string, any>
 const SELECTED_STATE: NodeSelectionState = { checked: true, indeterminate: false, implicit: false, disabled: false }
 const UNSELECTED_STATE: NodeSelectionState = { checked: false, indeterminate: false, implicit: false, disabled: false }
 const IMPLICITLY_SELECTED_STATE: NodeSelectionState = { checked: true, indeterminate: false, implicit: true, disabled: false }
-const INDETERMINATE_SELECTED_STATE: NodeSelectionState = { checked: false, indeterminate: true, implicit: false, disabled: false }
 const INDETERMINATE_IMPLICITLY_SELECTED_STATE: NodeSelectionState = {
     checked: false,
     indeterminate: true,
     implicit: true,
     disabled: false
 }
+const INDETERMINATE_SELECTED_STATE: NodeSelectionState = INDETERMINATE_IMPLICITLY_SELECTED_STATE // { checked: false, indeterminate: true, implicit: false, disabled: false }
 const UNSELECTABLE_STATE: NodeSelectionState = { checked: false, indeterminate: false, implicit: false, disabled: true }
 
 /**

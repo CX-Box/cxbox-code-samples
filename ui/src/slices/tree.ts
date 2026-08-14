@@ -382,6 +382,15 @@ const treeSlice = createSlice({
                 .map(String)
 
             currentTree.expandedParents = getUniqueValues([...currentTree.expandedParents, ...restoredParentIds])
+        },
+        changeSearchMode(state, action: PayloadAction<{ bcName: string; searchMode: TreeSearchModes }>) {
+            const { bcName, searchMode } = action.payload
+
+            if (!state[bcName]) {
+                state[bcName] = initBcTreeState()
+            }
+
+            state[bcName]!.searchMode = searchMode
         }
     },
     extraReducers: builder => {

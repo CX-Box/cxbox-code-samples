@@ -42,7 +42,15 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
 
             dispatch(treeActions.expandNode({ bcName: bcName!, nodeId: String(record[ROW_KEY]), value: expanded }))
         },
-        [dispatch, bcName, bcTreeState?.nodesState, fetchChildNodes]
+        [
+            dispatch,
+            bcName,
+            bcTreeState?.filterActive,
+            bcTreeState?.searchMode,
+            bcTreeState?.filteredNodesState,
+            bcTreeState?.nodesState,
+            fetchChildNodes
+        ]
     )
 
     const restoreAncestorPaths = React.useCallback(
