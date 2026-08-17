@@ -20,5 +20,11 @@ public class Myexample3261AnyDTO extends DataResponseDTO {
 
 	private Boolean isLeaf;
 
+	private String lastName;
 
+	private String firstName;
+
+	private String middleName;
+
+	private String fullName;
 }

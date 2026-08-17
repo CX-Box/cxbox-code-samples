@@ -1,26 +1,21 @@
 package org.demo.documentation.widgets.tree.any;
 
 import lombok.RequiredArgsConstructor;
-import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
+import org.demo.documentation.widgets.tree.any.data.departments.MydepartmensRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261AnyDTO> {
 
-	private final MockExternalService mockExternalService = new MockExternalService();
-
+	private final MydepartmensRepository repository;
 	@Override
 	public String getId(Myexample3261AnyDTO entity) {
 		return entity.getId();
@@ -33,75 +28,43 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 	@Override
 	public Myexample3261AnyDTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
-		return mockExternalService.get(bc).orElse(null);
+		return  getData().stream()
+				.filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
 	}
 
 	@Override
 	public Page<Myexample3261AnyDTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
-		return new PageImpl<>(mockExternalService.get(bc, queryParameters));
+		return new PageImpl<>(getData());
 	}
 
 	@Override
-	public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity) {
-		return mockExternalService.create(bc, entity);
+	public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity){
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public Myexample3261AnyDTO update(BusinessComponent bc, Myexample3261AnyDTO entity) {
-		return mockExternalService.update(bc, entity);
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void delete(BusinessComponent bc) {
-		mockExternalService.delete(bc);
-	}
+		throw new IllegalStateException();	}
 
-	// TODO: >> plugins >> Add your custom implementation of  service
-	// this is simple example using service
-	private static class MockExternalService {
+	public List<Myexample3261AnyDTO> getData() {
+		return repository.allDepartmentUsers().stream().map(
+				entity -> {
+					Myexample3261AnyDTO myexample3261AnyDTO= new Myexample3261AnyDTO()
+							.setDepartment(entity.departmentName())
+							.setParentId(entity.parentId())
+							.setIsLeaf(entity.isLeaf())
+							.setLastName(entity.lastName())
+							.setFullName(entity.fullName())
+							.setFirstName(entity.firstName())
+							.setMiddleName(entity.middleName());
+					myexample3261AnyDTO.setId(entity.id());
+					return myexample3261AnyDTO;
+				}).toList();
 
-		private static final Map<String, Myexample3261AnyDTO> simpleDataProvider = new ConcurrentHashMap<>();
-
-		public static String generateId() {
-			return simpleDataProvider.values().stream()
-					.max(Comparator.comparingLong(id -> Long.parseLong(id.getId())))
-					.map(DataResponseDTO::getId)
-					.map(id -> Long.parseLong(id) + 1L)
-					.map(String::valueOf)
-					.orElse("0");
-		}
-
-		public Optional<Myexample3261AnyDTO> get(BusinessComponent bc) {
-			return simpleDataProvider.values().stream()
-					.filter(dto -> dto.getId().equals(bc.getId()))
-					.findFirst();
-		}
-
-		public List<Myexample3261AnyDTO> get(BusinessComponent bc, QueryParameters queryParameters) {
-			return simpleDataProvider.values().stream()
-					.skip((long) (queryParameters.getPage().getPageNo()) * queryParameters.getPageSize())
-					.limit(queryParameters.getPageSize())
-					.toList();
-		}
-
-		public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity) {
-			if (entity.getId() == null || "-1".equals(entity.getId())) {
-				entity.setId(generateId());
-			}
-			simpleDataProvider.put(entity.getId(), entity);
-			return entity;
-		}
-
-		public Myexample3261AnyDTO update(BusinessComponent bc, Myexample3261AnyDTO entity) {
-			if (entity.getId() == null || "-1".equals(entity.getId())) {
-				entity.setId(generateId());
-			}
-			simpleDataProvider.put(entity.getId(), entity);
-			return entity;
-		}
-
-		public void delete(BusinessComponent bc) {
-			simpleDataProvider.remove(bc.getId());
-		}
 	}
 }
