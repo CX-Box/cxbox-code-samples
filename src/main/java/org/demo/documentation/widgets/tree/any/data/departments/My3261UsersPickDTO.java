@@ -19,7 +19,7 @@ public class My3261UsersPickDTO extends DataResponseDTO {
 	@SearchParameter(name = "firstName", provider = StringValueProvider.class)
 	private String firstName;
 
-	@SearchParameter(name = "midleName", provider = StringValueProvider.class)
+	@SearchParameter(name = "middleName", provider = StringValueProvider.class)
 	private String middleName;
 
 	private String fullName;
