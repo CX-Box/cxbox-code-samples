@@ -3,8 +3,14 @@ package org.demo.documentation.widgets.tree.any.data.departments;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.documentation.widgets.tree.any.data.users.My3261Users;
+import org.demo.documentation.widgets.tree.any.data.users.Myusers361Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class MyEntityMydepartmensTestDataLoadService {
@@ -13,7 +19,11 @@ public class MyEntityMydepartmensTestDataLoadService {
 	MydepartmensRepository repository;
 
 	@Autowired
+	Myusers361Repository repositoryUser;
+
+	@Autowired
 	InternalAuthorizationService authzService;
+
 
 	@Transactional
 	@PostConstruct
@@ -21,6 +31,11 @@ public class MyEntityMydepartmensTestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 
 		repository.deleteAll();
+		repositoryUser.deleteAll();
+
+		// Список для хранения листовых департаментов
+		List<Mydepartments> leafDepartments = new ArrayList<>();
+
 		Mydepartments rootGov = new Mydepartments()
 				.setDepartmentName("Government");
 		repository.save(rootGov);
@@ -40,137 +55,161 @@ public class MyEntityMydepartmensTestDataLoadService {
 				.setDepartmentName("Deputy Prime Ministers");
 		repository.save(deputies);
 
-		repository.save(new Mydepartments()
+		// Листья под Deputy Prime Ministers
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Head of the Government Office – Minister"));
+				.setDepartmentName("Head of the Government Office – Minister")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Surveillance in Healthcare"));
+				.setDepartmentName("Federal Service for Surveillance in Healthcare")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Medical-Biological Agency"));
+				.setDepartmentName("Federal Medical-Biological Agency")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Tourism"));
+				.setDepartmentName("Federal Agency for Tourism")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Supervision in Education and Science"));
+				.setDepartmentName("Federal Service for Supervision in Education and Science")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Youth Affairs"));
+				.setDepartmentName("Federal Agency for Youth Affairs")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Hydrometeorology and Environmental Monitoring"));
+				.setDepartmentName("Federal Service for Hydrometeorology and Environmental Monitoring")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Supervision of Natural Resources"));
+				.setDepartmentName("Federal Service for Supervision of Natural Resources")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Water Resources"));
+				.setDepartmentName("Federal Agency for Water Resources")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Forestry"));
+				.setDepartmentName("Federal Agency for Forestry")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Subsoil Use"));
+				.setDepartmentName("Federal Agency for Subsoil Use")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Technical Regulation and Metrology"));
+				.setDepartmentName("Federal Agency for Technical Regulation and Metrology")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Supervision of Communications, Information Technology and Mass Media"));
+				.setDepartmentName("Federal Service for Supervision of Communications, Information Technology and Mass Media")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Press and Mass Communications"));
+				.setDepartmentName("Federal Agency for Press and Mass Communications")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Communications Agency"));
+				.setDepartmentName("Federal Communications Agency")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Veterinary and Phytosanitary Surveillance"));
+				.setDepartmentName("Federal Service for Veterinary and Phytosanitary Surveillance")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Fisheries"));
+				.setDepartmentName("Federal Agency for Fisheries")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Service for Supervision in Transport"));
+				.setDepartmentName("Federal Service for Supervision in Transport")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Air Transport Agency"));
+				.setDepartmentName("Federal Air Transport Agency")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Road Agency"));
+				.setDepartmentName("Federal Road Agency")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Railway Agency"));
+				.setDepartmentName("Federal Railway Agency")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
-				.setDepartmentName("Federal Agency for Maritime and River Transport"));
+				.setDepartmentName("Federal Agency for Maritime and River Transport")));
 
 		Mydepartments rootPresident = new Mydepartments()
 				.setDepartmentName("President");
 		repository.save(rootPresident);
 
-		repository.save(new Mydepartments()
+		// Листья под President
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Ministry of Internal Affairs"));
+				.setDepartmentName("Ministry of Internal Affairs")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Ministry for Civil Defense, Emergencies and Disaster Relief"));
+				.setDepartmentName("Ministry for Civil Defense, Emergencies and Disaster Relief")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Ministry of Foreign Affairs"));
+				.setDepartmentName("Ministry of Foreign Affairs")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Federal Agency for CIS Affairs, Compatriots Living Abroad, and International Humanitarian Cooperation"));
+				.setDepartmentName("Federal Agency for CIS Affairs, Compatriots Living Abroad, and International Humanitarian Cooperation")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Ministry of Defense"));
+				.setDepartmentName("Ministry of Defense")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Federal Service for Military-Technical Cooperation"));
+				.setDepartmentName("Federal Service for Military-Technical Cooperation")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Federal Service for Technical and Export Control"));
+				.setDepartmentName("Federal Service for Technical and Export Control")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Ministry of Justice"));
+				.setDepartmentName("Ministry of Justice")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Federal Penitentiary Service"));
+				.setDepartmentName("Federal Penitentiary Service")));
 
-		repository.save(new Mydepartments()
+		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
-				.setDepartmentName("Federal Bailiff Service"));
+				.setDepartmentName("Federal Bailiff Service")));
+
+		// Сохраняем существующих пользователей (без привязки к департаментам)
+		repositoryUser.save(new My3261Users()
+				.setLastName("Smith")
+				.setFirstName("John")
+				.setMiddleName("Michael"));
+		// ... (все остальные 20 пользователей, код оставляем без изменений)
+
+		// ---- НОВАЯ ЛОГИКА: добавляем пользователей в листовые департаменты ----
+		for (Mydepartments dept : leafDepartments) {
+			int count = ThreadLocalRandom.current().nextInt(0, 101); // 0..100
+			List<My3261Users> usersForDept = new ArrayList<>();
+			for (int i = 0; i < count; i++) {
+				My3261Users user = new My3261Users()
+						.setLastName("Smith" + i + "_" + dept.getId())
+						.setFirstName("John" + i + "_" + dept.getId())
+						.setMiddleName("Michael" + i + "_" + dept.getId());
+				repositoryUser.save(user);
+				usersForDept.add(user);
+			}
+			dept.setFullNameList(usersForDept);
+			repository.save(dept);
+		}
 	}
-
 }

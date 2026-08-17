@@ -5,6 +5,7 @@ import org.cxbox.api.data.BcIdentifier;
 import org.cxbox.core.crudma.bc.EnumBcIdentifier;
 import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.demo.documentation.widgets.tree.allType.*;
 import org.demo.documentation.widgets.tree.any.Myexample3261AnyService;
 import org.demo.documentation.widgets.tree.any.data.departments.My3261UsersPickService;
 import org.demo.documentation.widgets.tree.any.data.departments.MydepartmentsService;
@@ -25,7 +26,8 @@ public enum CxboxMyExample3260Controller implements EnumBcIdentifier {
 	myexample3261any(Myexample3261AnyService.class),
 	mydepartments(MydepartmentsService.class),
 		my3261UsersPick(mydepartments, My3261UsersPickService.class),
-	my3261users(My3261UsersService.class);
+	my3261users(My3261UsersService.class),
+	myexample3262(Myexample3262Service.class),myexample3262PickPick0(myexample3262, Myexample3262PickPick0Service.class),myexample3262PickPick(myexample3262, Myexample3262PickPickService.class),myexample3262MultiPick(myexample3262, Myexample3262MultiPickService.class),myexample3262MultiHoverPick(myexample3262, Myexample3262MultiHoverPickService.class);
 	// @formatter:on
 
 	public static final Holder<CxboxMyExample3260Controller> Holder = new Holder<>(CxboxMyExample3260Controller.class);
