@@ -13,16 +13,16 @@ public class Myexample3261AnyMetaBuilder extends AnySourceFieldMetaBuilder<Myexa
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3261AnyDTO> fields, BcDescription bcDescription, String id,
 	                                  String parentId) {
 		fields.setEnabled(
-				org.demo.documentation.widgets.tree.any.Myexample3261AnyDTO_.id
+			Myexample3261AnyDTO_.id
 		);
 	}
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<Myexample3261AnyDTO> fields, BcDescription bcDescription, String parentId) {
 		fields.enableFilter(
-				org.demo.documentation.widgets.tree.any.Myexample3261AnyDTO_.id);
+				Myexample3261AnyDTO_.id);
 		fields.enableSort(
-				org.demo.documentation.widgets.tree.any.Myexample3261AnyDTO_.id);
+				Myexample3261AnyDTO_.id);
 	}
 
 }

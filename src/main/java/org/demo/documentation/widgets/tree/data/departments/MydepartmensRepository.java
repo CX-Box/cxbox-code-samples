@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,8 +31,9 @@ public interface MydepartmensRepository extends JpaRepository<Mydepartments, Lon
                     THEN true ELSE false END AS isLeaf
 		FROM Mydepartments mydept
 		JOIN mydept.fullNameList u
-			""")
-	List<DepartmentUsersPrj> allDepartmentUsers(
-	);
+		ORDER BY mydept.id, u.id
+		OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
+		""")
+	List<DepartmentUsersPrj> allDepartmentUsers(@Param("offset") int offset, @Param("limit") int limit);
 
 }

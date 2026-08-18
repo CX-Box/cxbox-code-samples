@@ -25,13 +25,13 @@ public class Myexample3261DTO extends DataResponseDTO {
 
 	private Boolean isLeaf;
 
-	@SearchParameter(name = "description", provider = StringValueProvider.class)
+	@SearchParameter(name = "description")
 	private String description;
 
-	@SearchParameter(name = "code", provider = StringValueProvider.class)
+	@SearchParameter(name = "code")
 	private String code;
 
-	@SearchParameter(name = "mnemonic", provider = StringValueProvider.class)
+	@SearchParameter(name = "mnemonic")
 	private String mnemonic;
 
 	public Myexample3261DTO(Myexample3261 entity) {

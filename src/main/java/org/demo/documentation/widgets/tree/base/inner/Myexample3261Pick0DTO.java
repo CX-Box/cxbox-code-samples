@@ -14,19 +14,19 @@ import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
 @NoArgsConstructor
 public class Myexample3261Pick0DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "department", provider = StringValueProvider.class)
+	@SearchParameter(name = "department")
 	private String department;
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
 	private Long parentId;
 	private Boolean isLeaf;
 
-	@SearchParameter(name = "description", provider = StringValueProvider.class)
+	@SearchParameter(name = "description")
 	private String description;
 
-	@SearchParameter(name = "code", provider = StringValueProvider.class)
+	@SearchParameter(name = "code")
 	private String code;
 
-	@SearchParameter(name = "mnemonic", provider = StringValueProvider.class)
+	@SearchParameter(name = "mnemonic")
 	private String mnemonic;
 
 	public Myexample3261Pick0DTO(Myexample3261 entity) {

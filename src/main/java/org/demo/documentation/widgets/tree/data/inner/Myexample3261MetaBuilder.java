@@ -28,7 +28,12 @@ public class Myexample3261MetaBuilder extends FieldMetaBuilder<Myexample3261DTO>
 		fields.enableFilter(Myexample3261DTO_.department);
 		fields.enableFilter(Myexample3261DTO_.parentId);
 		fields.enableFilter(Myexample3261DTO_.id);
-
+		fields.enableSort(Myexample3261DTO_.mnemonic);
+		fields.enableSort(Myexample3261DTO_.code);
+		fields.enableSort(Myexample3261DTO_.description);
+		fields.enableSort(Myexample3261DTO_.department);
+		fields.enableSort(Myexample3261DTO_.parentId);
+		fields.enableSort(Myexample3261DTO_.id);
 	}
 
 }

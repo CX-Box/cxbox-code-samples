@@ -13,13 +13,13 @@ import org.demo.documentation.widgets.tree.data.users.My3261Users;
 @NoArgsConstructor
 public class My3261UsersPickDTO extends DataResponseDTO {
 
-	@SearchParameter(name = "lastName", provider = StringValueProvider.class)
+	@SearchParameter(name = "lastName")
 	private String lastName;
 
-	@SearchParameter(name = "firstName", provider = StringValueProvider.class)
+	@SearchParameter(name = "firstName")
 	private String firstName;
 
-	@SearchParameter(name = "middleName", provider = StringValueProvider.class)
+	@SearchParameter(name = "middleName")
 	private String middleName;
 
 	private String fullName;
