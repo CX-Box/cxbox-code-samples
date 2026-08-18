@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
+import org.demo.documentation.widgets.tree.data.departments.DepartmentUsersPrj;
 import org.demo.documentation.widgets.tree.data.departments.MydepartmensRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +17,7 @@ import java.util.*;
 public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261AnyDTO> {
 
 	private final MydepartmensRepository repository;
+
 	@Override
 	public String getId(Myexample3261AnyDTO entity) {
 		return entity.getId();
@@ -28,17 +30,20 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 	@Override
 	public Myexample3261AnyDTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
-		return  getData(bc).stream()
-				.filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
+		String id = bc.getId();
+		String[] parts = id.split("-");
+		String departmentId = parts[0];
+		return getData(bc, departmentId).stream().filter(s -> Objects.equals(s.getId(), id)).findFirst().orElse(null);
+
 	}
 
 	@Override
 	public Page<Myexample3261AnyDTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
-		return new PageImpl<>(getData(bc));
+		return new PageImpl<>(getData(bc, null));
 	}
 
 	@Override
-	public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity){
+	public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity) {
 		throw new IllegalStateException();
 	}
 
@@ -49,31 +54,55 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 	@Override
 	public void delete(BusinessComponent bc) {
-		throw new IllegalStateException();	}
-
-	public List<Myexample3261AnyDTO> getData(BusinessComponent bc) {
-		//Page size
-		String pageStr = bc.getParameters().getParameter("_page");
-
-		//Limit
-		String limitStr = bc.getParameters().getParameter("_limit");
-
-		int page = (pageStr != null) ? Integer.parseInt(pageStr) : 0;
-		int limit = (limitStr != null) ? Integer.parseInt(limitStr) : 20;
-		int offset = page * limit;
-		return repository.allDepartmentUsers(offset,limit).stream().map(
-				entity -> {
-					Myexample3261AnyDTO myexample3261AnyDTO= new Myexample3261AnyDTO()
-							.setDepartment(entity.departmentName())
-							.setParentId(entity.parentId())
-							.setIsLeaf(entity.isLeaf())
-							.setLastName(entity.lastName())
-							.setFullName(entity.fullName())
-							.setFirstName(entity.firstName())
-							.setMiddleName(entity.middleName());
-					myexample3261AnyDTO.setId(entity.id());
-					return myexample3261AnyDTO;
-				}).toList();
-
+		throw new IllegalStateException();
 	}
+
+	public List<Myexample3261AnyDTO> getData(BusinessComponent bc, String deptId) {
+
+		String pageStr = bc.getParameters().getParameter("_page");
+		String limitStr = bc.getParameters().getParameter("_limit");
+		String isLeafParam = bc.getParameters().getParameter("parentId.specified");
+
+		int page = parseOrDefault(pageStr, 0);
+		int limit = parseOrDefault(limitStr, 20);
+		int offset = page == 0 ? 0 : (page - 1) * limit;
+
+		List<DepartmentUsersPrj> entities;
+		if (deptId != null) {
+			entities = repository.allDepartmentUsersDeptId(offset, limit, deptId);
+		} else if (isLeafParam != null) {
+			entities = repository.allDepartmentUsersisLeaf(offset, limit, Boolean.parseBoolean(isLeafParam));
+		} else {
+			entities = repository.allDepartmentUsers(offset, limit);
+		}
+
+		return entities.stream()
+				.map(this::toDTO)
+				.toList();
+	}
+
+	private Myexample3261AnyDTO toDTO(DepartmentUsersPrj entity) {
+		Myexample3261AnyDTO myexample3261AnyDTO = new Myexample3261AnyDTO()
+				.setDepartment(entity.departmentName())
+				.setParentId(entity.parentId())
+				.setIsLeaf(entity.isLeaf())
+				.setLastName(entity.lastName())
+				.setFullName(entity.fullName())
+				.setFirstName(entity.firstName())
+				.setMiddleName(entity.middleName());
+		myexample3261AnyDTO.setId(entity.id());
+		return myexample3261AnyDTO;
+	}
+
+	private int parseOrDefault(String value, int defaultValue) {
+		if (value == null || value.trim().isEmpty()) {
+			return defaultValue;
+		}
+		try {
+			return Integer.parseInt(value.trim());
+		} catch (NumberFormatException e) {
+			return defaultValue;
+		}
+	}
+
 }
