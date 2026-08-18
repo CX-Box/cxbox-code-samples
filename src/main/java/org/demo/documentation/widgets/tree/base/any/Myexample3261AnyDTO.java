@@ -16,7 +16,7 @@ public class Myexample3261AnyDTO extends DataResponseDTO {
 
 	private String department;
 
-	private Long parentId;
+	private String parentId;
 
 	private Boolean isLeaf;
 
