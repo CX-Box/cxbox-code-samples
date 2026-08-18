@@ -28,13 +28,13 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 	@Override
 	public Myexample3261AnyDTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
-		return  getData().stream()
+		return  getData(bc).stream()
 				.filter(s -> Objects.equals(s.getId(), bc.getId())).findFirst().orElse(null);
 	}
 
 	@Override
 	public Page<Myexample3261AnyDTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
-		return new PageImpl<>(getData());
+		return new PageImpl<>(getData(bc));
 	}
 
 	@Override
@@ -51,8 +51,17 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 	public void delete(BusinessComponent bc) {
 		throw new IllegalStateException();	}
 
-	public List<Myexample3261AnyDTO> getData() {
-		return repository.allDepartmentUsers().stream().map(
+	public List<Myexample3261AnyDTO> getData(BusinessComponent bc) {
+		//Page size
+		String pageStr = bc.getParameters().getParameter("_page");
+
+		//Limit
+		String limitStr = bc.getParameters().getParameter("_limit");
+
+		int page = (pageStr != null) ? Integer.parseInt(pageStr) : 0;
+		int limit = (limitStr != null) ? Integer.parseInt(limitStr) : 20;
+		int offset = page * limit;
+		return repository.allDepartmentUsers(offset,limit).stream().map(
 				entity -> {
 					Myexample3261AnyDTO myexample3261AnyDTO= new Myexample3261AnyDTO()
 							.setDepartment(entity.departmentName())

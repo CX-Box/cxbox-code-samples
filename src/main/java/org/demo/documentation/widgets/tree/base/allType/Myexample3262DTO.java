@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class Myexample3262DTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "customFieldHint", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldHint")
 	private String customFieldHint;
 
 	@SearchParameter(name = "customFieldMultivalueHoverList.id", provider = LongValueProvider.class)
@@ -46,13 +46,13 @@ public class Myexample3262DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
 	private Double customFieldMoney;
 
-	@SearchParameter(name = "customFieldInlineEntity.customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldInlineEntity.customField")
 	private String customFieldInline;
 
 	@SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
 	private Long customFieldInlineId;
 
-	@SearchParameter(name = "customFieldPickListEntity.customField2", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldPickListEntity.customField2")
 	private String customFieldPickList;
 
 	@SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
@@ -64,7 +64,7 @@ public class Myexample3262DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
 	private Long customFieldNumber;
 
-	@SearchParameter(name = "customFieldFileUpload", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldFileUpload")
 	private String customFieldFileUpload;
 
 	private String customFieldFileUploadId;
@@ -84,13 +84,13 @@ public class Myexample3262DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
 	private LocalDateTime customFieldDateTime;
 
-	@SearchParameter(name = "customFieldText", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldText")
 	private String customFieldText;
 
-	@SearchParameter(name = "customFieldHidden", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldHidden")
 	private String customFieldHidden;
 
-	@SearchParameter(name = "customField", provider = StringValueProvider.class)
+	@SearchParameter(name = "customField")
 	private String customField;
 
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)

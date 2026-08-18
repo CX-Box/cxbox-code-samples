@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 public class MydepartmentsDTO extends DataResponseDTO {
 
 
-	@SearchParameter(name = "departmentName", provider = StringValueProvider.class)
+	@SearchParameter(name = "departmentName")
 	private String departmentName;
 
-	@SearchParameter(name = "description", provider = StringValueProvider.class)
+	@SearchParameter(name = "description")
 	private String description;
 
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)

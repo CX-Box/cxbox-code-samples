@@ -47,7 +47,7 @@ public class Myexample3262MetaBuilder extends FieldMetaBuilder<Myexample3262DTO>
 		fields.setEnabled(Myexample3262DTO_.customFieldMultivalueHover);
 		fields.setEnabled(Myexample3262DTO_.customFieldHint);
 		fields.setEnabled(
-				org.demo.documentation.widgets.tree.allType.Myexample3262DTO_.id
+				Myexample3262DTO_.id
 		);
 	}
 
@@ -76,10 +76,10 @@ public class Myexample3262MetaBuilder extends FieldMetaBuilder<Myexample3262DTO>
 		fields.enableFilter(Myexample3262DTO_.customFieldMultivalue);
 		fields.enableFilter(Myexample3262DTO_.customFieldMultivalueHover);
 		fields.enableFilter(
-				org.demo.documentation.widgets.tree.allType.Myexample3262DTO_.id
+				Myexample3262DTO_.id
 		);
 		fields.enableSort(
-				org.demo.documentation.widgets.tree.allType.Myexample3262DTO_.id
+				Myexample3262DTO_.id
 		);
 	}
 

@@ -3,8 +3,8 @@ package org.demo.documentation.widgets.tree.data.inner;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.widgets.tree.base.inner.MyEntity3260Repository;
-import org.demo.documentation.widgets.tree.base.inner.Myexample3260;
+import org.demo.documentation.widgets.tree.base.inner.MyEntity3263Repository;
+import org.demo.documentation.widgets.tree.base.inner.Myexample3263;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class MyEntity3261TestDataLoadService {
 	MyEntity3261Repository repository3261;
 
 	@Autowired
-	MyEntity3260Repository repository3260;
+	MyEntity3263Repository repository3263;
 
 	@Autowired
 	InternalAuthorizationService authzService;
@@ -25,7 +25,7 @@ public class MyEntity3261TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository3261.deleteAll();
-		repository3260.deleteAll();
+		repository3263.deleteAll();
 
 		Myexample3261 e1103500 = new Myexample3261()
 				.setDepartment("Полномочия Росгвардии")
@@ -1996,7 +1996,7 @@ public class MyEntity3261TestDataLoadService {
 
 		repository3261.save(parent1);
 
-		repository3260.save(new Myexample3260());
+		repository3263.save(new Myexample3263());
 	}
 
 }

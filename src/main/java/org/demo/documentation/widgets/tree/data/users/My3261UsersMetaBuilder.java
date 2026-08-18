@@ -15,7 +15,7 @@ public class My3261UsersMetaBuilder extends FieldMetaBuilder<My3261UsersDTO> {
 		fields.setEnabled(My3261UsersDTO_.firstName);
 		fields.setEnabled(My3261UsersDTO_.lastName);
 		fields.setEnabled(
-				org.demo.documentation.widgets.tree.any.data.users.My3261UsersDTO_.id
+				My3261UsersDTO_.id
 		);
 	}
 
@@ -25,10 +25,10 @@ public class My3261UsersMetaBuilder extends FieldMetaBuilder<My3261UsersDTO> {
 		fields.enableFilter(My3261UsersDTO_.firstName);
 		fields.enableFilter(My3261UsersDTO_.lastName);
 		fields.enableFilter(
-				org.demo.documentation.widgets.tree.any.data.users.My3261UsersDTO_.id
+				My3261UsersDTO_.id
 		);
 		fields.enableSort(
-				org.demo.documentation.widgets.tree.any.data.users.My3261UsersDTO_.id
+				My3261UsersDTO_.id
 		);
 	}
 
