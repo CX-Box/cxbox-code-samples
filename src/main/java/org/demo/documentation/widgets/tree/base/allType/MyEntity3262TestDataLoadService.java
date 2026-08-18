@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
 @Service
 @AllArgsConstructor
 public class MyEntity3262TestDataLoadService {
@@ -70,17 +71,66 @@ public class MyEntity3262TestDataLoadService {
 
 		// Корень 1: будет иметь 3 дочерних узла
 		Myexample3262 root1 = createBaseEntity("Root 1 (with children)")
-			//	.setCustomFieldMultivalueList(multiList)
-			//	.setCustomFieldMultivalueHoverList(hoverList)
-			//	.setCustomFieldPickListEntity(pickEntity)
-			//	.setCustomFieldInlineEntity(inlineEntity)
+				//	.setCustomFieldMultivalueList(multiList)
+				//	.setCustomFieldMultivalueHoverList(hoverList)
+				//	.setCustomFieldPickListEntity(pickEntity)
+				//	.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldFileUploadId(file.getData().getId());
 		repository.save(root1);
+		// Корень 2: без детей (лист)
+		Myexample3262 root2 = createBaseEntity("Root 2 (leaf)")
+				//	.setCustomFieldMultivalueList(Collections.singletonList(multi1)) // только один элемент
+				//.setCustomFieldMultivalueHoverList(Collections.singletonList(hover1))
+				//.setCustomFieldPickListEntity(pickEntity)
+				//.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId());
+		repository.save(root2);
 
+		// Корень 3: без детей
+		Myexample3262 root3 = createBaseEntity("Root 3 (leaf)")
+				//	.setCustomFieldMultivalueList(multiList)
+				//	.setCustomFieldMultivalueHoverList(hoverList)
+//.setCustomFieldPickListEntity(pickEntity)
+				//	.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId());
+		repository.save(root3);
+
+		// Корень 4: без детей
+		Myexample3262 root4 = createBaseEntity("Root 4 (leaf)")
+				//	.setCustomFieldMultivalueList(multiList)
+				//	.setCustomFieldMultivalueHoverList(hoverList)
+				//	.setCustomFieldPickListEntity(pickEntity)
+//.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId());
+		repository.save(root4);
+
+		// Корень 5: без детей
+		Myexample3262 root5 = createBaseEntity("Root 5 (leaf)")
+				//	.setCustomFieldMultivalueList(multiList)
+//.setCustomFieldMultivalueHoverList(hoverList)
+//.setCustomFieldPickListEntity(pickEntity)
+				//	.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId());
+		repository.save(root5);
+
+		// ---- Создание 3 дочерних узлов для root1 ----
+		for (int i = 1; i <= 3; i++) {
+			Myexample3262 child = createBaseEntity("Child " + i + " of Root 1")
+					.setParentId(root1.getId())  // привязываем к корню
+					//.setCustomFieldMultivalueList(multiList)
+					//.setCustomFieldMultivalueHoverList(hoverList)
+					//.setCustomFieldPickListEntity(pickEntity)
+					//.setCustomFieldInlineEntity(inlineEntity)
+					.setCustomFieldFileUpload(file.getData().getName())
+					.setCustomFieldFileUploadId(file.getData().getId());
+			repository.save(child);
+		}
 	}
-
-
 	private Myexample3262 createBaseEntity(String customFieldValue) {
 		return new Myexample3262()
 				.setCustomField(customFieldValue)                                    // input
