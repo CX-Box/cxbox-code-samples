@@ -85,7 +85,7 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 		int page = parseOrDefault(pageStr, DEFAULT_PAGE);
 		int limit = parseOrDefault(limitStr, DEFAULT_LIMIT);
-		int offset = (page - 1) * limit; // CXBOX использует page начиная с 1
+		int offset = (page - 1) * limit;
 
 		return new PaginationParams(offset, limit);
 	}
@@ -117,19 +117,7 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 
 		if (filters.parentId() != null && !filters.parentId().isEmpty()) {
 			String parentIdExtract = extractDepartmentId(filters.parentId());
-			return	repository.allDepartmentUsersParentId(offset, limit, parentIdExtract)
-					.stream()
-					.map(entity -> new DepartmentUsersPrj(
-							entity.id(),
-							filters.parentId(),
-							entity.departmentName(),
-							entity.lastName(),
-							entity.firstName(),
-							entity.middleName(),
-							entity.fullName(),
-							entity.isLeaf()
-					))
-					.toList();
+			return	repository.allDepartmentUsersParentId(offset, limit,parentIdExtract);
 		}
 
 		return repository.allDepartmentUsers(offset, limit);
