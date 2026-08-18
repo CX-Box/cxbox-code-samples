@@ -62,6 +62,7 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 		String pageStr = bc.getParameters().getParameter("_page");
 		String limitStr = bc.getParameters().getParameter("_limit");
 		String isLeafParam = bc.getParameters().getParameter("parentId.specified");
+		String parentId = bc.getParameters().getParameter("parentId.equals");
 
 		int page = parseOrDefault(pageStr, 0);
 		int limit = parseOrDefault(limitStr, 20);
@@ -72,7 +73,11 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 			entities = repository.allDepartmentUsersDeptId(offset, limit, deptId);
 		} else if (isLeafParam != null) {
 			entities = repository.allDepartmentUsersisLeaf(offset, limit, Boolean.parseBoolean(isLeafParam));
-		} else {
+		}else if (parentId != null) {
+			String[] parts = parentId.split("-");
+			parentId = parts[0];
+			entities = repository.allDepartmentUsersParentId(offset, limit, parentId);
+		}  else {
 			entities = repository.allDepartmentUsers(offset, limit);
 		}
 

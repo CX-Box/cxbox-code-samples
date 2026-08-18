@@ -72,4 +72,24 @@ public interface MydepartmensRepository extends JpaRepository<Mydepartments, Lon
 	List<DepartmentUsersPrj> allDepartmentUsersDeptId(@Param("offset") int offset,
 	                                                  @Param("limit") int limit,
 	                                                  @Param("deptId") String deptId);
+
+
+	@Query("""
+    SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)) AS Id,
+           mydept.parentId AS parentId,
+           mydept.departmentName AS departmentName,
+           u.lastName AS lastName,
+           u.firstName AS firstName,
+           u.middleName AS middleName,
+           CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
+           CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
+    FROM Mydepartments mydept
+    LEFT JOIN mydept.fullNameList u
+    WHERE mydept.parentId = :parentId
+    ORDER BY mydept.id, u.id
+    OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
+""")
+	List<DepartmentUsersPrj> allDepartmentUsersParentId(@Param("offset") int offset,
+	                                                  @Param("limit") int limit,
+	                                                  @Param("parentId") String parentId);
 }
