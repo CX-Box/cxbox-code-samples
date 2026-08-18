@@ -33,7 +33,6 @@ public class MyEntityMydepartmensTestDataLoadService {
 		repository.deleteAll();
 		repositoryUser.deleteAll();
 
-		// Список для хранения листовых департаментов
 		List<Mydepartments> leafDepartments = new ArrayList<>();
 
 		Mydepartments rootGov = new Mydepartments()
@@ -55,7 +54,7 @@ public class MyEntityMydepartmensTestDataLoadService {
 				.setDepartmentName("Deputy Prime Ministers");
 		repository.save(deputies);
 
-		// Листья под Deputy Prime Ministers
+		// Deputy Prime Ministers
 		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(deputies.getId())
 				.setDepartmentName("Head of the Government Office – Minister")));
@@ -148,7 +147,7 @@ public class MyEntityMydepartmensTestDataLoadService {
 				.setDepartmentName("President");
 		repository.save(rootPresident);
 
-		// Листья под President
+		// President
 		leafDepartments.add(repository.save(new Mydepartments()
 				.setParentId(rootPresident.getId())
 				.setDepartmentName("Ministry of Internal Affairs")));
@@ -189,22 +188,22 @@ public class MyEntityMydepartmensTestDataLoadService {
 				.setParentId(rootPresident.getId())
 				.setDepartmentName("Federal Bailiff Service")));
 
-		// Сохраняем существующих пользователей (без привязки к департаментам)
+
 		repositoryUser.save(new My3261Users()
 				.setLastName("Smith")
 				.setFirstName("John")
 				.setMiddleName("Michael"));
-		// ... (все остальные 20 пользователей, код оставляем без изменений)
 
-		// ---- НОВАЯ ЛОГИКА: добавляем пользователей в листовые департаменты ----
+
+
 		for (Mydepartments dept : leafDepartments) {
-			int count = ThreadLocalRandom.current().nextInt(0, 101); // 0..100
+			int count = ThreadLocalRandom.current().nextInt(0, 6);
 			List<My3261Users> usersForDept = new ArrayList<>();
 			for (int i = 0; i < count; i++) {
 				My3261Users user = new My3261Users()
-						.setLastName("Smith" + i + "_" + dept.getId())
-						.setFirstName("John" + i + "_" + dept.getId())
-						.setMiddleName("Michael" + i + "_" + dept.getId());
+						.setLastName("Smith" + i)
+						.setFirstName("John" + i )
+						.setMiddleName("Michael" + i );
 				repositoryUser.save(user);
 				usersForDept.add(user);
 			}

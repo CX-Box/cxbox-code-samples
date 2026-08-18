@@ -96,6 +96,8 @@ public class Myexample3262DTO extends DataResponseDTO {
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
 	private Long parentId;
 
+	private Boolean isLeaf;
+
 	public Myexample3262DTO(Myexample3262 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.customFieldHint = entity.getCustomFieldHint();
@@ -139,6 +141,7 @@ public class Myexample3262DTO extends DataResponseDTO {
 		this.customFieldHidden = entity.getCustomFieldHidden();
 		this.customField = entity.getCustomField();
 		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getParentId() == null ? false : true;
 	}
 
 }

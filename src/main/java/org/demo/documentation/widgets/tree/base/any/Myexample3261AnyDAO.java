@@ -10,13 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261AnyDTO> {
 
 	private final MydepartmensRepository repository;
+	private static final int DEFAULT_PAGE = 1;
+	private static final int DEFAULT_LIMIT = 20;
 
 	@Override
 	public String getId(Myexample3261AnyDTO entity) {
@@ -31,59 +34,105 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 	@Override
 	public Myexample3261AnyDTO getByIdIgnoringFirstLevelCache(BusinessComponent bc) {
 		String id = bc.getId();
-		String[] parts = id.split("-");
-		String departmentId = parts[0];
-		return getData(bc, departmentId).stream().filter(s -> Objects.equals(s.getId(), id)).findFirst().orElse(null);
+		if (id == null || !id.contains("-")) {
+			return null;
+		}
 
+		String departmentId = extractDepartmentId(id);
+		return getData(bc, departmentId).stream()
+				.filter(dto -> Objects.equals(dto.getId(), id))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
 	public Page<Myexample3261AnyDTO> getList(BusinessComponent bc, QueryParameters queryParameters) {
-		return new PageImpl<>(getData(bc, null));
+		List<Myexample3261AnyDTO> data = getData(bc, null);
+		return new PageImpl<>(data);
 	}
 
 	@Override
 	public Myexample3261AnyDTO create(BusinessComponent bc, Myexample3261AnyDTO entity) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Create operation is not supported");
 	}
 
 	@Override
 	public Myexample3261AnyDTO update(BusinessComponent bc, Myexample3261AnyDTO entity) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Update operation is not supported");
 	}
 
 	@Override
 	public void delete(BusinessComponent bc) {
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Delete operation is not supported");
 	}
 
 	public List<Myexample3261AnyDTO> getData(BusinessComponent bc, String deptId) {
+		PaginationParams pagination = extractPaginationParams(bc);
+		FilterParams filters = extractFilterParams(bc);
 
-		String pageStr = bc.getParameters().getParameter("_page");
-		String limitStr = bc.getParameters().getParameter("_limit");
-		String isLeafParam = bc.getParameters().getParameter("parentId.specified");
-		String parentId = bc.getParameters().getParameter("parentId.equals");
-
-		int page = parseOrDefault(pageStr, 0);
-		int limit = parseOrDefault(limitStr, 20);
-		int offset = page == 0 ? 0 : (page - 1) * limit;
-
-		List<DepartmentUsersPrj> entities;
-		if (deptId != null) {
-			entities = repository.allDepartmentUsersDeptId(offset, limit, deptId);
-		} else if (isLeafParam != null) {
-			entities = repository.allDepartmentUsersisLeaf(offset, limit, Boolean.parseBoolean(isLeafParam));
-		}else if (parentId != null) {
-			String[] parts = parentId.split("-");
-			parentId = parts[0];
-			entities = repository.allDepartmentUsersParentId(offset, limit, parentId);
-		}  else {
-			entities = repository.allDepartmentUsers(offset, limit);
-		}
+		List<DepartmentUsersPrj> entities = getData(pagination, filters, deptId);
 
 		return entities.stream()
 				.map(this::toDTO)
 				.toList();
+	}
+
+
+
+	private PaginationParams extractPaginationParams(BusinessComponent bc) {
+		String pageStr = bc.getParameters().getParameter("_page");
+		String limitStr = bc.getParameters().getParameter("_limit");
+
+		int page = parseOrDefault(pageStr, DEFAULT_PAGE);
+		int limit = parseOrDefault(limitStr, DEFAULT_LIMIT);
+		int offset = (page - 1) * limit; // CXBOX использует page начиная с 1
+
+		return new PaginationParams(offset, limit);
+	}
+
+	private FilterParams extractFilterParams(BusinessComponent bc) {
+		String isLeafParam = bc.getParameters().getParameter("parentId.specified");
+		String parentIdParam = bc.getParameters().getParameter("parentId.equals");
+
+		return new FilterParams(
+				isLeafParam != null ? Boolean.parseBoolean(isLeafParam) : null,
+				parentIdParam
+		);
+	}
+
+	private List<DepartmentUsersPrj> getData(PaginationParams pagination,
+	                                         FilterParams filters,
+	                                         String deptId) {
+		int offset = pagination.offset();
+		int limit = pagination.limit();
+
+
+		if (deptId != null) {
+			return repository.allDepartmentUsersDeptId(offset, limit, deptId);
+		}
+
+		if (filters.isLeaf() != null) {
+			return repository.allDepartmentUsersisLeaf(offset, limit, filters.isLeaf());
+		}
+
+		if (filters.parentId() != null && !filters.parentId().isEmpty()) {
+			String parentIdExtract = extractDepartmentId(filters.parentId());
+			return	repository.allDepartmentUsersParentId(offset, limit, parentIdExtract)
+					.stream()
+					.map(entity -> new DepartmentUsersPrj(
+							entity.id(),
+							filters.parentId(),
+							entity.departmentName(),
+							entity.lastName(),
+							entity.firstName(),
+							entity.middleName(),
+							entity.fullName(),
+							entity.isLeaf()
+					))
+					.toList();
+		}
+
+		return repository.allDepartmentUsers(offset, limit);
 	}
 
 	private Myexample3261AnyDTO toDTO(DepartmentUsersPrj entity) {
@@ -100,7 +149,7 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 	}
 
 	private int parseOrDefault(String value, int defaultValue) {
-		if (value == null || value.trim().isEmpty()) {
+		if (value == null || value.isBlank()) {
 			return defaultValue;
 		}
 		try {
@@ -110,4 +159,14 @@ public class Myexample3261AnyDAO extends AbstractAnySourceBaseDAO<Myexample3261A
 		}
 	}
 
+	private String extractDepartmentId(String compositeId) {
+		if (compositeId == null || !compositeId.contains("-")) {
+			return compositeId;
+		}
+		return compositeId.split("-")[0];
+	}
+
+	private record PaginationParams(int offset, int limit) {}
+
+	private record FilterParams(Boolean isLeaf, String parentId) {}
 }

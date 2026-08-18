@@ -11,85 +11,60 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MydepartmensRepository extends JpaRepository<Mydepartments, Long>, JpaSpecificationExecutor<Mydepartments> {
+public interface MydepartmensRepository extends JpaRepository<Mydepartments, Long>,
+		JpaSpecificationExecutor<Mydepartments> {
+
+	// ============ SPECIFICATIONS ============
 
 	default Specification<Mydepartments> getFullTextSearchSpecification(String value) {
-		return   getDepartmentLikeIgnoreCaseSpecification(value);
+		return getDepartmentLikeIgnoreCaseSpecification(value);
 	}
 
 	default Specification<Mydepartments> getDepartmentLikeIgnoreCaseSpecification(String value) {
-		return (root, query, cb)
-				-> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(Mydepartments_.departmentName));
+		return (root, query, cb) ->
+				FullTextSearchExt.likeIgnoreCase(value, cb, root.get(Mydepartments_.departmentName));
 	}
-	@Query("""
-		SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)), 
-				 mydept.parentId, 
-				mydept.departmentName, 
-				u.lastName, u.firstName, u.middleName,
-				 CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
-				 case when  mydept.parentId is null  then FALSE else TRUE end AS isLeaf
-		FROM Mydepartments mydept
-		LEFT JOIN mydept.fullNameList u
-		ORDER BY mydept.id, u.id
-		OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
-		""")
-	List<DepartmentUsersPrj> allDepartmentUsers(@Param("offset") int offset, @Param("limit") int limit);
 
-	@Query("""
-    SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)) AS Id,
-           mydept.parentId AS parentId,
-           mydept.departmentName AS departmentName,
-           u.lastName AS lastName,
-           u.firstName AS firstName,
-           u.middleName AS middleName,
-           CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
-           CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
-    FROM Mydepartments mydept
-    LEFT JOIN mydept.fullNameList u
-	WHERE (CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END) = :isLeaf
-		ORDER BY mydept.id, u.id
-		OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
-	""")
+	// ============ QUERIES ============
+
+	String BASE_SELECT = """
+        SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)) AS Id,
+             CAST(mydept.parentId AS string) AS parentId,
+               mydept.departmentName AS departmentName,
+               u.lastName AS lastName,
+               u.firstName AS firstName,
+               u.middleName AS middleName,
+               CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
+               CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
+        FROM Mydepartments mydept
+        LEFT JOIN mydept.fullNameList u
+    """;
+
+	String ORDER_BY = " ORDER BY mydept.id, u.id ";
+	String OFFSET_LIMIT = " OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY ";
+
+	@Query(BASE_SELECT + ORDER_BY + OFFSET_LIMIT)
+	List<DepartmentUsersPrj> allDepartmentUsers(@Param("offset") int offset,
+	                                            @Param("limit") int limit);
+
+	@Query(BASE_SELECT +
+			" WHERE (CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END) = :isLeaf " +
+			ORDER_BY + OFFSET_LIMIT)
 	List<DepartmentUsersPrj> allDepartmentUsersisLeaf(@Param("offset") int offset,
 	                                                  @Param("limit") int limit,
 	                                                  @Param("isLeaf") boolean isLeaf);
 
-	@Query("""
-    SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)) AS Id,
-           mydept.parentId AS parentId,
-           mydept.departmentName AS departmentName,
-           u.lastName AS lastName,
-           u.firstName AS firstName,
-           u.middleName AS middleName,
-           CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
-           CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
-    FROM Mydepartments mydept
-    LEFT JOIN mydept.fullNameList u
-    WHERE mydept.id = :deptId
-    ORDER BY mydept.id, u.id
-    OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
-""")
+	@Query(BASE_SELECT +
+			" WHERE mydept.id = :deptId " +
+			ORDER_BY + OFFSET_LIMIT)
 	List<DepartmentUsersPrj> allDepartmentUsersDeptId(@Param("offset") int offset,
 	                                                  @Param("limit") int limit,
 	                                                  @Param("deptId") String deptId);
 
-
-	@Query("""
-    SELECT CONCAT(mydept.id, '-', COALESCE(u.id, 0)) AS Id,
-           mydept.parentId AS parentId,
-           mydept.departmentName AS departmentName,
-           u.lastName AS lastName,
-           u.firstName AS firstName,
-           u.middleName AS middleName,
-           CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
-           CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
-    FROM Mydepartments mydept
-    LEFT JOIN mydept.fullNameList u
-    WHERE mydept.parentId = :parentId
-    ORDER BY mydept.id, u.id
-    OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY
-""")
+	@Query(BASE_SELECT +
+			" WHERE mydept.parentId = :parentId " +
+			ORDER_BY + OFFSET_LIMIT)
 	List<DepartmentUsersPrj> allDepartmentUsersParentId(@Param("offset") int offset,
-	                                                  @Param("limit") int limit,
-	                                                  @Param("parentId") String parentId);
+	                                                    @Param("limit") int limit,
+	                                                    @Param("parentId") String parentId);
 }
