@@ -22,6 +22,7 @@ interface BuildTreeTableColumnsParams {
     restoreAncestorPaths: ReturnType<typeof useTableTree>['restoreAncestorPaths']
     showCloseButton: boolean
     hideColumn: (fieldKey: string) => void
+    disableRowExpand?: boolean
 }
 
 export function buildTreeTableColumns<T extends CustomDataItem>({
@@ -36,7 +37,8 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
     createFetchNodesHandler,
     restoreAncestorPaths,
     showCloseButton,
-    hideColumn
+    hideColumn,
+    disableRowExpand
 }: BuildTreeTableColumnsParams): Array<ColumnProps<T>> {
     const isGroupingHierarchy = (widget.type as string) === CustomWidgetTypes.GroupingHierarchy
 
@@ -63,6 +65,7 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                 width: field.width,
                 render: (text: string, dataItem: T) => (
                     <TreeTableCell
+                        disableRowExpand={disableRowExpand}
                         field={listField}
                         dataItem={dataItem as T & TableTreeNode}
                         isFirstColumn={isFirstColumn}

@@ -3,7 +3,7 @@ import { TableProps as AntdTableProps } from 'antd/es/table'
 import { TableEventListeners } from 'antd/lib/table/interface'
 import { actions } from '@actions'
 import Operations from '@components/Operations/Operations'
-import { RESTORE_ANCESTORS_ID, ROW_KEY, TREE_SEARCH_MODES } from '@components/widgets/Table/constants'
+import { RESTORE_ANCESTORS_ID, ROW_KEY } from '@components/widgets/Table/constants'
 import StandardTable from '@components/widgets/Table/StandardTable'
 import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
@@ -25,6 +25,7 @@ import TableSettings from '@components/widgets/Table/components/TableSettings'
 import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
 import { treeActions } from '@slices/tree'
 import { Lookup } from '@utils/Lookup'
+import { TREE_SEARCH_MODES } from '@constants/tree'
 
 interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -50,7 +51,7 @@ function TreeTable<T extends CustomDataItem>({
     const parentRef = React.useRef()
     const currentSearchMode = useAppSelector(state => selectBcTree(state, bcName)?.searchMode)
 
-    const { dataSource, handleExpand, expandedRowKeys, createFetchNodesHandler, restoreAncestorPaths } = useTableTree(widget)
+    const { dataSource, handleExpand, expandedRowKeys, createFetchNodesHandler, restoreAncestorPaths, filterActive } = useTableTree(widget)
     const defaultTreeRowSelection = useTreeRowSelection(widgetName)
     const { selectNode, getNodeSelectionState } = treeRowSelection ?? defaultTreeRowSelection
     const { changePageLimit, hideLimitOptions, value: pageLimit, options } = useWidgetPaginationLimit(widget)
@@ -96,7 +97,8 @@ function TreeTable<T extends CustomDataItem>({
                 ...tableEventListeners,
                 ...onRow?.(record, index),
                 'data-test-widget-tree-row-id': record.id,
-                'data-test-widget-tree-row-type': treeRecord._recordType === 'node' ? 'Row' : 'PseudoRow'
+                'data-test-widget-tree-row-type': treeRecord._recordType === 'node' ? 'Row' : 'PseudoRow',
+                'data-record-type': treeRecord._recordType
             } as TableEventListeners
         },
         [bc?.cursor, bc?.name, dispatch, onRow]
@@ -134,13 +136,16 @@ function TreeTable<T extends CustomDataItem>({
 
     const handleChangeSearchMode = useCallback(
         (searchMode: string) => {
-            if (!Lookup.has(TREE_SEARCH_MODES, searchMode)) {
+            if (!Lookup.has(TREE_SEARCH_MODES, searchMode) || searchMode === currentSearchMode) {
                 return
             }
 
             dispatch(treeActions.changeSearchMode({ bcName, searchMode }))
+            dispatch(treeActions.initTree({ bcName, reset: true }))
+            dispatch(actions.bcRemoveAllFilters({ bcName }))
+            dispatch(actions.bcForceUpdate({ bcName }))
         },
-        [bcName, dispatch]
+        [bcName, currentSearchMode, dispatch]
     )
 
     const settings =
@@ -177,6 +182,7 @@ function TreeTable<T extends CustomDataItem>({
     const columns = React.useMemo(
         () =>
             buildTreeTableColumns<T>({
+                disableRowExpand: currentSearchMode === 'hide' && filterActive,
                 showCloseButton: closeButton.visibility,
                 hideColumn: hideColumn,
                 fields: resultedFields,
@@ -194,8 +200,10 @@ function TreeTable<T extends CustomDataItem>({
             bcRowMeta?.fields,
             closeButton.visibility,
             createFetchNodesHandler,
+            currentSearchMode,
             disableRowSelection,
             expandedRowKeys,
+            filterActive,
             getNodeSelectionState,
             handleExpand,
             hideColumn,

@@ -6,7 +6,6 @@ import { selectBcTree, selectWidget } from '@selectors/selectors'
 import { useRowSelection } from '@components/widgets/Table/massOperations/hooks/useRowSelection'
 import { TREE_ROOT_ID } from '@components/widgets/Table/constants'
 import { TableTreeNode } from '@components/widgets/Table/tree/hooks/useTreeDataSource'
-import { useTreePagination } from '@components/widgets/Table/tree/hooks/useTreePagination'
 import { useTreeShowMore } from '@components/widgets/Table/tree/hooks/useTreeShowMore'
 import { isDefined } from '@utils/isDefined'
 import { TreeNode } from '@slices/tree'
@@ -83,8 +82,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
     const selectionMode = widget?.options?.tree?.selection ?? 'nodeAndLeaf'
     const dataLossWarning = widget?.options?.tree?.dataLossWarning ?? 'always'
     const treeState = useAppSelector(state => selectBcTree(state, bcName))
-    const { limit, defaultLimit, total, paginationType } = useTreePagination(bcName, widget)
-    const calculateShowMoreState = useTreeShowMore(paginationType, limit, defaultLimit, total)
+    const calculateShowMoreState = useTreeShowMore(widget)
 
     const hasEnabledShowMore = useCallback(
         (parentId: string): boolean => {
@@ -92,9 +90,19 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
                 return false
             }
 
-            const parentNodeState = treeState.nodesState[parentId]
+            if (treeState.filterActive && treeState.searchMode === 'hide') {
+                return false
+            }
 
-            return calculateShowMoreState(parentId, treeState.nodesState, parentNodeState?.lastResponseCount ?? 0).visible
+            const nodesState = treeState.nodesState
+            const parentNodeState = nodesState[parentId]
+            const childIds = treeState.childIdsByParent[parentId] ?? []
+            const visibleChildCount =
+                treeState.filterActive && treeState.searchMode === 'collapse'
+                    ? childIds.filter(id => treeState.visibleNodeIdsForHidden.includes(String(id))).length
+                    : childIds.length
+
+            return calculateShowMoreState(parentId, nodesState, parentNodeState?.lastResponseCount ?? 0, visibleChildCount).visible
         },
         [calculateShowMoreState, treeState]
     )

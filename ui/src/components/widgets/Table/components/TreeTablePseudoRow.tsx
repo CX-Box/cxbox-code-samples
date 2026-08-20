@@ -50,13 +50,15 @@ export function TreeTablePseudoRow({
                     />
                 )}
                 <Button
-                    type="default"
+                    type="Link"
                     size="small"
+                    removeIndentation={true}
                     disabled={dataItem._disabled}
                     loading={dataItem._loading}
                     onClick={createFetchNodesHandler(dataItem.parentId, true)}
+                    style={{ border: 'none', color: '#40a9ff', fontSize: 'var(--field-read-font-size)' }}
                 >
-                    ...
+                    {t('More {{n}}', { n: dataItem._remainingNumberOfRecords ?? '' })}
                 </Button>
             </>
         )

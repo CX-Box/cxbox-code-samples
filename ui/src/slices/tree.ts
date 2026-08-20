@@ -6,8 +6,8 @@ import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { isDefined } from '@utils/isDefined'
 import { DEFAULT_PAGE } from '@constants/pagination'
 import { AnyAction } from 'redux'
-import { TreeSearchModes } from '@interfaces/widget'
-import { DEFAULT_SEARCH_MODE } from '@constants/tree'
+import { TreeExpandedStateAfterFilter, TreeSearchModes } from '@interfaces/widget'
+import { DEFAULT_EXPANDED_STATE_AFTER_FILTER, DEFAULT_SEARCH_MODE } from '@constants/tree'
 import { DEFAULT_TREE_IS_LEAF_FIELD_KEY, DEFAULT_TREE_PARENT_FIELD_KEY, getTreeNodeIsLeaf } from '@utils/tree'
 
 export interface TreeNode extends CustomDataItem {
@@ -19,16 +19,25 @@ export interface TreeNode extends CustomDataItem {
 export interface BcTreeState {
     nodes: Record<string, TreeNode>
     childIdsByParent: Record<string, string[]>
-    nodesState: Record<string, Pick<BcMetaState, 'loading' | 'page' | 'hasNext'> & { lastResponseCount?: number }>
+    nodesState: Record<
+        string,
+        Pick<BcMetaState, 'loading' | 'page' | 'hasNext'> & { lastResponseCount?: number; count?: number; filterPage?: number }
+    >
     errors: Record<string, string | null>
     expandedParents: string[]
     searchMode: TreeSearchModes
     filterActive: boolean
     matchedNodeIds: string[]
-    filteredNodesState: BcTreeState['nodesState']
+    filterResultNodeIds: string[]
+    visibleNodeIdsForHidden: string[]
+    filterPagination: Pick<BcMetaState, 'loading' | 'page' | 'hasNext'> & {
+        lastResponseCount?: number
+        count?: number
+    }
     parentFieldKey: string
     isLeafFieldKey: string
     expandedParentsBeforeFilter?: string[]
+    expandedStateAfterFilter: TreeExpandedStateAfterFilter
 }
 
 type TreeSate = { [bcName: string]: BcTreeState | undefined }
@@ -86,11 +95,45 @@ const initBcTreeState = (initialTreeState?: Partial<BcTreeState>): BcTreeState =
     searchMode: DEFAULT_SEARCH_MODE,
     filterActive: false,
     matchedNodeIds: [],
-    filteredNodesState: {},
+    filterResultNodeIds: [],
+    visibleNodeIdsForHidden: [],
+    filterPagination: {},
     parentFieldKey: DEFAULT_TREE_PARENT_FIELD_KEY,
     isLeafFieldKey: DEFAULT_TREE_IS_LEAF_FIELD_KEY,
+    expandedStateAfterFilter: DEFAULT_EXPANDED_STATE_AFTER_FILTER,
     ...initialTreeState
 })
+
+const getExpandedPathIds = (tree: BcTreeState, nodeIds: string[]) => {
+    const expandedPathIds = new Set<string>()
+
+    nodeIds.forEach(id => {
+        let node = tree.nodes[id]
+        const visited = new Set<string>()
+
+        while (isDefined(node?.[tree.parentFieldKey])) {
+            const parentId = String(node[tree.parentFieldKey])
+            if (visited.has(parentId)) {
+                break
+            }
+            visited.add(parentId)
+            expandedPathIds.add(parentId)
+            node = tree.nodes[parentId]
+        }
+    })
+
+    return expandedPathIds
+}
+
+const getExpandedVisibleParentIds = (tree: BcTreeState) => {
+    const visibleNodeIds = new Set(tree.visibleNodeIdsForHidden)
+
+    return new Set(
+        Object.entries(tree.childIdsByParent)
+            .filter(([parentId, childIds]) => visibleNodeIds.has(parentId) && childIds.some(childId => visibleNodeIds.has(childId)))
+            .map(([parentId]) => parentId)
+    )
+}
 
 const treeSlice = createSlice({
     name: 'tree',
@@ -105,15 +148,18 @@ const treeSlice = createSlice({
                 searchMode?: TreeSearchModes
                 parentFieldKey?: string
                 isLeafFieldKey?: string
+                expandedStateAfterFilter?: TreeExpandedStateAfterFilter
             }>
         ) {
-            const { bcName, nodeState, reset, searchMode, parentFieldKey, isLeafFieldKey } = action.payload
+            const { bcName, nodeState, reset, searchMode, parentFieldKey, isLeafFieldKey, expandedStateAfterFilter } = action.payload
             if (!state[bcName] || reset) {
                 state[bcName] = initBcTreeState({
                     ...(nodeState ? { nodesState: { null: nodeState } } : undefined),
                     searchMode: searchMode ?? state[bcName]?.searchMode ?? DEFAULT_SEARCH_MODE,
                     parentFieldKey: parentFieldKey ?? state[bcName]?.parentFieldKey ?? DEFAULT_TREE_PARENT_FIELD_KEY,
-                    isLeafFieldKey: isLeafFieldKey ?? state[bcName]?.isLeafFieldKey ?? DEFAULT_TREE_IS_LEAF_FIELD_KEY
+                    isLeafFieldKey: isLeafFieldKey ?? state[bcName]?.isLeafFieldKey ?? DEFAULT_TREE_IS_LEAF_FIELD_KEY,
+                    expandedStateAfterFilter:
+                        expandedStateAfterFilter ?? state[bcName]?.expandedStateAfterFilter ?? DEFAULT_EXPANDED_STATE_AFTER_FILTER
                 })
             }
         },
@@ -126,10 +172,9 @@ const treeSlice = createSlice({
                 more?: boolean
                 limit?: number
                 bcDataRequestAction?: AnyAction
-                filtered?: boolean
             }>
         ) {
-            const { bcName, page: newPage, more, filtered } = action.payload
+            const { bcName, page: newPage, more } = action.payload
             const parentId = action.payload.parentId as string
 
             if (!state[bcName]) {
@@ -138,7 +183,7 @@ const treeSlice = createSlice({
 
             const currentTree = state[bcName]!
 
-            const nodesState = filtered ? currentTree.filteredNodesState : currentTree.nodesState
+            const nodesState = currentTree.nodesState
 
             if (!nodesState[parentId]) {
                 nodesState[parentId] = {}
@@ -163,18 +208,16 @@ const treeSlice = createSlice({
                 parentId: string | null | undefined
                 data: DataItem[]
                 hasNext?: boolean
-                filtered?: boolean
-                matchedNodeIds?: string[]
             }>
         ) {
-            const { bcName, data, hasNext, parentId: requestedParentId, filtered, matchedNodeIds } = action.payload
+            const { bcName, data, hasNext, parentId: requestedParentId } = action.payload
 
             if (!state[bcName]) {
                 state[bcName] = initBcTreeState()
             }
 
             const currentTree = state[bcName]!
-            const nodesState = filtered ? currentTree.filteredNodesState : currentTree.nodesState
+            const nodesState = currentTree.nodesState
 
             const mutateBcTreeByParentId = (
                 nodeId: string | null,
@@ -230,18 +273,19 @@ const treeSlice = createSlice({
             const newNodes = createDictionaryFrom(FIELDS.TECHNICAL.ID, data)
             Object.assign(currentTree.nodes, newNodes)
 
-            if (filtered) {
-                currentTree.matchedNodeIds = getUniqueValues([...currentTree.matchedNodeIds, ...(matchedNodeIds ?? [])])
+            if (currentTree.filterActive && currentTree.searchMode === 'collapse') {
+                currentTree.visibleNodeIdsForHidden = getUniqueValues([...currentTree.visibleNodeIdsForHidden, ...extractIds(data)])
+                if (requestedParentId !== undefined) {
+                    const nodeState = nodesState[String(requestedParentId)]
+                    nodeState.filterPage = nodeState.page ?? 0
+                }
             }
         },
-        fetchChildNodeDataFail(
-            state,
-            action: PayloadAction<{ bcName: string; parentId: string | null; error?: string; filtered?: boolean }>
-        ) {
-            const { bcName, parentId, error, filtered } = action.payload
+        fetchChildNodeDataFail(state, action: PayloadAction<{ bcName: string; parentId: string | null; error?: string }>) {
+            const { bcName, parentId, error } = action.payload
             const currentTree = state[bcName]
             const safeParentId = String(parentId)
-            const nodesState = filtered ? currentTree?.filteredNodesState : currentTree?.nodesState
+            const nodesState = currentTree?.nodesState
 
             if (nodesState?.[safeParentId]) {
                 nodesState[safeParentId].loading = false
@@ -250,17 +294,62 @@ const treeSlice = createSlice({
                 currentTree.errors[safeParentId] = error ?? null
             }
         },
-        applyFilter(state, action: PayloadAction<{ bcName: string }>) {
-            const { bcName } = action.payload
+        setTreeChildCount(state, action: PayloadAction<{ bcName: string; parentId: string | null; count: number }>) {
+            const { bcName, parentId, count } = action.payload
 
             if (!state[bcName]) {
                 state[bcName] = initBcTreeState()
             }
 
-            state[bcName]!.filteredNodesState = {}
+            const currentTree = state[bcName]!
+            const nodesState = currentTree.nodesState
+            const safeParentId = String(parentId)
+
+            if (!nodesState[safeParentId]) {
+                nodesState[safeParentId] = {}
+            }
+
+            nodesState[safeParentId].count = count
         },
-        applyFilterSuccess(state, action: PayloadAction<{ bcName: string; data: DataItem[]; matchedNodeIds: string[] }>) {
-            const { bcName, data, matchedNodeIds } = action.payload
+        applyFilter(state, action: PayloadAction<{ bcName: string; more?: boolean }>) {
+            const { bcName, more } = action.payload
+
+            if (!state[bcName]) {
+                state[bcName] = initBcTreeState()
+            }
+
+            const currentTree = state[bcName]!
+            if (!more) {
+                currentTree.visibleNodeIdsForHidden = []
+                Object.values(currentTree.nodesState).forEach(nodeState => {
+                    if (currentTree.searchMode === 'collapse') {
+                        nodeState.filterPage = 0
+                    } else {
+                        delete nodeState.filterPage
+                    }
+                })
+            }
+            currentTree.filterPagination = more
+                ? {
+                      ...currentTree.filterPagination,
+                      loading: true,
+                      page: (currentTree.filterPagination.page ?? DEFAULT_PAGE) + 1
+                  }
+                : { loading: true, page: DEFAULT_PAGE }
+        },
+        applyFilterSuccess(
+            state,
+            action: PayloadAction<{
+                bcName: string
+                data: DataItem[]
+                matchedNodeIds: string[]
+                filterResultNodeIds: string[]
+                restoredNodeIds: string[]
+                hasNext?: boolean
+                more?: boolean
+            }>
+        ) {
+            const { bcName, data, matchedNodeIds, filterResultNodeIds, restoredNodeIds, hasNext, more } = action.payload
             const currentTree = state[bcName] ?? initBcTreeState()
             state[bcName] = currentTree
 
@@ -269,7 +358,19 @@ const treeSlice = createSlice({
             }
 
             currentTree.filterActive = true
-            currentTree.matchedNodeIds = getUniqueValues(matchedNodeIds.map(String))
+            currentTree.filterPagination.loading = false
+            currentTree.filterPagination.hasNext = hasNext
+            currentTree.filterPagination.lastResponseCount = filterResultNodeIds.length
+            currentTree.matchedNodeIds = getUniqueValues([...(more ? currentTree.matchedNodeIds : []), ...matchedNodeIds.map(String)])
+            currentTree.filterResultNodeIds = getUniqueValues([
+                ...(more ? currentTree.filterResultNodeIds : []),
+                ...filterResultNodeIds.map(String)
+            ])
+            currentTree.visibleNodeIdsForHidden = getUniqueValues([
+                ...(more ? currentTree.visibleNodeIdsForHidden : []),
+                ...filterResultNodeIds.map(String),
+                ...restoredNodeIds.map(String)
+            ])
 
             const recordsByParentId = dataByCategory(currentTree.parentFieldKey, data)
             Object.entries(recordsByParentId).forEach(([parentId, children]) => {
@@ -280,43 +381,78 @@ const treeSlice = createSlice({
             })
             Object.assign(currentTree.nodes, createDictionaryFrom(FIELDS.TECHNICAL.ID, data))
 
-            const expandedPathIds = new Set<string>()
-            currentTree.matchedNodeIds.forEach(id => {
-                let node = currentTree.nodes[id]
-                const visited = new Set<string>()
-                while (isDefined(node?.[currentTree.parentFieldKey])) {
-                    const parentId = String(node[currentTree.parentFieldKey])
-                    if (visited.has(parentId)) {
-                        break
-                    }
-                    visited.add(parentId)
-                    expandedPathIds.add(parentId)
-                    node = currentTree.nodes[parentId]
-                }
-            })
+            const hidePreviouslyLoadedNodes = currentTree.searchMode === 'hide' || currentTree.searchMode === 'collapse'
+            const expandedPathIds = hidePreviouslyLoadedNodes
+                ? getExpandedVisibleParentIds(currentTree)
+                : getExpandedPathIds(currentTree, currentTree.matchedNodeIds)
 
-            currentTree.expandedParents =
-                currentTree.searchMode === 'highlight'
-                    ? getUniqueValues([...currentTree.expandedParents, ...expandedPathIds])
-                    : [...expandedPathIds]
+            currentTree.expandedParents = hidePreviouslyLoadedNodes
+                ? getUniqueValues([...(more ? currentTree.expandedParents : []), ...expandedPathIds])
+                : getUniqueValues([...currentTree.expandedParents, ...expandedPathIds])
 
-            if (currentTree.searchMode === 'collapse' || currentTree.searchMode === 'hide') {
-                const paginationState = currentTree.searchMode === 'hide' ? currentTree.filteredNodesState : currentTree.nodesState
+            if (currentTree.searchMode === 'collapse' || currentTree.searchMode === 'highlight') {
                 const visibleParentIds = new Set<string>([String(null), ...expandedPathIds])
 
-                currentTree.matchedNodeIds.forEach(id => {
+                const filterNodeIds = currentTree.searchMode === 'collapse' ? filterResultNodeIds : currentTree.matchedNodeIds
+                filterNodeIds.forEach(id => {
                     if (!getTreeNodeIsLeaf(currentTree.nodes[id], currentTree.isLeafFieldKey)) {
                         visibleParentIds.add(id)
                     }
                 })
 
                 visibleParentIds.forEach(parentId => {
-                    if (!paginationState[parentId]) {
+                    if (!currentTree.nodesState[parentId]) {
                         // Page zero means that this branch has not been requested in the current mode yet.
                         // It also keeps the show-more control visible until the first response provides hasNext.
-                        paginationState[parentId] = { page: 0, hasNext: true }
+                        currentTree.nodesState[parentId] = {
+                            page: 0,
+                            hasNext: true,
+                            ...(currentTree.searchMode === 'collapse' ? { filterPage: 0 } : undefined)
+                        }
                     }
                 })
+            }
+        },
+        showCachedFilterPage(state, action: PayloadAction<{ bcName: string; parentId: string; limit: number }>) {
+            const { bcName, parentId, limit } = action.payload
+            const currentTree = state[bcName]
+            const nodeState = currentTree?.nodesState[parentId]
+
+            if (!currentTree?.filterActive || currentTree.searchMode !== 'collapse' || !nodeState) {
+                return
+            }
+
+            const loadedPage = nodeState.page ?? 0
+            const filterPage = nodeState.filterPage ?? 0
+            if (filterPage >= loadedPage) {
+                return
+            }
+
+            const loadedCount = (loadedPage - 1) * limit + (nodeState.lastResponseCount ?? limit)
+            const cachedIds = (currentTree.childIdsByParent[parentId] ?? []).slice(
+                filterPage * limit,
+                Math.min((filterPage + 1) * limit, loadedCount)
+            )
+
+            currentTree.visibleNodeIdsForHidden = getUniqueValues([...currentTree.visibleNodeIdsForHidden, ...cachedIds])
+            nodeState.filterPage = filterPage + 1
+        },
+        applyFilterFail(state, action: PayloadAction<{ bcName: string; more?: boolean }>) {
+            const currentTree = state[action.payload.bcName]
+            if (currentTree) {
+                currentTree.filterPagination.loading = false
+                if (!currentTree.filterActive) {
+                    Object.values(currentTree.nodesState).forEach(nodeState => delete nodeState.filterPage)
+                }
+                if (action.payload.more && currentTree.filterPagination.page) {
+                    currentTree.filterPagination.page -= 1
+                }
+            }
+        },
+        setFilterCount(state, action: PayloadAction<{ bcName: string; count: number }>) {
+            const currentTree = state[action.payload.bcName]
+            if (currentTree) {
+                currentTree.filterPagination.count = action.payload.count
             }
         },
         clearFilter(state, action: PayloadAction<{ bcName: string }>) {
@@ -326,9 +462,15 @@ const treeSlice = createSlice({
             }
             currentTree.filterActive = false
             currentTree.matchedNodeIds = []
-            currentTree.filteredNodesState = {}
+            currentTree.filterResultNodeIds = []
+            currentTree.visibleNodeIdsForHidden = []
+            currentTree.filterPagination = {}
+            Object.values(currentTree.nodesState).forEach(nodeState => delete nodeState.filterPage)
             if (currentTree.expandedParentsBeforeFilter) {
-                currentTree.expandedParents = currentTree.expandedParentsBeforeFilter
+                currentTree.expandedParents =
+                    currentTree.expandedStateAfterFilter === 'merge'
+                        ? getUniqueValues([...currentTree.expandedParentsBeforeFilter, ...currentTree.expandedParents])
+                        : currentTree.expandedParentsBeforeFilter
             }
             delete currentTree.expandedParentsBeforeFilter
         },
@@ -343,14 +485,11 @@ const treeSlice = createSlice({
                 ? [...new Set([...currentTree.expandedParents, nodeId])]
                 : currentTree.expandedParents.filter(item => item !== nodeId)
         },
-        fetchNodeData(state, action: PayloadAction<{ bcName: string; ids: string[] }>) {
-            return
-        },
         restoreNodePaths(state, action: PayloadAction<{ bcName: string; ids: string[] }>) {
             return
         },
-        fetchNodeDataSuccess(state, action: PayloadAction<{ bcName: string; data: DataItem[] }>) {
-            const { bcName, data } = action.payload
+        restoreNodePathsSuccess(state, action: PayloadAction<{ bcName: string; data: DataItem[]; restoredNodeIds: string[] }>) {
+            const { bcName, data, restoredNodeIds } = action.payload
 
             if (!state[bcName]) {
                 state[bcName] = initBcTreeState()
@@ -376,12 +515,25 @@ const treeSlice = createSlice({
 
             Object.assign(currentTree.nodes, createDictionaryFrom(FIELDS.TECHNICAL.ID, data))
 
+            const hiddenFilterActive =
+                currentTree.filterActive && (currentTree.searchMode === 'hide' || currentTree.searchMode === 'collapse')
+
+            if (hiddenFilterActive) {
+                currentTree.visibleNodeIdsForHidden = getUniqueValues([
+                    ...currentTree.visibleNodeIdsForHidden,
+                    ...restoredNodeIds.map(String)
+                ])
+                currentTree.expandedParents = getUniqueValues([...currentTree.expandedParents, ...getExpandedVisibleParentIds(currentTree)])
+            }
+
             const restoredParentIds = data
                 .map(item => item[currentTree.parentFieldKey])
                 .filter((parentId): parentId is string => isDefined(parentId))
                 .map(String)
 
-            currentTree.expandedParents = getUniqueValues([...currentTree.expandedParents, ...restoredParentIds])
+            if (!hiddenFilterActive) {
+                currentTree.expandedParents = getUniqueValues([...currentTree.expandedParents, ...restoredParentIds])
+            }
         },
         changeSearchMode(state, action: PayloadAction<{ bcName: string; searchMode: TreeSearchModes }>) {
             const { bcName, searchMode } = action.payload
@@ -391,6 +543,7 @@ const treeSlice = createSlice({
             }
 
             state[bcName]!.searchMode = searchMode
+            Object.values(state[bcName]!.nodesState).forEach(nodeState => delete nodeState.filterPage)
         }
     },
     extraReducers: builder => {

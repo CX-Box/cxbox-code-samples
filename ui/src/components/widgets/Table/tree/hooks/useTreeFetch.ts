@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { treeActions, BcTreeState } from '../../../../../slices/tree'
+import { treeActions, BcTreeState } from '@slices/tree'
 
-export const useTreeFetch = (bcName?: string, bcTreeState?: BcTreeState) => {
+export const useTreeFetch = (bcName?: string, bcTreeState?: BcTreeState, limit?: number) => {
     const dispatch = useDispatch()
 
     const fetchChildNodes = useCallback(
@@ -15,10 +15,21 @@ export const useTreeFetch = (bcName?: string, bcTreeState?: BcTreeState) => {
                 return
             }
 
-            const filtered = bcTreeState.filterActive && bcTreeState.searchMode === 'hide'
-            dispatch(treeActions.fetchChildNodeData({ bcName, parentId, more, filtered }))
+            const nodeState = bcTreeState.nodesState[String(parentId)]
+            if (
+                more &&
+                limit &&
+                bcTreeState.filterActive &&
+                bcTreeState.searchMode === 'collapse' &&
+                (nodeState?.filterPage ?? 0) < (nodeState?.page ?? 0)
+            ) {
+                dispatch(treeActions.showCachedFilterPage({ bcName, parentId: String(parentId), limit }))
+                return
+            }
+
+            dispatch(treeActions.fetchChildNodeData({ bcName, parentId, more }))
         },
-        [bcName, bcTreeState, dispatch]
+        [bcName, bcTreeState, dispatch, limit]
     )
 
     const createFetchChildNodesHandler = useCallback(

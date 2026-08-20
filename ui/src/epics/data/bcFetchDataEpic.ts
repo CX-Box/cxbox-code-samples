@@ -192,9 +192,30 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                 return EMPTY
             }
 
+            const treeEnabled = widgets?.some(candidate => candidate.bcName === bcName && isTreeWidget(candidate))
+
+            if (treeEnabled) {
+                const resetTree = bcForceUpdate.match(action) || bcChangePage.match(action) || showViewPopup.match(action)
+                const withBcDataSideEffects = bcFetchDataRequest.match(action) || resetTree
+
+                return concat(
+                    resetTree ? of(treeActions.initTree({ bcName, reset: true })) : EMPTY,
+                    of(
+                        treeActions.fetchChildNodeData({
+                            bcName,
+                            parentId: null,
+                            page: fetchParams._page,
+                            limit: fetchParams._limit,
+                            bcDataRequestAction: withBcDataSideEffects ? action : undefined
+                        })
+                    )
+                )
+            }
+
             const anyHierarchyWidget = widgets?.find(item => {
                 return item.bcName === widget.bcName && item.type === WidgetTypes.AssocListPopup && isHierarchyWidget(item)
             })
+
             if (bcForceUpdate.match(action)) {
                 const infinityPaginationWidget =
                     (widgetName && infiniteWidgets?.includes(widgetName)) ||
@@ -211,26 +232,6 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
             }
             if ((bcFetchDataRequest.match(action) && action.payload.ignorePageLimit) || anyHierarchyWidget?.options?.hierarchyFull) {
                 fetchParams._limit = 0
-            }
-
-            const treeEnabled = widgets?.some(candidate => candidate.bcName === bcName && isTreeWidget(candidate))
-
-            if (treeEnabled) {
-                const resetTree = bcForceUpdate.match(action) || bcChangePage.match(action)
-                const withBcDataSideEffects = bcFetchDataRequest.match(action) || showViewPopup.match(action) || resetTree
-
-                return concat(
-                    resetTree ? of(treeActions.initTree({ bcName, reset: true })) : EMPTY,
-                    of(
-                        treeActions.fetchChildNodeData({
-                            bcName,
-                            parentId: null,
-                            page: fetchParams._page,
-                            limit: fetchParams._limit,
-                            bcDataRequestAction: withBcDataSideEffects ? action : undefined
-                        })
-                    )
-                )
             }
 
             const canceler = api.createCanceler()

@@ -26,9 +26,9 @@ export const SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT = PAGINATION_MODES.nex
 
 export const WIDGETS_WITH_SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT: (WidgetTypes | CustomWidgetTypes)[] = [
     WidgetTypes.List,
-    // CustomWidgetTypes.Tree,
-    // CustomWidgetTypes.AssocTreePopup,
-    // CustomWidgetTypes.PickTreePopup,
+    CustomWidgetTypes.Tree,
+    CustomWidgetTypes.AssocTreePopup,
+    CustomWidgetTypes.PickTreePopup,
     CustomWidgetTypes.GroupingHierarchy,
     CustomWidgetTypes.DashboardList,
     WidgetTypes.AssocListPopup,
