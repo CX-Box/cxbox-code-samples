@@ -11,12 +11,16 @@ import { FIELDS } from '@constants'
 import { isDefined } from '@utils/isDefined'
 import { buildBcFetchContext, getBcFetchSideEffects } from './data/bcFetchDataEpic'
 import { DEFAULT_PAGE } from '@constants/pagination'
-import { TREE_PATH_RESTORE_MAX_REQUESTS } from '@components/widgets/Table/constants'
 import { isDataItemMatchedByFilters } from '@utils/filterMatch'
 import { getTreeFieldKeys } from '@utils/tree'
 import { isTreeWidget } from '@constants/widget'
 import { AppWidgetMeta } from '@interfaces/widget'
-import { DEFAULT_SEARCH_MODE } from '@constants/tree'
+import {
+    DEFAULT_EXPANDED_STATE_AFTER_FILTER,
+    DEFAULT_SEARCH_MODE,
+    TREE_PATH_RESTORE_MAX_REQUESTS_AFTER_FILTRATION,
+    TREE_PATH_RESTORE_MAX_REQUESTS_BEFORE_FILTRATION
+} from '@constants/tree'
 
 export const initTreeEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
@@ -52,6 +56,7 @@ export const initTreeEpic: RootEpic = (action$, state$, { api }) =>
 
 interface TreePathRestoreState {
     data: DataItem[]
+    restoredNodeIds: string[]
     nextIds: string[]
     requestCount: number
 }
@@ -64,9 +69,12 @@ interface RestoreTreePathsOptions {
     bcName: string
     initialData?: DataItem[]
     requestedIds?: string[]
+    maxRequests: number
 }
 
-const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds = [] }: RestoreTreePathsOptions) => {
+const normalizeMaxRestoreRequests = (value: number) => (Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0)
+
+const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds = [], maxRequests }: RestoreTreePathsOptions) => {
     const bc = state.screen.bo.bc[bcName]
     const widget = (state.view.widgets as AppWidgetMeta[]).find(item => item.bcName === bcName && isTreeWidget(item))
 
@@ -77,23 +85,60 @@ const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds =
     const bcUrl = buildBcUrl(bcName, false, state) ?? ''
     const { parentFieldKey } = getTreeFieldKeys(widget)
     const limit = widget.limit || bc.limit || requestedIds.length || initialData.length
-    const initiallyLoadedIds = new Set(Object.keys(state.tree[bcName]?.nodes ?? {}))
+    const cachedNodes = state.tree[bcName]?.nodes ?? {}
 
-    const getMissingParentIds = (data: DataItem[], accumulatedData: DataItem[]) => {
-        const accumulatedIds = new Set(accumulatedData.map(item => String(item[FIELDS.TECHNICAL.ID])))
+    const resolveAncestors = (
+        accumulatedData: DataItem[],
+        restoredNodeIds: string[],
+        seedIds: string[],
+        requestCount: number
+    ): TreePathRestoreState => {
+        const dataById = new Map(accumulatedData.map(item => [String(item[FIELDS.TECHNICAL.ID]), item]))
+        const restoredIds = new Set(restoredNodeIds)
+        const missingIds = new Set<string>()
+        const visitedIds = new Set<string>()
+        const queue = [...seedIds]
 
-        return [
-            ...new Set(
-                data
-                    .map(item => item[parentFieldKey])
-                    .filter(isDefined)
-                    .map(String)
-                    .filter(parentId => !initiallyLoadedIds.has(parentId) && !accumulatedIds.has(parentId))
-            )
-        ]
+        while (queue.length > 0) {
+            const nodeId = queue.shift()!
+            if (visitedIds.has(nodeId)) {
+                continue
+            }
+            visitedIds.add(nodeId)
+
+            let node = dataById.get(nodeId)
+            if (!node && cachedNodes[nodeId]) {
+                node = cachedNodes[nodeId]
+                dataById.set(nodeId, node)
+                restoredIds.add(nodeId)
+            }
+            if (!node) {
+                missingIds.add(nodeId)
+                continue
+            }
+
+            const parentId = node[parentFieldKey]
+            if (!isDefined(parentId)) {
+                continue
+            }
+
+            const normalizedParentId = String(parentId)
+            if (dataById.has(normalizedParentId) || cachedNodes[normalizedParentId]) {
+                queue.push(normalizedParentId)
+            } else {
+                missingIds.add(normalizedParentId)
+            }
+        }
+
+        return {
+            data: [...dataById.values()],
+            restoredNodeIds: [...restoredIds],
+            nextIds: [...missingIds],
+            requestCount
+        }
     }
 
-    const fetchNodesByIds = (ids: string[], accumulatedData: DataItem[], requestCount: number) =>
+    const fetchNodesByIds = (ids: string[], restoreState: TreePathRestoreState) =>
         api
             .fetchBcData(state.screen.screenName, bcUrl, {
                 _page: DEFAULT_PAGE,
@@ -104,33 +149,33 @@ const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds =
                 map(response => {
                     const dataById = new Map<string, DataItem>()
 
-                    accumulatedData.forEach(item => dataById.set(String(item[FIELDS.TECHNICAL.ID]), item))
+                    restoreState.data.forEach(item => dataById.set(String(item[FIELDS.TECHNICAL.ID]), item))
                     response.data.forEach(item => dataById.set(String(item[FIELDS.TECHNICAL.ID]), item))
+                    const responseIds = response.data.map(item => String(item[FIELDS.TECHNICAL.ID]))
 
-                    const data = [...dataById.values()]
-
-                    return {
-                        data,
-                        nextIds: getMissingParentIds(response.data, data),
-                        requestCount
-                    } satisfies TreePathRestoreState
+                    return resolveAncestors(
+                        [...dataById.values()],
+                        getUniqueValues([...restoreState.restoredNodeIds, ...responseIds]),
+                        responseIds,
+                        restoreState.requestCount + 1
+                    )
                 })
             )
 
     const uniqueRequestedIds = [...new Set(requestedIds.map(String))]
-    const initialRestoreState: TreePathRestoreState = {
-        data: initialData,
-        nextIds: uniqueRequestedIds.length ? uniqueRequestedIds : getMissingParentIds(initialData, initialData),
-        requestCount: 0
-    }
+    const initialSeedIds = uniqueRequestedIds.length ? uniqueRequestedIds : initialData.map(item => String(item[FIELDS.TECHNICAL.ID]))
+    const initialRestoreState: TreePathRestoreState =
+        maxRequests > 0
+            ? resolveAncestors(initialData, [], initialSeedIds, 0)
+            : { data: initialData, restoredNodeIds: [], nextIds: [], requestCount: 0 }
 
     return of(initialRestoreState).pipe(
         expand(restoreState => {
-            if (restoreState.requestCount >= TREE_PATH_RESTORE_MAX_REQUESTS || restoreState.nextIds.length === 0) {
+            if (restoreState.requestCount >= maxRequests || restoreState.nextIds.length === 0) {
                 return EMPTY
             }
 
-            return fetchNodesByIds(restoreState.nextIds, restoreState.data, restoreState.requestCount + 1)
+            return fetchNodesByIds(restoreState.nextIds, restoreState)
         })
     )
 }
@@ -143,7 +188,7 @@ const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds =
  */
 const syncTreeNodesToBcDataEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isAnyOf(treeActions.fetchChildNodeDataSuccess, treeActions.fetchNodeDataSuccess)),
+        filter(isAnyOf(treeActions.fetchChildNodeDataSuccess, treeActions.restoreNodePathsSuccess)),
         switchMap(action => {
             const { bcName } = action.payload
             const state = state$.value
@@ -163,9 +208,7 @@ export const fetchTreeChildNodesEpic: RootEpic = (action$, state$, { api, utils:
             const treeState = state.tree[bcName]
             const widget = (state.view.widgets as AppWidgetMeta[]).find(item => item.bcName === bcName && isTreeWidget(item))
             const { parentFieldKey } = getTreeFieldKeys(widget)
-            const filtered = treeState?.filterActive && treeState.searchMode === 'hide'
-            const nodeState = (filtered ? treeState?.filteredNodesState : treeState?.nodesState)?.[String(parentId)]
-            const userFilters = (selectBcFilters(state, bcName) || []).filter(filter => filter.fieldName !== parentFieldKey)
+            const nodeState = treeState?.nodesState[String(parentId)]
             const parentFilter = {
                 fieldName: parentFieldKey,
                 type: parentId === null ? FilterType.specified : FilterType.equals,
@@ -175,28 +218,31 @@ export const fetchTreeChildNodesEpic: RootEpic = (action$, state$, { api, utils:
                 widgetName: widget?.name,
                 page: nodeState?.page ?? DEFAULT_PAGE,
                 limit: action.payload.limit,
-                filters: [...(filtered ? userFilters : []), parentFilter]
+                filters: [parentFilter]
             })
 
             if (!fetchContext) {
-                return of(treeActions.fetchChildNodeDataFail({ bcName, parentId, filtered }))
+                return of(treeActions.fetchChildNodeDataFail({ bcName, parentId }))
+            }
+
+            const currentFilters = selectBcFilters(state, bcName) || []
+            const userFilters = currentFilters?.filter(filter => filter.fieldName !== parentFieldKey)
+            const hasUserFilters = userFilters.length > 0
+            const localSideEffects = {
+                applyFilter:
+                    hasUserFilters && !treeState?.filterActive && widget?.bcName
+                        ? of(treeActions.applyFilter({ bcName: widget.bcName }))
+                        : EMPTY
             }
 
             return api.fetchBcData(state.screen.screenName, fetchContext.bcUrl, fetchContext.fetchParams).pipe(
                 mergeMap(response => {
-                    const matchedNodeIds = filtered
-                        ? response.data
-                              .filter(item => isDataItemMatchedByFilters(item, userFilters, widget?.fields as WidgetFieldBase[]))
-                              .map(item => String(item[FIELDS.TECHNICAL.ID]))
-                        : undefined
                     const setTreeData = of(
                         treeActions.fetchChildNodeDataSuccess({
                             bcName,
                             parentId,
                             data: response.data,
-                            hasNext: response.hasNext,
-                            filtered,
-                            matchedNodeIds
+                            hasNext: response.hasNext
                         })
                     )
                     const sourceAction = action.payload.bcDataRequestAction
@@ -224,15 +270,13 @@ export const fetchTreeChildNodesEpic: RootEpic = (action$, state$, { api, utils:
                         sideEffects.resetOutdatedData,
                         setTreeData,
                         sideEffects.fetchRowMeta,
-                        sideEffects.fetchChildren
+                        sideEffects.fetchChildren,
+                        localSideEffects.applyFilter
                     )
                 }),
                 catchError(error => {
                     console.error(error)
-                    return concat(
-                        of(treeActions.fetchChildNodeDataFail({ bcName, parentId, filtered })),
-                        utils.createApiErrorObservable(error)
-                    )
+                    return concat(of(treeActions.fetchChildNodeDataFail({ bcName, parentId })), utils.createApiErrorObservable(error))
                 })
             )
         })
@@ -255,34 +299,47 @@ export const applyTreeFilterEpic: RootEpic = (action$, state$, { api }) =>
                 return of(treeActions.clearFilter({ bcName }))
             }
 
+            const filterPage = state.tree[bcName]?.filterPagination.page ?? DEFAULT_PAGE
             const fetchContext = buildBcFetchContext(state, bcName, {
                 widgetName: widget?.name,
-                page: DEFAULT_PAGE,
+                page: filterPage,
                 filters: userFilters
             })
 
             if (!fetchContext) {
-                return EMPTY
+                return of(treeActions.applyFilterFail({ bcName, more: action.payload.more }))
             }
 
             return api.fetchBcData(state.screen.screenName, fetchContext.bcUrl, fetchContext.fetchParams).pipe(
                 switchMap(response => {
-                    return restoreTreePaths({ api, state, bcName, initialData: response.data }).pipe(
+                    const maxRequests = normalizeMaxRestoreRequests(
+                        widget?.options?.tree?.treePathRestoreMaxRequestsBeforeFiltration ??
+                            TREE_PATH_RESTORE_MAX_REQUESTS_BEFORE_FILTRATION
+                    )
+
+                    return restoreTreePaths({ api, state, bcName, initialData: response.data, maxRequests }).pipe(
                         last(),
                         map(restoreState =>
                             treeActions.applyFilterSuccess({
                                 bcName,
                                 data: restoreState.data,
+                                filterResultNodeIds: response.data.map(item => String(item[FIELDS.TECHNICAL.ID])),
                                 matchedNodeIds: response.data
                                     .filter(item => isDataItemMatchedByFilters(item, userFilters, widget?.fields as WidgetFieldBase[]))
-                                    .map(item => String(item[FIELDS.TECHNICAL.ID]))
+                                    .map(item => String(item[FIELDS.TECHNICAL.ID])),
+                                restoredNodeIds: restoreState.restoredNodeIds,
+                                hasNext: response.hasNext,
+                                more: action.payload.more
                             })
                         )
                     )
                 }),
                 catchError(error => {
                     console.error(error)
-                    return utils.createApiErrorObservable(error)
+                    return concat(
+                        of(treeActions.applyFilterFail({ bcName, more: action.payload.more })),
+                        utils.createApiErrorObservable(error)
+                    )
                 })
             )
         })
@@ -303,11 +360,12 @@ export const applyTreeSortEpic: RootEpic = action$ =>
 
 const restoreNodePathsEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isAnyOf(treeActions.fetchNodeData, treeActions.restoreNodePaths)),
+        filter(isAnyOf(treeActions.restoreNodePaths)),
         mergeMap(action => {
             const state = state$.value
             const { bcName } = action.payload
             const requestedIds = [...new Set(action.payload.ids.map(String))]
+            const widget = (state.view.widgets as AppWidgetMeta[]).find(item => item.bcName === bcName && isTreeWidget(item))
 
             if (!requestedIds.length) {
                 return EMPTY
@@ -318,10 +376,19 @@ const restoreNodePathsEpic: RootEpic = (action$, state$, { api }) =>
                 state,
                 bcName,
                 initialData: [],
-                requestedIds: requestedIds
+                requestedIds: requestedIds,
+                maxRequests: normalizeMaxRestoreRequests(
+                    widget?.options?.tree?.treePathRestoreMaxRequestsAfterFiltration ?? TREE_PATH_RESTORE_MAX_REQUESTS_AFTER_FILTRATION
+                )
             }).pipe(
                 last(),
-                map(restoreState => treeActions.fetchNodeDataSuccess({ bcName, data: restoreState.data })),
+                map(restoreState =>
+                    treeActions.restoreNodePathsSuccess({
+                        bcName,
+                        data: restoreState.data,
+                        restoredNodeIds: restoreState.restoredNodeIds
+                    })
+                ),
                 catchError(error => {
                     console.error(error)
                     return utils.createApiErrorObservable(error)

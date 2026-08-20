@@ -5,7 +5,7 @@ import { ReactComponent as HierarchySVG } from '@assets/icons/hierarchy.svg'
 import Button from '@components/ui/Button/Button'
 import styles from '../Table.less'
 import DropdownSetting from './DropdownSetting'
-import { TREE_SEARCH_MODES } from '@components/widgets/Table/constants'
+import { TREE_SEARCH_MODES } from '@constants/tree'
 
 interface TableSettingsProps {
     customSettings?: ReactNode

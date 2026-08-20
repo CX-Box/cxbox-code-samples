@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { TreeNode, BcTreeState } from '@slices/tree'
 import { RESTORE_ANCESTORS_ID } from '@components/widgets/Table/constants'
-import { isDefined } from '@utils/isDefined'
 
 export type RestoreAncestorsPosition = 'start' | 'end'
 
@@ -12,7 +11,9 @@ export type TableTreeNode = TreeNode & {
     _loading?: boolean
     _level: number
     _matchesFilter?: boolean
+    _restorePath?: boolean
     _treeParentId?: string | null
+    _remainingNumberOfRecords?: string | number | undefined
     _treeIsLeaf?: boolean
 }
 
@@ -21,12 +22,15 @@ export const useTreeDataSource = (
     calculateShowMoreState: (
         parentId: string,
         nodeStates: BcTreeState['nodesState'],
-        loadedChildCount: number
+        loadedChildCount: number,
+        visibleChildCount: number
     ) => {
         visible: boolean
         disabled: boolean
+        count?: string | number | undefined
     },
-    restoreAncestorsPosition: RestoreAncestorsPosition = 'end'
+    restoreAncestorsPosition: RestoreAncestorsPosition = 'end',
+    showBranchPagination = true
 ) => {
     const convertTreeStateToDataSource = useCallback(
         (
@@ -37,12 +41,16 @@ export const useTreeDataSource = (
             matchedNodeIds?: Set<string>
         ): TableTreeNode[] => {
             const appendPseudoNodes = (childNodes: TableTreeNode[], parentId: string | null, isLoading: boolean, level: number) => {
+                if (!showBranchPagination || (visibleNodeIds && parentId === null)) {
+                    return
+                }
                 const hasChildren = childNodes.length > 0
                 const normalizedParentId = String(parentId)
-                const { visible, disabled } = calculateShowMoreState(
+                const { visible, disabled, count } = calculateShowMoreState(
                     normalizedParentId,
                     nodeStates,
-                    nodeStates[normalizedParentId]?.lastResponseCount ?? childNodes.length
+                    nodeStates[normalizedParentId]?.lastResponseCount ?? childNodes.length,
+                    childNodes.length
                 )
 
                 if (!hasChildren && isLoading && level !== 0) {
@@ -55,11 +63,18 @@ export const useTreeDataSource = (
                         _level: level
                     } as TableTreeNode)
                 } else if (visible) {
+                    const hideShowMore = bcTreeState?.filterActive && bcTreeState.searchMode === 'collapse' && parentId === null
+
+                    if (hideShowMore) {
+                        return
+                    }
+
                     childNodes.push({
                         id: `show-more-${parentId}`,
                         vstamp: 0,
                         parentId: parentId,
                         name: 'show-more',
+                        _remainingNumberOfRecords: count,
                         _recordType: 'show-more',
                         _disabled: disabled || isLoading,
                         _loading: isLoading,
@@ -107,6 +122,12 @@ export const useTreeDataSource = (
                 const parentId = node[bcTreeState?.parentFieldKey ?? 'parentId'] as string | null | undefined
                 const isLeaf = node[bcTreeState?.isLeafFieldKey ?? 'isLeaf'] === true
                 const childNodes = getChildNodesWithPseudoNodes(nodeId, buildTreeNode, currentLevel + 1)
+                const hasActualChildren = childNodes.some(child => child._recordType === 'node')
+                const technicalIsLeaf = isLeaf && !hasActualChildren
+
+                if (isLeaf && hasActualChildren) {
+                    console.error(`Tree node "${nodeId}" is marked as leaf but has children`)
+                }
 
                 return {
                     ...node,
@@ -114,21 +135,27 @@ export const useTreeDataSource = (
                     _level: currentLevel,
                     _matchesFilter: matchedNodeIds?.has(String(node.id)),
                     _treeParentId: parentId,
-                    _treeIsLeaf: isLeaf,
-                    children: isLeaf ? undefined : childNodes
+                    _treeIsLeaf: technicalIsLeaf,
+                    children: technicalIsLeaf ? undefined : childNodes
                 }
             }
 
             const rootNodes = getChildNodesWithPseudoNodes(null, buildTreeNode, 0)
             const orphanRootIds = Object.values(nodesById)
-                .filter(
-                    node =>
-                        node[bcTreeState?.parentFieldKey ?? 'parentId'] != null &&
-                        !nodesById[String(node[bcTreeState?.parentFieldKey ?? 'parentId'])] &&
+                .filter(node => {
+                    const parentId = node[bcTreeState?.parentFieldKey ?? 'parentId']
+
+                    return (
+                        parentId != null &&
+                        (!nodesById[String(parentId)] || (visibleNodeIds && !visibleNodeIds.has(String(parentId)))) &&
                         (!visibleNodeIds || visibleNodeIds.has(String(node.id)))
-                )
+                    )
+                })
                 .map(node => String(node.id))
-            const orphanNodes = orphanRootIds.map(nodeId => buildTreeNode(nodeId, 1)).filter(Boolean) as TableTreeNode[]
+            const orphanNodes = orphanRootIds
+                .map(nodeId => buildTreeNode(nodeId, 1))
+                .filter(Boolean)
+                .map(node => ({ ...node!, _restorePath: true })) as TableTreeNode[]
 
             if (orphanNodes.length === 0) {
                 return rootNodes
@@ -147,7 +174,15 @@ export const useTreeDataSource = (
 
             return restoreAncestorsPosition === 'start' ? [restoreAncestorsNode, ...rootNodes] : [...rootNodes, restoreAncestorsNode]
         },
-        [bcTreeState?.isLeafFieldKey, bcTreeState?.parentFieldKey, calculateShowMoreState, restoreAncestorsPosition]
+        [
+            bcTreeState?.filterActive,
+            bcTreeState?.isLeafFieldKey,
+            bcTreeState?.parentFieldKey,
+            bcTreeState?.searchMode,
+            calculateShowMoreState,
+            restoreAncestorsPosition,
+            showBranchPagination
+        ]
     )
 
     return useMemo(() => {
@@ -158,26 +193,16 @@ export const useTreeDataSource = (
         const matchedNodeIds = bcTreeState.filterActive ? new Set(bcTreeState.matchedNodeIds) : undefined
         let visibleNodeIds: Set<string> | undefined
 
-        if (bcTreeState.filterActive && bcTreeState.searchMode === 'hide') {
-            visibleNodeIds = new Set(matchedNodeIds)
-            bcTreeState.matchedNodeIds.forEach(id => {
-                let node = bcTreeState.nodes[id]
-                const visited = new Set<string>()
-                while (isDefined(node?.[bcTreeState.parentFieldKey])) {
-                    const parentId = String(node[bcTreeState.parentFieldKey])
-                    if (visited.has(parentId)) {
-                        break
-                    }
-                    visited.add(parentId)
-                    visibleNodeIds!.add(parentId)
-                    node = bcTreeState.nodes[parentId]
-                }
-            })
+        if (bcTreeState.filterActive && (bcTreeState.searchMode === 'hide' || bcTreeState.searchMode === 'collapse')) {
+            visibleNodeIds = new Set(bcTreeState.visibleNodeIdsForHidden)
         }
 
-        const nodeStates =
-            bcTreeState.filterActive && bcTreeState.searchMode === 'hide' ? bcTreeState.filteredNodesState : bcTreeState.nodesState
-
-        return convertTreeStateToDataSource(bcTreeState.nodes, bcTreeState.childIdsByParent, nodeStates, visibleNodeIds, matchedNodeIds)
+        return convertTreeStateToDataSource(
+            bcTreeState.nodes,
+            bcTreeState.childIdsByParent,
+            bcTreeState.nodesState,
+            visibleNodeIds,
+            matchedNodeIds
+        )
     }, [bcTreeState, convertTreeStateToDataSource])
 }

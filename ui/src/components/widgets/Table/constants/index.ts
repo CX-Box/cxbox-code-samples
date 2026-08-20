@@ -9,7 +9,3 @@ export const ROW_KEY = FIELDS.TECHNICAL.ID
 export const TREE_ROOT_ID = String(null)
 
 export const RESTORE_ANCESTORS_ID = '__restore-ancestors__'
-
-export const TREE_PATH_RESTORE_MAX_REQUESTS = 3
-
-export const TREE_SEARCH_MODES = Lookup.create(['highlight', 'hide', 'collapse'])

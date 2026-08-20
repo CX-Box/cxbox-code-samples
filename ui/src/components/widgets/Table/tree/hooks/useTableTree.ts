@@ -16,14 +16,18 @@ export type { TableTreeNode }
 export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
     const bcName = widgetMeta?.bcName
     const bcTreeState = useAppSelector(state => state.tree[bcName!])
+    const { limit } = useTreePagination(bcName, widgetMeta)
 
-    const { limit, defaultLimit, total, paginationType } = useTreePagination(bcName, widgetMeta)
+    const calculateShowMoreState = useTreeShowMore(widgetMeta)
 
-    const calculateShowMoreState = useTreeShowMore(paginationType, limit, defaultLimit, total)
+    const { fetchChildNodes, createFetchChildNodesHandler } = useTreeFetch(bcName, bcTreeState, limit)
 
-    const { fetchChildNodes, createFetchChildNodesHandler } = useTreeFetch(bcName, bcTreeState)
-
-    const dataSource = useTreeDataSource(bcTreeState, calculateShowMoreState)
+    const dataSource = useTreeDataSource(
+        bcTreeState,
+        calculateShowMoreState,
+        'end',
+        !(bcTreeState?.filterActive && bcTreeState.searchMode === 'hide')
+    )
 
     const expandedRowKeys = useAppSelector(state => selectBcTree(state, bcName)?.expandedParents) ?? []
     const dispatch = useDispatch()
@@ -31,26 +35,16 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
     const handleExpand = React.useCallback(
         (expanded: boolean, record: CustomDataItem) => {
             if (expanded) {
-                const activeNodesState =
-                    bcTreeState?.filterActive && bcTreeState.searchMode === 'hide'
-                        ? bcTreeState.filteredNodesState
-                        : bcTreeState?.nodesState
-                if (!activeNodesState?.[record.id]) {
+                const nodeState = bcTreeState?.nodesState[record.id]
+                const hidePagination = bcTreeState?.filterActive && bcTreeState.searchMode === 'hide'
+                if (!hidePagination && (!nodeState || nodeState.page === 0)) {
                     fetchChildNodes(record.id as string, true)
                 }
             }
 
             dispatch(treeActions.expandNode({ bcName: bcName!, nodeId: String(record[ROW_KEY]), value: expanded }))
         },
-        [
-            dispatch,
-            bcName,
-            bcTreeState?.filterActive,
-            bcTreeState?.searchMode,
-            bcTreeState?.filteredNodesState,
-            bcTreeState?.nodesState,
-            fetchChildNodes
-        ]
+        [dispatch, bcName, bcTreeState?.searchMode, bcTreeState?.filterActive, bcTreeState?.nodesState, fetchChildNodes]
     )
 
     const restoreAncestorPaths = React.useCallback(
@@ -67,6 +61,7 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
         handleExpand,
         dataSource,
         createFetchNodesHandler: createFetchChildNodesHandler,
-        restoreAncestorPaths
+        restoreAncestorPaths,
+        filterActive: bcTreeState?.filterActive
     }
 }

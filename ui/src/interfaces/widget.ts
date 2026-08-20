@@ -16,7 +16,7 @@ import { TableSettingsItem } from '@interfaces/tableSettings'
 import { IAggField, IAggLevel } from '@interfaces/groupingHierarchy'
 import { PaginationMode } from '@constants/pagination'
 import { SignaturePackage, SignatureType } from '@constants/cadesPlugin'
-import { TREE_SEARCH_MODES } from '@components/widgets/Table/constants'
+import { TREE_EXPANDED_STATE_AFTER_FILTERS, TREE_SEARCH_MODES } from '@constants/tree'
 
 export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect',
@@ -142,6 +142,7 @@ export type CryptoGeneratorItem = {
 }
 
 export type TreeSearchModes = ValueOf<typeof TREE_SEARCH_MODES>
+export type TreeExpandedStateAfterFilter = ValueOf<typeof TREE_EXPANDED_STATE_AFTER_FILTERS>
 
 export interface AppWidgetMeta extends WidgetMeta {
     personalFields?: TableSettingsItem | null // TODO make mandatory
@@ -168,6 +169,9 @@ export interface AppWidgetMeta extends WidgetMeta {
         fullTextSearch?: {
             enabled?: boolean
             placeholder?: string
+            highLight?: {
+                fieldKeys?: ['department']
+            }
         }
 
         additional?: {
@@ -211,6 +215,8 @@ export interface AppWidgetMeta extends WidgetMeta {
             parentFieldKey?: string // default: parentId
             isLeafFieldKey?: string // default: isLeaf
             searchMode?: TreeSearchModes
+            treePathRestoreMaxRequestsBeforeFiltration?: number // TODO-DEV rename
+            treePathRestoreMaxRequestsAfterFiltration?: number // TODO-DEV rename
             selection?: 'node' | 'nodeAndLeaf' | 'leaf'
             dataLossWarning?: 'hiddenOnly' | 'always' | 'never'
         }

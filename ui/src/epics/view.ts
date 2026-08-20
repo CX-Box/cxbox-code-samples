@@ -1,5 +1,5 @@
 import { RootEpic, RootState } from '@store'
-import { catchError, concat, EMPTY, filter, from, mergeMap, of, switchMap } from 'rxjs'
+import { catchError, concat, EMPTY, filter, mergeMap, of, switchMap } from 'rxjs'
 import { isAnyOf, nanoid } from '@reduxjs/toolkit'
 import {
     OperationError,
@@ -27,6 +27,11 @@ import { closePopupRules } from './utils/closePopup'
 import { isDefined } from '@utils/isDefined'
 import { SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT } from '@constants/pagination'
 import { findWidgetHasCount } from '@features/pagination/utils/common'
+import { treeActions } from '@slices/tree'
+import { FilterType } from '@interfaces/filters'
+import { isTreeWidget } from '@constants/widget'
+import { DEFAULT_TREE_PARENT_FIELD_KEY } from '@utils/tree'
+import { selectBcFilters } from '@selectors/selectors'
 
 const getWidgetsForRowMetaUpdate = (state: RootState, activeBcName: string) => {
     const { widgets, pendingDataChanges } = state.view
@@ -73,7 +78,15 @@ export const updateRowMetaForRelatedBcEpic: RootEpic = (action$, state$) =>
 
 const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isAnyOf(actions.bcFetchDataSuccess, actions.selectView, actions.setAlternativePaginationType)),
+        filter(
+            isAnyOf(
+                actions.bcFetchDataSuccess,
+                actions.selectView,
+                actions.setAlternativePaginationType,
+                treeActions.fetchChildNodeDataSuccess,
+                treeActions.applyFilterSuccess
+            )
+        ),
         mergeMap(action => {
             const state = state$.value
 
@@ -98,8 +111,66 @@ const bcFetchCountEpic: RootEpic = (action$, state$, { api }) =>
                 )
             }
 
-            let widgetWithCount = null
             const widgets = state.view.widgets as AppWidgetMeta[]
+            const screenName = state.screen.screenName
+
+            if (treeActions.applyFilterSuccess.match(action)) {
+                const { bcName } = action.payload
+                const widgetWithCount = findWidgetHasCount(bcName, widgets, state.screen.alternativePagination)
+                const treeState = state.tree[bcName]
+
+                if (!widgetWithCount || treeState?.filterPagination.count !== undefined) {
+                    return EMPTY
+                }
+
+                const parentFieldKey =
+                    (widgets.find(widget => widget.bcName === bcName && isTreeWidget(widget)) as AppWidgetMeta | undefined)?.options?.tree
+                        ?.parentFieldKey ?? DEFAULT_TREE_PARENT_FIELD_KEY
+                const userFilters = selectBcFilters(state, bcName)?.filter(filter => filter.fieldName !== parentFieldKey) ?? []
+                const bcUrl = buildBcUrl(bcName)
+
+                return api.fetchBcCount(screenName, bcUrl, utils.getFilters(userFilters)).pipe(
+                    mergeMap(({ data: count }) => of(treeActions.setFilterCount({ bcName, count }))),
+                    catchError((error: AxiosError) => utils.createApiErrorObservable(error))
+                )
+            }
+
+            if (treeActions.fetchChildNodeDataSuccess.match(action)) {
+                const { bcName, parentId } = action.payload
+                if (parentId === undefined) {
+                    return EMPTY
+                }
+
+                const widgetWithCount = findWidgetHasCount(action.payload.bcName, widgets, state.screen.alternativePagination)
+                const treeWidgets = widgets.filter(widget => isTreeWidget(widget)) as AppWidgetMeta[] | undefined
+                const parentFieldKey =
+                    treeWidgets?.find(widget => isDefined(widget.options?.tree?.parentFieldKey))?.options?.tree?.parentFieldKey ??
+                    DEFAULT_TREE_PARENT_FIELD_KEY
+                if (widgetWithCount) {
+                    const parentFilter = {
+                        fieldName: parentFieldKey,
+                        type: parentId === null ? FilterType.specified : FilterType.equals,
+                        value: parentId === null ? false : parentId
+                    }
+
+                    const filters = utils.getFilters([parentFilter])
+                    const bcUrl = buildBcUrl(bcName)
+                    return api.fetchBcCount(screenName, bcUrl, filters).pipe(
+                        mergeMap(({ data: count }) => {
+                            return concat(
+                                parentId === null ? of(setBcCount({ bcName, count })) : EMPTY,
+                                of(treeActions.setTreeChildCount({ parentId, bcName, count }))
+                            )
+                        }),
+                        catchError((error: AxiosError) => utils.createApiErrorObservable(error))
+                    )
+                }
+
+                return EMPTY
+            }
+
+            let widgetWithCount = null
+            // TODO add the logic for working with AlternativePagination for the tree
             if (
                 actions.setAlternativePaginationType.match(action) &&
                 action.payload.type === SECONDARY_DEFAULT_PAGINATION_TYPE_WITH_COUNT
