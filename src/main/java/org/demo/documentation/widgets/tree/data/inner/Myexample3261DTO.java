@@ -6,9 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
-
 import java.util.Optional;
 
 @Getter
@@ -34,6 +32,11 @@ public class Myexample3261DTO extends DataResponseDTO {
 	@SearchParameter(name = "mnemonic")
 	private String mnemonic;
 
+	@SearchParameter(suppressProcess = true)
+	private Boolean isIncluded;
+
+	private String colorIncluded;
+
 	public Myexample3261DTO(Myexample3261 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.department = entity.getDepartment();
@@ -43,5 +46,4 @@ public class Myexample3261DTO extends DataResponseDTO {
 		this.code = entity.getCode();
 		this.mnemonic = entity.getMnemonic();
 	}
-
 }
