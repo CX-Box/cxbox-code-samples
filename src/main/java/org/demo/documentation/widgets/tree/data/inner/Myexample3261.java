@@ -1,13 +1,15 @@
 package org.demo.documentation.widgets.tree.data.inner;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.tree.base.inner.Myexample3263;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -35,4 +37,7 @@ public class Myexample3261 extends BaseEntity {
 
 	@Column
 	private String mnemonic;
+
+	@ManyToMany(mappedBy = "departmentsList")
+	private List<Myexample3263> departments = new ArrayList<>();
 }

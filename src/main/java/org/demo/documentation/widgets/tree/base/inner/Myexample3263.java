@@ -24,12 +24,12 @@ public class Myexample3263 extends BaseEntity {
 	@ManyToOne
 	private Myexample3261 departmentEntity;
 
-	@JoinTable(name = "Myexample3263_Myexample3261Pick0",
-			joinColumns = @JoinColumn(name = "Myexample3263_id"),
-			inverseJoinColumns = @JoinColumn(name = "Myexample3261_id")
+	@JoinTable(
+			name = "MYEXAMPLE3263_MYEXAMPLE3261_PICK0",
+			joinColumns = @JoinColumn(name = "MYEXAMPLE3263_ID"),
+			inverseJoinColumns = @JoinColumn(name = "MYEXAMPLE3261_ID")
 	)
-	@ManyToMany(cascade =
-			{CascadeType.PERSIST,
-					CascadeType.MERGE})
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Myexample3261> departmentsList = new ArrayList<>();
+
 }

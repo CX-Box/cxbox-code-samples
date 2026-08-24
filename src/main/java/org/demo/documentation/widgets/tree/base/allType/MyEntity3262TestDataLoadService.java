@@ -70,14 +70,14 @@ public class MyEntity3262TestDataLoadService {
 		repositoryPick.save(inlineEntity);
 
 		// Корень 1: будет иметь 3 дочерних узла
-		Myexample3262 root1 = createBaseEntity("Root 1 (with children)")
-				//	.setCustomFieldMultivalueList(multiList)
-				//	.setCustomFieldMultivalueHoverList(hoverList)
-				//	.setCustomFieldPickListEntity(pickEntity)
-				//	.setCustomFieldInlineEntity(inlineEntity)
-				.setCustomFieldFileUpload(file.getData().getName())
-				.setCustomFieldFileUploadId(file.getData().getId());
-		repository.save(root1);
+		Myexample3262 root1 = createBaseEntity("Root 1 (with children)");
+		repository.save(root1.setCustomFieldPickListEntity(pickEntity)
+			.setCustomFieldInlineEntity(inlineEntity).setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId()));
+
+		repository.save(root1.setCustomFieldMultivalueList(multiList)
+				.setCustomFieldMultivalueHoverList(hoverList));
+
 		// Корень 2: без детей (лист)
 		Myexample3262 root2 = createBaseEntity("Root 2 (leaf)")
 				//	.setCustomFieldMultivalueList(Collections.singletonList(multi1)) // только один элемент
@@ -131,6 +131,7 @@ public class MyEntity3262TestDataLoadService {
 			repository.save(child);
 		}
 	}
+
 	private Myexample3262 createBaseEntity(String customFieldValue) {
 		return new Myexample3262()
 				.setCustomField(customFieldValue)                                    // input

@@ -2,27 +2,18 @@
   "name": "myexample3261TreeList",
   "title": "Department (Tree List)",
   "type": "Tree",
-  "bc": "myexample3261",
+  "bc": "myexample3261child",
   "fields": [
-    {
-      "title": "Is Leaf",
-      "key": "isLeaf",
-      "type": "checkbox"
-    },
-    {
-      "title": "Parent Id",
-      "key": "parentId",
-      "type": "hidden"
-    },
-    {
-      "title": "id",
-      "key": "id",
-      "type": "text"
-    },
     {
       "title": "Departments",
       "key": "department",
-      "type": "input"
+      "type": "input",
+      "bgColorKey": "colorIncluded"
+    },
+    {
+      "label": "Is Included",
+      "key": "isIncluded",
+      "type": "hidden"
     },
     {
       "title": "Description",
@@ -38,6 +29,11 @@
       "title": "Mnemonic",
       "key": "mnemonic",
       "type": "input"
+    },
+    {
+      "title": "colorIncluded",
+      "key": "colorIncluded",
+      "type": "hidden"
     }
   ],
   "options": {
