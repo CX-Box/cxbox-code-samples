@@ -5,7 +5,7 @@ import { actions } from '@actions'
 import { utils } from '@cxbox-ui/core'
 import { FIELDS } from '@constants'
 import { selectBc, selectBcFilters, selectHasBcTree } from '@selectors/selectors'
-import { treeActions } from '../../../../slices/tree'
+import { treeActions } from '@slices/tree'
 
 function useFiltersGroupName<T>(filtersExist: boolean) {
     const [filterGroupName, setFilterGroupName] = useState<T | null>(null)
