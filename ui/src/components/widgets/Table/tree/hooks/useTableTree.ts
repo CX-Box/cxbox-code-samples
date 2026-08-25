@@ -10,17 +10,20 @@ import { useTreeDataSource, TableTreeNode } from './useTreeDataSource'
 import { selectBcTree } from '@selectors/selectors'
 import { useDispatch } from 'react-redux'
 import { treeActions } from '@slices/tree'
+import { useTreeInternalWidget } from '@hooks/useTreeInternalWidget'
 
 export type { TableTreeNode }
 
 export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
     const bcName = widgetMeta?.bcName
     const bcTreeState = useAppSelector(state => state.tree[bcName!])
-    const { limit } = useTreePagination(bcName, widgetMeta)
+    const { limit, defaultLimit, paginationType } = useTreePagination(bcName, widgetMeta)
+
+    useTreeInternalWidget(widgetMeta)
 
     const calculateShowMoreState = useTreeShowMore(widgetMeta)
 
-    const { fetchChildNodes, createFetchChildNodesHandler } = useTreeFetch(bcName, bcTreeState, limit)
+    const { fetchChildNodes, createFetchChildNodesHandler } = useTreeFetch(bcName, bcTreeState, limit, defaultLimit, paginationType)
 
     const dataSource = useTreeDataSource(
         bcTreeState,

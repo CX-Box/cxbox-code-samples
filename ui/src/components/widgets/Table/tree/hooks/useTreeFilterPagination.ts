@@ -14,7 +14,7 @@ export const useTreeFilterPagination = (widgetMeta?: AppWidgetMeta) => {
 
     const fetchNextFilterPage = useCallback(() => {
         if (bcName) {
-            dispatch(treeActions.applyFilter({ bcName, more: true }))
+            dispatch(treeActions.applyFilter({ bcName, more: true, fetchUntilDataChanges: true }))
         }
     }, [bcName, dispatch])
 

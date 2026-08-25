@@ -141,8 +141,6 @@ function TreeTable<T extends CustomDataItem>({
             }
 
             dispatch(treeActions.changeSearchMode({ bcName, searchMode }))
-            dispatch(treeActions.initTree({ bcName, reset: true }))
-            dispatch(actions.bcRemoveAllFilters({ bcName }))
             dispatch(actions.bcForceUpdate({ bcName }))
         },
         [bcName, currentSearchMode, dispatch]
@@ -183,6 +181,7 @@ function TreeTable<T extends CustomDataItem>({
         () =>
             buildTreeTableColumns<T>({
                 disableRowExpand: currentSearchMode === 'hide' && filterActive,
+                dataSource: dataSource as TableTreeNode[],
                 showCloseButton: closeButton.visibility,
                 hideColumn: hideColumn,
                 fields: resultedFields,
@@ -201,6 +200,7 @@ function TreeTable<T extends CustomDataItem>({
             closeButton.visibility,
             createFetchNodesHandler,
             currentSearchMode,
+            dataSource,
             disableRowSelection,
             expandedRowKeys,
             filterActive,

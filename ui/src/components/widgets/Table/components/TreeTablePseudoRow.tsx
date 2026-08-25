@@ -1,11 +1,12 @@
 import React from 'react'
-import { Checkbox, Icon, Spin, Typography } from 'antd'
+import { Checkbox, Divider, Icon, Spin, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ui/Button/Button'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
 import { isDefined } from '@utils/isDefined'
 import styles from '../Table.less'
+import { RightWithEllipse } from '@components/widgets/Table/components/TreeTableCell'
 
 interface TreeTablePseudoRowProps {
     dataItem: TableTreeNode
@@ -66,29 +67,45 @@ export function TreeTablePseudoRow({
         content = (
             <>
                 <Button
-                    style={{ marginLeft: -22, marginRight: 8 }}
-                    type="default"
+                    type="Link"
                     size="small"
+                    removeIndentation={true}
                     disabled={dataItem._disabled}
                     loading={dataItem._loading}
+                    style={{ border: 'none', width: '100%', background: 'transparent' }}
                     onClick={event => {
                         event.stopPropagation()
                         restoreAncestorPaths(dataItem.children?.map(item => item._treeParentId).filter(isDefined) ?? [])
                     }}
                 >
-                    <Icon type="search" style={{ color: '#fa8c16' }} />
+                    <Divider style={{ margin: 0 }}>
+                        <Icon
+                            component={RightWithEllipse}
+                            style={{ position: 'relative', bottom: '-2px', fontSize: 20, color: '#0088bb', paddingRight: 8 }}
+                        />
+                        <span style={{ fontSize: 14, fontWeight: 'normal' }}>
+                            {t('Nesting level over {{limit}}', { limit: dataItem._nestingLevel ?? 0 })}
+                        </span>
+                    </Divider>
                 </Button>
-                {t('Path not fully restored')}
             </>
+        )
+    }
+
+    if (dataItem._recordType === 'restore-ancestors') {
+        return (
+            <div style={{ display: 'flex', alignItems: 'center' }} data-pseudo-row={true}>
+                <span style={dataItem._recordType === 'restore-ancestors' ? { display: 'block', width: '100%' } : undefined}>
+                    {content}
+                </span>
+            </div>
         )
     }
 
     return (
         <div style={{ display: 'flex', alignItems: 'center' }} data-pseudo-row={true}>
             <span style={{ paddingLeft: paddingLeft + 22 }} />
-            <span data-pseudo-row={true} style={dataItem._recordType === 'restore-ancestors' ? { color: '#fa8c16' } : undefined}>
-                {content}
-            </span>
+            <span>{content}</span>
         </div>
     )
 }

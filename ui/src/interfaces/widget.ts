@@ -141,7 +141,7 @@ export type CryptoGeneratorItem = {
     encryptedFileBaseNameKey?: string
 }
 
-export type TreeSearchModes = ValueOf<typeof TREE_SEARCH_MODES>
+export type TreeSearchModes = ValueOf<typeof TREE_SEARCH_MODES> | string
 export type TreeExpandedStateAfterFilter = ValueOf<typeof TREE_EXPANDED_STATE_AFTER_FILTERS>
 
 export interface AppWidgetMeta extends WidgetMeta {
@@ -170,7 +170,7 @@ export interface AppWidgetMeta extends WidgetMeta {
             enabled?: boolean
             placeholder?: string
             highLight?: {
-                fieldKeys?: ['department']
+                fieldKeys?: string[]
             }
         }
 
@@ -218,7 +218,7 @@ export interface AppWidgetMeta extends WidgetMeta {
             treePathRestoreMaxRequestsBeforeFiltration?: number // TODO-DEV rename
             treePathRestoreMaxRequestsAfterFiltration?: number // TODO-DEV rename
             selection?: 'node' | 'nodeAndLeaf' | 'leaf'
-            dataLossWarning?: 'hiddenOnly' | 'always' | 'never'
+            misleadWarn?: 'paginationUnselect' | 'all' | 'never' | 'selectAll'
         }
     }
 }

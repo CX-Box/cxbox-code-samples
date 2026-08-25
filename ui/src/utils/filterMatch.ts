@@ -100,7 +100,7 @@ export const getFieldHighlightSearch = (source: string, filter: BcFilter | undef
         return undefined
     }
 
-    if (filter.type === FilterType.contains || filter.type === FilterType.equals) {
+    if (filter.type === FilterType.contains || filter.type === FilterType.equals || filter.type === FilterType.fullTextSearch) {
         return utils.escapedSrc(String(filter.value ?? ''))
     }
 

@@ -1,16 +1,24 @@
 import React from 'react'
 import { ColumnProps } from 'antd/es/table'
 import { WidgetListField } from '@cxbox-ui/schema'
-import { TreeTableCell } from '@components/widgets/Table/components/TreeTableCell'
+import { PSEUDO_ROW_TYPES, TreeTableCell } from '@components/widgets/Table/components/TreeTableCell'
 import { TreeTableColumnTitle } from '@components/widgets/Table/components/TreeTableColumnTitle'
 import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { RowMetaField } from '@interfaces/rowMeta'
+import styles from '../../Table.less'
+import { buildContinuingGuidesWidthById } from '@components/widgets/Table/tree/utils/buildContinuingGuidesWidthById'
+
+type TreeLevelCellStyle = React.CSSProperties & {
+    '--tree-level': number
+    '--tree-continuing-guides-width': string
+}
 
 interface BuildTreeTableColumnsParams {
     fields: AppWidgetTableMeta['fields']
+    dataSource: TableTreeNode[]
     widget: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
     rowMetaFields: RowMetaField[] | undefined
     expandedRowKeys: string[]
@@ -28,6 +36,7 @@ interface BuildTreeTableColumnsParams {
 export function buildTreeTableColumns<T extends CustomDataItem>({
     widget,
     fields,
+    dataSource,
     rowMetaFields,
     expandedRowKeys,
     showSelection,
@@ -41,11 +50,13 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
     disableRowExpand
 }: BuildTreeTableColumnsParams): Array<ColumnProps<T>> {
     const isGroupingHierarchy = (widget.type as string) === CustomWidgetTypes.GroupingHierarchy
+    const continuingGuidesWidthById = buildContinuingGuidesWidthById(dataSource, expandedRowKeys)
 
     return (
         fields?.map((field, index) => {
             const listField = field as WidgetListField
             const isFirstColumn = index === 0
+            const fieldsLength = fields.length
 
             return {
                 title: (
@@ -63,23 +74,45 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                 key: field.key,
                 dataIndex: field.key,
                 width: field.width,
-                render: (text: string, dataItem: T) => (
-                    <TreeTableCell
-                        disableRowExpand={disableRowExpand}
-                        field={listField}
-                        dataItem={dataItem as T & TableTreeNode}
-                        isFirstColumn={isFirstColumn}
-                        isGroupingHierarchy={isGroupingHierarchy}
-                        showSelection={showSelection}
-                        widget={widget}
-                        expandedRowKeys={expandedRowKeys}
-                        selectNode={selectNode}
-                        getNodeSelectionState={getNodeSelectionState}
-                        handleExpand={handleExpand}
-                        createFetchNodesHandler={createFetchNodesHandler}
-                        restoreAncestorPaths={restoreAncestorPaths}
-                    />
-                ),
+                render: (text: string, dataItem: T) => {
+                    const cellElement = (
+                        <TreeTableCell
+                            disableRowExpand={disableRowExpand}
+                            field={listField}
+                            dataItem={dataItem as T & TableTreeNode}
+                            isFirstColumn={isFirstColumn}
+                            isGroupingHierarchy={isGroupingHierarchy}
+                            showSelection={showSelection}
+                            widget={widget}
+                            expandedRowKeys={expandedRowKeys}
+                            selectNode={selectNode}
+                            getNodeSelectionState={getNodeSelectionState}
+                            handleExpand={handleExpand}
+                            createFetchNodesHandler={createFetchNodesHandler}
+                            restoreAncestorPaths={restoreAncestorPaths}
+                        />
+                    )
+
+                    if (PSEUDO_ROW_TYPES.includes(dataItem._recordType)) {
+                        if (isFirstColumn) {
+                            return { props: { colSpan: fieldsLength }, children: cellElement }
+                        }
+
+                        return { props: { colSpan: 0 }, children: null }
+                    }
+
+                    return cellElement
+                },
+                onCell: (dataItem: T) =>
+                    isFirstColumn
+                        ? {
+                              className: styles.treeLevelCell,
+                              style: {
+                                  '--tree-level': (dataItem as T & TableTreeNode)._level ?? 0,
+                                  '--tree-continuing-guides-width': continuingGuidesWidthById.get(String(dataItem.id)) ?? '0px'
+                              } as TreeLevelCellStyle
+                          }
+                        : {},
                 onHeaderCell: () => ({
                     'data-test-widget-tree-header-column-title': field.title,
                     'data-test-widget-tree-header-column-type': field.type,
