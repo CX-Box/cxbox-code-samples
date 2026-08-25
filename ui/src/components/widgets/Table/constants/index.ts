@@ -9,3 +9,5 @@ export const ROW_KEY = FIELDS.TECHNICAL.ID
 export const TREE_ROOT_ID = String(null)
 
 export const RESTORE_ANCESTORS_ID = '__restore-ancestors__'
+
+export const TREE_INDENT_SIZE = 20

@@ -38,6 +38,10 @@ const INDETERMINATE_IMPLICITLY_SELECTED_STATE: NodeSelectionState = {
 }
 const INDETERMINATE_SELECTED_STATE: NodeSelectionState = INDETERMINATE_IMPLICITLY_SELECTED_STATE // { checked: false, indeterminate: true, implicit: false, disabled: false }
 const UNSELECTABLE_STATE: NodeSelectionState = { checked: false, indeterminate: false, implicit: false, disabled: true }
+const PAGINATION_UNSELECT_WARNING =
+    'You are unchecking the ellipsis. Only the currently visible items in the group will remain selected; items on subsequent pages will be excluded.'
+const IMPLICIT_UNSELECT_WARNING =
+    'You are unchecking an implicitly selected item. Selection will switch to visible items; items on subsequent pages may be excluded.'
 
 /**
  * A nullish id points to the virtual root of the tree
@@ -80,7 +84,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
     const widget = useAppSelector(state => selectWidget(state, widgetName)) as AppWidgetMeta | undefined
     const bcName = widget?.bcName
     const selectionMode = widget?.options?.tree?.selection ?? 'nodeAndLeaf'
-    const dataLossWarning = widget?.options?.tree?.dataLossWarning ?? 'always'
+    const misleadWarn = widget?.options?.tree?.misleadWarn ?? 'all'
     const treeState = useAppSelector(state => selectBcTree(state, bcName))
     const calculateShowMoreState = useTreeShowMore(widget)
 
@@ -389,23 +393,36 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
         [getLoadedDescendantIds, getLoadedSelectionFrontierIds, resolveNodeRecord, selectItems, selectedRowKeys]
     )
 
-    const requestSwitchToManualSelection = useCallback(
-        (selectedAncestorId: string, excludedNodeIds: Set<string>, hiddenRecordsWillBeLost: boolean) => {
-            const showWarning = dataLossWarning === 'always' || (dataLossWarning === 'hiddenOnly' && hiddenRecordsWillBeLost)
-
-            if (!showWarning) {
+    const requestPaginationUnselect = useCallback(
+        (selectedAncestorId: string, excludedNodeIds: Set<string>, warning: string) => {
+            if (misleadWarn !== 'paginationUnselect' && misleadWarn !== 'all') {
                 switchToManualSelection(selectedAncestorId, excludedNodeIds)
                 return
             }
 
             Modal.confirm({
-                title: t(
-                    'Unchecking the item from the group switches to manual selection - only the items currently visible will stay selected, the rest will be excluded.'
-                ),
+                title: t(warning),
                 onOk: () => switchToManualSelection(selectedAncestorId, excludedNodeIds)
             })
         },
-        [dataLossWarning, switchToManualSelection, t]
+        [misleadWarn, switchToManualSelection, t]
+    )
+
+    const requestSelectGroup = useCallback(
+        (nodeId: string) => {
+            if (misleadWarn !== 'selectAll' && misleadWarn !== 'all') {
+                handleSelectNode(nodeId)
+                return
+            }
+
+            Modal.confirm({
+                title: t(
+                    'You are selecting the whole group. All nested items will be selected, including items hidden on subsequent pages.'
+                ),
+                onOk: () => handleSelectNode(nodeId)
+            })
+        },
+        [handleSelectNode, misleadWarn, t]
     )
 
     const handleUnselectNode = useCallback(
@@ -420,19 +437,19 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
 
             // ancestors of the unchecked node stay out of the selection, otherwise the node would be
             // covered by them again, its own descendants stay out because unchecking a group excludes them
-            requestSwitchToManualSelection(
+            requestPaginationUnselect(
                 selectedAncestorId,
                 new Set([nodeId, ...getAncestorIds(nodeId), ...getLoadedDescendantIds(nodeId)]),
-                false
+                IMPLICIT_UNSELECT_WARNING
             )
         },
         [
-            requestSwitchToManualSelection,
             getAncestorIds,
             getClosestExplicitlySelectedAncestorId,
             getLoadedDescendantIds,
             resolveNodeRecord,
-            selectItems
+            selectItems,
+            requestPaginationUnselect
         ]
     )
 
@@ -449,9 +466,9 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
                 return
             }
 
-            requestSwitchToManualSelection(selectionSourceId, new Set([parentId, ...getAncestorIds(parentId)]), true)
+            requestPaginationUnselect(selectionSourceId, new Set([parentId, ...getAncestorIds(parentId)]), PAGINATION_UNSELECT_WARNING)
         },
-        [getAncestorIds, getExplicitSelectionSourceId, requestSwitchToManualSelection]
+        [getAncestorIds, getExplicitSelectionSourceId, requestPaginationUnselect]
     )
 
     const selectNode = useCallback(
@@ -480,7 +497,11 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
             }
 
             if (checked || isSelectionAggregatedFromChildren(nodeId)) {
-                handleSelectNode(nodeId)
+                if (!getTreeNodeIsLeaf(record, treeState?.isLeafFieldKey ?? 'isLeaf')) {
+                    requestSelectGroup(nodeId)
+                } else {
+                    handleSelectNode(nodeId)
+                }
             } else {
                 handleUnselectNode(nodeId)
             }

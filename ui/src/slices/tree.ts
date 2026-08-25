@@ -104,6 +104,22 @@ const initBcTreeState = (initialTreeState?: Partial<BcTreeState>): BcTreeState =
     ...initialTreeState
 })
 
+const initializeUnloadedBranchState = (tree: BcTreeState, parentId: string) => {
+    const nodeState = tree.nodesState[parentId] ?? (tree.nodesState[parentId] = {})
+
+    if (!isDefined(nodeState.page)) {
+        nodeState.page = 0
+
+        if (!isDefined(nodeState.hasNext)) {
+            nodeState.hasNext = true
+        }
+    }
+
+    if (tree.filterActive && tree.searchMode === 'collapse' && !isDefined(nodeState.filterPage)) {
+        nodeState.filterPage = 0
+    }
+}
+
 const getExpandedPathIds = (tree: BcTreeState, nodeIds: string[]) => {
     const expandedPathIds = new Set<string>()
 
@@ -170,6 +186,8 @@ const treeSlice = createSlice({
                 parentId: string | null
                 page?: number
                 more?: boolean
+                fetchUntilDataChanges?: boolean
+                maxRequests?: number
                 limit?: number
                 bcDataRequestAction?: AnyAction
             }>
@@ -208,9 +226,11 @@ const treeSlice = createSlice({
                 parentId: string | null | undefined
                 data: DataItem[]
                 hasNext?: boolean
+                page?: number
+                lastResponseCount?: number
             }>
         ) {
-            const { bcName, data, hasNext, parentId: requestedParentId } = action.payload
+            const { bcName, data, hasNext, page, lastResponseCount, parentId: requestedParentId } = action.payload
 
             if (!state[bcName]) {
                 state[bcName] = initBcTreeState()
@@ -257,8 +277,11 @@ const treeSlice = createSlice({
                     data: [],
                     loading: false,
                     hasNext,
-                    lastResponseCount: data.length
+                    lastResponseCount: lastResponseCount ?? data.length
                 })
+                if (isDefined(page)) {
+                    nodesState[String(requestedParentId)].page = page
+                }
             }
 
             const recordsByParentId = dataByCategory(currentTree.parentFieldKey, data)
@@ -311,7 +334,7 @@ const treeSlice = createSlice({
 
             nodesState[safeParentId].count = count
         },
-        applyFilter(state, action: PayloadAction<{ bcName: string; more?: boolean }>) {
+        applyFilter(state, action: PayloadAction<{ bcName: string; more?: boolean; fetchUntilDataChanges?: boolean }>) {
             const { bcName, more } = action.payload
 
             if (!state[bcName]) {
@@ -347,9 +370,12 @@ const treeSlice = createSlice({
                 restoredNodeIds: string[]
                 hasNext?: boolean
                 more?: boolean
+                page?: number
+                lastResponseCount?: number
             }>
         ) {
-            const { bcName, data, matchedNodeIds, filterResultNodeIds, restoredNodeIds, hasNext, more } = action.payload
+            const { bcName, data, matchedNodeIds, filterResultNodeIds, restoredNodeIds, hasNext, more, page, lastResponseCount } =
+                action.payload
             const currentTree = state[bcName] ?? initBcTreeState()
             state[bcName] = currentTree
 
@@ -360,7 +386,10 @@ const treeSlice = createSlice({
             currentTree.filterActive = true
             currentTree.filterPagination.loading = false
             currentTree.filterPagination.hasNext = hasNext
-            currentTree.filterPagination.lastResponseCount = filterResultNodeIds.length
+            currentTree.filterPagination.lastResponseCount = lastResponseCount ?? filterResultNodeIds.length
+            if (isDefined(page)) {
+                currentTree.filterPagination.page = page
+            }
             currentTree.matchedNodeIds = getUniqueValues([...(more ? currentTree.matchedNodeIds : []), ...matchedNodeIds.map(String)])
             currentTree.filterResultNodeIds = getUniqueValues([
                 ...(more ? currentTree.filterResultNodeIds : []),
@@ -401,20 +430,14 @@ const treeSlice = createSlice({
                 })
 
                 visibleParentIds.forEach(parentId => {
-                    if (!currentTree.nodesState[parentId]) {
-                        // Page zero means that this branch has not been requested in the current mode yet.
-                        // It also keeps the show-more control visible until the first response provides hasNext.
-                        currentTree.nodesState[parentId] = {
-                            page: 0,
-                            hasNext: true,
-                            ...(currentTree.searchMode === 'collapse' ? { filterPage: 0 } : undefined)
-                        }
-                    }
+                    // Page zero means that this branch has not been requested in the current mode yet.
+                    // It also keeps the show-more control visible until the first response provides hasNext.
+                    initializeUnloadedBranchState(currentTree, parentId)
                 })
             }
         },
-        showCachedFilterPage(state, action: PayloadAction<{ bcName: string; parentId: string; limit: number }>) {
-            const { bcName, parentId, limit } = action.payload
+        showCachedFilterPage(state, action: PayloadAction<{ bcName: string; parentId: string; limit: number; pageCount?: number }>) {
+            const { bcName, parentId, limit, pageCount = 1 } = action.payload
             const currentTree = state[bcName]
             const nodeState = currentTree?.nodesState[parentId]
 
@@ -429,13 +452,14 @@ const treeSlice = createSlice({
             }
 
             const loadedCount = (loadedPage - 1) * limit + (nodeState.lastResponseCount ?? limit)
+            const nextFilterPage = Math.min(filterPage + Math.max(1, pageCount), loadedPage)
             const cachedIds = (currentTree.childIdsByParent[parentId] ?? []).slice(
                 filterPage * limit,
-                Math.min((filterPage + 1) * limit, loadedCount)
+                Math.min(nextFilterPage * limit, loadedCount)
             )
 
             currentTree.visibleNodeIdsForHidden = getUniqueValues([...currentTree.visibleNodeIdsForHidden, ...cachedIds])
-            nodeState.filterPage = filterPage + 1
+            nodeState.filterPage = nextFilterPage
         },
         applyFilterFail(state, action: PayloadAction<{ bcName: string; more?: boolean }>) {
             const currentTree = state[action.payload.bcName]
@@ -508,12 +532,19 @@ const treeSlice = createSlice({
 
                 const nodeState = currentTree.nodesState[parentId]
                 nodeState.loading = false
+                initializeUnloadedBranchState(currentTree, parentId)
 
                 const childIds = extractIds(children)
                 currentTree.childIdsByParent[parentId] = getUniqueValues([...currentTree.childIdsByParent[parentId], ...childIds])
             })
 
             Object.assign(currentTree.nodes, createDictionaryFrom(FIELDS.TECHNICAL.ID, data))
+
+            data.forEach(node => {
+                if (!getTreeNodeIsLeaf(node, currentTree.isLeafFieldKey)) {
+                    initializeUnloadedBranchState(currentTree, String(node[FIELDS.TECHNICAL.ID]))
+                }
+            })
 
             const hiddenFilterActive =
                 currentTree.filterActive && (currentTree.searchMode === 'hide' || currentTree.searchMode === 'collapse')

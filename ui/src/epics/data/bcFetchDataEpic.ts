@@ -72,7 +72,7 @@ export const buildBcFetchContext = (state: RootState, bcName: string, options: B
     }
 
     const page = options.page ?? bc.page ?? DEFAULT_PAGE
-    const limit = options.limit ?? bc.limit ?? DEFAULT_PAGE_LIMIT
+    const limit = options.limit ?? (widgets?.find(item => item.bcName === bcName)?.limit || bc.limit) ?? DEFAULT_PAGE_LIMIT
     const fullHierarchyWidget = widgets?.find(
         item => item.bcName === widget.bcName && item.type === WidgetTypes.AssocListPopup && item.options?.hierarchyFull
     )

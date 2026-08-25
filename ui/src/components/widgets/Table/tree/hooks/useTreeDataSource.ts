@@ -15,7 +15,16 @@ export type TableTreeNode = TreeNode & {
     _treeParentId?: string | null
     _remainingNumberOfRecords?: string | number | undefined
     _treeIsLeaf?: boolean
+    _nestingLevel?: number
 }
+
+const getMaxNestingLevel = (nodes: TableTreeNode[]): number =>
+    nodes.reduce((maxLevel, node) => {
+        const nodeLevel = node._recordType === 'node' ? node._level : 0
+        const childrenLevel = node.children ? getMaxNestingLevel(node.children) : 0
+
+        return Math.max(maxLevel, nodeLevel, childrenLevel)
+    }, 0)
 
 export const useTreeDataSource = (
     bcTreeState: BcTreeState | undefined,
@@ -153,7 +162,7 @@ export const useTreeDataSource = (
                 })
                 .map(node => String(node.id))
             const orphanNodes = orphanRootIds
-                .map(nodeId => buildTreeNode(nodeId, 1))
+                .map(nodeId => buildTreeNode(nodeId, 0))
                 .filter(Boolean)
                 .map(node => ({ ...node!, _restorePath: true })) as TableTreeNode[]
 
@@ -169,6 +178,7 @@ export const useTreeDataSource = (
                 isLeaf: false,
                 _recordType: 'restore-ancestors',
                 _level: 0,
+                _nestingLevel: getMaxNestingLevel(orphanNodes),
                 children: orphanNodes
             } as TableTreeNode
 
