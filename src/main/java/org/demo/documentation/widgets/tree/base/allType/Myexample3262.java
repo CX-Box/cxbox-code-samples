@@ -29,19 +29,18 @@ public class Myexample3262 extends BaseEntity {
 	@Column
 	private String customFieldHint;
 
-	@JoinTable(name = "Myexample3262_Myexample3262MultiHoverPick_1",
-			joinColumns = @JoinColumn(name = "Myexample3262_id"),
-			inverseJoinColumns = @JoinColumn(name = "Myexample3262MultiHover_id")
+	@JoinTable(name = "MYEXAMPLE3262_MYEXAMPLE3262MULTIHOVERPICK_1",
+			joinColumns = @JoinColumn(name = "MYEXAMPLE3262_ID"),
+			inverseJoinColumns = @JoinColumn(name = "MYEXAMPLE3262MULTIHOVER_ID")
 	)
-	@ManyToMany(cascade =
-			{CascadeType.PERSIST,
-					CascadeType.MERGE})
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Myexample3262MultiHover> customFieldMultivalueHoverList = new ArrayList<>();
 
-	@JoinTable(name = "Myexample3262_Myexample3262MultiPick_2",
-			joinColumns = @JoinColumn(name = "Myexample3262_id"),
-			inverseJoinColumns = @JoinColumn(name = "Myexample3262Multi_id")
+	@JoinTable(name = "MYEXAMPLE3262_MYEXAMPLE3262MULTIPICK_2",
+			joinColumns = @JoinColumn(name = "MYEXAMPLE3262_ID"),
+			inverseJoinColumns = @JoinColumn(name = "MYEXAMPLE3262MULTI_ID")
 	)
+
 	@ManyToMany(cascade =
 			{CascadeType.PERSIST,
 					CascadeType.MERGE})

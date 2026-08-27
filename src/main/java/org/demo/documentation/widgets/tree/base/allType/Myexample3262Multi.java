@@ -11,7 +11,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 
 
 @Entity
-@Table(name = "MYEXAMPLE3262")
+@Table(name = "MYEXAMPLE3262MULTI")
 @Getter
 @Setter
 @NoArgsConstructor
