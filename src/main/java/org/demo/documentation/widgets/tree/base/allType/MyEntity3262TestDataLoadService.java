@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.core.file.dto.CxboxResponseDTO;
 import org.cxbox.core.file.dto.FileUploadDto;
+import org.demo.documentation.fields.multivalue.filtration.MyEntity185;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
@@ -26,10 +27,6 @@ public class MyEntity3262TestDataLoadService {
 	MyEntity3262Repository repository;
 	@Autowired
 	MyEntity3262PickRepository repositoryPick;
-	@Autowired
-	MyEntity3262MultiRepository repositoryMulti;
-	@Autowired
-	MyEntity3262MultiHoverRepository repositoryMultiHover;
 	@Autowired
 	InternalAuthorizationService authzService;
 
@@ -56,71 +53,106 @@ public class MyEntity3262TestDataLoadService {
 				.setCustomField("Hover option B (another long text)");
 		List<Myexample3262MultiHover> hoverList = Arrays.asList(hover1, hover2);
 
-
 		Myexample3262Pick pickEntity = new Myexample3262Pick().setCustomField("PickList target").setCustomField2("Inline PickList target");
 		repositoryPick.save(pickEntity);
 
 		Myexample3262Pick inlineEntity = new Myexample3262Pick().setCustomField("PickList target2").setCustomField2("Inline PickList target2");
 		repositoryPick.save(inlineEntity);
 
-		// root 1: 3 child
-		Myexample3262 root1 = createBaseEntity("Root 1 (with children)");
-		repository.save(root1.setCustomFieldPickListEntity(pickEntity)
-				.setCustomFieldInlineEntity(inlineEntity).setCustomFieldFileUpload(file.getData().getName())
-				.setCustomFieldFileUploadId(file.getData().getId()));
+		// root 1: without Child
+		Myexample3262 root1 = createBaseEntity("Root 1")
+				.setCustomFieldPickListEntity(pickEntity)
+				.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId())
+				.setCustomFieldMultivalueList(multiList)
+				.setCustomFieldMultivalueHoverList(hoverList);
 
-		repository.save(root1.setCustomFieldMultivalueList(multiList)
-				.setCustomFieldMultivalueHoverList(hoverList));
+		repository.save(root1);
 
 		// root 2: without Child
-		Myexample3262 root2 = createBaseEntity("Root 2 (leaf)");
-
-		repository.save(root2.setCustomFieldPickListEntity(pickEntity)
+		Myexample3262 root2 = createBaseEntity("Root 2 (without children)")
+				.setCustomFieldPickListEntity(pickEntity)
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
-				.setCustomFieldFileUploadId(file.getData().getId()));
-		repository.save(root2.setCustomFieldMultivalueList(Collections.singletonList(multi1))
-				.setCustomFieldMultivalueHoverList(Collections.singletonList(hover1)));
+				.setCustomFieldFileUploadId(file.getData().getId());
+		repository.save(root2);
+
+		Myexample3262Multi multi3 = new Myexample3262Multi().setCustomField("Multivalue option 3");
+		Myexample3262Multi multi4 = new Myexample3262Multi().setCustomField("Multivalue option 4");
+
+		List<Myexample3262Multi> multiList2 = Arrays.asList(multi3, multi4);
+
+		Myexample3262MultiHover hover3 = new Myexample3262MultiHover()
+				.setCustomField("Hover option A (long description for tooltip)");
+		Myexample3262MultiHover hover4 = new Myexample3262MultiHover()
+				.setCustomField("Hover option B (another long text)");
+
+		List<Myexample3262MultiHover> hoverList2 = Arrays.asList(hover3, hover4);
 
 		// root 3: without Child
-		Myexample3262 root3 = createBaseEntity("Root 3 (leaf)");
-		repository.save(root3.setCustomFieldInlineEntity(inlineEntity)
-				.setCustomFieldFileUpload(file.getData().getName())
-				.setCustomFieldPickListEntity(pickEntity)
-				.setCustomFieldFileUploadId(file.getData().getId()));
-		repository.save(root3).setCustomFieldMultivalueList(multiList)
-				.setCustomFieldMultivalueHoverList(hoverList);
-
-		// root 4: without Child
-		Myexample3262 root4 = createBaseEntity("Root 4 (leaf)");
-		repository.save(root4.setCustomFieldPickListEntity(pickEntity)
+		Myexample3262 root3 = createBaseEntity("Root 3  (without children)")
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
-				.setCustomFieldFileUploadId(file.getData().getId()));
-		repository.save(root4).setCustomFieldMultivalueList(multiList)
-				.setCustomFieldMultivalueHoverList(hoverList);
+				.setCustomFieldPickListEntity(pickEntity)
+				.setCustomFieldFileUploadId(file.getData().getId()).setCustomFieldMultivalueList(multiList2)
+				.setCustomFieldMultivalueHoverList(hoverList2);
+		repository.save(root3);
 
-		// root 5: without Child
-		Myexample3262 root5 = createBaseEntity("Root 5 (leaf)");
+		Myexample3262Multi multi5 = new Myexample3262Multi().setCustomField("Multivalue option 5");
+		Myexample3262Multi multi6 = new Myexample3262Multi().setCustomField("Multivalue option 6");
+		List<Myexample3262Multi> multiList3 = Arrays.asList(multi5, multi6);
 
-		repository.save(root5).setCustomFieldInlineEntity(inlineEntity)
+		Myexample3262MultiHover hover5 = new Myexample3262MultiHover()
+				.setCustomField("Hover option A (long description for tooltip)");
+		Myexample3262MultiHover hover6 = new Myexample3262MultiHover()
+				.setCustomField("Hover option B (another long text)");
+		List<Myexample3262MultiHover> hoverList3 = Arrays.asList(hover5, hover6);
+
+		// root 4: without Child
+		Myexample3262 root4 = createBaseEntity("Root 4 (without children)")
+				.setCustomFieldPickListEntity(pickEntity)
+				.setCustomFieldInlineEntity(inlineEntity)
+				.setCustomFieldFileUpload(file.getData().getName())
+				.setCustomFieldFileUploadId(file.getData().getId())
+				.setCustomFieldMultivalueList(multiList3)
+				.setCustomFieldMultivalueHoverList(hoverList3);
+		repository.save(root4);
+
+
+		Myexample3262Multi multi7 = new Myexample3262Multi().setCustomField("Multivalue option 7");
+		Myexample3262Multi multi8 = new Myexample3262Multi().setCustomField("Multivalue option 8");
+		List<Myexample3262Multi> multiList5 = Arrays.asList(multi7, multi8);
+		Myexample3262MultiHover hover7 = new Myexample3262MultiHover()
+				.setCustomField("Hover option A (long description for tooltip)");
+		Myexample3262MultiHover hover8 = new Myexample3262MultiHover()
+				.setCustomField("Hover option B (another long text)");
+		List<Myexample3262MultiHover> hoverList5 = Arrays.asList(hover7, hover8);
+
+		// root 5
+		Myexample3262 root5 = createBaseEntity("Root 5 (with children)")
+				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldPickListEntity(pickEntity)
-				.setCustomFieldFileUploadId(file.getData().getId());
-		repository.save(root5).setCustomFieldMultivalueList(multiList)
- .setCustomFieldMultivalueHoverList(hoverList);
+				.setCustomFieldFileUploadId(file.getData().getId())
+				.setCustomFieldMultivalueList(multiList5)
+				.setCustomFieldMultivalueHoverList(hoverList5);
+		repository.save(root5);
 
-		// ---- Create 3 child for root1 ----
+		// ---- Create 3 child for root5 ----
 		for (int i = 1; i <= 3; i++) {
 			Myexample3262 child = createBaseEntity("Child " + i + " of Root 1")
-					.setParentId(root1.getId())
- 					.setCustomFieldFileUpload(file.getData().getName())
+					.setParentId(root5.getId())
+					.setCustomFieldFileUpload(file.getData().getName())
 					.setCustomFieldFileUploadId(file.getData().getId());
-			repository.save(child).setCustomFieldPickListEntity(pickEntity)
-			.setCustomFieldInlineEntity(inlineEntity);
-			repository.save(child).setCustomFieldMultivalueList(multiList)
-			.setCustomFieldMultivalueHoverList(hoverList);
-
+			child.setCustomFieldPickListEntity(pickEntity)
+					.setCustomFieldInlineEntity(inlineEntity)
+					.setCustomFieldMultivalueList(Arrays.asList(new Myexample3262Multi().setCustomField("Multivalue option " + i),
+							new Myexample3262Multi().setCustomField("Multivalue option " + (i + 1))))
+					.setCustomFieldMultivalueHoverList(Arrays.asList(new Myexample3262MultiHover()
+							.setCustomField("Hover option B (another long text)"), new Myexample3262MultiHover()
+							.setCustomField("Hover option B (another long text)")));
+			repository.save(child);
 		}
 	}
 

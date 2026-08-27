@@ -8,10 +8,14 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
-import org.demo.documentation.widgets.tree.colortitle.enums.CustomFieldColorDictionaryEnum;
-import org.demo.documentation.widgets.tree.colortitle.enums.CustomFieldColorRadioEnum;
-import org.demo.documentation.widgets.tree.colortitle.forfields.MyEntity3267Multi;
-import org.demo.documentation.widgets.tree.colortitle.forfields.MyEntity3267MultiMulti;
+import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.tree.base.allType.Myexample3262;
+import org.demo.documentation.widgets.tree.base.allType.Myexample3262Multi;
+import org.demo.documentation.widgets.tree.base.allType.Myexample3262MultiHover;
+
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,94 +26,109 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3267DTO extends DataResponseDTO {
 
+	private Long parentId;
+	private Boolean isLeaf;
 	private String customField;
 	private String customFieldColor;
 	private String customFieldText;
 	private String customFieldTextColor;
-	@SearchParameter(name = "customFieldColorMultivalueHoverTree.id", provider = LongValueProvider.class)
+
+	@SearchParameter(name = "customFieldMultivalueHoverList.id", provider = LongValueProvider.class)
 	private MultivalueField customFieldColorMultivalueHover;
 	private String customFieldColorMultivalueHoverDisplayedKey;
-	@SearchParameter(name = "customFieldColorMultivalueTree.id", provider = LongValueProvider.class)
+	@SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
 	private MultivalueField customFieldColorMultivalue;
 	private String customFieldColorMultivalueDisplayedKey;
-	@SearchParameter(name = "customFieldColorInlinePicklistEntity.customField")
+	@SearchParameter(name = "customFieldInlineEntity.customField")
 	private String customFieldColorInlinePicklist;
-	@SearchParameter(name = "customFieldColorInlinePicklistEntity.id", provider = LongValueProvider.class)
+	@SearchParameter(name = "customFieldInlineEntity.id", provider = LongValueProvider.class)
 	private Long customFieldColorInlinePicklistId;
-	@SearchParameter(name = "customFieldColorPicklistEntity.customField")
+	@SearchParameter(name = "customFieldPickListEntity.customField")
 	private String customFieldColorPicklist;
-	@SearchParameter(name = "customFieldColorPicklistEntity.id", provider = LongValueProvider.class)
+	@SearchParameter(name = "customFieldPickListEntity.id", provider = LongValueProvider.class)
 	private Long customFieldColorPicklistId;
-	@SearchParameter(name = "customFieldColorRadio", provider = EnumValueProvider.class)
-	private CustomFieldColorRadioEnum customFieldColorRadio;
-	@SearchParameter(name = "customFieldColorMoney", provider = BigDecimalValueProvider.class)
+	@SearchParameter(name = "customFieldRadio", provider = EnumValueProvider.class)
+	private CustomFieldRadioEnum customFieldColorRadio;
+	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
 	private Double customFieldColorMoney;
-	@SearchParameter(name = "customFieldColorPercent", provider = BigDecimalValueProvider.class)
+	@SearchParameter(name = "customFieldPercent", provider = BigDecimalValueProvider.class)
 	private Long customFieldColorPercent;
-	@SearchParameter(name = "customFieldColorNumber", provider = BigDecimalValueProvider.class)
+	@SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
 	private Long customFieldColorNumber;
-	@SearchParameter(name = "customFieldColorFileUploade")
+	@SearchParameter(name = "customFieldFileUpload")
 	private String customFieldColorFileUploade;
 	private String customFieldColorFileUploadeId;
-	@SearchParameter(name = "customFieldColorDictionary", provider = EnumValueProvider.class)
-	private CustomFieldColorDictionaryEnum customFieldColorDictionary;
-	@SearchParameter(name = "customFieldColorDateTimeWithSeconds", provider = DateValueProvider.class)
+	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
+	private CustomFieldDictionaryEnum customFieldColorDictionary;
+	@SearchParameter(name = "customFieldDateTimeWithSeconds", provider = DateValueProvider.class)
 	private LocalDateTime customFieldColorDateTimeWithSeconds;
-	@SearchParameter(name = "customFieldColorDate", provider = DateValueProvider.class)
+	@SearchParameter(name = "customFieldDate", provider = DateValueProvider.class)
 	private LocalDateTime customFieldColorDate;
-	@SearchParameter(name = "customFieldColorCheckbox", provider = BooleanValueProvider.class)
+	@SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
 	private Boolean customFieldColorCheckbox;
-	@SearchParameter(name = "customFieldColorDateTime", provider = DateTimeValueProvider.class)
+	@SearchParameter(name = "customFieldDateTime", provider = DateTimeValueProvider.class)
 	private LocalDateTime customFieldColorDateTime;
-	@SearchParameter(name = "customFieldColorText")
+	@SearchParameter(name = "customFieldText")
 	private String customFieldColorText;
-	@SearchParameter(name = "customFieldColorInput")
+	@SearchParameter(name = "customField")
 	private String customFieldColorInput;
+	private String customFieldColorHint;
+	private String customFieldColorHidden;
+	@SearchParameter(name = "customFieldMultipleSelect", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
+	@EnumValueProvider.BaseEnum(value = CustomFieldMultipleSelectEnum.class)
+	private MultivalueField customFieldColorMultipleSelect;
 
 	// --8<-- [start:colorDTO]
-	public MyExample3267DTO(MyEntity3267 entity) {
+	public MyExample3267DTO(Myexample3262 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.customFieldText = entity.getCustomFieldText();
 		this.customFieldColor = "#eda6a6";
 		this.customFieldTextColor = "#a6eda6";
 		// --8<-- [end:colorDTO]
-		this.customFieldColorMultivalueHover = entity.getCustomFieldColorMultivalueHoverTree().stream().collect(MultivalueField.toMultivalueField(
+		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
+		this.customFieldColorHint = entity.getCustomFieldHint();
+		this.customFieldColorMultivalueHover = entity.getCustomFieldMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
-				MyEntity3267Multi::getCustomField
+				e -> String.valueOf(e.getCustomField())
 		));
-		this.customFieldColorMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueHoverTree().stream().map(MyEntity3267Multi::getCustomField
-		).collect(Collectors.joining(",")), 12);
-		this.customFieldColorMultivalue = entity.getCustomFieldColorMultivalueTree().stream().collect(MultivalueField.toMultivalueField(
+		this.customFieldColorMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueHoverList().stream().map(Myexample3262MultiHover::getCustomField
+		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		this.customFieldColorMultivalue = entity.getCustomFieldMultivalueList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
-				MyEntity3267MultiMulti::getCustomField
+				e -> String.valueOf(e.getCustomField())
 		));
-		this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldColorMultivalueTree().stream().map(MyEntity3267MultiMulti::getCustomField
-		).collect(Collectors.joining(",")), 12);
-		this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldColorInlinePicklistEntity())
+		this.customFieldColorMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueList().stream().map(Myexample3262Multi::getCustomField
+		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		this.customFieldColorMultipleSelect = entity.getCustomFieldMultipleSelect().stream().collect(MultivalueField.toMultivalueField(Enum::name, CustomFieldMultipleSelectEnum::getValue));
+		this.customFieldColorRadio = entity.getCustomFieldRadio();
+		this.customFieldColorMoney = entity.getCustomFieldMoney();
+		this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldInlineEntity())
 				.map(e -> e.getId())
 				.orElse(null);
-		this.customFieldColorInlinePicklist = Optional.ofNullable(entity.getCustomFieldColorInlinePicklistEntity())
+		this.customFieldColorInlinePicklist = Optional.ofNullable(entity.getCustomFieldInlineEntity())
 				.map(e -> e.getCustomField())
 				.orElse(null);
-		this.customFieldColorPicklistId = Optional.ofNullable(entity.getCustomFieldColorPicklistEntity())
+		this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldPickListEntity())
 				.map(e -> e.getId())
 				.orElse(null);
-		this.customFieldColorPicklist = Optional.ofNullable(entity.getCustomFieldColorPicklistEntity())
-				.map(e -> e.getCustomField())
+		this.customFieldColorPicklist = Optional.ofNullable(entity.getCustomFieldPickListEntity())
+				.map(e -> e.getCustomField2())
 				.orElse(null);
-		this.customFieldColorRadio = entity.getCustomFieldColorRadio();
-		this.customFieldColorMoney = entity.getCustomFieldColorMoney();
-		this.customFieldColorPercent = entity.getCustomFieldColorPercent();
-		this.customFieldColorNumber = entity.getCustomFieldColorNumber();
-		this.customFieldColorFileUploade = entity.getCustomFieldColorFileUploade();
-		this.customFieldColorFileUploadeId = entity.getCustomFieldColorFileUploadeId();
-		this.customFieldColorDictionary = entity.getCustomFieldColorDictionary();
-		this.customFieldColorDateTimeWithSeconds = entity.getCustomFieldColorDateTimeWithSeconds();
-		this.customFieldColorDate = entity.getCustomFieldColorDate();
-		this.customFieldColorCheckbox = entity.getCustomFieldColorCheckbox();
-		this.customFieldColorDateTime = entity.getCustomFieldColorDateTime();
-		this.customFieldColorText = entity.getCustomFieldColorText();
-		this.customFieldColorInput = entity.getCustomFieldColorInput();
+		this.customFieldColorPercent = entity.getCustomFieldPercent();
+		this.customFieldColorNumber = entity.getCustomFieldNumber();
+		this.customFieldColorFileUploade = entity.getCustomFieldFileUpload();
+		this.customFieldColorFileUploadeId = entity.getCustomFieldFileUploadId();
+		this.customFieldColorDictionary = entity.getCustomFieldDictionary();
+		this.customFieldColorDateTimeWithSeconds = entity.getCustomFieldDateTimeWithSeconds();
+		this.customFieldColorDate = entity.getCustomFieldDate();
+		this.customFieldColorCheckbox = entity.getCustomFieldCheckbox();
+		this.customFieldColorDateTime = entity.getCustomFieldDateTime();
+		this.customFieldText = entity.getCustomFieldText();
+		this.customFieldColorHidden = entity.getCustomFieldHidden();
+		this.customField = entity.getCustomField();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getParentId() == null ? false : true;
+
 	}
 }

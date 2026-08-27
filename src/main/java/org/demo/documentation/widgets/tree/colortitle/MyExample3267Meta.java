@@ -4,10 +4,10 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.widgets.tree.colortitle.enums.CustomFieldColorDictionaryEnum;
-import org.demo.documentation.widgets.tree.colortitle.enums.CustomFieldColorRadioEnum;
 import org.springframework.stereotype.Service;
 
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
 @SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3267Meta extends FieldMetaBuilder<MyExample3267DTO> {
@@ -23,14 +23,14 @@ public class MyExample3267Meta extends FieldMetaBuilder<MyExample3267DTO> {
 		fields.setEnabled(MyExample3267DTO_.customFieldColorCheckbox);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorDate);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorDateTimeWithSeconds);
-		fields.setEnumValues(MyExample3267DTO_.customFieldColorDictionary, CustomFieldColorDictionaryEnum.values());
+		fields.setEnumValues(MyExample3267DTO_.customFieldColorDictionary, CustomFieldDictionaryEnum.values());
 		fields.setEnabled(MyExample3267DTO_.customFieldColorDictionary);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorFileUploadeId);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorFileUploade);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorNumber);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorPercent);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorMoney);
-		fields.setEnumValues(MyExample3267DTO_.customFieldColorRadio, CustomFieldColorRadioEnum.values());
+		fields.setEnumValues(MyExample3267DTO_.customFieldColorRadio, CustomFieldRadioEnum.values());
 		fields.setEnabled(MyExample3267DTO_.customFieldColorRadio);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorPicklistId);
 		fields.setEnabled(MyExample3267DTO_.customFieldColorPicklist);
@@ -51,13 +51,13 @@ public class MyExample3267Meta extends FieldMetaBuilder<MyExample3267DTO> {
 		fields.enableFilter(MyExample3267DTO_.customFieldColorCheckbox);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorDate);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorDateTimeWithSeconds);
-		fields.setEnumFilterValues(fields, MyExample3267DTO_.customFieldColorDictionary, CustomFieldColorDictionaryEnum.values());
+		fields.setEnumFilterValues(fields, MyExample3267DTO_.customFieldColorDictionary, CustomFieldDictionaryEnum.values());
 		fields.enableFilter(MyExample3267DTO_.customFieldColorDictionary);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorFileUploade);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorNumber);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorPercent);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorMoney);
-		fields.setEnumFilterValues(fields, MyExample3267DTO_.customFieldColorRadio, CustomFieldColorRadioEnum.values());
+		fields.setEnumFilterValues(fields, MyExample3267DTO_.customFieldColorRadio, CustomFieldRadioEnum.values());
 		fields.enableFilter(MyExample3267DTO_.customFieldColorRadio);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorPicklist);
 		fields.enableFilter(MyExample3267DTO_.customFieldColorInlinePicklist);
