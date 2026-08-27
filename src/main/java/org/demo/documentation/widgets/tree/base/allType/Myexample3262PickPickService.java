@@ -2,6 +2,7 @@ package org.demo.documentation.widgets.tree.base.allType;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Pick;
 import org.springframework.stereotype.Service;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Pick;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ public class MyEntity3268InlinePickPickDTO extends DataResponseDTO {
 
 	private String customField;
 
-	public MyEntity3268InlinePickPickDTO(MyEntity3268InlinePick entity) {
+	public MyEntity3268InlinePickPickDTO(Myexample3262Pick entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 	}

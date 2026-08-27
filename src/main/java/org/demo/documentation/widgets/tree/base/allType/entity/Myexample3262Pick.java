@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.base.allType;
+package org.demo.documentation.widgets.tree.base.allType.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,12 +11,12 @@ import org.cxbox.model.core.entity.BaseEntity;
 
 
 @Entity
-@Table(name = "MYEXAMPLE3262MULTIHOVER")
+@Table(name = "MYEXAMPLE3262PICK")
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
-public class Myexample3262MultiHover extends BaseEntity {
+public class Myexample3262Pick extends BaseEntity {
 	@Column
 	private String customField;
 
