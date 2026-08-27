@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ public class MyEntity3267MultiMultiMultivalueDTO extends DataResponseDTO {
 
 	private String customField;
 
-	public MyEntity3267MultiMultiMultivalueDTO(org.demo.documentation.widgets.tree.colortitle.forfields.MyEntity3267MultiMulti entity) {
+	public MyEntity3267MultiMultiMultivalueDTO(Myexample3262MultiHover entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 	}

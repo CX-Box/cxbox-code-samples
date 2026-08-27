@@ -5,7 +5,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 
 @Getter
 @Setter

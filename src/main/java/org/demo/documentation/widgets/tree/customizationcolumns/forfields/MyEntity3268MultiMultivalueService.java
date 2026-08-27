@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Multi;
 import org.springframework.stereotype.Service;
 
 
@@ -13,18 +14,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Getter
 @Service
-public class MyEntity3268MultiMultivalueService extends VersionAwareResponseService<MyEntity3268MultiMultivalueDTO, MyEntity3268Multi> {
+public class MyEntity3268MultiMultivalueService extends VersionAwareResponseService<MyEntity3268MultiMultivalueDTO, Myexample3262Multi> {
 
 	@Getter(onMethod_ = @Override)
 	private final Class<MyEntity3268MultiMultivalueMeta> meta = MyEntity3268MultiMultivalueMeta.class;
 
 	@Override
-	protected CreateResult<MyEntity3268MultiMultivalueDTO> doCreateEntity(MyEntity3268Multi entity, BusinessComponent bc) {
+	protected CreateResult<MyEntity3268MultiMultivalueDTO> doCreateEntity(Myexample3262Multi entity, BusinessComponent bc) {
 		return null;
 	}
 
 	@Override
-	protected ActionResultDTO<MyEntity3268MultiMultivalueDTO> doUpdateEntity(MyEntity3268Multi entity, MyEntity3268MultiMultivalueDTO data,
+	protected ActionResultDTO<MyEntity3268MultiMultivalueDTO> doUpdateEntity(Myexample3262Multi entity, MyEntity3268MultiMultivalueDTO data,
 																			 BusinessComponent bc) {
 		return null;
 	}

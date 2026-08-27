@@ -5,11 +5,10 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.widgets.tree.customizationcolumns.enums.CustomFieldDictionaryEnum;
-import org.demo.documentation.widgets.tree.customizationcolumns.enums.CustomFieldMultipleSelectEnum;
-import org.demo.documentation.widgets.tree.customizationcolumns.enums.CustomFieldMultipleSelectEnum1;
-import org.demo.documentation.widgets.tree.customizationcolumns.enums.CustomFieldRadioEnum;
 import org.springframework.stereotype.Service;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
+import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
 
 import java.util.Arrays;
 
@@ -21,8 +20,8 @@ public class MyExample3268Meta extends FieldMetaBuilder<MyExample3268DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3268DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample3268DTO_.customFieldMultivalueHover);
-		fields.setConcreteValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum1.values())
-				.map(CustomFieldMultipleSelectEnum1::getValue)
+		fields.setConcreteValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
+				.map(CustomFieldMultipleSelectEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
 				.toList());
 		fields.setEnabled(MyExample3268DTO_.customFieldMultipleSelect);
@@ -63,7 +62,7 @@ public class MyExample3268Meta extends FieldMetaBuilder<MyExample3268DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3268DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExample3268DTO_.customFieldMultivalueHover);
-		fields.setConcreteFilterValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum1.values())
+		fields.setConcreteFilterValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
 				.map(en -> new SimpleDictionary(en.name(), en.getValue()))
 				.toList());
 		fields.enableFilter(MyExample3268DTO_.customFieldMultipleSelect);

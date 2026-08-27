@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.base.allType;
+package org.demo.documentation.widgets.tree.base.allType.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

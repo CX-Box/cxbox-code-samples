@@ -10,8 +10,8 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.tree.base.allType.Myexample3262;
-import org.demo.documentation.widgets.tree.base.allType.Myexample3262Multi;
-import org.demo.documentation.widgets.tree.base.allType.Myexample3262MultiHover;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Multi;
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;

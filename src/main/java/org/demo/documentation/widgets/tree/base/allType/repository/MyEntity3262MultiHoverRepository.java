@@ -1,5 +1,6 @@
-package org.demo.documentation.widgets.tree.base.allType;
+package org.demo.documentation.widgets.tree.base.allType.repository;
 
+import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
