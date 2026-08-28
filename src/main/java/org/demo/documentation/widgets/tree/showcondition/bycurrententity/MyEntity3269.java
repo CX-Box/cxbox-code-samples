@@ -17,4 +17,12 @@ public class MyEntity3269 extends BaseEntity {
 	@Column
 	private Long customField;
 
+	@Column
+	private String customFieldInput;
+
+	@Column
+	private String isLeaf;
+
+	@Column
+	private String parentId;
 }
