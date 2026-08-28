@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3268DTO extends DataResponseDTO {
 
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
 	private Long parentId;
 	private Boolean isLeaf;
 	private String customField;
@@ -122,6 +123,6 @@ public class MyExample3268DTO extends DataResponseDTO {
 		this.customFieldMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueHoverList().stream().map(Myexample3262MultiHover::getCustomField
 		).collect(Collectors.joining(",")), 12);
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() == null ? false : true;
+		this.isLeaf = entity.getParentId() != null;
 	}
 }

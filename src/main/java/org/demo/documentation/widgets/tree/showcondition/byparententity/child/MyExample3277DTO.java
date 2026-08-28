@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 @Getter
 @Setter
@@ -20,10 +21,24 @@ public class MyExample3277DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
 	private Long customFieldNumber;
 
+	@SearchParameter(name = "isLeaf", provider = StringValueProvider.class)
+	private String isLeaf;
+
+
+	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
+	private Double customFieldMoney;
+
+	@SearchParameter(name = "parentTreeId", provider = StringValueProvider.class)
+	private String parentTreeId;
+
 	public MyExample3277DTO(MyEntity3277 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.customFieldNumber = entity.getCustomFieldNumber();
 		this.customFieldShowCondition = entity.getCustomFieldNumber() > 5;
+		this.isLeaf = entity.getIsLeaf();
+
+		this.customFieldMoney = entity.getCustomFieldMoney();
+		this.parentTreeId = entity.getParentTreeId();
 	}
 }

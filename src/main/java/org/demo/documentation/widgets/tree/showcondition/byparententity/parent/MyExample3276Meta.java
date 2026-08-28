@@ -16,7 +16,11 @@ public class MyExample3276Meta extends FieldMetaBuilder<MyExample3276DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3276DTO> fields, InnerBcDescription bcDescription,
-									  Long id, Long parentId) {
+	                                  Long id, Long parentId) {
+		fields.setEnabled(MyExample3276DTO_.parentTreeId);
+		fields.setEnabled(MyExample3276DTO_.customFieldMoney);
+		fields.setEnabled(MyExample3276DTO_.parentId);
+		fields.setEnabled(MyExample3276DTO_.isLeaf);
 		fields.setEnabled(MyExample3276DTO_.customFieldNumber);
 		fields.setEnabled(MyExample3276DTO_.customField);
 	}
@@ -25,6 +29,7 @@ public class MyExample3276Meta extends FieldMetaBuilder<MyExample3276DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3276DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3276DTO_.customFieldMoney);
 		fields.enableFilter(MyExample3276DTO_.customFieldNumber);
 		fields.enableFilter(MyExample3276DTO_.customField);
 
