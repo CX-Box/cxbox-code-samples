@@ -30,15 +30,6 @@ public class MyEntity359TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		repository.save(new MyEntity359().setCustomField("test data 1"));
-		repository.save(new MyEntity359().setCustomField("test data 2"));
-		repository.save(new MyEntity359().setCustomField("test data 3"));
-		repository.save(new MyEntity359().setCustomField("test data 4"));
-		repository.save(new MyEntity359().setCustomField("test data 5"));
-		repository.save(new MyEntity359().setCustomField("test data 6"));
-		repository.save(new MyEntity359().setCustomField("test data 7"));
-		repository.save(new MyEntity359().setCustomField("test data 8"));
-
 		repositoryAssoc.save(new MyEntity359Assoc().setCustomField("test data 1"));
 		repositoryAssoc.save(new MyEntity359Assoc().setCustomField("test data 2"));
 		repositoryAssoc.save(new MyEntity359Assoc().setCustomField("test data 3"));
@@ -56,6 +47,41 @@ public class MyEntity359TestDataLoadService {
 		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 6"));
 		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 7"));
 		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 8"));
+
+
+		// root 1: without Child
+		MyEntity359 root1 = createBaseEntity("Root 1");
+
+		repository.save(root1);
+
+		// root 2: without Child
+		MyEntity359 root2 = createBaseEntity("Root 2 (without children)");
+		repository.save(root2);
+
+		// root 3: without Child
+		MyEntity359 root3 = createBaseEntity("Root 3  (without children)");
+		repository.save(root3);
+
+		// root 4: without Child
+		MyEntity359 root4 = createBaseEntity("Root 4 (without children)") ;
+		repository.save(root4);
+
+		// root 5
+		MyEntity359 root5 = createBaseEntity("Root 5 (with children)") ;
+		repository.save(root5);
+
+		// ---- Create 3 child for root5 ----
+		for (int i = 1; i <= 3; i++) {
+			MyEntity359 child = createBaseEntity("Child " + i + " of Root 1")
+					.setParentId(String.valueOf(root5.getId()));
+			repository.save(child);
+		}
+	}
+
+	private MyEntity359 createBaseEntity(String customFieldValue) {
+		return new MyEntity359()
+				.setCustomField(customFieldValue)                                    // input
+				.setCustomFieldMoney(12345.67) ;                                      // money
 	}
 
 }
