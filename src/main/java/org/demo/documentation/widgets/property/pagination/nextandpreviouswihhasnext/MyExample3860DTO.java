@@ -18,6 +18,7 @@ public class MyExample3860DTO extends DataResponseDTO {
 	private String customField;
 	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
 	private LocalDateTime customFieldDateTime;
+	private String ParentId;
 
 	public MyExample3860DTO(MyEntity3860OutServiceDTO entity) {
 		this.id = entity.getId();
