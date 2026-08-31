@@ -7,7 +7,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.provider.impl.LongValueProvider; 
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
 
 @Getter
