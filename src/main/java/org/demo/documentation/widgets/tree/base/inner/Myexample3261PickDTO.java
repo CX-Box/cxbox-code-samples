@@ -7,8 +7,7 @@ import org.cxbox.core.util.filter.SearchParameter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider; 
 import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
 
 @Getter
@@ -35,7 +34,7 @@ public class Myexample3261PickDTO extends DataResponseDTO {
 		this.id = entity.getId().toString();
 		this.department = entity.getDepartment();
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() == null ? false : true;
+		this.isLeaf = entity.getParentId() != null;
 		this.description = entity.getDescription();
 		this.code = entity.getCode();
 		this.mnemonic = entity.getMnemonic();

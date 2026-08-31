@@ -31,7 +31,7 @@ public class MyExample3274DTO extends DataResponseDTO {
 		this.customField = entity.getCustomField();
 		this.customFieldText = entity.getCustomFieldText();
 
-		this.isLeaf = entity.getParentId() == null ? false : true;
+		this.isLeaf = entity.getParentId() != null;
 		this.parentId = entity.getParentId();
 		this.customFieldMoney = entity.getCustomFieldMoney();
 	}

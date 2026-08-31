@@ -143,7 +143,7 @@ public class Myexample3262DTO extends DataResponseDTO {
 		this.customFieldHidden = entity.getCustomFieldHidden();
 		this.customField = entity.getCustomField();
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() == null ? false : true;
+		this.isLeaf = entity.getParentId() != null;
 	}
 
 }
