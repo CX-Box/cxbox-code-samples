@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Assoc;
 
 import java.util.Optional;
@@ -28,6 +30,14 @@ public class MyExample359DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldPicklistEntity.id", provider = LongValueProvider.class)
 	private Long customFieldPicklistId;
 
+	private Boolean isLeaf;
+
+	@SearchParameter(name = "parentId")
+	private String parentId;
+
+	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
+	private Double customFieldMoney;
+
 	public MyExample359DTO(MyEntity359 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
@@ -43,5 +53,8 @@ public class MyExample359DTO extends DataResponseDTO {
 		this.customFieldPicklist = Optional.ofNullable(entity.getCustomFieldPicklistEntity())
 				.map(e -> e.getCustomField())
 				.orElse(null);
+		this.isLeaf = entity.getParentId() == null ? false : true;
+		this.parentId = entity.getParentId();
+		this.customFieldMoney = entity.getCustomFieldMoney();
 	}
 }

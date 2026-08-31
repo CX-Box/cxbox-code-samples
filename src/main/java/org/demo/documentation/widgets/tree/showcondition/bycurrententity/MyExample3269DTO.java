@@ -21,13 +21,12 @@ public class MyExample3269DTO extends DataResponseDTO {
 	private String customFieldShowCond;
 
 
-	@SearchParameter(name = "customFieldInput", provider = StringValueProvider.class)
+	@SearchParameter(name = "customFieldInput")
 	private String customFieldInput;
 
-	@SearchParameter(name = "isLeaf", provider = StringValueProvider.class)
-	private String isLeaf;
+	private Boolean isLeaf;
 
-	@SearchParameter(name = "parentId", provider = StringValueProvider.class)
+	@SearchParameter(name = "parentId")
 	private String parentId;
 
 	public MyExample3269DTO(MyEntity3269 entity) {
@@ -36,7 +35,7 @@ public class MyExample3269DTO extends DataResponseDTO {
 		this.customFieldShowCond = entity.getCustomField() > 5 ? "true" : "false";
 		this.customFieldInput = entity.getCustomFieldInput();
 
-		this.isLeaf = entity.getIsLeaf();
+		this.isLeaf = entity.getParentId() == null ? false : true;
 		this.parentId = entity.getParentId();
 	}
 }

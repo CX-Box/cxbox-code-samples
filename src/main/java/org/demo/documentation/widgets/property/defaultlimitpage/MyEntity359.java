@@ -29,4 +29,13 @@ public class MyEntity359 extends BaseEntity {
 	@JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
 	@ManyToOne
 	private MyEntity359Pick customFieldPicklistEntity;
+
+	@Column
+	private Boolean isLeaf;
+
+	@Column
+	private String parentId;
+
+	@Column
+	private Double customFieldMoney;
 }

@@ -19,10 +19,9 @@ public class MyExample3273DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldText")
 	private String customFieldText;
 
-	@SearchParameter(name = "isLeaf", provider = StringValueProvider.class)
-	private String isLeaf;
+	private Boolean isLeaf;
 
-	@SearchParameter(name = "parentId", provider = StringValueProvider.class)
+	@SearchParameter(name = "parentId")
 	private String parentId;
 
 	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
@@ -33,7 +32,7 @@ public class MyExample3273DTO extends DataResponseDTO {
 		this.customField = entity.getCustomField();
 		this.customFieldText = entity.getCustomFieldText();
 
-		this.isLeaf = entity.getIsLeaf();
+		this.isLeaf = entity.getParentId() == null ? false : true;
 		this.parentId = entity.getParentId();
 		this.customFieldMoney = entity.getCustomFieldMoney();
 	}

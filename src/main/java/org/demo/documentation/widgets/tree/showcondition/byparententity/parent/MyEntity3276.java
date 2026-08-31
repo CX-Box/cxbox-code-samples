@@ -24,7 +24,7 @@ public class MyEntity3276 extends BaseEntity implements BaseTreeEntity {
 	private Boolean customFieldShowCondition;
 
 	@Column
-	private String isLeaf;
+	private Boolean isLeaf;
 
 	@Column
 	private String parentId;
