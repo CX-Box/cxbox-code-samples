@@ -13,7 +13,13 @@ import { isDefined } from '@utils/isDefined'
 import { TREE_INDENT_SIZE } from '@components/widgets/Table/constants'
 
 const EXPAND_ICON_WIDTH = 22
-export const PSEUDO_ROW_TYPES: Array<TableTreeNode['_recordType']> = ['loading', 'show-more', 'empty', 'restore-ancestors']
+export const PSEUDO_ROW_TYPES: Array<TableTreeNode['_recordType']> = [
+    'loading',
+    'show-more',
+    'empty',
+    'restore-ancestors',
+    'unallocated-nodes'
+]
 const EXPANDED_ICON_TYPE = 'down'
 const COLLAPSED_ICON_TYPE = 'right'
 const ListDotSvg = () => (
@@ -26,7 +32,7 @@ export const RightWithEllipse = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="300 64 1600 894"
-        width="1em"
+        width="2em"
         height="1em"
         fill="currentColor"
         aria-hidden="true"
@@ -157,6 +163,27 @@ export function TreeTableCell<T extends CustomDataItem>({
                 ) : (
                     <span style={{ display: 'inline-block', width: EXPAND_ICON_WIDTH }} />
                 )}
+                {dataItem._restorePath && isDefined(dataItem._treeParentId) && (
+                    <Button
+                        type="Link"
+                        size="small"
+                        removeIndentation={true}
+                        style={{
+                            border: 'none',
+                            marginRight: 8,
+                            color: '#0088bb',
+                            background: 'transparent',
+                            display: 'inline-flex',
+                            alignItems: 'center'
+                        }}
+                        onClick={event => {
+                            event.stopPropagation()
+                            restoreAncestorPaths([String(dataItem._treeParentId)])
+                        }}
+                    >
+                        <Icon component={RightWithEllipse} style={{ fontSize: 14, lineHeight: 1, verticalAlign: 'initial' }} />
+                    </Button>
+                )}
                 {showSelection && dataItem._recordType === 'node' && (
                     <Checkbox
                         style={{ marginRight: 8 }}
@@ -169,20 +196,6 @@ export function TreeTableCell<T extends CustomDataItem>({
                     />
                 )}
             </span>
-            {dataItem._restorePath && isDefined(dataItem._treeParentId) && (
-                <Button
-                    type="Link"
-                    size="small"
-                    removeIndentation={true}
-                    style={{ border: 'none', marginRight: 8, color: '#0088bb', background: 'transparent' }}
-                    onClick={event => {
-                        event.stopPropagation()
-                        restoreAncestorPaths([String(dataItem._treeParentId)])
-                    }}
-                >
-                    <Icon component={RightWithEllipse} style={{ fontSize: 20 }} />
-                </Button>
-            )}
             {cell}
         </div>
     )

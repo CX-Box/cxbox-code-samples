@@ -10,4 +10,6 @@ export const TREE_ROOT_ID = String(null)
 
 export const RESTORE_ANCESTORS_ID = '__restore-ancestors__'
 
+export const UNALLOCATED_NODES_ID = '__unallocated-nodes__'
+
 export const TREE_INDENT_SIZE = 20

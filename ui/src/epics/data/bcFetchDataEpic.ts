@@ -114,9 +114,9 @@ export const getBcFetchSideEffects = ({ action, state, data, bcName, widgetName,
             bcName,
             state as any
         )
-    const isWidgetVisible = (candidate: WidgetMeta) => {
-        if (candidate.showCondition?.bcName === state.screen.bo.bc[candidate.bcName]?.parentName) {
-            let parentName = state.screen.bo.bc[candidate.showCondition?.bcName]?.parentName
+    const isWidgetVisible = (widget: WidgetMeta) => {
+        if (widget.showCondition?.bcName === state.screen.bo.bc[widget.bcName]?.parentName) {
+            let parentName = state.screen.bo.bc[widget.showCondition?.bcName]?.parentName
             let parent = parentName === bcName
             while (!parent && parentName) {
                 parentName = state.screen.bo.bc[parentName]?.parentName
@@ -126,12 +126,12 @@ export const getBcFetchSideEffects = ({ action, state, data, bcName, widgetName,
                 return true
             }
         }
-        const dataToCheck = bcName === candidate.showCondition?.bcName ? data : state.data[candidate.showCondition?.bcName as string]
+        const dataToCheck = bcName === widget.showCondition?.bcName ? data : state.data[widget.showCondition?.bcName as string]
         const currentCursor = dataToCheck
-            ? cursorSelectionStrategy(dataToCheck, state.screen.bo.bc[candidate.showCondition?.bcName as string]?.cursor!)
+            ? cursorSelectionStrategy(dataToCheck, state.screen.bo.bc[widget.showCondition?.bcName as string]?.cursor!)
             : null
 
-        return checkShowCondition(candidate.showCondition, currentCursor!, dataToCheck, state.view.pendingDataChanges)
+        return checkShowCondition(widget.showCondition, currentCursor!, dataToCheck, state.view.pendingDataChanges)
     }
     const cursorChange = getCursorChange(action, data, bc.cursor!, !!anyHierarchyWidget, cursorSelectionStrategy)
     const fetchRowMeta = of(bcFetchRowMeta({ widgetName, bcName }))
@@ -192,7 +192,7 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                 return EMPTY
             }
 
-            const treeEnabled = widgets?.some(candidate => candidate.bcName === bcName && isTreeWidget(candidate))
+            const treeEnabled = widgets?.some(widget => widget.bcName === bcName && isTreeWidget(widget))
 
             if (treeEnabled) {
                 const resetTree = bcForceUpdate.match(action) || bcChangePage.match(action) || showViewPopup.match(action)

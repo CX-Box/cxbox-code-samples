@@ -30,6 +30,7 @@ interface UseTableRowsParams<T extends CustomDataItem> {
     expandIcon: AntdTableProps<T>['expandIcon']
     getGroupingRowKeyByRecordId: (id: string | undefined) => string | undefined
     onRow: AntdTableProps<T>['onRow']
+    isInteractiveRow?: (record: T) => boolean
 }
 
 export function useTableRows<T extends CustomDataItem>({
@@ -49,7 +50,8 @@ export function useTableRows<T extends CustomDataItem>({
     bcData,
     expandIcon,
     getGroupingRowKeyByRecordId,
-    onRow
+    onRow,
+    isInteractiveRow
 }: UseTableRowsParams<T>) {
     const dispatch = useDispatch()
     const bc = useAppSelector(selectBc(bcName))
@@ -92,25 +94,28 @@ export function useTableRows<T extends CustomDataItem>({
 
     const handleRow = useCallback(
         (record: T, index: number) => {
-            const tableEventListeners = {
-                ...handleRowMenu(record as DataItem),
-                onClick: event => {
-                    if (event.defaultPrevented || enabledMassMode) {
-                        return
-                    }
+            const interactive = isInteractiveRow?.(record) ?? true
+            const tableEventListeners = interactive
+                ? ({
+                      ...handleRowMenu(record as DataItem),
+                      onClick: event => {
+                          if (event.defaultPrevented || enabledMassMode) {
+                              return
+                          }
 
-                    const selection = window.getSelection()
-                    if (selection !== null && selection.type === 'Range') {
-                        return
-                    }
+                          const selection = window.getSelection()
+                          if (selection !== null && selection.type === 'Range') {
+                              return
+                          }
 
-                    if (selectEditableRow && record.id !== selectedRow?.rowId) {
-                        dispatch(actions.selectTableRowInit({ widgetName, rowId: record.id }))
-                    } else if (!selectEditableRow && record.id !== bc?.cursor) {
-                        dispatch(actions.bcSelectRecord({ bcName: bc?.name as string, cursor: record.id }))
-                    }
-                }
-            } as TableEventListeners
+                          if (selectEditableRow && record.id !== selectedRow?.rowId) {
+                              dispatch(actions.selectTableRowInit({ widgetName, rowId: record.id }))
+                          } else if (!selectEditableRow && record.id !== bc?.cursor) {
+                              dispatch(actions.bcSelectRecord({ bcName: bc?.name as string, cursor: record.id }))
+                          }
+                      }
+                  } as TableEventListeners)
+                : ({} as TableEventListeners)
             const rowProperties: Record<string, unknown> = {
                 'data-test-widget-list-row-id': record.id,
                 'data-test-widget-list-row-type': typeof record._groupLevel === 'number' ? 'GroupingRow' : 'Row'
@@ -138,6 +143,7 @@ export function useTableRows<T extends CustomDataItem>({
             dispatch,
             enabledMassMode,
             handleRowMenu,
+            isInteractiveRow,
             needHideActions,
             needHideRow,
             onRow,
@@ -148,8 +154,9 @@ export function useTableRows<T extends CustomDataItem>({
     )
 
     const resultExpandIcon = useCallback(
-        (props: ExpandIconProps<T>) => (!needHideActions(props.record) ? expandIcon?.(props) : null),
-        [expandIcon, needHideActions]
+        (props: ExpandIconProps<T>) =>
+            (isInteractiveRow?.(props.record) ?? true) && !needHideActions(props.record) ? expandIcon?.(props) : null,
+        [expandIcon, isInteractiveRow, needHideActions]
     )
 
     const isEditMode = useCallback(

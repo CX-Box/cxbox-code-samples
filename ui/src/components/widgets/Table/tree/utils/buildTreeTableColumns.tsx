@@ -3,7 +3,7 @@ import { ColumnProps } from 'antd/es/table'
 import { WidgetListField } from '@cxbox-ui/schema'
 import { PSEUDO_ROW_TYPES, TreeTableCell } from '@components/widgets/Table/components/TreeTableCell'
 import { TreeTableColumnTitle } from '@components/widgets/Table/components/TreeTableColumnTitle'
-import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
@@ -16,7 +16,7 @@ type TreeLevelCellStyle = React.CSSProperties & {
     '--tree-continuing-guides-width': string
 }
 
-interface BuildTreeTableColumnsParams {
+interface BuildTreeTableColumnsParams<T extends CustomDataItem> {
     fields: AppWidgetTableMeta['fields']
     dataSource: TableTreeNode[]
     widget: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -31,6 +31,7 @@ interface BuildTreeTableColumnsParams {
     showCloseButton: boolean
     hideColumn: (fieldKey: string) => void
     disableRowExpand?: boolean
+    controlColumns: Array<ControlColumn<T>>
 }
 
 export function buildTreeTableColumns<T extends CustomDataItem>({
@@ -47,16 +48,17 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
     restoreAncestorPaths,
     showCloseButton,
     hideColumn,
-    disableRowExpand
-}: BuildTreeTableColumnsParams): Array<ColumnProps<T>> {
+    disableRowExpand,
+    controlColumns
+}: BuildTreeTableColumnsParams<T>): Array<ColumnProps<T>> {
     const isGroupingHierarchy = (widget.type as string) === CustomWidgetTypes.GroupingHierarchy
     const continuingGuidesWidthById = buildContinuingGuidesWidthById(dataSource, expandedRowKeys)
 
-    return (
+    const columnsLength = (fields?.length ?? 0) + controlColumns.length
+    const dataColumns =
         fields?.map((field, index) => {
             const listField = field as WidgetListField
             const isFirstColumn = index === 0
-            const fieldsLength = fields.length
 
             return {
                 title: (
@@ -95,7 +97,7 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
 
                     if (PSEUDO_ROW_TYPES.includes(dataItem._recordType)) {
                         if (isFirstColumn) {
-                            return { props: { colSpan: fieldsLength }, children: cellElement }
+                            return { props: { colSpan: columnsLength }, children: cellElement }
                         }
 
                         return { props: { colSpan: 0 }, children: null }
@@ -120,5 +122,18 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                 })
             }
         }) ?? []
-    )
+
+    const leftColumns: Array<ColumnProps<T>> = []
+    const rightColumns: Array<ColumnProps<T>> = []
+
+    controlColumns.forEach(({ position, column }) => {
+        const target = position === 'left' ? leftColumns : rightColumns
+        target.push({
+            ...column,
+            onCell: (record: T, rowIndex: number) =>
+                PSEUDO_ROW_TYPES.includes(record._recordType) ? { colSpan: 0 } : column.onCell?.(record, rowIndex) ?? {}
+        })
+    })
+
+    return [...leftColumns, ...dataColumns, ...rightColumns]
 }

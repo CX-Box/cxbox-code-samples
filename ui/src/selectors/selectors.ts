@@ -53,6 +53,10 @@ export const selectBcFilters = createUniversalSelector((state: RootState, bcName
     bcName ? state.screen.filters[bcName] : undefined
 )
 
+export const selectViewFilters = createUniversalSelector((state: RootState, bcName: string | undefined) =>
+    selectBcFilters(state, bcName)?.filter(filter => filter.viewName === state.view.name)
+)
+
 export const selectBcSorters = createUniversalSelector((state: RootState, bcName: string | undefined) =>
     bcName ? state.screen.sorters[bcName] : undefined
 )

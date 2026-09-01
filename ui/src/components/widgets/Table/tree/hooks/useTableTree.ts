@@ -10,7 +10,8 @@ import { useTreeDataSource, TableTreeNode } from './useTreeDataSource'
 import { selectBcTree } from '@selectors/selectors'
 import { useDispatch } from 'react-redux'
 import { treeActions } from '@slices/tree'
-import { useTreeInternalWidget } from '@hooks/useTreeInternalWidget'
+import { Lookup } from '@utils/Lookup'
+import { TREE_SEARCH_MODES } from '@constants/tree'
 
 export type { TableTreeNode }
 
@@ -18,8 +19,6 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
     const bcName = widgetMeta?.bcName
     const bcTreeState = useAppSelector(state => state.tree[bcName!])
     const { limit, defaultLimit, paginationType } = useTreePagination(bcName, widgetMeta)
-
-    useTreeInternalWidget(widgetMeta)
 
     const calculateShowMoreState = useTreeShowMore(widgetMeta)
 
@@ -40,8 +39,13 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
             if (expanded) {
                 const nodeState = bcTreeState?.nodesState[record.id]
                 const hidePagination = bcTreeState?.filterActive && bcTreeState.searchMode === 'hide'
-                if (!hidePagination && (!nodeState || nodeState.page === 0)) {
-                    fetchChildNodes(record.id as string, true)
+                const needFetchFirstPage =
+                    !nodeState ||
+                    (bcTreeState.filterActive && Lookup.has([TREE_SEARCH_MODES.collapse], bcTreeState.searchMode)
+                        ? nodeState?.filterPage === 0
+                        : nodeState.page === 0)
+                if (!hidePagination && needFetchFirstPage) {
+                    fetchChildNodes(record.id as string, true, false)
                 }
             }
 
