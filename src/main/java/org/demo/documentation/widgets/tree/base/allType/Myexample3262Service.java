@@ -31,7 +31,7 @@ public class Myexample3262Service extends VersionAwareResponseService<Myexample3
 	@Getter(onMethod_ = @Override)
 	private final Class<Myexample3262MetaBuilder> meta = Myexample3262MetaBuilder.class;
 
-	private final Myexample3262Repository myexample3262Repository;
+	private final Myexample3262Repository repository;
 
 	@Autowired
 	private EntityManager entityManager;
@@ -44,7 +44,7 @@ public class Myexample3262Service extends VersionAwareResponseService<Myexample3
 
 	@Override
 	protected CreateResult<Myexample3262DTO> doCreateEntity(Myexample3262 entity, BusinessComponent bc) {
-		return new CreateResult<>(entityToDto(bc, myexample3262Repository.save(entity)));
+		return new CreateResult<>(entityToDto(bc, repository.save(entity)));
 	}
 
 	@Override
@@ -99,7 +99,13 @@ public class Myexample3262Service extends VersionAwareResponseService<Myexample3
 					.collect(Collectors.toList()));
 		}
 		setIfChanged(data, Myexample3262DTO_.customFieldHint, entity::setCustomFieldHint);
-		return new ActionResultDTO<>(entityToDto(bc, myexample3262Repository.save(entity)))
+
+		Myexample3262DTO dto = entityToDto(bc, repository.save(entity));
+
+		if (data.isFieldChanged(Myexample3262DTO_.isLeaf)) {
+			dto.setIsLeaf(!repository.existsByParentId(entity.getId()));
+		}
+		return new ActionResultDTO<>(dto)
 				.setAction(PostAction.refreshBc(bc));
 	}
 

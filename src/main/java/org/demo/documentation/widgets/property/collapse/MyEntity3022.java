@@ -21,4 +21,7 @@ public class MyEntity3022 extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	@Column
 	private CustomFieldDictionaryEnum customFieldDictionary;
+
+	@Column
+	private String parentId;
 }

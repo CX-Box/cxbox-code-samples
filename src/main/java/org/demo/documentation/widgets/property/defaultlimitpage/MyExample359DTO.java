@@ -52,7 +52,7 @@ public class MyExample359DTO extends DataResponseDTO {
 		this.customFieldPicklist = Optional.ofNullable(entity.getCustomFieldPicklistEntity())
 				.map(e -> e.getCustomField())
 				.orElse(null);
-		this.isLeaf = entity.getParentId() != null;
+
 		this.parentId = entity.getParentId();
 		this.customFieldMoney = entity.getCustomFieldMoney();
 	}

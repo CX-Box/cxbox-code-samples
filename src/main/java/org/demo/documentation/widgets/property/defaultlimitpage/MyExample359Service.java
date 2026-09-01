@@ -37,7 +37,7 @@ public class MyExample359Service extends VersionAwareResponseService<MyExample35
 	protected ActionResultDTO<MyExample359DTO> doUpdateEntity(MyEntity359 entity, MyExample359DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample359DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample359DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample359DTO_.isLeaf, entity::setIsLeaf);
+
 		if (data.isFieldChanged(MyExample359DTO_.customFieldPicklistId)) {
 			entity.setCustomFieldPicklistEntity(data.getCustomFieldPicklistId() != null
 					? entityManager.getReference(MyEntity359Pick.class, data.getCustomFieldPicklistId())
@@ -55,7 +55,10 @@ public class MyExample359Service extends VersionAwareResponseService<MyExample35
 		if (data.isFieldChanged(MyExample359DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		MyExample359DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
+
+		return new ActionResultDTO<>(dto);
 	}
 
 	@Override

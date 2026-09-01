@@ -13,8 +13,6 @@ import org.demo.documentation.widgets.tree.showcondition.byparententity.parent.M
 @Setter
 @NoArgsConstructor
 public class MyEntity3277 extends BaseEntity implements BaseTreeEntity {
-
-
 	@Column
 	private String customField;
 	@Column
@@ -23,9 +21,6 @@ public class MyEntity3277 extends BaseEntity implements BaseTreeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARENT_ID")
 	private MyEntity3276 customFieldEntity;
-
-	@Column
-	private Boolean isLeaf;
 
 
 	@Column

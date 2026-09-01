@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyEntity3269Repository extends JpaRepository<MyEntity3269, Long>, JpaSpecificationExecutor<MyEntity3269> {
-
+	boolean existsByParentId(String parentId);
 }

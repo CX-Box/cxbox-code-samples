@@ -41,7 +41,7 @@ public class Myexample3261DTO extends DataResponseDTO {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.department = entity.getDepartment();
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() != null;
+
 		this.description = entity.getDescription();
 		this.code = entity.getCode();
 		this.mnemonic = entity.getMnemonic();

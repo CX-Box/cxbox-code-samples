@@ -32,7 +32,7 @@ public class MyExample3269DTO extends DataResponseDTO {
 		this.customFieldShowCond = entity.getCustomField() > 5 ? "true" : "false";
 		this.customFieldInput = entity.getCustomFieldInput();
 
-		this.isLeaf = entity.getParentId() != null;
+
 		this.parentId = entity.getParentId();
 	}
 }

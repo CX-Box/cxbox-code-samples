@@ -30,13 +30,14 @@ public class MyExample3276Service extends VersionAwareResponseService<MyExample3
 		setIfChanged(data, MyExample3276DTO_.parentTreeId, entity::setParentTreeId);
 		setIfChanged(data, MyExample3276DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample3276DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample3276DTO_.isLeaf, entity::setIsLeaf);
 		setIfChanged(data, MyExample3276DTO_.customFieldNumber, entity::setCustomFieldNumber);
 		if (data.isFieldChanged(MyExample3276DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
+		MyExample3276DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		return new ActionResultDTO<>(dto);
 	}
 
 	// --8<-- [start:getActions]

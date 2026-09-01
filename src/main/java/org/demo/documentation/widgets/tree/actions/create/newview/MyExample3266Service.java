@@ -28,7 +28,7 @@ public class MyExample3266Service extends VersionAwareResponseService<MyExample3
 		return new CreateResult<>(entityToDto(bc, entity))
 				.setAction(PostAction.drillDown(
 						DrillDownType.INNER,
-						"/screen/myexample3266/view/myexample3266form/"
+						"/screen/myexample3265/view/myexample3266form/"
 								+ CxboxMyExample3266Controller.myexample3266 + "/"
 								+ entity.getId()));
 	}
@@ -38,12 +38,14 @@ public class MyExample3266Service extends VersionAwareResponseService<MyExample3
 	protected ActionResultDTO<MyExample3266DTO> doUpdateEntity(MyEntity3266 entity, MyExample3266DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample3266DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample3266DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample3266DTO_.isLeaf, entity::setIsLeaf);
 		setIfChanged(data, MyExample3266DTO_.customFieldText, entity::setCustomFieldText);
 		if (data.isFieldChanged(MyExample3266DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		MyExample3266DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(entity.getId().toString()));
+		return new ActionResultDTO<>(dto)
+				.setAction(PostAction.refreshBc(bc));
 	}
 
 	// --8<-- [start:getActions]
@@ -59,7 +61,7 @@ public class MyExample3266Service extends VersionAwareResponseService<MyExample3
 							return new ActionResultDTO<MyExample3266DTO>().setAction(
 									PostAction.drillDown(
 											DrillDownType.INNER,
-											"/screen/myexample3266/view/myexample3266list"
+											"/screen/myexample3265/view/myexample3266tree"
 									));
 						})
 				)

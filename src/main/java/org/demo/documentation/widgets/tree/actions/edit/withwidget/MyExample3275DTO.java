@@ -29,7 +29,7 @@ public class MyExample3275DTO extends DataResponseDTO {
 		this.customField = entity.getCustomField();
 		this.customFieldText = entity.getCustomFieldText();
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() != null;
+
 		this.parentId = entity.getParentId();
 		this.customFieldMoney = entity.getCustomFieldMoney();
 	}

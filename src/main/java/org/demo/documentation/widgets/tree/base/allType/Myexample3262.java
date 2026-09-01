@@ -28,7 +28,6 @@ import java.util.Set;
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample3262 extends BaseEntity {
 
-
 	@Column
 	private String customFieldHint;
 

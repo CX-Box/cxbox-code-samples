@@ -31,9 +31,6 @@ public class MyEntity359 extends BaseEntity {
 	private MyEntity359Pick customFieldPicklistEntity;
 
 	@Column
-	private Boolean isLeaf;
-
-	@Column
 	private String parentId;
 
 	@Column

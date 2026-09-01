@@ -19,8 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample6103 extends BaseEntity {
-
-
 	@Column
 	private String fullName;
 

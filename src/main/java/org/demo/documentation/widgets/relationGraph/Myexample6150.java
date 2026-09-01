@@ -16,8 +16,6 @@ import org.demo.documentation.widgets.relationGraph.enums.TargetNodeTypeEnum;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample6150 extends BaseEntity {
-
-
 	@Column
 	private String sourceNodeId;
 

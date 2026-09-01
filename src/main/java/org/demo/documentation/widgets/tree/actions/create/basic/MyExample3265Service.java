@@ -28,21 +28,25 @@ public class MyExample3265Service extends VersionAwareResponseService<MyExample3
 	protected ActionResultDTO<MyExample3265DTO> doUpdateEntity(MyEntity3265 entity, MyExample3265DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample3265DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample3265DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample3265DTO_.isLeaf, entity::setIsLeaf);
+
 		setIfChanged(data, MyExample3265DTO_.customFieldText, entity::setCustomFieldText);
 		if (data.isFieldChanged(MyExample3265DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		MyExample3265DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
+
+		return new ActionResultDTO<>(dto);
 	}
 
 	// --8<-- [start:getActions]
 	@Override
 	public Actions<MyExample3265DTO> getActions() {
 		return Actions.<MyExample3265DTO>builder()
+				.create(crt -> crt.text("Add"))
 				.save(sv -> sv.text("Save"))
-				.create(crt -> crt)
-				.delete(dlt -> dlt)
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
 				.build();
 	}
 	// --8<-- [end:getActions]
