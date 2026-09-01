@@ -1,18 +1,19 @@
 import React, { ReactNode, useCallback, useMemo } from 'react'
 import { TableProps as AntdTableProps } from 'antd/es/table'
-import { TableEventListeners } from 'antd/lib/table/interface'
 import { actions } from '@actions'
 import Operations from '@components/Operations/Operations'
-import { RESTORE_ANCESTORS_ID, ROW_KEY } from '@components/widgets/Table/constants'
+import { RESTORE_ANCESTORS_ID, ROW_KEY, UNALLOCATED_NODES_ID } from '@components/widgets/Table/constants'
 import StandardTable from '@components/widgets/Table/StandardTable'
-import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
+import { useExpandableForm } from '@components/widgets/Table/hooks/useExpandableForm'
+import { useTableRows } from '@components/widgets/Table/hooks/useTableRows'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
 import { buildTreeTableColumns } from '@components/widgets/Table/tree/utils/buildTreeTableColumns'
 import { useWidgetPaginationLimit } from '@features/pagination/hooks/useWidgetPaginationLimit'
 import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta } from '@interfaces/widget'
-import { selectBc, selectBcTree } from '@selectors/selectors'
+import { selectBcTree } from '@selectors/selectors'
 import { useAppSelector } from '@store'
 import { useDispatch } from 'react-redux'
 import styles from './Table.less'
@@ -32,6 +33,7 @@ interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     treeRowSelection?: ReturnType<typeof useTreeRowSelection>
     disableRowSelection?: boolean
     settingsComponent?: ReactNode
+    hideRowActions?: boolean
 }
 
 function TreeTable<T extends CustomDataItem>({
@@ -42,16 +44,30 @@ function TreeTable<T extends CustomDataItem>({
     disableRowSelection = true,
     rowClassName,
     settingsComponent: outerSettingsComponent,
+    hideRowActions,
     ...rest
 }: TreeTableProps<T>) {
     const { bcName, name: widgetName } = widget
-    const bc = useAppSelector(state => selectBc(state, bcName))
     const dispatch = useDispatch()
     const bcRowMeta = useRowMetaWithCache(bcName, true)
-    const parentRef = React.useRef()
     const currentSearchMode = useAppSelector(state => selectBcTree(state, bcName)?.searchMode)
 
-    const { dataSource, handleExpand, expandedRowKeys, createFetchNodesHandler, restoreAncestorPaths, filterActive } = useTableTree(widget)
+    const {
+        dataSource: treeDataSource,
+        handleExpand: handleTreeExpandBase,
+        expandedRowKeys: treeExpandedRowKeys,
+        createFetchNodesHandler,
+        restoreAncestorPaths,
+        filterActive
+    } = useTableTree(widget)
+    const {
+        onExpand: onFormExpand,
+        expandIcon,
+        expandIconColumn,
+        getExpandIconColumnIndex,
+        expandedRowRender,
+        expandedRowId
+    } = useExpandableForm<T>(widget)
     const defaultTreeRowSelection = useTreeRowSelection(widgetName)
     const { selectNode, getNodeSelectionState } = treeRowSelection ?? defaultTreeRowSelection
     const { changePageLimit, hideLimitOptions, value: pageLimit, options } = useWidgetPaginationLimit(widget)
@@ -64,11 +80,53 @@ function TreeTable<T extends CustomDataItem>({
     const transfer = useVisibility(false)
     const filterSetting = useVisibility(false)
 
-    const controlColumns = useMemo(() => {
-        return []
-    }, [])
+    const controlColumns = useMemo<Array<ControlColumn<T>>>(
+        () => (expandIconColumn ? [{ column: expandIconColumn, position: 'right' }] : []),
+        [expandIconColumn]
+    )
 
     const { resultedFields } = useTableSettingResultedFields(widget, blockedFields)
+
+    const isNode = useCallback((record: T) => (record as T & TableTreeNode)._recordType === 'node', [])
+    const treeOnRow = useCallback(
+        (record: T, index: number) => ({
+            ...onRow?.(record, index),
+            'data-test-widget-tree-row-id': record.id,
+            'data-test-widget-tree-row-type': isNode(record) ? 'Row' : 'PseudoRow',
+            'data-record-type': (record as T & TableTreeNode)._recordType
+        }),
+        [isNode, onRow]
+    )
+    const getGroupingRowKeyByRecordId = useCallback(() => undefined, [])
+    const { operationsRef, parentRef, expandedRowKeys, handleRow, resultExpandIcon } = useTableRows<T>({
+        widgetName,
+        bcName,
+        enabledGrouping: false,
+        enabledMassMode: false,
+        selectEditableRow: false,
+        allowEdit: false,
+        groupingHierarchyModeAggregate: false,
+        fields: resultedFields,
+        sortedGroupKeys: [],
+        expandedParentRowKeys: [UNALLOCATED_NODES_ID, RESTORE_ANCESTORS_ID, ...treeExpandedRowKeys],
+        expandedRowId,
+        tree: treeDataSource as unknown as T[],
+        bcData: treeDataSource as unknown as T[],
+        expandIcon,
+        getGroupingRowKeyByRecordId,
+        onRow: treeOnRow,
+        isInteractiveRow: isNode
+    })
+
+    const handleTreeExpand = useCallback(
+        (expanded: boolean, record: CustomDataItem) => {
+            if (!expanded && record.id === expandedRowId) {
+                onFormExpand?.(false, record as T)
+            }
+            handleTreeExpandBase(expanded, record)
+        },
+        [expandedRowId, handleTreeExpandBase, onFormExpand]
+    )
 
     const handleHeaderRow = useCallback(() => {
         return {
@@ -76,33 +134,6 @@ function TreeTable<T extends CustomDataItem>({
             onDoubleClick: showColumnSettings ? closeButton.toggleVisibility : undefined
         }
     }, [showColumnSettings, closeButton?.toggleVisibility])
-
-    const handleRow = React.useCallback(
-        (record: T, index: number) => {
-            const treeRecord = record as T & TableTreeNode
-            const tableEventListeners: TableEventListeners = {
-                onClick: event => {
-                    if (event.defaultPrevented || treeRecord._recordType !== 'node') {
-                        return
-                    }
-
-                    const selection = window.getSelection()
-                    if ((selection === null || selection.type !== 'Range') && record.id !== bc?.cursor) {
-                        dispatch(actions.bcSelectRecord({ bcName: bc?.name as string, cursor: record.id }))
-                    }
-                }
-            }
-
-            return {
-                ...tableEventListeners,
-                ...onRow?.(record, index),
-                'data-test-widget-tree-row-id': record.id,
-                'data-test-widget-tree-row-type': treeRecord._recordType === 'node' ? 'Row' : 'PseudoRow',
-                'data-record-type': treeRecord._recordType
-            } as TableEventListeners
-        },
-        [bc?.cursor, bc?.name, dispatch, onRow]
-    )
 
     const { allFields, currentAdditionalFields, changeOrder, changeColumnsVisibility } = useTableSetting(
         widget,
@@ -181,7 +212,7 @@ function TreeTable<T extends CustomDataItem>({
         () =>
             buildTreeTableColumns<T>({
                 disableRowExpand: currentSearchMode === 'hide' && filterActive,
-                dataSource: dataSource as TableTreeNode[],
+                dataSource: treeDataSource as TableTreeNode[],
                 showCloseButton: closeButton.visibility,
                 hideColumn: hideColumn,
                 fields: resultedFields,
@@ -191,25 +222,27 @@ function TreeTable<T extends CustomDataItem>({
                 showSelection: !disableRowSelection,
                 selectNode,
                 getNodeSelectionState,
-                handleExpand,
+                handleExpand: handleTreeExpand,
                 createFetchNodesHandler,
-                restoreAncestorPaths
+                restoreAncestorPaths,
+                controlColumns
             }),
         [
             bcRowMeta?.fields,
             closeButton.visibility,
             createFetchNodesHandler,
             currentSearchMode,
-            dataSource,
+            controlColumns,
             disableRowSelection,
             expandedRowKeys,
             filterActive,
             getNodeSelectionState,
-            handleExpand,
+            handleTreeExpand,
             hideColumn,
             restoreAncestorPaths,
             resultedFields,
             selectNode,
+            treeDataSource,
             widget
         ]
     )
@@ -230,14 +263,23 @@ function TreeTable<T extends CustomDataItem>({
                 <Operations operations={bcRowMeta?.actions} bcName={bcName} widgetMeta={widget} />
             </div>
             <StandardTable<T>
-                expandedRowKeys={[RESTORE_ANCESTORS_ID, ...expandedRowKeys]}
+                operationsRef={operationsRef as any}
+                expandedRowKeys={expandedRowKeys}
                 wrapperRef={parentRef as any}
                 widgetName={widgetName}
                 onColumnDragEnd={showColumnSettings ? changeOrder : undefined}
                 columns={columns}
-                dataSource={dataSource as unknown as T[]}
+                dataSource={treeDataSource as unknown as T[]}
                 rowKey={ROW_KEY}
-                expandIconColumnIndex={-1}
+                expandIconColumnIndex={getExpandIconColumnIndex(controlColumns, resultedFields, rowSelection?.type)}
+                expandIcon={resultExpandIcon}
+                expandedRowRender={record => (isNode(record) ? expandedRowRender?.(record) : null)}
+                onExpand={(expanded, record) => {
+                    if (isNode(record)) {
+                        onFormExpand?.(expanded, record)
+                    }
+                }}
+                hideRowActions={hideRowActions}
                 hidePagination={true}
                 indentSize={0}
                 rowSelection={rowSelection}

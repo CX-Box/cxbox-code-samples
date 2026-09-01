@@ -395,9 +395,24 @@
         }
     }
 
-    tr[data-record-type='restore-ancestors'] .treeLevelCell {
+    tr[data-record-type='restore-ancestors'] .treeLevelCell,
+    tr[data-record-type='unallocated-nodes'] .treeLevelCell {
         &::before, &::after {
             content: none;
+        }
+    }
+}
+// Always hidden pseudo string
+tr[data-record-type='unallocated-nodes'] {
+    height: 0!important;
+    td {
+        padding: 0!important;
+        height: 0!important;
+
+        div {
+            visibility: hidden;
+            height: 0!important;
+            overflow: hidden;
         }
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, Divider, Icon, Spin, Typography } from 'antd'
+import { Checkbox, Divider, Icon, Spin, Tooltip, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ui/Button/Button'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
@@ -50,17 +50,21 @@ export function TreeTablePseudoRow({
                         onClick={event => event.stopPropagation()}
                     />
                 )}
-                <Button
-                    type="Link"
-                    size="small"
-                    removeIndentation={true}
-                    disabled={dataItem._disabled}
-                    loading={dataItem._loading}
-                    onClick={createFetchNodesHandler(dataItem.parentId, true)}
-                    style={{ border: 'none', color: '#40a9ff', fontSize: 'var(--field-read-font-size)' }}
-                >
-                    {t('More {{n}}', { n: dataItem._remainingNumberOfRecords ?? '' })}
-                </Button>
+
+                <Tooltip title={dataItem._countInfoMessage} trigger="hover">
+                    <Button
+                        type="Link"
+                        size="small"
+                        removeIndentation={true}
+                        disabled={dataItem._disabled}
+                        loading={dataItem._loading}
+                        onClick={createFetchNodesHandler(dataItem.parentId, true)}
+                        style={{ border: 'none', color: '#40a9ff', fontSize: 'var(--field-read-font-size)' }}
+                    >
+                        {t('More {{n}}', { n: dataItem._remainingNumberOfRecords ?? '' })}
+                        {dataItem._countInfoMessage && <Icon type="info-circle" style={{ fontSize: 12, marginLeft: 3 }} />}
+                    </Button>
+                </Tooltip>
             </>
         )
     } else if (dataItem._recordType === 'restore-ancestors') {
@@ -81,7 +85,12 @@ export function TreeTablePseudoRow({
                     <Divider style={{ margin: 0 }}>
                         <Icon
                             component={RightWithEllipse}
-                            style={{ position: 'relative', bottom: '-2px', fontSize: 20, color: '#0088bb', paddingRight: 8 }}
+                            style={{
+                                fontSize: 14,
+                                lineHeight: 1,
+                                color: '#0088bb',
+                                paddingRight: 8
+                            }}
                         />
                         <span style={{ fontSize: 14, fontWeight: 'normal' }}>
                             {t('Nesting level over {{limit}}', { limit: dataItem._nestingLevel ?? 0 })}
@@ -90,14 +99,14 @@ export function TreeTablePseudoRow({
                 </Button>
             </>
         )
+    } else if (dataItem._recordType === 'unallocated-nodes') {
+        content = <Typography.Text strong={true}>{t('Unallocated nodes')}</Typography.Text>
     }
 
-    if (dataItem._recordType === 'restore-ancestors') {
+    if (dataItem._recordType === 'restore-ancestors' || dataItem._recordType === 'unallocated-nodes') {
         return (
             <div style={{ display: 'flex', alignItems: 'center' }} data-pseudo-row={true}>
-                <span style={dataItem._recordType === 'restore-ancestors' ? { display: 'block', width: '100%' } : undefined}>
-                    {content}
-                </span>
+                <span style={{ display: 'block', width: '100%' }}>{content}</span>
             </div>
         )
     }

@@ -240,6 +240,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                       )
                     : undefined
             const isMassOperation = currentOperationScope === 'mass'
+            const treeEnabled = state.view.widgets?.some(widget => widget.bcName === bcName && isTreeWidget(widget))
 
             const pendingChanges = utils.removeDisabledFields(state.view.pendingDataChanges[bcName]?.[bc?.cursor as string], rowMeta)
 
@@ -272,7 +273,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     // TODO: Remove in 2.0.0 in favor of postInvokeConfirm (is this todo needed?)
                     const preInvoke = response.preInvoke as OperationPreInvoke
                     const responseIds = response[FIELDS.MASS_OPERATION.MASS_IDS]
-                    const withoutBcForceUpdate = postInvokeHasRefreshBc(bcName, postInvoke) || isMassOperation
+                    const withoutBcForceUpdate = postInvokeHasRefreshBc(bcName, postInvoke) || isMassOperation || treeEnabled
 
                     // defaultSaveOperation mean that executed custom autosave and postAction will be ignored
                     // drop pendingChanges and onSuccessAction execute instead
@@ -459,6 +460,38 @@ const bcDeleteDataEpic: RootEpic = (action$, state$, { api }) =>
                             of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
                             isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
                             ...actions$,
+                            postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
+                        )
+                    }
+
+                    const treeEnabled =
+                        !!state.tree[bcName] && state.view.widgets.some(widget => widget.bcName === bcName && isTreeWidget(widget))
+                    if (treeEnabled) {
+                        const tree = state.tree[bcName]
+                        const node = tree?.nodes[cursor]
+                        const parentIdValueFromNode = node?.[tree?.parentFieldKey ?? DEFAULT_TREE_PARENT_FIELD_KEY]
+                        const parentId = isDefined(parentIdValueFromNode) ? String(parentIdValueFromNode) : String(null)
+                        const siblings = tree?.childIdsByParent[parentId] ?? []
+                        const nodeIndex = siblings.indexOf(cursor)
+                        const previousCursor =
+                            siblings[nodeIndex - 1] ??
+                            siblings[nodeIndex + 1] ??
+                            (parentId !== String(null) && tree?.nodes[parentId] ? parentId : undefined) ??
+                            tree?.childIdsByParent[String(null)]?.find(id => id !== cursor) ??
+                            null
+
+                        return concat(
+                            of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.delete })),
+                            isTargetFormatPVF ? of(actions.bcCancelPendingChanges({ bcNames: [bcName] })) : EMPTY,
+                            of(
+                                treeActions.removeNode({
+                                    bcName,
+                                    nodeId: cursor,
+                                    limit: widget?.limit || state.screen.bo.bc[bcName]?.limit
+                                })
+                            ),
+                            of(actions.bcChangeCursors({ cursorsMap: { [bcName]: previousCursor } })),
+                            of(actions.bcFetchRowMeta({ widgetName, bcName })),
                             postInvoke ? of(actions.processPostInvoke({ bcName, postInvoke, cursor, widgetName })) : EMPTY
                         )
                     }

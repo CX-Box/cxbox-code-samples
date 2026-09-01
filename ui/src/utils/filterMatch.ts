@@ -46,7 +46,8 @@ export const isFieldValueMatchedByFilter = (value: unknown, filter: BcFilter, fi
     const filterValue = filter.value
 
     switch (filterType) {
-        case FilterType.contains: {
+        case FilterType.contains:
+        case FilterType.fullTextSearch: {
             if (!TEXT_FIELD_TYPES.has(fieldType ?? '') || value == null || filterValue == null) {
                 return false
             }

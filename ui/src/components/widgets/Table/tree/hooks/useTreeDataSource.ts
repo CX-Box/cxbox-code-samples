@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react'
 import { TreeNode, BcTreeState } from '@slices/tree'
-import { RESTORE_ANCESTORS_ID } from '@components/widgets/Table/constants'
+import { RESTORE_ANCESTORS_ID, UNALLOCATED_NODES_ID } from '@components/widgets/Table/constants'
 
 export type RestoreAncestorsPosition = 'start' | 'end'
 
 export type TableTreeNode = TreeNode & {
     children?: TableTreeNode[]
-    _recordType?: 'node' | 'show-more' | 'loading' | 'error' | 'empty' | 'restore-ancestors'
+    _recordType?: 'node' | 'show-more' | 'loading' | 'error' | 'empty' | 'restore-ancestors' | 'unallocated-nodes'
     _disabled?: boolean
     _loading?: boolean
     _level: number
@@ -14,6 +14,7 @@ export type TableTreeNode = TreeNode & {
     _restorePath?: boolean
     _treeParentId?: string | null
     _remainingNumberOfRecords?: string | number | undefined
+    _countInfoMessage?: string
     _treeIsLeaf?: boolean
     _nestingLevel?: number
 }
@@ -37,6 +38,7 @@ export const useTreeDataSource = (
         visible: boolean
         disabled: boolean
         count?: string | number | undefined
+        countInfoMessage?: string
     },
     restoreAncestorsPosition: RestoreAncestorsPosition = 'end',
     showBranchPagination = true
@@ -55,7 +57,7 @@ export const useTreeDataSource = (
                 }
                 const hasChildren = childNodes.length > 0
                 const normalizedParentId = String(parentId)
-                const { visible, disabled, count } = calculateShowMoreState(
+                const { visible, disabled, count, countInfoMessage } = calculateShowMoreState(
                     normalizedParentId,
                     nodeStates,
                     nodeStates[normalizedParentId]?.lastResponseCount ?? childNodes.length,
@@ -72,18 +74,13 @@ export const useTreeDataSource = (
                         _level: level
                     } as TableTreeNode)
                 } else if (visible) {
-                    const hideShowMore = bcTreeState?.filterActive && bcTreeState.searchMode === 'collapse' && parentId === null
-
-                    if (hideShowMore) {
-                        return
-                    }
-
                     childNodes.push({
                         id: `show-more-${parentId}`,
                         vstamp: 0,
                         parentId: parentId,
                         name: 'show-more',
                         _remainingNumberOfRecords: count,
+                        _countInfoMessage: countInfoMessage,
                         _recordType: 'show-more',
                         _disabled: disabled || isLoading,
                         _loading: isLoading,
@@ -150,11 +147,14 @@ export const useTreeDataSource = (
             }
 
             const rootNodes = getChildNodesWithPseudoNodes(null, buildTreeNode, 0)
+            const unallocatedNodeIds = new Set(bcTreeState?.unallocatedNodeIds ?? [])
+            const unallocatedNodes = [...unallocatedNodeIds].map(nodeId => buildTreeNode(nodeId, 0)).filter(Boolean) as TableTreeNode[]
             const orphanRootIds = Object.values(nodesById)
                 .filter(node => {
                     const parentId = node[bcTreeState?.parentFieldKey ?? 'parentId']
 
                     return (
+                        !unallocatedNodeIds.has(String(node.id)) &&
                         parentId != null &&
                         (!nodesById[String(parentId)] || (visibleNodeIds && !visibleNodeIds.has(String(parentId)))) &&
                         (!visibleNodeIds || visibleNodeIds.has(String(node.id)))
@@ -166,8 +166,21 @@ export const useTreeDataSource = (
                 .filter(Boolean)
                 .map(node => ({ ...node!, _restorePath: true })) as TableTreeNode[]
 
+            const unallocatedNodesGroup = unallocatedNodes.length
+                ? ([
+                      {
+                          id: UNALLOCATED_NODES_ID,
+                          vstamp: 0,
+                          name: 'unallocated-nodes',
+                          _recordType: 'unallocated-nodes',
+                          _level: 0,
+                          children: unallocatedNodes
+                      } as TableTreeNode
+                  ] as TableTreeNode[])
+                : []
+
             if (orphanNodes.length === 0) {
-                return rootNodes
+                return [...unallocatedNodesGroup, ...rootNodes]
             }
 
             const restoreAncestorsNode = {
@@ -182,13 +195,14 @@ export const useTreeDataSource = (
                 children: orphanNodes
             } as TableTreeNode
 
-            return restoreAncestorsPosition === 'start' ? [restoreAncestorsNode, ...rootNodes] : [...rootNodes, restoreAncestorsNode]
+            return restoreAncestorsPosition === 'start'
+                ? [...unallocatedNodesGroup, restoreAncestorsNode, ...rootNodes]
+                : [...unallocatedNodesGroup, ...rootNodes, restoreAncestorsNode]
         },
         [
-            bcTreeState?.filterActive,
             bcTreeState?.isLeafFieldKey,
             bcTreeState?.parentFieldKey,
-            bcTreeState?.searchMode,
+            bcTreeState?.unallocatedNodeIds,
             calculateShowMoreState,
             restoreAncestorsPosition,
             showBranchPagination

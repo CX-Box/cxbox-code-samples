@@ -291,7 +291,14 @@ const restoreTreePaths = ({ api, state, bcName, initialData = [], requestedIds =
  */
 const syncTreeNodesToBcDataEpic: RootEpic = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isAnyOf(treeActions.fetchChildNodeDataSuccess, treeActions.restoreNodePathsSuccess)),
+        filter(
+            isAnyOf(
+                treeActions.fetchChildNodeDataSuccess,
+                treeActions.restoreNodePathsSuccess,
+                treeActions.clearFilter,
+                treeActions.removeNode
+            )
+        ),
         switchMap(action => {
             const { bcName } = action.payload
             const state = state$.value
@@ -483,18 +490,17 @@ export const applyTreeFilterEpic: RootEpic = (action$, state$, { api }) =>
                 return of(treeActions.applyFilterFail({ bcName, more: action.payload.more }))
             }
 
-            const treeNodeIds = new Set(Object.keys(state.tree[bcName]?.nodes ?? {}))
-
             return fetchPagesUntilDataChanges({
                 fetchPage: page =>
                     api.fetchBcData(state.screen.screenName, fetchContext.bcUrl, { ...fetchContext.fetchParams, _page: page }),
                 initialPage: fetchContext.page,
-                knownIds: treeNodeIds,
+                knownIds: new Set(action.payload.knownNodeIds ?? []),
                 paginationType: getPaginationType(state, widget),
                 limit: fetchContext.limit,
                 defaultLimit: fetchContext.bc.defaultLimit ?? fetchContext.limit,
                 total: state.tree[bcName]?.filterPagination.count,
-                enabled: TREE_SHOW_MORE_AUTO_FETCH_ENABLED && action.payload.fetchUntilDataChanges === true
+                enabled: TREE_SHOW_MORE_AUTO_FETCH_ENABLED && action.payload.fetchUntilDataChanges === true,
+                requestLimit: action.payload.maxRequests
             }).pipe(
                 switchMap(pageSequence => {
                     const maxRequests = normalizeMaxRestoreRequests(

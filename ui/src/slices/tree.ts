@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit'
 import { BcMetaState, DataItem } from '@cxbox-ui/core'
 import { actions } from '@actions'
 import { FIELDS } from '@constants'
@@ -25,6 +25,7 @@ export interface BcTreeState {
     >
     errors: Record<string, string | null>
     expandedParents: string[]
+    unallocatedNodeIds: string[]
     searchMode: TreeSearchModes
     filterActive: boolean
     matchedNodeIds: string[]
@@ -92,6 +93,7 @@ const initBcTreeState = (initialTreeState?: Partial<BcTreeState>): BcTreeState =
     nodesState: {},
     errors: {},
     expandedParents: [],
+    unallocatedNodeIds: [],
     searchMode: DEFAULT_SEARCH_MODE,
     filterActive: false,
     matchedNodeIds: [],
@@ -149,6 +151,163 @@ const getExpandedVisibleParentIds = (tree: BcTreeState) => {
             .filter(([parentId, childIds]) => visibleNodeIds.has(parentId) && childIds.some(childId => visibleNodeIds.has(childId)))
             .map(([parentId]) => parentId)
     )
+}
+
+const getRootConnectedNodeIds = (tree: BcTreeState) => {
+    const connectedNodeIds = new Set<string>()
+
+    Object.keys(tree.nodes).forEach(nodeId => {
+        let currentId: string | undefined = nodeId
+        const path: string[] = []
+        const visited = new Set<string>()
+
+        while (currentId && tree.nodes[currentId] && !visited.has(currentId)) {
+            if (connectedNodeIds.has(currentId)) {
+                path.forEach(id => connectedNodeIds.add(id))
+                return
+            }
+
+            visited.add(currentId)
+            path.push(currentId)
+            const parentId: unknown = tree.nodes[currentId][tree.parentFieldKey]
+
+            if (!isDefined(parentId)) {
+                path.forEach(id => connectedNodeIds.add(id))
+                return
+            }
+
+            currentId = String(parentId)
+        }
+    })
+
+    return connectedNodeIds
+}
+
+const normalizeId = (id: unknown) => (isDefined(id) ? String(id) : String(null))
+
+const adjustKnownChildCount = (tree: BcTreeState, parentId: string, delta: number) => {
+    const nodeState = tree.nodesState[parentId]
+
+    if (typeof nodeState?.count === 'number') {
+        nodeState.count = Math.max(0, nodeState.count + delta)
+    }
+}
+
+const replaceId = (ids: string[], previousId: string, nextId: string) => getUniqueValues(ids.map(id => (id === previousId ? nextId : id)))
+
+const detachNodeId = (tree: BcTreeState, nodeId: string) => {
+    Object.keys(tree.childIdsByParent).forEach(parentId => {
+        tree.childIdsByParent[parentId] = tree.childIdsByParent[parentId].filter(id => id !== nodeId)
+    })
+    tree.unallocatedNodeIds = tree.unallocatedNodeIds.filter(id => id !== nodeId)
+}
+
+const removeNodeIdFromCollections = (tree: BcTreeState, nodeId: string) => {
+    detachNodeId(tree, nodeId)
+    tree.expandedParents = tree.expandedParents.filter(id => id !== nodeId)
+    tree.matchedNodeIds = tree.matchedNodeIds.filter(id => id !== nodeId)
+    tree.filterResultNodeIds = tree.filterResultNodeIds.filter(id => id !== nodeId)
+    tree.visibleNodeIdsForHidden = tree.visibleNodeIdsForHidden.filter(id => id !== nodeId)
+}
+
+const upsertTreeNode = (tree: BcTreeState, previousId: string, dataItem: DataItem) => {
+    if (!isDefined(dataItem[FIELDS.TECHNICAL.ID])) {
+        return
+    }
+
+    const nextId = String(dataItem[FIELDS.TECHNICAL.ID])
+    const previousNode = tree.nodes[previousId] ?? tree.nodes[nextId]
+    const nextNode = { ...previousNode, ...dataItem, id: nextId } as TreeNode
+    const wasUnallocated = tree.unallocatedNodeIds.includes(previousId) || tree.unallocatedNodeIds.includes(nextId)
+    const previousParentId = previousNode ? normalizeId(previousNode[tree.parentFieldKey]) : undefined
+    const nextParentId = normalizeId(nextNode[tree.parentFieldKey])
+    const previousIndex = previousParentId ? tree.childIdsByParent[previousParentId]?.indexOf(previousId) ?? -1 : -1
+
+    detachNodeId(tree, previousId)
+    if (nextId !== previousId) {
+        detachNodeId(tree, nextId)
+        delete tree.nodes[previousId]
+
+        if (tree.childIdsByParent[previousId]) {
+            tree.childIdsByParent[nextId] = tree.childIdsByParent[previousId]
+            delete tree.childIdsByParent[previousId]
+            tree.childIdsByParent[nextId].forEach(childId => {
+                const child = tree.nodes[childId]
+                if (child && String(child[tree.parentFieldKey]) === previousId) {
+                    child[tree.parentFieldKey] = nextId
+                }
+            })
+        }
+        if (tree.nodesState[previousId]) {
+            tree.nodesState[nextId] = tree.nodesState[previousId]
+            delete tree.nodesState[previousId]
+        }
+        if (tree.errors[previousId] !== undefined) {
+            tree.errors[nextId] = tree.errors[previousId]
+            delete tree.errors[previousId]
+        }
+        tree.expandedParents = replaceId(tree.expandedParents, previousId, nextId)
+        tree.matchedNodeIds = replaceId(tree.matchedNodeIds, previousId, nextId)
+        tree.filterResultNodeIds = replaceId(tree.filterResultNodeIds, previousId, nextId)
+        tree.visibleNodeIdsForHidden = replaceId(tree.visibleNodeIdsForHidden, previousId, nextId)
+    }
+
+    tree.nodes[nextId] = nextNode
+    const nextSiblings = tree.childIdsByParent[nextParentId] ?? []
+    const insertionIndex = previousParentId === nextParentId && previousIndex >= 0 ? previousIndex : 0
+    nextSiblings.splice(Math.min(insertionIndex, nextSiblings.length), 0, nextId)
+    tree.childIdsByParent[nextParentId] = getUniqueValues(nextSiblings)
+
+    if (wasUnallocated) {
+        adjustKnownChildCount(tree, nextParentId, 1)
+        if (tree.filterActive && (tree.searchMode === 'hide' || tree.searchMode === 'collapse')) {
+            tree.visibleNodeIdsForHidden = getUniqueValues([...tree.visibleNodeIdsForHidden, nextId])
+        }
+    } else if (previousParentId && previousParentId !== nextParentId) {
+        adjustKnownChildCount(tree, previousParentId, -1)
+        adjustKnownChildCount(tree, nextParentId, 1)
+    }
+}
+
+const removeTreeNode = (tree: BcTreeState, nodeId: string, limit?: number) => {
+    const node = tree.nodes[nodeId]
+    if (!node) {
+        return
+    }
+
+    const parentId = normalizeId(node[tree.parentFieldKey])
+    const parentNodeState = tree.nodesState[parentId]
+    const loadedSiblingCount = tree.childIdsByParent[parentId]?.length ?? 0
+    const mayHaveUnloadedSiblings =
+        parentNodeState?.hasNext === true ||
+        (typeof parentNodeState?.count === 'number' && parentNodeState.count > loadedSiblingCount) ||
+        (parentNodeState?.hasNext === undefined && !!limit && (parentNodeState?.lastResponseCount ?? 0) >= limit)
+    const idsToRemove = new Set<string>()
+    const pendingIds = [nodeId]
+
+    while (pendingIds.length) {
+        const currentId = pendingIds.pop()!
+        if (idsToRemove.has(currentId)) {
+            continue
+        }
+        idsToRemove.add(currentId)
+        pendingIds.push(...(tree.childIdsByParent[currentId] ?? []))
+    }
+
+    idsToRemove.forEach(id => {
+        removeNodeIdFromCollections(tree, id)
+        delete tree.nodes[id]
+        delete tree.nodesState[id]
+        delete tree.errors[id]
+        delete tree.childIdsByParent[id]
+    })
+    adjustKnownChildCount(tree, parentId, -1)
+    if (mayHaveUnloadedSiblings && parentNodeState) {
+        parentNodeState.page = Math.max(0, (parentNodeState.page ?? DEFAULT_PAGE) - 1)
+        if (isDefined(parentNodeState.filterPage)) {
+            parentNodeState.filterPage = Math.max(0, parentNodeState.filterPage - 1)
+        }
+    }
 }
 
 const treeSlice = createSlice({
@@ -334,7 +493,22 @@ const treeSlice = createSlice({
 
             nodesState[safeParentId].count = count
         },
-        applyFilter(state, action: PayloadAction<{ bcName: string; more?: boolean; fetchUntilDataChanges?: boolean }>) {
+        removeNode(state, action: PayloadAction<{ bcName: string; nodeId: string; limit?: number }>) {
+            const currentTree = state[action.payload.bcName]
+            if (currentTree) {
+                removeTreeNode(currentTree, String(action.payload.nodeId), action.payload.limit)
+            }
+        },
+        applyFilter(
+            state,
+            action: PayloadAction<{
+                bcName: string
+                more?: boolean
+                fetchUntilDataChanges?: boolean
+                maxRequests?: number
+                knownNodeIds?: string[]
+            }>
+        ) {
             const { bcName, more } = action.payload
 
             if (!state[bcName]) {
@@ -484,6 +658,18 @@ const treeSlice = createSlice({
             if (!currentTree) {
                 return
             }
+            const connectedNodeIds = new Set([...getRootConnectedNodeIds(currentTree), ...currentTree.unallocatedNodeIds])
+            Object.keys(currentTree.nodes).forEach(nodeId => {
+                if (!connectedNodeIds.has(nodeId)) {
+                    delete currentTree.nodes[nodeId]
+                    delete currentTree.nodesState[nodeId]
+                    delete currentTree.errors[nodeId]
+                    delete currentTree.childIdsByParent[nodeId]
+                }
+            })
+            Object.keys(currentTree.childIdsByParent).forEach(parentId => {
+                currentTree.childIdsByParent[parentId] = currentTree.childIdsByParent[parentId].filter(id => connectedNodeIds.has(id))
+            })
             currentTree.filterActive = false
             currentTree.matchedNodeIds = []
             currentTree.filterResultNodeIds = []
@@ -496,6 +682,7 @@ const treeSlice = createSlice({
                         ? getUniqueValues([...currentTree.expandedParentsBeforeFilter, ...currentTree.expandedParents])
                         : currentTree.expandedParentsBeforeFilter
             }
+            currentTree.expandedParents = currentTree.expandedParents.filter(id => connectedNodeIds.has(id))
             delete currentTree.expandedParentsBeforeFilter
         },
         applySorter(state, action: PayloadAction<{ bcName: string }>) {
@@ -582,7 +769,28 @@ const treeSlice = createSlice({
             return {}
         })
         builder.addCase(actions.selectView, (state, action) => {
-            return {}
+            if (!action.payload.isTab) {
+                return {}
+            }
+        })
+        builder.addCase(actions.bcNewDataSuccess, (state, action) => {
+            const currentTree = state[action.payload.bcName]
+            const nodeId = action.payload.dataItem[FIELDS.TECHNICAL.ID]
+
+            if (!currentTree || !isDefined(nodeId)) {
+                return
+            }
+
+            const normalizedNodeId = String(nodeId)
+            removeNodeIdFromCollections(currentTree, normalizedNodeId)
+            currentTree.nodes[normalizedNodeId] = { ...action.payload.dataItem, id: normalizedNodeId } as TreeNode
+            currentTree.unallocatedNodeIds = [normalizedNodeId, ...currentTree.unallocatedNodeIds]
+        })
+        builder.addMatcher(isAnyOf(actions.bcSaveDataSuccess, actions.sendOperationSuccess), (state, action) => {
+            const currentTree = state[action.payload.bcName]
+            if (currentTree && action.payload.dataItem) {
+                upsertTreeNode(currentTree, String(action.payload.cursor), action.payload.dataItem)
+            }
         })
     }
 })
