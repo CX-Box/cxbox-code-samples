@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Myexample3262Repository extends JpaRepository<Myexample3262, Long>, JpaSpecificationExecutor<Myexample3262> {
 
+	boolean existsByParentId(Long parentId);
 
 }

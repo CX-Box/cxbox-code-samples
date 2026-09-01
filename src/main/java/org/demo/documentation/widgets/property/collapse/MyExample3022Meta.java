@@ -14,6 +14,7 @@ public class MyExample3022Meta extends FieldMetaBuilder<MyExample3022DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3022DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3022DTO_.parentId);
 		fields.setEnumValues(MyExample3022DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
 		fields.setEnabled(MyExample3022DTO_.customFieldDictionary);
 		fields.setEnabled(MyExample3022DTO_.customField);

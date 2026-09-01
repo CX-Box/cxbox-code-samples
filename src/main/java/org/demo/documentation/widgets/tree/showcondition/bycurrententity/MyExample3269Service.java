@@ -6,6 +6,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,15 @@ public class MyExample3269Service extends VersionAwareResponseService<MyExample3
 	@Override
 	protected ActionResultDTO<MyExample3269DTO> doUpdateEntity(MyEntity3269 entity, MyExample3269DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample3269DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample3269DTO_.isLeaf, entity::setIsLeaf);
 		setIfChanged(data, MyExample3269DTO_.customFieldInput, entity::setCustomFieldInput);
 		if (data.isFieldChanged(MyExample3269DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
+		MyExample3269DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
 
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		return new ActionResultDTO<>(dto)
+				.setAction(PostAction.refreshBc(bc));
 	}
 
 	// --8<-- [start:getActions]

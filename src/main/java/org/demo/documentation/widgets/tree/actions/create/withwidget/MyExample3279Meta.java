@@ -19,7 +19,6 @@ public class MyExample3279Meta extends FieldMetaBuilder<MyExample3279DTO> {
 		fields.setEnabled(MyExample3279DTO_.isLeaf);
 		fields.setEnabled(MyExample3279DTO_.customFieldText);
 		fields.setEnabled(MyExample3279DTO_.customField);
-		fields.setRequired(MyExample3279DTO_.customField);
 	}
 
 	// --8<-- [end:buildRowDependentMeta]

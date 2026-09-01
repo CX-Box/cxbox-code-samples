@@ -7,6 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 import org.cxbox.core.util.filter.provider.impl.DateTimeValueProvider;
+import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
 
 import java.time.LocalDateTime;
 
@@ -25,11 +26,15 @@ public class MyExample3138DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldText")
 	private String customFieldText;
 
+	@SearchParameter(name = "parentId", provider = StringValueProvider.class)
+	private String parentId;
+
 	public MyExample3138DTO(MyEntity3138 entity) {
 		this.id = entity.getId().toString();
 		this.customFieldDateTime = entity.getCustomFieldDateTime();
 		this.customFieldNumber = entity.getCustomFieldNumber();
 		this.customFieldInput = entity.getCustomFieldInput();
 		this.customFieldText = entity.getCustomFieldText();
+		this.parentId = entity.getParentId();
 	}
 }

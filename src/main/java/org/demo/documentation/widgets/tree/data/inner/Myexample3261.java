@@ -27,9 +27,6 @@ public class Myexample3261 extends BaseEntity {
 	private Long parentId;
 
 	@Column
-	private Boolean isLeaf;
-
-	@Column
 	private String description;
 
 	@Column

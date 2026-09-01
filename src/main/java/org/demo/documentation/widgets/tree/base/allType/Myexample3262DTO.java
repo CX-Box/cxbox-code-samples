@@ -14,6 +14,7 @@ import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Mult
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
+import org.demo.repository.core.Myexample3262Repository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class Myexample3262DTO extends DataResponseDTO {
-
 
 	@SearchParameter(name = "customFieldHint")
 	private String customFieldHint;
@@ -143,7 +143,6 @@ public class Myexample3262DTO extends DataResponseDTO {
 		this.customFieldHidden = entity.getCustomFieldHidden();
 		this.customField = entity.getCustomField();
 		this.parentId = entity.getParentId();
-		this.isLeaf = entity.getParentId() != null;
 	}
 
 }

@@ -15,8 +15,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Setter
 @NoArgsConstructor
 public class NumberRuntimeExEntity extends BaseEntity {
-
-
 	@Column
 	private Long customField;
 

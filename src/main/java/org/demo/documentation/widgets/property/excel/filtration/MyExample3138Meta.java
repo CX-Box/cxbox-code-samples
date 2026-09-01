@@ -14,6 +14,7 @@ public class MyExample3138Meta extends FieldMetaBuilder<MyExample3138DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3138DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
+		fields.setEnabled(MyExample3138DTO_.parentId);
 		fields.setEnabled(MyExample3138DTO_.customFieldText);
 		fields.setEnabled(MyExample3138DTO_.customFieldInput);
 		fields.setEnabled(MyExample3138DTO_.customFieldNumber);

@@ -20,9 +20,6 @@ public class MyEntity3273 extends BaseEntity {
 	private String customFieldText;
 
 	@Column
-	private Boolean isLeaf;
-
-	@Column
 	private String parentId;
 
 	@Column

@@ -24,4 +24,7 @@ public class MyEntity3138 extends BaseEntity {
 	private String customFieldInput;
 	@Column
 	private String customFieldText;
+
+	@Column
+	private String parentId;
 }

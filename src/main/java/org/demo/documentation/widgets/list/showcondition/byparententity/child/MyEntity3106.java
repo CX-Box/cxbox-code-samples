@@ -13,8 +13,6 @@ import org.demo.documentation.widgets.list.showcondition.byparententity.parent.M
 @Setter
 @NoArgsConstructor
 public class MyEntity3106 extends BaseEntity {
-
-
 	@Column
 	private String customField;
 	@Column

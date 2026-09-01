@@ -16,8 +16,6 @@ import org.demo.documentation.fields.money.currency.constkey.enums.CustomFieldDi
 @Setter
 @NoArgsConstructor
 public class MyEntity3150 extends BaseEntity {
-
-
 	@Column
 	private Double customField;
 	@Enumerated(value = EnumType.STRING)

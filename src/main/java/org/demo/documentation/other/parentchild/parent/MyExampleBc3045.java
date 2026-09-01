@@ -17,8 +17,6 @@ import org.cxbox.model.core.entity.BaseEntity;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class MyExampleBc3045 extends BaseEntity {
-
-
 	@Column
 	private Long customField = 0L;
 

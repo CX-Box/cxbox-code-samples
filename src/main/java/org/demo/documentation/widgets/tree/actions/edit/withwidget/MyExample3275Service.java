@@ -28,12 +28,15 @@ public class MyExample3275Service extends VersionAwareResponseService<MyExample3
 	protected ActionResultDTO<MyExample3275DTO> doUpdateEntity(MyEntity3275 entity, MyExample3275DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample3275DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample3275DTO_.parentId, entity::setParentId);
-		setIfChanged(data, MyExample3275DTO_.isLeaf, entity::setIsLeaf);
+
 		setIfChanged(data, MyExample3275DTO_.customFieldText, entity::setCustomFieldText);
 		if (data.isFieldChanged(MyExample3275DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
 		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		MyExample3275DTO dto = entityToDto(bc, repository.save(entity));
+		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
+
+		return new ActionResultDTO<>(dto);
 	}
 
 	// --8<-- [start:getActions]

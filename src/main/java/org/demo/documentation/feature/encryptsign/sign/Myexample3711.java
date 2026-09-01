@@ -16,8 +16,6 @@ import org.demo.documentation.feature.encryptsign.sign.enums.StatusSignEnum;
 @NoArgsConstructor
 @EqualsAndHashCode(of = {}, callSuper = true)
 public class Myexample3711 extends BaseEntity {
-
-
 	@Column
 	private String file;
 
