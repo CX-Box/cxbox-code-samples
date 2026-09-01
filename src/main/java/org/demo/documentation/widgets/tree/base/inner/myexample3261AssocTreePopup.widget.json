@@ -1,0 +1,53 @@
+{
+  "name": "myexample3261AssocTreePopup",
+  "title": "Select Department (AssocTreePopup)",
+  "type": "AssocTreePopup",
+  "bc": "myexample3261Pick0",
+  "fields": [
+    {
+      "title": "Parent Id",
+      "key": "parentId",
+      "type": "hidden"
+    },
+    {
+      "title": "id",
+      "key": "id",
+      "type": "text"
+    },
+    {
+      "title": "Departments",
+      "key": "department",
+      "type": "input"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "checkbox"
+    },
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "title": "Code",
+      "key": "code",
+      "type": "input"
+    },
+    {
+      "title": "Mnemonic",
+      "key": "mnemonic",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "fullTextSearch": {
+      "enabled": true,
+      "placeholder": "Find by department"
+    },
+    "tree": {
+      "searchMode": "highlight",
+      "nodeSelection": "node"
+    }
+  }
+}

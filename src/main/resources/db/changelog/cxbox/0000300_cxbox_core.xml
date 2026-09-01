@@ -47,6 +47,14 @@
     </addColumn>
   </changeSet>
 
+  <changeSet id="BC_FILTER_GROUPS DEFAULT_FILTER" author="cxbox">
+    <addColumn tableName="BC_FILTER_GROUPS">
+      <column name="DEFAULT_FILTER" type="BOOLEAN" defaultValue="false">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
   <changeSet id="add-default-bc-filter-groups-id" author="cxbox">
     <addDefaultValue
       tableName="BC_FILTER_GROUPS"

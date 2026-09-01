@@ -12,7 +12,10 @@ public class MyExample359Meta extends FieldMetaBuilder<MyExample359DTO> {
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription,
-									  Long id, Long parentId) {
+	                                  Long id, Long parentId) {
+		fields.setEnabled(MyExample359DTO_.customFieldMoney);
+		fields.setEnabled(MyExample359DTO_.parentId);
+		fields.setEnabled(MyExample359DTO_.isLeaf);
 		fields.setEnabled(MyExample359DTO_.customFieldPicklistId);
 		fields.setEnabled(MyExample359DTO_.customFieldPicklist);
 		fields.setEnabled(MyExample359DTO_.customFieldMultivalue);
@@ -21,6 +24,7 @@ public class MyExample359Meta extends FieldMetaBuilder<MyExample359DTO> {
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample359DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample359DTO_.customFieldMoney);
 		fields.enableFilter(MyExample359DTO_.customFieldPicklist);
 		fields.enableFilter(MyExample359DTO_.customFieldMultivalue);
 	}

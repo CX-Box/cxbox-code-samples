@@ -1,0 +1,39 @@
+{
+  "name": "MyExample3276parent",
+  "title": "Show condition widget",
+  "type": "Tree",
+  "bc": "myexample3276",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field, bc - myExampleBc3276",
+      "key": "customFieldNumber",
+      "type": "number"
+    },
+    {
+      "title": "customField",
+      "key": "customFieldMoney",
+      "digits": 2,
+      "type": "money"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "hidden"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentTreeId",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "tree": {
+      "parentFieldKey": "parentTreeId"
+    }
+  }
+}

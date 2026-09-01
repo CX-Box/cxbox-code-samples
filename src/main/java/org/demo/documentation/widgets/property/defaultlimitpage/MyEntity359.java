@@ -18,10 +18,10 @@ import java.util.List;
 public class MyEntity359 extends BaseEntity {
 	@Column
 	private String customField;
-	@JoinTable(name = "MyEntity359_MyEntity359AssocPick",
-			joinColumns = @JoinColumn(name = "MyEntity359_id"),
-			inverseJoinColumns = @JoinColumn(name = "MyEntity359Assoc_id")
-	)
+	@JoinTable(name = "MY_ENTITY359_MY_ENTITY359_ASSOC_PICK",
+			joinColumns = @JoinColumn(name = "MY_ENTITY359_ID"),
+			inverseJoinColumns = @JoinColumn(name = "MY_ENTITY359_ASSOC_ID"))
+
 	@ManyToMany(cascade =
 			{CascadeType.PERSIST,
 					CascadeType.MERGE})
@@ -29,4 +29,13 @@ public class MyEntity359 extends BaseEntity {
 	@JoinColumn(name = "CUSTOM_FIELD_PICKLIST_ID")
 	@ManyToOne
 	private MyEntity359Pick customFieldPicklistEntity;
+
+	@Column
+	private Boolean isLeaf;
+
+	@Column
+	private String parentId;
+
+	@Column
+	private Double customFieldMoney;
 }
