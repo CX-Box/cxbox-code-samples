@@ -226,10 +226,11 @@ function CryptoGeneratorContent({ operationType, meta, onClose }: CryptoGenerato
                         if (!encryptedBase64) {
                             return {}
                         }
+                        const encryptedDoubleBase64 = btoa(encryptedBase64)
 
                         return {
                             encryptedBase64,
-                            signatureBase64: await sign(encryptedBase64)
+                            signatureBase64: await sign(encryptedDoubleBase64)
                         }
                     }
                 }
