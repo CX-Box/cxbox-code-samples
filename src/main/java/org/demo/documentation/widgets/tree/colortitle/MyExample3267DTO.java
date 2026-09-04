@@ -129,7 +129,6 @@ public class MyExample3267DTO extends DataResponseDTO {
 		this.customFieldColorHidden = entity.getCustomFieldHidden();
 		this.customField = entity.getCustomField();
 		this.parentId = entity.getParentId();
-
-
+		this.isLeaf = entity.getChildren().isEmpty();
 	}
 }

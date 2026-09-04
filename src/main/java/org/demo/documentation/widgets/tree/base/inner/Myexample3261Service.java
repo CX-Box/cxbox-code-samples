@@ -17,6 +17,7 @@ import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
 import org.demo.documentation.widgets.tree.data.inner.MyEntity3261Repository;
 import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
+import org.demo.documentation.widgets.tree.data.inner.Myexample3261MetaBuilder;
 import org.demo.documentation.widgets.tree.data.inner.Myexample3261_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

@@ -30,7 +30,7 @@ public class MyEntity32762TestDataLoadService {
 		repositoryChild.deleteAll();
 		repositoryParent.deleteAll();
 		// root 1: without Child
-		MyEntity3276 root1 = createBaseEntity("Root 1", 3L);
+		MyEntity3276 root1 = createBaseEntity("Root 1 without children", 3L);
 		repositoryParent.save(root1);
 		// root 2: without Child
 
@@ -52,13 +52,13 @@ public class MyEntity32762TestDataLoadService {
 		// ---- Create 3 child for root5 ----
 
 		for (int i = 1; i <= 3; i++) {
-			MyEntity3276 child = createBaseEntity("Child " + i + " of Root 1", i + 3L)
-					.setParentTreeId(String.valueOf(root5.getId()));
+			MyEntity3276 child = createBaseEntity("Child " + i + " of Root 5", i + 3L)
+					.setParentTreeId(root5.getId());
 			repositoryParent.save(child);
 		}
 		// root 1: without Child
 
-		MyEntity3277 root77_1 = createBaseEntity77("Root 1");
+		MyEntity3277 root77_1 = createBaseEntity77("Root 1 without children");
 		repositoryChild.save(root77_1);
 		//root 2:without Child
 		MyEntity3277 root77_2 = createBaseEntity77("Root 2 (without children)");
@@ -74,7 +74,7 @@ public class MyEntity32762TestDataLoadService {
 		repositoryChild.save(root77_5);
 		//----Create 3 child for root5----
 		for (int i = 1; i <= 3; i++) {
-			MyEntity3277 child = createBaseEntity77("Child " + i + " of Root 1").setParentTreeId(String.valueOf(root5.getId()));
+			MyEntity3277 child = createBaseEntity77("Child " + i + " of Root 5").setParentTreeId(root5.getId());
 			repositoryChild.save(child);
 		}
 	}

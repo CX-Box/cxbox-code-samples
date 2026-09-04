@@ -64,7 +64,7 @@ public class MyEntity3262TestDataLoadService {
 		repositoryPick.save(inlineEntity);
 
 		// root 1: without Child
-		Myexample3262 root1 = createBaseEntity("Root 1")
+		Myexample3262 root1 = createBaseEntity("Root 1 without children")
 				.setCustomFieldPickListEntity(pickEntity)
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
@@ -145,7 +145,7 @@ public class MyEntity3262TestDataLoadService {
 
 		// ---- Create 3 child for root5 ----
 		for (int i = 1; i <= 3; i++) {
-			Myexample3262 child = createBaseEntity("Child " + i + " of Root 1")
+			Myexample3262 child = createBaseEntity("Child " + i + " of Root 5")
 					.setParentId(root5.getId())
 					.setCustomFieldFileUpload(file.getData().getName())
 					.setCustomFieldFileUploadId(file.getData().getId());

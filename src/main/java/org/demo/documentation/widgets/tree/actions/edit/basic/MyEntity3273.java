@@ -25,7 +25,7 @@ public class MyEntity3273 extends BaseEntity {
 	private String customFieldText;
 
 	@Column
-	private String parentId;
+	private Long parentId;
 
 	@Column
 	private Double customFieldMoney;

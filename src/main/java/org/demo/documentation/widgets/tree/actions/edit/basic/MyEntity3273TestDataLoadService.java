@@ -22,7 +22,7 @@ public class MyEntity3273TestDataLoadService {
 		repository.deleteAll();
 
 		// root 1: without Child
-		MyEntity3273 root1 = createBaseEntity("Root 1");
+		MyEntity3273 root1 = createBaseEntity("Root 1 without children");
 
 		repository.save(root1);
 
@@ -44,8 +44,8 @@ public class MyEntity3273TestDataLoadService {
 
 		// ---- Create 3 child for root5 ----
 		for (int i = 1; i <= 3; i++) {
-			MyEntity3273 child = createBaseEntity("Child " + i + " of Root 1")
-					.setParentId(String.valueOf(root5.getId()));
+			MyEntity3273 child = createBaseEntity("Child " + i + " of Root 5")
+					.setParentId(root5.getId());
 			repository.save(child);
 		}
 	}
