@@ -7,7 +7,7 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.tree.base.allType.Myexample3262;
+import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 import org.demo.documentation.widgets.tree.base.allType.repository.MyEntity3262Repository;
 import org.springframework.stereotype.Service;
 

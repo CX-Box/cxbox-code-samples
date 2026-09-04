@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.base.allType;
+package org.demo.documentation.widgets.tree.data.alltypes;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;

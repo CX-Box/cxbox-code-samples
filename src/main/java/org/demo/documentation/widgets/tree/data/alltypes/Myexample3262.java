@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.base.allType;
+package org.demo.documentation.widgets.tree.data.alltypes;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -108,4 +108,11 @@ public class Myexample3262 extends BaseEntity {
 
 	@Column
 	private Long parentId;
+
+
+	@OneToMany(
+			mappedBy = "parentId",
+			fetch = FetchType.LAZY
+	)
+	private List<Myexample3262> children = new ArrayList<>();
 }
