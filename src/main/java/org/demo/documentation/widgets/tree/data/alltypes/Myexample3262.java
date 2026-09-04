@@ -109,7 +109,6 @@ public class Myexample3262 extends BaseEntity {
 	@Column
 	private Long parentId;
 
-
 	@OneToMany(
 			mappedBy = "parentId",
 			fetch = FetchType.LAZY

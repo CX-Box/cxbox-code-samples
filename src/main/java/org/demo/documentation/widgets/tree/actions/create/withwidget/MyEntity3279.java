@@ -2,10 +2,15 @@ package org.demo.documentation.widgets.tree.actions.create.withwidget;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -23,4 +28,10 @@ public class MyEntity3279 extends BaseEntity {
 
 	@Column
 	private Double customFieldMoney;
+
+	@OneToMany(
+			mappedBy = "parentId",
+			fetch = FetchType.LAZY
+	)
+	private List<MyEntity3279> children = new ArrayList<>();
 }
