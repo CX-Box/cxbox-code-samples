@@ -2,10 +2,15 @@ package org.demo.documentation.widgets.tree.showcondition.bycurrententity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -21,5 +26,11 @@ public class MyEntity3269 extends BaseEntity {
 	private String customFieldInput;
 
 	@Column
-	private String parentId;
+	private Long parentId;
+
+	@OneToMany(
+			mappedBy = "parentId",
+			fetch = FetchType.LAZY
+	)
+	private List<MyEntity3269> children = new ArrayList<>();
 }

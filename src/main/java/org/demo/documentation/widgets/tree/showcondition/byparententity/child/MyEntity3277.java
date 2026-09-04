@@ -22,10 +22,9 @@ public class MyEntity3277 extends BaseEntity implements BaseTreeEntity {
 	@JoinColumn(name = "PARENT_ID")
 	private MyEntity3276 customFieldEntity;
 
-
 	@Column
 	private Double customFieldMoney;
 
 	@Column
-	private String parentTreeId;
+	private Long parentTreeId;
 }

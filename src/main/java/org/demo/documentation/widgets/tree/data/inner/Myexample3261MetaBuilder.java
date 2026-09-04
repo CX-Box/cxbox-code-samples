@@ -4,6 +4,8 @@ import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
+import org.demo.documentation.widgets.tree.base.inner.Myexample3261DTO;
+import org.demo.documentation.widgets.tree.base.inner.Myexample3261DTO_;
 import org.springframework.stereotype.Service;
 
 @Service

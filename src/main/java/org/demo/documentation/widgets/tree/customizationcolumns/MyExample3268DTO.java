@@ -123,6 +123,6 @@ public class MyExample3268DTO extends DataResponseDTO {
 		this.customFieldMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueHoverList().stream().map(Myexample3262MultiHover::getCustomField
 		).collect(Collectors.joining(",")), 12);
 		this.parentId = entity.getParentId();
-
+		this.isLeaf = entity.getChildren().isEmpty();
 	}
 }

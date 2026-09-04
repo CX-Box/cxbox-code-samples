@@ -27,7 +27,7 @@ public class MyExample3277DTO extends DataResponseDTO {
 	private Double customFieldMoney;
 
 	@SearchParameter(name = "parentTreeId")
-	private String parentTreeId;
+	private Long parentTreeId;
 
 	public MyExample3277DTO(MyEntity3277 entity) {
 		this.id = entity.getId().toString();

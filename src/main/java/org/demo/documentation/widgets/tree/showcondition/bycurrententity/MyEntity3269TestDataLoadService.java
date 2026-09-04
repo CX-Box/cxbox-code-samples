@@ -24,7 +24,7 @@ public class MyEntity3269TestDataLoadService {
 		repository.save(new MyEntity3269().setCustomField(8L));
 		repository.save(new MyEntity3269().setCustomField(9L));
 		// root 1: without Child
-		MyEntity3269 root1 = createBaseEntity("Root 1",4L);
+		MyEntity3269 root1 = createBaseEntity("Root 1 without children",4L);
 
 		repository.save(root1);
 
@@ -46,8 +46,8 @@ public class MyEntity3269TestDataLoadService {
 
 		// ---- Create 3 child for root5 ----
 		for (int i = 1; i <= 3; i++) {
-			MyEntity3269 child = createBaseEntity("Child " + i + " of Root 1",i+5L)
-					.setParentId(String.valueOf(root5.getId()));
+			MyEntity3269 child = createBaseEntity("Child " + i + " of Root 5",i+5L)
+					.setParentId(root5.getId());
 			repository.save(child);
 		}
 	}

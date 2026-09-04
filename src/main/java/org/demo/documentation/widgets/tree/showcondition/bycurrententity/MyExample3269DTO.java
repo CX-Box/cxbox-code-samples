@@ -15,8 +15,8 @@ public class MyExample3269DTO extends DataResponseDTO {
 	public static final String TEXT2 = "Show condition - if CustomField  > 5 widget show.";
 
 	private Long customField;
-	private String customFieldShowCond;
 
+	private String customFieldShowCond;
 
 	@SearchParameter(name = "customFieldInput")
 	private String customFieldInput;
@@ -24,15 +24,14 @@ public class MyExample3269DTO extends DataResponseDTO {
 	private Boolean isLeaf;
 
 	@SearchParameter(name = "parentId")
-	private String parentId;
+	private Long parentId;
 
 	public MyExample3269DTO(MyEntity3269 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.customFieldShowCond = entity.getCustomField() > 5 ? "true" : "false";
 		this.customFieldInput = entity.getCustomFieldInput();
-
-
 		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getChildren().isEmpty();
 	}
 }
