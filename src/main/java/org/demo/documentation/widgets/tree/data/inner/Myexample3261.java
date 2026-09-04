@@ -37,4 +37,10 @@ public class Myexample3261 extends BaseEntity {
 
 	@ManyToMany(mappedBy = "departmentsList")
 	private List<Myexample3263> departments = new ArrayList<>();
+
+	@OneToMany(
+			mappedBy = "parentId",
+			fetch = FetchType.LAZY
+	)
+	private List<Myexample3261> children = new ArrayList<>();
 }

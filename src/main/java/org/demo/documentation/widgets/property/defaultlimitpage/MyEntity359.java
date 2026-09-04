@@ -8,6 +8,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359Assoc;
 import org.demo.documentation.widgets.property.defaultlimitpage.forpick.MyEntity359Pick;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,4 +36,11 @@ public class MyEntity359 extends BaseEntity {
 
 	@Column
 	private Double customFieldMoney;
+
+	@OneToMany(
+			mappedBy = "parentId",
+			fetch = FetchType.LAZY
+	)
+	private List<MyEntity359> children = new ArrayList<>();
+
 }

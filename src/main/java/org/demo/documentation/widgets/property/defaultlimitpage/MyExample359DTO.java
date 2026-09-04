@@ -55,5 +55,6 @@ public class MyExample359DTO extends DataResponseDTO {
 
 		this.parentId = entity.getParentId();
 		this.customFieldMoney = entity.getCustomFieldMoney();
+		this.isLeaf = entity.getChildren().isEmpty();
 	}
 }
