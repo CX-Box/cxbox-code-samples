@@ -19,42 +19,42 @@ public class MyExample3268Meta extends FieldMetaBuilder<MyExample3268DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3268DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyExample3268DTO_.customFieldMultivalueHover);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultivalueHover);
 		fields.setConcreteValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
 				.map(CustomFieldMultipleSelectEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
 				.toList());
-		fields.setEnabled(MyExample3268DTO_.customFieldMultipleSelect);
-		fields.setEnabled(MyExample3268DTO_.customFieldMultivalue);
-		fields.setEnabled(MyExample3268DTO_.customFieldHidden);
-		fields.setEnabled(MyExample3268DTO_.customFieldText);
-		fields.setEnabled(MyExample3268DTO_.customFieldDateTime);
-		fields.setEnabled(MyExample3268DTO_.customFieldDateTimeWithSeconds);
-		fields.setEnabled(MyExample3268DTO_.customFieldFileUploadId);
-		fields.setEnabled(MyExample3268DTO_.customFieldFileUpload);
-		fields.setEnabled(MyExample3268DTO_.customFieldNumber);
-		fields.setEnabled(MyExample3268DTO_.customFieldPercent);
-		fields.setEnabled(MyExample3268DTO_.customFieldPickTreeId);
-		fields.setEnabled(MyExample3268DTO_.customFieldPickTree);
-		fields.setEnabled(MyExample3268DTO_.customFieldInlineId);
-		fields.setEnabled(MyExample3268DTO_.customFieldInline);
-		fields.setEnabled(MyExample3268DTO_.customFieldMoney);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultipleSelect);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultivalue);
+		fields.setDisabled(MyExample3268DTO_.customFieldHidden);
+		fields.setDisabled(MyExample3268DTO_.customFieldText);
+		fields.setDisabled(MyExample3268DTO_.customFieldDateTime);
+		fields.setDisabled(MyExample3268DTO_.customFieldDateTimeWithSeconds);
+		fields.setDisabled(MyExample3268DTO_.customFieldFileUploadId);
+		fields.setDisabled(MyExample3268DTO_.customFieldFileUpload);
+		fields.setDisabled(MyExample3268DTO_.customFieldNumber);
+		fields.setDisabled(MyExample3268DTO_.customFieldPercent);
+		fields.setDisabled(MyExample3268DTO_.customFieldPickTreeId);
+		fields.setDisabled(MyExample3268DTO_.customFieldPickTree);
+		fields.setDisabled(MyExample3268DTO_.customFieldInlineId);
+		fields.setDisabled(MyExample3268DTO_.customFieldInline);
+		fields.setDisabled(MyExample3268DTO_.customFieldMoney);
 		fields.setEnumValues(MyExample3268DTO_.customFieldRadio, CustomFieldRadioEnum.values());
-		fields.setEnabled(MyExample3268DTO_.customFieldRadio);
+		fields.setDisabled(MyExample3268DTO_.customFieldRadio);
 		fields.setConcreteValues(MyExample3268DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
 				.map(CustomFieldMultipleSelectEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
 				.toList());
-		fields.setEnabled(MyExample3268DTO_.customFieldMultipleSelect);
-		fields.setEnabled(MyExample3268DTO_.customFieldMultivalue);
-		fields.setEnabled(MyExample3268DTO_.customFieldHint);
-		fields.setEnabled(MyExample3268DTO_.customFieldMultivalueHover);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultipleSelect);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultivalue);
+		fields.setDisabled(MyExample3268DTO_.customFieldHint);
+		fields.setDisabled(MyExample3268DTO_.customFieldMultivalueHover);
 		fields.setEnumValues(MyExample3268DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-		fields.setEnabled(MyExample3268DTO_.customFieldDictionary);
-		fields.setEnabled(MyExample3268DTO_.customFieldCheckBox);
-		fields.setEnabled(MyExample3268DTO_.customFieldDate);
-		fields.setEnabled(MyExample3268DTO_.customFieldInput);
-		fields.setEnabled(MyExample3268DTO_.customField);
+		fields.setDisabled(MyExample3268DTO_.customFieldDictionary);
+		fields.setDisabled(MyExample3268DTO_.customFieldCheckBox);
+		fields.setDisabled(MyExample3268DTO_.customFieldDate);
+		fields.setDisabled(MyExample3268DTO_.customFieldInput);
+		fields.setDisabled(MyExample3268DTO_.customField);
 		fields.setRequired(MyExample3268DTO_.customField);
 	}
 

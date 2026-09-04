@@ -18,37 +18,34 @@ public class Myexample3262MetaBuilder extends FieldMetaBuilder<Myexample3262DTO>
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3262DTO> fields, InnerBcDescription bcDescription, Long id, Long parentId) {
-		fields.setEnabled(Myexample3262DTO_.customField);
-		fields.setEnabled(Myexample3262DTO_.customFieldHidden);
-		fields.setEnabled(Myexample3262DTO_.customFieldText);
-		fields.setEnabled(Myexample3262DTO_.customFieldDateTime);
-		fields.setEnabled(Myexample3262DTO_.customFieldCheckbox);
-		fields.setEnabled(Myexample3262DTO_.customFieldDate);
-		fields.setEnabled(Myexample3262DTO_.customFieldDateTimeWithSeconds);
+		fields.setDisabled(Myexample3262DTO_.customField);
+		fields.setDisabled(Myexample3262DTO_.customFieldHidden);
+		fields.setDisabled(Myexample3262DTO_.customFieldText);
+		fields.setDisabled(Myexample3262DTO_.customFieldDateTime);
+		fields.setDisabled(Myexample3262DTO_.customFieldCheckbox);
+		fields.setDisabled(Myexample3262DTO_.customFieldDate);
+		fields.setDisabled(Myexample3262DTO_.customFieldDateTimeWithSeconds);
 		fields.setEnumValues(Myexample3262DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
-		fields.setEnabled(Myexample3262DTO_.customFieldDictionary);
-		fields.setEnabled(Myexample3262DTO_.customFieldFileUploadId);
-		fields.setEnabled(Myexample3262DTO_.customFieldFileUpload);
-		fields.setEnabled(Myexample3262DTO_.customFieldNumber);
-		fields.setEnabled(Myexample3262DTO_.customFieldPercent);
-		fields.setEnabled(Myexample3262DTO_.customFieldPickListId);
-		fields.setEnabled(Myexample3262DTO_.customFieldPickList);
-		fields.setEnabled(Myexample3262DTO_.customFieldInlineId);
-		fields.setEnabled(Myexample3262DTO_.customFieldInline);
-		fields.setEnabled(Myexample3262DTO_.customFieldMoney);
+		fields.setDisabled(Myexample3262DTO_.customFieldDictionary);
+		fields.setDisabled(Myexample3262DTO_.customFieldFileUploadId);
+		fields.setDisabled(Myexample3262DTO_.customFieldFileUpload);
+		fields.setDisabled(Myexample3262DTO_.customFieldNumber);
+		fields.setDisabled(Myexample3262DTO_.customFieldPercent);
+		fields.setDisabled(Myexample3262DTO_.customFieldPickListId);
+		fields.setDisabled(Myexample3262DTO_.customFieldPickList);
+		fields.setDisabled(Myexample3262DTO_.customFieldInlineId);
+		fields.setDisabled(Myexample3262DTO_.customFieldInline);
+		fields.setDisabled(Myexample3262DTO_.customFieldMoney);
 		fields.setEnumValues(Myexample3262DTO_.customFieldRadio, CustomFieldRadioEnum.values());
-		fields.setEnabled(Myexample3262DTO_.customFieldRadio);
+		fields.setDisabled(Myexample3262DTO_.customFieldRadio);
 		fields.setConcreteValues(Myexample3262DTO_.customFieldMultipleSelect, Arrays.stream(CustomFieldMultipleSelectEnum.values())
 				.map(CustomFieldMultipleSelectEnum::getValue)
 				.map(e -> new SimpleDictionary(e, e))
 				.toList());
-		fields.setEnabled(Myexample3262DTO_.customFieldMultipleSelect);
-		fields.setEnabled(Myexample3262DTO_.customFieldMultivalue);
-		fields.setEnabled(Myexample3262DTO_.customFieldMultivalueHover);
-		fields.setEnabled(Myexample3262DTO_.customFieldHint);
-		fields.setEnabled(
-				Myexample3262DTO_.id
-		);
+		fields.setDisabled(Myexample3262DTO_.customFieldMultipleSelect);
+		fields.setDisabled(Myexample3262DTO_.customFieldMultivalue);
+		fields.setDisabled(Myexample3262DTO_.customFieldMultivalueHover);
+		fields.setDisabled(Myexample3262DTO_.customFieldHint);
 	}
 
 	@Override

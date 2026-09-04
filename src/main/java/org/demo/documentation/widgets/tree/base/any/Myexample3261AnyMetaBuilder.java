@@ -12,9 +12,6 @@ public class Myexample3261AnyMetaBuilder extends AnySourceFieldMetaBuilder<Myexa
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3261AnyDTO> fields, BcDescription bcDescription, String id,
 	                                  String parentId) {
-		fields.setEnabled(
-			Myexample3261AnyDTO_.id
-		);
 	}
 
 	@Override

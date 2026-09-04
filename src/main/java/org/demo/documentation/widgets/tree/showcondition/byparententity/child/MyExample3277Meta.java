@@ -13,11 +13,11 @@ public class MyExample3277Meta extends FieldMetaBuilder<MyExample3277DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3277DTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
-		fields.setEnabled(MyExample3277DTO_.parentTreeId);
-		fields.setEnabled(MyExample3277DTO_.customFieldMoney);
+		fields.setDisabled(MyExample3277DTO_.parentTreeId);
+		fields.setDisabled(MyExample3277DTO_.customFieldMoney);
 
-		fields.setEnabled(MyExample3277DTO_.isLeaf);
-		fields.setEnabled(MyExample3277DTO_.customField);
+		fields.setDisabled(MyExample3277DTO_.isLeaf);
+		fields.setDisabled(MyExample3277DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
