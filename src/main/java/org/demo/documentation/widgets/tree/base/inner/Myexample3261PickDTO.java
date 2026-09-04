@@ -38,6 +38,7 @@ public class Myexample3261PickDTO extends DataResponseDTO {
 		this.description = entity.getDescription();
 		this.code = entity.getCode();
 		this.mnemonic = entity.getMnemonic();
+		this.isLeaf = entity.getChildren().isEmpty();
 	}
 
 }
