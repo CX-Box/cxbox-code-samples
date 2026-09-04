@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { TreeNode, BcTreeState } from '@slices/tree'
 import { RESTORE_ANCESTORS_ID, UNALLOCATED_NODES_ID } from '@components/widgets/Table/constants'
+import { TEXT_SEPARATOR_FOR_NEST_LEVEL } from '@constants/tree'
 
 export type RestoreAncestorsPosition = 'start' | 'end'
 
@@ -17,6 +18,7 @@ export type TableTreeNode = TreeNode & {
     _countInfoMessage?: string
     _treeIsLeaf?: boolean
     _nestingLevel?: number
+    _separatorText?: string
 }
 
 const getMaxNestingLevel = (nodes: TableTreeNode[]): number =>
@@ -52,7 +54,7 @@ export const useTreeDataSource = (
             matchedNodeIds?: Set<string>
         ): TableTreeNode[] => {
             const appendPseudoNodes = (childNodes: TableTreeNode[], parentId: string | null, isLoading: boolean, level: number) => {
-                if (!showBranchPagination || (visibleNodeIds && parentId === null)) {
+                if (!showBranchPagination) {
                     return
                 }
                 const hasChildren = childNodes.length > 0
@@ -191,7 +193,8 @@ export const useTreeDataSource = (
                 isLeaf: false,
                 _recordType: 'restore-ancestors',
                 _level: 0,
-                _nestingLevel: getMaxNestingLevel(orphanNodes),
+                _nestingLevel: TEXT_SEPARATOR_FOR_NEST_LEVEL?.includes('{{limit}}') ? getMaxNestingLevel(orphanNodes) : undefined,
+                _separatorText: TEXT_SEPARATOR_FOR_NEST_LEVEL ?? undefined,
                 children: orphanNodes
             } as TableTreeNode
 

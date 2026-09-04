@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useMemo } from 'react'
+import React, { ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { TableProps as AntdTableProps } from 'antd/es/table'
 import { actions } from '@actions'
 import Operations from '@components/Operations/Operations'
@@ -13,6 +13,7 @@ import { buildTreeTableColumns } from '@components/widgets/Table/tree/utils/buil
 import { useWidgetPaginationLimit } from '@features/pagination/hooks/useWidgetPaginationLimit'
 import { useRowMetaWithCache } from '@hooks/useRowMetaWithCache'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta } from '@interfaces/widget'
+import type { TreeSearchModes } from '@interfaces/widget'
 import { selectBcTree } from '@selectors/selectors'
 import { useAppSelector } from '@store'
 import { useDispatch } from 'react-redux'
@@ -25,8 +26,8 @@ import { usePresetFilterSettings } from '@components/widgets/Table/hooks/usePres
 import TableSettings from '@components/widgets/Table/components/TableSettings'
 import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
 import { treeActions } from '@slices/tree'
-import { Lookup } from '@utils/Lookup'
-import { TREE_SEARCH_MODES } from '@constants/tree'
+import { normalizeTreeSearchModes } from '@constants/tree'
+import { isDefined } from '@utils/isDefined'
 
 interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -34,6 +35,7 @@ interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     disableRowSelection?: boolean
     settingsComponent?: ReactNode
     hideRowActions?: boolean
+    disableCellEdit?: boolean
 }
 
 function TreeTable<T extends CustomDataItem>({
@@ -45,12 +47,14 @@ function TreeTable<T extends CustomDataItem>({
     rowClassName,
     settingsComponent: outerSettingsComponent,
     hideRowActions,
+    disableCellEdit = false,
     ...rest
 }: TreeTableProps<T>) {
     const { bcName, name: widgetName } = widget
     const dispatch = useDispatch()
     const bcRowMeta = useRowMetaWithCache(bcName, true)
-    const currentSearchMode = useAppSelector(state => selectBcTree(state, bcName)?.searchMode)
+    const searchModes = useMemo(() => normalizeTreeSearchModes(widget.options?.tree?.searchModes), [widget.options?.tree?.searchModes])
+    const currentSearchMode = useAppSelector(state => selectBcTree(state, bcName)?.searchMode) ?? searchModes[0]
 
     const {
         dataSource: treeDataSource,
@@ -61,6 +65,7 @@ function TreeTable<T extends CustomDataItem>({
         filterActive
     } = useTableTree(widget)
     const {
+        expandable,
         onExpand: onFormExpand,
         expandIcon,
         expandIconColumn,
@@ -89,22 +94,29 @@ function TreeTable<T extends CustomDataItem>({
 
     const isNode = useCallback((record: T) => (record as T & TableTreeNode)._recordType === 'node', [])
     const treeOnRow = useCallback(
-        (record: T, index: number) => ({
-            ...onRow?.(record, index),
-            'data-test-widget-tree-row-id': record.id,
-            'data-test-widget-tree-row-type': isNode(record) ? 'Row' : 'PseudoRow',
-            'data-record-type': (record as T & TableTreeNode)._recordType
-        }),
+        (record: T, index: number) => {
+            const treeRecord = record as T & TableTreeNode
+
+            return {
+                ...onRow?.(record, index),
+                'data-test-widget-tree-row-id': record.id,
+                'data-test-widget-tree-row-type': isNode(record) ? 'Row' : 'PseudoRow',
+                'data-record-type': treeRecord._recordType,
+                'data-hidden-tree-row': treeRecord._recordType === 'restore-ancestors' && !treeRecord._separatorText
+            }
+        },
         [isNode, onRow]
     )
     const getGroupingRowKeyByRecordId = useCallback(() => undefined, [])
-    const { operationsRef, parentRef, expandedRowKeys, handleRow, resultExpandIcon } = useTableRows<T>({
+    const needRowSelectRecord = !expandable && widget.options?.readOnly !== true && widget.options?.edit?.style !== 'none'
+    const isAllowEdit = !expandable && !widget.options?.readOnly && !disableCellEdit
+    const { operationsRef, parentRef, expandedRowKeys, handleRow, resultExpandIcon, isEditMode } = useTableRows<T>({
         widgetName,
         bcName,
         enabledGrouping: false,
         enabledMassMode: false,
-        selectEditableRow: false,
-        allowEdit: false,
+        selectEditableRow: needRowSelectRecord,
+        allowEdit: isAllowEdit,
         groupingHierarchyModeAggregate: false,
         fields: resultedFields,
         sortedGroupKeys: [],
@@ -146,6 +158,12 @@ function TreeTable<T extends CustomDataItem>({
 
     const { saveCurrentFiltersAsGroup, filterGroups, removeFilterGroup, filtersExist } = usePresetFilterSettings(bcName)
 
+    const restoreAncestorsNode = useMemo(() => treeDataSource.find(node => node._recordType === 'restore-ancestors'), [treeDataSource])
+    const restoreAllPaths = useCallback(
+        () => restoreAncestorPaths(restoreAncestorsNode?.children?.map(node => node._treeParentId).filter(isDefined) ?? []),
+        [restoreAncestorPaths, restoreAncestorsNode]
+    )
+
     const handleSaveFilterGroup = useCallback(
         (values: { name: string }) => {
             saveCurrentFiltersAsGroup(values.name)
@@ -154,10 +172,19 @@ function TreeTable<T extends CustomDataItem>({
     )
 
     const exportConfig = widget.options?.export
-    const showExport = exportConfig?.enabled
+    const showExport = false ?? exportConfig?.enabled
+    useEffect(() => {
+        if (exportConfig?.enabled) {
+            console.log(
+                `"${widget.type}" "${widget.name}": options.export is not supported yet - Excel export for Tree-like widgets will be supported soon.`
+            )
+        }
+    }, [exportConfig?.enabled, widget.name, widget.type])
+
     const showSaveFiltersButton = widget.options?.filterSetting?.enabled
     const showPaginationLimit = !hideLimitOptions
-    const showSettings = showSaveFiltersButton || showColumnSettings || showExport || showPaginationLimit
+    const showSettings =
+        showSaveFiltersButton || showColumnSettings || showExport || showPaginationLimit || searchModes.length > 0 || !!restoreAncestorsNode
 
     const { exportTable } = useExportTable({
         bcName: bcName,
@@ -166,15 +193,15 @@ function TreeTable<T extends CustomDataItem>({
     })
 
     const handleChangeSearchMode = useCallback(
-        (searchMode: string) => {
-            if (!Lookup.has(TREE_SEARCH_MODES, searchMode) || searchMode === currentSearchMode) {
+        (searchMode: TreeSearchModes) => {
+            if (!searchModes.includes(searchMode) || searchMode === currentSearchMode) {
                 return
             }
 
             dispatch(treeActions.changeSearchMode({ bcName, searchMode }))
             dispatch(actions.bcForceUpdate({ bcName }))
         },
-        [bcName, currentSearchMode, dispatch]
+        [bcName, currentSearchMode, dispatch, searchModes]
     )
 
     const settings =
@@ -182,7 +209,10 @@ function TreeTable<T extends CustomDataItem>({
             <TableSettings
                 showSearchMode={true}
                 searchMode={currentSearchMode}
+                searchModes={searchModes}
                 onChangeSearchMode={handleChangeSearchMode}
+                showRestorePath={!!restoreAncestorsNode}
+                onRestoreAllPaths={restoreAllPaths}
                 customSettings={outerSettingsComponent}
                 showSettings={showSettings}
                 showColumnSettings={showColumnSettings}
@@ -225,7 +255,8 @@ function TreeTable<T extends CustomDataItem>({
                 handleExpand: handleTreeExpand,
                 createFetchNodesHandler,
                 restoreAncestorPaths,
-                controlColumns
+                controlColumns,
+                isEditMode
             }),
         [
             bcRowMeta?.fields,
@@ -239,6 +270,7 @@ function TreeTable<T extends CustomDataItem>({
             getNodeSelectionState,
             handleTreeExpand,
             hideColumn,
+            isEditMode,
             restoreAncestorPaths,
             resultedFields,
             selectNode,

@@ -6,7 +6,7 @@ import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hook
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
 import { isDefined } from '@utils/isDefined'
 import styles from '../Table.less'
-import { RightWithEllipse } from '@components/widgets/Table/components/TreeTableCell'
+import { ReactComponent as RightWithEllipseSvg } from '@assets/icons/rightWithEllipse.svg'
 
 interface TreeTablePseudoRowProps {
     dataItem: TableTreeNode
@@ -84,7 +84,7 @@ export function TreeTablePseudoRow({
                 >
                     <Divider style={{ margin: 0 }}>
                         <Icon
-                            component={RightWithEllipse}
+                            component={() => <RightWithEllipseSvg />}
                             style={{
                                 fontSize: 14,
                                 lineHeight: 1,
@@ -92,9 +92,11 @@ export function TreeTablePseudoRow({
                                 paddingRight: 8
                             }}
                         />
-                        <span style={{ fontSize: 14, fontWeight: 'normal' }}>
-                            {t('Nesting level over {{limit}}', { limit: dataItem._nestingLevel ?? 0 })}
-                        </span>
+                        {!!dataItem._separatorText && (
+                            <span style={{ fontSize: 14, fontWeight: 'normal' }}>
+                                {t(dataItem._separatorText, { limit: dataItem._nestingLevel ?? 0 })}
+                            </span>
+                        )}
                     </Divider>
                 </Button>
             </>

@@ -11,6 +11,8 @@ import styles from '../Table.less'
 import Button from '@components/ui/Button/Button'
 import { isDefined } from '@utils/isDefined'
 import { TREE_INDENT_SIZE } from '@components/widgets/Table/constants'
+import { ReactComponent as ListDotSvg } from '@assets/icons/listDot.svg'
+import { ReactComponent as RightWithEllipseSvg } from '@assets/icons/rightWithEllipse.svg'
 
 const EXPAND_ICON_WIDTH = 22
 export const PSEUDO_ROW_TYPES: Array<TableTreeNode['_recordType']> = [
@@ -22,56 +24,6 @@ export const PSEUDO_ROW_TYPES: Array<TableTreeNode['_recordType']> = [
 ]
 const EXPANDED_ICON_TYPE = 'down'
 const COLLAPSED_ICON_TYPE = 'right'
-const ListDotSvg = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 10 10">
-        <circle cx="5" cy="5" r="2" fill="currentColor" />
-    </svg>
-)
-
-export const RightWithEllipse = () => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="300 64 1600 894"
-        width="2em"
-        height="1em"
-        fill="currentColor"
-        aria-hidden="true"
-        focusable="false"
-    >
-        <path
-            d="
-        M765.7 486.8
-        L314.9 134.7
-        A7.97 7.97 0 0 0 302 141
-        v77.3
-        c0 4.9 2.3 9.6 6.1 12.6
-        l360 281.1
-        -360 281.1
-        c-3.9 3-6.1 7.7-6.1 12.6
-        V883
-        c0 6.7 7.7 10.4 12.9 6.3
-        l450.8-352.1
-        a31.96 31.96 0 0 0 0-50.4
-        z
-
-        M1207.7 511
-        A56 56 0 1 0 1319.7 511
-        A56 56 0 1 0 1207.7 511
-        Z
-
-        M1487.7 511
-        A56 56 0 1 0 1599.7 511
-        A56 56 0 1 0 1487.7 511
-        Z
-
-        M1767.7 511
-        A56 56 0 1 0 1879.7 511
-        A56 56 0 1 0 1767.7 511
-        Z
-    "
-        />
-    </svg>
-)
 
 interface TreeTableCellProps<T extends CustomDataItem> {
     field: WidgetListField
@@ -87,6 +39,7 @@ interface TreeTableCellProps<T extends CustomDataItem> {
     createFetchNodesHandler: ReturnType<typeof useTableTree>['createFetchNodesHandler']
     restoreAncestorPaths: ReturnType<typeof useTableTree>['restoreAncestorPaths']
     disableRowExpand?: boolean
+    isEditMode: (record: T) => boolean
 }
 
 export function TreeTableCell<T extends CustomDataItem>({
@@ -102,7 +55,8 @@ export function TreeTableCell<T extends CustomDataItem>({
     handleExpand,
     createFetchNodesHandler,
     restoreAncestorPaths,
-    disableRowExpand
+    disableRowExpand,
+    isEditMode
 }: TreeTableCellProps<T>) {
     const paddingLeft = (dataItem._level ?? 0) * TREE_INDENT_SIZE + TREE_INDENT_SIZE
 
@@ -126,7 +80,7 @@ export function TreeTableCell<T extends CustomDataItem>({
             dataItem={dataItem as any}
             isGroupingHierarchy={isGroupingHierarchy}
             enabledGrouping={false}
-            isEditMode={() => false}
+            isEditMode={isEditMode}
             needHideActions={() => false}
             sortedGroupKeys={[]}
             expandedParentRowKeys={[]}
@@ -181,7 +135,7 @@ export function TreeTableCell<T extends CustomDataItem>({
                             restoreAncestorPaths([String(dataItem._treeParentId)])
                         }}
                     >
-                        <Icon component={RightWithEllipse} style={{ fontSize: 14, lineHeight: 1, verticalAlign: 'initial' }} />
+                        <Icon component={() => <RightWithEllipseSvg />} style={{ fontSize: 14, lineHeight: 1, verticalAlign: 'initial' }} />
                     </Button>
                 )}
                 {showSelection && dataItem._recordType === 'node' && (

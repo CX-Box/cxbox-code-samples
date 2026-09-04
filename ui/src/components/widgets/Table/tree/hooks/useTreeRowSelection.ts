@@ -39,9 +39,10 @@ const INDETERMINATE_IMPLICITLY_SELECTED_STATE: NodeSelectionState = {
 const INDETERMINATE_SELECTED_STATE: NodeSelectionState = INDETERMINATE_IMPLICITLY_SELECTED_STATE // { checked: false, indeterminate: true, implicit: false, disabled: false }
 const UNSELECTABLE_STATE: NodeSelectionState = { checked: false, indeterminate: false, implicit: false, disabled: true }
 const PAGINATION_UNSELECT_WARNING =
-    'You are unchecking the ellipsis. Only the currently visible items in the group will remain selected; items on subsequent pages will be excluded.'
-const IMPLICIT_UNSELECT_WARNING =
-    'You are unchecking an implicitly selected item. Selection will switch to visible items; items on subsequent pages may be excluded.'
+    'Some items in this group are hidden behind "More" and haven\'t loaded yet. Unchecking this item will also deselect all hidden items - only the items currently visible will stay selected.'
+const IMPLICIT_UNSELECT_WARNING = PAGINATION_UNSELECT_WARNING
+const SELECT_ALL_WARNING = 'You\'re selecting this entire group, including items hidden behind "More".'
+const DEFAULT_TREE_CONFIRMS = ['paginationUnselect', 'paginationSelect'] as const
 
 /**
  * A nullish id points to the virtual root of the tree
@@ -84,7 +85,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
     const widget = useAppSelector(state => selectWidget(state, widgetName)) as AppWidgetMeta | undefined
     const bcName = widget?.bcName
     const selectionMode = widget?.options?.tree?.selection ?? 'nodeAndLeaf'
-    const misleadWarn = widget?.options?.tree?.misleadWarn ?? 'all'
+    const confirms = widget?.options?.tree?.confirms ?? DEFAULT_TREE_CONFIRMS
     const treeState = useAppSelector(state => selectBcTree(state, bcName))
     const calculateShowMoreState = useTreeShowMore(widget)
 
@@ -136,6 +137,11 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
             return descendantIds
         },
         [treeState]
+    )
+
+    const hasUnloadedDescendants = useCallback(
+        (nodeId: string) => hasEnabledShowMore(nodeId) || getLoadedDescendantIds(nodeId).some(hasEnabledShowMore),
+        [getLoadedDescendantIds, hasEnabledShowMore]
     )
 
     /**
@@ -395,7 +401,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
 
     const requestPaginationUnselect = useCallback(
         (selectedAncestorId: string, excludedNodeIds: Set<string>, warning: string) => {
-            if (misleadWarn !== 'paginationUnselect' && misleadWarn !== 'all') {
+            if (!confirms.includes('paginationUnselect')) {
                 switchToManualSelection(selectedAncestorId, excludedNodeIds)
                 return
             }
@@ -405,24 +411,22 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
                 onOk: () => switchToManualSelection(selectedAncestorId, excludedNodeIds)
             })
         },
-        [misleadWarn, switchToManualSelection, t]
+        [confirms, switchToManualSelection, t]
     )
 
     const requestSelectGroup = useCallback(
         (nodeId: string) => {
-            if (misleadWarn !== 'selectAll' && misleadWarn !== 'all') {
+            if (!confirms.includes('paginationSelect') || !hasUnloadedDescendants(nodeId)) {
                 handleSelectNode(nodeId)
                 return
             }
 
             Modal.confirm({
-                title: t(
-                    'You are selecting the whole group. All nested items will be selected, including items hidden on subsequent pages.'
-                ),
+                title: t(SELECT_ALL_WARNING),
                 onOk: () => handleSelectNode(nodeId)
             })
         },
-        [handleSelectNode, misleadWarn, t]
+        [confirms, handleSelectNode, hasUnloadedDescendants, t]
     )
 
     const handleUnselectNode = useCallback(
@@ -511,6 +515,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
             handleUnselectNode,
             handleUnselectShowMore,
             isSelectionAggregatedFromChildren,
+            requestSelectGroup,
             selectionMode,
             treeState?.isLeafFieldKey,
             treeState?.nodes

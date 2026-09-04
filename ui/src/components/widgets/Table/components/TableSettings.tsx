@@ -5,6 +5,9 @@ import { ReactComponent as HierarchySVG } from '@assets/icons/hierarchy.svg'
 import Button from '@components/ui/Button/Button'
 import styles from '../Table.less'
 import DropdownSetting from './DropdownSetting'
+import type { TreeSearchModes } from '@interfaces/widget'
+import { ReactComponent as RightWithEllipseSvg } from '@assets/icons/rightWithEllipse.svg'
+import { Lookup } from '@utils/Lookup'
 import { TREE_SEARCH_MODES } from '@constants/tree'
 
 interface TableSettingsProps {
@@ -31,8 +34,16 @@ interface TableSettingsProps {
     paginationLimit?: number
     onChangePaginationLimit?: (limit: number) => void
     showSearchMode?: boolean
-    searchMode?: string
-    onChangeSearchMode?: (searchMode: string) => void
+    searchMode?: TreeSearchModes
+    searchModes?: TreeSearchModes[]
+    onChangeSearchMode?: (searchMode: TreeSearchModes) => void
+    showRestorePath?: boolean
+    onRestoreAllPaths?: () => void
+}
+
+const SEARCH_MODE_TITLES = {
+    collapse: 'Collapse',
+    hide: 'Hide'
 }
 
 function TableSettings({
@@ -60,7 +71,10 @@ function TableSettings({
     onChangePaginationLimit,
     showSearchMode,
     searchMode,
-    onChangeSearchMode
+    searchModes = [],
+    onChangeSearchMode,
+    showRestorePath,
+    onRestoreAllPaths
 }: TableSettingsProps) {
     const { t } = useTranslation()
 
@@ -88,6 +102,8 @@ function TableSettings({
               bcCount: bcCountForShowing
           })
         : undefined
+
+    const getSearchModeTitle = (searchMode: string) => (Lookup.has(TREE_SEARCH_MODES, searchMode) ? t(SEARCH_MODE_TITLES[searchMode]) : '')
 
     return (
         <>
@@ -130,11 +146,26 @@ function TableSettings({
                         )}
                         {showSearchMode && (
                             <Menu.ItemGroup key="searchMode" title={t('Search Mode')}>
-                                {Object.values(TREE_SEARCH_MODES).map(searchMode => (
+                                {searchModes.map(searchMode => (
                                     <Menu.Item key={`search-mode-${searchMode}`} onClick={() => onChangeSearchMode?.(searchMode)}>
-                                        {t(searchMode)}
+                                        {getSearchModeTitle(searchMode)}
                                     </Menu.Item>
                                 ))}
+                            </Menu.ItemGroup>
+                        )}
+                        {showRestorePath && (
+                            <Menu.ItemGroup key="restorePath" title={t('RestorePath')}>
+                                <Menu.Item key="restore-all-paths" onClick={onRestoreAllPaths}>
+                                    <Icon
+                                        component={() => <RightWithEllipseSvg />}
+                                        style={{
+                                            fontSize: 14,
+                                            lineHeight: 1,
+                                            color: '#0088bb'
+                                        }}
+                                    />
+                                    {t('For all')}
+                                </Menu.Item>
                             </Menu.ItemGroup>
                         )}
                         {enabledGrouping && (
