@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { catchError, concat, EMPTY, filter, mergeMap, of, race } from 'rxjs'
+import { catchError, concat, EMPTY, filter, mergeMap, Observable, of, race } from 'rxjs'
 import { AnyAction } from 'redux'
 import { DataItem, WidgetTypes } from '@cxbox-ui/schema'
 import { isAnyOf } from '@reduxjs/toolkit'
@@ -26,6 +26,11 @@ import { buildBcUrl } from '@utils/buildBcUrl'
 import { treeActions } from '@slices/tree'
 import { isTreeWidget } from '@constants/widget'
 import { DEFAULT_PAGE, DEFAULT_PAGE_LIMIT } from '@constants/pagination'
+import { FilterType } from '@interfaces/filters'
+import { FIELDS } from '@constants'
+import { getBcDefaultFilters, mergeFilters } from '@utils/defaultFilters'
+import { CustomWidgetTypes } from '@interfaces/widget'
+import { getAssocTreeSelectedNodeIds } from '@utils/getAssocTreeSelectedNodeIds'
 
 const {
     checkShowCondition,
@@ -177,6 +182,12 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                 return EMPTY
             }
             const bcName = action.payload.bcName as string
+            const treeEnabled = widgets?.some(widget => widget.bcName === bcName && isTreeWidget(widget))
+
+            if (treeEnabled && bcForceUpdate.match(action) && action.payload.nodeId) {
+                return EMPTY
+            }
+
             const fetchContext = buildBcFetchContext(state, bcName, { widgetName })
 
             if (!fetchContext) {
@@ -192,14 +203,40 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                 return EMPTY
             }
 
-            const treeEnabled = widgets?.some(widget => widget.bcName === bcName && isTreeWidget(widget))
-
             if (treeEnabled) {
                 const resetTree = bcForceUpdate.match(action) || bcChangePage.match(action) || showViewPopup.match(action)
                 const withBcDataSideEffects = bcFetchDataRequest.match(action) || resetTree
 
+                const isAssocTreePopup = showViewPopup.match(action) && widget.type === CustomWidgetTypes.AssocTreePopup
+                const bcHasAppliedFilter = state.screen.filters[bcName]
+                let setDefaultFilters: Observable<AnyAction> = EMPTY
+
+                if (isAssocTreePopup && !bcHasAppliedFilter) {
+                    const selectedNodeIds = getAssocTreeSelectedNodeIds(state, action.payload, widget)
+
+                    const defaultFilters = mergeFilters(
+                        getBcDefaultFilters(bc),
+                        selectedNodeIds.length
+                            ? [
+                                  {
+                                      type: FilterType.equalsOneOf,
+                                      fieldName: FIELDS.TECHNICAL.ID,
+                                      value: selectedNodeIds
+                                  }
+                              ]
+                            : undefined
+                    )
+
+                    setDefaultFilters = of(
+                        actions.bcRemoveAllFilters({ bcName: widget.bcName }),
+                        ...defaultFilters.map(filter => actions.bcAddFilter({ bcName: widget.bcName, filter, widgetName: widget.name })),
+                        treeActions.setTreeDefaultFilter({ bcName: widget.bcName, filters: defaultFilters })
+                    )
+                }
+
                 return concat(
                     resetTree ? of(treeActions.initTree({ bcName, reset: true })) : EMPTY,
+                    setDefaultFilters,
                     of(
                         treeActions.fetchChildNodeData({
                             bcName,

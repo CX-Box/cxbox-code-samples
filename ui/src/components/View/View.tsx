@@ -22,7 +22,7 @@ import LevelMenu from '../widgets/LevelMenu/LevelMenu'
 import { Number } from '@fields/Number/Number'
 import { FormPopup } from '../widgets/FormPopup/FormPopup'
 import MultivalueField from '../../fields/Multivalue/MultivalueField'
-import InlinePickList from '../../fields/InlinePickList/InlinePickList'
+import PickField, { PickFieldProps } from '../../fields/PickField/PickField'
 import FileUpload from '@fields/FileUpload/FileUpload'
 import { FieldType, interfaces, utils } from '@cxbox-ui/core'
 import { AdditionalInfoWidget } from '@components/widgets/AdditionalInfo/AdditionalInfoWidget'
@@ -53,8 +53,11 @@ export const customFields = {
     [FieldType.money]: Number,
     [FieldType.dictionary]: Dictionary,
     [FieldType.multivalue]: MultivalueField,
-    [FieldType.pickList]: InlinePickList,
-    [FieldType.inlinePickList]: InlinePickList,
+    [FieldType.pickList]: (props: Omit<PickFieldProps, 'inline'>) => <PickField {...props} inline={false} />,
+    [FieldType.inlinePickList]: (props: Omit<PickFieldProps, 'inline'>) => <PickField {...props} inline={true} />,
+    [CustomFieldTypes.pickTree]: (props: Omit<PickFieldProps, 'inline'>) => <PickField {...props} inline={false} />,
+    [CustomFieldTypes.inlinePickTree]: (props: Omit<PickFieldProps, 'inline'>) => <PickField {...props} inline={true} />,
+    [CustomFieldTypes.multivalueTree]: MultivalueField,
     [CustomFieldTypes.MultipleSelect]: MultipleSelectField,
     [FieldType.fileUpload]: FileUpload,
     [CustomFieldTypes.Time]: TimeField,

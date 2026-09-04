@@ -273,7 +273,10 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                     // TODO: Remove in 2.0.0 in favor of postInvokeConfirm (is this todo needed?)
                     const preInvoke = response.preInvoke as OperationPreInvoke
                     const responseIds = response[FIELDS.MASS_OPERATION.MASS_IDS]
-                    const withoutBcForceUpdate = postInvokeHasRefreshBc(bcName, postInvoke) || isMassOperation || treeEnabled
+                    const hasDataItem = !!dataItem && isDefined(dataItem[FIELDS.TECHNICAL.ID])
+                    const refreshNodeId = treeEnabled && !hasDataItem ? cursor ?? undefined : undefined
+                    const withoutBcForceUpdate =
+                        postInvokeHasRefreshBc(bcName, postInvoke) || isMassOperation || (treeEnabled && hasDataItem)
 
                     // defaultSaveOperation mean that executed custom autosave and postAction will be ignored
                     // drop pendingChanges and onSuccessAction execute instead
@@ -288,7 +291,7 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
                                   isMassOperation && action.payload.onSuccessAction ? of(action.payload.onSuccessAction) : EMPTY,
                                   isMassOperation && responseIds ? of(actions.clearSelectedRows({ bcName })) : EMPTY,
                                   isMassOperation && responseIds ? of(actions.selectRows({ bcName, dataItems: responseIds })) : EMPTY,
-                                  withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName })),
+                                  withoutBcForceUpdate ? EMPTY : of(actions.bcForceUpdate({ bcName, nodeId: refreshNodeId })),
                                   ...(isMassOperation
                                       ? [of(actions.setPendingPostInvoke({ bcName, operationType, postInvoke }))]
                                       : postOperationRoutine(widgetName, postInvoke, preInvoke, operationType, bcName))

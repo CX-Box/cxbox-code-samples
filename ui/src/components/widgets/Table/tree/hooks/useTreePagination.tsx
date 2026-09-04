@@ -10,7 +10,7 @@ export const useTreePagination = (bcName?: string, widgetMeta?: AppWidgetMeta) =
     useEffect(() => {
         if (widgetMeta && !enabled) {
             console.error(
-                `"${widgetMeta.type}"  "${widgetMeta.name}": options.pagination.enabled is ignored - pagination elements are required for lazy loading. Use the "..." indicator to load more, and the gear icon for page size.`
+                `"${widgetMeta.type}" "${widgetMeta.name}": options.pagination.enabled is ignored - Tree-like widgets don't have the standard pagination panel to show or hide.`
             )
         }
     }, [enabled, widgetMeta])

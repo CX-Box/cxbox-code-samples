@@ -1,6 +1,8 @@
 import { EAggFunction } from '@constants/aggregation'
 import {
     DictionaryFieldMeta,
+    FieldType,
+    MultivalueFieldMeta,
     NumberFieldMeta,
     PickListFieldMeta,
     WidgetFormMeta,
@@ -22,7 +24,19 @@ export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect',
     Time = 'time',
     SuggestionPickList = 'suggestionPickList',
-    RichText = 'richText'
+    RichText = 'richText',
+    multivalueTree = 'multivalueTree',
+    pickTree = 'pickTree',
+    inlinePickTree = 'inline-pickTree'
+}
+
+export type AppMultivalueFieldMeta = Omit<MultivalueFieldMeta, 'type'> & {
+    type: FieldType.multivalue | CustomFieldTypes.multivalueTree
+}
+
+export type AppPickFieldMeta = Omit<PickListFieldMeta, 'type'> & {
+    type: FieldType.pickList | FieldType.inlinePickList | CustomFieldTypes.pickTree | CustomFieldTypes.inlinePickTree
+    searchSpec?: string
 }
 
 export enum CustomWidgetTypes {
@@ -53,10 +67,11 @@ export enum CustomWidgetTypes {
 
 export const removeRecordOperationWidgets: Array<WidgetTypes | string> = [
     WidgetTypes.List,
+    CustomWidgetTypes.Tree,
     CustomWidgetTypes.GroupingHierarchy,
     WidgetTypes.PickListPopup,
-    WidgetTypes.AssocListPopup,
     CustomWidgetTypes.PickTreePopup,
+    WidgetTypes.AssocListPopup,
     CustomWidgetTypes.AssocTreePopup,
     CustomWidgetTypes.CalendarList,
     CustomWidgetTypes.CalendarYearList,
@@ -214,11 +229,11 @@ export interface AppWidgetMeta extends WidgetMeta {
         tree?: {
             parentFieldKey?: string // default: parentId
             isLeafFieldKey?: string // default: isLeaf
-            searchMode?: TreeSearchModes
-            treePathRestoreMaxRequestsBeforeFiltration?: number // TODO-DEV rename
-            treePathRestoreMaxRequestsAfterFiltration?: number // TODO-DEV rename
+            searchModes?: TreeSearchModes[]
+            onFilterApplyNestLevel?: number
+            insertPosition?: 'start' | 'end'
             selection?: 'node' | 'nodeAndLeaf' | 'leaf'
-            misleadWarn?: 'paginationUnselect' | 'all' | 'never' | 'selectAll'
+            confirms?: ('paginationUnselect' | 'paginationSelect')[]
         }
     }
 }

@@ -32,6 +32,7 @@ interface BuildTreeTableColumnsParams<T extends CustomDataItem> {
     hideColumn: (fieldKey: string) => void
     disableRowExpand?: boolean
     controlColumns: Array<ControlColumn<T>>
+    isEditMode: (record: T) => boolean
 }
 
 export function buildTreeTableColumns<T extends CustomDataItem>({
@@ -49,7 +50,8 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
     showCloseButton,
     hideColumn,
     disableRowExpand,
-    controlColumns
+    controlColumns,
+    isEditMode
 }: BuildTreeTableColumnsParams<T>): Array<ColumnProps<T>> {
     const isGroupingHierarchy = (widget.type as string) === CustomWidgetTypes.GroupingHierarchy
     const continuingGuidesWidthById = buildContinuingGuidesWidthById(dataSource, expandedRowKeys)
@@ -92,6 +94,7 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                             handleExpand={handleExpand}
                             createFetchNodesHandler={createFetchNodesHandler}
                             restoreAncestorPaths={restoreAncestorPaths}
+                            isEditMode={isEditMode}
                         />
                     )
 

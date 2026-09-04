@@ -87,6 +87,7 @@ export function TableCell<T extends CustomDataItem>({
                 display: 'flex',
                 alignItems: 'center',
                 gap: 4,
+                width: '100%',
                 ...rightAlignment
             }}
         >
