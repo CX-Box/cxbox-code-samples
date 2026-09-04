@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.data.inner;
+package org.demo.documentation.widgets.tree.base.inner;
 
 
 import jakarta.persistence.criteria.Join;
@@ -15,15 +15,16 @@ import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity;
 import org.cxbox.model.core.entity.BaseEntity_;
 import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
-import org.demo.documentation.widgets.tree.base.inner.MyEntity3263Repository;
-import org.demo.documentation.widgets.tree.base.inner.Myexample3263;
+import org.demo.documentation.widgets.tree.data.inner.MyEntity3261Repository;
+import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
+import org.demo.documentation.widgets.tree.data.inner.Myexample3261_;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import static org.cxbox.api.data.dao.SpecificationUtils.and;
-import static org.demo.documentation.widgets.tree.data.inner.Myexample3261DTO_.isIncluded;
+import static org.demo.documentation.widgets.tree.base.inner.Myexample3261DTO_.isIncluded;
 
 @Service
 @Getter

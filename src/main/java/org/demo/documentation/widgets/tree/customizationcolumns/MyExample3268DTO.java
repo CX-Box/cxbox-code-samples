@@ -8,7 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
-import org.demo.documentation.widgets.tree.base.allType.Myexample3262;
+import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Multi;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;

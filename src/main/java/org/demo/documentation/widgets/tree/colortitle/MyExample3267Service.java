@@ -9,7 +9,7 @@ import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.tree.base.allType.Myexample3262;
+import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Multi;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Pick;

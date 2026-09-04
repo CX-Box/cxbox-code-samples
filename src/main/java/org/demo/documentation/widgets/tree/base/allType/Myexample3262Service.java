@@ -15,6 +15,7 @@ import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Mult
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262MultiHover;
 import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Pick;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
+import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 import org.demo.repository.core.Myexample3262Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.tree.data.inner;
+package org.demo.documentation.widgets.tree.base.inner;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +7,8 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.tree.data.inner.Myexample3261;
+
 import java.util.Optional;
 
 @Getter

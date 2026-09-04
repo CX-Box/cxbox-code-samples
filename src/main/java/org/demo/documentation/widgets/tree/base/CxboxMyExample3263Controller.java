@@ -13,7 +13,7 @@ import org.demo.documentation.widgets.tree.base.inner.Myexample3261PickService;
 import org.demo.documentation.widgets.tree.data.departments.My3261UsersPickService;
 import org.demo.documentation.widgets.tree.data.departments.MydepartmentsService;
 import org.demo.documentation.widgets.tree.data.users.My3261UsersService;
-import org.demo.documentation.widgets.tree.data.inner.Myexample3261Service;
+import org.demo.documentation.widgets.tree.base.inner.Myexample3261Service;
 import org.springframework.stereotype.Component;
 
 @SuppressWarnings({"java:S115", "java:S1144"})
