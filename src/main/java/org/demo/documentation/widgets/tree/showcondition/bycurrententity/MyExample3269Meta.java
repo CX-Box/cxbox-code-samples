@@ -17,10 +17,10 @@ public class MyExample3269Meta extends FieldMetaBuilder<MyExample3269DTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3269DTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
-		fields.setEnabled(MyExample3269DTO_.parentId);
-		fields.setEnabled(MyExample3269DTO_.isLeaf);
-		fields.setEnabled(MyExample3269DTO_.customFieldInput);
-		fields.setEnabled(MyExample3269DTO_.customField);
+		fields.setDisabled(MyExample3269DTO_.parentId);
+		fields.setDisabled(MyExample3269DTO_.isLeaf);
+		fields.setDisabled(MyExample3269DTO_.customFieldInput);
+		fields.setDisabled(MyExample3269DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

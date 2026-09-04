@@ -16,29 +16,29 @@ public class MyExample3267Meta extends FieldMetaBuilder<MyExample3267DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3267DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyExample3267DTO_.customFieldText);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorInput);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorText);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorDateTime);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorCheckbox);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorDate);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorDateTimeWithSeconds);
+		fields.setDisabled(MyExample3267DTO_.customFieldText);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorInput);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorText);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorDateTime);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorCheckbox);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorDate);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorDateTimeWithSeconds);
 		fields.setEnumValues(MyExample3267DTO_.customFieldColorDictionary, CustomFieldDictionaryEnum.values());
-		fields.setEnabled(MyExample3267DTO_.customFieldColorDictionary);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorFileUploadeId);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorFileUploade);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorNumber);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorPercent);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorMoney);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorDictionary);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorFileUploadeId);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorFileUploade);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorNumber);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorPercent);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorMoney);
 		fields.setEnumValues(MyExample3267DTO_.customFieldColorRadio, CustomFieldRadioEnum.values());
-		fields.setEnabled(MyExample3267DTO_.customFieldColorRadio);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorPicklistId);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorPicklist);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorInlinePicklistId);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorInlinePicklist);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorMultivalue);
-		fields.setEnabled(MyExample3267DTO_.customFieldColorMultivalueHover);
-		fields.setEnabled(MyExample3267DTO_.customField);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorRadio);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorPicklistId);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorPicklist);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorInlinePicklistId);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorInlinePicklist);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorMultivalue);
+		fields.setDisabled(MyExample3267DTO_.customFieldColorMultivalueHover);
+		fields.setDisabled(MyExample3267DTO_.customField);
 		fields.setRequired(MyExample3267DTO_.customField);
 	}
 
