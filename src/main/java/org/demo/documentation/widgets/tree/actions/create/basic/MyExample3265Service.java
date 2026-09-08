@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +30,13 @@ public class MyExample3265Service extends VersionAwareResponseService<MyExample3
 	@Override
 	protected ActionResultDTO<MyExample3265DTO> doUpdateEntity(MyEntity3265 entity, MyExample3265DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample3265DTO_.customFieldMoney, entity::setCustomFieldMoney);
-		setIfChanged(data, MyExample3265DTO_.parentId, entity::setParentId);
 
 		setIfChanged(data, MyExample3265DTO_.customFieldText, entity::setCustomFieldText);
 		if (data.isFieldChanged(MyExample3265DTO_.customField)) {
 			entity.setCustomField(data.getCustomField());
+		}
+		if (data.isFieldChanged(MyExample3265DTO_.parentId)) {
+			entity.setParentId(data.getParentId());
 		}
 		MyExample3265DTO dto = entityToDto(bc, repository.save(entity));
 		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
@@ -47,6 +52,21 @@ public class MyExample3265Service extends VersionAwareResponseService<MyExample3
 				.save(sv -> sv.text("Save"))
 				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
 				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("sdgfdgdg", "Sdgfdgdg")
+						.scope(ActionScope.RECORD)
+						.available(bc -> {
+							// TODO: Write action availability condition here
+							return true;
+						})
+						.invoker((bc, dto) -> {
+							// TODO: Write action processing code here
+							return new ActionResultDTO<MyExample3265DTO>()
+									.setAction(PostAction.showMessage(
+											MessageType.INFO, "Action sdgfdgdg was invoked"
+									));
+						})
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
