@@ -31,6 +31,7 @@ import { FIELDS } from '@constants'
 import { getBcDefaultFilters, mergeFilters } from '@utils/defaultFilters'
 import { CustomWidgetTypes } from '@interfaces/widget'
 import { getAssocTreeSelectedNodeIds } from '@utils/getAssocTreeSelectedNodeIds'
+import { selectBcFilters } from '@selectors/selectors'
 
 const {
     checkShowCondition,
@@ -208,30 +209,45 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                 const withBcDataSideEffects = bcFetchDataRequest.match(action) || resetTree
 
                 const isAssocTreePopup = showViewPopup.match(action) && widget.type === CustomWidgetTypes.AssocTreePopup
-                const bcHasAppliedFilter = state.screen.filters[bcName]
+                const rawFilters = selectBcFilters(state, bcName)
+                const filtersUntouched = rawFilters === undefined
+                const hasAppliedFilters = Array.isArray(rawFilters) && rawFilters.length > 0
+
                 let setDefaultFilters: Observable<AnyAction> = EMPTY
+                let hasFilters = hasAppliedFilters
 
-                if (isAssocTreePopup && !bcHasAppliedFilter) {
+                if (isAssocTreePopup) {
                     const selectedNodeIds = getAssocTreeSelectedNodeIds(state, action.payload, widget)
-
+                    const newIdFilter = selectedNodeIds.length
+                        ? {
+                              type: FilterType.equalsOneOf,
+                              fieldName: FIELDS.TECHNICAL.ID,
+                              value: selectedNodeIds
+                          }
+                        : undefined
+                    const unnecessaryFilterById = rawFilters?.find(filter => filter.fieldName === newIdFilter?.fieldName)
                     const defaultFilters = mergeFilters(
-                        getBcDefaultFilters(bc),
-                        selectedNodeIds.length
-                            ? [
-                                  {
-                                      type: FilterType.equalsOneOf,
-                                      fieldName: FIELDS.TECHNICAL.ID,
-                                      value: selectedNodeIds
-                                  }
-                              ]
-                            : undefined
+                        filtersUntouched ? getBcDefaultFilters(bc)?.filter(filter => filter.fieldName !== newIdFilter?.fieldName) : [],
+                        newIdFilter ? [newIdFilter] : undefined
                     )
 
-                    setDefaultFilters = of(
-                        actions.bcRemoveAllFilters({ bcName: widget.bcName }),
-                        ...defaultFilters.map(filter => actions.bcAddFilter({ bcName: widget.bcName, filter, widgetName: widget.name })),
-                        treeActions.setTreeDefaultFilter({ bcName: widget.bcName, filters: defaultFilters })
+                    setDefaultFilters = concat(
+                        unnecessaryFilterById
+                            ? of(actions.bcRemoveFilter({ bcName: widget.bcName, filter: unnecessaryFilterById }))
+                            : EMPTY,
+                        of(...defaultFilters.map(filter => actions.bcAddFilter({ bcName: widget.bcName, filter, widgetName: widget.name })))
                     )
+
+                    hasFilters = defaultFilters.length > 0
+                } else if (filtersUntouched) {
+                    const defaultFilters = getBcDefaultFilters(bc)
+
+                    if (defaultFilters.length > 0) {
+                        setDefaultFilters = of(
+                            ...defaultFilters.map(filter => actions.bcAddFilter({ bcName: widget.bcName, filter, widgetName: widget.name }))
+                        )
+                        hasFilters = true
+                    }
                 }
 
                 return concat(
@@ -240,7 +256,7 @@ export const bcFetchDataEpic: RootEpic = (action$, state$, { api, utils }) =>
                     of(
                         treeActions.fetchChildNodeData({
                             bcName,
-                            parentId: null,
+                            parentId: hasFilters ? undefined : null,
                             page: fetchParams._page,
                             limit: fetchParams._limit,
                             bcDataRequestAction: withBcDataSideEffects ? action : undefined

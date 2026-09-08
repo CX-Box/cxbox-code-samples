@@ -7,6 +7,7 @@ import { AnyAction } from '@reduxjs/toolkit'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { selectBcNameFromPopupData, selectBcUrlRowMeta } from '@selectors/selectors'
 import { bcFetchDataEpic } from './data/bcFetchDataEpic'
+import { postInvokeHasRefreshBc } from '@utils/postInvokeHasRefreshBc'
 
 // TODO update this epic in the kernel to the current implementation
 /**
@@ -94,13 +95,14 @@ export const bcSaveDataEpic: RootEpic = (action$, state$, { api, utils: internal
             return api.saveBcData(state.screen.screenName, bcUrl, { ...pendingChanges, vstamp: dataItem?.vstamp as number }, context).pipe(
                 mergeMap(data => {
                     const postInvoke = data.postActions?.[0]
+                    const withoutBcForceUpdate = postInvokeHasRefreshBc(bcName, postInvoke)
                     const responseDataItem = data.record
                     return concat(
                         of(actions.setOperationFinished({ bcName, operationType: OperationTypeCrud.save })),
                         of(actions.bcSaveDataSuccess({ bcName, cursor, dataItem: responseDataItem })),
                         of(actions.bcFetchRowMeta({ widgetName, bcName })),
                         of(actions.deselectTableRow()),
-                        of(...fetchChildrenBcData),
+                        withoutBcForceUpdate ? EMPTY : of(...fetchChildrenBcData), // Solves the problem of duplicate requests
                         postInvoke
                             ? of(
                                   actions.processPostInvoke({

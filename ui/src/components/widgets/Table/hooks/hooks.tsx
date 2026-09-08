@@ -6,9 +6,15 @@ import { FIELDS } from '@constants'
 import { selectBc, selectBcFilters, selectHasBcTree } from '@selectors/selectors'
 import { treeActions } from '@slices/tree'
 import { AppWidgetMeta, CustomWidgetTypes } from '@interfaces/widget'
-import { getBcDefaultFilters, areFiltersEqual, mergeFilters } from '@utils/defaultFilters'
+import {
+    getBcDefaultFilters,
+    areFiltersEqual,
+    mergeFilters,
+    getBcDefaultFilterGroupName,
+    DEFAULT_ASSOC_ID_FILTER_PARAMS,
+    getResetFilterTitleKey
+} from '@utils/defaultFilters'
 import { getAssocTreeSelectedNodeIds } from '@utils/getAssocTreeSelectedNodeIds'
-import { FilterType } from '@cxbox-ui/core'
 
 function useFiltersGroupName(bcName: string | undefined) {
     const filterGroupName = useAppSelector(state => state.screen.appliedFilterGroup[bcName!] ?? null)
@@ -27,7 +33,16 @@ function useFiltersGroupName(bcName: string | undefined) {
 
 export const useFilterGroups = (meta?: AppWidgetMeta) => {
     const bcName = meta?.bcName ?? ''
-    const { filtersExist, filterGroupsExist, filterGroups, filtersCount, defaultFilters, showResetButton } = useAppSelector(state => {
+    const {
+        filtersExist,
+        filterGroupsExist,
+        filterGroups,
+        filtersCount,
+        defaultFilters,
+        showResetButton,
+        defaultFilterGroupName,
+        resetButtonTitleKey
+    } = useAppSelector(state => {
         const bc = selectBc(state, bcName)
         const bcFilters = selectBcFilters(state, bcName)
         const screenViewerMode = state.screen.viewerMode[bcName]
@@ -44,9 +59,12 @@ export const useFilterGroups = (meta?: AppWidgetMeta) => {
         const resolvedDefaultFilters = mergeFilters(
             getBcDefaultFilters(bc),
             meta?.type === CustomWidgetTypes.AssocTreePopup && selectedNodeIds.length
-                ? [{ fieldName: FIELDS.TECHNICAL.ID, type: FilterType.equalsOneOf, value: selectedNodeIds }]
+                ? [{ ...DEFAULT_ASSOC_ID_FILTER_PARAMS, value: selectedNodeIds }]
                 : undefined
         )
+        const hasDefaultFilters = (getBcDefaultFilters(bc)?.length ?? 0) > 0
+        const hasSelectedRowsFilter = meta?.type === CustomWidgetTypes.AssocTreePopup && selectedNodeIds.length > 0
+        const resetButtonTitleKey = getResetFilterTitleKey({ hasDefaultFilters, hasSelectedRowsFilter })
 
         return {
             cursor: bc?.cursor,
@@ -55,7 +73,9 @@ export const useFilterGroups = (meta?: AppWidgetMeta) => {
             filtersExist: enabledMassMode ? massModeFiltersExist : defaultFiltersExist,
             filtersCount: enabledMassMode && filterById && !resultFilterEnabled ? filtersLength - 1 : filtersLength,
             defaultFilters: resolvedDefaultFilters,
-            showResetButton: resolvedDefaultFilters.length > 0 && !areFiltersEqual(bcFilters, resolvedDefaultFilters)
+            defaultFilterGroupName: getBcDefaultFilterGroupName(bc),
+            showResetButton: resolvedDefaultFilters.length > 0 && !areFiltersEqual(bcFilters, resolvedDefaultFilters),
+            resetButtonTitleKey
         }
     }, shallowEqual)
     const hasBcTree = useAppSelector(selectHasBcTree(bcName))
@@ -76,15 +96,18 @@ export const useFilterGroups = (meta?: AppWidgetMeta) => {
 
     const resetFilters = useCallback(() => {
         dispatch(actions.bcRemoveAllFilters({ bcName }))
-        defaultFilters.forEach(filter => dispatch(actions.bcAddFilter({ bcName, filter, widgetName: meta?.name })))
+        if (defaultFilterGroupName) {
+            setFilterGroupName(defaultFilterGroupName)
+        } else {
+            defaultFilters.forEach(filter => dispatch(actions.bcAddFilter({ bcName, filter, widgetName: meta?.name })))
+        }
 
         if (hasBcTree) {
-            dispatch(treeActions.setTreeDefaultFilter({ bcName, filters: defaultFilters }))
             dispatch(treeActions.applyFilter({ bcName }))
         } else {
             dispatch(actions.bcForceUpdate({ bcName }))
         }
-    }, [bcName, defaultFilters, dispatch, hasBcTree, meta?.name])
+    }, [bcName, defaultFilterGroupName, defaultFilters, dispatch, hasBcTree, meta?.name, setFilterGroupName])
 
     const applyFilterGroup = useCallback(
         (value: string) => {
@@ -103,6 +126,7 @@ export const useFilterGroups = (meta?: AppWidgetMeta) => {
         showFilterGroups: filterGroupsExist,
         showClearButton: filtersExist,
         showResetButton,
+        resetButtonTitleKey,
         applyFilterGroup,
         clearAllFilters,
         resetFilters,

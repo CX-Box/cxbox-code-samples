@@ -6,6 +6,7 @@ import { TreeTableColumnTitle } from '@components/widgets/Table/components/TreeT
 import { ControlColumn, CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { TableTreeNode, useTableTree } from '@components/widgets/Table/tree/hooks/useTableTree'
 import { useTreeRowSelection } from '@components/widgets/Table/tree/hooks/useTreeRowSelection'
+import { TREE_ROOT_ID } from '@components/widgets/Table/constants'
 import { AppWidgetGroupingHierarchyMeta, AppWidgetTableMeta, CustomWidgetTypes } from '@interfaces/widget'
 import { RowMetaField } from '@interfaces/rowMeta'
 import styles from '../../Table.less'
@@ -70,9 +71,12 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                         field={listField}
                         rowMeta={rowMetaFields?.find(item => item.key === field.key)}
                         widgetName={widget.name}
+                        isFirstColumn={isFirstColumn}
                         showSelection={isFirstColumn && showSelection}
                         selectNode={selectNode}
                         getNodeSelectionState={getNodeSelectionState}
+                        handleExpand={handleExpand}
+                        isExpanded={expandedRowKeys.includes(TREE_ROOT_ID)}
                     />
                 ),
                 key: field.key,

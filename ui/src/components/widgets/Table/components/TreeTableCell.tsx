@@ -101,22 +101,6 @@ export function TreeTableCell<T extends CustomDataItem>({
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <span style={{ paddingLeft, display: 'flex', alignItems: 'center' }}>
-                {!dataItem._treeIsLeaf && dataItem._recordType === 'node' ? (
-                    disableRowExpand ? (
-                        <Icon component={ListDotSvg} style={{ marginRight: 8, cursor: 'initial', color: 'rgba(0, 0, 0, 0.65)' }} />
-                    ) : (
-                        <Icon
-                            type={isExpanded ? EXPANDED_ICON_TYPE : COLLAPSED_ICON_TYPE}
-                            style={{ marginRight: 8, cursor: 'pointer' }}
-                            onClick={event => {
-                                event.stopPropagation()
-                                handleExpand(!isExpanded, dataItem)
-                            }}
-                        />
-                    )
-                ) : (
-                    <span style={{ display: 'inline-block', width: EXPAND_ICON_WIDTH }} />
-                )}
                 {dataItem._restorePath && isDefined(dataItem._treeParentId) && (
                     <Button
                         type="Link"
@@ -137,6 +121,22 @@ export function TreeTableCell<T extends CustomDataItem>({
                     >
                         <Icon component={() => <RightWithEllipseSvg />} style={{ fontSize: 14, lineHeight: 1, verticalAlign: 'initial' }} />
                     </Button>
+                )}
+                {!dataItem._treeIsLeaf && dataItem._recordType === 'node' ? (
+                    disableRowExpand ? (
+                        <Icon component={ListDotSvg} style={{ marginRight: 8, cursor: 'initial', color: 'rgba(0, 0, 0, 0.65)' }} />
+                    ) : (
+                        <Icon
+                            type={isExpanded ? EXPANDED_ICON_TYPE : COLLAPSED_ICON_TYPE}
+                            style={{ marginRight: 8, cursor: 'pointer' }}
+                            onClick={event => {
+                                event.stopPropagation()
+                                handleExpand(!isExpanded, dataItem)
+                            }}
+                        />
+                    )
+                ) : (
+                    <span style={{ display: 'inline-block', width: EXPAND_ICON_WIDTH }} />
                 )}
                 {showSelection && dataItem._recordType === 'node' && (
                     <Checkbox

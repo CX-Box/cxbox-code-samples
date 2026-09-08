@@ -28,6 +28,7 @@ import { useExportTable } from '@components/widgets/Table/hooks/useExportTable'
 import { treeActions } from '@slices/tree'
 import { normalizeTreeSearchModes } from '@constants/tree'
 import { isDefined } from '@utils/isDefined'
+import { isRestoreAncestorsBranch, isUnallocatedNodesBranch } from '@components/widgets/Table/tree/hooks/useTreeDataSource'
 
 interface TreeTableProps<T extends CustomDataItem> extends AntdTableProps<T> {
     meta: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -102,7 +103,9 @@ function TreeTable<T extends CustomDataItem>({
                 'data-test-widget-tree-row-id': record.id,
                 'data-test-widget-tree-row-type': isNode(record) ? 'Row' : 'PseudoRow',
                 'data-record-type': treeRecord._recordType,
-                'data-hidden-tree-row': treeRecord._recordType === 'restore-ancestors' && !treeRecord._separatorText
+                'data-hidden-tree-row': treeRecord._recordType === 'restore-ancestors' && !treeRecord._separatorText,
+                'data-restore-ancestors-branch': isRestoreAncestorsBranch(treeRecord) ? 'true' : undefined,
+                'data-unallocated-nodes-branch': isUnallocatedNodesBranch(treeRecord) ? 'true' : undefined
             }
         },
         [isNode, onRow]

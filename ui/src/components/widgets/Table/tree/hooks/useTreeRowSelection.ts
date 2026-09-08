@@ -10,7 +10,9 @@ import { useTreeShowMore } from '@components/widgets/Table/tree/hooks/useTreeSho
 import { isDefined } from '@utils/isDefined'
 import { TreeNode } from '@slices/tree'
 import { AppWidgetMeta } from '@interfaces/widget'
-import { getTreeNodeIsLeaf, getTreeNodeParentId } from '@utils/tree'
+import { collectSubtreeNodeIds, getAncestorNodeIds, getTreeNodeIsLeaf, normalizeNodeId } from '@utils/tree'
+import { Lookup } from '@utils/Lookup'
+import { DEFAULT_TREE_CONFIRM_MODES } from '@constants/tree'
 
 export interface TreeRowSelectionSource {
     selectItems: (selected: boolean, changedRows: Array<Record<string, any>>) => void
@@ -42,12 +44,6 @@ const PAGINATION_UNSELECT_WARNING =
     'Some items in this group are hidden behind "More" and haven\'t loaded yet. Unchecking this item will also deselect all hidden items - only the items currently visible will stay selected.'
 const IMPLICIT_UNSELECT_WARNING = PAGINATION_UNSELECT_WARNING
 const SELECT_ALL_WARNING = 'You\'re selecting this entire group, including items hidden behind "More".'
-const DEFAULT_TREE_CONFIRMS = ['paginationUnselect', 'paginationSelect'] as const
-
-/**
- * A nullish id points to the virtual root of the tree
- */
-const normalizeNodeId = (nodeId: NodeId): string => (isDefined(nodeId) ? String(nodeId) : TREE_ROOT_ID)
 
 const asNodeRecord = (recordOrId: NodeRecordOrId): Record<string, any> | null =>
     isDefined(recordOrId) && typeof recordOrId === 'object' ? recordOrId : null
@@ -85,7 +81,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
     const widget = useAppSelector(state => selectWidget(state, widgetName)) as AppWidgetMeta | undefined
     const bcName = widget?.bcName
     const selectionMode = widget?.options?.tree?.selection ?? 'nodeAndLeaf'
-    const confirms = widget?.options?.tree?.confirms ?? DEFAULT_TREE_CONFIRMS
+    const confirms = widget?.options?.tree?.confirms ?? DEFAULT_TREE_CONFIRM_MODES
     const treeState = useAppSelector(state => selectBcTree(state, bcName))
     const calculateShowMoreState = useTreeShowMore(widget)
 
@@ -117,7 +113,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
             const normalizedNodeId = normalizeNodeId(nodeId)
 
             // the virtual root has no record of its own
-            return treeState?.nodes[normalizedNodeId] ?? { id: normalizedNodeId === 'null' ? null : normalizedNodeId }
+            return treeState?.nodes[normalizedNodeId] ?? { id: normalizedNodeId === TREE_ROOT_ID ? null : normalizedNodeId }
         },
         [treeState]
     )
@@ -127,14 +123,8 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
             if (!treeState) {
                 return []
             }
-            const childIds = treeState.childIdsByParent[normalizeNodeId(nodeId)] || []
-            let descendantIds = [...childIds]
 
-            childIds.forEach(childId => {
-                descendantIds = descendantIds.concat(getLoadedDescendantIds(childId))
-            })
-
-            return descendantIds
+            return Array.from(collectSubtreeNodeIds(nodeId, id => treeState.childIdsByParent[id]))
         },
         [treeState]
     )
@@ -216,17 +206,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
                 return []
             }
 
-            const ancestorIds: string[] = []
-            let currentNodeId = normalizeNodeId(nodeId)
-
-            while (currentNodeId !== TREE_ROOT_ID) {
-                const parentId = normalizeNodeId(getTreeNodeParentId(treeState.nodes[currentNodeId], treeState.parentFieldKey))
-
-                ancestorIds.push(parentId)
-                currentNodeId = parentId
-            }
-
-            return ancestorIds
+            return getAncestorNodeIds(nodeId, id => treeState.nodes[id], treeState.parentFieldKey, { includeRoot: true })
         },
         [treeState]
     )
@@ -401,7 +381,7 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
 
     const requestPaginationUnselect = useCallback(
         (selectedAncestorId: string, excludedNodeIds: Set<string>, warning: string) => {
-            if (!confirms.includes('paginationUnselect')) {
+            if (!confirms.includes('paginationUnselect') || !hasUnloadedDescendants(selectedAncestorId)) {
                 switchToManualSelection(selectedAncestorId, excludedNodeIds)
                 return
             }
@@ -411,12 +391,12 @@ export const useTreeRowSelection = (widgetName: string, selectionSource?: TreeRo
                 onOk: () => switchToManualSelection(selectedAncestorId, excludedNodeIds)
             })
         },
-        [confirms, switchToManualSelection, t]
+        [confirms, hasUnloadedDescendants, switchToManualSelection, t]
     )
 
     const requestSelectGroup = useCallback(
         (nodeId: string) => {
-            if (!confirms.includes('paginationSelect') || !hasUnloadedDescendants(nodeId)) {
+            if (!Lookup.has(confirms, 'paginationSelect') || !hasUnloadedDescendants(nodeId)) {
                 handleSelectNode(nodeId)
                 return
             }

@@ -18,7 +18,7 @@ import { TableSettingsItem } from '@interfaces/tableSettings'
 import { IAggField, IAggLevel } from '@interfaces/groupingHierarchy'
 import { PaginationMode } from '@constants/pagination'
 import { SignaturePackage, SignatureType } from '@constants/cadesPlugin'
-import { TREE_EXPANDED_STATE_AFTER_FILTERS, TREE_SEARCH_MODES } from '@constants/tree'
+import { TREE_CONFIRM_MODES, TREE_EXPANDED_STATE_AFTER_FILTERS, TREE_SEARCH_MODES } from '@constants/tree'
 
 export enum CustomFieldTypes {
     MultipleSelect = 'multipleSelect',
@@ -233,7 +233,7 @@ export interface AppWidgetMeta extends WidgetMeta {
             onFilterApplyNestLevel?: number
             insertPosition?: 'start' | 'end'
             selection?: 'node' | 'nodeAndLeaf' | 'leaf'
-            confirms?: ('paginationUnselect' | 'paginationSelect')[]
+            confirms?: (keyof typeof TREE_CONFIRM_MODES)[]
         }
     }
 }

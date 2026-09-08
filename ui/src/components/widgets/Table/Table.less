@@ -384,6 +384,15 @@
         top: 25%;
     }
 
+    tr[data-restore-ancestors-branch='true'] .treeLevelCell,
+    tr[data-unallocated-nodes-branch='true'] .treeLevelCell {
+        &::before,
+        &::after {
+            left: 30.5px;
+            width: calc((var(--tree-level) - 1) * 20px + 1px);
+        }
+    }
+
     tr[data-record-type='show-more'] .treeLevelCell {
         &::before {
             bottom: 75%;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { TreeNode, BcTreeState } from '@slices/tree'
-import { RESTORE_ANCESTORS_ID, UNALLOCATED_NODES_ID } from '@components/widgets/Table/constants'
+import { RESTORE_ANCESTORS_ID, TREE_ROOT_ID, UNALLOCATED_NODES_ID } from '@components/widgets/Table/constants'
 import { TEXT_SEPARATOR_FOR_NEST_LEVEL } from '@constants/tree'
 
 export type RestoreAncestorsPosition = 'start' | 'end'
@@ -13,12 +13,21 @@ export type TableTreeNode = TreeNode & {
     _level: number
     _matchesFilter?: boolean
     _restorePath?: boolean
+    _branchType?: 'restore-ancestors' | 'unallocated-nodes' | string
     _treeParentId?: string | null
     _remainingNumberOfRecords?: string | number | undefined
     _countInfoMessage?: string
     _treeIsLeaf?: boolean
     _nestingLevel?: number
     _separatorText?: string
+}
+
+export const isRestoreAncestorsBranch = ({ _branchType }: Pick<TableTreeNode, '_branchType'>) => {
+    return _branchType === 'restore-ancestors'
+}
+
+export const isUnallocatedNodesBranch = ({ _branchType }: Pick<TableTreeNode, '_branchType'>) => {
+    return _branchType === 'unallocated-nodes'
 }
 
 const getMaxNestingLevel = (nodes: TableTreeNode[]): number =>
@@ -53,7 +62,13 @@ export const useTreeDataSource = (
             visibleNodeIds?: Set<string>,
             matchedNodeIds?: Set<string>
         ): TableTreeNode[] => {
-            const appendPseudoNodes = (childNodes: TableTreeNode[], parentId: string | null, isLoading: boolean, level: number) => {
+            const appendPseudoNodes = (
+                childNodes: TableTreeNode[],
+                parentId: string | null,
+                isLoading: boolean,
+                level: number,
+                branchType?: string
+            ) => {
                 if (!showBranchPagination) {
                     return
                 }
@@ -73,7 +88,8 @@ export const useTreeDataSource = (
                         parentId: parentId,
                         name: 'loading',
                         _recordType: 'loading',
-                        _level: level
+                        _level: level,
+                        _branchType: branchType
                     } as TableTreeNode)
                 } else if (visible) {
                     childNodes.push({
@@ -86,7 +102,8 @@ export const useTreeDataSource = (
                         _recordType: 'show-more',
                         _disabled: disabled || isLoading,
                         _loading: isLoading,
-                        _level: level
+                        _level: level,
+                        _branchType: branchType
                     } as TableTreeNode)
                 } else if (!hasChildren && level !== 0) {
                     childNodes.push({
@@ -95,32 +112,34 @@ export const useTreeDataSource = (
                         parentId: parentId,
                         name: 'empty',
                         _recordType: 'empty',
-                        _level: level
+                        _level: level,
+                        _branchType: branchType
                     } as TableTreeNode)
                 }
             }
 
             const getChildNodesWithPseudoNodes = (
                 parentId: string | null,
-                buildNode: (nodeId: string, level: number) => TableTreeNode | null,
-                level: number
+                buildNode: (nodeId: string, level: number, branchType?: string) => TableTreeNode | null,
+                level: number,
+                branchType?: string
             ) => {
                 const normalizedParentId = String(parentId)
                 const childIds = childIdsByParentId[normalizedParentId] || []
                 const childNodes = childIds
                     .filter(childId => !visibleNodeIds || visibleNodeIds.has(String(childId)))
-                    .map(childId => buildNode(childId, level))
+                    .map(childId => buildNode(childId, level, branchType))
                     .filter(Boolean) as TableTreeNode[]
 
                 const parentNodeState = nodeStates[normalizedParentId]
                 const isLoading = parentNodeState?.loading || false
 
-                appendPseudoNodes(childNodes, parentId, isLoading, level)
+                appendPseudoNodes(childNodes, parentId, isLoading, level, branchType)
 
                 return childNodes
             }
 
-            const buildTreeNode = (nodeId: string, currentLevel: number): TableTreeNode | null => {
+            const buildTreeNode = (nodeId: string, currentLevel: number, branchType?: string): TableTreeNode | null => {
                 const node = nodesById[nodeId]
 
                 if (!node) {
@@ -129,7 +148,7 @@ export const useTreeDataSource = (
 
                 const parentId = node[bcTreeState?.parentFieldKey ?? 'parentId'] as string | null | undefined
                 const isLeaf = node[bcTreeState?.isLeafFieldKey ?? 'isLeaf'] === true
-                const childNodes = getChildNodesWithPseudoNodes(nodeId, buildTreeNode, currentLevel + 1)
+                const childNodes = getChildNodesWithPseudoNodes(nodeId, buildTreeNode, currentLevel + 1, branchType)
                 const hasActualChildren = childNodes.some(child => child._recordType === 'node')
                 const technicalIsLeaf = isLeaf && !hasActualChildren
 
@@ -144,13 +163,18 @@ export const useTreeDataSource = (
                     _matchesFilter: matchedNodeIds?.has(String(node.id)),
                     _treeParentId: parentId,
                     _treeIsLeaf: technicalIsLeaf,
+                    _branchType: branchType,
                     children: technicalIsLeaf ? undefined : childNodes
                 }
             }
 
             const rootNodes = getChildNodesWithPseudoNodes(null, buildTreeNode, 0)
             const unallocatedNodeIds = new Set(bcTreeState?.unallocatedNodeIds ?? [])
-            const unallocatedNodes = [...unallocatedNodeIds].map(nodeId => buildTreeNode(nodeId, 0)).filter(Boolean) as TableTreeNode[]
+            const unallocatedNodes = [...unallocatedNodeIds]
+                .map(nodeId => buildTreeNode(nodeId, 0, 'unallocated-nodes'))
+                .filter(Boolean)
+                .map(node => ({ ...node, _branchType: 'unallocated-nodes' })) as TableTreeNode[]
+
             const orphanRootIds = Object.values(nodesById)
                 .filter(node => {
                     const parentId = node[bcTreeState?.parentFieldKey ?? 'parentId']
@@ -164,9 +188,9 @@ export const useTreeDataSource = (
                 })
                 .map(node => String(node.id))
             const orphanNodes = orphanRootIds
-                .map(nodeId => buildTreeNode(nodeId, 0))
+                .map(nodeId => buildTreeNode(nodeId, 0, 'restore-ancestors'))
                 .filter(Boolean)
-                .map(node => ({ ...node!, _restorePath: true })) as TableTreeNode[]
+                .map(node => ({ ...node!, _restorePath: true, _branchType: 'restore-ancestors' })) as TableTreeNode[]
 
             const unallocatedNodesGroup = unallocatedNodes.length
                 ? ([
@@ -176,14 +200,17 @@ export const useTreeDataSource = (
                           name: 'unallocated-nodes',
                           _recordType: 'unallocated-nodes',
                           _level: 0,
+                          _branchType: 'unallocated-nodes',
                           children: unallocatedNodes
                       } as TableTreeNode
                   ] as TableTreeNode[])
                 : []
 
-            if (orphanNodes.length === 0) {
-                return [...unallocatedNodesGroup, ...rootNodes]
-            }
+            const filterHasNoVisibleData =
+                bcTreeState?.filterActive &&
+                !bcTreeState.filterPagination.loading &&
+                !rootNodes.some(node => node._recordType === 'node') &&
+                orphanNodes.length === 0
 
             const restoreAncestorsNode = {
                 id: RESTORE_ANCESTORS_ID,
@@ -195,17 +222,42 @@ export const useTreeDataSource = (
                 _level: 0,
                 _nestingLevel: TEXT_SEPARATOR_FOR_NEST_LEVEL?.includes('{{limit}}') ? getMaxNestingLevel(orphanNodes) : undefined,
                 _separatorText: TEXT_SEPARATOR_FOR_NEST_LEVEL ?? undefined,
+                _branchType: 'restore-ancestors',
                 children: orphanNodes
             } as TableTreeNode
 
+            if (filterHasNoVisibleData) {
+                restoreAncestorsNode.children = [
+                    {
+                        id: 'empty-null',
+                        vstamp: 0,
+                        parentId: null,
+                        name: 'empty',
+                        _recordType: 'empty',
+                        _level: 0,
+                        _branchType: 'restore-ancestors'
+                    } as TableTreeNode
+                ]
+            }
+
+            const isRootExpanded = bcTreeState?.expandedParents ? bcTreeState.expandedParents.includes(TREE_ROOT_ID) : true
+            const visibleRootNodes = isRootExpanded ? rootNodes : []
+
+            if (restoreAncestorsNode.children?.length === 0) {
+                return [...unallocatedNodesGroup, ...visibleRootNodes]
+            }
+
             return restoreAncestorsPosition === 'start'
-                ? [...unallocatedNodesGroup, restoreAncestorsNode, ...rootNodes]
-                : [...unallocatedNodesGroup, ...rootNodes, restoreAncestorsNode]
+                ? [...unallocatedNodesGroup, restoreAncestorsNode, ...visibleRootNodes]
+                : [...unallocatedNodesGroup, ...visibleRootNodes, restoreAncestorsNode]
         },
         [
+            bcTreeState?.filterActive,
+            bcTreeState?.filterPagination.loading,
             bcTreeState?.isLeafFieldKey,
             bcTreeState?.parentFieldKey,
             bcTreeState?.unallocatedNodeIds,
+            bcTreeState?.expandedParents,
             calculateShowMoreState,
             restoreAncestorsPosition,
             showBranchPagination

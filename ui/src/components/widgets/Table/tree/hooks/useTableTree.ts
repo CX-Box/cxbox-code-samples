@@ -1,7 +1,7 @@
 import { useAppSelector } from '@store'
 import React from 'react'
 import { AppWidgetMeta } from '@interfaces/widget'
-import { ROW_KEY } from '@components/widgets/Table/constants'
+import { ROW_KEY, TREE_ROOT_ID } from '@components/widgets/Table/constants'
 import { CustomDataItem } from '@components/widgets/Table/Table.interfaces'
 import { useTreePagination } from './useTreePagination'
 import { useTreeShowMore } from './useTreeShowMore'
@@ -39,11 +39,12 @@ export const useTableTree = (widgetMeta: AppWidgetMeta | undefined) => {
             if (expanded) {
                 const nodeState = bcTreeState?.nodesState[record.id]
                 const hidePagination = bcTreeState?.filterActive && bcTreeState.searchMode === 'hide'
+                const isRootNodeExpanded = String(record.id) === TREE_ROOT_ID
                 const needFetchFirstPage =
                     !nodeState ||
                     (bcTreeState.filterActive && Lookup.has([TREE_SEARCH_MODES.collapse], bcTreeState.searchMode)
-                        ? nodeState?.filterPage === 0
-                        : nodeState.page === 0)
+                        ? nodeState?.filterPage === 0 && !isRootNodeExpanded
+                        : nodeState.page === 0 && !isRootNodeExpanded)
                 if (!hidePagination && needFetchFirstPage) {
                     fetchChildNodes(record.id as string, true, false)
                 }

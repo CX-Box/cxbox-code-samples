@@ -26,7 +26,8 @@ function Header({ meta }: HeaderProps) {
         showClearButton,
         clearAllFilters,
         showResetButton,
-        resetFilters
+        resetFilters,
+        resetButtonTitleKey
     } = useFilterGroups(meta as AppWidgetMeta)
     const { showAllRecords, showAllRecordsButton } = useTableShowAllRecords(meta.bcName)
     const treeMeta = isTreeWidget(meta as AppWidgetMeta) ? (meta as AppWidgetMeta) : undefined
@@ -45,7 +46,7 @@ function Header({ meta }: HeaderProps) {
                 </Select>
             )}
             {showClearButton && <ActionLink onClick={clearAllFilters}>{t('Clear filters', { count: appliedFiltersCount })}</ActionLink>}
-            {showResetButton && <ActionLink onClick={resetFilters}>{t('Reset filters')}</ActionLink>}
+            {showResetButton && <ActionLink onClick={resetFilters}>{t(resetButtonTitleKey)}</ActionLink>}
             {showClearButton && filterActive && (
                 <>
                     <span style={{ color: 'var(--field-read-color)' }}>{t('shown {{n}}', { n: shownCount })}</span>
