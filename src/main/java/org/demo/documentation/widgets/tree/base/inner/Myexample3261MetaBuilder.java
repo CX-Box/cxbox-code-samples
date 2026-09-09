@@ -1,11 +1,9 @@
-package org.demo.documentation.widgets.tree.data.inner;
+package org.demo.documentation.widgets.tree.base.inner;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.widgets.tree.base.inner.Myexample3261DTO;
-import org.demo.documentation.widgets.tree.base.inner.Myexample3261DTO_;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +32,6 @@ public class Myexample3261MetaBuilder extends FieldMetaBuilder<Myexample3261DTO>
 		fields.enableSort(Myexample3261DTO_.code);
 		fields.enableSort(Myexample3261DTO_.description);
 		fields.enableSort(Myexample3261DTO_.department);
-		fields.enableSort(Myexample3261DTO_.parentId);
 		fields.enableSort(Myexample3261DTO_.id);
 	}
 

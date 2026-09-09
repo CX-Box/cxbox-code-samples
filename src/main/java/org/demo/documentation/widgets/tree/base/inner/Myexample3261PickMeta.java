@@ -26,7 +26,6 @@ public class Myexample3261PickMeta extends FieldMetaBuilder<Myexample3261PickDTO
 		fields.enableFilter(Myexample3261PickDTO_.mnemonic);
 		fields.enableFilter(Myexample3261PickDTO_.code);
 		fields.enableFilter(Myexample3261PickDTO_.description);
-		fields.enableFilter(Myexample3261PickDTO_.parentId);
 		fields.enableFilter(Myexample3261PickDTO_.id);
 		fields.enableFilter(Myexample3261PickDTO_.isLeaf);
 		fields.enableFilter(Myexample3261PickDTO_.department);

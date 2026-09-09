@@ -14,9 +14,6 @@ public class Myexample3263MetaBuilder extends FieldMetaBuilder<Myexample3263DTO>
 		fields.setEnabled(Myexample3263DTO_.departments);
 		fields.setEnabled(Myexample3263DTO_.departmentId);
 		fields.setEnabled(Myexample3263DTO_.department);
-		fields.setEnabled(
-				Myexample3263DTO_.id
-		);
 	}
 
 	@Override
