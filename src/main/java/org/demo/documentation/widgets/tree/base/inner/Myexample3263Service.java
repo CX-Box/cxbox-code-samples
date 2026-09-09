@@ -59,7 +59,7 @@ public class Myexample3263Service extends VersionAwareResponseService<Myexample3
 					.filter(Objects::nonNull)
 					.map(Long::parseLong)
 					.map(e -> entityManager.getReference(Myexample3261.class, e))
-					.collect(Collectors.toList()));
+					.toList());
 		}
 		if (data.isFieldChanged(Myexample3263DTO_.departmentId)) {
 			entity.setDepartmentEntity(data.getDepartmentId() != null
@@ -76,7 +76,7 @@ public class Myexample3263Service extends VersionAwareResponseService<Myexample3
 		Myexample3263DTO dto = entityToDto(bc, myexample3263);
 		String departmentsDisplayed = myexample3263.getDepartmentsList()
 				.stream()
-				.map(dept -> dept.getDepartment())
+				.map(Myexample3261::getDepartment)
 				.collect(Collectors.joining(", "));
 		dto.setDepartmentsDisplayedKey(departmentsDisplayed);
 		List<Myexample3263DTO> collect = new ArrayList<>();
@@ -90,7 +90,7 @@ public class Myexample3263Service extends VersionAwareResponseService<Myexample3
 		List<Myexample3261> listMultivalue = new ArrayList<>();
 		for (AssociateDTO item : dataIds) {
 			Optional<Myexample3261> entityChild = myexample3261Repository.findById(Long.valueOf(item.getId()));
-			listMultivalue.add(entityChild.get());
+			entityChild.ifPresent(listMultivalue::add);
 		}
 		myexample3263.setDepartmentsList(listMultivalue);
 		myexample3263Repository.save(myexample3263);

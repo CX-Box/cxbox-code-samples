@@ -6,12 +6,8 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.widgets.tree.actions.create.newview.CxboxMyExample3266Controller;
-import org.demo.documentation.widgets.tree.actions.create.newview.MyEntity3266;
-import org.demo.documentation.widgets.tree.actions.create.newview.MyExample3266DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})

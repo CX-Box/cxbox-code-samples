@@ -10,10 +10,6 @@ import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.postaction.enums.StatusEnum;
-import org.demo.documentation.feature.postaction.waituntil.allbutton.MyEntity3231;
-import org.demo.documentation.feature.postaction.waituntil.allbutton.MyExample3231DTO;
-import org.demo.documentation.feature.postaction.waituntil.allbutton.MyExample3231DTO_;
 import org.demo.documentation.widgets.tree.actions.create.basic.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
