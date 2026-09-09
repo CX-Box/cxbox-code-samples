@@ -8,6 +8,8 @@ import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.dto.rowmeta.PreAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -67,8 +69,29 @@ public class MyExample3266Service extends VersionAwareResponseService<MyExample3
 									));
 						})
 				)
+				.action(act -> act
+						.action("customSave", "custom Save")
+						.scope(ActionScope.RECORD)
+						.invoker(this::customSaveInvoker)
+				)
+				.action(act -> act
+						.action("customDelete", "custom Delete")
+						.withPreAction(PreAction.confirm(cf -> cf
+								.text("You want to delete the value?")
+						))
+						.invoker((bc, dto) ->
+						{
+							this.deleteEntity(bc);
+							return new ActionResultDTO<MyExample3266DTO>();
+						})
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
-
+	private ActionResultDTO<MyExample3266DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3266DTO dto) {
+		MyEntity3266 entity = repository.findById(bc.getIdAsLong()).orElse(null);
+		assert entity != null;
+		entity.setCustomField("Test data" + Math.random());
+		return new ActionResultDTO<>(dto);
+	}
 }

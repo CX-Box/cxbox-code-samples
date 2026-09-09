@@ -1,13 +1,11 @@
 package org.demo.documentation.widgets.tree.actions.create.basic;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.tree.actions.create.basic.enums.CustomFieldDictionaryEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,4 +32,8 @@ public class MyEntity3265 extends BaseEntity {
 			fetch = FetchType.LAZY
 	)
 	private List<MyEntity3265> children = new ArrayList<>();
+
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }

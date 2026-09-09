@@ -6,7 +6,12 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.demo.documentation.widgets.tree.actions.create.newview.CxboxMyExample3266Controller;
+import org.demo.documentation.widgets.tree.actions.create.newview.MyEntity3266;
+import org.demo.documentation.widgets.tree.actions.create.newview.MyExample3266DTO;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
@@ -48,9 +53,20 @@ public class MyExample3279Service extends VersionAwareResponseService<MyExample3
 				.save(sv -> sv.text("Save"))
 				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
 				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("customSave", "custom Save")
+						.scope(ActionScope.RECORD)
+						.invoker(this::customSaveInvoker)
+				)
 				.build();
 	}
 	// --8<-- [end:getActions]
 
+	private ActionResultDTO<MyExample3279DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3279DTO dto) {
+		MyEntity3279 entity = repository.findById(bc.getIdAsLong()).orElse(null);
+		assert entity != null;
+		entity.setCustomField("Test data" + Math.random());
+		return new ActionResultDTO<>(dto);
+	}
 }
 
