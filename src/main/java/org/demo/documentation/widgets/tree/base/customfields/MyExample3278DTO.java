@@ -14,8 +14,6 @@ import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 @NoArgsConstructor
 public class MyExample3278DTO extends DataResponseDTO {
 
-	public static final String INFO_TEXT_CUSTOM_FIELDS = "Custom fields. Shows tree built by custom DTO fields mapped in widget options via parentFieldKey and isLeafFieldKey";
-
 	@SearchParameter(name = "customField")
 	private String customField;
 	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
