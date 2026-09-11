@@ -22,6 +22,9 @@ concurrency:
 # Global workflow environment variables
 env:
   APP_URL: http://localhost:81/ui/#/ # Test application URL
+  # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
+  KEYCLOAK_ADMIN_USER: cxbox_admin
+  KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
 
 
 jobs:

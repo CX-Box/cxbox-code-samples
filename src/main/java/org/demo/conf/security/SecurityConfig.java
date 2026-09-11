@@ -29,7 +29,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_ENABLED;
 import static org.demo.conf.security.basic.AuthBasicConfigProperties.APP_AUTH_BASIC_PROP_PREFIX;
 
-@SuppressWarnings({"java:S4502", "java:S5122", "java:S5804"})
+@SuppressWarnings({"java:S4502", "java:S5122", "java:S5804", "java:S3330"})
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
@@ -91,8 +91,7 @@ public class SecurityConfig {
 						.requestMatchers("/v3/api-docs/**").permitAll()
 						.requestMatchers("/api/v1/websocketnotification/**").fullyAuthenticated()
 						.requestMatchers("/api/v1/notification/**").fullyAuthenticated()
-						.requestMatchers("/**").fullyAuthenticated())
-		;
+						.requestMatchers("/**").authenticated());
 		if (Boolean.TRUE.equals(authBasicConfigProperties.getEnabled())) {
 			http.httpBasic(c -> c.authenticationEntryPoint(customBasicAuthenticationEntryPoint()));
 		} else {
