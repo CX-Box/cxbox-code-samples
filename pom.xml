@@ -284,6 +284,14 @@
             <version>${selenide.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- administration of the OIDC provider for application.Samples.Feature.signInAgain (KeycloakAdmin) only:
+             a project that does not test its provider removes the tests, the class and this dependency -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>26.0.12</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-video-recorder</artifactId>

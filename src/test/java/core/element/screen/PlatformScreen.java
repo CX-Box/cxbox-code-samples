@@ -25,7 +25,9 @@ public class PlatformScreen extends AbstractScreen {
 					.$("ul[data-test='MAIN_MENU']")
 					.$$("li[data-test='MAIN_MENU_ITEM']")
 					.find(Condition.exactText(name))
-					.shouldBe(Condition.enabled).click();
+					.shouldBe(Condition.enabled)
+					// the menu can be long: the item is scrolled to the middle first, otherwise the sticky footer of the sidebar intercepts the click
+					.scrollIntoView("{block: \"center\"}").click();
 			checkPageLoaded();
 		});
 
