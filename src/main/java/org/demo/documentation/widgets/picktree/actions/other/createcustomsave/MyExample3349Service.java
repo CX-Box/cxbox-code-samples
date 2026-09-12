@@ -1,0 +1,77 @@
+package org.demo.documentation.widgets.picktree.actions.other.createcustomsave;
+
+import jakarta.persistence.EntityManager;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.cxbox.core.crudma.bc.BusinessComponent;
+import org.cxbox.core.crudma.impl.VersionAwareResponseService;
+import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.service.action.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@SuppressWarnings("java:S1170")
+@RequiredArgsConstructor
+@Service
+public class MyExample3349Service extends VersionAwareResponseService<MyExample3349DTO, MyEntity3349> {
+
+	private final MyEntity3349Repository repository;
+
+	private final MyEntity3349PickRepository repositoryPick;
+	@Getter(onMethod_ = @Override)
+	private final Class<MyExample3349Meta> meta = MyExample3349Meta.class;
+
+	@Autowired
+	private EntityManager entityManager;
+
+	@Override
+	protected CreateResult<MyExample3349DTO> doCreateEntity(MyEntity3349 entity, BusinessComponent bc) {
+		repository.save(entity);
+		return new CreateResult<>(entityToDto(bc, entity));
+	}
+
+	@Override
+	protected ActionResultDTO<MyExample3349DTO> doUpdateEntity(MyEntity3349 entity, MyExample3349DTO data, BusinessComponent bc) {
+		setIfChanged(data, MyExample3349DTO_.customFieldRequred, entity::setCustomFieldRequred);
+		if (data.isFieldChanged(MyExample3349DTO_.customFieldId)) {
+			entity.setCustomFieldEntity(data.getCustomFieldId() != null
+					? entityManager.getReference(MyEntity3349Pick.class, data.getCustomFieldId())
+					: null);
+		}
+
+		return new ActionResultDTO<>(entityToDto(bc, entity));
+	}
+
+	// --8<-- [start:getActions]
+	@Override
+	public Actions<MyExample3349DTO> getActions() {
+		return Actions.<MyExample3349DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
+				.action(act -> act
+						.action("custom save", "Custom Save")
+						.invoker(this::customSave)
+				)
+				.build();
+	}
+	// --8<-- [end:getActions]
+
+	// --8<-- [start:customSave]
+	private ActionResultDTO<MyExample3349DTO> customSave(BusinessComponent bc, MyExample3349DTO dto) {
+		Optional<MyEntity3349> entity = repository.findById(bc.getIdAsLong());
+		if (entity.isEmpty()) {
+			return null;
+		}
+
+		Optional<MyEntity3349Pick> entityPick = repositoryPick.findById(dto.getCustomFieldId());
+		entityPick.ifPresent(myEntity3349Pick -> entity.get().setCustomFieldEntity(myEntity3349Pick));
+		return new ActionResultDTO<>(entityToDto(bc, entity.get()));
+	}
+	// --8<-- [end:customSave]
+
+}
+

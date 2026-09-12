@@ -1,0 +1,42 @@
+{
+  "title": "AssocTreePopup widget action button",
+  "name": "myexample3333Assoc",
+  "type": "AssocTreePopup",
+  "bc": "myexample3333Assoc",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "id",
+      "key": "id",
+      "type": "text"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentId",
+      "type": "hidden"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "myexample3333FormForAssoc"
+    },
+    "edit": {
+      "widget": "myexample3333FormForAssoc"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}
