@@ -14,10 +14,12 @@ import { buildContinuingGuidesWidthById } from '@components/widgets/Table/tree/u
 
 type TreeLevelCellStyle = React.CSSProperties & {
     '--tree-level': number
+    '--tree-active-level'?: number
     '--tree-continuing-guides-width': string
 }
 
 interface BuildTreeTableColumnsParams<T extends CustomDataItem> {
+    activeLevel?: number
     fields: AppWidgetTableMeta['fields']
     dataSource: TableTreeNode[]
     widget: AppWidgetTableMeta | AppWidgetGroupingHierarchyMeta
@@ -34,9 +36,11 @@ interface BuildTreeTableColumnsParams<T extends CustomDataItem> {
     disableRowExpand?: boolean
     controlColumns: Array<ControlColumn<T>>
     isEditMode: (record: T) => boolean
+    expandedRowRender?: (record: T) => React.ReactNode
 }
 
 export function buildTreeTableColumns<T extends CustomDataItem>({
+    activeLevel,
     widget,
     fields,
     dataSource,
@@ -52,7 +56,8 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
     hideColumn,
     disableRowExpand,
     controlColumns,
-    isEditMode
+    isEditMode,
+    expandedRowRender
 }: BuildTreeTableColumnsParams<T>): Array<ColumnProps<T>> {
     const isGroupingHierarchy = (widget.type as string) === CustomWidgetTypes.GroupingHierarchy
     const continuingGuidesWidthById = buildContinuingGuidesWidthById(dataSource, expandedRowKeys)
@@ -99,6 +104,7 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                             createFetchNodesHandler={createFetchNodesHandler}
                             restoreAncestorPaths={restoreAncestorPaths}
                             isEditMode={isEditMode}
+                            expandedRowRender={expandedRowRender}
                         />
                     )
 
@@ -118,6 +124,7 @@ export function buildTreeTableColumns<T extends CustomDataItem>({
                               className: styles.treeLevelCell,
                               style: {
                                   '--tree-level': (dataItem as T & TableTreeNode)._level ?? 0,
+                                  '--tree-active-level': activeLevel,
                                   '--tree-continuing-guides-width': continuingGuidesWidthById.get(String(dataItem.id)) ?? '0px'
                               } as TreeLevelCellStyle
                           }
