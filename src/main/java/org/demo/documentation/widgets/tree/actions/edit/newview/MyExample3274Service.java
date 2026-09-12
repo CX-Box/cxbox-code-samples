@@ -68,7 +68,7 @@ public class MyExample3274Service extends VersionAwareResponseService<MyExample3
 											return new ActionResultDTO<MyExample3274DTO>()
 													.setAction(PostAction.drillDown(
 															DrillDownType.INNER,
-															"//screen/myexample3265/view/myexample3274form/"
+															"/screen/myexample3265/view/myexample3274form/"
 																	+ CxboxMyExample3274Controller.myexample3274 + "/"
 																	+ bc.getId()
 													));
