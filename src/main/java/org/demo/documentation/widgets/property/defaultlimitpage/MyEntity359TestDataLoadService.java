@@ -73,7 +73,7 @@ public class MyEntity359TestDataLoadService {
 		// ---- Create 3 child for root5 ----
 		for (int i = 1; i <= 3; i++) {
 			MyEntity359 child = createBaseEntity("Child " + i + " of Root 1")
-					.setParentId(String.valueOf(root5.getId()));
+					.setParentId(root5.getId());
 			repository.save(child);
 		}
 	}

@@ -56,7 +56,7 @@ public class MyExample359Service extends VersionAwareResponseService<MyExample35
 			entity.setCustomField(data.getCustomField());
 		}
 		MyExample359DTO dto = entityToDto(bc, repository.save(entity));
-		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
+		dto.setIsLeaf(!repository.existsByParentId(entity.getId()));
 
 		return new ActionResultDTO<>(dto);
 	}

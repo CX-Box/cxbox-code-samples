@@ -31,8 +31,8 @@ public class MyExample359DTO extends DataResponseDTO {
 
 	private Boolean isLeaf;
 
-	@SearchParameter(name = "parentId")
-	private String parentId;
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
 
 	@SearchParameter(name = "customFieldMoney", provider = BigDecimalValueProvider.class)
 	private Double customFieldMoney;

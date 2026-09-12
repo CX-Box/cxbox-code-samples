@@ -32,7 +32,7 @@ public class MyEntity359 extends BaseEntity {
 	private MyEntity359Pick customFieldPicklistEntity;
 
 	@Column
-	private String parentId;
+	private Long parentId;
 
 	@Column
 	private Double customFieldMoney;
