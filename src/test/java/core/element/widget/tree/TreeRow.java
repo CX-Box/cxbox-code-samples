@@ -40,6 +40,20 @@ public interface TreeRow<SELF extends TreeRow<SELF, W, ROWS>, W extends Abstract
 		return element().$("i[data-test-widget-tree-row-expand]").exists();
 	}
 
+	/** Waits until the row is collapsed (its expand arrow points right); fails after the widget timeout. */
+	@SuppressWarnings("unchecked")
+	default SELF shouldBeCollapsed() {
+		element().$(TreeNavigation.EXPANDED_ROW_ICON).shouldNot(Condition.exist, widget().getExpectations().getTimeout());
+		return (SELF) this;
+	}
+
+	/** Waits until the row is expanded (its expand arrow points down); fails after the widget timeout. */
+	@SuppressWarnings("unchecked")
+	default SELF shouldBeExpanded() {
+		element().$(TreeNavigation.EXPANDED_ROW_ICON).should(Condition.exist, widget().getExpectations().getTimeout());
+		return (SELF) this;
+	}
+
 	default boolean isExpanded() {
 		return element().$(TreeNavigation.EXPANDED_ROW_ICON).exists();
 	}

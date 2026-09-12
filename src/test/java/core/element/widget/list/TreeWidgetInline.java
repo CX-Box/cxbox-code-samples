@@ -84,6 +84,8 @@ public abstract class TreeWidgetInline<
 	/** Gear menu item "Restore path -> For all". */
 	public SELF restorePathForAll() {
 		settings().select("For all");
+		element().$(TreeNavigation.RESTORE_PATH_BUTTON).shouldNot(Condition.exist, getExpectations().getTimeout());
+		waitLoaded();
 		return self();
 	}
 
