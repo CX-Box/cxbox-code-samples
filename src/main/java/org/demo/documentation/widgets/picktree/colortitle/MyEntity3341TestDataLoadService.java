@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.demo.documentation.widgets.picktree.colortitle.forfields.MyEntity3342PickPick;
-import org.demo.documentation.widgets.picktree.colortitle.forfields.MyEntity3342Pick;
 
 @Service
 public class MyEntity3341TestDataLoadService {

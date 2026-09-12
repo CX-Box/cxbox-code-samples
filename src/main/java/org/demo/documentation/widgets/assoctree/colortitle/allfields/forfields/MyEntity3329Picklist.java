@@ -9,9 +9,6 @@ import org.demo.documentation.widgets.assoctree.colortitle.allfields.MyEntity332
 
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 
 
 @Entity

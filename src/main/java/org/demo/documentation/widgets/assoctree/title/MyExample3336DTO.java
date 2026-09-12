@@ -30,6 +30,6 @@ public class MyExample3336DTO extends DataResponseDTO {
 				e -> String.valueOf(e.getCustomField())
 		));
 		this.customFieldMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueList().stream().map(MyEntity3336Multi::getCustomField
-		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		).map(String::valueOf).collect(Collectors.joining(",")), 12);
 	}
 }

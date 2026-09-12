@@ -15,9 +15,6 @@ import org.demo.documentation.widgets.picktree.base.allfields.forfields.enums.Cu
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 
 
 @Entity

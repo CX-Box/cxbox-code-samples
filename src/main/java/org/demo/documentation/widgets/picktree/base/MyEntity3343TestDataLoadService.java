@@ -24,8 +24,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.demo.documentation.widgets.picktree.base.allfields.forfields.MyEntity3343PickInlinePicktree;
-import org.demo.documentation.widgets.picktree.base.allfields.forfields.MyEntity3343PickPicktree;
 
 @Service
 @AllArgsConstructor

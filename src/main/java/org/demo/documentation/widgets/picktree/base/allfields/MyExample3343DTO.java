@@ -61,7 +61,7 @@ public class MyExample3343DTO extends DataResponseDTO {
 				e -> String.valueOf(e.getCustomField())
 		));
 		this.customFieldMultivalueDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueList().stream().map(MyEntity3343Multi::getCustomField
-		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		).map(String::valueOf).collect(Collectors.joining(",")), 12);
 		this.customFieldRadio = entity.getCustomFieldRadio();
 		this.customFieldFileUploade = entity.getCustomFieldFileUploade();
 		this.customFieldFileUploadeId = entity.getCustomFieldFileUploadeId();

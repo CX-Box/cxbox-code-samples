@@ -15,9 +15,6 @@ import org.demo.documentation.widgets.picktree.colortitle.forfields.MyEntity3342
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 
 
 @Entity

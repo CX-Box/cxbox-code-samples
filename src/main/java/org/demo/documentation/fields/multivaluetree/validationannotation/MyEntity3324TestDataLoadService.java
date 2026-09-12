@@ -7,8 +7,6 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class MyEntity3324TestDataLoadService {
@@ -27,11 +25,11 @@ public class MyEntity3324TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
+		repository3324Multivalue.deleteAll();
 		MyEntity3324Multivalue myEntity1 = new MyEntity3324Multivalue().setCustomField("Test123 data");
 		MyEntity3324Multivalue myEntity2 = new MyEntity3324Multivalue().setCustomField("Abs123 data");
-		List<MyEntity3324Multivalue> list = new ArrayList<>();
-		list.add(myEntity1);
-		list.add(myEntity2);
+		repository3324Multivalue.save(myEntity1);
+		repository3324Multivalue.save(myEntity2);
 		repository.save(new MyEntity3324());
 		MyEntity3324Multivalue myEntity3324MultivalueGroup = repository3324Multivalue.save(new MyEntity3324Multivalue().setCustomField("Test group"));
 		repository3324Multivalue.findAll().stream()

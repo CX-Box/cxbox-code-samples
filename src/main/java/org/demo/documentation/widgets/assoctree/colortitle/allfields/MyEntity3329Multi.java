@@ -15,9 +15,6 @@ import org.demo.documentation.widgets.assoctree.colortitle.allfields.forfields.M
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 
 
 @Entity

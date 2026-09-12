@@ -32,12 +32,12 @@ public class MyExample3332DTO extends DataResponseDTO {
 				e -> String.valueOf(e.getCustomField())
 		));
 		this.customFieldMultiDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultiList().stream().map(MyEntity3332Multi::getCustomField
-		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		).map(String::valueOf).collect(Collectors.joining(",")), 12);
 		this.customFieldMultiConst = entity.getCustomFieldMultiConstList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
 				e -> String.valueOf(e.getCustomField())
 		));
 		this.customFieldMultiConstDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultiConstList().stream().map(MyEntity3332Multi::getCustomField
-		).map(e -> e.toString()).collect(Collectors.joining(",")), 12);
+		).map(String::valueOf).collect(Collectors.joining(",")), 12);
 	}
 }

@@ -31,7 +31,7 @@ public class MyEntity3357TestDataLoadService {
 				.setCustomFieldColorSort("test data 6")
 				.setCustomFieldColorValidation("test data")
 				.setCustomFieldDrilldown("test data 2")
-				.setCustomFieldColorConst(60l)
+				.setCustomFieldColorConst(60L)
 				.setCustomFieldRequired("test data")
 				.setCustomFieldColorConst(2L));
 		MyEntity3357PickTreePopup myEntity3357PickTreePopupGroup = repositoryPick.save(new MyEntity3357PickTreePopup().setCustomField("Test group"));

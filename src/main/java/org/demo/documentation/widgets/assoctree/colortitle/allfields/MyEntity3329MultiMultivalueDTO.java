@@ -16,7 +16,6 @@ import org.demo.documentation.widgets.assoctree.colortitle.allfields.forfields.M
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 
 @Getter
 @Setter
