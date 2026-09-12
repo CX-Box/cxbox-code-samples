@@ -293,7 +293,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 				.view().listInline("List");
 		list.actions().action("Create").click();
 
-		var form = PlatformApp.screen("PickTreePopup widget picktree create with parent").secondLevelView("Picklist With Required Fields").form("Form Requred field");
+		var form = PlatformApp.screen("PickTreePopup widget picktree create with parent").secondLevelView("Picktree With Required Fields").form("Form Requred field");
 		form.pickTree("Custom Field").setValue("Custom Field", "test data");
 
 		var row = list.rows().clickRow(0);
