@@ -52,7 +52,7 @@ public class MyExample3274Service extends VersionAwareResponseService<MyExample3
 							return new ActionResultDTO<MyExample3274DTO>().setAction(
 									PostAction.drillDown(
 											DrillDownType.INNER,
-											"/screen/myexample3274/view/myexample3266tree"
+											"/screen/myexample3265/view/myexample3274tree"
 									));
 						})
 				)
