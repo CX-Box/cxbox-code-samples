@@ -14,8 +14,9 @@ import org.demo.documentation.widgets.tree.actions.create.basic.enums.CustomFiel
 @Setter
 @NoArgsConstructor
 public class MyExample3265DTO extends DataResponseDTO {
-
+	@SearchParameter(name = "customField")
 	private String customField;
+
 	@SearchParameter(name = "customFieldText")
 	private String customFieldText;
 

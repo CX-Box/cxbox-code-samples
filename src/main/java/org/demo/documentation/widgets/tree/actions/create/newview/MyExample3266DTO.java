@@ -12,8 +12,7 @@ import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 @Setter
 @NoArgsConstructor
 public class MyExample3266DTO extends DataResponseDTO {
-	public static final String INFO_TEXT = "Tree widget is list the general information for many records and present it in a way that is easily interpretable for users.";
-
+	@SearchParameter(name = "customField")
 	private String customField;
 	@SearchParameter(name = "customFieldText")
 	private String customFieldText;

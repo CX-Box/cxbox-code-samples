@@ -12,8 +12,9 @@ import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 @Setter
 @NoArgsConstructor
 public class MyExample3279DTO extends DataResponseDTO {
-
+	@SearchParameter(name = "customField")
 	private String customField;
+
 	@SearchParameter(name = "customFieldText")
 	private String customFieldText;
 

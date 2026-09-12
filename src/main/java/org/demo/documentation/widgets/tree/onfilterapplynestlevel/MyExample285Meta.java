@@ -10,25 +10,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class MyExample3285Meta extends FieldMetaBuilder<MyExample3285DTO> {
+public class MyExample285Meta extends FieldMetaBuilder<MyExample285DTO> {
 
 	// --8<-- [start:buildRowDependentMeta]
 	private final DocumentConfig configuration;
 
 	@Override
-	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3285DTO> fields, InnerBcDescription bcDescription,
+	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample285DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setDisabled(MyExample3285DTO_.customField);
+		fields.setDisabled(MyExample285DTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
-	public void buildIndependentMeta(FieldsMeta<MyExample3285DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-		fields.enableFilter(MyExample3285DTO_.customField);
-		fields.enableSort(MyExample3285DTO_.customField);
+	public void buildIndependentMeta(FieldsMeta<MyExample285DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample285DTO_.customField);
+		fields.enableSort(MyExample285DTO_.customField);
 		if (configuration.getForceActiveEnabled()) {
-			fields.setForceActive(MyExample3285DTO_.customField);
+			fields.setForceActive(MyExample285DTO_.customField);
 		}
 	}
 	// --8<-- [end:buildIndependentMeta]

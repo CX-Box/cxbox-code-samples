@@ -12,7 +12,7 @@ import org.demo.documentation.widgets.tree.data.alltypes.Myexample3262;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample3285DTO extends DataResponseDTO {
+public class MyExample285DTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
 	private String customField;
@@ -20,7 +20,7 @@ public class MyExample3285DTO extends DataResponseDTO {
 	private Long parentId;
 	private Boolean isLeaf;
 
-	public MyExample3285DTO(Myexample3262 entity) {
+	public MyExample285DTO(Myexample3262 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 

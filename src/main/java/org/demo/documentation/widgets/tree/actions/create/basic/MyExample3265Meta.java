@@ -31,6 +31,7 @@ public class MyExample3265Meta extends FieldMetaBuilder<MyExample3265DTO> {
 		fields.enableFilter(MyExample3265DTO_.customFieldDictionary);
 		fields.enableFilter(MyExample3265DTO_.customFieldMoney);
 		fields.enableFilter(MyExample3265DTO_.customFieldText);
+		fields.enableFilter(MyExample3265DTO_.customField);
 		fields.enableSort(MyExample3265DTO_.customFieldText);
 		fields.enableSort(MyExample3265DTO_.customField);
 	}

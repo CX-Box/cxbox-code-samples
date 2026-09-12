@@ -29,6 +29,7 @@ public class MyExample3266Meta extends FieldMetaBuilder<MyExample3266DTO> {
 	public void buildIndependentMeta(FieldsMeta<MyExample3266DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExample3266DTO_.customFieldMoney);
 		fields.enableFilter(MyExample3266DTO_.customFieldText);
+		fields.enableFilter(MyExample3266DTO_.customField);
 		fields.enableSort(MyExample3266DTO_.customFieldText);
 		fields.enableSort(MyExample3266DTO_.customField);
 	}
