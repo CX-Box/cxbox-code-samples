@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
@@ -40,19 +41,21 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 //              .checkValue(value->assertThat(value).isEqualTo("Abs data,..."));
 	}
 
-	@Disabled
 	@Test
 	@Severity(MINOR)
-	@Tag("Negative")
+	@Tag("Positive")
 	@DisplayName("Filtering test")
 	@Description("Filtering by the specified column.")
 	void filtration() {
-//        MainPages.click("MultiValue filtration");
-//        MainPages.FirstLevelMenu.click("List");
-//        var list = $box.findListWidgetByTitle("List title");
-//        List<String> listRows = list.getNoFocusValues("Custom Field");
-//        var customField = list.findRowSegmentByValue("Custom Field", listRows.get(0)).multiValue();
-//        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
+		var list = PlatformApp.screen("MultivalueTree filtration")
+				.secondLevelView("List")
+				.listInline("List title");
+		list.headers().filter(fb -> fb.multivalueTree("Custom Field", List.of("Test3 data")));
+		var values = list.rows().streamCurrentPage()
+				.map(r -> r.multivalueTree("Custom Field").getValue())
+				.collect(Collectors.toList());
+		assertThat(values).isNotEmpty();
+		assertThat(values).allMatch(v -> v.contains("Test3 data"));
 	}
 
 	@Test

@@ -119,6 +119,18 @@ public class FB<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 		return self();
 	}
 
+	/** multivalueTree column: the records are chosen in the AssocTreePopup opened by the filter icon. */
+	public S multivalueTree(String name, List<String> values) {
+		container.add(new TreePopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
+	/** pickTree column, "..." button of the filter: the records are chosen in the AssocTreePopup. */
+	public S pickTree(String name, List<String> values) {
+		container.add(new TreePopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
 	public S dateWithSecond(String name, LocalDateTime value) {
 		container.add(new DateTimeWithSecondsFilter<>(widget, column(name), value));
 		return self();

@@ -21,6 +21,10 @@ public class HeaderColumn<WIDGET extends ListWidget<WIDGET, ROWS, ROW>, ROWS ext
 		this.headers = headers;
 	}
 
+	public String name() {
+		return name;
+	}
+
 	public WIDGET widget() {
 		return widget;
 	}
