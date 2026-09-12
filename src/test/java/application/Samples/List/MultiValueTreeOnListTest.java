@@ -160,7 +160,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multivalueTree("Custom Field").setAllModal(true);
+		row.multivalueTree("Custom Field").setValue(List.of("Abs data"));
 		row.burgerAction("save").click();
 		list.confirmPopup()
 				.checkTitleAndMessage(

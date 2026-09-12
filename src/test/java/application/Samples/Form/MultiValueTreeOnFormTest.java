@@ -165,7 +165,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
-		multivalue.setAll(true);
+		multivalue.setValue(List.of("Abs data"));
 		form.actions().action("save").click();
 		form.confirmPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
@@ -255,9 +255,10 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("MultivalueTree basic")
 				.secondLevelView("Form")
 				.form("Form title");
+		// a tree popup has no "select all": every value is picked explicitly
 		form.field((w) -> new MultivalueTree<>(w, "Custom Field"))
-				.setAll(true)
-				.checkValue(v -> assertThat(v).isEqualTo(expected));
+				.setValue(expected)
+				.checkValue(v -> assertThat(v).containsExactlyInAnyOrderElementsOf(expected));
 	}
 
 	@Test

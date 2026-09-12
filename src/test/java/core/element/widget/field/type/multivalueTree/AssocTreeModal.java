@@ -1,6 +1,5 @@
 package core.element.widget.field.type.multivalueTree;
 
-import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
@@ -157,26 +156,15 @@ public class AssocTreeModal<W extends AbstractWidget<ExpectationPattern, W>> ext
 		return TreeNavigation.HEADER_TITLE_ATTRIBUTE;
 	}
 
+	/** A tree has no "select all" checkbox in the header: the whole tree is never loaded. */
 	@Override
 	protected SelenideElement getCheckBoxAll() {
-		return modal.$(TreeNavigation.COLUMN_SELECT_SELECTOR)
-				.should(Condition.exist, widget.getExpectations().getTimeout());
+		throw new UnsupportedOperationException("AssocTreePopup has no select all; select a node instead");
 	}
 
-	/** The header checkbox selects every loaded row; the transparent antd input is clicked through its wrapper. */
 	@Override
 	public void setValueAll(boolean close) {
-		TreeNavigation.waitLoaded(modal, widget.getExpectations());
-		if (!getCheckBoxAll().isSelected()) {
-			getCheckBoxAll().click(ClickOptions.usingJavaScript());
-			if (confirm().isShown()) {
-				confirm().ok();
-			}
-			getCheckBoxAll().shouldBe(Condition.selected, widget.getExpectations().getTimeout());
-		}
-		if (close) {
-			close();
-		}
+		throw new UnsupportedOperationException("AssocTreePopup has no select all; select a node instead");
 	}
 
 }

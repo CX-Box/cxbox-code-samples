@@ -31,8 +31,6 @@ public final class TreeNavigation {
 
 	public static final String ROW_SELECT_SELECTOR = "input[data-test-widget-tree-row-select]";
 
-	public static final String COLUMN_SELECT_SELECTOR = "input[data-test-widget-tree-column-select]";
-
 	public static final String SHOW_MORE_SELECT_SELECTOR = "input[data-test-widget-tree-show-more-select]";
 
 	public static final String COLLAPSED_ROW_ICON = "i[data-test-widget-tree-row-expand][aria-label=\"icon: right\"]";
