@@ -82,6 +82,7 @@ public class FB<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 		return self();
 	}
 
+
 	public S money(String name, BigDecimal value) {
 		container.add(new MoneyFilter<>(widget, column(name), value));
 		return self();

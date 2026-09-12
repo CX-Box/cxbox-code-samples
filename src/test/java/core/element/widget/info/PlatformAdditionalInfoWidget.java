@@ -15,6 +15,7 @@ import core.element.widget.field.type.multipleSelect.MultipleSelectRO;
 import core.element.widget.field.type.multivalueHover.MultivalueHover;
 import core.element.widget.field.type.number.Number;
 import core.element.widget.field.type.pickList.PickList;
+import core.element.widget.field.type.pickTree.PickTree;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
 
@@ -74,6 +75,10 @@ public class PlatformAdditionalInfoWidget extends PlatformWidget<PlatformAdditio
 
 	public PickList<PlatformAdditionalInfoWidget, ?> pickList(String title) {
 		return new PickList<>(this, title);
+	}
+
+	public PickTree<PlatformAdditionalInfoWidget, ?> pickTree(String title) {
+		return new PickTree<>(this, title);
 	}
 
 	@Override

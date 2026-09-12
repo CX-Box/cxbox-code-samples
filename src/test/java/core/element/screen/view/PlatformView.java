@@ -11,6 +11,8 @@ import core.element.widget.list.realization.form.gh.PlatformGHWidgetInlineForm;
 import core.element.widget.list.realization.form.list.PlatformListWidgetInlineForm;
 import core.element.widget.list.realization.inline.gh.PlatformGHWidgetInline;
 import core.element.widget.list.realization.inline.list.PlatformListWidgetInline;
+import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
+import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineForm;
 import core.element.widget.statblock.StatsBlockWidget;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
@@ -79,6 +81,22 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public PlatformGHWidgetInlineForm groupingHierarchyInlineWidgetByName(String name) {
 		return new PlatformGHWidgetInlineForm(PlatformIdentifier.NAME, name);
+	}
+
+	public PlatformTreeWidgetInline tree(String title) {
+		return new PlatformTreeWidgetInline(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformTreeWidgetInline treeByName(String name) {
+		return new PlatformTreeWidgetInline(PlatformIdentifier.NAME, name);
+	}
+
+	public PlatformTreeWidgetInlineForm treeInlineForm(String title) {
+		return new PlatformTreeWidgetInlineForm(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformTreeWidgetInlineForm treeInlineFormByName(String name) {
+		return new PlatformTreeWidgetInlineForm(PlatformIdentifier.NAME, name);
 	}
 
 	public StatsBlockWidget statBlock(String title) {

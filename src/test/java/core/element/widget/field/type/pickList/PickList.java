@@ -2,6 +2,7 @@ package core.element.widget.field.type.pickList;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
@@ -71,13 +72,9 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 				i.click();
 				i.shouldBe(Condition.disappear, widget().getExpectations().getTimeout());
 			}
-			element()
-					.$("i[data-test-field-picklist-popup=\"true\"]")
-					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-					.click();
+			openPopupIcon();
 
-			PickListModal<W> multivalueModal = new PickListModal<>(widget());
-			multivalueModal.setValue(title, value);
+			pickInModal(title, value);
 			return (SELF) this;
 		});
 	}
@@ -95,13 +92,9 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 				i.click();
 				i.shouldBe(Condition.disappear, widget().getExpectations().getTimeout());
 			}
-			element()
-					.$("i[data-test-field-picklist-popup=\"true\"]")
-					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-					.click();
+			openPopupIcon();
 
-			PickListModal<W> multivalueModal = new PickListModal<>(widget());
-			multivalueModal.setValue(columnName, value);
+			pickInModal(columnName, value);
 			return (SELF) this;
 		});
 	}
@@ -111,13 +104,37 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		return widget().element();
 	}
 
+	protected String popupIconSelector() {
+		return "i[data-test-field-picklist-popup=\"true\"]";
+	}
+
+	protected String clearIconSelector() {
+		return "i[data-test-field-picklist-clear=\"true\"]";
+	}
+
+	/** Clicks the popup icon; the first click may only focus the field, so the click is repeated until a popup is shown. */
+	protected void openPopupIcon() {
+		SelenideElement icon = element()
+				.$(popupIconSelector())
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+		SelenideElement modal = Selenide.$("div[data-test-widget-type$=\"Popup\"] .ant-modal");
+		for (int attempt = 0; attempt < 3 && !modal.is(Condition.visible); attempt++) {
+			icon.click();
+			modal.is(Condition.visible, widget().getExpectations().getTimeout());
+		}
+	}
+
+	protected void pickInModal(String columnName, String value) {
+		new PickListModal<>(widget()).setValue(columnName, value);
+	}
+
 	@Override
 	public SELF clear() {
 		Allure.step("Clearing the field", step -> {
 			logTime(step);
 
 			element()
-					.$("i[data-test-field-picklist-clear=\"true\"]")
+					.$(clearIconSelector())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout()).click();
 		});
 		return (SELF) this;

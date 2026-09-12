@@ -18,6 +18,7 @@ public enum PlatformFieldType implements FieldType {
 	MULTIVALUE_HOVER("multivalueHover", "p"),
 	NUMBER("number", "input"),
 	PICKLIST("pickList", "div[class=\"ant-select-selection-selected-value\"]"),
+	PICK_TREE("pickTree", "div[class=\"ant-select-selection-selected-value\"]"),
 	PERCENT("percent", "input"),
 	TIME("time", "input"),
 
@@ -28,6 +29,9 @@ public enum PlatformFieldType implements FieldType {
 	MULTIVALUE_RO("multivalue", "div[class*=\"MultiValueListRecord\"]"),
 	MULTIVALUE("multivalue", "span[class=\"ant-form-item-children\"]"),
 	MULTIVALUE_LIST("multivalue", "span[class=\"ant-form-item-children\"]", ""),
+	MULTIVALUE_TREE_RO("multivalueTree", "div[class*=\"MultiValueListRecord\"]"),
+	MULTIVALUE_TREE("multivalueTree", "span[class=\"ant-form-item-children\"]"),
+	MULTIVALUE_TREE_LIST("multivalueTree", "span[class=\"ant-form-item-children\"]", ""),
 	FILE_UPLOAD_RO("fileUpload", "button[class*=\"FileUpload\""),
 	FILE_UPLOAD("fileUpload", "input[type=\"file\"]"),
 	FILE_UPLOAD_LIST("fileUpload", "button[class*=\"FileUpload\""),

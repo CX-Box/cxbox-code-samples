@@ -18,6 +18,8 @@ import core.element.widget.field.type.multipleSelect.MultipleSelect;
 import core.element.widget.field.type.multivalueHover.MultivalueHover;
 import core.element.widget.field.type.number.Number;
 import core.element.widget.field.type.pickList.PickList;
+import core.element.widget.field.type.pickTree.PickTree;
+import core.element.widget.field.type.multivalueTree.MultivalueTree;
 import core.element.widget.list.rows.row.RowInlineForm;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
@@ -95,6 +97,15 @@ public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormW
 
 	public PickList<PlatformInlineFormWidget, ?> pickList(String title) {
 		return new PickList<>(this, title);
+	}
+
+	public PickTree<PlatformInlineFormWidget, ?> pickTree(String title) {
+		return new PickTree<>(this, title);
+	}
+
+
+	public MultivalueTree<PlatformInlineFormWidget> multivalueTree(String title) {
+		return new MultivalueTree<>(this, title);
 	}
 
 

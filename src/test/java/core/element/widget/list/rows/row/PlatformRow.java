@@ -18,6 +18,8 @@ import core.element.widget.field.type.multivalueHover.ListMultivalueHover;
 import core.element.widget.field.type.number.ListNumber;
 import core.element.widget.field.type.percent.ListPercent;
 import core.element.widget.field.type.pickList.ListPickList;
+import core.element.widget.field.type.pickTree.ListPickTree;
+import core.element.widget.field.type.multivalueTree.ListMultivalueTree;
 import core.element.widget.field.type.radio.ListRadio;
 import core.element.widget.field.type.suggestionPickList.ListSuggestionPickList;
 import core.element.widget.field.type.text.ListText;
@@ -206,6 +208,24 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 
 	public ListPickList<WIDGET, ROWS, SELF> pickListByName(String name) {
 		return new ListPickList<>(widget(), name, self());
+	}
+
+	public ListPickTree<WIDGET, ROWS, SELF> pickTree(String title) {
+		return new ListPickTree<>(widget(), title, self());
+	}
+
+	public ListPickTree<WIDGET, ROWS, SELF> pickTreeByName(String name) {
+		return new ListPickTree<>(widget(), name, self());
+	}
+
+
+
+	public ListMultivalueTree<WIDGET, ROWS, SELF> multivalueTree(String title) {
+		return new ListMultivalueTree<>(widget(), title, self());
+	}
+
+	public ListMultivalueTree<WIDGET, ROWS, SELF> multivalueTreeByName(String name) {
+		return new ListMultivalueTree<>(widget(), name, self());
 	}
 
 	public ListRadio<WIDGET, ROWS, SELF> radio(String title) {

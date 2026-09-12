@@ -18,6 +18,8 @@ import core.element.widget.field.type.multivalueHover.MultivalueHover;
 import core.element.widget.field.type.number.Number;
 import core.element.widget.field.type.percent.Percent;
 import core.element.widget.field.type.pickList.PickList;
+import core.element.widget.field.type.pickTree.PickTree;
+import core.element.widget.field.type.multivalueTree.MultivalueTreeRO;
 import core.element.widget.field.type.radio.Radio;
 import core.element.widget.field.type.text.Text;
 import core.element.widget.field.type.time.Time;
@@ -104,6 +106,14 @@ public class PlatformInfoWidget extends PlatformWidget<PlatformInfoWidget> {
 
 	public PickList<PlatformInfoWidget, ?> pickList(String title) {
 		return new PickList<>(this, title);
+	}
+
+	public PickTree<PlatformInfoWidget, ?> pickTree(String title) {
+		return new PickTree<>(this, title);
+	}
+
+	public MultivalueTreeRO<PlatformInfoWidget> multivalueTree(String title) {
+		return new MultivalueTreeRO<>(this, title);
 	}
 
 	@Override
