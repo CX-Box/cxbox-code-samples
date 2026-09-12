@@ -68,9 +68,10 @@ public class DocScreenshotsTreePopupsTest extends BaseTestForSamples {
 	@Test
 	void assocButton() throws IOException {
 		var form = open("myexample3333", "myexample3333form").formByName("MyExample3333Form");
-		form.actions().action("Associate").click();
+		shot(ASSOC, form.element(), "choose_button.png");
+		form.actions().action("Popup Assoc").click();
 		Selenide.sleep(1500);
-		shot(ASSOC, Selenide.$("body"), "choose_button.png");
+		shot(ASSOC, Selenide.$("body"), "up_assoc.png");
 	}
 
 	@Test
@@ -223,6 +224,22 @@ public class DocScreenshotsTreePopupsTest extends BaseTestForSamples {
 		popup = form.pickTree("Department Pick").openPopup();
 		popup.loadNext();
 		shot(PICK, popup.dialog(), "selection_nodeandleaf.png");
+		popup.close();
+	}
+
+	@Test
+	void assocEditWithWidget() throws IOException {
+		var form = open("myexample3331", "myexample3331editinlineform").formByName("MyExample3331FormEdit");
+		var popup = form.multivalueTree("Custom Field").openPopup();
+		shot(ASSOC, popup.dialog(), "assoc_edit_with_widget.png");
+		popup.closeModal();
+	}
+
+	@Test
+	void pickCancelCreateOnCancel() throws IOException {
+		var form = open("myexample3353", "myexample3356formoncancel").formByName("MyExample3356FormOnCancel");
+		var popup = form.pickTree("Custom Field").openPopup();
+		shot(PICK, popup.dialog(), "actioncanceloncancel.png");
 		popup.close();
 	}
 

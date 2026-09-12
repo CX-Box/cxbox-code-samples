@@ -131,6 +131,18 @@ public class FB<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 		return self();
 	}
 
+	/** pickList column, "..." button of the filter: the records are chosen in the AssocListPopup. */
+	public S pickList(String name, List<String> values) {
+		container.add(new ListPopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
+	/** multivalue column: the records are chosen in the AssocListPopup opened by the filter icon. */
+	public S multivalue(String name, List<String> values) {
+		container.add(new ListPopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
 	public S dateWithSecond(String name, LocalDateTime value) {
 		container.add(new DateTimeWithSecondsFilter<>(widget, column(name), value));
 		return self();

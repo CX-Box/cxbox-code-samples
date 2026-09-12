@@ -6,6 +6,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.PlatformApp;
+import core.element.widget.tree.TreeNavigation;
 import core.element.screen.view.PlatformView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -43,6 +44,19 @@ public class DocScreenshotsTreeFieldsTest extends BaseTestForSamples {
 		PlatformApp.screen(screen).secondLevelView(view);
 		Selenide.sleep(1500);
 		return PlatformApp.currentScreen().view();
+	}
+
+	/** Closes every open modal (error popup, confirm, assoc popup) left after a step. */
+	private static void dismissModals() {
+		for (int i = 0; i < 5 && Selenide.$$("div.ant-modal-wrap").filter(Condition.visible).size() > 0; i++) {
+			var closeX = Selenide.$$("div.ant-modal-wrap span.ant-modal-close-x").filter(Condition.visible);
+			if (closeX.size() > 0) {
+				closeX.last().click();
+			} else {
+				Selenide.$("body").pressEscape();
+			}
+			Selenide.sleep(700);
+		}
 	}
 
 	private static void shot(Path dir, SelenideElement element, String file) throws IOException {
@@ -125,21 +139,22 @@ public class DocScreenshotsTreeFieldsTest extends BaseTestForSamples {
 		form.pickTree(FIELD).setValue(FIELD, "1234");
 		Selenide.sleep(1500);
 		shot(PICK_TREE, Selenide.$("body"), "img_business_error.png");
-		form.errorPopup().close();
+		dismissModals();
 
 		form = open("Picktree runtime", "Form").form("Form title");
 		form.pickTree(FIELD).setValue(FIELD, "Test data");
 		Selenide.sleep(1500);
 		shot(PICK_TREE, Selenide.$("body"), "img_runtime_error.png");
-		form.errorPopup().close();
+		dismissModals();
 
 		form = open("Picktree validation confirm", "Form").form("Form title");
 		form.pickTree(FIELD).setValue(FIELD, "Test data");
 		Selenide.sleep(1500);
 		shot(PICK_TREE, Selenide.$("body"), "confirm_form.png");
+		dismissModals();
 
 		form = open("Picktree validation field level dynamic", "Form").form("Form title");
-		form.pickTree(FIELD).setValue(FIELD, "Test data");
+		form.pickTree(FIELD).setValue(FIELD, "Test data 123");
 		form.actions().action("Save").click();
 		Selenide.sleep(1500);
 		shot(PICK_TREE, form.element(), "img_javax_stat_form.png");
@@ -149,7 +164,7 @@ public class DocScreenshotsTreeFieldsTest extends BaseTestForSamples {
 	void pickTreeValidationList() throws IOException {
 		var list = open("Picktree validation field level dynamic", "List").listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.pickTree(FIELD).setValue(FIELD, "Test data");
+		row.pickTree(FIELD).setValue(FIELD, "Test data 123");
 		row.burgerAction("Save").click();
 		Selenide.sleep(1500);
 		shot(PICK_TREE, list.element(), "img_javax_stat_list.png");
@@ -196,24 +211,33 @@ public class DocScreenshotsTreeFieldsTest extends BaseTestForSamples {
 	@Test
 	void multivalueTreeValidationForm() throws IOException {
 		var form = open("MultivalueTree validation business exception", "Form").form("Form title");
-		form.multivalueTree(FIELD).setValue(List.of("Abs data"));
+		try {
+			form.multivalueTree(FIELD).setValue(List.of("Abs data"));
+		} catch (RuntimeException | AssertionError e) {
+			// the sample may raise the business exception before the popup is used: the error popup is the screenshot
+		}
 		Selenide.sleep(1500);
 		shot(MULTIVALUE_TREE, Selenide.$("body"), "img_business_error.png");
-		form.errorPopup().close();
+		dismissModals();
 
 		form = open("MultivalueTree validation runtime exception", "Form").form("Form title");
-		form.multivalueTree(FIELD).setValue(List.of("Abs data"));
+		try {
+			form.multivalueTree(FIELD).setValue(List.of("Abs data"));
+		} catch (RuntimeException | AssertionError e) {
+			// the sample raises the runtime exception while the popup is being used: the error popup is the screenshot
+		}
 		Selenide.sleep(1500);
 		shot(MULTIVALUE_TREE, Selenide.$("body"), "img_runtime_error.png");
-		form.errorPopup().close();
+		dismissModals();
 
 		form = open("MultivalueTree validation confirm", "Form").form("Form title");
+		dismissModals();
 		form.multivalueTree(FIELD).setValue(List.of("Abs data"));
 		Selenide.sleep(1500);
 		shot(MULTIVALUE_TREE, Selenide.$("body"), "confirm_form.png");
+		dismissModals();
 
 		form = open("MultivalueTree validation field level dynamic", "Form").form("Form title");
-		form.multivalueTree(FIELD).setValue(List.of("Abs data"));
 		form.actions().action("Save").click();
 		Selenide.sleep(1500);
 		shot(MULTIVALUE_TREE, form.element(), "img_javax_stat_form.png");
@@ -224,11 +248,48 @@ public class DocScreenshotsTreeFieldsTest extends BaseTestForSamples {
 		var form = open("MultivalueTree basic", "Form").form("Form title");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		popup.clearFilters();
-		popup.row(FIELD, "Test group");
-		popup.expand(FIELD, "Test group");
+		if (popup.row(FIELD, "Test group").$(TreeNavigation.COLLAPSED_ROW_ICON).exists()) {
+			popup.expand(FIELD, "Test group");
+		}
 		popup.toggle(FIELD, "Test group");
 		shot(MULTIVALUE_TREE, popup.dialog(), "img_selection_form.png");
 		popup.closeModal();
+	}
+
+	@Test
+	void multivalueTreeFiltration() throws IOException {
+		var list = open("MultivalueTree filtration", "List").listInline("List title");
+		list.headers().filter(fb -> fb.multivalueTree(FIELD, List.of("Test3 data")));
+		Selenide.sleep(1000);
+		shot(MULTIVALUE_TREE, list.element(), "img_filtr_list.png");
+	}
+
+	@Test
+	void multivalueTreeValidationList() throws IOException {
+		var list = open("MultivalueTree validation business exception", "List").listInline("List title");
+		list.rows().clickRow(0).multivalueTree(FIELD).clearWithModal();
+		Selenide.sleep(1500);
+		shot(MULTIVALUE_TREE, Selenide.$("body"), "img_business_error_list.png");
+		dismissModals();
+
+		list = open("MultivalueTree validation runtime exception", "List").listInline("List title");
+		list.rows().clickRow(0).multivalueTree(FIELD).deleteValueFromField();
+		Selenide.sleep(1500);
+		shot(MULTIVALUE_TREE, Selenide.$("body"), "img_runtime_error_list.png");
+		dismissModals();
+
+		list = open("MultivalueTree validation confirm", "List").listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.multivalueTree(FIELD).setValue(List.of("Abs data"));
+		row.burgerAction("save").click();
+		Selenide.sleep(1500);
+		shot(MULTIVALUE_TREE, Selenide.$("body"), "confirm_list.png");
+		dismissModals();
+
+		list = open("MultivalueTree validation field level dynamic", "List").listInline("List title");
+		list.rows().clickRow(0).burgerAction("Save").click();
+		Selenide.sleep(1500);
+		shot(MULTIVALUE_TREE, list.element(), "img_javax_stat_list.png");
 	}
 
 }

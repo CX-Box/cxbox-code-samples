@@ -135,6 +135,21 @@ public class PickListOnListTest extends BaseTestForSamples {
 
 	@Test
 	@Tag("Positive")
+	@DisplayName("The filtration by popup test")
+	@Description("The \"...\" button of the column filter opens the PickListPopup; the chosen record filters the list by id.")
+	void filtrationPopup() {
+		var list = PlatformApp.screen("Picklist filtration")
+				.secondLevelView("List")
+				.listInline("List title");
+		list.headers().filter(fb -> fb.pickList("Custom Field", List.of("Abs data")));
+		var values = list.rows().streamCurrentPage()
+				.map(r -> r.pickList("Custom Field").getValue())
+				.collect(Collectors.toList());
+		assertThat(values).isEqualTo(List.of("Abs data"));
+	}
+
+	@Test
+	@Tag("Positive")
 	@DisplayName("The DrillDown test")
 	@Description("Checking the url before the transition and after the transition/click on a special element")
 	void drillDown() {

@@ -31,6 +31,7 @@ public abstract class BasePopup<E> {
 		findPopup().$("span[class=\"ant-modal-close-x\"]")
 				.shouldBe(Condition.exist, expectationPattern.getTimeout())
 				.click();
+		findPopup().shouldNotBe(Condition.visible, expectationPattern.getTimeout());
 	}
 
 	/**

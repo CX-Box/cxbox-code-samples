@@ -113,7 +113,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	/** Clicks the popup icon; the first click may only focus the field, so the click is repeated until a popup is shown. */
-	protected void openPopupIcon() {
+	public void openPopupIcon() {
 		SelenideElement icon = element()
 				.$(popupIconSelector())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());

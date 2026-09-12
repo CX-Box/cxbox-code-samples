@@ -8,6 +8,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.PlatformApp;
 import core.element.screen.view.PlatformView;
+import core.element.widget.tree.TreeNavigation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
@@ -29,6 +30,8 @@ public class DocScreenshotsTreeTest extends BaseTestForSamples {
 
 	private static final Path DOC = Path.of("C:/idea/cxbox-doc/docs/widget/type/tree");
 
+	private static final Path PROPERTY = Path.of("C:/idea/cxbox-doc/docs/widget/type/property");
+
 	@BeforeAll
 	static void size() {
 		Configuration.browserSize = "1600x1000";
@@ -41,10 +44,14 @@ public class DocScreenshotsTreeTest extends BaseTestForSamples {
 	}
 
 	private static void shot(SelenideElement element, String file) throws IOException {
+		shot(DOC, element, file);
+	}
+
+	private static void shot(Path dir, SelenideElement element, String file) throws IOException {
 		Selenide.sleep(700);
 		File png = element.shouldBe(Condition.visible).screenshot();
-		Files.createDirectories(DOC);
-		Files.copy(png.toPath(), DOC.resolve(file), StandardCopyOption.REPLACE_EXISTING);
+		Files.createDirectories(dir);
+		Files.copy(png.toPath(), dir.resolve(file), StandardCopyOption.REPLACE_EXISTING);
 	}
 
 	@Test
@@ -150,6 +157,26 @@ public class DocScreenshotsTreeTest extends BaseTestForSamples {
 		tree.headers().sort(sb -> sb.sort("Custom Field"));
 		tree.waitLoaded();
 		shot(tree.element(), "sorting.png");
+	}
+
+	@Test
+	void editWithView() throws IOException {
+		var tree = open("myexample3265", "myexample3274tree").treeByName("MyExample3274Tree");
+		tree.rows().clickRow(0).burgerAction("Edit").click();
+		Selenide.sleep(2000);
+		shot(PlatformApp.currentScreen().view().formByName("MyExample3274Form").element(), "edit_with_view.png");
+	}
+
+	/** Tree tabs of the property articles (defaultlimitpage, filtration). */
+	@Test
+	void properties() throws IOException {
+		var tree = open("myexample359", "myexample359tree").treeByName("MyExample359Tree");
+		shot(PROPERTY.resolve("defaultlimitpage"), tree.element(), "tree_default_limit.png");
+
+		tree = open("myexample3616", "myexample3614tree").treeByName("MyExample3614Tree");
+		TreeNavigation.fullTextSearch(tree.element(), "test data2", tree.getExpectations());
+		tree.waitLoaded();
+		shot(PROPERTY.resolve("filtration"), tree.element(), "fulltextsearch_tree.png");
 	}
 
 }
