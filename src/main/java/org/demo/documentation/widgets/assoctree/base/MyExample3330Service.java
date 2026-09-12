@@ -9,6 +9,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -62,10 +62,10 @@ public class MyExample3330Service extends VersionAwareResponseService<MyExample3
 	@Override
 	protected AssociateResultDTO doAssociate(List<AssociateDTO> data, BusinessComponent bc) {
 		List<MyEntity3330> myEntity3330List = addNewRecords(data, bc);
-		List<MyExample3330DTO> collect = myEntity3330List.stream()
-				.map(e -> entityToDto(bc, e))
+		List<DataResponseDTO> collect = myEntity3330List.stream()
+				.<DataResponseDTO>map(e -> entityToDto(bc, e))
 				.toList();
-		return new AssociateResultDTO((List) collect);
+		return new AssociateResultDTO(collect);
 	}
 	// --8<-- [end:doAssociate]
 
@@ -89,9 +89,9 @@ public class MyExample3330Service extends VersionAwareResponseService<MyExample3
 		List<MyEntity3330> recordList = new ArrayList<>();
 		for (AssociateDTO item : dataIds) {
 			List<MyEntity3330Multi> listMultivalue = new ArrayList<>();
-			Optional<MyEntity3330Multi> entityChild = repositoryMulti.findById(Long.valueOf(item.getId()));
-			listMultivalue.add(entityChild.get());
-			MyEntity3330 myEntity3330 = new MyEntity3330().setCustomFieldList(listMultivalue).setCustomFieldNew(entityChild.get().getCustomFieldNew());
+			MyEntity3330Multi entityChild = repositoryMulti.findById(Long.valueOf(item.getId())).orElseThrow();
+			listMultivalue.add(entityChild);
+			MyEntity3330 myEntity3330 = new MyEntity3330().setCustomFieldList(listMultivalue).setCustomFieldNew(entityChild.getCustomFieldNew());
 			recordList.add(repository.save(myEntity3330));
 		}
 		return recordList;

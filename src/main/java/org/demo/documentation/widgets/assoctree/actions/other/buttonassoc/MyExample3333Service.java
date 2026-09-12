@@ -8,6 +8,7 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
+import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.dto.rowmeta.AssociateResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
@@ -67,9 +67,9 @@ public class MyExample3333Service extends VersionAwareResponseService<MyExample3
 			entityChild.ifPresent(listMultivalue::add);
 		}
 		entity.get().setCustomFieldList(listMultivalue);
-		List<MyExample3333DTO> collect = entity.stream().map(e -> entityToDto(bc, e))
-				.collect(Collectors.toList());
-		return new AssociateResultDTO((List) collect);
+		List<DataResponseDTO> collect = entity.stream().<DataResponseDTO>map(e -> entityToDto(bc, e))
+				.toList();
+		return new AssociateResultDTO(collect);
 	}
 
 	// --8<-- [start:getActions]

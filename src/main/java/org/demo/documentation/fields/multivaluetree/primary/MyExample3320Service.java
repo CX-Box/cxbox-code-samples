@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 @SuppressWarnings("java:S1170")
@@ -47,7 +46,7 @@ public class MyExample3320Service extends VersionAwareResponseService<MyExample3
 					.filter(Objects::nonNull)
 					.map(Long::parseLong)
 					.map(e -> entityManager.getReference(MyEntity3320Multivalue.class, e))
-					.collect(Collectors.toList()));
+					.toList());
 			val primary = data.getCustomField().getValues().stream().filter(e -> e.getOptions().get(MultivalueExt.PRIMARY) != null && e.getOptions().get(MultivalueExt.PRIMARY).equalsIgnoreCase(Boolean.TRUE.toString())).findAny();
 			primary.ifPresent(s -> entity.setPrimaryId(Long.parseLong(s.getId())));
 		}
