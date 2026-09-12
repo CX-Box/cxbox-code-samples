@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
 import core.element.widget.list.WidgetSettings;
 import core.element.widget.tree.TreeNavigation;
+import core.element.widget.tree.TreePopupRows;
 import core.exception.InvalidStateException;
 import core.expectation.ExpectationPattern;
 import org.openqa.selenium.By;
@@ -39,6 +40,11 @@ public class PickTreeModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	/** The visible dialog box of the popup, e.g. for screenshots. */
 	public SelenideElement dialog() {
 		return modal.$(".ant-modal");
+	}
+
+	/** Widget actions and row actions inside the popup. */
+	public TreePopupRows rowActions() {
+		return new TreePopupRows(modal, widget.getExpectations());
 	}
 
 	/** Full text search of the popup (options.fullTextSearch). */

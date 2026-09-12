@@ -39,10 +39,7 @@ public class PickTree<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	/** Opens the PickTreePopup of the field and returns it for step-by-step checks. */
 	public PickTreeModal<W> openPopup() {
 		widget().getExpectations().getWaitAllFields();
-		element()
-				.$(popupIconSelector())
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.click();
+		openPopupIcon();
 		return new PickTreeModal<>(widget());
 	}
 
