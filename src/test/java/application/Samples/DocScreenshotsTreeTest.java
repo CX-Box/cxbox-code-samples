@@ -64,7 +64,7 @@ public class DocScreenshotsTreeTest extends BaseTestForSamples {
 
 	@Test
 	void fields() throws IOException {
-		var tree = open("myexample3261", "myexample3261allfieldstree").treeByName("MyExample3262AllFieldsInput");
+		var tree = open("myexample3261", "myexample3261allfieldstree").treeByName("MyExample3262AllFields");
 		shot(tree.element(), "fields.png");
 	}
 
