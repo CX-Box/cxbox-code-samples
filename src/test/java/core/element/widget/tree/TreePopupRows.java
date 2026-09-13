@@ -1,9 +1,11 @@
 package core.element.widget.tree;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import core.element.widget.list.realization.form.tree.PlatformTreePopupWidgetInlineForm;
+import core.element.widget.list.realization.inline.tree.PlatformTreePopupWidgetInline;
+import core.element.widget.type.TypeWidget;
 import core.expectation.ExpectationPattern;
 
 import java.util.List;
@@ -11,49 +13,63 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.$$;
 
 /**
- * Row actions inside a tree popup (PickTreePopup, AssocTreePopup): the widget actions of the popup,
- * the row menu ("..."), inline editing of a row and the inline form of a row (antd extra row).
+ * Row actions inside a tree popup. Kept for the tests written against it; every method delegates
+ * to the standard Tree API of the popup widget.
+ *
+ * @deprecated use {@code popup.tree()} / {@code popup.treeInlineForm()} and the same calls as for a Tree widget:
+ * {@code tree.actions().click("Add")}, {@code tree.rows().row(0).input("Custom Field").setValue(v)},
+ * {@code row.burgerAction("Save").click()}, {@code tree.rows().row(0).clickPencil()}, {@code tree.headers().clearFilters()}.
  */
+@Deprecated(since = "CXBOX-1341", forRemoval = true)
 public class TreePopupRows {
 
 	private static final String ROW_ACTION_BUTTON = "button[data-test-widget-list-row-action]";
 
 	private static final String ROW_ACTION_ITEM = "li[data-test-widget-list-row-action-item=\"true\"]";
 
-	private static final String EXTRA_ROW = "-extra-row";
-
 	private final SelenideElement modal;
 
 	private final ExpectationPattern expectations;
 
-	public TreePopupRows(SelenideElement modal, ExpectationPattern expectations) {
+	private final PlatformTreePopupWidgetInline tree;
+
+	private final PlatformTreePopupWidgetInlineForm treeInlineForm;
+
+	public TreePopupRows(SelenideElement modal, ExpectationPattern expectations, TypeWidget type) {
 		this.modal = modal;
 		this.expectations = expectations;
+		String name = modal.getAttribute("data-test-widget-name");
+		this.tree = new PlatformTreePopupWidgetInline(type, name);
+		this.treeInlineForm = new PlatformTreePopupWidgetInlineForm(type, name);
 	}
 
-	/** Clicks a widget action of the popup (e.g. "Add") by its text. */
+	/** @deprecated use {@code tree.actions().click(text)} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows action(String text) {
-		modal.$("div[class*='Operations__operations']").$$("button")
-				.shouldHave(CollectionCondition.sizeGreaterThan(0), expectations.getTimeout())
-				.findBy(Condition.text(text)).click();
-		TreeNavigation.waitLoaded(modal, expectations);
+		tree.actions().click(text);
 		return this;
 	}
 
-	/** Visible tree rows of the popup (root rows and the expanded child rows). */
+	/** @deprecated use {@code tree.rows().streamCurrentPage()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public List<SelenideElement> rows() {
-		return TreeNavigation.rows(modal).asFixedIterable().stream().toList();
+		return tree.rows().streamCurrentPage().map(r -> r.element()).toList();
 	}
 
+	/** @deprecated use {@code tree.rows().streamCurrentPage().map(r -> r.element().getText())} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public List<String> rowTexts() {
 		return rows().stream().map(r -> r.getText().replace("\n", " | ")).toList();
 	}
 
+	/** @deprecated use {@code tree.rows().row(index).element()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public SelenideElement row(int index) {
-		return TreeNavigation.rows(modal).shouldHave(CollectionCondition.sizeGreaterThan(index), expectations.getTimeout()).get(index);
+		return tree.rows().row(index).element();
 	}
 
-	/** Index of the first row whose text contains the value, -1 when there is no such row. */
+	/** @deprecated search the row with {@code tree.rows().streamCurrentPage()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public int rowIndex(String text) {
 		List<String> texts = rowTexts();
 		for (int i = 0; i < texts.size(); i++) {
@@ -64,7 +80,8 @@ public class TreePopupRows {
 		return -1;
 	}
 
-	/** Waits until a row whose text contains the value is shown; -1 after the widget timeout. */
+	/** @deprecated wait with {@code tree.waitLoaded()} and search the row with {@code tree.rows().streamCurrentPage()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public int waitRow(String text) {
 		long until = System.currentTimeMillis() + expectations.getTimeout().toMillis();
 		int index = rowIndex(text);
@@ -75,28 +92,28 @@ public class TreePopupRows {
 		return index;
 	}
 
-	/** The first input of the row in the edit mode. */
+	/** @deprecated use {@code tree.rows().row(index).input(title)} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public SelenideElement rowInput(int index) {
 		return row(index).$("input:not([type=checkbox])").shouldBe(Condition.visible, expectations.getTimeout());
 	}
 
-	/** "Clear N filter(s)" of the popup filter panel, when a filter is applied (an AssocTreePopup opens filtered by the selected records). */
+	/** @deprecated use {@code tree.headers().clearFilters()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows clearFilters() {
-		SelenideElement clear = modal.$$("a").findBy(Condition.text("filter"));
-		if (clear.exists()) {
-			clear.click();
-			TreeNavigation.waitLoaded(modal, expectations);
-		}
+		tree.headers().clearFilters();
 		return this;
 	}
 
-	/** Clicks the cell of the column (1-based, the first column is the tree column) to switch the row into the edit mode. */
+	/** @deprecated use {@code tree.rows().clickRow(index)} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows clickCell(int index, int column) {
 		row(index).$$("td").get(column - 1).click();
 		return this;
 	}
 
-	/** Items of the row menu "..." of the row; the menu is closed afterwards. */
+	/** @deprecated use {@code tree.rows().row(index).burgerAction(item)} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public List<String> rowMenuItems(int index) {
 		openRowMenu(index);
 		List<String> items = $$(ROW_ACTION_ITEM).filter(Condition.visible).texts();
@@ -104,15 +121,16 @@ public class TreePopupRows {
 		return items;
 	}
 
-	/** Chooses the item of the row menu "..." of the row. */
+	/** @deprecated use {@code tree.rows().row(index).burgerAction(item).click()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows rowMenu(int index, String item) {
-		openRowMenu(index);
-		$$(ROW_ACTION_ITEM).filter(Condition.visible).findBy(Condition.text(item)).click();
-		TreeNavigation.waitLoaded(modal, expectations);
+		tree.rows().row(index).burgerAction(item).click();
+		tree.waitLoaded();
 		return this;
 	}
 
-	/** The row menu "..." exists for the row (it is rendered on hover). */
+	/** @deprecated use {@code tree.rows().row(index).burgerAction(item)} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public boolean hasRowMenu(int index) {
 		SelenideElement row = row(index);
 		row.scrollIntoView("{block: \"center\"}");
@@ -124,46 +142,44 @@ public class TreePopupRows {
 		SelenideElement row = row(index);
 		row.scrollIntoView("{block: \"center\"}");
 		row.$$("td").last().hover();
-		SelenideElement button = modal.$(ROW_ACTION_BUTTON);
-		if (!button.is(Condition.visible)) {
-			row.$$("td").first().hover();
-		}
-		button.shouldBe(Condition.visible, expectations.getTimeout()).click();
-		$$(ROW_ACTION_ITEM).filter(Condition.visible).shouldHave(CollectionCondition.sizeGreaterThan(0), expectations.getTimeout());
+		modal.$(ROW_ACTION_BUTTON).shouldBe(Condition.visible, expectations.getTimeout()).click();
 	}
 
-	/** The pencil of the row opens its inline form. */
+	/** @deprecated use {@code treeInlineForm.rows().row(index).clickPencil()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows clickPencil(int index) {
-		SelenideElement row = row(index);
-		row.hover();
-		row.$("i[aria-label='icon: edit']").shouldBe(Condition.visible, expectations.getTimeout()).click();
-		extraRow(index).shouldBe(Condition.visible, expectations.getTimeout());
+		treeInlineForm.rows().row(index).clickPencil();
 		return this;
 	}
 
-	/** The inline form (antd extra row) of the row, when it is open. */
+	/** @deprecated use the form returned by {@code treeInlineForm.rows().row(index).clickPencil()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public SelenideElement extraRow(int index) {
-		String key = row(index).getAttribute("data-row-key");
-		return modal.$("tr[data-row-key=\"" + key + EXTRA_ROW + "\"]");
+		return treeInlineForm.rows().row(index).clickPencil().element();
 	}
 
-	/** Input of the inline form of the row by the field title. */
+	/** @deprecated use {@code form.input(title)} of the form returned by {@code clickPencil()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public SelenideElement extraRowInput(int index, String title) {
-		return extraRow(index).$("div[data-test-field-title=\"" + title + "\"] input").shouldBe(Condition.visible, expectations.getTimeout());
+		return treeInlineForm.rows().row(index).clickPencil().input(title).element();
 	}
 
-	/** Clicks a button of the inline form of the row (e.g. "Save", "Cancel"). */
+	/** @deprecated use {@code form.actions().action(text).click()} of the form returned by {@code clickPencil()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows extraRowAction(int index, String text) {
-		extraRow(index).$$("button").findBy(Condition.text(text)).click();
-		TreeNavigation.waitLoaded(modal, expectations);
+		treeInlineForm.rows().row(index).clickPencil().actions().action(text).click();
+		tree.waitLoaded();
 		return this;
 	}
 
-	/** Texts of the widget actions of the popup (e.g. "Add", "Save"). */
+	/** @deprecated use {@code tree.actions()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public List<String> actionTexts() {
 		return modal.$$("div[class*='Operations__operations'] button").asFixedIterable().stream().map(b -> b.getText().trim()).toList();
 	}
 
+	/** @deprecated use {@code tree.errorPopup()} */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public boolean errorShown() {
 		return Selenide.$("div[data-test-error-popup]").is(Condition.visible);
 	}

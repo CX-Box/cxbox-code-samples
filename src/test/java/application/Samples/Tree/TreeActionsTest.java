@@ -7,8 +7,10 @@ import core.element.PlatformApp;
 import core.element.screen.view.PlatformView;
 import core.element.widget.list.ListWidget;
 import core.element.widget.tree.TreeNavigation;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -23,12 +25,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DisplayName("Tree. Standard actions: create and edit (inline, inline-form, with view)")
 @Epic("Samples")
+@Feature(TreeActionsTest.ARTICLE)
 @Tag("Samples")
 public class TreeActionsTest extends BaseTestForSamples {
 
 	private static final String SCREEN = "myexample3265";
 
 	private static final String FIELD = "Custom Field";
+
+	static final String ARTICLE = "widget/type/tree";
 
 	private static PlatformView open(String view) {
 		Selenide.open(Env.uri() + "screen/" + SCREEN + "/view/" + view);
@@ -57,6 +62,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		tree.actions().click("Add");
 		var row = tree.rows().row(0);
 		row.element().$("input").shouldBe(com.codeborne.selenide.Condition.visible, tree.getExpectations().getTimeout());
+		DocShots.png(tree.element(), ARTICLE, "create_inline.png", 1600, 1000);
 		String value = unique("Inline root");
 		row.input(FIELD).setValue(value);
 		row.burgerAction("Save").click();
@@ -73,6 +79,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		tree.actions().click("Add");
 		Selenide.sleep(1000);
 		var form = tree.rows().row(0).clickPencil();
+		DocShots.png(tree.element(), ARTICLE, "create_inline_form.png", 1600, 1000);
 		String value = unique("Inline-form root");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save").click();
@@ -91,6 +98,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		tree.actions().click("Add");
 		Selenide.sleep(2000);
 		var form = PlatformApp.currentScreen().view().formByName("MyExample3266Form");
+		DocShots.png(form.element(), ARTICLE, "create_with_view.png", 1600, 1000);
 		String value = unique("With view root");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save and Close").click();
@@ -108,6 +116,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		var tree = open("myexample3273tree").treeByName("MyExample3273Tree");
 		tree.waitLoaded();
 		var row = tree.rows().clickRow(1);
+		DocShots.png(tree.element(), ARTICLE, "edit_inline.png", 1600, 1000);
 		String value = unique("Edited inline");
 		row.input(FIELD).setValue(value);
 		row.burgerAction("Save").click();
@@ -122,6 +131,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 	void editInlineForm() {
 		var tree = open("myexample3275tree").treeInlineFormByName("MyExample3275Tree");
 		var form = tree.rows().row(1).clickPencil();
+		DocShots.png(tree.element(), ARTICLE, "edit_inline_form.png", 1600, 1000);
 		String value = unique("Edited inline-form");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save").click();
@@ -140,6 +150,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		tree.rows().clickRow(1).burgerAction("Edit").click();
 		Selenide.sleep(2000);
 		var form = PlatformApp.currentScreen().view().formByName("MyExample3274Form");
+		DocShots.png(form.element(), ARTICLE, "edit_with_view.png", 1600, 1000);
 		String value = unique("Edited with view");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save and Close").click();

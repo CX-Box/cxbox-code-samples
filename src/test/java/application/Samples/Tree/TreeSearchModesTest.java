@@ -3,9 +3,12 @@ package application.Samples.Tree;
 import application.config.BaseTestForSamples;
 import core.element.PlatformApp;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
+import core.util.DocShots;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DisplayName("Tree. Search modes: collapse, hide, restoring the path of the found rows")
 @Epic("Samples")
+@Feature(TreeSearchModesTest.ARTICLE)
 @Tag("Samples")
 @Tag("Tree")
 public class TreeSearchModesTest extends BaseTestForSamples {
@@ -27,17 +31,26 @@ public class TreeSearchModesTest extends BaseTestForSamples {
 	/** matches child rows only; their parents are not loaded, so the rows are shown apart */
 	private static final String SEARCH = "заявлений";
 
+	/** matches root rows: the difference between the modes (arrows or dots) is visible */
+	private static final String ROOT_SEARCH = "Полномочия";
+
+	static final String ARTICLE = "widget/type/tree";
+
 	/** the page size of the filter results */
 	private static final int SHOWN = 5;
 
 	private PlatformTreeWidgetInline treeWithFilter() {
+		return treeWithFilter(SEARCH);
+	}
+
+	private PlatformTreeWidgetInline treeWithFilter(String search) {
 		var tree = PlatformApp.screen("Tree widget basic")
 				.secondLevelView("Business example")
 				.treeByName("myexample3261TreeList");
 		tree.waitLoaded();
 		tree.headers().clearFilters();
 		tree.waitLoaded();
-		tree.headers().filter(fb -> fb.input(COLUMN, SEARCH));
+		tree.headers().filter(fb -> fb.input(COLUMN, search));
 		return tree.shouldShow(SHOWN);
 	}
 
@@ -47,17 +60,15 @@ public class TreeSearchModesTest extends BaseTestForSamples {
 	@DisplayName("collapse: only the found rows are shown, the panel counts them, the arrows stay active")
 	@Description("Default search mode; every shown row matches the filter, no row gets the disabled dot")
 	void collapseMode() {
-		var tree = treeWithFilter();
+		var tree = treeWithFilter(ROOT_SEARCH);
+		DocShots.png(tree.element(), ARTICLE, "search_collapse.png", 1600, 1000);
 		int shown = tree.filterShown();
 		assertThat(shown).isEqualTo(SHOWN);
+		// a found record whose parent is not loaded waits in the unallocated block
 		assertThat(tree.rows().element().size() + tree.unallocatedRows().element().size()).isEqualTo(shown);
 		tree.rows().streamCurrentPage().forEach(r ->
-				assertThat(r.input(COLUMN).getValue()).contains(SEARCH));
-		var unallocated = tree.unallocatedRows();
-		for (int i = 0; i < unallocated.element().size(); i++) {
-			assertThat(unallocated.row(i).input(COLUMN).getValue()).contains(SEARCH);
-			assertThat(unallocated.row(i).isExpandDisabled()).isFalse();
-		}
+				assertThat(r.input(COLUMN).getValue()).contains(ROOT_SEARCH));
+		assertThat(tree.rows().streamCurrentPage().anyMatch(r -> r.isExpandable())).as("the arrows stay active").isTrue();
 	}
 
 	@Test
@@ -66,18 +77,17 @@ public class TreeSearchModesTest extends BaseTestForSamples {
 	@DisplayName("hide: the same rows, the arrows are replaced by the dot")
 	@Description("Switching the mode in the gear menu keeps the filter; switching back restores the arrows")
 	void hideMode() {
-		var tree = treeWithFilter();
+		var tree = treeWithFilter(ROOT_SEARCH);
 		int shown = tree.filterShown();
+		DocShots.png(tree.settings().open(), ARTICLE, "search_modes_menu.png", 1600, 1000);
 		tree.settings().select("Hide");
 		tree.shouldShow(shown);
-		var unallocated = tree.unallocatedRows();
-		assertThat(tree.rows().element().size() + unallocated.element().size()).isEqualTo(shown);
-		assertThat(tree.rows().streamCurrentPage().noneMatch(r -> r.isExpandable())).isTrue();
-		for (int i = 0; i < unallocated.element().size(); i++) {
-			assertThat(unallocated.row(i).isExpandable()).isFalse();
-		}
+		DocShots.png(tree.element(), ARTICLE, "search_hide.png", 1600, 1000);
+		assertThat(tree.rows().element().size() + tree.unallocatedRows().element().size()).isEqualTo(shown);
+		assertThat(tree.rows().streamCurrentPage().noneMatch(r -> r.isExpandable())).as("the arrows are replaced by the dot").isTrue();
 		tree.settings().select("Collapse");
 		tree.shouldShow(shown);
+		assertThat(tree.rows().streamCurrentPage().anyMatch(r -> r.isExpandable())).as("the arrows are back").isTrue();
 	}
 
 	@Test

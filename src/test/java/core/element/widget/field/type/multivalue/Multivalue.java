@@ -80,6 +80,8 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 							}
 							return false;
 						});
+				// let the widget apply the removed values before the popup builds its filter
+				Selenide.sleep(500);
 			}
 
 			element()

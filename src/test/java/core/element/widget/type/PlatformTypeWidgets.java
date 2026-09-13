@@ -13,7 +13,9 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	STATS_BLOCK("StatsBlock"),
 	TREE("Tree"),
 	ASSOC_TREE_POPUP("AssocTreePopup"),
-	PICK_TREE_POPUP("PickTreePopup");
+	PICK_TREE_POPUP("PickTreePopup"),
+	ASSOC_LIST_POPUP("AssocListPopup"),
+	PICK_LIST_POPUP("PickListPopup");
 
 	private final String type;
 

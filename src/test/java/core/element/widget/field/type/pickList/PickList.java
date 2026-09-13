@@ -128,6 +128,13 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		new PickListModal<>(widget()).setValue(columnName, value);
 	}
 
+	/** Opens the PickListPopup of the field and returns it for step-by-step checks (a pickTree field opens its tree popup with {@code openPopup()}). */
+	public PickListModal<W> openListPopup() {
+		widget().getExpectations().getWaitAllFields();
+		openPopupIcon();
+		return new PickListModal<>(widget());
+	}
+
 	@Override
 	public SELF clear() {
 		Allure.step("Clearing the field", step -> {

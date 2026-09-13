@@ -5,6 +5,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
+import core.element.widget.list.realization.form.list.PlatformListPopupWidgetInlineForm;
+import core.element.widget.list.realization.inline.list.PlatformListPopupWidgetInline;
+import core.element.widget.type.PlatformTypeWidgets;
 import core.exception.InvalidStateException;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
@@ -27,11 +30,47 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	private final SelenideElement modal;
 
+	private String name;
+
 	public PickListModal(W widget) {
 		this.widget = widget;
 		this.modal = $("div[data-test-widget-type=\"PickListPopup\"]")
 				.shouldBe(visible, widget.getExpectations().getTimeout())
 				.shouldBe(exist, widget.getExpectations().getTimeout());
+		name();
+	}
+
+	public SelenideElement element() {
+		return modal;
+	}
+
+	/** The visible dialog box of the popup, e.g. for screenshots. */
+	public SelenideElement dialog() {
+		return modal.$(".ant-modal-content");
+	}
+
+	/** Title of the popup; empty when the widget has no title. */
+	public String title() {
+		SelenideElement title = dialog().$(".ant-modal-title");
+		return title.exists() ? title.getText() : "";
+	}
+
+	/** The list of the popup with the standard List API: actions, rows, headers, settings. */
+	public PlatformListPopupWidgetInline list() {
+		return new PlatformListPopupWidgetInline(PlatformTypeWidgets.PICK_LIST_POPUP, name());
+	}
+
+	/** The list of the popup whose rows open the inline form (options.create.widget / options.edit.widget). */
+	public PlatformListPopupWidgetInlineForm listInlineForm() {
+		return new PlatformListPopupWidgetInlineForm(PlatformTypeWidgets.PICK_LIST_POPUP, name());
+	}
+
+	/** The widget name is read once: the popup may be closed by the time the widget of the popup is asked for. */
+	private String name() {
+		if (name == null) {
+			name = modal.getAttribute("data-test-widget-name");
+		}
+		return name;
 	}
 
 	public void setValue(String name, String value) {
@@ -96,19 +135,14 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		});
 	}
 
-	private void close() {
+	/** Closes the popup: the Close button when the widget has one, otherwise the cross of the dialog. */
+	public void close() {
 		Allure.step("Clicking on the button Close", step -> {
 			logTime(step);
-
-			getSubmitButton()
+			modal.$("button[data-test-widget-list-close=\"true\"], button.ant-modal-close")
+					.shouldBe(visible, widget.getExpectations().getTimeout())
 					.click();
 		});
-	}
-
-	private SelenideElement getSubmitButton() {
-		return this.modal
-				.$("button[data-test-widget-list-close=\"true\"]")
-				.shouldBe(Condition.visible, widget.getExpectations().getTimeout());
 	}
 
 	private SelenideElement getColumnByName(String columnName, SelenideElement row) {

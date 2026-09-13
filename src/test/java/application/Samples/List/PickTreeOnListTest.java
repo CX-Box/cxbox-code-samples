@@ -4,8 +4,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,9 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the PickTree in the widget List")
 @Epic("Samples")
+@Feature(PickTreeOnListTest.ARTICLE)
 @Tag("Samples")
 @Tag("List")
 public class PickTreeOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/pickTree";
 
 	@Test
 	@Tag("Positive")
@@ -36,6 +41,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.pickTree("Custom Field")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -49,6 +55,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.pickTree("Custom Field")
 				.checkColor(color -> assertThat(color).isEqualTo("#EDA6A6"));
+		DocShots.png(list.element(), ARTICLE, "img_color_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -62,6 +69,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.pickTree("Custom Field")
 				.checkReadOnly(ro -> assertThat(ro).isTrue());
+		DocShots.png(list.element(), ARTICLE, "img_ro_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -88,9 +96,12 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.pickTree("Custom Field")
-				.setValue("New data")
+		var customField = row.pickTree("Custom Field");
+		DocShots.gif(ARTICLE, "img_list.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
+		customField.clear();
+		customField.setValue("New data")
 				.checkValue(value -> assertThat(value).isEqualTo("New data"));
+		DocShots.stop();
 	}
 
 	@Test
@@ -126,11 +137,14 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		var list = PlatformApp.screen("Picktree filtration")
 				.secondLevelView("List")
 				.listInline("List title");
+		DocShots.gif(ARTICLE, "img_filtr_list.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		list.headers().filter(fb -> fb.input("Custom Field", "Abs"));
 		var values = list.rows().streamCurrentPage()
 				.map(r -> r.pickTree("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(values).isEqualTo(List.of("Abs data"));
+		list.headers().clearFilters();
+		DocShots.stop();
 	}
 
 	@Test
@@ -159,6 +173,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.pickTree("Custom Field")
 				.checkDrillDownSupported(ro -> assertThat(ro).isTrue());
+		DocShots.png(list.element(), ARTICLE, "img_drilldown_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -232,6 +247,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		row.editRow();// TODO >> front bag >> set value picklist break edit mode
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo("The field 'customField' can contain only letters."));
+		DocShots.png(list.element(), ARTICLE, "img_javax_stat_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -265,6 +281,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 				.map(r -> r.pickTree("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(valuesAfter).isEqualTo(List.of("Test data", "Abs data"));
+		DocShots.png(list.element(), ARTICLE, "img_sort_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -281,6 +298,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 		row.burgerAction("Save").click();
 		customField
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+		DocShots.png(list.element(), ARTICLE, "img_req_list.png", 1600, 1000);
 	}
 
 	@Test

@@ -3,8 +3,10 @@ package application.Samples.Info;
 import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the PickTree")
 @Epic("application/Samples")
+@Feature(PickTreeOnInfoTest.ARTICLE)
 @Tag("application/Samples")
 public class PickTreeOnInfoTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/pickTree";
 
 	@Disabled
 	@Test
@@ -28,12 +33,17 @@ public class PickTreeOnInfoTest extends BaseTestForSamples {
 	void placeholder() {
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("A test to check the field for \"Read-only\"")
-	@Description("Info Widget is always read-only")
+	@Description("Info Widget is always read-only: the field shows its value and cannot be edited")
 	void readonly() {
+		var info = PlatformApp.screen("Picktree readonly")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.pickTree("Custom Field")
+				.checkValue(val -> assertThat(val).isNotEmpty());
+		DocShots.png(info.element(), ARTICLE, "img_ro_info.png", 1600, 1000);
 	}
 
 	@Disabled
@@ -45,12 +55,17 @@ public class PickTreeOnInfoTest extends BaseTestForSamples {
 	void filtration() {
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("The DrillDown test")
-	@Description("DrillDown is not available for InfoWidget.")
+	@Description("The field of the Info widget is shown as a link when drillDown is set")
 	void drillDown() {
+		var info = PlatformApp.screen("Picktree drilldown")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.pickTree("Custom Field")
+				.checkDrillDownSupported(dd -> assertThat(dd).isTrue());
+		DocShots.png(info.element(), ARTICLE, "img_drilldown_info.png", 1600, 1000);
 	}
 
 	@Disabled
@@ -73,6 +88,7 @@ public class PickTreeOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.pickTree("Custom Field")
 				.checkColor(color -> assertThat(color).isEqualTo("#EDA6A6"));
+		DocShots.png(info.element(), ARTICLE, "img_color_info.png", 1600, 1000);
 	}
 
 	@Test
@@ -84,6 +100,7 @@ public class PickTreeOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.pickTree("Custom Field")
 				.checkValue(val -> assertThat(val).isEqualTo("New data"));
+		DocShots.png(info.element(), ARTICLE, "img_info.png", 1600, 1000);
 	}
 
 	@Test

@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -44,7 +43,8 @@ public class WidgetSettings<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	/** Chooses an item of the menu, e.g. {@code select("Hide")} or {@code select("10 / page")}. */
 	public W select(String item) {
-		open().$$("li").findBy(text(item))
+		// the groups of the menu are li elements too: only the items are searched, by the exact text
+		open().$$("li[role=\"menuitem\"]").findBy(Condition.exactText(item))
 				.shouldBe(Condition.visible, expectations.getTimeout())
 				.click();
 		expectations.getWaitAllElements(container);

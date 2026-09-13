@@ -5,8 +5,10 @@ import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.multivalueTree.MultivalueTree;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -23,10 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultiValueTree in the widget Form")
 @Epic("Samples")
+@Feature(MultiValueTreeOnFormTest.ARTICLE)
 @Tag("Samples")
 @Tag("Form")
 @Slf4j
 public class MultiValueTreeOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalueTree";
 
 	@Disabled
 	@Test
@@ -74,6 +79,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.field((w) -> new MultivalueTree<>(w, "Custom Field"))
 				.checkPlaceholder(ph -> assertThat(ph).isEqualTo("Placeholder text"));
+		DocShots.png(form.element(), ARTICLE, "img_plchldr_form.png", 1600, 1000);
 	}
 
 	@Test
@@ -98,6 +104,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("MultivalueTree basic")
 				.secondLevelView("Form")
 				.form("Form title");
+		DocShots.png(form.element(), ARTICLE, "img_form.png", 1600, 1000);
 		form.field((w) -> new MultivalueTree<>(w, "Custom Field"))
 				.setValue(List.of("Information7 data", "Information9 data", "Abs data"))
 				.checkValue(val -> assertThat(val).isEqualTo(List.of("Abs data", "Information7 data", "Information9 data")));
@@ -119,6 +126,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		form.field((w) -> new MultivalueTree<>(w, "Custom Field"))
 				.checkReadOnly(iro -> assertThat(iro).isTrue());
+		DocShots.png(form.element(), ARTICLE, "img_ro_form.png", 1600, 1000);
 	}
 
 	@Test
@@ -132,10 +140,11 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
 		multivalue.clear();
-		form.errorPopup()
+		var error = form.errorPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
-				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
-				.close();
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
+		DocShots.png(ARTICLE, "img_business_error.png", 1600, 1000);
+		error.close();
 	}
 
 	@Test
@@ -149,10 +158,11 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.form("Form title");
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
 		multivalue.clearValue("Test data", false);
-		form.errorPopup()
+		var error = form.errorPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
-				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
-				.close();
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError));
+		DocShots.png(ARTICLE, "img_runtime_error.png", 1600, 1000);
+		error.close();
 	}
 
 	@Test
@@ -167,10 +177,11 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
 		multivalue.setValue(List.of("Abs data"));
 		form.actions().action("save").click();
-		form.confirmPopup()
+		var confirm = form.confirmPopup()
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE))
-				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue))
-				.close();
+				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SaveValue));
+		DocShots.png(ARTICLE, "confirm_form.png", 1600, 1000);
+		confirm.close();
 	}
 
 	@Test
@@ -201,6 +212,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredField));
 		form.field((w) -> new MultivalueTree<>(w, "Custom Field Additional"))
 				.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredField));
+		DocShots.png(form.element(), ARTICLE, "img_javax_stat_form.png", 1600, 1000);
 	}
 
 	@Test
@@ -216,6 +228,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 		multivalue.clear(true);
 		form.actions().action("Save").click();
 		multivalue.checkRequired(rm -> assertThat(rm).isEqualTo(Constants.RequiredMessage));
+		DocShots.png(form.element(), ARTICLE, "img_req_form.png", 1600, 1000);
 	}
 
 	@Test

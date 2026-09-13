@@ -3,8 +3,10 @@ package application.Samples.Info;
 import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Info. Checking the basic functions for the MultiValueTree")
 @Epic("Samples")
+@Feature(MultiValueTreeOnInfoTest.ARTICLE)
 @Tag("Samples")
 public class MultiValueTreeOnInfoTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalueTree";
 
 	@Disabled
 	@Test
@@ -30,12 +35,17 @@ public class MultiValueTreeOnInfoTest extends BaseTestForSamples {
 	void placeholder() {
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("A test to check the field for \"Read-only\"")
-	@Description("Info Widget is always read-only")
+	@Description("Info Widget is always read-only: the field shows its values and cannot be edited")
 	void readonly() {
+		var info = PlatformApp.screen("MultivalueTree readonly")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.multivalueTree("Custom Field")
+				.checkValue(val -> assertThat(val).isNotEmpty());
+		DocShots.png(info.element(), ARTICLE, "img_ro_info.png", 1600, 1000);
 	}
 
 	@Disabled
@@ -110,6 +120,7 @@ public class MultiValueTreeOnInfoTest extends BaseTestForSamples {
 				.info("Info title");
 		info.multivalueTree("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo(expectedValue));
+		DocShots.png(info.element(), ARTICLE, "img_info.png", 1600, 1000);
 	}
 
 	@Test

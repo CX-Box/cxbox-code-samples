@@ -31,12 +31,12 @@ public class TreeConfirm {
 	}
 
 	public void ok() {
-		element().$$("button").findBy(Condition.cssClass("ant-btn-primary")).click();
+		element().$$(".ant-modal-confirm-btns button").findBy(Condition.cssClass("ant-btn-primary")).click();
 		element().shouldNot(Condition.visible, expectations.getTimeout());
 	}
 
 	public void cancel() {
-		element().$$("button").findBy(Condition.not(Condition.cssClass("ant-btn-primary"))).click();
+		element().$$(".ant-modal-confirm-btns button").findBy(Condition.not(Condition.cssClass("ant-btn-primary"))).click();
 		element().shouldNot(Condition.visible, expectations.getTimeout());
 	}
 

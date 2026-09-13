@@ -3,9 +3,12 @@ package core.element.widget.field.type.pickTree;
 import com.codeborne.selenide.SelenideElement;
 import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
+import core.element.widget.list.realization.form.tree.PlatformTreePopupWidgetInlineForm;
+import core.element.widget.list.realization.inline.tree.PlatformTreePopupWidgetInline;
+import core.element.widget.tree.TreePopupRows;
+import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.list.WidgetSettings;
 import core.element.widget.tree.TreeNavigation;
-import core.element.widget.tree.TreePopupRows;
 import core.exception.InvalidStateException;
 import core.expectation.ExpectationPattern;
 import org.openqa.selenium.By;
@@ -26,11 +29,14 @@ public class PickTreeModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	private final SelenideElement modal;
 
+	private String name;
+
 	public PickTreeModal(W widget) {
 		this.widget = widget;
 		this.modal = $("div[data-test-widget-type=\"PickTreePopup\"]")
 				.shouldBe(visible, widget.getExpectations().getTimeout())
 				.shouldBe(exist, widget.getExpectations().getTimeout());
+		name();
 	}
 
 	public SelenideElement element() {
@@ -39,12 +45,37 @@ public class PickTreeModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	/** The visible dialog box of the popup, e.g. for screenshots. */
 	public SelenideElement dialog() {
-		return modal.$(".ant-modal");
+		return modal.$(".ant-modal-content");
 	}
 
-	/** Widget actions and row actions inside the popup. */
+	/** Title of the popup; empty when the widget has no title. */
+	public String title() {
+		SelenideElement title = dialog().$(".ant-modal-title");
+		return title.exists() ? title.getText() : "";
+	}
+
+	/** The tree of the popup with the standard Tree API: actions, rows, headers, settings. */
+	public PlatformTreePopupWidgetInline tree() {
+		return new PlatformTreePopupWidgetInline(PlatformTypeWidgets.PICK_TREE_POPUP, name());
+	}
+
+	/** The tree of the popup whose rows open the inline form (options.create.widget / options.edit.widget). */
+	public PlatformTreePopupWidgetInlineForm treeInlineForm() {
+		return new PlatformTreePopupWidgetInlineForm(PlatformTypeWidgets.PICK_TREE_POPUP, name());
+	}
+
+	/** @deprecated use {@link #tree()} / {@link #treeInlineForm()} with the standard Tree API */
+	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows rowActions() {
-		return new TreePopupRows(modal, widget.getExpectations());
+		return new TreePopupRows(modal, widget.getExpectations(), PlatformTypeWidgets.PICK_TREE_POPUP);
+	}
+
+	/** The widget name is read once: the popup may be closed by the time the widget of the popup is asked for. */
+	private String name() {
+		if (name == null) {
+			name = modal.getAttribute("data-test-widget-name");
+		}
+		return name;
 	}
 
 	/** Full text search of the popup (options.fullTextSearch). */

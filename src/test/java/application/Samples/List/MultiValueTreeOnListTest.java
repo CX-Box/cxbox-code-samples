@@ -4,8 +4,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -22,9 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the MultiValueTree in the widget List")
 @Epic("Samples")
+@Feature(MultiValueTreeOnListTest.ARTICLE)
 @Tag("Samples")
 @Tag("List")
 public class MultiValueTreeOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalueTree";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -56,6 +61,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.collect(Collectors.toList());
 		assertThat(values).isNotEmpty();
 		assertThat(values).allMatch(v -> v.contains("Test3 data"));
+		DocShots.png(list.element(), ARTICLE, "img_filtr_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -82,6 +88,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.multivalueTree("Custom Field")
 				.checkColor(color -> assertThat(color).isEqualTo("#EDA6A6"));
+		DocShots.png(list.element(), ARTICLE, "img_color_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -95,6 +102,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.multivalueTree("Custom Field")
 				.checkReadOnly(ro -> assertThat(ro).isTrue());
+		DocShots.png(list.element(), ARTICLE, "img_ro_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -107,6 +115,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
+		DocShots.png(list.element(), ARTICLE, "img_list.png", 1600, 1000);
 		row.multivalueTree("Custom Field")
 				.setValue(List.of("Information7 data", "Information9 data", "Abs data"))
 				.checkValue(val -> assertThat(val).isEqualTo(List.of("Information9 data", "Information7 data", "Abs data")));
@@ -128,11 +137,12 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalueTree("Custom Field").clearWithModal();
-		list.errorPopup()
+		var error = list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
-						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
-				.close();
+						message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
+		DocShots.png(ARTICLE, "img_business_error_list.png", 1600, 1000);
+		error.close();
 	}
 
 	@Test
@@ -146,11 +156,12 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalueTree("Custom Field").deleteValueFromField();
-		list.errorPopup()
+		var error = list.errorPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
-						message -> assertThat(message).isEqualTo(Constants.SystemError))
-				.close();
+						message -> assertThat(message).isEqualTo(Constants.SystemError));
+		DocShots.png(ARTICLE, "img_runtime_error_list.png", 1600, 1000);
+		error.close();
 	}
 
 	@Test
@@ -165,11 +176,12 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 		var row = list.rows().clickRow(0);
 		row.multivalueTree("Custom Field").setValue(List.of("Abs data"));
 		row.burgerAction("save").click();
-		list.confirmPopup()
+		var confirm = list.confirmPopup()
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
-						message -> assertThat(message).isEqualTo(Constants.SaveValue))
-				.close();
+						message -> assertThat(message).isEqualTo(Constants.SaveValue));
+		DocShots.png(ARTICLE, "confirm_list.png", 1600, 1000);
+		confirm.close();
 	}
 
 	@Test
@@ -204,6 +216,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 		var customFieldAdditional = editRow.multivalueTree("Custom Field Additional");
 		customField.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredField));
 		customFieldAdditional.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredField));
+		DocShots.png(list.element(), ARTICLE, "img_javax_stat_list.png", 1600, 1000);
 	}
 
 	@Test
@@ -221,6 +234,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 		list.rows().row(0)
 				.multivalueTree("Custom Field")
 				.checkRequired(message -> assertThat(message).isEqualTo(Constants.RequiredMessage));
+		DocShots.png(list.element(), ARTICLE, "img_req_list.png", 1600, 1000);
 	}
 
 	@Test

@@ -94,12 +94,12 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 				.stream()
 				.filter(r -> values.contains(getColumnByName(columnName, r).getText()))
 				.forEach(row -> {
-					if (getSelectionRow(row).shouldBe(Condition.enabled).isSelected() == status) {
-						getSelectionRow(row).click();
+					SelenideElement checkbox = getSelectionRow(row);
+					if (checkbox.isSelected() != status) {
+						checkbox.click();
 					}
-					if (!getSelectionRow(row).shouldBe(Condition.enabled).isSelected() == status) {
-						getSelectionRow(row).click();
-					}
+					// the popup re-renders after a click: the state is checked, not assumed
+					checkbox.shouldBe(status ? Condition.selected : Condition.not(Condition.selected), widget.getExpectations().getTimeout());
 				});
 	}
 

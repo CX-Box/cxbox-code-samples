@@ -3,6 +3,7 @@ package core.element.widget.tree;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.expectation.ExpectationPattern;
 import org.openqa.selenium.By;
@@ -20,6 +21,9 @@ public final class TreeNavigation {
 
 	/** owner key of the rows found by a filter whose path to the root is not restored yet */
 	public static final String UNALLOCATED_KEY = "unallocated";
+
+	/** Owner key of every visible row regardless of its parent: the rows of a popup, which may be shown filtered (unallocated). */
+	public static final String ALL_KEY = "*";
 
 	public static final String ROW_ID_ATTRIBUTE = "data-test-widget-tree-row-id";
 
@@ -75,6 +79,9 @@ public final class TreeNavigation {
 	public static ElementsCollection childRows(SelenideElement container, String parentKey) {
 		if (UNALLOCATED_KEY.equals(parentKey)) {
 			return unallocatedRows(container);
+		}
+		if (ALL_KEY.equals(parentKey)) {
+			return rows(container);
 		}
 		return container.$$(ROWS_SELECTOR + "[" + PARENT_ID_ATTRIBUTE + "=\"" + parentKey + "\"]").filter(Condition.visible);
 	}
@@ -143,6 +150,8 @@ public final class TreeNavigation {
 		SelenideElement more = container.$(SHOW_MORE_BUTTON);
 		if (more.exists()) {
 			more.shouldBe(Condition.visible, expectations.getTimeout()).click();
+			// the "More" button is replaced by the loading row a moment later
+			Selenide.sleep(300);
 			waitLoaded(container, expectations);
 			return true;
 		}
@@ -150,8 +159,16 @@ public final class TreeNavigation {
 	}
 
 	public static void loadWholeTree(SelenideElement container, ExpectationPattern expectations) {
-		while (loadNext(container, expectations)) {
-			// keep loading until nothing is left
+		while (true) {
+			if (loadNext(container, expectations)) {
+				continue;
+			}
+			// a page may still be rendering: check once more after a pause
+			Selenide.sleep(500);
+			waitLoaded(container, expectations);
+			if (!loadNext(container, expectations)) {
+				return;
+			}
 		}
 	}
 
