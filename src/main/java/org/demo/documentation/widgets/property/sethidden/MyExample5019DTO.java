@@ -20,6 +20,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample5019DTO extends DataResponseDTO {
 
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
+
+	private Boolean isLeaf;
+
 
 	public static final String TEXT = "The field  customField is dynamically hidden when the field  customFieldDictionary has the value Low.\n";
 	public static final String TEXT_GRAPH_2D = "The field clientName is dynamically hidden when the field  productName has the value Equipment.\n";
@@ -44,6 +49,8 @@ public class MyExample5019DTO extends DataResponseDTO {
 
 	public MyExample5019DTO(MyEntity5019 entity) {
 		this.id = entity.getId().toString();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getChildren().isEmpty();
 		this.customField = entity.getCustomField();
 		this.customFieldDictionary = entity.getCustomFieldDictionary();
 		this.customFieldMV = entity.getCustomFieldMVList().stream().collect(MultivalueField.toMultivalueField(

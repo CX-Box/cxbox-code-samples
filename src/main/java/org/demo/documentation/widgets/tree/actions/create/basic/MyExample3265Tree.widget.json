@@ -1,0 +1,58 @@
+{
+  "name": "MyExample3265Tree",
+  "title": "Tree",
+  "type": "Tree",
+  "bc": "myexample3265",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "customFieldMoney",
+      "key": "customFieldMoney",
+      "digits": 2,
+      "type": "money"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "hidden"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentId",
+      "type": "number"
+    },
+    {
+      "title": "Id",
+      "key": "id",
+      "type": "number"
+    },
+    {
+      "title": "custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    }
+  ],
+  "options": {
+    "tree": {
+      "insertPosition": "start"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete",
+        "save",
+        "customSave",
+        "customSaveWithRefresh",
+        "customDelete",
+        "customDeleteConfirm",
+        "saveWaitUntil",
+        "cancel-create"
+      ]
+    }
+  }
+}
+

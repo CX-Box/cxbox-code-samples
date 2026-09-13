@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount;
 
+import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -64,6 +65,9 @@ public class MyEntity3862TestDataLoadService {
 		repositoryAssoc.save(new MyEntity3862Assoc().setCustomField("test data10"));
 
 
+		// the tree tab: the first record is the root, the others are its children
+		List<MyEntity3862> all = repository.findAll();
+		all.stream().skip(1).forEach(e -> repository.save(e.setParentId(all.get(0).getId())));
 	}
 
 }

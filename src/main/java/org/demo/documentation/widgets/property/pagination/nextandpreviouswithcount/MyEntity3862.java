@@ -30,4 +30,11 @@ public class MyEntity3862 extends BaseEntity {
 			{CascadeType.PERSIST,
 					CascadeType.MERGE})
 	private List<MyEntity3862Assoc> customFieldMultivalueDisplayedKeyList = new ArrayList<>();
+
+	/** The tree tab: the parent record, empty for a root record. */
+	@Column
+	private Long parentId;
+
+	@OneToMany(mappedBy = "parentId", fetch = FetchType.LAZY)
+	private List<MyEntity3862> children = new ArrayList<>();
 }

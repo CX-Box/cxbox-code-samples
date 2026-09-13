@@ -82,6 +82,7 @@ public class FB<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 		return self();
 	}
 
+
 	public S money(String name, BigDecimal value) {
 		container.add(new MoneyFilter<>(widget, column(name), value));
 		return self();
@@ -115,6 +116,30 @@ public class FB<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<RO
 
 	public S input(String name, String value) {
 		container.add(new InputFilter<>(widget, column(name), value));
+		return self();
+	}
+
+	/** multivalueTree column: the records are chosen in the AssocTreePopup opened by the filter icon. */
+	public S multivalueTree(String name, List<String> values) {
+		container.add(new TreePopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
+	/** pickTree column, "..." button of the filter: the records are chosen in the AssocTreePopup. */
+	public S pickTree(String name, List<String> values) {
+		container.add(new TreePopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
+	/** pickList column, "..." button of the filter: the records are chosen in the AssocListPopup. */
+	public S pickList(String name, List<String> values) {
+		container.add(new ListPopupFilter<>(widget, column(name), values));
+		return self();
+	}
+
+	/** multivalue column: the records are chosen in the AssocListPopup opened by the filter icon. */
+	public S multivalue(String name, List<String> values) {
+		container.add(new ListPopupFilter<>(widget, column(name), values));
 		return self();
 	}
 

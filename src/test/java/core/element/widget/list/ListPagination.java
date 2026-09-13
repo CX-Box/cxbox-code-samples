@@ -8,7 +8,7 @@ import lombok.Getter;
 
 import java.util.function.Consumer;
 
-public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
+public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> implements Pagination<ListPagination<W>, W> {
 
 	@Getter(value = AccessLevel.PROTECTED)
 	private final W widget;
@@ -17,12 +17,14 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 		this.widget = widget;
 	}
 
+	@Override
 	public ListPagination<W> checkPageCount(Consumer<Integer> pageCountChecker) {
 		pageCountChecker.accept(getPages());
 		return this;
 	}
 
 	//ROW
+	@Override
 	public ListPagination<W> pages(int number) {
 		firstPage();
 		for (int i = 0; i < number; i++) {
@@ -39,6 +41,7 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	// Rows
+	@Override
 	public ListPagination<W> firstPage() {
 		this.getWidget().element()
 				.$("div[data-test-widget-list-pagination=\"true\"]")
@@ -50,6 +53,7 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	// cant return ROW   be  chain >> pagination.nextPage().nextPage()
+	@Override
 	public ListPagination<W> nextPage() {
 		this.getWidget().element().$("i[class=\"anticon anticon-right\"]")
 				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
@@ -58,6 +62,7 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 		return this;
 	}
 
+	@Override
 	public ListPagination<W> previousPage() {
 		this.getWidget().element().$("i[class=\"anticon anticon-left\"]")
 				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
@@ -74,10 +79,12 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 				.$$("li[tabindex=\"0\"].ant-pagination-item").size();
 	}
 
+	@Override
 	public boolean checkNextPage() {
 		return !isLastPage();
 	}
 
+	@Override
 	public boolean isLastPage() {
 		widget.getExpectations().getWaitAllElements(widget.element());
 		return this.widget.element()
@@ -85,6 +92,7 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> {
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
 	}
 
+	@Override
 	public W widget() {
 		return widget;
 	}

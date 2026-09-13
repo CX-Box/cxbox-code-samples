@@ -19,6 +19,8 @@ import core.element.widget.field.type.multivalueHover.MultivalueHover;
 import core.element.widget.field.type.number.Number;
 import core.element.widget.field.type.percent.Percent;
 import core.element.widget.field.type.pickList.PickList;
+import core.element.widget.field.type.pickTree.PickTree;
+import core.element.widget.field.type.multivalueTree.MultivalueTree;
 import core.element.widget.field.type.radio.Radio;
 import core.element.widget.field.type.suggestionPickList.SuggestionPickList;
 import core.element.widget.field.type.richtext.RichText;
@@ -89,6 +91,15 @@ public class PlatformFormWidget extends PlatformWidget<PlatformFormWidget> {
 
 	public PickList<PlatformFormWidget, ?> pickList(String title) {
 		return new PickList<>(this, title);
+	}
+
+	public PickTree<PlatformFormWidget, ?> pickTree(String title) {
+		return new PickTree<>(this, title);
+	}
+
+
+	public MultivalueTree<PlatformFormWidget> multivalueTree(String title) {
+		return new MultivalueTree<>(this, title);
 	}
 
 	public Percent<PlatformFormWidget, ?> percent(String title) {

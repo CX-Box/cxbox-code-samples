@@ -27,6 +27,7 @@ public class MyExample3618Meta extends FieldMetaBuilder<MyExample3618DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3618DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3618DTO_.parentId);
 		fields.enableFilter(MyExample3618DTO_.customFieldPicklist);
 		fields.enableFilter(MyExample3618DTO_.customFieldMultivalueDisplayedKey);
 		fields.setEnumFilterValues(fields, MyExample3618DTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());

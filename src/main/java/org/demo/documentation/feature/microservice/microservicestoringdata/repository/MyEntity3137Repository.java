@@ -16,4 +16,6 @@ public interface MyEntity3137Repository extends
 
 
 	List<MyEntity3137> findAllByCustomField(String customField);
+
+	boolean existsByParentId(String parentId);
 }

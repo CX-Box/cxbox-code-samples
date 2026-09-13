@@ -1,0 +1,37 @@
+{
+  "title": "PickTreePopup create",
+  "name": "myEntity3350PickPickTreePopup",
+  "type": "PickTreePopup",
+  "bc": "myEntity3350PickPickTreePopup",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentId",
+      "type": "hidden"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "myEntity3350FormForPopup"
+    },
+    "edit": {
+      "widget": "myEntity3350FormForPopup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+package org.demo.documentation.widgets.picktree.actions.delete;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.api.data.dto.DataResponseDTO;
+import org.cxbox.core.util.filter.SearchParameter;
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
+
+import java.util.Optional;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyExample3354DTO extends DataResponseDTO {
+
+	@SearchParameter(name = "customField")
+	private String customField;
+	@SearchParameter(name = "customFieldDeleteEntity.customField")
+	private String customFieldDelete;
+	@SearchParameter(name = "customFieldDeleteEntity.id", provider = LongValueProvider.class)
+	private Long customFieldDeleteId;
+
+	public MyExample3354DTO(MyEntity3354 entity) {
+		this.id = entity.getId().toString();
+		this.customField = entity.getCustomField();
+		this.customFieldDeleteId = Optional.ofNullable(entity.getCustomFieldDeleteEntity())
+				.map(e -> e.getId())
+				.orElse(null);
+		this.customFieldDelete = Optional.ofNullable(entity.getCustomFieldDeleteEntity())
+				.map(e -> e.getCustomField())
+				.orElse(null);
+	}
+}

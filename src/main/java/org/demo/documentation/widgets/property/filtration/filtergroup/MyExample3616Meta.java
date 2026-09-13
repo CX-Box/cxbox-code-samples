@@ -26,6 +26,7 @@ public class MyExample3616Meta extends FieldMetaBuilder<MyExample3616DTO> {
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3616DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3616DTO_.parentId);
 		fields.enableFilter(MyExample3616DTO_.customFieldPicklist);
 		fields.enableFilter(MyExample3616DTO_.customFieldMultivalue);
 		fields.enableFilter(MyExample3616DTO_.customFieldNew);

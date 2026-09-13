@@ -23,13 +23,17 @@ import static core.element.widget.AbstractWidget.logTime;
 @Slf4j
 public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
-	private final W widget;
+	protected final W widget;
 
-	private final SelenideElement modal;
+	protected final SelenideElement modal;
 
 	public MultivalueModal(W widget) {
+		this(widget, "AssocListPopup");
+	}
+
+	protected MultivalueModal(W widget, String popupType) {
 		this.widget = widget;
-		this.modal = $("div[data-test-widget-type=\"AssocListPopup\"]")
+		this.modal = $("div[data-test-widget-type=\"" + popupType + "\"]")
 				.shouldBe(visible, widget.getExpectations().getOverTimeout())
 				.shouldBe(exist, widget.getExpectations().getOverTimeout());
 	}
@@ -46,13 +50,13 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		close();
 	}
 
-	private boolean isLastPage() {
+	protected boolean isLastPage() {
 		return this.modal
 				.$("li[title=\"Next Page\"][aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
 	}
 
-	private void pressRight(int number) {
+	protected void pressRight(int number) {
 		Allure.step("Clicking on the button \"Right\"", step -> {
 			logTime(step);
 			step.parameter("Number of clicks", number);
@@ -78,30 +82,34 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		});
 	}
 
-	private void setValuesOnCurrentPage(String columnName, List<String> values, Boolean status) {
+	protected ElementsCollection rows() {
+		return modal.$$(By.cssSelector("table > tbody > tr"));
+	}
+
+	protected void setValuesOnCurrentPage(String columnName, List<String> values, Boolean status) {
 		widget.getExpectations().getWaitAllElements(this.modal);
-		modal.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
-				.$$(By.cssSelector("table > tbody > tr"))
+		modal.shouldBe(Condition.visible, widget.getExpectations().getTimeout());
+		rows()
 				.shouldBe(CollectionCondition.sizeGreaterThan(0))
 				.stream()
 				.filter(r -> values.contains(getColumnByName(columnName, r).getText()))
 				.forEach(row -> {
-					if (getSelectionRow(row).shouldBe(Condition.enabled).isSelected() == status) {
-						getSelectionRow(row).click();
+					SelenideElement checkbox = getSelectionRow(row);
+					if (checkbox.isSelected() != status) {
+						checkbox.click();
 					}
-					if (!getSelectionRow(row).shouldBe(Condition.enabled).isSelected() == status) {
-						getSelectionRow(row).click();
-					}
+					// the popup re-renders after a click: the state is checked, not assumed
+					checkbox.shouldBe(status ? Condition.selected : Condition.not(Condition.selected), widget.getExpectations().getTimeout());
 				});
 	}
 
-	private SelenideElement getSelectionRow(SelenideElement row) {
+	protected SelenideElement getSelectionRow(SelenideElement row) {
 		return row.$(By.cssSelector("td[class='ant-table-selection-column']"))
 				.$(By.tagName("input"))
 				.shouldBe(Condition.enabled);
 	}
 
-	private SelenideElement getColumnByName(String columnName, SelenideElement row) {
+	protected SelenideElement getColumnByName(String columnName, SelenideElement row) {
 		for (var i = 1; i <= widget.getExpectations().getRetryNumber(); i++) {
 			try {
 				SelenideElement column = row.$$(By.tagName("td"))
@@ -126,7 +134,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		return number;
 	}
 
-	private List<String> getColumnNames() {
+	protected List<String> getColumnNames() {
 		for (int i = 1; i < widget.getExpectations().getRetryNumber(); i++) {
 			try {
 				return this.modal
@@ -135,7 +143,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 						.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 						.$$(By.tagName("th"))
 						.stream()
-						.map(th -> th.getAttribute("data-test-widget-list-header-column-title"))
+						.map(th -> th.getAttribute(headerTitleAttribute()))
 						.collect(Collectors.toList());
 			} catch (StaleElementReferenceException ex) {
 				log.error("Stale element reference exception occurred while getting column names. Retrying...{}", i, ex);
@@ -144,13 +152,17 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		throw new RuntimeException("Time is over...");
 	}
 
-	private SelenideElement getSubmitButton() {
+	protected String headerTitleAttribute() {
+		return "data-test-widget-list-header-column-title";
+	}
+
+	protected SelenideElement getSubmitButton() {
 		return this.modal
 				.$("button[data-test-widget-list-close=\"true\"]")
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout());
 	}
 
-	private void close() {
+	protected void close() {
 		Allure.step("Clicking on the button Close", step -> {
 			logTime(step);
 
@@ -227,7 +239,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		}
 	}
 
-	private SelenideElement getCheckBoxAll() {
+	protected SelenideElement getCheckBoxAll() {
 		return this.modal
 				.$("thead[class=\"ant-table-thead\"]")
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())

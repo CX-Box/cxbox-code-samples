@@ -2,6 +2,7 @@ package core.element.widget.list;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import core.common.IterableElement;
 import core.element.widget.list.filter.header.filtration.FB;
 import core.element.widget.list.filter.header.filtration.FC;
@@ -63,6 +64,16 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 
 	public W widget() {
 		return widget;
+	}
+
+	/** Clicks "Clear N filter(s)" above the table when filters are applied. */
+	public W clearFilters() {
+		SelenideElement clear = widget().element().$$("a").findBy(Condition.text("filter"));
+		if (clear.exists()) {
+			clear.click();
+			widget().getExpectations().getWaitAllElements(widget().element());
+		}
+		return widget();
 	}
 
 	public HeaderColumn<W, ROWS, ROW> headerColumn(String name) {

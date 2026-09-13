@@ -12,4 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface MyEntity4002ExternalRepository extends
 		JpaRepository<MyEntity4002External, Long>, JpaSpecificationExecutor<MyEntity4002External>,
 		QueryLanguageRepository<MyEntity4002External, Long> {
+
+	boolean existsByParentId(Long parentId);
+
 }

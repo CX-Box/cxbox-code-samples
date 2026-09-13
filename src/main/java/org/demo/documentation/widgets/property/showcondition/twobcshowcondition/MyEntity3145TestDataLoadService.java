@@ -30,7 +30,8 @@ public class MyEntity3145TestDataLoadService {
 		MyEntity3146 myEntity3146 = new MyEntity3146().setCustomField(5L);
 		repositoryParent.save(myEntity3146);
 		repository.save(new MyEntity3145().setCustomField("test data").setCustomFieldEntity(myEntity3146));
-		repositoryParent.save(new MyEntity3146().setCustomField(8L));
+		// the tree tab: the second record is a child of the first one
+		repositoryParent.save(new MyEntity3146().setCustomField(8L).setParentId(myEntity3146.getId()));
 	}
 
 }

@@ -29,7 +29,11 @@ public class MyExample6500PostActionExportToExcelListDataLoadService {
 			entity.setTestData("testData" + i);
 			data.add(entity);
 		}
-		dao.saveAll(data);
+		// the tree tab: the first record is the root, the others are its children
+		MyExample6500PostActionExportToExcelListEntity root = data.get(0);
+		dao.saveAll(List.of(root));
+		data.stream().skip(1).forEach(e -> e.setParentId(root.getId()));
+		dao.saveAll(data.subList(1, data.size()));
 	}
 
 

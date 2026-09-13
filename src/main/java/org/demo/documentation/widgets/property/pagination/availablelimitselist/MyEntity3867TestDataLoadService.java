@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.property.pagination.availablelimitselist;
 
+import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -68,6 +69,9 @@ public class MyEntity3867TestDataLoadService {
 		repositoryPick.save(new MyEntity3867Pick().setCustomField("test data9"));
 		repositoryPick.save(new MyEntity3867Pick().setCustomField("test data10"));
 
+		// the tree tab: the first record is the root, the others are its children
+		List<MyEntity3867> all = repository.findAll();
+		all.stream().skip(1).forEach(e -> repository.save(e.setParentId(all.get(0).getId())));
 	}
 
 }

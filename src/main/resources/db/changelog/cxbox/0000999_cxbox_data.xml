@@ -36,6 +36,7 @@
       <column header="name" name="name" type="STRING"/>
       <column header="bc" name="bc" type="STRING"/>
       <column header="filters" name="filters" type="STRING"/>
+      <column header="default_filter" name="default_filter" type="boolean"/>
     </loadUpdateData>
   </changeSet>
 
@@ -118,7 +119,11 @@
     </loadUpdateData>
 
   </changeSet>
-
+  <changeSet id="ADD_PG_TRIM_EXTENSION" author="cxbox" dbms="postgresql">
+    <sql>
+      CREATE EXTENSION IF NOT EXISTS pg_trgm;
+    </sql>
+  </changeSet>
 
 
 </databaseChangeLog>

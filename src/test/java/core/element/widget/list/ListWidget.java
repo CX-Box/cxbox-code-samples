@@ -18,7 +18,7 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 		return new ListHeaders<>(self());
 	}
 
-	public ListPagination<SELF> pagination() {
+	public Pagination<?, SELF> pagination() {
 		return new ListPagination<>(self());
 	}
 
@@ -29,6 +29,16 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 
 	public Action<SELF> actions() {
 		return new Action<>(self());
+	}
+
+	/** data-test attribute that holds the column title in the table header. */
+	public String headerTitleAttribute() {
+		return "data-test-widget-list-header-column-title";
+	}
+
+	/** The gear menu of the widget. */
+	public WidgetSettings<SELF> settings() {
+		return new WidgetSettings<>(self());
 	}
 
 }

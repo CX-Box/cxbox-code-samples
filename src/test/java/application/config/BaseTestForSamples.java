@@ -15,6 +15,7 @@ import core.config.selenide.AbstractLoggingProxyServer;
 import core.config.selenide.AllureScreenshotExtension;
 import core.config.selenide.AllureVideoRecorder;
 import core.page.auth.keycloak.KeycloackAuthPage;
+import core.util.DocShots;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
@@ -68,7 +69,7 @@ public abstract class BaseTestForSamples {
 		Configuration.browser = "chrome";
 		Configuration.headless = false;
 		Configuration.timeout = 10000;
-		Configuration.browserSize = "1280x800";
+		Configuration.browserSize = DocShots.enabled() ? DocShots.browserSize() : "1280x800";
 		Configuration.pageLoadTimeout = 60000;
 		Configuration.webdriverLogsEnabled = false;
 		Configuration.reportsFolder = "target/videos";
@@ -84,7 +85,7 @@ public abstract class BaseTestForSamples {
 			//0 (lossless) to 51 (the lowest quality)
 			System.setProperty("selenide.video.crf", String.valueOf(0));
 		}
-		Configuration.browserCapabilities = getChromeOptions();
+		Configuration.browserCapabilities = getChromeOptions().addArguments(DocShots.chromeArguments());
 
 		SelenideLogger.addListener(
 				AllureSelenide.class.getName(),
@@ -106,7 +107,7 @@ public abstract class BaseTestForSamples {
 		String envApp = String.valueOf(Env.uri());
 
 		var options = new ChromeOptions().addArguments(
-				"--headless",
+				Boolean.getBoolean("headed") ? "--start-maximized" : "--headless",
 //				"--auto-open-devtools-for-tabs", // show devtools on start browser
 				"--enable-automation",
 				"--remote-allow-origins=*",

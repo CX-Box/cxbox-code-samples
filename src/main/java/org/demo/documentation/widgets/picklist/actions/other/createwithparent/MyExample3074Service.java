@@ -46,7 +46,7 @@ public class MyExample3074Service extends VersionAwareResponseService<MyExample3
 	public Actions<MyExample3074DTO> getActions() {
 		return Actions.<MyExample3074DTO>builder()
 				.save(sv -> sv.text("Save"))
-				.create(crt -> crt)
+				.create(crt -> crt.text("Create"))
 				.delete(dlt -> dlt)
 				.build();
 	}

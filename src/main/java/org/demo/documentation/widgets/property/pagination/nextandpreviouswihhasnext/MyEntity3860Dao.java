@@ -76,11 +76,18 @@ public class MyEntity3860Dao extends AbstractAnySourceBaseDAO<MyEntity3860OutSer
 		List<String> sortCustomField = getSortFieldName(queryParameters, "customField");
 		Optional<String> sort = sortCustomField.isEmpty() ? Optional.empty() : Optional.of(sortCustomField.get(0));
 
+		//Tree: the root records (parentId.specified=false) or the child records of a node (parentId.equals=<id>)
+		Optional<String> roots = Optional.ofNullable(bc.getParameters().getParameter("parentId.specified"))
+				.map(v -> String.valueOf(!Boolean.parseBoolean(v)));
+		Optional<String> parentId = Optional.ofNullable(bc.getParameters().getParameter("parentId.equals"));
+
 		String urlTemplate = UriComponentsBuilder.fromUriString(integrationConfig.getNextAndPreviousMicroservicesDataServerUrl())
 				.queryParam("number", page)
 				.queryParam("size", limit)
 				.queryParamIfPresent("filterCustomField", filter)
 				.queryParamIfPresent("sortCustomField", sort)
+				.queryParamIfPresent("filterRoots", roots)
+				.queryParamIfPresent("filterParentId", parentId)
 				.encode()
 				.toUriString();
 

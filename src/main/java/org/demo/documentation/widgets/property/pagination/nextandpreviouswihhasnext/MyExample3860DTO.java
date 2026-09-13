@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.property.pagination.nextandpreviouswihhasnext;
 
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyExample3860DTO extends DataResponseDTO {
 
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
+
+	private Boolean isLeaf;
+
 	@SearchParameter(name = "customField")
 	private String customField;
 	@SearchParameter(name = "customField", provider = DateTimeValueProvider.class)
@@ -21,6 +27,8 @@ public class MyExample3860DTO extends DataResponseDTO {
 
 	public MyExample3860DTO(MyEntity3860OutServiceDTO entity) {
 		this.id = entity.getId();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getIsLeaf();
 		this.customField = entity.getCustomField();
 		this.customFieldDateTime = entity.getCustomFieldDateTime();
 	}

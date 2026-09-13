@@ -96,8 +96,7 @@ public class ListMultivalue<
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 
-			MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-			multivalueModal.setValues(identifier, value);
+			modal().setValues(identifier, value);
 			return this;
 		});
 	}
@@ -106,6 +105,10 @@ public class ListMultivalue<
 	@Override
 	protected SelenideElement parentElement() {
 		return row().element();
+	}
+
+	protected MultivalueModal<W> modal() {
+		return new MultivalueModal<>(widget());
 	}
 
 
@@ -181,8 +184,7 @@ public class ListMultivalue<
 				.$("div[data-test-field-multivalue-icon=\"true\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-		multivalueModal.clear(close);
+		modal().clear(close);
 		return this;
 	}
 
@@ -196,8 +198,7 @@ public class ListMultivalue<
 				.$("div[data-test-field-multivalue-icon=\"true\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-		multivalueModal.setValueAll(close);
+		modal().setValueAll(close);
 		widget().getExpectations().getWaitAllFields();
 		return this;
 	}

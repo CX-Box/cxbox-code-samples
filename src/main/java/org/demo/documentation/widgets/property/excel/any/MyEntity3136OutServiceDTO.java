@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyEntity3136OutServiceDTO implements Serializable {
 
+	private String parentId;
+
+	private Boolean isLeaf;
+
 	private String id;
 	private String customField;
 	private LocalDateTime customFieldDateTime;

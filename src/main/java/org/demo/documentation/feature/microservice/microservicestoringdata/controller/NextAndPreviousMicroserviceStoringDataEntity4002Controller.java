@@ -63,7 +63,7 @@ public class NextAndPreviousMicroserviceStoringDataEntity4002Controller {
 	@GetMapping("/{id}")
 	public ResponseEntity<MyExample4002ExternalDTO> getOne(@PathVariable final Long id) {
 		authzService.loginAs(authzService.createAuthentication(VANILLA));
-		return ResponseEntity.ok().body(dataRepository.findById(id).map(mapper::toDto).orElse(null));
+		return ResponseEntity.ok().body(dataRepository.findById(id).map(this::toDto).orElse(null));
 	}
 
 
@@ -80,7 +80,11 @@ public class NextAndPreviousMicroserviceStoringDataEntity4002Controller {
 			@RequestParam(value = "filterCustomField", required = false) String filterCustomField,
 			@Parameter(in = ParameterIn.QUERY,
 					description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
-			@RequestParam(value = "sortCustomField", required = false) String sortCustomField
+			@RequestParam(value = "sortCustomField", required = false) String sortCustomField,
+			@Parameter(in = ParameterIn.QUERY, description = "Only the root records (the tree)", example = "true")
+			@RequestParam(value = "filterRoots", required = false) Boolean filterRoots,
+			@Parameter(in = ParameterIn.QUERY, description = "Only the child records of the record (the tree)", example = "1")
+			@RequestParam(value = "filterParentId", required = false) Long filterParentId
 	) {
 		authzService.loginAs(authzService.createAuthentication(VANILLA));
 
@@ -93,7 +97,20 @@ public class NextAndPreviousMicroserviceStoringDataEntity4002Controller {
 					criteriaBuilder.like(root.get(MyEntity4002External_.customField.getName()), "%" + filterCustomField + "%");
 		}
 
-		return ResponseEntity.ok().body(dataRepository.findAll(specification, entityPageable).map(mapper::toDto));
+		if (Boolean.TRUE.equals(filterRoots)) {
+			specification = specification.and((root, query, cb) -> cb.isNull(root.get(MyEntity4002External_.parentId.getName())));
+		}
+		if (filterParentId != null) {
+			specification = specification.and((root, query, cb) -> cb.equal(root.get(MyEntity4002External_.parentId.getName()), filterParentId));
+		}
+		return ResponseEntity.ok().body(dataRepository.findAll(specification, entityPageable).map(this::toDto));
+	}
+
+	/** The tree needs to know whether the record has child records. */
+	private MyExample4002ExternalDTO toDto(MyEntity4002External entity) {
+		MyExample4002ExternalDTO dto = mapper.toDto(entity);
+		dto.setIsLeaf(!dataRepository.existsByParentId(entity.getId()));
+		return dto;
 	}
 
 	private Pageable getEntityPageable(String numberPage, String sizePage, String sortCustomField) {

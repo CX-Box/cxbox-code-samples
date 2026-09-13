@@ -18,8 +18,6 @@ public class MyEntity3428 extends BaseEntity {
 	private String customField;
 	@Column
 	private String customFieldDrilldown;
-
-
 	@Column
 	private String customFieldAdditional;
 	@Column

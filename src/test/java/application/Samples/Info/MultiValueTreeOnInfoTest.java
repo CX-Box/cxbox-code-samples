@@ -1,0 +1,130 @@
+package application.Samples.Info;
+
+import application.config.BaseTestForSamples;
+import application.custom.Position;
+import core.element.PlatformApp;
+import core.util.DocShots;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static io.qameta.allure.SeverityLevel.MINOR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@DisplayName("Info. Checking the basic functions for the MultiValueTree")
+@Epic("Samples")
+@Feature(MultiValueTreeOnInfoTest.ARTICLE)
+@Tag("Samples")
+public class MultiValueTreeOnInfoTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalueTree";
+
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value")
+	@Description("The InfoWidget doesn't have a Placeholder..")
+	void placeholder() {
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to check the field for \"Read-only\"")
+	@Description("Info Widget is always read-only: the field shows its values and cannot be edited")
+	void readonly() {
+		var info = PlatformApp.screen("MultivalueTree readonly")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.multivalueTree("Custom Field")
+				.checkValue(val -> assertThat(val).isNotEmpty());
+		DocShots.png(info.element(), ARTICLE, "img_ro_info.png", 1600, 1000);
+	}
+
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Filtering test")
+	@Description("Filtering is not available for InfoWidget.")
+	void filtration() {
+	}
+
+	@Disabled
+	@Test
+	@Tag("Positive")
+	@DisplayName("The DrillDown test")
+	@Description("Drill Down is not available for InfoWidget.")
+	void drillDown() {
+	}
+
+	@Disabled
+	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Sorting test")
+	@Description("Sorting is not available for InfoWidget.")
+	void sorting() {
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test to get the field color value in Hex format")
+	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
+	void color() {
+		var info = PlatformApp
+				.screen("MultivalueTree color")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.multivalueTree("Custom Field")
+				.checkColor(color -> assertThat(color).isNull());
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("The test for getting the value from the field")
+	void read() {
+		List<String> expectedValue = List.of("Abs data",
+				"Abs data",
+				"Test data",
+				"Test data",
+				"Information data",
+				"Information data",
+				"Information2 data",
+				"Information2 data",
+				"Information3 data",
+				"Information3 data",
+				"Information4 data",
+				"Information4 data",
+				"Information5 data",
+				"Information5 data",
+				"Information6 data",
+				"Information6 data",
+				"Information7 data",
+				"Information7 data",
+				"Information8 data",
+				"Information8 data",
+				"Information9 data",
+				"Information9 data",
+				"Information10 data",
+				"Information10 data");
+		var info = PlatformApp.screen("MultivalueTree basic")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.multivalueTree("Custom Field")
+				.checkValue(value -> assertThat(value).isEqualTo(expectedValue));
+		DocShots.png(info.element(), ARTICLE, "img_info.png", 1600, 1000);
+	}
+
+	@Test
+	void position() {
+		assertTrue(Position.checkPosition(302, 95, PlatformApp.screen("MultivalueTree basic").secondLevelView("Info").info("Info title").element()));
+	}
+}

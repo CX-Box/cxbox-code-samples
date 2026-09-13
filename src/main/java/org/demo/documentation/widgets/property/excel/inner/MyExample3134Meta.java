@@ -57,6 +57,7 @@ public class MyExample3134Meta extends FieldMetaBuilder<MyExample3134DTO> {
 	// --8<-- [end:buildRowDependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3134DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3134DTO_.parentId);
 		fields.enableFilter(MyExample3134DTO_.customFieldSuggectionPickList);
 		fields.enableFilter(MyExample3134DTO_.customFieldMoneyWithCurrencyDynamic);
 		fields.enableFilter(MyExample3134DTO_.customFieldMoneyWithCurrencyConst);

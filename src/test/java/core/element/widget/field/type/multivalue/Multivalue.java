@@ -80,6 +80,8 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 							}
 							return false;
 						});
+				// let the widget apply the removed values before the popup builds its filter
+				Selenide.sleep(500);
 			}
 
 			element()
@@ -87,8 +89,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 
-			MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-			multivalueModal.setValues(name, value);
+			modal().setValues(name, value);
 			return this;
 		});
 
@@ -98,6 +99,10 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 	@Override
 	protected SelenideElement parentElement() {
 		return widget().element();
+	}
+
+	protected MultivalueModal<W> modal() {
+		return new MultivalueModal<>(widget());
 	}
 
 	@Override
@@ -122,8 +127,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 				.$("div[data-test-field-multivalue-icon=\"true\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-		multivalueModal.clear(close);
+		modal().clear(close);
 		return this;
 	}
 
@@ -132,8 +136,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 				.$("div[data-test-field-multivalue-icon=\"true\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-		multivalueModal.clearWithValue(value, close);
+		modal().clearWithValue(value, close);
 		return this;
 	}
 
@@ -142,8 +145,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 				.$("div[data-test-field-multivalue-icon=\"true\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		MultivalueModal<W> multivalueModal = new MultivalueModal<>(widget());
-		multivalueModal.setValueAll(close);
+		modal().setValueAll(close);
 
 		widget().getExpectations().getWaitAllFields();
 		return this;

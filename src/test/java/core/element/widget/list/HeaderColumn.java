@@ -21,6 +21,10 @@ public class HeaderColumn<WIDGET extends ListWidget<WIDGET, ROWS, ROW>, ROWS ext
 		this.headers = headers;
 	}
 
+	public String name() {
+		return name;
+	}
+
 	public WIDGET widget() {
 		return widget;
 	}
@@ -28,7 +32,7 @@ public class HeaderColumn<WIDGET extends ListWidget<WIDGET, ROWS, ROW>, ROWS ext
 	@Override
 	public SelenideElement element() throws StaleElementReferenceException {
 		return headers.element()
-				.filter(Condition.attribute("data-test-widget-list-header-column-title", name))
+				.filter(Condition.attribute(widget.headerTitleAttribute(), name))
 				.first();
 	}
 

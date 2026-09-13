@@ -19,6 +19,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3865DTO extends DataResponseDTO {
 
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
+
+	private Boolean isLeaf;
+
 	@SearchParameter(name = "customField")
 	private String customField;
 	@SearchParameter(name = "customFieldPickListEntity.customField")
@@ -42,6 +47,8 @@ public class MyExample3865DTO extends DataResponseDTO {
 
 	public MyExample3865DTO(MyEntity3865 entity) {
 		this.id = entity.getId().toString();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getChildren().isEmpty();
 		this.customField = entity.getCustomField();
 		this.customFieldPickListId = Optional.ofNullable(entity.getCustomFieldPickListEntity())
 				.map(e -> e.getId())
