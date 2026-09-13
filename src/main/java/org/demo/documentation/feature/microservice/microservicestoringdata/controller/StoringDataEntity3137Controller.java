@@ -65,7 +65,7 @@ public class StoringDataEntity3137Controller {
 	@GetMapping("/{id}")
 	public ResponseEntity<MyExample3137DTO> getOne(@PathVariable final Long id) {
 		authzService.loginAs(authzService.createAuthentication(VANILLA));
-		return ResponseEntity.ok().body(dataRepository.findById(id).map(mapper::toDto).orElse(null));
+		return ResponseEntity.ok().body(dataRepository.findById(id).map(this::toDto).orElse(null));
 	}
 
 
@@ -82,6 +82,7 @@ public class StoringDataEntity3137Controller {
 			@RequestParam(value = "filterCustomField", required = false) String filterCustomField,
 			@RequestParam(value = "filterEqualsCustomField", required = false) String filterEqualsCustomField,
 			@RequestParam(value = "filterParentId", required = false) String filterParentId,
+			@RequestParam(value = "filterRoots", required = false) Boolean filterRoots,
 			@Parameter(in = ParameterIn.QUERY,
 					description = "Sorting criteria in the format: property(asc|desc)", example = "desc")
 			@RequestParam(value = "sortCustomField", required = false) String sortCustomField
@@ -106,7 +107,17 @@ public class StoringDataEntity3137Controller {
 			specification = (root, query, criteriaBuilder) ->
 					criteriaBuilder.equal(root.get(MyEntity3137_.parentId.getName()), filterParentId);
 		}
-		return ResponseEntity.ok().body(dataRepository.findAll(specification, entityPageable).map(mapper::toDto));
+		if (Boolean.TRUE.equals(filterRoots)) {
+			specification = specification.and((root, query, cb) -> cb.isNull(root.get(MyEntity3137_.parentId.getName())));
+		}
+		return ResponseEntity.ok().body(dataRepository.findAll(specification, entityPageable).map(this::toDto));
+	}
+
+	/** The tree needs to know whether the record has child records. */
+	private MyExample3137DTO toDto(MyEntity3137 entity) {
+		MyExample3137DTO dto = mapper.toDto(entity);
+		dto.setIsLeaf(!dataRepository.existsByParentId(String.valueOf(entity.getId())));
+		return dto;
 	}
 
 	private Pageable getEntityPageable(String numberPage, String sizePage, String sortCustomField) {

@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.property.excel.inner;
 
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,11 @@ import static org.demo.documentation.fields.money.currency.fieldkey.enums.Custom
 @Setter
 @NoArgsConstructor
 public class MyExample3134DTO extends DataResponseDTO {
+
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
+
+	private Boolean isLeaf;
 
 	private String customField;
 	@SearchParameter(name = "customFieldMultivalueHoverList.id", provider = LongValueProvider.class)
@@ -84,6 +90,8 @@ public class MyExample3134DTO extends DataResponseDTO {
 
 	public MyExample3134DTO(MyEntity3134 entity) {
 		this.id = entity.getId().toString();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getChildren().isEmpty();
 		this.customField = entity.getCustomField();
 		this.customFieldCurrency = entity.getCustomFieldMoney() > 50000 ? RUBLE : DOLLAR;
 		this.customFieldMultivalueHover = entity.getCustomFieldMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(

@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class MyExample3867DTO extends DataResponseDTO {
 
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
+
+	private Boolean isLeaf;
+
 	@SearchParameter(name = "customField")
 	private String customField;
 	@SearchParameter(name = "customFieldMultivalueList.id", provider = LongValueProvider.class)
@@ -30,6 +35,8 @@ public class MyExample3867DTO extends DataResponseDTO {
 
 	public MyExample3867DTO(MyEntity3867 entity) {
 		this.id = entity.getId().toString();
+		this.parentId = entity.getParentId();
+		this.isLeaf = entity.getChildren().isEmpty();
 		this.customField = entity.getCustomField();
 		this.customFieldMultivalue = entity.getCustomFieldMultivalueList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),

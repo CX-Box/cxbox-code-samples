@@ -42,7 +42,8 @@ public class MyEntity3183TestDataLoadService {
 		repositoryParent.save(myEntity3185.setCustomFieldEntity(myEntity3184));
 
 		MyEntity3185 myEntity3185_2 = new MyEntity3185().setCustomField("test data2").setCustomFieldCheckbox(false);
-		repositoryParent.save(myEntity3185_2.setCustomFieldEntity(myEntity3184));
+		// the tree tab: the second record is a child of the first one
+		repositoryParent.save(myEntity3185_2.setCustomFieldEntity(myEntity3184).setParentId(myEntity3185.getId()));
 
 		repositoryChild.save(new MyEntity3183().setCustomField("test data").setCustomFieldEntity(myEntity3185));
 		repositoryChild.save(new MyEntity3183().setCustomField("test data2").setCustomFieldEntity(myEntity3185_2));

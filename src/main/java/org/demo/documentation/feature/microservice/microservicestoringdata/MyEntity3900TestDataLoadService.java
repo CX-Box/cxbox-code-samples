@@ -1,5 +1,6 @@
 package org.demo.documentation.feature.microservice.microservicestoringdata;
 
+import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -78,6 +79,9 @@ public class MyEntity3900TestDataLoadService {
 		repository4002.save(new MyEntity4002External().setCustomField("Test data8").setCustomFieldNew("Test data8"));
 		repository4002.save(new MyEntity4002External().setCustomField("Test data9").setCustomFieldNew("Test data9"));
 		repository4002.save(new MyEntity4002External().setCustomField("Test data10").setCustomFieldNew("Test data10"));
+		// the tree tab: the first record is the root, the others are its children
+		List<MyEntity4002External> all4002 = repository4002.findAll();
+		all4002.stream().skip(1).forEach(e -> repository4002.save(e.setParentId(all4002.get(0).getId())));
 		repository3081.deleteAll();
 		repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data").setCustomFieldNew("Test data").setCustomFieldSuggestionDate(LocalDateTime.now().minusDays(1)));
 		repository3081.save(new MyEntity3081().setCustomFieldSuggestion("Test data2").setCustomFieldNew("Test data2").setCustomFieldSuggestionDate(LocalDateTime.now()));
@@ -103,6 +107,9 @@ public class MyEntity3900TestDataLoadService {
 		repository3137.save(new MyEntity3137().setCustomField("Test data10").setCustomFieldNew("Test data10").setCustomFieldDateTime(LocalDateTime.now().minusWeeks(7)).setCustomFieldDouble(Double.valueOf(300200)));
 		repository3137.save(new MyEntity3137().setCustomField("Test data11").setCustomFieldDateTime(LocalDateTime.now().minusDays(3)));
 		repository3137.save(new MyEntity3137().setCustomField("Test data2"));
+		// the tree tab: the first record is the root, the others are its children
+		List<MyEntity3137> all3137 = repository3137.findAll();
+		all3137.stream().skip(1).forEach(e -> repository3137.save(e.setParentId(String.valueOf(all3137.get(0).getId()))));
 
 		repository380.save(new MyEntity380External().setType("DICTIONARY_TYPE").setKey("HIGH").setValue("High").setDisplayOrder(1));
 		repository380.save(new MyEntity380External().setType("DICTIONARY_TYPE").setKey("MIDDLE").setValue("Middle").setDisplayOrder(2));

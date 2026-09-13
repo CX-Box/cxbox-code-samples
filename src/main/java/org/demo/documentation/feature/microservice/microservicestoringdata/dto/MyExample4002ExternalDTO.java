@@ -15,8 +15,13 @@ public class MyExample4002ExternalDTO implements Serializable {
 	private String id;
 	private String customField;
 
+	private Long parentId;
+
+	private Boolean isLeaf;
+
 	public MyExample4002ExternalDTO(MyEntity4002External entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.parentId = entity.getParentId();
 	}
 }

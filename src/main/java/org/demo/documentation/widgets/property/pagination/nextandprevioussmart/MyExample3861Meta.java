@@ -21,6 +21,7 @@ public class MyExample3861Meta extends AnySourceFieldMetaBuilder<MyExample3861DT
 	// --8<-- [end:buildRowDependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3861DTO> fields, BcDescription bcDescription, String parentId) {
+		fields.enableFilter(MyExample3861DTO_.parentId);
 		fields.enableSort(MyExample3861DTO_.customField);
 
 	}

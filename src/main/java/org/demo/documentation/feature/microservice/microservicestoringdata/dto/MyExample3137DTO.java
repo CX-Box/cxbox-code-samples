@@ -28,6 +28,8 @@ public class MyExample3137DTO implements Serializable {
 	private Double customFieldDouble;
 	private String parentId;
 
+	private Boolean isLeaf;
+
 	public MyExample3137DTO(MyEntity3137 entity) {
 		this.id = entity.getId().toString();
 		this.parentId = entity.getParentId();

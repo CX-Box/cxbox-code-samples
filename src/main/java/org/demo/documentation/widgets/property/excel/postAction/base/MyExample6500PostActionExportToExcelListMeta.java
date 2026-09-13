@@ -18,6 +18,7 @@ public class MyExample6500PostActionExportToExcelListMeta extends FieldMetaBuild
 
 	@Override
 	public void buildIndependentMeta(final FieldsMeta<MyExample6500PostActionExportToExcelListDTO> fields, final InnerBcDescription bcDescription, final Long parentId) {
+		fields.enableFilter(MyExample6500PostActionExportToExcelListDTO_.parentId);
 
 	}
 

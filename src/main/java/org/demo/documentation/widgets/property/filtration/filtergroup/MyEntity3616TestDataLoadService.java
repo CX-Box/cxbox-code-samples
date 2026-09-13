@@ -1,5 +1,6 @@
 package org.demo.documentation.widgets.property.filtration.filtergroup;
 
+import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
@@ -50,6 +51,10 @@ public class MyEntity3616TestDataLoadService {
 		repository3630.save(new MyEntity3630().setCustomField("test data"));
 		repository3630.save(new MyEntity3630().setCustomField("test data2"));
 		repository3630.save(new MyEntity3630().setCustomField("test data"));
+
+		// the tree tab: the first record is the root, the others are its children
+		List<MyEntity3616> all = repository.findAll();
+		all.stream().skip(1).forEach(e -> repository.save(e.setParentId(all.get(0).getId())));
 	}
 
 }

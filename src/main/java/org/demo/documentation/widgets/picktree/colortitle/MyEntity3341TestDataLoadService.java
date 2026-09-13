@@ -70,7 +70,9 @@ public class MyEntity3341TestDataLoadService {
 				.setCustomFieldColorTextConst("Test data")
 				.setCustomFieldColorInlinePicktreeEntity(myEntityPick2);
 		repository2.save(myEntity3342new.setCustomFieldColorMultivalueHoverList(list).setCustomFieldColorMultivalueList(list2));
-		MyEntity3342 myEntity3342Group = repository2.save(new MyEntity3342().setCustomField("Test group"));
+		// the group is the first row of the popup: it carries the colored values too
+		MyEntity3342 myEntity3342Group = repository2.save(new MyEntity3342().setCustomField("Test group")
+				.setCustomFieldColorInput("Test group").setCustomFieldColorText("Unlike a digital typeface"));
 		repository2.findAll().stream()
 				.filter(e -> !e.getId().equals(myEntity3342Group.getId()))
 				.forEach(e -> repository2.save(e.setParentId(myEntity3342Group.getId())));

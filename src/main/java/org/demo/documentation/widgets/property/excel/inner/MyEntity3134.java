@@ -92,4 +92,11 @@ public class MyEntity3134 extends BaseEntity {
 	@JoinColumn(name = "CUSTOM_FIELD_SUGGECTION_PICK_LIST_ID")
 	@ManyToOne
 	private MyEntity3134SuggectionPick customFieldSuggectionPickListEntity;
+
+	/** The tree tab: the parent record, empty for a root record. */
+	@Column
+	private Long parentId;
+
+	@OneToMany(mappedBy = "parentId", fetch = FetchType.LAZY)
+	private List<MyEntity3134> children = new ArrayList<>();
 }

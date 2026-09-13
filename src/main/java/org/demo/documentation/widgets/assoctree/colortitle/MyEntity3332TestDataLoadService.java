@@ -27,7 +27,8 @@ public class MyEntity3332TestDataLoadService {
 		repository.save(new MyEntity3332());
 		repositoryMulti.deleteAll();
 		repositoryMulti.save(new MyEntity3332Multi().setCustomField("Test data").setCustomFieldText("Test data text"));
-		MyEntity3332Multi myEntity3332MultiGroup = repositoryMulti.save(new MyEntity3332Multi().setCustomField("Test group"));
+		// the group is the first row of the popup: it carries the colored values too
+		MyEntity3332Multi myEntity3332MultiGroup = repositoryMulti.save(new MyEntity3332Multi().setCustomField("Test group").setCustomFieldText("Test group text"));
 		repositoryMulti.findAll().stream()
 				.filter(e -> !e.getId().equals(myEntity3332MultiGroup.getId()))
 				.forEach(e -> repositoryMulti.save(e.setParentId(myEntity3332MultiGroup.getId())));
