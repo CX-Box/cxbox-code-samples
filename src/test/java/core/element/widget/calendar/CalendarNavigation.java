@@ -62,6 +62,11 @@ public final class CalendarNavigation {
 		return $$(FORM + "[" + ROW_ID_ATTRIBUTE + "=\"" + rowKey + "\"]").findBy(Condition.visible);
 	}
 
+	/** The visible form of any event: an opened edit popover or the create popup. */
+	public static SelenideElement openedForm() {
+		return $$(FORM + "[" + ROW_ID_ATTRIBUTE + "]").findBy(Condition.visible);
+	}
+
 	/** Waits until the widget is shown and its data is not loading. */
 	public static void waitLoaded(SelenideElement container, ExpectationPattern expectations) {
 		expectations.getWaitAllElements(container);
