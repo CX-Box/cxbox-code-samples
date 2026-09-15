@@ -5,6 +5,8 @@ import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
+import core.element.widget.calendar.PlatformCalendarMonthWidget;
+import core.element.widget.calendar.PlatformCalendarYearWidget;
 import core.element.widget.form.PlatformFormWidget;
 import core.element.widget.info.PlatformAdditionalInfoWidget;
 import core.element.widget.info.PlatformInfoWidget;
@@ -105,6 +107,23 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public PlatformTreeWidgetInlineForm treeInlineFormByName(String name) {
 		return new PlatformTreeWidgetInlineForm(PlatformIdentifier.NAME, name);
+	}
+
+	/** CalendarList widget in the month view, the view it is opened with. */
+	public PlatformCalendarMonthWidget calendar(String title) {
+		return new PlatformCalendarMonthWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformCalendarMonthWidget calendarByName(String name) {
+		return new PlatformCalendarMonthWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public PlatformCalendarYearWidget calendarYear(String title) {
+		return new PlatformCalendarYearWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformCalendarYearWidget calendarYearByName(String name) {
+		return new PlatformCalendarYearWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public StatsBlockWidget statBlock(String title) {

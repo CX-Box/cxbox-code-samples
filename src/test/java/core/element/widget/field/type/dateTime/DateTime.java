@@ -76,6 +76,10 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	public SELF clear() {
 		return Allure.step("Clearing the field through the cross icon", step -> {
 			logTime(step);
+			// an empty field has no cross icon: nothing to clear
+			if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+				return (SELF) this;
+			}
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 					.hover()

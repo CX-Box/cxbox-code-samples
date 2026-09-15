@@ -1,0 +1,37 @@
+{
+  "name": "MyExample5059Child",
+  "title": "Show condition widget",
+  "type": "CalendarList",
+  "bc": "myexample5059",
+  "showCondition": {
+    "bcName": "myexample5058",
+    "params": {
+      "fieldKey": "customFieldShowCondition",
+      "value": true
+    }
+  },
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Start Date Time",
+      "key": "startDateTime",
+      "type": "dateTime"
+    },
+    {
+      "title": "End Date Time",
+      "key": "endDateTime",
+      "type": "dateTime"
+    }
+  ],
+  "options": {
+    "calendar": {
+      "valueFieldKey": "customField",
+      "startFieldKey": "startDateTime",
+      "endFieldKey": "endDateTime"
+    }
+  }
+}
