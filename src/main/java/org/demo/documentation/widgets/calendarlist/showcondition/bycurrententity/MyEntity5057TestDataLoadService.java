@@ -28,7 +28,7 @@ public class MyEntity5057TestDataLoadService {
 		repository.save(new MyEntity5057().setCustomField("Meeting 2").setCustomFieldNumber(8L)
 				.setStartDateTime(month.withDayOfMonth(12).atTime(14, 0))
 				.setEndDateTime(month.withDayOfMonth(12).atTime(15, 30)));
-		repository.save(new MyEntity5057().setCustomField("Conference").setCustomFieldNumber(9L)
+		repository.save(new MyEntity5057().setCustomField("Conference").setCustomFieldNumber(3L)
 				.setStartDateTime(month.withDayOfMonth(20).atTime(9, 0))
 				.setEndDateTime(month.withDayOfMonth(21).atTime(18, 0)));
 	}
