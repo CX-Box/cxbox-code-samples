@@ -12,9 +12,6 @@ import org.cxbox.core.util.filter.provider.impl.BigDecimalValueProvider;
 @NoArgsConstructor
 public class MyExample5058DTO extends DataResponseDTO {
 
-	@SearchParameter(name = "customField")
-	private String customField;
-
 	@SearchParameter(name = "customFieldNumber", provider = BigDecimalValueProvider.class)
 	private Long customFieldNumber;
 
@@ -22,7 +19,6 @@ public class MyExample5058DTO extends DataResponseDTO {
 
 	public MyExample5058DTO(MyEntity5058 entity) {
 		this.id = entity.getId().toString();
-		this.customField = entity.getCustomField();
 		this.customFieldNumber = entity.getCustomFieldNumber();
 		this.customFieldShowCondition = entity.getCustomFieldNumber() != null && entity.getCustomFieldNumber() > 5;
 	}
