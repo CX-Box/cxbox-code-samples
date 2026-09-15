@@ -34,7 +34,7 @@ public class CalendarInput<W extends CalendarWidget<W>> extends ListInput<W, Cal
 	@Override
 	public void drilldown(Consumer<String> consumer) {
 		String url = WebDriverRunner.url();
-		element().$("[class*='actionLink']")
+		element().$("[data-test-field-drilldown]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(url));

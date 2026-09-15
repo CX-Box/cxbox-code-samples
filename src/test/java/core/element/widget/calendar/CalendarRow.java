@@ -39,9 +39,15 @@ public class CalendarRow<W extends CalendarWidget<W>> extends RowInline<Calendar
 	 */
 	public PlatformFormWidget clickPencil() {
 		Duration timeout = widget().getExpectations().getTimeout();
-		if (!CalendarNavigation.form(getRowKey()).is(Condition.visible)) {
+		// the first click on an event only closes the popover of another event, the second one opens this popover
+		for (int click = 0; click < 2 && !CalendarNavigation.form(getRowKey()).is(Condition.visible); click++) {
 			SelenideElement event = element().shouldBe(Condition.visible, timeout);
 			event.click(ClickOptions.usingDefaultMethod().offset(event.getSize().getWidth() / 2 - 2, 0));
+			try {
+				CalendarNavigation.form(getRowKey()).shouldBe(Condition.visible, timeout);
+			} catch (AssertionError e) {
+				// clicked again below
+			}
 		}
 		CalendarNavigation.form(getRowKey()).shouldBe(Condition.visible, timeout);
 		return new CalendarFormWidget(getRowKey());
