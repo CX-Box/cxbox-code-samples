@@ -105,6 +105,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	/**
 	 * The operation is finished when its requests are done and rendered (a popup widget has no loading spinner) and the
 	 * widget has no loading spinner. A widget that is gone after the operation (a drilldown, a closed popup) has nothing to wait for.
+	 * The requests wait is temporary until the popup widgets show the loading spinner ({@link PageRequests}).
 	 */
 	private void waitOperationFinished() {
 		PageRequests.waitDone(widget.getExpectations().getOverTimeout());

@@ -7,6 +7,8 @@ import java.time.Duration;
 /**
  * The requests of the application page (XHR and fetch). A popup widget has no loading spinner, so an operation
  * started by a click is finished when its requests are done and their results are rendered.
+ * <p>
+ * TODO temporary: remove when the popup widgets show the loading spinner, the spinner wait of the actions is enough then.
  */
 final class PageRequests {
 
