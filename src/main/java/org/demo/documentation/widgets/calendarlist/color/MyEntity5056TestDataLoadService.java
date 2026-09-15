@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.title;
+package org.demo.documentation.widgets.calendarlist.color;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyEntity5055TestDataLoadService {
+public class MyEntity5056TestDataLoadService {
 
 	@Autowired
-	MyEntity5055Repository repository;
+	MyEntity5056Repository repository;
 
 	@Autowired
 	InternalAuthorizationService authzService;
@@ -22,13 +22,13 @@ public class MyEntity5055TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 		LocalDate month = LocalDate.now();
-		repository.save(new MyEntity5055().setCustomField("Meeting 1")
+		repository.save(new MyEntity5056().setCustomField("Meeting 1")
 				.setStartDateTime(month.withDayOfMonth(10).atTime(10, 0))
 				.setEndDateTime(month.withDayOfMonth(10).atTime(11, 0)));
-		repository.save(new MyEntity5055().setCustomField("Meeting 2")
+		repository.save(new MyEntity5056().setCustomField("Meeting 2")
 				.setStartDateTime(month.withDayOfMonth(12).atTime(14, 0))
 				.setEndDateTime(month.withDayOfMonth(12).atTime(15, 30)));
-		repository.save(new MyEntity5055().setCustomField("Conference")
+		repository.save(new MyEntity5056().setCustomField("Conference")
 				.setStartDateTime(month.withDayOfMonth(20).atTime(9, 0))
 				.setEndDateTime(month.withDayOfMonth(21).atTime(18, 0)));
 	}

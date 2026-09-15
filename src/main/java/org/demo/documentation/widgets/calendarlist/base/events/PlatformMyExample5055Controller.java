@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.title;
+package org.demo.documentation.widgets.calendarlist.base.events;
 
 import lombok.Getter;
 import org.cxbox.api.data.BcIdentifier;

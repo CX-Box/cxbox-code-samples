@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.title;
+package org.demo.documentation.widgets.calendarlist.base.events;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

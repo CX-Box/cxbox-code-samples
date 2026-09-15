@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.colortitle;
+package org.demo.documentation.widgets.calendarlist.base.events;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import org.cxbox.model.core.entity.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity5056 extends BaseEntity {
+public class MyEntity5055 extends BaseEntity {
 
 	@Column
 	private String customField;

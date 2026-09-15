@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.colortitle;
+package org.demo.documentation.widgets.calendarlist.color;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

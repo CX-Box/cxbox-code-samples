@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.calendarlist.colortitle;
+package org.demo.documentation.widgets.calendarlist.color;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
