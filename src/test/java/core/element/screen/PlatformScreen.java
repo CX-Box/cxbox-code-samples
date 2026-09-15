@@ -9,10 +9,12 @@ import core.expectation.CxBoxExpectations;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
@@ -23,14 +25,30 @@ public class PlatformScreen extends AbstractScreen {
 		Allure.step("Selecting the screen " + name, step -> {
 			step.parameter("screen", name);
 			logTime(step);
-			$("aside[data-test='LEFT_SIDER']")
-					.$("ul[data-test='MAIN_MENU']")
-					.$$("li[data-test='MAIN_MENU_ITEM']")
-					.find(Condition.exactText(name))
+			// one lookup in the browser: a filter of the item collection asks the driver for the text of every item before the match;
+			// the text is compared like Condition.exactText: ignoring case and extra spaces
+			$x("//aside[@data-test='LEFT_SIDER']//ul[@data-test='MAIN_MENU']//li[@data-test='MAIN_MENU_ITEM']"
+					+ "[translate(normalize-space(.), '" + UPPER_CASE + "', '" + LOWER_CASE + "')="
+					+ xpathLiteral(name.strip().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT)) + "]")
 					.shouldBe(Condition.enabled).click();
 			checkPageLoaded();
 		});
 
+	}
+
+	private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+
+	private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+	/** The name as an XPath string literal: a name may contain quotes. */
+	private static String xpathLiteral(String value) {
+		if (!value.contains("'")) {
+			return "'" + value + "'";
+		}
+		if (!value.contains("\"")) {
+			return "\"" + value + "\"";
+		}
+		return "concat('" + value.replace("'", "', \"'\", '") + "')";
 	}
 
 	public PlatformScreen() {

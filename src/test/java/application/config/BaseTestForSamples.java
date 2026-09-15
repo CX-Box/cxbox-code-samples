@@ -3,7 +3,6 @@ package application.config;
 
 import application.config.props.Env;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.codeborne.selenide.proxy.SelenideProxyServerFactory;
 import com.google.auto.service.AutoService;
@@ -24,7 +23,6 @@ import io.qameta.allure.selenide.AllureSelenide;
 import io.qameta.allure.selenide.LogType;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +38,6 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static core.element.widget.AbstractWidget.logTime;
 
 /**
@@ -146,24 +143,7 @@ public abstract class BaseTestForSamples {
 		Allure.step(
 				"Login", step -> {
 					logTime(step);
-					Selenide.open(Env.uri().toString());
-					new KeycloackAuthPage().authWithUsernameAndPassword("demo", "demo", Env.uri());
-				}
-		);
-	}
-
-	/**
-	 * Direct link logout faster x3 than logout with UI button
-	 */
-	@AfterEach
-	public void afterEach() {
-		Allure.step(
-				"Logout", step -> {
-					logTime(step);
-					String logoutUrl = AppChecks.logout(Env.uri());
-					executeJavaScript("sessionStorage.clear(); localStorage.clear();");
-					Selenide.open(logoutUrl);
-					Selenide.clearBrowserCookies();
+					new KeycloackAuthPage().checkUserOrElseAuthWithUsernameAndPassword("demo", "demo", Env.uri());
 				}
 		);
 	}
