@@ -20,10 +20,22 @@ public class CalendarRow<W extends CalendarWidget<W>> extends RowInline<Calendar
 
 	/** Clicks the event like {@code row.click()} of a List: selects the record, or opens the edit popover when options.edit is set. */
 	public CalendarRow<W> click() {
-		SelenideElement event = element().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-		event.click(ClickOptions.usingDefaultMethod().offset(event.getSize().getWidth() / 2 - 2, 0));
+		clickEvent();
 		CalendarNavigation.waitLoaded(widget().element(), widget().getExpectations());
 		return this;
+	}
+
+	/**
+	 * Clicks the event at its right edge, away from the title link. An opened popover of another event may cover
+	 * this event, then the event itself gets the click.
+	 */
+	private void clickEvent() {
+		SelenideElement event = element().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+		if (CalendarNavigation.openedForm().is(Condition.visible)) {
+			event.click(ClickOptions.usingJavaScript());
+		} else {
+			event.click(ClickOptions.usingDefaultMethod().offset(event.getSize().getWidth() / 2 - 2, 0));
+		}
 	}
 
 	/** Opens the edit popover of the event, the same as {@link #clickPencil()}. */
@@ -41,8 +53,7 @@ public class CalendarRow<W extends CalendarWidget<W>> extends RowInline<Calendar
 		Duration timeout = widget().getExpectations().getTimeout();
 		// the first click on an event only closes the popover of another event, the second one opens this popover
 		for (int click = 0; click < 2 && !CalendarNavigation.form(getRowKey()).is(Condition.visible); click++) {
-			SelenideElement event = element().shouldBe(Condition.visible, timeout);
-			event.click(ClickOptions.usingDefaultMethod().offset(event.getSize().getWidth() / 2 - 2, 0));
+			clickEvent();
 			try {
 				CalendarNavigation.form(getRowKey()).shouldBe(Condition.visible, timeout);
 			} catch (AssertionError e) {
