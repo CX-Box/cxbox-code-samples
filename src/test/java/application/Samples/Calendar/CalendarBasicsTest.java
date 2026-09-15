@@ -22,10 +22,10 @@ import static io.qameta.allure.SeverityLevel.NORMAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Basics of the CalendarList widget (samples widgets/calendarlist): title, title color, show condition, events of
- * the shown period, periods as pages, views, filtration. The test data has three events in the current month.
+ * Basics of the CalendarList widget (samples widgets/calendarlist): events of the shown period, event color, show
+ * condition, periods as pages, views, filtration. The test data has three events in the current month.
  */
-@DisplayName("Calendar. Basics: title, color, show condition, events, periods, views, filtration")
+@DisplayName("Calendar. Basics: events, color, show condition, periods, views, filtration")
 @Epic("Samples")
 @Feature(CalendarBasicsTest.ARTICLE)
 @Tag("Samples")
@@ -50,34 +50,21 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
-	@DisplayName("Constant title, the events of the current month")
-	@Description("The widget is found by its title; the events of the month are the rows in the order of the grid.")
-	void constantTitle() {
-		var calendar = open("myexample5055", "myexample5055list").calendar("Constant Title");
+	@DisplayName("Events of the current month")
+	@Description("The events of the month are the rows in the order of the grid.")
+	void events() {
+		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
 		calendar.waitLoaded();
 		DocShots.png(calendar.element(), ARTICLE, "calendar.png", 1600, 1000);
-		DocShots.png(calendar.element(), ARTICLE, "consttitle.png", 1600, 1000);
 		assertThat(titles(calendar)).containsExactlyElementsOf(EVENTS);
 	}
 
 	@Test
 	@Severity(NORMAL)
 	@Tag("Positive")
-	@DisplayName("Empty title")
-	@Description("A widget without a title is found by its name.")
-	void emptyTitle() {
-		var calendar = open("myexample5055", "myexample5055emptytitle").calendarByName("MyExample5055EmptyTitle");
-		calendar.waitLoaded();
-		DocShots.png(calendar.element(), ARTICLE, "empytitle.png", 1600, 1000);
-		assertThat(titles(calendar)).containsExactlyElementsOf(EVENTS);
-	}
-
-	@Test
-	@Severity(NORMAL)
-	@Tag("Positive")
-	@DisplayName("Title color")
-	@Description("bgColorKey of the title field colors the title and the events.")
-	void titleColor() {
+	@DisplayName("Event color")
+	@Description("bgColorKey of the title field colors the events.")
+	void eventColor() {
 		var calendar = open("myexample5056", "myexample5056list").calendarByName("MyExample5056");
 		calendar.waitLoaded();
 		DocShots.png(calendar.element(), ARTICLE, "colorwidget.png", 1600, 1000);
@@ -106,7 +93,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Periods are the pages of the calendar")
 	@Description("The arrows go to the next and the previous month, Today (the first page) returns to the current month.")
 	void periods() {
-		var calendar = open("myexample5055", "myexample5055list").calendar("Constant Title");
+		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
 		DocShots.gif(ARTICLE, "calendar_pagination.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.pagination().nextPage();
 		assertThat(titles(calendar)).isEmpty();
@@ -127,7 +114,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Views: month, week, day")
 	@Description("Every view is a widget of its own; the month view shows the events of the month again after the week and the day views.")
 	void views() {
-		var month = open("myexample5055", "myexample5055list").calendar("Constant Title");
+		var month = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
 		DocShots.gif(ARTICLE, "calendar_views.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		var week = month.weekWidget();
 		assertThat(titles(week)).isSubsetOf(EVENTS);
@@ -144,7 +131,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Filtration by the fields above the calendar")
 	@Description("The filter of a field above the calendar is applied like the filter of a column of a List.")
 	void filtration() {
-		var calendar = open("myexample5055", "myexample5055list").calendar("Constant Title");
+		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
 		calendar.waitLoaded();
 		DocShots.gif(ARTICLE, "calendar_filtration.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.headers().filter(fb -> fb.input(FIELD, "Meeting"));
