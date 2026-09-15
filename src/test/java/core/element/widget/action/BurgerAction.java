@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
 
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS extends PlatformRows<ROWS, WIDGET, ROW>, WIDGET extends ListWidget<WIDGET, ROWS, ROW>> implements SingleElement {
 
@@ -42,18 +42,19 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 		row.element()
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 				.hover();
-		$("button[data-test-widget-list-row-action=\"true\"]")
+		// the visible button and menu: closed popovers (e.g. of calendar events) keep theirs in the page hidden
+		$$("button[data-test-widget-list-row-action=\"true\"]").findBy(Condition.visible)
 				.shouldBe(Condition.exist, widget.getExpectations().getTimeout())
 				.hover()
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 				.click();
 
 		// TODO: see why without this collect failded burger menu
-		String collect = $("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]")
+		String collect = $$("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]").findBy(Condition.visible)
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 				.$$("li[data-test-widget-list-row-action-item=\"true\"]").stream().map(se -> se.getText()).collect(Collectors.joining(","));
-		return $("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]")
+		return $$("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]").findBy(Condition.visible)
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout())
 				.$$("li[data-test-widget-list-row-action-item=\"true\"]")
 				.stream()
