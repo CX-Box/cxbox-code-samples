@@ -1,11 +1,9 @@
 package application.Samples.Calendar;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
-import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.calendar.CalendarWidget;
+import core.element.widget.calendar.PlatformCalendarMonthWidget;
 import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -37,10 +35,12 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 
 	private static final List<String> EVENTS = List.of("Meeting 1", "Meeting 2", "Conference");
 
-	private static PlatformView open(String screen, String view) {
-		Selenide.open(Env.uri() + "screen/" + screen + "/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
+	/** The events sample opened by the menu. */
+	private static PlatformCalendarMonthWidget events() {
+		return PlatformApp.screen("CalendarList widget events")
+				.secondLevelView("Events")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5055/view/myexample5055list"))
+				.calendarByName("MyExample5055List");
 	}
 
 	private static <W extends CalendarWidget<W>> List<String> titles(W calendar) {
@@ -52,8 +52,8 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("Events of the current month")
 	@Description("The events of the month are the rows in the order of the grid.")
-	void events() {
-		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
+	void events_ofCurrentMonth() {
+		var calendar = events();
 		calendar.waitLoaded();
 		DocShots.png(calendar.element(), ARTICLE, "calendar.png", 1600, 1000);
 		assertThat(titles(calendar)).containsExactlyElementsOf(EVENTS);
@@ -65,7 +65,10 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Event color")
 	@Description("bgColorKey of the title field colors the events.")
 	void eventColor() {
-		var calendar = open("myexample5056", "myexample5056list").calendarByName("MyExample5056");
+		var calendar = PlatformApp.screen("CalendarList widget color")
+				.secondLevelView("Color")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5056/view/myexample5056list"))
+				.calendarByName("MyExample5056");
 		calendar.waitLoaded();
 		DocShots.png(calendar.element(), ARTICLE, "colorwidget.png", 1600, 1000);
 		assertThat(titles(calendar)).containsExactlyElementsOf(EVENTS);
@@ -77,7 +80,9 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Show condition by current entity")
 	@Description("A click on an event selects its record; the widget with the show condition by the selected record is shown.")
 	void showConditionByCurrentEntity() {
-		var view = open("myexample5057", "myexample5057showcond");
+		var view = PlatformApp.screen("CalendarList widget show condition")
+				.secondLevelView("Show condition by current entity")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5057/view/myexample5057showcond"));
 		var calendar = view.calendarByName("MyExample5057");
 		calendar.waitLoaded();
 		DocShots.gif(ARTICLE, "show_cond_current.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
@@ -93,7 +98,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Periods are the pages of the calendar")
 	@Description("The arrows go to the next and the previous month, Today (the first page) returns to the current month.")
 	void periods() {
-		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
+		var calendar = events();
 		DocShots.gif(ARTICLE, "calendar_pagination.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.pagination().nextPage();
 		assertThat(titles(calendar)).isEmpty();
@@ -114,7 +119,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Views: month, week, day")
 	@Description("Every view is a widget of its own; the month view shows the events of the month again after the week and the day views.")
 	void views() {
-		var month = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
+		var month = events();
 		DocShots.gif(ARTICLE, "calendar_views.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		var week = month.weekWidget();
 		assertThat(titles(week)).isSubsetOf(EVENTS);
@@ -131,7 +136,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@DisplayName("Filtration by the fields above the calendar")
 	@Description("The filter of a field above the calendar is applied like the filter of a column of a List.")
 	void filtration() {
-		var calendar = open("myexample5055", "myexample5055list").calendarByName("MyExample5055List");
+		var calendar = events();
 		calendar.waitLoaded();
 		DocShots.gif(ARTICLE, "calendar_filtration.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.headers().filter(fb -> fb.input(FIELD, "Meeting"));

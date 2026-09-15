@@ -1,11 +1,10 @@
 package application.Samples.Calendar;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
 import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.calendar.CalendarWidget;
+import core.element.widget.calendar.PlatformCalendarMonthWidget;
 import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -38,10 +37,12 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	/** a day of the current month without the events of the test data */
 	private static final LocalDate DAY = LocalDate.now().withDayOfMonth(15);
 
-	private static PlatformView open(String screen, String view) {
-		Selenide.open(Env.uri() + "screen/" + screen + "/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
+	/** Opens the screen of the sample by the menu and checks its address (a screen of one view has no view in the address). */
+	private static PlatformCalendarMonthWidget calendar(String screen, String url, String widget) {
+		return PlatformApp.screen(screen)
+				.view()
+				.checkUrl(actual -> assertThat(actual).contains(url))
+				.calendarByName(widget);
 	}
 
 	private static String unique(String prefix) {
@@ -58,7 +59,8 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	@DisplayName("Create inline-form")
 	@Description("Create opens the form of options.create in a popup over the calendar; after Save the event is shown in the calendar.")
 	void createInlineForm() {
-		var calendar = open("myexample5061", "myexample5061list").calendarByName("MyExample5061");
+		var calendar = calendar("CalendarList widget action create inline-form", "#/screen/myexample5061",
+				"MyExample5061");
 		calendar.waitLoaded();
 		DocShots.gif(ARTICLE, "calendar_create_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		calendar.actions().click("Create");
@@ -88,19 +90,22 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	@DisplayName("Create with view")
 	@Description("Create drills down to the form view; Save and Close returns to the calendar with the new event.")
 	void createWithView() {
-		var calendar = open("myexample5062", "myexample5062list").calendarByName("MyExample5062");
+		var calendar = calendar("CalendarList widget action create with view", "#/screen/myexample5062",
+				"MyExample5062");
 		calendar.waitLoaded();
 		DocShots.gif(ARTICLE, "calendar_create_with_view.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.actions().click("Create");
-		Selenide.sleep(2000);
-		var form = PlatformApp.currentScreen().view().formByName("MyExample5062Form");
+		var form = PlatformApp.currentScreen().view()
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5062/view/myexample5062form"))
+				.formByName("MyExample5062Form");
 		String value = unique("Created with view");
 		form.input(FIELD).setValue(value);
 		form.dateTime("Start Date Time").setValue(DAY.atTime(14, 0));
 		form.dateTime("End Date Time").setValue(DAY.atTime(15, 0));
 		form.actions().action("Save and Close").click();
-		Selenide.sleep(2500);
-		calendar = PlatformApp.currentScreen().view().calendarByName("MyExample5062");
+		calendar = PlatformApp.currentScreen().view()
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5062/view/myexample5062list"))
+				.calendarByName("MyExample5062");
 		calendar.waitLoaded();
 		DocShots.stop();
 		assertThat(titles(calendar)).contains(value);
@@ -112,7 +117,8 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	@DisplayName("Edit inline-form")
 	@Description("A click on the event opens the form of options.edit in a popover; the changed value is saved and shown in the event.")
 	void editInlineForm() {
-		var calendar = open("myexample5064", "myexample5064list").calendarByName("MyExample5064");
+		var calendar = calendar("CalendarList widget action edit inline-form", "#/screen/myexample5064",
+				"MyExample5064");
 		String original = calendar.rows().row(0).input(FIELD).getValue();
 		DocShots.gif(ARTICLE, "calendar_edit_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		var form = calendar.rows().row(0).clickPencil();
@@ -136,7 +142,8 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	@DisplayName("Edit inline-form: clickRow, editRow and clickPencil open the same popover")
 	@Description("clickRow and editRow open the edit popover of the event; clickPencil returns its form without a second click; the menu of the form has the row actions.")
 	void editInlineFormOpenedByRowClick() {
-		var calendar = open("myexample5064", "myexample5064list").calendarByName("MyExample5064");
+		var calendar = calendar("CalendarList widget action edit inline-form", "#/screen/myexample5064",
+				"MyExample5064");
 		String title = calendar.rows().row(1).input(FIELD).getValue();
 
 		calendar.rows().clickRow(1);
@@ -154,26 +161,28 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	@DisplayName("Edit with view")
 	@Description("Edit of the event menu drills down to the form view; Save and Close returns to the calendar with the changed event.")
 	void editWithView() {
-		var calendar = open("myexample5065", "myexample5065list").calendarByName("MyExample5065");
+		var calendar = calendar("CalendarList widget action edit with view", "#/screen/myexample5065",
+				"MyExample5065");
 		String original = calendar.rows().row(0).input(FIELD).getValue();
 		DocShots.gif(ARTICLE, "calendar_edit_with_view.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.rows().row(0).burgerAction("Edit").click();
-		Selenide.sleep(2000);
-		var form = PlatformApp.currentScreen().view().formByName("MyExample5065Form");
+		var form = PlatformApp.currentScreen().view()
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5065/view/myexample5065form"))
+				.formByName("MyExample5065Form");
 		String value = unique("Edited with view");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save and Close").click();
-		Selenide.sleep(2500);
-		calendar = PlatformApp.currentScreen().view().calendarByName("MyExample5065");
+		calendar = PlatformApp.currentScreen().view()
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5065/view/myexample5065list"))
+				.calendarByName("MyExample5065");
 		DocShots.stop();
 		assertThat(calendar.rows().row(0).input(FIELD).getValue()).isEqualTo(value);
 
 		calendar.rows().row(0).burgerAction("Edit").click();
-		Selenide.sleep(2000);
 		form = PlatformApp.currentScreen().view().formByName("MyExample5065Form");
 		form.input(FIELD).setValue(original);
 		form.actions().action("Save and Close").click();
-		Selenide.sleep(2500);
+		Selenide.sleep(1000);
 		calendar = PlatformApp.currentScreen().view().calendarByName("MyExample5065");
 		assertThat(calendar.rows().row(0).input(FIELD).getValue()).isEqualTo(original);
 	}
