@@ -30,7 +30,7 @@ public class MyEntity5058TestDataLoadService {
 		repositoryChild.deleteAll();
 		repositoryParent.deleteAll();
 		LocalDate month = LocalDate.now();
-		MyEntity5058 parent = repositoryParent.save(new MyEntity5058().setCustomField("Project").setCustomFieldNumber(8L));
+		MyEntity5058 parent = repositoryParent.save(new MyEntity5058().setCustomFieldNumber(8L));
 		repositoryChild.save(new MyEntity5059().setCustomFieldEntity(parent).setCustomField("Meeting 1")
 				.setStartDateTime(month.withDayOfMonth(10).atTime(10, 0))
 				.setEndDateTime(month.withDayOfMonth(10).atTime(11, 0)));
