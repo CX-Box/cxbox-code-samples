@@ -48,6 +48,7 @@ public class MyExample5062Service extends VersionAwareResponseService<MyExample5
 	public Actions<MyExample5062DTO> getActions() {
 		return Actions.<MyExample5062DTO>builder()
 				.create(crt -> crt.text("Create"))
+				.delete(dlt -> dlt.text("Delete"))
 				.action(act -> act
 						.action("finish", "Save and Close")
 						.invoker((bc, dto) -> {

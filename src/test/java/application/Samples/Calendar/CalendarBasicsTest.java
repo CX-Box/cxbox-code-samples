@@ -85,7 +85,7 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5057/view/myexample5057showcond"));
 		var calendar = view.calendarByName("MyExample5057");
 		calendar.waitLoaded();
-		DocShots.gif(ARTICLE, "show_cond_current.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
+		DocShots.gif(ARTICLE, "show_cond_current.gif", 1660, 1400, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.rows().row(1).click();
 		var shown = view.calendarByName("MyExample5057ShowCond").waitLoaded();
 		DocShots.stop();
