@@ -37,6 +37,9 @@ public class CalendarActionsTest extends BaseTestForSamples {
 	/** a day of the current month without the events of the test data */
 	private static final LocalDate DAY = LocalDate.now().withDayOfMonth(15);
 
+	/** capital letters and three days: the new event stands out from the events of the test data (small letters) */
+	private static final String NEW_EVENT = "MY NEW EVENT";
+
 	/** Opens the screen of the sample by the menu and checks its address (a screen of one view has no view in the address). */
 	private static PlatformCalendarMonthWidget calendar(String screen, String url, String widget) {
 		return PlatformApp.screen(screen)
@@ -82,6 +85,36 @@ public class CalendarActionsTest extends BaseTestForSamples {
 				.click();
 		calendar.waitLoaded();
 		assertThat(titles(calendar)).doesNotContain(value);
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Create, then edit the created event")
+	@Description("After Save of the create popup a click on the new event opens the form of options.edit with the values of the new event.")
+	void createThenEditCreated() {
+		var calendar = calendar("CalendarList widget action create inline-form", "#/screen/myexample5061",
+				"MyExample5061");
+		calendar.waitLoaded();
+		DocShots.gif(ARTICLE, "calendar.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
+		calendar.actions().click("Create");
+		var form = PlatformApp.currentScreen().view().formByName("myEntity5061CreateForm");
+		form.input(FIELD).setValue(NEW_EVENT);
+		form.dateTime("Start Date Time").setValue(DAY.atTime(9, 0));
+		form.dateTime("End Date Time").setValue(DAY.plusDays(2).atTime(18, 0));
+		form.actions().action("Save").click();
+		calendar.waitLoaded();
+		var edit = calendar.rows().streamCurrentPage()
+				.filter(row -> row.input(FIELD).getValue().equals(NEW_EVENT))
+				.findFirst()
+				.orElseThrow()
+				.clickPencil();
+		assertThat(edit.input(FIELD).getValue()).isEqualTo(NEW_EVENT);
+		DocShots.stop();
+
+		edit.burgerAction("Delete").click();
+		calendar.waitLoaded();
+		assertThat(titles(calendar)).doesNotContain(NEW_EVENT);
 	}
 
 	@Test
