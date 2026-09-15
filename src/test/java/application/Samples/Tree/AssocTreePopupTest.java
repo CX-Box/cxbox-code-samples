@@ -1,11 +1,8 @@
 package application.Samples.Tree;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.element.widget.field.type.multivalueTree.AssocTreeModal;
 import core.util.DocShots;
@@ -49,22 +46,24 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 		return texts;
 	}
 
-	private static PlatformView open(String screen, String view) {
-		Selenide.open(Env.uri() + "screen/" + screen + "/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
-	}
-
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("The popup opens from the multivalueTree field of a list and of a form")
 	void basics() {
-		var list = open("myexample3330", "myexample3330list").listByName("MyExample3330List");
+		var list = PlatformApp
+				.screen("AssocTreePopup widget basic")
+				.secondLevelView("List")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3330/view/myexample3330list"))
+				.listByName("MyExample3330List");
 		assertThat(list.rows().element().size()).isGreaterThan(0);
 		DocShots.png(list.element(), ARTICLE, "assoc_list.png", 1600, 1000);
 		DocShots.png(list.element(), ARTICLE, "assoc_list_button.png", 1600, 1000);
-		var form = open("myexample3330", "myexample3330form").formByName("MyExample3330Form");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget basic")
+				.secondLevelView("Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3330/view/myexample3330form"))
+				.formByName("MyExample3330Form");
 		DocShots.png(form.element(), ARTICLE, "assoc_form.png", 1600, 1000);
 		var popup = form.multivalueTree(FIELD).openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
@@ -77,7 +76,11 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 	@DisplayName("The popup opens by a widget action")
 	@Description("The action of the form opens the AssocTreePopup without a field")
 	void actionButton() {
-		var form = open("myexample3333", "myexample3333form").formByName("MyExample3333Form");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget action button")
+				.checkUrl(url -> assertThat(url).endsWith("#/screen/myexample3333"))
+				.view()
+				.formByName("MyExample3333Form");
 		DocShots.png(form.element(), ARTICLE, "choose_button.png", 1600, 1000);
 		form.actions().action("Popup Assoc").click();
 		AssocTreeModal.modalElement().shouldBe(Condition.visible, form.getExpectations().getTimeout());
@@ -89,12 +92,20 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("Constant title of the popup and a popup without a title")
 	void title() {
-		var form = open("myexample3336", "myexample3336title").formByName("MyExample3336WithTitle");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget title")
+				.secondLevelView("AssocTreePopup widget const title")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3336/view/myexample3336title"))
+				.formByName("MyExample3336WithTitle");
 		var popup = form.multivalueTree("Custom Field Multivalue").openPopup();
 		assertThat(popup.title()).isEqualTo("AssocTreePopup with title");
 		DocShots.png(popup.dialog(), ARTICLE, "consttitle.png", 1600, 1000);
 		popup.closeModal();
-		form = open("myexample3336", "myexample3336emptytitle").formByName("MyExample3336EmptyTitle");
+		form = PlatformApp
+				.screen("AssocTreePopup widget title")
+				.secondLevelView("AssocTreePopup widget empty title")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3336/view/myexample3336emptytitle"))
+				.formByName("MyExample3336EmptyTitle");
 		popup = form.multivalueTree("Custom Field Multivalue").openPopup();
 		assertThat(popup.title()).isEmpty();
 		DocShots.png(popup.dialog(), ARTICLE, "empytitle.png", 1600, 1000);
@@ -105,7 +116,11 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("Colored rows of the popup")
 	void color() {
-		var form = open("myexample3329", "myexample3332color").formByName("MyExample3332Color");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget color title")
+				.secondLevelView("Color")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3329/view/myexample3332color"))
+				.formByName("MyExample3332Color");
 		var popup = form.multivalueTree("Custom Field Multi").openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
 		popup.tree().rows().row(0).expandRow();
@@ -119,9 +134,11 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 	@DisplayName("Lazy load and the search modes of the popup")
 	@Description("A node is expanded on demand; the full text search shows the found rows, the hide mode replaces the arrows by the dot")
 	void lazyLoadAndSearch() {
-		open("myexample3261", "myexample3261list");
-		Selenide.sleep(2500);
-		var form = PlatformApp.currentScreen().view().formByName("MyExample3263List");
+		var form = PlatformApp
+				.screen("Tree widget basic")
+				.secondLevelView("Business example")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3261/view/myexample3261list"))
+				.formByName("MyExample3263List");
 		var popup = form.multivalueTree("Departments Assoc").openPopup();
 		popup.expand("Departments", NODE);
 		assertThat(popup.children("Departments", NODE)).isNotEmpty();

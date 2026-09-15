@@ -185,8 +185,10 @@ public class ListDateTimeWithSeconds<
 	public ListDateTimeWithSeconds<W, RR, R> checkRequired(Consumer<String> checkRequired) {
 		return Allure.step("Get validation message", step -> {
 			logTime(step);
+			// move the mouse away to the corner: the center of the body may be over the field itself,
+			// then the hover below does not enter the field and its error tooltip does not open
 			Selenide.actions()
-					.moveToElement($("body"))
+					.moveToLocation(0, 0)
 					.perform();
 			element()
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())

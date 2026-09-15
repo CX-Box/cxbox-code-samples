@@ -1,7 +1,9 @@
 package core.page.auth.keycloak;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import core.expectation.CxBoxExpectations;
 import core.page.auth.AuthPage;
 import core.page.auth.AuthWithUsernameAndPassword;
 import io.qameta.allure.Allure;
@@ -63,8 +65,24 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 					signInButton
 							.shouldBe(Condition.visible)
 							.click();
+					waitSignedIn();
 				}
 		);
+	}
+
+	/**
+	 * The application stores the session after the redirect back from Keycloak. A test that ends earlier logs out
+	 * without the id_token_hint: Keycloak asks to confirm the logout, the session stays and the next test finds no login form.
+	 */
+	private void waitSignedIn() {
+		Selenide.Wait().withTimeout(new CxBoxExpectations().getOverTimeout()).until(driver -> {
+			try {
+				return Boolean.TRUE.equals(Selenide.executeJavaScript(
+						"return Object.keys(localStorage).some(key => key.startsWith('oidc.user:'));"));
+			} catch (RuntimeException e) {
+				return false;
+			}
+		});
 	}
 
 

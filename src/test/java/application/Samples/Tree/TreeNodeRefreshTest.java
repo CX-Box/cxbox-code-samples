@@ -1,8 +1,6 @@
 package application.Samples.Tree;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
-import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
 import core.element.widget.list.realization.inline.tree.PlatformTreeRowInline;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
@@ -42,9 +40,11 @@ public class TreeNodeRefreshTest extends BaseTestForSamples {
 	private static final String CUSTOM_SAVE_VALUE = "Test data";
 
 	private static PlatformTreeWidgetInline open() {
-		Selenide.open(Env.uri() + "screen/" + SCREEN + "/view/" + VIEW);
-		Selenide.sleep(2500);
-		var tree = PlatformApp.currentScreen().view().treeByName(WIDGET);
+		var tree = PlatformApp
+				.screen("Tree widget action basic")
+				.secondLevelView("Action create")
+				.checkUrl(url -> assertThat(url).contains("#/screen/" + SCREEN + "/view/" + VIEW))
+				.treeByName(WIDGET);
 		tree.waitLoaded();
 		return tree;
 	}
@@ -166,7 +166,6 @@ public class TreeNodeRefreshTest extends BaseTestForSamples {
 		var tree = open();
 		tree.actions().click("Add");
 		var row = tree.rows().row(0);
-		row.element().$("input").shouldBe(com.codeborne.selenide.Condition.visible, tree.getExpectations().getTimeout());
 		String value = "Delete me " + System.currentTimeMillis() % 100000;
 		row.input(FIELD).setValue(value);
 		row.burgerAction("Save").click();
