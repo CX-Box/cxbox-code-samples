@@ -92,10 +92,7 @@ public class Calendar {
 			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
 				return;
 			}
-			PANEL_CALENDAR
-					.$("input")
-					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
-					.sendKeys(Keys.ENTER);
+			confirm();
 
 		});
 	}
@@ -134,12 +131,25 @@ public class Calendar {
 					.is(Condition.exist, Duration.of(500, ChronoUnit.MILLIS))) {
 				return;
 			}
-			PANEL_CALENDAR
-					.$("input")
-					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
-					.sendKeys(Keys.ENTER);
+			confirm();
 		});
 
+	}
+
+	/**
+	 * Confirms the value typed in the calendar the way a user does: a click on Ok when the calendar has it (date with
+	 * time), Enter otherwise (date without time, or Ok is disabled for the value).
+	 */
+	private static void confirm() {
+		SelenideElement ok = PANEL_CALENDAR.$("a.ant-calendar-ok-btn");
+		if (ok.is(Condition.visible) && !ok.has(Condition.cssClass("ant-calendar-ok-btn-disabled"))) {
+			ok.click();
+			return;
+		}
+		PANEL_CALENDAR
+				.$("input")
+				.shouldBe(Condition.enabled, expectationPattern.getTimeout())
+				.sendKeys(Keys.ENTER);
 	}
 
 	public static void setDateField(List<String> value) {
@@ -188,10 +198,7 @@ public class Calendar {
 			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
 				return;
 			}
-			PANEL_CALENDAR
-					.$("input")
-					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
-					.sendKeys(Keys.ENTER);
+			confirm();
 		});
 
 	}
