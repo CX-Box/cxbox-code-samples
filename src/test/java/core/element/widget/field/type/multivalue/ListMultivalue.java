@@ -17,6 +17,9 @@ import core.element.widget.list.rows.row.PlatformRow;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 import java.util.List;
@@ -75,14 +78,14 @@ public class ListMultivalue<
 						.pollingEvery(Duration.ofMillis(multivalueElementCount *
 								widget().getExpectations().getTimeout().toSeconds()).dividedBy(widget().getExpectations().getPoolingRate()))
 						.until(driver -> {
-							SelenideElement closeIcon = container.$("i.anticon-close");
-
-							if (!closeIcon.exists()) {
-								return true;
-							}
-
-							if (closeIcon.isDisplayed()) {
-								closeIcon.click();
+							try {
+								List<WebElement> closeIcons = container.toWebElement().findElements(By.cssSelector("i.anticon-close"));
+								if (closeIcons.isEmpty()) {
+									return true;
+								}
+								closeIcons.get(0).click();
+							} catch (ElementNotInteractableException | StaleElementReferenceException ignored) {
+								// the tag removed by the previous click is still re-rendering, the next polling clicks again
 							}
 							return false;
 						});

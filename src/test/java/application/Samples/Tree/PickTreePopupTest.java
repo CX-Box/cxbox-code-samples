@@ -1,10 +1,7 @@
 package application.Samples.Tree;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
-import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.util.DocShots;
 import io.qameta.allure.Description;
@@ -42,18 +39,16 @@ public class PickTreePopupTest extends BaseTestForSamples {
 		return texts;
 	}
 
-	private static PlatformView open(String screen, String view) {
-		Selenide.open(Env.uri() + "screen/" + screen + "/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
-	}
-
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("Constant title of the popup; the popup with selection = node")
 	void constantTitle() {
-		var form = open("myexample3344", "myexample3344form").formByName("MyExample3344Form");
+		var screen = PlatformApp.screen("PickTreePopup widget with title");
+		screen.secondLevelView("PickTreePopup widget with title");
+		var form = screen.thirdLevelView("Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3344form"))
+				.formByName("MyExample3344Form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).isEqualTo("Constant Title");
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupWithTitle.png", 1600, 1000);
@@ -66,7 +61,11 @@ public class PickTreePopupTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("Popup without a title; the popup with selection = leaf")
 	void withoutTitle() {
-		var form = open("myexample3344", "myexample3345form").formByName("MyExample3345Form");
+		var screen = PlatformApp.screen("PickTreePopup widget with title");
+		screen.secondLevelView("PickTreePopup widget without title");
+		var form = screen.thirdLevelView("Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3345form"))
+				.formByName("MyExample3345Form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).isEmpty();
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupWithoutTitle.png", 1600, 1000);
@@ -80,7 +79,11 @@ public class PickTreePopupTest extends BaseTestForSamples {
 	@DisplayName("Calculated title of the popup")
 	@Description("The title is built from the field of the parent record: customFieldPick: ${customFieldPick}")
 	void calculatedTitle() {
-		var form = open("myexample3344", "myexample3347form").formByName("MyExample3347Form");
+		var screen = PlatformApp.screen("PickTreePopup widget with title");
+		screen.secondLevelView("PickTreePopup widget calculated title");
+		var form = screen.thirdLevelView("Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3347form"))
+				.formByName("MyExample3347Form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).startsWith("customFieldPick:");
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupCalculatedTitle.png", 1600, 1000);
@@ -91,7 +94,11 @@ public class PickTreePopupTest extends BaseTestForSamples {
 	@Tag("Positive")
 	@DisplayName("Colored rows of the popup")
 	void color() {
-		var form = open("myexample3341", "myexample3341form").formByName("MyExample3341Form");
+		var form = PlatformApp
+				.screen("PickTreePopup widget color title")
+				.secondLevelView("Color")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3341/view/myexample3341form"))
+				.formByName("MyExample3341Form");
 		var popup = form.pickTree("Custom Field Picktree").openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
 		popup.tree().rows().row(0).expandRow();
@@ -105,7 +112,11 @@ public class PickTreePopupTest extends BaseTestForSamples {
 	@DisplayName("Lazy load and the search modes of the popup")
 	@Description("A node is expanded on demand; the full text search shows the found rows, the hide mode replaces the arrows by the dot")
 	void lazyLoadAndSearch() {
-		var form = open("myexample3261", "myexample3261list").formByName("MyExample3263List");
+		var form = PlatformApp
+				.screen("Tree widget basic")
+				.secondLevelView("Business example")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3261/view/myexample3261list"))
+				.formByName("MyExample3263List");
 		var popup = form.pickTree("Department Pick").openPopup();
 		var tree = popup.tree();
 		int roots = tree.rows().element().size();

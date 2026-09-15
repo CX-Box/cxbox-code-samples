@@ -23,8 +23,10 @@ public interface RequiredCheckable<W extends AbstractWidget<ExpectationPattern, 
 		return Allure.step("Getting a value from a field RequiredMessage", step -> {
 			logTime(step);
 			String actualText;
+			// move the mouse away to the corner: the center of the body may be over the field itself,
+			// then the hover below does not enter the field and its error tooltip does not open
 			Selenide.actions()
-					.moveToElement($("body"))
+					.moveToLocation(0, 0)
 					.perform();
 			if (ListWidget.class.isAssignableFrom(widget().getClass())) {
 				element()

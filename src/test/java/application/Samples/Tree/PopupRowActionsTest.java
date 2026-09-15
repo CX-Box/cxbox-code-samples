@@ -1,12 +1,10 @@
 package application.Samples.Tree;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverConditions;
 import com.codeborne.selenide.WebDriverRunner;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.realization.form.tree.PlatformTreePopupWidgetInlineForm;
 import core.element.widget.list.realization.inline.tree.PlatformTreePopupWidgetInline;
@@ -39,12 +37,6 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 
 	private static final String FIELD = "Custom Field";
 
-
-	private static PlatformView open(String screen, String view) {
-		Selenide.open(Env.uri() + "screen/" + screen + "/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
-	}
 
 	private static String unique(String prefix) {
 		return prefix + " " + System.currentTimeMillis() % 100000;
@@ -82,7 +74,6 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 
 		DocShots.gif(article, deleted, width, height, DocShots.Frame.WITH_SIDEBAR);
 		tree.rows().row(index).burgerAction("Delete").click();
-		Selenide.sleep(1500);
 		DocShots.stop();
 		assertThat(rowIndex(tree, value)).as("the deleted row is removed").isEqualTo(-1);
 	}
@@ -91,17 +82,14 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	private static void createInlineForm(PlatformTreePopupWidgetInlineForm tree, String article, String picture, String field, int width, int height) {
 		DocShots.gif(article, picture, width, height, DocShots.Frame.WITH_SIDEBAR);
 		tree.actions().click("Add");
-		Selenide.sleep(1000);
 		var form = tree.rows().row(0).clickPencil();
 		String value = unique("Popup form");
 		form.input(field).setValue(value);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		int index = savedRowIndex(tree, value);
 		DocShots.stop();
 		assertThat(index).as("the saved row is shown").isNotNegative();
 		tree.rows().row(index).burgerAction("Delete").click();
-		Selenide.sleep(1500);
 		assertThat(rowIndex(tree, value)).as("the created row is removed").isEqualTo(-1);
 	}
 
@@ -110,7 +98,6 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		DocShots.gif(article, picture, width, height, DocShots.Frame.WITH_SIDEBAR);
 		tree.actions().click("Add");
 		tree.rows().row(0).burgerAction("Cancel").click();
-		Selenide.sleep(1000);
 		DocShots.stop();
 	}
 
@@ -140,7 +127,6 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		String value = unique("Popup form edited");
 		form.input(field).setValue(value);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		int index = rowIndex(tree, value);
 		DocShots.stop();
 		assertThat(index).as("the edited row is shown").isNotNegative();
@@ -148,7 +134,6 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		form = tree.rows().row(index).clickPencil();
 		form.input(field).setValue(original);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		assertThat(rowIndex(tree, original)).as("the original value is restored").isNotNegative();
 	}
 
@@ -159,7 +144,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup: create inline, save, delete")
 	@Description("Add creates an empty root row inside the popup; the row is saved from its menu and then deleted from its menu.")
 	void pickCreateInlineAndDelete() {
-		var form = open("myexample3353", "myexample3354form").formByName("MyExample3354Form");
+		var form = PlatformApp
+				.screen("PickTreePopup widget action")
+				.secondLevelView("Delete")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3354form"))
+				.formByName("MyExample3354Form");
 		var popup = form.pickTree("Custom Field Delete").openPopup();
 		createInlineAndDelete(popup.tree(), PICK, "create_inline.gif", "actiondelete.gif", 1200, 760);
 		popup.close();
@@ -172,7 +161,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup: create inline-form")
 	@Description("Add opens the row form inside the popup (options.create.widget); the form is saved and the new row is shown.")
 	void pickCreateInlineForm() {
-		var list = open("myexample3353", "myexample3348listinlineform").listByName("MyExample3348ListInlineForm");
+		var screen = PlatformApp.screen("PickTreePopup widget action");
+		screen.secondLevelView("Create");
+		var list = screen.thirdLevelView("Inline-form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3348listinlineform"))
+				.listByName("MyExample3348ListInlineForm");
 		var popup = list.rows().clickRow(0).pickTree("Custom Field Pick").openPopup();
 		createInlineForm(popup.treeInlineForm(), PICK, "create_with_widget.gif", "Custom Field Pick", 1200, 900);
 		popup.close();
@@ -185,7 +178,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup: cancel of the created row")
 	@Description("Cancel (cancel-create) removes the row added by Add.")
 	void pickCreateAndCancel() {
-		var form = open("myexample3353", "myexample3356form").formByName("MyExample3356Form");
+		var form = PlatformApp
+				.screen("PickTreePopup widget action")
+				.secondLevelView("CancelCreate")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3356form"))
+				.formByName("MyExample3356Form");
 		var popup = form.pickTree(FIELD).openPopup();
 		int before = popup.tree().rows().element().size();
 		createAndCancel(popup.tree(), PICK, "actioncancel.gif", 1200, 760);
@@ -200,7 +197,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup: cancel-create with the onCancel action")
 	@Description("The cancel of the created row runs the onCancel action of the sample; the row is removed.")
 	void pickCreateAndCancelOnCancel() {
-		var form = open("myexample3353", "myexample3356formoncancel").formByName("MyExample3356FormOnCancel");
+		var screen = PlatformApp.screen("PickTreePopup widget action");
+		screen.secondLevelView("CancelCreate");
+		var form = screen.thirdLevelView("Action cancel-create OnCancel")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3356formoncancel"))
+				.formByName("MyExample3356FormOnCancel");
 		var popup = form.pickTree(FIELD).openPopup();
 		createAndCancel(popup.tree(), PICK, "actioncanceloncancel.gif", 1200, 760);
 		// the onCancel action of the sample drills down to the create view
@@ -214,7 +215,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup: edit inline-form")
 	@Description("The pencil of the popup row opens its form (options.edit.widget); the changed value is saved and shown.")
 	void pickEditInlineForm() {
-		var list = open("myexample3353", "myexample3353listinlineform").listByName("MyExample3353ListInlineForm");
+		var screen = PlatformApp.screen("PickTreePopup widget action");
+		screen.secondLevelView("Edit");
+		var list = screen.thirdLevelView("Inline-Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3353listinlineform"))
+				.listByName("MyExample3353ListInlineForm");
 		var popup = list.rows().clickRow(0).pickTree("Custom Field PickTree").openPopup();
 		editInlineForm(popup.treeInlineForm(), PICK, "edit_inline_form.gif", FIELD, 1200, 900);
 		popup.close();
@@ -227,7 +232,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("AssocTreePopup: create inline, save, delete")
 	@Description("Add creates an empty root row inside the popup; the row is saved from its menu and then deleted from its menu.")
 	void assocCreateInlineAndDelete() {
-		var form = open("myexample3331", "myexample3331create").formByName("MyExample3331FormCreate");
+		var screen = PlatformApp.screen("AssocTreePopup widget action");
+		screen.secondLevelView("Create");
+		var form = screen.thirdLevelView("Create Inline")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331create"))
+				.formByName("MyExample3331FormCreate");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		createInlineAndDelete(popup.tree(), ASSOC, "assoc_create_inline.gif", "actiondelete.gif", 1200, 760);
 		popup.closeModal();
@@ -240,7 +249,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("AssocTreePopup: create inline-form")
 	@Description("Add opens the row form inside the popup (options.create.widget); the form is saved and the new row is shown.")
 	void assocCreateInlineForm() {
-		var form = open("myexample3331", "myexample3331inlinecreate").formByName("MyExample3331Form");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget action")
+				.secondLevelView("Create")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331inlinecreate"))
+				.formByName("MyExample3331Form");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		createInlineForm(popup.treeInlineForm(), ASSOC, "assoc_create_with_widget.gif", FIELD, 1200, 900);
 		popup.closeModal();
@@ -253,7 +266,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("AssocTreePopup: edit inline")
 	@Description("A click on the cell switches the popup row into the edit mode; the changed value is saved from the row menu.")
 	void assocEditInline() {
-		var form = open("myexample3331", "myexample3331edit").formByName("MyExample3331Edit");
+		var screen = PlatformApp.screen("AssocTreePopup widget action");
+		screen.secondLevelView("Edit");
+		var form = screen.thirdLevelView("Edit Inline")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331edit"))
+				.formByName("MyExample3331Edit");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		editInline(popup.tree(), ASSOC, "assoc_edit_basic.gif", 1200, 760);
 		popup.closeModal();
@@ -266,7 +283,11 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("AssocTreePopup: edit inline-form")
 	@Description("The pencil of the popup row opens its form (options.edit.widget); the changed value is saved and shown.")
 	void assocEditInlineForm() {
-		var form = open("myexample3331", "myexample3331editinlineform").formByName("MyExample3331FormEdit");
+		var form = PlatformApp
+				.screen("AssocTreePopup widget action")
+				.secondLevelView("Edit")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331editinlineform"))
+				.formByName("MyExample3331FormEdit");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		editInlineForm(popup.treeInlineForm(), ASSOC, "assoc_edit_with_widget.gif", FIELD, 1200, 900);
 		popup.closeModal();

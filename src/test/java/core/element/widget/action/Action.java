@@ -2,6 +2,7 @@ package core.element.widget.action;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
 import core.element.widget.AbstractWidget;
@@ -87,15 +88,33 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 
 	public W click() {
 		Action<W> currentAction = this.current;
+		PageRequests.track();
 		if (this.parent == null) {
 			currentAction.element().click();
+			waitOperationFinished();
 			return this.widget;
 		}
 		log.warn("Action parent: {} {} , action: {} {}", this.parent.name, this.parent.iconName, this.name, this.iconName);
 		//click parent action;
 		currentAction.parent.element().click();
 		currentAction.element().click();
+		waitOperationFinished();
 		return widget;
+	}
+
+	/**
+	 * The operation is finished when its requests are done and rendered (a popup widget has no loading spinner) and the
+	 * widget has no loading spinner. A widget that is gone after the operation (a drilldown, a closed popup) has nothing to wait for.
+	 */
+	private void waitOperationFinished() {
+		PageRequests.waitDone(widget.getExpectations().getOverTimeout());
+		Selenide.Wait().withTimeout(widget.getExpectations().getOverTimeout()).until(driver -> {
+			try {
+				return !widget.element().$(".ant-spin-spinning").exists();
+			} catch (RuntimeException | AssertionError e) {
+				return true;
+			}
+		});
 	}
 
 	public W click(String name) {

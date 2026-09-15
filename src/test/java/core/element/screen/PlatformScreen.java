@@ -3,11 +3,13 @@ package core.element.screen;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import core.element.PlatformApp;
 import core.element.screen.view.*;
 import core.expectation.CxBoxExpectations;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -36,6 +38,12 @@ public class PlatformScreen extends AbstractScreen {
 		// need for check loaded page
 		element();
 		checkPageLoaded();
+	}
+
+	/** Passes the address of the current page ({@link PlatformApp#getUrl()}) to the check. */
+	public PlatformScreen checkUrl(Consumer<String> checkUrl) {
+		checkUrl.accept(PlatformApp.getUrl());
+		return this;
 	}
 
 	public PlatformView secondLevelView(String name) {

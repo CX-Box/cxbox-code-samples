@@ -1,6 +1,7 @@
 package core.element.screen.view;
 
 import com.codeborne.selenide.ElementsCollection;
+import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
@@ -17,10 +18,17 @@ import core.element.widget.statblock.StatsBlockWidget;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 
 public class PlatformView extends AbstractView<PlatformView> {
+
+	/** Passes the address of the current page ({@link PlatformApp#getUrl()}) to the check. */
+	public PlatformView checkUrl(Consumer<String> checkUrl) {
+		checkUrl.accept(PlatformApp.getUrl());
+		return this;
+	}
 
 	public PlatformFormWidget form(String title) {
 		return new PlatformFormWidget(PlatformIdentifier.TITLE, title);

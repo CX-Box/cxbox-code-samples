@@ -27,6 +27,8 @@ public abstract class AbstractFilter<
 
 	protected static final String DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER = "div[data-test-widget-list-header-column-filter=\"true\"]";
 
+	private static final String LOADING_SPINNER = ".ant-spin-spinning";
+
 	@Getter(AccessLevel.PROTECTED)
 	private final WIDGET widget;
 
@@ -56,17 +58,30 @@ public abstract class AbstractFilter<
 	}
 
 	public PARENT apply() {
-		$("button[data-test-filter-popup-apply=\"true\"]")
-				.shouldBe(Condition.exist)
-				.click();
+		SelenideElement button = $("button[data-test-filter-popup-apply=\"true\"]");
+		button.shouldBe(Condition.exist).click();
+		waitFilterApplied(button);
 		return this.parent;
 	}
 
 	public PARENT setClear() {
-		$("button[data-test-filter-popup-clear=\"true\"]")
-				.shouldBe(Condition.exist)
-				.click();
+		SelenideElement button = $("button[data-test-filter-popup-clear=\"true\"]");
+		button.shouldBe(Condition.exist).click();
+		waitFilterApplied(button);
 		return this.parent;
+	}
+
+	/**
+	 * The filter popover closes in the same render that shows the loading spinner,
+	 * and the filtered rows are rendered when the spinner is gone.
+	 * The column header may be re-rendered meanwhile, so the filter icon is not a reliable signal.
+	 */
+	private void waitFilterApplied(SelenideElement popupButton) {
+		popupButton.shouldNotBe(Condition.visible, widget.getExpectations().getTimeout());
+		column().element()
+				.$x("ancestor::div[@data-test='WIDGET']")
+				.$(LOADING_SPINNER)
+				.shouldNot(Condition.exist, widget.getExpectations().getOverTimeout());
 	}
 
 	public SelenideElement buttonPopup() {

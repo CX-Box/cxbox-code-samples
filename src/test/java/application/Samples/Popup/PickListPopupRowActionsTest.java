@@ -1,12 +1,10 @@
 package application.Samples.Popup;
 
 import application.config.BaseTestForSamples;
-import application.config.props.Env;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverConditions;
 import com.codeborne.selenide.WebDriverRunner;
 import core.element.PlatformApp;
-import core.element.screen.view.PlatformView;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.realization.inline.list.PlatformListPopupWidgetInline;
 import core.util.DocShots;
@@ -37,12 +35,6 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	private static final String FIELD = "Custom Field";
 
 
-	private static PlatformView open(String view) {
-		Selenide.open(Env.uri() + "screen/myexample3092/view/" + view);
-		Selenide.sleep(2500);
-		return PlatformApp.currentScreen().view();
-	}
-
 	private static String unique(String prefix) {
 		return prefix + " " + System.currentTimeMillis() % 100000;
 	}
@@ -70,7 +62,6 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		DocShots.gif(ARTICLE, picture, width, height, DocShots.Frame.WITH_SIDEBAR);
 		list.actions().click("Add");
 		list.rows().row(0).burgerAction("Cancel").click();
-		Selenide.sleep(1000);
 		DocShots.stop();
 	}
 
@@ -80,7 +71,11 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("Create inline, save, delete")
 	@Description("Add creates an empty row inside the popup; the row is saved from its menu and then deleted from its menu.")
 	void createInlineAndDelete() {
-		var page = open("myexample3072inlinecreatelist").listByName("MyExample3072List");
+		var page = PlatformApp
+				.screen("PickListPopup widget action")
+				.secondLevelView("Create")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3072inlinecreatelist"))
+				.listByName("MyExample3072List");
 		var popup = page.rows().clickRow(0).pickList("Custom Field Pick").openListPopup();
 		var list = popup.list();
 		DocShots.gif(ARTICLE, "create_inline.gif", 1200, 760, DocShots.Frame.WITH_SIDEBAR);
@@ -95,7 +90,6 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 
 		DocShots.gif(ARTICLE, "actiondelete.gif", 1200, 760, DocShots.Frame.WITH_SIDEBAR);
 		list.rows().row(index).burgerAction("Delete").click();
-		Selenide.sleep(1500);
 		DocShots.stop();
 		assertThat(rowIndex(list, value)).as("the deleted row is removed").isEqualTo(-1);
 		popup.close();
@@ -107,22 +101,23 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("Create inline-form")
 	@Description("Add opens the row form inside the popup (options.create.widget); the form is saved and the new row is shown.")
 	void createInlineForm() {
-		var page = open("myexample3072listinlineform").listByName("MyExample3072ListInlineForm");
+		var screen = PlatformApp.screen("PickListPopup widget action");
+		screen.secondLevelView("Create");
+		var page = screen.thirdLevelView("Inline-form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3072listinlineform"))
+				.listByName("MyExample3072ListInlineForm");
 		var popup = page.rows().clickRow(0).pickList("Custom Field Pick").openListPopup();
 		var list = popup.listInlineForm();
 		DocShots.gif(ARTICLE, "create_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		list.actions().click("Add");
-		Selenide.sleep(1000);
 		var form = list.rows().row(0).clickPencil();
 		String value = unique("Popup form");
 		form.input("Custom Field Pick").setValue(value);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		int index = savedRowIndex(list, value);
 		DocShots.stop();
 		assertThat(index).as("the saved row is shown").isNotNegative();
 		list.rows().row(index).burgerAction("Delete").click();
-		Selenide.sleep(1500);
 		assertThat(rowIndex(list, value)).as("the created row is removed").isEqualTo(-1);
 		popup.close();
 	}
@@ -133,7 +128,11 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("Cancel of the created row")
 	@Description("Cancel (cancel-create) removes the row added by Add.")
 	void createAndCancel() {
-		var form = open("myexample3198form").formByName("MyExample3198Form");
+		var form = PlatformApp
+				.screen("PickListPopup widget action")
+				.secondLevelView("CancelCreate")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3198form"))
+				.formByName("MyExample3198Form");
 		var popup = form.pickList(FIELD).openListPopup();
 		int before = popup.list().rows().element().size();
 		createAndCancel(popup.list(), "actioncancel.gif", 1200, 760);
@@ -147,7 +146,11 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("Cancel-create with the onCancel action")
 	@Description("The cancel of the created row runs the onCancel action of the sample; the row is removed.")
 	void createAndCancelOnCancel() {
-		var form = open("myexample3198formoncancel").formByName("MyExample3198FormOnCancel");
+		var screen = PlatformApp.screen("PickListPopup widget action");
+		screen.secondLevelView("CancelCreate");
+		var form = screen.thirdLevelView("Action cancel-create OnCancel")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3198formoncancel"))
+				.formByName("MyExample3198FormOnCancel");
 		var popup = form.pickList(FIELD).openListPopup();
 		createAndCancel(popup.list(), "actioncanceloncancel.gif", 1200, 760);
 		// the onCancel action of the sample drills down to the create view
@@ -160,7 +163,11 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 	@DisplayName("Edit inline-form")
 	@Description("The pencil of the popup row opens its form (options.edit.widget); the changed value is saved and shown.")
 	void editInlineForm() {
-		var page = open("myexample3092listinlineform").listByName("MyExample3092ListInlineForm");
+		var screen = PlatformApp.screen("PickListPopup widget action");
+		screen.secondLevelView("Edit");
+		var page = screen.thirdLevelView("Inline-Form")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3092listinlineform"))
+				.listByName("MyExample3092ListInlineForm");
 		var popup = page.rows().clickRow(0).pickList("Custom Field PickList").openListPopup();
 		var list = popup.listInlineForm();
 		DocShots.gif(ARTICLE, "edit_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
@@ -169,7 +176,6 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		String value = unique("Popup form edited");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		int index = rowIndex(list, value);
 		DocShots.stop();
 		assertThat(index).as("the edited row is shown").isNotNegative();
@@ -177,7 +183,6 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		form = list.rows().row(index).clickPencil();
 		form.input(FIELD).setValue(original);
 		form.actions().action("Save").click();
-		Selenide.sleep(1500);
 		assertThat(rowIndex(list, original)).as("the original value is restored").isNotNegative();
 		popup.close();
 	}

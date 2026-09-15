@@ -1,6 +1,7 @@
 package core.element.widget.list;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
 import lombok.AccessLevel;
@@ -9,6 +10,10 @@ import lombok.Getter;
 import java.util.function.Consumer;
 
 public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> implements Pagination<ListPagination<W>, W> {
+
+	private static final String LOADING_SPINNER = ".ant-spin-spinning";
+
+	private static final String ACTIVE_PAGE = "ant-pagination-item-active";
 
 	@Getter(value = AccessLevel.PROTECTED)
 	private final W widget;
@@ -29,12 +34,7 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 		firstPage();
 		for (int i = 0; i < number; i++) {
 			if (getPages() > 1) {
-				getWidget().getExpectations().getWaitAllElements(getWidget().element());
-				this.getWidget().element().$("i[class=\"anticon anticon-right\"]")
-						.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-						.scrollIntoView("{ block: \"center\", behavior: \"smooth\" }")
-						.click();
-				getWidget().getExpectations().getWaitAllElements(getWidget().element());
+				nextPage();
 			}
 		}
 		return this;
@@ -43,32 +43,48 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	// Rows
 	@Override
 	public ListPagination<W> firstPage() {
-		this.getWidget().element()
-				.$("div[data-test-widget-list-pagination=\"true\"]")
-				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-				.$("li[title=\"1\"]")
-				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-				.click();
+		SelenideElement widgetElement = getWidget().element();
+		SelenideElement first = widgetElement
+				.$("div[data-test-widget-list-pagination=\"true\"] li[title=\"1\"]")
+				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout());
+		if (!first.has(Condition.cssClass(ACTIVE_PAGE))) {
+			first.click();
+			waitPageLoaded(widgetElement, 1);
+		}
 		return this;
 	}
 
 	// cant return ROW   be  chain >> pagination.nextPage().nextPage()
 	@Override
 	public ListPagination<W> nextPage() {
-		this.getWidget().element().$("i[class=\"anticon anticon-right\"]")
-				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-				.scrollIntoView("{ block: \"center\", behavior: \"smooth\" }")
-				.click();
-		return this;
+		return changePage("i[class=\"anticon anticon-right\"]", 1);
 	}
 
 	@Override
 	public ListPagination<W> previousPage() {
-		this.getWidget().element().$("i[class=\"anticon anticon-left\"]")
+		return changePage("i[class=\"anticon anticon-left\"]", -1);
+	}
+
+	private ListPagination<W> changePage(String arrow, int step) {
+		SelenideElement widgetElement = getWidget().element();
+		int target = Integer.parseInt(widgetElement.$("li." + ACTIVE_PAGE).getAttribute("title")) + step;
+		widgetElement.$(arrow)
 				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
 				.scrollIntoView("{ block: \"center\", behavior: \"smooth\" }")
 				.click();
+		waitPageLoaded(widgetElement, target);
 		return this;
+	}
+
+	/**
+	 * The page becomes active in the same render that shows the loading spinner,
+	 * and the rows of the page are rendered when the spinner is gone.
+	 */
+	private void waitPageLoaded(SelenideElement widgetElement, int page) {
+		widgetElement.$("li." + ACTIVE_PAGE + "[title=\"" + page + "\"]")
+				.should(Condition.exist, getWidget().getExpectations().getTimeout());
+		widgetElement.$(LOADING_SPINNER)
+				.shouldNot(Condition.exist, getWidget().getExpectations().getOverTimeout());
 	}
 
 
