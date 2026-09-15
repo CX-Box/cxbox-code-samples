@@ -9,6 +9,7 @@ import core.expectation.CxBoxExpectations;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -24,14 +25,20 @@ public class PlatformScreen extends AbstractScreen {
 		Allure.step("Selecting the screen " + name, step -> {
 			step.parameter("screen", name);
 			logTime(step);
-			// one lookup in the browser: a filter of the item collection asks the driver for the text of every item before the match
-			$x("//aside[@data-test='LEFT_SIDER']//ul[@data-test='MAIN_MENU']//li[@data-test='MAIN_MENU_ITEM'][normalize-space(.)="
-					+ xpathLiteral(name) + "]")
+			// one lookup in the browser: a filter of the item collection asks the driver for the text of every item before the match;
+			// the text is compared like Condition.exactText: ignoring case and extra spaces
+			$x("//aside[@data-test='LEFT_SIDER']//ul[@data-test='MAIN_MENU']//li[@data-test='MAIN_MENU_ITEM']"
+					+ "[translate(normalize-space(.), '" + UPPER_CASE + "', '" + LOWER_CASE + "')="
+					+ xpathLiteral(name.strip().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT)) + "]")
 					.shouldBe(Condition.enabled).click();
 			checkPageLoaded();
 		});
 
 	}
+
+	private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+
+	private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
 	/** The name as an XPath string literal: a name may contain quotes. */
 	private static String xpathLiteral(String value) {
