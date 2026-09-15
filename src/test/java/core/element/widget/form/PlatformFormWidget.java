@@ -3,6 +3,7 @@ package core.element.widget.form;
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
 import core.element.widget.action.Action;
+import core.element.widget.action.FormBurgerAction;
 import core.element.widget.field.type.checkbox.CheckBox;
 import core.element.widget.field.type.date.Date;
 import core.element.widget.field.type.dateTime.DateTime;
@@ -132,6 +133,11 @@ public class PlatformFormWidget extends PlatformWidget<PlatformFormWidget> {
 
 	public Action<PlatformFormWidget> actions() {
 		return new Action<>(this);
+	}
+
+	/** An item of the "..." menu of the form, shown on the forms with row actions (the edit popover of a calendar event). */
+	public FormBurgerAction<PlatformFormWidget> burgerAction(String label) {
+		return new FormBurgerAction<>(this, label);
 	}
 
 
