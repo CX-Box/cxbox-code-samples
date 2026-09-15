@@ -14,15 +14,12 @@ public class MyExample5058Meta extends FieldMetaBuilder<MyExample5058DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample5058DTO> fields, InnerBcDescription bcDescription,
 			Long id, Long parentId) {
 		fields.setEnabled(MyExample5058DTO_.customField);
-		fields.setEnabled(MyExample5058DTO_.startDateTime);
-		fields.setEnabled(MyExample5058DTO_.endDateTime);
 		fields.setEnabled(MyExample5058DTO_.customFieldNumber);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample5058DTO> fields, InnerBcDescription bcDescription, Long parentId) {
-		fields.enableFilter(MyExample5058DTO_.customField);
 	}
 
 }
