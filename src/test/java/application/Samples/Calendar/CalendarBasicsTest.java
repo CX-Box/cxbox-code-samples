@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
@@ -85,11 +86,30 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5057/view/myexample5057showcond"));
 		var calendar = view.calendarByName("MyExample5057");
 		calendar.waitLoaded();
-		DocShots.gif(ARTICLE, "show_cond_current.gif", 1660, 1400, DocShots.Frame.WITHOUT_SIDEBAR);
 		calendar.rows().row(1).click();
 		var shown = view.calendarByName("MyExample5057ShowCond").waitLoaded();
-		DocShots.stop();
 		assertThat(titles(shown)).containsExactlyElementsOf(EVENTS);
+	}
+
+	@Test
+	@Severity(NORMAL)
+	@Tag("Positive")
+	@DisplayName("Show condition by parent entity")
+	@Description("The calendar is shown when Custom Field Number of the parent form is greater than 5; the condition is recalculated on save.")
+	void showConditionByParentEntity() {
+		var view = PlatformApp.screen("CalendarList widget show condition")
+				.secondLevelView("Show condition by parent entity")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample5057/view/myexample5059showcond"));
+		var parent = view.formByName("MyExample5058Parent");
+		view.calendarByName("MyExample5059Child").waitLoaded();
+		DocShots.gif(ARTICLE, "show_cond.gif", 1660, 1400, DocShots.Frame.WITHOUT_SIDEBAR);
+		parent.number("Custom Field Number").setValue(BigDecimal.valueOf(3));
+		parent.actions().action("Save").click();
+		parent.number("Custom Field Number").setValue(BigDecimal.valueOf(8));
+		parent.actions().action("Save").click();
+		var calendar = view.calendarByName("MyExample5059Child").waitLoaded();
+		DocShots.stop();
+		assertThat(titles(calendar)).containsExactly("Meeting 1", "Meeting 2");
 	}
 
 	@Test
