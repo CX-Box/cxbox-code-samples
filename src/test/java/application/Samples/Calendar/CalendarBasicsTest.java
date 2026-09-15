@@ -21,9 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Basics of the CalendarList widget (samples widgets/calendarlist): events of the shown period, event color, show
- * condition, periods as pages, views, filtration. The test data has three events in the current month.
+ * condition, periods as pages, scale, filtration. The test data has three events in the current month.
  */
-@DisplayName("Calendar. Basics: events, color, show condition, periods, views, filtration")
+@DisplayName("Calendar. Basics: events, color, show condition, periods, scale, filtration")
 @Epic("Samples")
 @Feature(CalendarBasicsTest.ARTICLE)
 @Tag("Samples")
@@ -116,11 +116,11 @@ public class CalendarBasicsTest extends BaseTestForSamples {
 	@Test
 	@Severity(NORMAL)
 	@Tag("Positive")
-	@DisplayName("Views: month, week, day")
-	@Description("Every view is a widget of its own; the month view shows the events of the month again after the week and the day views.")
-	void views() {
+	@DisplayName("Scale: month, week, day")
+	@Description("Every scale is a widget of its own; the month scale shows the events of the month again after the week and the day scales.")
+	void scale() {
 		var month = events();
-		DocShots.gif(ARTICLE, "calendar_views.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
+		DocShots.gif(ARTICLE, "calendar_scale.gif", 1660, 1000, DocShots.Frame.WITHOUT_SIDEBAR);
 		var week = month.weekWidget();
 		assertThat(titles(week)).isSubsetOf(EVENTS);
 		var day = week.dayWidget();
