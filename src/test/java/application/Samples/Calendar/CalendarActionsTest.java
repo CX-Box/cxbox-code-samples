@@ -109,6 +109,15 @@ public class CalendarActionsTest extends BaseTestForSamples {
 		calendar.waitLoaded();
 		DocShots.stop();
 		assertThat(titles(calendar)).contains(value);
+
+		calendar.rows().streamCurrentPage()
+				.filter(row -> row.input(FIELD).getValue().equals(value))
+				.findFirst()
+				.orElseThrow()
+				.burgerAction("Delete")
+				.click();
+		calendar.waitLoaded();
+		assertThat(titles(calendar)).doesNotContain(value);
 	}
 
 	@Test
