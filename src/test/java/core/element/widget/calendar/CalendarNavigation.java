@@ -25,11 +25,11 @@ public final class CalendarNavigation {
 
 	public static final String TODAY_BUTTON = "button[data-test-widget-calendar-today]";
 
-	public static final String MONTH_VIEW = "dayGridMonth";
+	public static final String MONTH_SCALE = "dayGridMonth";
 
-	public static final String WEEK_VIEW = "timeGridWeek";
+	public static final String WEEK_SCALE = "timeGridWeek";
 
-	public static final String DAY_VIEW = "timeGridDay";
+	public static final String DAY_SCALE = "timeGridDay";
 
 	/** a filterable field above the calendar, the analogue of a column of the table header */
 	public static final String FILTER_COLUMNS = "[data-test-widget-list-header-column-title]";
@@ -40,8 +40,8 @@ public final class CalendarNavigation {
 	private CalendarNavigation() {
 	}
 
-	public static SelenideElement viewButton(SelenideElement container, String view) {
-		return container.$("span[data-test-widget-calendar-view=\"" + view + "\"]");
+	public static SelenideElement scaleButton(SelenideElement container, String scale) {
+		return container.$("span[data-test-widget-calendar-view=\"" + scale + "\"]");
 	}
 
 	/** Visible parts of the events of the container. */
