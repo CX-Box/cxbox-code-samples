@@ -7,6 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,20 +28,26 @@ public class AdditionalInfoShowConditionTest extends BaseTestForSamples {
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
-	@DisplayName("The widget is shown only for the record that meets the show condition")
-	@Description("Show condition by current entity: the widget is shown for a record with Custom Field Num less than 5 and hidden for the other records")
+	@DisplayName("The widget is shown while the saved value meets the show condition")
+	@Description("Show condition by current entity: the widget is hidden after Custom Field Num 5 or more is saved and is shown again after a smaller value is saved")
 	void showConditionByCurrentEntity() {
 		var view = PlatformApp.screen("AdditionalInfo widget show condition").view();
-		var rows = view.listInline("List").rows();
+		var form = view.form("Show condition by current entity");
 		var info = view.additionalInfo("Additional information");
-		DocShots.gif(ARTICLE, "show_cond_current.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
-		// "test data": Custom Field Num 0
-		rows.clickRow(1);
+		var customFieldNum = form.number("Custom Field Num");
+		BigDecimal initialValue = customFieldNum.getValue();
+
+		DocShots.gif(ARTICLE, "show_cond_current.gif", 1280, 620, DocShots.Frame.WITHOUT_SIDEBAR);
+		customFieldNum.setValue(BigDecimal.valueOf(6));
+		form.actions().action("Save").click();
+		info.checkVisible(visible -> assertThat(visible).isFalse());
+		customFieldNum.setValue(BigDecimal.ZERO);
+		form.actions().action("Save").click();
 		info.checkVisible(visible -> assertThat(visible).isTrue());
-		// "test data2": Custom Field Num 6
-		rows.clickRow(0);
-		assertThat(info.isVisible()).isFalse();
 		DocShots.stop();
+
+		customFieldNum.setValue(initialValue);
+		form.actions().action("Save").click();
 	}
 
 }
