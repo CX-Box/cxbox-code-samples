@@ -6,8 +6,6 @@ import core.element.widget.list.ListWidget;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
 
-import static com.codeborne.selenide.Selenide.$;
-
 public class InputFilter<
 		WIDGET extends ListWidget<WIDGET, ROWS, ROW>,
 		ROWS extends PlatformRows<ROWS, WIDGET, ROW>,
@@ -24,11 +22,11 @@ public class InputFilter<
 	@Override
 	public SELF filter(String s) {
 		clickFilterIcon();
-		$(formFilter())
+		getFormFilter()
 				.$("input[data-test-filter-popup-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(s);
-		$(formFilter())
+		getFormFilter()
 				.$("input[data-test-filter-popup-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();

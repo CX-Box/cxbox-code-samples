@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 @Slf4j
 public abstract class AbstractFilter<
@@ -38,7 +39,10 @@ public abstract class AbstractFilter<
 	@Getter()
 	private final VALUE value;
 
-	SelenideElement formFilter = $("div[class*=\"ant-popover ant-popover-placement\"]");
+	private static final String FILTER_FORM = "form[data-test-filter-popup=\"true\"]";
+
+	/** The opened filter popup: the container of the visible filter form (closed popups stay in the page hidden). */
+	SelenideElement formFilter = $$(FILTER_FORM).findBy(Condition.visible).parent();
 
 	public AbstractFilter(WIDGET widget, PARENT parent, VALUE value) {
 		this.widget = widget;
@@ -53,8 +57,9 @@ public abstract class AbstractFilter<
 
 	public abstract SELF filter(VALUE value);
 
+	/** Selector of the filter form; use {@link #getFormFilter()} for the opened one. */
 	public String formFilter() {
-		return "div[class*=\"ant-popover ant-popover-placement\"]";
+		return FILTER_FORM;
 	}
 
 	public PARENT apply() {
