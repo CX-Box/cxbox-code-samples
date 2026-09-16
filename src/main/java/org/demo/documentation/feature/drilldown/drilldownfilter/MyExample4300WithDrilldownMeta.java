@@ -197,7 +197,7 @@ public class MyExample4300WithDrilldownMeta extends FieldMetaBuilder<MyExample43
 				MyExample4300WithDrilldownDTO_.customFieldHint, DrillDownType.INNER, SCREEN_MY_EXAMPLE_4300_VIEW_MY_EXAMPLE_4300_LIST, fc ->
 						fc.add(
 								CxboxMyExample4300Controller.myExample4300DrillDown, MyExample4300WithDrilldownDTO.class, fb ->
-										fb.input(
+										fb.hint(
 												MyExample4300WithDrilldownDTO_.customFieldHint,
 												fields.getCurrentValue(MyExample4300WithDrilldownDTO_.customFieldHint).orElse(null)
 										)

@@ -3,8 +3,10 @@ package application.Samples.Form;
 import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Hint in the widget Form")
 @Epic("Samples")
+@Feature(HintOnFormTest.ARTICLE)
 @Tag("Samples")
 @Tag("Form")
-
 public class HintOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/hint";
 
 	@Disabled
 	@Test
@@ -51,6 +55,7 @@ public class HintOnFormTest extends BaseTestForSamples {
 		form
 				.hint("Custom Field")
 				.checkValue(value -> assertThat(value).isEqualTo("Information data"));
+		DocShots.png(form.element(), ARTICLE, "img_form.png", 1600, 1000);
 	}
 
 	@Disabled
@@ -62,12 +67,17 @@ public class HintOnFormTest extends BaseTestForSamples {
 	void filtration() {
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("The DrillDown test")
-	@Description("The transition/Redirect is not available")
+	@Description("Checking the url before the transition and after the transition/click on a special element")
 	void drillDown() {
+		var form = PlatformApp.screen("Hint drilldown")
+				.secondLevelView("Form")
+				.form("Form title");
+		DocShots.png(form.element(), ARTICLE, "img_drilldown_form.png", 1600, 1000);
+		form.hint("Custom Field")
+				.drilldown(url -> assertThat(url).contains("/screen/myexample161/view/myexample161form/myExampleBc161/"));
 	}
 
 	@Test
