@@ -15,6 +15,8 @@ import org.openqa.selenium.StaleElementReferenceException;
 
 import java.util.function.Consumer;
 
+import static com.codeborne.selenide.Selenide.$;
+
 // need List widget
 @Slf4j
 public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<ROWS, W, ROW>, ROW extends PlatformRow<ROW, ROWS, W>> implements IterableElement {
@@ -74,6 +76,21 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 			widget().getExpectations().getWaitAllElements(widget().element());
 		}
 		return widget();
+	}
+
+	/**
+	 * pickList/pickTree column: whether the "..." button of the column filter is highlighted,
+	 * i.e. the filter is chosen in the popup. Opens the filter of the column and closes it back.
+	 */
+	public ListHeaders<W, ROWS, ROW> checkPopupFilterActive(String name, Consumer<Boolean> isActive) {
+		SelenideElement filterIcon = headerColumn(name).element().$("div[data-test-widget-list-header-column-filter=\"true\"]");
+		filterIcon.click();
+		SelenideElement moreButton = $("div.ant-popover:not(.ant-popover-hidden) button[data-test-filter-popup-select]")
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+		isActive.accept("true".equals(moreButton.getAttribute("data-test-filter-popup-select-active")));
+		filterIcon.click();
+		moreButton.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
+		return this;
 	}
 
 	public HeaderColumn<W, ROWS, ROW> headerColumn(String name) {
