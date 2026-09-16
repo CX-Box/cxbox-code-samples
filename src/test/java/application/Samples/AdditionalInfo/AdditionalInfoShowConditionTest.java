@@ -25,6 +25,10 @@ public class AdditionalInfoShowConditionTest extends BaseTestForSamples {
 
 	static final String ARTICLE = "widget/type/additionalinfo";
 
+	private static final BigDecimal CONDITION_MET = BigDecimal.ZERO;
+
+	private static final BigDecimal CONDITION_NOT_MET = BigDecimal.valueOf(6);
+
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
@@ -37,14 +41,21 @@ public class AdditionalInfoShowConditionTest extends BaseTestForSamples {
 		var customFieldNum = form.number("Custom Field Num");
 		BigDecimal initialValue = customFieldNum.getValue();
 
-		DocShots.gif(ARTICLE, "show_cond_current.gif", 1280, 620, DocShots.Frame.WITHOUT_SIDEBAR);
-		customFieldNum.setValue(BigDecimal.valueOf(6));
-		form.actions().action("Save").click();
-		info.checkVisible(visible -> assertThat(visible).isFalse());
-		customFieldNum.setValue(BigDecimal.ZERO);
+		// the picture of the article starts with the widget shown
+		customFieldNum.setValue(CONDITION_MET);
 		form.actions().action("Save").click();
 		info.checkVisible(visible -> assertThat(visible).isTrue());
+
+		// one change of the value per loop of the picture: the widget goes away right after the save
+		DocShots.gif(ARTICLE, "show_cond_current.gif", 1280, 760, DocShots.Frame.WITHOUT_SIDEBAR);
+		customFieldNum.setValue(CONDITION_NOT_MET);
+		form.actions().action("Save").click();
+		info.checkVisible(visible -> assertThat(visible).isFalse());
 		DocShots.stop();
+
+		customFieldNum.setValue(CONDITION_MET);
+		form.actions().action("Save").click();
+		info.checkVisible(visible -> assertThat(visible).isTrue());
 
 		customFieldNum.setValue(initialValue);
 		form.actions().action("Save").click();
