@@ -39,7 +39,10 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 					Selenide.open("about:blank");
 					Selenide.open(appUri.toString());
 					// the application shows the menu when it has accepted the session, otherwise it goes to the login form
-					Selenide.Wait().until(driver -> menuItem.exists() || KeycloackAuthPage.login.exists());
+					Selenide.Wait()
+							.withTimeout(new CxBoxExpectations().getOverTimeout())
+							.withMessage("the application has shown neither the menu nor the login form")
+							.until(driver -> menuItem.exists() || KeycloackAuthPage.login.exists());
 					if (KeycloackAuthPage.login.exists()) {
 						authWithUsernameAndPassword(username, password, appUri);
 						return;
