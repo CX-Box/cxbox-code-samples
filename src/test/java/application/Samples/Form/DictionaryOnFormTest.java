@@ -5,6 +5,7 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -25,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class DictionaryOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/dictionary";
 
 	@Test
 	@Tag("Positive")
@@ -265,5 +268,6 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.dictionary("Custom Field")
 				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
 						.isCloseTo((int) (fieldWidth * Constants.DropDown.DICTIONARY_MAX_COLS), withinPercentage(5)));
+		DocShots.png(ARTICLE, "img_dropdown_width_form.png", 1660, 760);
 	}
 }

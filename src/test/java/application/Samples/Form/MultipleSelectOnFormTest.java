@@ -4,6 +4,7 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -26,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("application/Samples")
 @Tag("Form")
 public class MultipleSelectOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multipleSelect";
 
 	@Disabled
 	@Test
@@ -296,5 +299,6 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.multipleSelect("Custom Field")
 				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
 						.isCloseTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS), withinPercentage(5)));
+		DocShots.png(ARTICLE, "img_dropdown_width_form.png", 1660, 760);
 	}
 }
