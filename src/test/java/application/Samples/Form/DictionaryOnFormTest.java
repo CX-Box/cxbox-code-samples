@@ -17,6 +17,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
+import static org.assertj.core.api.Assertions.withinPercentage;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("application/Samples")
 @Tag("application/Samples")
 public class DictionaryOnFormTest extends BaseTestForSamples {
+
+	private static final double DROP_DOWN_MAX_COLS = 1.3;
 
 	@Test
 	@Tag("Positive")
@@ -251,5 +254,18 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Dictionary enum basic").secondLevelView("Form").form("Form title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test for checking the width of the drop-down list with long values")
+	@Description("The test gets the field width and the option width and checks that the list is no wider than the limit")
+	void dropDownWidth() {
+		PlatformApp.screen("Dictionary enum long values")
+				.secondLevelView("Form")
+				.form("Form title")
+				.dictionary("Custom Field")
+				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
+						.isCloseTo((int) (fieldWidth * DROP_DOWN_MAX_COLS), withinPercentage(5)));
 	}
 }

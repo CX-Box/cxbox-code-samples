@@ -18,6 +18,7 @@ import java.util.Set;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withinPercentage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultipleSelect in the widget Form")
@@ -25,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("application/Samples")
 @Tag("Form")
 public class MultipleSelectOnFormTest extends BaseTestForSamples {
+
+	private static final double DROP_DOWN_MAX_COLS = 1.3;
 
 	@Disabled
 	@Test
@@ -282,5 +285,18 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultipleSelect basic").secondLevelView("Form").form("Form title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test for checking the width of the drop-down list with long values")
+	@Description("The test gets the field width and the option width and checks that the list is no wider than the limit")
+	void dropDownWidth() {
+		PlatformApp.screen("MultipleSelect long values")
+				.secondLevelView("Form")
+				.form("Form title")
+				.multipleSelect("Custom Field")
+				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
+						.isCloseTo((int) (fieldWidth * DROP_DOWN_MAX_COLS), withinPercentage(5)));
 	}
 }
