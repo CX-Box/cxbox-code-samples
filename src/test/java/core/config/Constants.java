@@ -26,6 +26,23 @@ public class Constants {
 	);
 
 	/**
+	 * Limits of a field drop-down list. Mirror the frontend constants, change together with them.
+	 */
+	public static class DropDown {
+
+		/**
+		 * ui/src/fields/Dictionary/constants.ts, dictionary_dropDownMaxCols
+		 */
+		public static final double DICTIONARY_MAX_COLS = 1.3;
+
+		/**
+		 * ui/src/fields/MultipleSelectField/constants.ts, multipleSelect_dropDownMaxCols
+		 */
+		public static final double MULTIPLE_SELECT_MAX_COLS = 1.3;
+
+	}
+
+	/**
 	 * Error Window Constants
 	 */
 	public static class ErrorPopup {

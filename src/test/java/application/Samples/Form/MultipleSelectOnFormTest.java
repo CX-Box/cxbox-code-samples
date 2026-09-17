@@ -27,8 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Form")
 public class MultipleSelectOnFormTest extends BaseTestForSamples {
 
-	private static final double DROP_DOWN_MAX_COLS = 1.3;
-
 	@Disabled
 	@Test
 	@Severity(MINOR)
@@ -297,6 +295,6 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.form("Form title")
 				.multipleSelect("Custom Field")
 				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
-						.isCloseTo((int) (fieldWidth * DROP_DOWN_MAX_COLS), withinPercentage(5)));
+						.isCloseTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS), withinPercentage(5)));
 	}
 }

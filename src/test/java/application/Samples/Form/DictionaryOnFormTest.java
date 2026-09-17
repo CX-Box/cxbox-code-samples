@@ -26,8 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("application/Samples")
 public class DictionaryOnFormTest extends BaseTestForSamples {
 
-	private static final double DROP_DOWN_MAX_COLS = 1.3;
-
 	@Test
 	@Tag("Positive")
 	@DisplayName("Test for getting the Placeholder value")
@@ -266,6 +264,6 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.form("Form title")
 				.dictionary("Custom Field")
 				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
-						.isCloseTo((int) (fieldWidth * DROP_DOWN_MAX_COLS), withinPercentage(5)));
+						.isCloseTo((int) (fieldWidth * Constants.DropDown.DICTIONARY_MAX_COLS), withinPercentage(5)));
 	}
 }
