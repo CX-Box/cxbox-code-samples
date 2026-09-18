@@ -284,6 +284,14 @@
             <version>${selenide.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- administration of the OIDC provider for application.Samples.Feature.signInAgain (KeycloakAdmin) only:
+             a project that does not test its provider removes the tests, the class and this dependency -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>26.0.12</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-video-recorder</artifactId>
@@ -559,6 +567,58 @@
                                 <allure.async>false</allure.async>
                             </systemPropertyVariables>
                         </configuration>
+                        <!--
+                            The slow tests (@Tag("Slow")) wait out the lifetime of an access token, about ten minutes.
+                            In a single run they hold a fork and its browser all that time: the queue of the other
+                            classes waits, and the neighbours of that fork meet a frozen tab.
+
+                            These two executions let the run be split in two: the build compiles once and then starts
+                            "surefire:test@fast" and "surefire:test@slow" as two processes at the same time. Maven runs
+                            executions of one phase one after another, so the parallelism comes from the two processes,
+                            not from the executions themselves; the executions only keep the settings out of the build
+                            script. The reports go to separate directories and are merged into one allure report.
+
+                            The phase "none" keeps them out of the lifecycle: "mvn test" still runs everything at once.
+                        -->
+                        <executions>
+                            <execution>
+                                <id>fast</id>
+                                <phase>none</phase>
+                                <configuration>
+                                    <excludedGroups>Slow</excludedGroups>
+                                    <parallel>classes</parallel>
+                                    <!-- the build gives one fork back where the slow process runs too, so the runner keeps three browsers -->
+                                    <forkCount>${surefire.forkCount}</forkCount>
+                                    <threadCount>1</threadCount>
+                                    <reportsDirectory>${project.build.directory}/surefire-reports-fast</reportsDirectory>
+                                    <systemPropertyVariables>
+                                        <allure.results.directory>${project.build.directory}/allure-results-fast</allure.results.directory>
+                                        <allure.async>false</allure.async>
+                                    </systemPropertyVariables>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>slow</id>
+                                <phase>none</phase>
+                                <configuration>
+                                    <groups>Slow</groups>
+                                    <forkCount>1</forkCount>
+                                    <!--
+                                        No reruns here. These tests are about the session and the token of the browser they run in,
+                                        and they leave it behind signed in, frozen, or holding a token that has been spent. A rerun
+                                        reuses that very browser, so it is not a second chance but a run in a dirtier state, where a
+                                        failure means something other than it did the first time. A failure of these has to be read,
+                                        not retried.
+                                    -->
+                                    <rerunFailingTestsCount>0</rerunFailingTestsCount>
+                                    <reportsDirectory>${project.build.directory}/surefire-reports-slow</reportsDirectory>
+                                    <systemPropertyVariables>
+                                        <allure.results.directory>${project.build.directory}/allure-results-slow</allure.results.directory>
+                                        <allure.async>false</allure.async>
+                                    </systemPropertyVariables>
+                                </configuration>
+                            </execution>
+                        </executions>
                         <dependencies>
                             <dependency>
                                 <groupId>org.aspectj</groupId>

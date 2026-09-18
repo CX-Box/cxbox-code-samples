@@ -3,13 +3,13 @@ package core.page.auth.keycloak;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import core.config.AppChecks;
-import core.expectation.CxBoxExpectations;
+import core.config.OidcProvider;
 import core.page.auth.AuthPage;
 import core.page.auth.AuthWithUsernameAndPassword;
 import io.qameta.allure.Allure;
 
 import java.net.URI;
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -26,6 +26,15 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 	private static final SelenideElement menuItem = $("aside[data-test='LEFT_SIDER'] li[data-test='MAIN_MENU_ITEM']");
 
 	/**
+	 * The sign in is a redirect to Keycloak and back, a form, the token exchange and the storage write, not a widget check.
+	 * The timeout of the suite (10 seconds) is not enough for it on a loaded runner: one CI run gave fourteen sign in
+	 * timeouts at exactly that mark, and thirty seconds still left two, both on the first sign in of a fork, when the stand
+	 * is cold and the browsers start together. A later give-up point costs nothing while the sign in is fast, it only says
+	 * when to stop waiting.
+	 */
+	private static final Duration SIGN_IN_TIMEOUT = Duration.ofSeconds(60);
+
+	/**
 	 * Opens the application with a page load, so nothing is left from the previous test. The session stays when the
 	 * application is signed in by this user; otherwise the user signs in with the username and password (the session of
 	 * another user is logged out first).
@@ -39,7 +48,10 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 					Selenide.open("about:blank");
 					Selenide.open(appUri.toString());
 					// the application shows the menu when it has accepted the session, otherwise it goes to the login form
-					Selenide.Wait().until(driver -> menuItem.exists() || KeycloackAuthPage.login.exists());
+					Selenide.Wait()
+							.withTimeout(SIGN_IN_TIMEOUT)
+							.withMessage("the application has shown neither the menu nor the login form")
+							.until(driver -> menuItem.exists() || KeycloackAuthPage.login.exists());
 					if (KeycloackAuthPage.login.exists()) {
 						authWithUsernameAndPassword(username, password, appUri);
 						return;
@@ -108,7 +120,10 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 	 * without the id_token_hint: Keycloak asks to confirm the logout, the session stays and the next test finds no login form.
 	 */
 	private void waitSignedIn() {
-		Selenide.Wait().withTimeout(new CxBoxExpectations().getOverTimeout()).until(driver -> {
+		Selenide.Wait()
+				.withTimeout(SIGN_IN_TIMEOUT)
+				.withMessage("the application has not stored the signed-in user")
+				.until(driver -> {
 			try {
 				return Boolean.TRUE.equals(Selenide.executeJavaScript(
 						"return Object.keys(localStorage).some(key => key.startsWith('oidc.user:'));"));
@@ -131,7 +146,7 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 		Allure.step(
 				"Logout", step -> {
 					logTime(step);
-					String logoutUrl = AppChecks.logout(appUri);
+					String logoutUrl = OidcProvider.ofApp(appUri).logoutUrl(appUri);
 					Selenide.executeJavaScript("sessionStorage.clear(); localStorage.clear();");
 					Selenide.open(logoutUrl);
 					Selenide.clearBrowserCookies();

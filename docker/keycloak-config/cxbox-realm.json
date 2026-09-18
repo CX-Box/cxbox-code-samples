@@ -5,9 +5,9 @@
   "displayNameHtml" : "<div><b>Cxbox Code Samples</b> <p></p></div><div style=\"text-transform: lowercase;\"><a href=\"https://github.com/CX-Box/cxbox-code-samples\">Github</a></div><p style=\"text-transform: lowercase;\"> username: demo / password: demo</p>",
   "notBefore" : 0,
   "defaultSignatureAlgorithm" : "RS256",
-  "revokeRefreshToken" : false,
+  "revokeRefreshToken" : true,
   "refreshTokenMaxReuse" : 0,
-  "accessTokenLifespan" : 300,
+  "accessTokenLifespan" : 120,
   "accessTokenLifespanForImplicitFlow" : 900,
   "ssoSessionIdleTimeout" : 1800,
   "ssoSessionMaxLifespan" : 36000,
@@ -1322,6 +1322,15 @@
         "secret" : [ "jceWjpKy917_KmGE2fPbTqZPbulICJX4z3C2AQSDp7S_y6v8XWnx1z9NMPJrjKmwymhe0ZlmubwAdC7MzpSBxQ" ],
         "priority" : [ "100" ],
         "algorithm" : [ "HS256" ]
+      }
+    }, {
+      "name" : "hmac-generated-hs512",
+      "providerId" : "hmac-generated",
+      "subComponents" : { },
+      "config" : {
+        "secretSize" : [ "64" ],
+        "priority" : [ "100" ],
+        "algorithm" : [ "HS512" ]
       }
     }, {
       "id" : "9a662611-438d-4217-9c8f-63b839f7576c",

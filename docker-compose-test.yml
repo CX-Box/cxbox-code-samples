@@ -21,8 +21,9 @@ services:
   cxbox-code-samples-test:
     build: ./
     environment:
-      FRONTEND_AUTH_SERVER_URL: 'https://code-samples.cxbox.org/auth'
-      BACKEND_AUTH_SERVER_URL: 'https://code-samples.cxbox.org/auth'
+      # the Keycloak of this compose: the browser reaches it through nginx on the same origin as the application, the backend directly
+      FRONTEND_AUTH_SERVER_URL: 'http://localhost:81/auth'
+      BACKEND_AUTH_SERVER_URL: 'http://cxbox-code-samples-keycloak:9080/auth'
       HIBERNATE_DDL_AUTO: 'update'
       DEV_PANEL_ENABLED: 'true'
       META_DIRECTORY: 'classpath:meta'

@@ -1,87 +1,35 @@
 package core.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import net.jcip.annotations.ThreadSafe;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Request.Builder;
-import okhttp3.Response;
 
 import java.net.URI;
-import java.net.URLEncoder;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
-
-import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 @UtilityClass
 @ThreadSafe
 public class AppChecks {
 
-	private static final ObjectMapper objectMapper = new ObjectMapper();
-
-	// TODO >> cxbox >> need universal logic for auth
-	@NonNull
+	/**
+	 * Waits until the application answers its start url with HTTP 200: a cold start takes minutes, so this is polled over plain HTTP
+	 * once per run, before any browser is opened. It says nothing about what a browser shows; whether the browser is on the login
+	 * page is checked with Selenide and the usual short timeout, see {@code BaseTestForSamples#shouldBeOnLoginPage()}.
+	 */
 	@SneakyThrows
-	public static String logout(@NonNull URI uri) {
-		log.info("app server url: {}", uri);
-		var authConfigUri = new Builder()
-				.url(uri.getScheme() + "://" + uri.getHost() + (uri.getPort() != -1 ? ":" + uri.getPort() : "")
-						+ "/api/v1/auth/oidc.json")
-				.build();
-		var client = new OkHttpClient.Builder().build();
-		try (var rs = client.newCall(authConfigUri).execute()) {
-			if (rs.body() != null) {
-				var cfg = objectMapper.readValue(rs.body().string(), AuthConfig.class);
-				log.info("Auth server url: {}", cfg.authority());
-				var authUri = new URI(cfg.authority());
-				Request request = new Request.Builder()
-						.url(authUri + "/.well-known/openid-configuration")
-						.build();
-				try (Response response = new OkHttpClient().newCall(request).execute()) {
-					JsonNode json = objectMapper.readTree(response.body().string());
-					String endSessionEndpoint = json.get("end_session_endpoint").asText(); // get
-					var logoutUrl = endSessionEndpoint
-							+ "?client_id=" + cfg.clientId
-							+ "&post_logout_redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8)
-							+ "&redirect_uri=" + URLEncoder.encode(uri.toString(), UTF_8);
-					try {
-						String sessionUserData = executeJavaScript("""
-								    var key = Object.keys(localStorage).find(k => k.startsWith('oidc.user:'));
-								    return key ? localStorage.getItem(key) : null;
-								""");
-						if (sessionUserData != null) {
-							String idToken = objectMapper.readTree(sessionUserData).path("id_token").asText();
-							if (!idToken.isEmpty()) {
-								logoutUrl += "&id_token_hint=" + idToken;
-							}
-						}
-					} catch (Exception e) {
-						log.error("Cannot find session data from storage");
-					}
-					return logoutUrl;
-				}
-			}
-		}
-		throw new IllegalStateException("cannot determine authUri");
-	}
-
-	@SneakyThrows
-	public static void waitAppLoginPageReady(@NonNull URI uri, @NonNull Duration totalWait,
-											 @NonNull Duration retryPeriod) {
+	public static void waitAppStarted(@NonNull URI uri, @NonNull Duration totalWait, @NonNull Duration retryPeriod) {
 		log.info("Application url: " + uri);
 		OkHttpClient client = new OkHttpClient.Builder().build();
-		var request = new Builder().url(uri.toString()).build();
+		var request = new Builder().url(uri.toString())
+				// webpack dev server answers 404 to a request without Accept header, a browser always sends one
+				.header("Accept", "text/html,*/*").build();
 		boolean appReady = awaitIsTrue(
 				totalWait, retryPeriod, "app started", () -> {
 					try (var response = client.newCall(request).execute()) {
@@ -129,12 +77,6 @@ public class AppChecks {
 		}
 		log.error("target '{}' has not been achieved!!", target);
 		return false;
-	}
-
-	// TODO >> this config related which version used ( oidc standard  or old oidc keyclock conf on application.yaml)
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public record AuthConfig(@JsonProperty("authority") String authority, @JsonProperty("client_id") String clientId) {
-
 	}
 
 }

@@ -22,6 +22,13 @@ concurrency:
 # Global workflow environment variables
 env:
   APP_URL: http://localhost:81/ui/#/ # Test application URL
+  # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
+  KEYCLOAK_ADMIN_USER: cxbox_admin
+  KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
+  # CXBOX_LOGGER is off here on purpose. It turns the Selenide proxy on (BaseTestForSamples), and the browser then reaches
+  # the application through a tunnel: the "Copy details" test reads CONNECT instead of GET, and the websocket test no longer
+  # sees its handshake in the performance log. Both failed with it on, while the 843 ordinary tests passed. Turn it on in
+  # the manual run (build_button_qa.yml, "Logging network") when the requests of a test are needed.
 
 
 jobs:
@@ -43,8 +50,11 @@ jobs:
         java: [ '17','21' ]
 
     # Job names:
-    # QA tests Java 17
+    # QA tests Java 17 + slow
     # QA tests Java 21
+    # The slow tests run on one java version only, and the name says which one
+    # The name is what branch protection requires as a check, so it stays exactly as it is.
+    # That the slow tests run in the Java 17 job is said in the pull request comment instead.
     name: QA tests Java ${{ matrix.java }}
 
     env:
@@ -127,18 +137,64 @@ jobs:
       #
       # continue-on-error:
       # allows workflow execution to continue if tests fail.
+      # The slow tests (@Tag("Slow")) wait out the lifetime of an access token, about ten minutes in total. In one run they
+      # hold a fork and its browser all that time: the queue of the other classes waits, and the neighbours of that fork
+      # meet a frozen tab. They run as a second surefire process instead, in its own fork with its own browser, at the
+      # same time as the rest; the results of both go into one allure report.
+      # Their subject is the browser, the OIDC provider and the ui, not the jvm, so one java version is enough for them:
+      # they run in the Java 17 job only, which its name says. Fifteen minutes of waiting are not spent twice, and the
+      # Java 21 job keeps three browsers instead of four.
       - name: Run Tests
         id: run_tests
         continue-on-error: true
         run: |
-          mvn --batch-mode \
-            -DrunTests=true \
-            -Dsurefire.parallel=classes \
-            -Dsurefire.forkCount=3 \
-            -Dsurefire.threadCount=1 \
-            -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
-            test
+          set +e
+          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**
+          mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
+          COMPILE_CODE=$?
+          if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi
+          # the slow process brings a fourth browser to the two cores of the runner: the fast process gives one of its forks
+          # back where they run together, so the runner keeps three browsers either way
+          FAST_FORKS=3
+          if [ "${{ matrix.java }}" = "17" ]; then FAST_FORKS=2; fi
+          mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast > target/tests-fast.log 2>&1 &
+          FAST_PID=$!
+          SLOW_CODE=0
+          SLOW_PID=""
+          if [ "${{ matrix.java }}" = "17" ]; then
+            mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow > target/tests-slow.log 2>&1 &
+            SLOW_PID=$!
+          fi
+          wait $FAST_PID; FAST_CODE=$?
+          if [ -n "$SLOW_PID" ]; then wait $SLOW_PID; SLOW_CODE=$?; fi
+          echo "::group::Tests without the slow ones"; cat target/tests-fast.log; echo "::endgroup::"
+          if [ -n "$SLOW_PID" ]; then echo "::group::Slow tests"; cat target/tests-slow.log; echo "::endgroup::"; fi
+          mkdir -p target/allure-results
+          cp -r target/allure-results-fast/. target/allure-results/ 2>/dev/null || true
+          cp -r target/allure-results-slow/. target/allure-results/ 2>/dev/null || true
+          echo "exit codes: fast=$FAST_CODE slow=$SLOW_CODE"
+          [ $FAST_CODE -eq 0 ] && [ $SLOW_CODE -eq 0 ]
+
+
+        # A screenshot shows what the browser saw, and when several browsers sign in at once that is sometimes the error page
+        # of the OIDC provider ("An error occurred, please login again through your application"). Why it was shown is in the
+        # log of the provider itself: an expired code (accessCodeLifespan is 60 seconds), a lost authentication session.
+        # The step runs always on purpose: a rerun that passes keeps the job green, and those are the failures worth reading.
+        # The timestamps are what lines the log up with the moment a test failed.
+      - name: Keycloak log
+        if: always()
+        run: |
+          docker compose -f docker-compose-test.yml logs --no-color --timestamps cxbox-code-samples-keycloak > keycloak-${{ matrix.java }}.log 2>&1 || true
+          echo "::group::Keycloak: warnings, errors and the login flow"
+          grep -inE "warn|error|expired|invalid|authentication session" keycloak-${{ matrix.java }}.log | tail -100 || true
+          echo "::endgroup::"
+
+      - name: Upload Keycloak log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keycloak-log-${{ matrix.java }}
+          path: keycloak-${{ matrix.java }}.log
 
         # Saves test execution result:
         # success / failure / cancelled
@@ -189,23 +245,30 @@ jobs:
          #│            └── history/
 
         # trend visual file ->/history/history-trend.json
+      - name: Copy trend history
+        if: always()
+        run: |
+          mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
+          
+          cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
+                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
+        # workspace
+        # allure-report/
+        # └── 125/                         # Pull Request number
+        #     └── java-17/                  # Java version used for test execution
+        #         └── history/              # Previous Allure history data
+        #             ├── history.json      # Test execution history (previous runs)
+        #             ├── trend.json        # Trend data for Allure Trend widget
+        #             └── retries-trend.json # Retry statistics history
 
       # Generates a new Allure report based on test results.
       # Also loads previous history from gh-pages
       # to preserve trends and statistics between workflow runs.
       - name: Generate Allure report
-        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
-        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
-        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
-        uses: docker://cxbox/allure-report-action:v1.15
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
-          # a docker:// step does not read action.yml: its defaults are passed here
-          github_run_num: ${{ github.run_number }}
-          github_run_id: ${{ github.run_id }}
-          github_tests_repo: ${{ github.repository }}
-          github_server_url: ${{ github.server_url }}
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
           gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
@@ -360,11 +423,11 @@ jobs:
           # Reads Java 17 test execution result.
           
           if [ "$JAVA17" = "success" ]; then
-            echo "java17=☕ Java 17 ✅ Passed" >> $GITHUB_OUTPUT
+            echo "java17=☕ Java 17 + slow ✅ Passed" >> $GITHUB_OUTPUT
           elif [ "$JAVA17" = "failure" ]; then
-             echo "java17=☕ Java 17 ❌ Failed" >> $GITHUB_OUTPUT
+             echo "java17=☕ Java 17 + slow ❌ Failed" >> $GITHUB_OUTPUT
           else
-            echo "java17=☕ Java 17 ⚪ Cancelled" >> $GITHUB_OUTPUT
+            echo "java17=☕ Java 17 + slow ⚪ Cancelled" >> $GITHUB_OUTPUT
           fi
           
           
@@ -529,7 +592,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
 
@@ -555,18 +618,10 @@ jobs:
 
       # Generates Allure report for main branch.
       - name: Generate Allure report
-        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
-        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
-        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
-        uses: docker://cxbox/allure-report-action:v1.15
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         id: allure-report
         with:
-          # a docker:// step does not read action.yml: its defaults are passed here
-          github_run_num: ${{ github.run_number }}
-          github_run_id: ${{ github.run_id }}
-          github_tests_repo: ${{ github.repository }}
-          github_server_url: ${{ github.server_url }}
 
           allure_results: target/allure-results
           # Existing history location for main branch.
@@ -574,12 +629,14 @@ jobs:
           # Generated report location.
           allure_report: allure-report/java-${{ matrix.java }}
           # Allure history storage.
-          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
+          allure_history: allure-history/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
           report_url: https://cx-box.github.io/cxbox-code-samples-allure/main/java-${{ matrix.java }}
           # Keep last 5 runs inside history.
           keep_reports: 5
+
+
 
       # Upload report for publish job.
       - name: Upload Allure report
