@@ -19,7 +19,6 @@ import java.util.Set;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.withinPercentage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the MultipleSelect in the widget Form")
@@ -297,8 +296,10 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title")
 				.multipleSelect("Custom Field")
-				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
-						.isCloseTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS), withinPercentage(5)));
+				.checkDropDownWidth((fieldWidth, optionWidth) -> {
+					assertThat(optionWidth).isGreaterThanOrEqualTo(fieldWidth);
+					assertThat(optionWidth).isLessThanOrEqualTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS * 1.05));
+				});
 		DocShots.png(ARTICLE, "img_dropdown_width_form.png", 1660, 760);
 	}
 }

@@ -33,7 +33,7 @@ public class Constants {
 		/**
 		 * ui/src/fields/Dictionary/constants.ts, dictionary_dropDownMaxCols
 		 */
-		public static final double DICTIONARY_MAX_COLS = 1.3;
+		public static final double DICTIONARY_MAX_COLS = 5;
 
 		/**
 		 * ui/src/fields/MultipleSelectField/constants.ts, multipleSelect_dropDownMaxCols

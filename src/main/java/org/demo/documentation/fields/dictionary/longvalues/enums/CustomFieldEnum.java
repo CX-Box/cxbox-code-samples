@@ -11,6 +11,7 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 public enum CustomFieldEnum {
+	DISPUTE("Delivery is suspended until the parties agree on the terms of the supplementary agreement and the client confirms the new delivery schedule in writing"),
 	POSTPONED("Client asked to postpone the delivery until the end of the next quarter"),
 	UNSIGNED("Documents are not signed by the authorized person of the counterparty"),
 	UNCONFIRMED("Payment is not confirmed by the bank"),

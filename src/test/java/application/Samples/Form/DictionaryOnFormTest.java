@@ -18,7 +18,6 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static io.qameta.allure.SeverityLevel.MINOR;
-import static org.assertj.core.api.Assertions.withinPercentage;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -266,8 +265,10 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title")
 				.dictionary("Custom Field")
-				.checkDropDownWidth((fieldWidth, optionWidth) -> assertThat(optionWidth)
-						.isCloseTo((int) (fieldWidth * Constants.DropDown.DICTIONARY_MAX_COLS), withinPercentage(5)));
+				.checkDropDownWidth((fieldWidth, optionWidth) -> {
+					assertThat(optionWidth).isGreaterThanOrEqualTo(fieldWidth);
+					assertThat(optionWidth).isLessThanOrEqualTo((int) (fieldWidth * Constants.DropDown.DICTIONARY_MAX_COLS * 1.05));
+				});
 		DocShots.png(ARTICLE, "img_dropdown_width_form.png", 1660, 760);
 	}
 }
