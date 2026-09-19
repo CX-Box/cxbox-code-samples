@@ -19,6 +19,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
+import io.qameta.allure.Allure;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
 import java.io.File;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -244,6 +246,27 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 					.texts();
 			StepReport.value(names);
 			return names;
+		});
+	}
+
+	/**
+	 * Checks whether the widget shows the action button (top level actions only). Like the click, it waits for the
+	 * buttons of the widget: they are shown with its row meta. A widget without any button gives false after the timeout.
+	 */
+	public W checkExist(Consumer<Boolean> exist) {
+		if (parent != null) {
+			throw new UnsupportedOperationException("checkExist supports top level actions only");
+		}
+		return Allure.step("Checking the action \"" + name + "\" for existence", () -> {
+			var buttons = buttons();
+			try {
+				buttons.shouldHave(CollectionCondition.sizeGreaterThan(0), widget.getExpectations().getTimeout());
+			} catch (AssertionError e) {
+				exist.accept(false);
+				return widget;
+			}
+			exist.accept(buttons.asFixedIterable().stream().anyMatch(this.condition));
+			return widget;
 		});
 	}
 
