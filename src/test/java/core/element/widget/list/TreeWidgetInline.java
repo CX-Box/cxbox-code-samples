@@ -2,12 +2,16 @@ package core.element.widget.list;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import core.common.Identifier;
+import core.element.widget.action.PageRequests;
 import core.element.widget.list.rows.RowsInline;
 import core.element.widget.list.rows.row.RowInline;
 import core.element.widget.tree.TreeNavigation;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
+
+import java.time.Duration;
 
 /**
  * Tree widget: a List-like widget whose {@link #rows()} are the root rows, each row owning its child rows.
@@ -50,6 +54,28 @@ public abstract class TreeWidgetInline<
 	public SELF waitLoaded() {
 		TreeNavigation.waitLoaded(element(), getExpectations());
 		return self();
+	}
+
+	/** The found rows of a tree come page by page: waits for every page as well. */
+	@Override
+	public SELF fullTextSearch(String text) {
+		super.fullTextSearch(text);
+		return waitLoaded();
+	}
+
+	/**
+	 * Clearing the search sends a request with the other filters. When the search is the last filter, the tree shows
+	 * the loaded rows without a request and the filter panel is gone.
+	 * TODO CXBOX-1388: clearing the last filter sends a request too, then remove the check of the filter panel.
+	 */
+	@Override
+	protected void waitFullTextSearchApplied(boolean cleared, long sentBefore, Duration timeout) {
+		if (!cleared) {
+			super.waitFullTextSearchApplied(false, sentBefore, timeout);
+			return;
+		}
+		Selenide.Wait().withTimeout(timeout).until(driver ->
+				PageRequests.sent() > sentBefore || !element().$(TreeNavigation.FILTER_SHOWN).exists());
 	}
 
 	/** Waits until the filter panel shows the given number of found rows. */
