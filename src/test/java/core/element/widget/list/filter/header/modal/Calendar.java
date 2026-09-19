@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 
 import static com.codeborne.selenide.Selenide.$;
 import static core.element.widget.AbstractWidget.logTime;
+import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
 
 @Slf4j
 public class Calendar {
@@ -255,8 +256,12 @@ public class Calendar {
 						if (!isExist) {
 							$("div[class*='TimeRangePicker__container']").$$("span[class='ant-time-picker']").get(i).click();
 						}
+						// Ok in Start time opens an empty End time: wait for the panel of this step to close, not for all panels
+						var panel = $("div[class*='ant-time-picker-panel']")
+								.shouldBe(Condition.exist, expectationPattern.getTimeout())
+								.getWrappedElement();
 						setTimeField(val, true);
-						$("div[class*='ant-time-picker-panel']").is(Condition.not(Condition.exist), expectationPattern.getTimeout());
+						Selenide.Wait().withTimeout(expectationPattern.getTimeout()).until(stalenessOf(panel));
 					});
 			value.forEach(v -> {
 
