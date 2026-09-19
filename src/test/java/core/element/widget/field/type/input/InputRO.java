@@ -71,7 +71,7 @@ public class InputRO<W extends AbstractWidget<ExpectationPattern, W>> extends In
 			logTime(step);
 			String oldUrl = WebDriverRunner.url();
 			element().$(valueTag()).getWrappedElement().findElement(By.cssSelector("span:has(a)")).click();
-			Wait().until(webDriver -> !webDriver.getCurrentUrl().contains(oldUrl));
+			Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(oldUrl));
 			widget().getExpectations().getContextMenu();
 			$x("//body").exists();
 			consumer.accept(WebDriverRunner.url());
