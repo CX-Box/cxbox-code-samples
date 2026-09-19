@@ -26,6 +26,25 @@ public class Env {
 		return "true".equalsIgnoreCase(System.getenv("CXBOX_LOGGER"));
 	}
 
+	/**
+	 * Admin account of the OIDC provider (Keycloak) for the authorization tests: what docker-compose-test.yml passes to Keycloak
+	 */
+	public static String keycloakAdminUser() {
+		return required("KEYCLOAK_ADMIN_USER");
+	}
+
+	public static String keycloakAdminPassword() {
+		return required("KEYCLOAK_ADMIN_PASSWORD");
+	}
+
+	private static String required(String name) {
+		var value = System.getenv(name);
+		if (value == null || value.isBlank()) {
+			throw new IllegalStateException(name + " is not set (the admin account of the OIDC provider, see docker-compose-test.yml)");
+		}
+		return value;
+	}
+
 	public static Duration timeout() {
 		var timeout = System.getenv("TIMEOUT");
 
