@@ -96,7 +96,7 @@ public class ListInput<
 		element().$(valueTag()).shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$("span:has(a)")
 				.click();
-		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().contains(url));
+		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(url));
 		widget().getExpectations().getContextMenu();
 		$x("//body").exists();
 		consumer.accept(WebDriverRunner.url());

@@ -1,11 +1,13 @@
 package core.element.widget.list;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.openqa.selenium.TimeoutException;
 
 import java.util.function.Consumer;
 
@@ -14,6 +16,8 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	private static final String LOADING_SPINNER = ".ant-spin-spinning";
 
 	private static final String ACTIVE_PAGE = "ant-pagination-item-active";
+
+	private static final String TOTAL = "data-test-widget-list-pagination-total";
 
 	@Getter(value = AccessLevel.PROTECTED)
 	private final W widget;
@@ -25,6 +29,23 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	@Override
 	public ListPagination<W> checkPageCount(Consumer<Integer> pageCountChecker) {
 		pageCountChecker.accept(getPages());
+		return this;
+	}
+
+	@Override
+	public ListPagination<W> checkTotal(Consumer<Integer> totalChecker) {
+		try {
+			Selenide.Wait()
+					.withTimeout(getWidget().getExpectations().getTimeout())
+					.ignoring(AssertionError.class)
+					.until(driver -> {
+						totalChecker.accept(getTotal());
+						return true;
+					});
+		} catch (TimeoutException e) {
+			// the last try gives the test the message of its own check
+			totalChecker.accept(getTotal());
+		}
 		return this;
 	}
 
@@ -87,6 +108,13 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 				.shouldNot(Condition.exist, getWidget().getExpectations().getOverTimeout());
 	}
 
+
+	/** Reads without a wait: the wait is the repeated check of {@link #checkTotal}. */
+	private Integer getTotal() {
+		SelenideElement total = getWidget().element().$("[" + TOTAL + "]");
+		String value = total.exists() ? total.getAttribute(TOTAL) : null;
+		return value != null && value.matches("\\d+") ? Integer.valueOf(value) : null;
+	}
 
 	private int getPages() {
 		return this.getWidget().element()
