@@ -7,7 +7,11 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
+import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import static org.cxbox.api.data.dao.SpecificationUtils.and;
 
 @SuppressWarnings({"java:S1170", "EmptyMethod"})
 @RequiredArgsConstructor
@@ -17,6 +21,13 @@ public class MyExample3138Service extends VersionAwareResponseService<MyExample3
 	private final MyEntity3138Repository repository;
 	@Getter(onMethod_ = @Override)
 	private final Class<MyExample3138Meta> meta = MyExample3138Meta.class;
+
+	@Override
+	protected Specification<MyEntity3138> getSpecification(BusinessComponent bc) {
+		var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
+		var specification = super.getSpecification(bc);
+		return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
+	}
 
 	@Override
 	protected CreateResult<MyExample3138DTO> doCreateEntity(MyEntity3138 entity, BusinessComponent bc) {
