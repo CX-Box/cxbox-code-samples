@@ -32,15 +32,24 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 	public abstract TypeWidget getType();
 
 	protected SelenideElement getWidgetElementByTitle(TypeWidget type, String title) {
-		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-title='" + title
-				+ "']")
+		return widgetByTitle(type, title)
 				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
 	}
 
 	protected SelenideElement getWidgetElementByName(TypeWidget type, String name) {
-		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-name='" + name
-				+ "']")
+		return widgetByName(type, name)
 				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
+	}
+
+	/** The widget without waiting for it: a widget hidden by its showCondition is not on the page. */
+	static SelenideElement widgetByTitle(TypeWidget type, String title) {
+		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-title='" + title
+				+ "']");
+	}
+
+	static SelenideElement widgetByName(TypeWidget type, String name) {
+		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-name='" + name
+				+ "']");
 	}
 
 
