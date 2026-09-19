@@ -1,5 +1,7 @@
 package core.element.widget;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.modal.ConfirmPopup;
@@ -7,6 +9,7 @@ import core.element.widget.modal.ErrorPopup;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
+import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,29 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 			log.error("Cannot find method for {} with identifier {}", getIdentifier().getName(), getIdentifier().getTypeIdentifier());
 			throw new UnsupportedOperationException("Cannot find method for " + getIdentifier().getName());
 		});
+	}
+
+	/**
+	 * Whether the widget is shown on the page: a widget hidden by its showCondition is not. The check is made when the
+	 * widgets of the page have no loading spinner.
+	 */
+	public boolean isVisible() {
+		return Allure.step("Getting the visibility of the widget " + textIdentifier, step -> {
+			logTime(step);
+			step.parameter("Widget title", textIdentifier);
+			Selenide.Wait().withTimeout(getExpectations().getOverTimeout()).until(driver ->
+					!Selenide.$("div[data-test='WIDGET'] .ant-spin-spinning, div[data-test='WIDGET'] [data-test-loading]").exists());
+			SelenideElement widget = getIdentifier().equals(PlatformIdentifier.NAME)
+					? widgetByName(getType(), textIdentifier)
+					: widgetByTitle(getType(), textIdentifier);
+			return widget.is(Condition.visible);
+		});
+	}
+
+	/** Passes the visibility of the widget ({@link #isVisible()}) to the check. */
+	public SELF checkVisible(Consumer<Boolean> checkVisible) {
+		checkVisible.accept(isVisible());
+		return widget();
 	}
 
 

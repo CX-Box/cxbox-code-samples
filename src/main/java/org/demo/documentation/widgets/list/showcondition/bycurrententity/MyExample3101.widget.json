@@ -1,18 +1,36 @@
 {
   "name": "MyExample3101",
   "title": "Show condition by current entity",
-  "type": "List",
+  "type": "Form",
   "bc": "myExampleBc3101",
   "fields": [
     {
-      "title": "Custom Field bc - myExampleBc3101",
+      "label": "Custom Field",
       "key": "customField",
       "type": "number"
     },
     {
-      "title": "customFieldShowCond, bc - myExampleBc3101",
+      "label": "Custom Field Show Condition",
       "key": "customFieldShowCond",
       "type": "input"
     }
-  ]
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 12
+            },
+            {
+              "fieldKey": "customFieldShowCond",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
