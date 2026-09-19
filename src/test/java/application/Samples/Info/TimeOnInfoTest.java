@@ -6,7 +6,6 @@ import application.custom.Position;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -77,17 +76,17 @@ public class TimeOnInfoTest extends BaseTestForSamples {
 				.checkPlaceholder(pl -> assertThat(pl).isNull());
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("A test to check the field for \"Read-only\"")
 	@Description("Info widgets are always read-only")
 	void readonly() {
-//        var info = PlatformApp.screen("Time readonly")
-//              .secondLevelView("Info")
-//              .info("Info title");
-//        info.time("Custom Field", "HH:mm:ss")
-//              .checkReadOnly(ro -> assertThat(ro).isFalse());
+		var info = PlatformApp
+				.screen("Time readonly")
+				.secondLevelView("Info")
+				.info("Info title");
+		info.time("Custom Field", "HH:mm:ss")
+				.checkReadOnly(ro -> assertThat(ro).isFalse());
 	}
 
 	@Test
