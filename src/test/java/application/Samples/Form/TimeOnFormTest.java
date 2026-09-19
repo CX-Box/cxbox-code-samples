@@ -35,17 +35,17 @@ public class TimeOnFormTest extends BaseTestForSamples {
 //        assertThatThrownBy(customField::setFiltration).isInstanceOf(UnsupportedOperationException.class);
 	}
 
-	@Disabled
 	@Test
 	@Tag("Positive")
 	@DisplayName("The DrillDown test")
-	@Description("Checking the url before the transition and after the transition/click on a special element")
+	@Description("DrillDown is not available for the Form widget")
 	void drillDown() {
-//        var form = PlatformApp.screen("Time drilldown")
-//              .secondLevelView("Form")
-//              .form("Form title");
-//        var customField = form.time("Custom Field", "HH:mm a");
-//        assertThatThrownBy(customField::drillDown).isInstanceOf(UnsupportedOperationException.class);
+		var form = PlatformApp
+				.screen("Time drilldown")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.time("Custom Field", "HH:mm:ss")
+				.checkDrillDownSupported(ds -> assertThat(ds).isFalse());
 	}
 
 	@Test
