@@ -21,6 +21,7 @@ import core.element.widget.field.type.pickList.PickList;
 import core.element.widget.field.type.pickTree.PickTree;
 import core.element.widget.field.type.multivalueTree.MultivalueTreeRO;
 import core.element.widget.field.type.radio.Radio;
+import core.element.widget.field.type.richtext.RichText;
 import core.element.widget.field.type.text.Text;
 import core.element.widget.field.type.time.Time;
 import core.element.widget.type.PlatformTypeWidgets;
@@ -98,6 +99,10 @@ public class PlatformInfoWidget extends PlatformWidget<PlatformInfoWidget> {
 
 	public Text<PlatformInfoWidget, ?> text(String title) {
 		return new Text<>(this, title);
+	}
+
+	public RichText<PlatformInfoWidget, ?> richText(String title) {
+		return new RichText<>(this, title);
 	}
 
 	public Time<PlatformInfoWidget, ?> time(String title, String format) {

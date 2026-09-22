@@ -5,6 +5,7 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
@@ -256,5 +257,22 @@ public class TextOnListTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Text basic").secondLevelView("List").listInline("List title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("The height of the field")
+	@Description("Two lists of the same record: with the default height and with maxRows 2.")
+	void height() {
+		var view = PlatformApp.screen("Text height")
+				.secondLevelView("List");
+		var byDefault = view.listInline("Default: minRows 1, maxRows 10");
+		byDefault.rows().row(0).text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(byDefault.element(), "widget/fields/field/text", "img_height_list_default.png", 1200, 800);
+		var widget = view.listInline("maxRows 2, editMinRows 3, editMaxRows 6");
+		widget.rows().row(0).text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(widget.element(), "widget/fields/field/text", "img_height_list.png", 1200, 800);
 	}
 }

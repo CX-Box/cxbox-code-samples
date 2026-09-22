@@ -3,6 +3,7 @@ package application.Samples.Info;
 import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
@@ -90,5 +91,22 @@ public class TextOnInfoTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Text basic").secondLevelView("Info").info("Info title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("The height of the field")
+	@Description("Two Info widgets of the same record: with the default height and with minRows 2, maxRows 4.")
+	void height() {
+		var view = PlatformApp.screen("Text height")
+				.secondLevelView("Info");
+		var byDefault = view.info("Default: minRows 1, maxRows 10");
+		byDefault.text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(byDefault.element(), "widget/fields/field/text", "img_height_info_default.png", 1200, 800);
+		var widget = view.info("minRows 2, maxRows 4");
+		widget.text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(widget.element(), "widget/fields/field/text", "img_height_info.png", 1200, 800);
 	}
 }
