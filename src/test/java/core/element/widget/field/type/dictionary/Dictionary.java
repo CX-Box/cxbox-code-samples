@@ -32,7 +32,8 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		ValueCheckable<W, String, SELF>,
 		DrillDownSupportCheckable<W, String, Boolean, SELF>,
 		RequiredCheckable<W, String, String, SELF>,
-		MaxInputCheckable<W, String, Integer, SELF> {
+		MaxInputCheckable<W, String, Integer, SELF>,
+		DropDownWidthCheckable<W, String, SELF> {
 
 	protected final String MENU_OPTIONS ="div.ant-select-dropdown.ant-select-dropdown--single" +
 			"[class*='ant-select-dropdown-placement-']";
@@ -103,6 +104,11 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	public SELF checkOptions(Consumer<List<String>> checkOptions) {
 		checkOptions.accept(getOptions());
 		return (SELF) this;
+	}
+
+	@Override
+	public SelenideElement dropDownOption() {
+		return $(MENU_OPTIONS).$(By.tagName("li"));
 	}
 
 	private SelenideElement getOptionDictionary(String value) {

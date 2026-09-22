@@ -4,6 +4,7 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -25,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Samples")
 @Tag("List")
 public class MultipleSelectOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multipleSelect";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -297,5 +300,22 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultipleSelect basic").secondLevelView("List").listInline("List title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test for checking the width of the drop-down list with long values")
+	@Description("The test gets the field width and the option width and checks that the list is no wider than the limit")
+	void dropDownWidth() {
+		var list = PlatformApp.screen("MultipleSelect long values")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.multipleSelect("Custom Field")
+				.checkDropDownWidth((fieldWidth, optionWidth) -> {
+					assertThat(optionWidth).isGreaterThanOrEqualTo(fieldWidth);
+					assertThat(optionWidth).isLessThanOrEqualTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS * 1.05));
+				});
+		DocShots.png(ARTICLE, "img_dropdown_width_list.png", 1660, 760);
 	}
 }
