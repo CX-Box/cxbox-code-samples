@@ -15,7 +15,6 @@ import core.element.widget.list.realization.inline.list.PlatformListWidgetInline
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineForm;
 import core.element.widget.statblock.StatsBlockWidget;
-import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
 
 import java.util.function.Consumer;
@@ -108,11 +107,11 @@ public class PlatformView extends AbstractView<PlatformView> {
 	}
 
 	public StatsBlockWidget statBlock(String title) {
-		return new StatsBlockWidget(new CxBoxExpectations(), title, PlatformIdentifier.TITLE);
+		return new StatsBlockWidget(PlatformIdentifier.TITLE, title);
 	}
 
 	public StatsBlockWidget statBlockByName(String name) {
-		return new StatsBlockWidget(new CxBoxExpectations(), name, PlatformIdentifier.NAME);
+		return new StatsBlockWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {

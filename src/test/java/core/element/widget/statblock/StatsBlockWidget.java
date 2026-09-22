@@ -3,54 +3,35 @@ package core.element.widget.statblock;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
-import core.element.widget.AbstractWidget;
-import core.element.widget.PlatformIdentifier;
+import core.element.widget.PlatformWidget;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
 import core.expectation.ExpectationPattern;
-import io.qameta.allure.Allure;
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.StaleElementReferenceException;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-@Getter(AccessLevel.PROTECTED)
 @Slf4j
-public class StatsBlockWidget extends AbstractWidget<ExpectationPattern, StatsBlockWidget> {
+public class StatsBlockWidget extends PlatformWidget<StatsBlockWidget> {
 
-	private final String textIdentifier;
+	public StatsBlockWidget(Identifier identifier, String textIdentifier) {
+		super(identifier, textIdentifier);
+	}
 
-	private final Identifier identifier;
-
+	/**
+	 * @deprecated the widget uses the same expectations as the other widgets, use
+	 * {@link #StatsBlockWidget(Identifier, String)}
+	 */
+	@Deprecated
 	public StatsBlockWidget(ExpectationPattern expectations, String textIdentifier, Identifier identifier) {
-		super(expectations);
-		this.textIdentifier = textIdentifier;
-		this.identifier = identifier;
+		this(identifier, textIdentifier);
 	}
 
 	@Override
 	public TypeWidget getType() {
 		return PlatformTypeWidgets.STATS_BLOCK;
-	}
-
-	@Override
-	public SelenideElement element() throws StaleElementReferenceException {
-		return Allure.step("Getting  Widget by heading (Title) " + textIdentifier, step -> {
-			logTime(step);
-			step.parameter("Widget title", textIdentifier);
-			if (getIdentifier().equals(PlatformIdentifier.NAME)) {
-				return getWidgetElementByName(getType(), textIdentifier);
-
-			} else if (getIdentifier().equals(PlatformIdentifier.TITLE)) {
-				return getWidgetElementByTitle(getType(), textIdentifier);
-			}
-			log.error("Cannot find method for {} with identifier {}", getIdentifier().getName(), getIdentifier().getTypeIdentifier());
-			throw new UnsupportedOperationException("Cannot find method for " + getIdentifier().getName());
-		});
 	}
 
 
@@ -88,10 +69,12 @@ public class StatsBlockWidget extends AbstractWidget<ExpectationPattern, StatsBl
 		e.scrollTo();
 		ElementsCollection blockValues = e.$$("div[class*='StatsBlock__itemContent'] > div ");
 		log.info("Found {} stats block values", blockValues.size());
+		// the icon is optional: a block without it has no icon element
+		SelenideElement icon = e.$("i[class*='StatsBlock__itemIcon']");
 		return new StatsBlock(
 				blockValues.get(0).text(),
 				blockValues.get(1).text(),
-				e.$("i[class*='StatsBlock__itemIcon']").getAttribute("aria-label"),
+				icon.exists() ? icon.getAttribute("aria-label") : null,
 				e);
 	}
 }
