@@ -5,6 +5,7 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -226,5 +227,22 @@ public class TextOnFormTest extends BaseTestForSamples {
 	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Text basic").secondLevelView("Form").form("Form title").element()));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("The height of the field")
+	@Description("Two forms of the same record: with the default height and with editMinRows 3, editMaxRows 6.")
+	void height() {
+		var view = PlatformApp.screen("Text height")
+				.secondLevelView("Form");
+		var byDefault = view.form("Default: editMinRows 5, editMaxRows 10");
+		byDefault.text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(byDefault.element(), "widget/fields/field/text", "img_height_form_default.png", 1200, 800);
+		var widget = view.form("editMinRows 3, editMaxRows 6");
+		widget.text("Custom Field")
+				.checkValue(value -> assertThat(value).startsWith("Meeting notes"));
+		DocShots.png(widget.element(), "widget/fields/field/text", "img_height_form.png", 1200, 800);
 	}
 }

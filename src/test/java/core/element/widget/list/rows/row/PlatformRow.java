@@ -21,6 +21,7 @@ import core.element.widget.field.type.pickList.ListPickList;
 import core.element.widget.field.type.pickTree.ListPickTree;
 import core.element.widget.field.type.multivalueTree.ListMultivalueTree;
 import core.element.widget.field.type.radio.ListRadio;
+import core.element.widget.field.type.richtext.ListRichText;
 import core.element.widget.field.type.suggestionPickList.ListSuggestionPickList;
 import core.element.widget.field.type.text.ListText;
 import core.element.widget.field.type.time.ListTime;
@@ -242,6 +243,10 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 
 	public ListSuggestionPickList<WIDGET, ROWS, SELF> suggestionPickListByName(String name) {
 		return new ListSuggestionPickList<>(widget(), name, self());
+	}
+
+	public ListRichText<WIDGET, ROWS, SELF> richText(String title) {
+		return new ListRichText<>(widget(), title, self());
 	}
 
 	public ListText<WIDGET, ROWS, SELF> text(String title) {

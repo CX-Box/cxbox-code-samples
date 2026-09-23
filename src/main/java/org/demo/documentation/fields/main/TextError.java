@@ -14,4 +14,5 @@ public class TextError {
 	public static final String LESS_20000 = "The field cannot be less than 20 000.";
 	public static final String LESS_5000 = "The field cannot be less than 5 000.00.";
 	public static final String LESS_SIZE = "The file cannot be more 9 KB";
+	public static final String MAX_50_CHARACTERS = "The field can contain no more than 50 characters, formatting marks included.";
 }

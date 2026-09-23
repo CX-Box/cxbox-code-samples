@@ -12,7 +12,9 @@ import core.element.widget.PlatformIdentifier;
 import core.element.widget.field.AbstractFieldImpl;
 import core.element.widget.field.FieldType;
 import core.element.widget.field.PlatformFieldType;
+import core.element.widget.field.attribute.checkable.PlaceholderCheckable;
 import core.element.widget.field.attribute.checkable.ReadOnlyCheckable;
+import core.element.widget.field.attribute.checkable.RequiredCheckable;
 import core.element.widget.field.attribute.checkable.ValueCheckable;
 import core.element.widget.field.attribute.custom.Clear;
 import core.expectation.ExpectationPattern;
@@ -26,7 +28,8 @@ import org.openqa.selenium.StaleElementReferenceException;
  *
  * <p>Like every field: {@link #setValue} puts a value in (the way the application does when a value
  * comes from the database), {@link #getValue} reads the markdown the field stores, {@link #checkValue},
- * {@link #clear}, {@link #checkReadOnly}.
+ * {@link #clear}, {@link #checkReadOnly}, {@link #checkPlaceholder}, {@link #checkRequired}, and
+ * {@link #checkTruncated} for a value cut to the field height in view mode.
  *
  * <p>Special for RichText - what the user does: {@link #userInput} types text and formats it with the
  * field's own methods, {@code field.userInput("abc", f -> f.bold(0, 3)).getValue()} is {@code **abc**}.
@@ -41,7 +44,8 @@ import org.openqa.selenium.StaleElementReferenceException;
  */
 public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF extends RichText<W, SELF>>
 		extends AbstractFieldImpl<ExpectationPattern, W, String, SELF>
-		implements ValueCheckable<W, String, SELF>, Clear<W, String, SELF>, ReadOnlyCheckable<W, String, Boolean, SELF> {
+		implements ValueCheckable<W, String, SELF>, Clear<W, String, SELF>, ReadOnlyCheckable<W, String, Boolean, SELF>,
+		PlaceholderCheckable<W, String, String, SELF>, RequiredCheckable<W, String, String, SELF> {
 
 	private SelenideElement resolved;
 
@@ -107,11 +111,15 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		return asSelf();
 	}
 
-	/** Empties the editor: one empty paragraph, no formatting left behind. */
+	/**
+	 * Empties the field the way the user does (select all, delete) and waits until the application has the
+	 * empty value, so a Save right after it sends the empty value.
+	 */
 	@Override
 	public SELF clear() {
 		Allure.step("Clearing the field", () -> onField(field -> {
-			RichTextCanvas.load(field, "");
+			RichTextCanvas.clearAsUser(field);
+			Selenide.Wait().until(driver -> RichTextCanvas.applied(field));
 			return field;
 		}));
 		return asSelf();
@@ -126,6 +134,40 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		});
 	}
 
+	/**
+	 * The placeholder the user sees in the empty visual editor, or null. The editor has no input with a
+	 * placeholder attribute: it draws the text before its empty first paragraph, so the check reads what is
+	 * drawn there.
+	 */
+	@Override
+	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
+		return Allure.step("Getting the Placeholder value", step -> {
+			logTime(step);
+			expectedPlaceholder.accept(onField(field -> {
+				SelenideElement empty = field.$(".ProseMirror p.is-editor-empty");
+				if (!empty.exists()) {
+					return null;
+				}
+				String drawn = Selenide.executeJavaScript("return getComputedStyle(arguments[0], '::before').content", empty);
+				String text = drawn == null || "none".equals(drawn) ? "" : drawn.replaceAll("^\"|\"$", "");
+				return text.isEmpty() ? null : text;
+			}));
+			return asSelf();
+		});
+	}
+
+	/**
+	 * Whether the value in view mode is cut to the field height ({@code maxRows}): the field then shows
+	 * "..." that opens the full value.
+	 */
+	public SELF checkTruncated(Consumer<Boolean> expectedTruncated) {
+		return Allure.step("Checking that the value is cut to the field height", step -> {
+			logTime(step);
+			expectedTruncated.accept(onField(field -> field.$("[class*='moreButton']").exists()));
+			return asSelf();
+		});
+	}
+
 	// ---- what the user does ---------------------------------------------------------------------
 
 	/**
@@ -134,7 +176,11 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	 * 0-6. Read the result with {@link #getValue}.
 	 */
 	public SELF userInput(String text, Consumer<? super SELF> actions) {
-		clear();
+		// the empty editor is not passed to the application: the typed text follows at once
+		onField(field -> {
+			RichTextCanvas.load(field, "");
+			return field;
+		});
 		type(text);
 		actions.accept(selectAll());
 		return asSelf();
