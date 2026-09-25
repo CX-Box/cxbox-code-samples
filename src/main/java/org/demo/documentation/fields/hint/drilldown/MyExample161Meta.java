@@ -2,6 +2,7 @@ package org.demo.documentation.fields.hint.drilldown;
 
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
+import org.cxbox.core.dto.DrillDownType;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
@@ -19,6 +20,11 @@ public class MyExample161Meta extends FieldMetaBuilder<MyExample161DTO> {
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample161DTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample161DTO_.customField);
+		fields.setDrilldown(
+				MyExample161DTO_.customField,
+				DrillDownType.INNER,
+				"/screen/myexample161/view/myexample161form/" + PlatformMyExample161Controller.myExampleBc161 + "/" + id
+		);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
