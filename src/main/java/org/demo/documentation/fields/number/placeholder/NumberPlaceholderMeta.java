@@ -26,6 +26,7 @@ public class NumberPlaceholderMeta extends FieldMetaBuilder<NumberPlaceholderDTO
 				NumberPlaceholderDTO_.customField
 		);
 		fields.setPlaceholder(NumberPlaceholderDTO_.customField, "123456");
+		fields.setPlaceholder(NumberPlaceholderDTO_.customFieldRO, "123456");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

@@ -4,8 +4,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("List")
+@Feature(MultipleSelectOnListTest.ARTICLE)
 public class MultipleSelectOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multipleSelect";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -66,6 +71,20 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multipleSelect("Custom Field")
+				.checkPlaceholder(pt -> assertThat(pt).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("MultipleSelect placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.multipleSelect("Custom Field RO")
 				.checkPlaceholder(pt -> assertThat(pt).isEqualTo("Placeholder text"));
 	}
 

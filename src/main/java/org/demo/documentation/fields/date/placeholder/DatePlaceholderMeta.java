@@ -22,6 +22,7 @@ public class DatePlaceholderMeta extends FieldMetaBuilder<DatePlaceholderDTO> {
 				DatePlaceholderDTO_.customField
 		);
 		fields.setPlaceholder(DatePlaceholderDTO_.customField, "29.05.2023");
+		fields.setPlaceholder(DatePlaceholderDTO_.customFieldRO, "29.05.2023");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

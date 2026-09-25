@@ -20,4 +20,10 @@ public class MyEntity100 extends BaseEntity {
 	@Column
 	private String customFieldId;
 
+	@Column
+	private String customFieldRO;
+
+	@Column
+	private String customFieldROId;
+
 }

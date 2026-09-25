@@ -23,4 +23,11 @@ public class MyEntity3319 extends BaseEntity {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<MyEntity3319Multivalue> customFieldList = new ArrayList<>();
 
+	@JoinTable(name = "MyEntity3319_MyEntity3319Multivalue_RO",
+			joinColumns = @JoinColumn(name = "MyEntity3319_id"),
+			inverseJoinColumns = @JoinColumn(name = "MyEntity3319Multivalue_id")
+	)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<MyEntity3319Multivalue> customFieldROList = new ArrayList<>();
+
 }

@@ -7,6 +7,7 @@ import core.config.Constants;
 import core.element.PlatformApp;
 import core.util.DocShots;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,10 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Feature(TextOnListTest.ARTICLE)
 public class TextOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/text";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -48,6 +52,20 @@ public class TextOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.text("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("Text placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.text("Custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
 	}
 

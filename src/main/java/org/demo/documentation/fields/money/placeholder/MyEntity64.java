@@ -16,4 +16,7 @@ public class MyEntity64 extends BaseEntity {
 	@Column
 	private Double customField;
 
+	@Column
+	private Double customFieldRO;
+
 }

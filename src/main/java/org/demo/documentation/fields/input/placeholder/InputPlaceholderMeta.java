@@ -24,6 +24,7 @@ public class InputPlaceholderMeta extends FieldMetaBuilder<InputPlaceholderDTO> 
 				InputPlaceholderDTO_.customField
 		);
 		fields.setPlaceholder(InputPlaceholderDTO_.customField, "Placeholder text");
+		fields.setPlaceholder(InputPlaceholderDTO_.customFieldRO, "Placeholder text");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

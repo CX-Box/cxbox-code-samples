@@ -5,8 +5,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Samples")
 @Tag("List")
 @Slf4j
+@Feature(DateTimeWithSecondsOnListTest.ARTICLE)
 public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/dateTimeWithSeconds";
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
@@ -45,6 +50,21 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.editRow()
 				.dateTimeWithSec("custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("29.05.2023 11:25:58"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("DateTimeWithSeconds placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().row(0);
+		row.editRow()
+				.dateTimeWithSec("custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("29.05.2023 11:25:58"));
 	}
 

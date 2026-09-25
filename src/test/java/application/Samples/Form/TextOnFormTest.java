@@ -8,6 +8,7 @@ import core.element.PlatformApp;
 import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -21,9 +22,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Form. Checking the basic functions for the Text in the widget Form")
 @Epic("application/Samples")
+@Feature(TextOnFormTest.ARTICLE)
 @Tag("application/Samples")
 @Tag("Form")
 public class TextOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/text";
 
 	@Disabled
 	@Test
@@ -75,6 +79,19 @@ public class TextOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		form.text("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+		DocShots.png(form.element(), ARTICLE, "img_plchldr_form.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var form = PlatformApp.screen("Text placeholder")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.text("Custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
 	}
 

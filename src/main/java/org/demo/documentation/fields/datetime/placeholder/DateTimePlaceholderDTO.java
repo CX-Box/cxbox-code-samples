@@ -17,9 +17,12 @@ public class DateTimePlaceholderDTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
 	private LocalDateTime customField;
 
+	private LocalDateTime customFieldRO;
+
 	public DateTimePlaceholderDTO(DateTimePlaceholderEntity entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

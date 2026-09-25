@@ -20,12 +20,22 @@ public class MyExample3287DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldEntity.id", provider = LongValueProvider.class)
 	private Long customFieldId;
 
+	private String customFieldRO;
+
+	private Long customFieldROId;
+
 	public MyExample3287DTO(MyEntity3287 entity) {
 		this.id = entity.getId().toString();
 		this.customFieldId = Optional.ofNullable(entity.getCustomFieldEntity())
 				.map(e -> e.getId())
 				.orElse(null);
 		this.customField = Optional.ofNullable(entity.getCustomFieldEntity())
+				.map(e -> e.getCustomField())
+				.orElse(null);
+		this.customFieldROId = Optional.ofNullable(entity.getCustomFieldROEntity())
+				.map(e -> e.getId())
+				.orElse(null);
+		this.customFieldRO = Optional.ofNullable(entity.getCustomFieldROEntity())
 				.map(e -> e.getCustomField())
 				.orElse(null);
 	}

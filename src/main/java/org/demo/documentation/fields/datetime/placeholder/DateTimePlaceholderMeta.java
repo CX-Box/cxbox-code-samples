@@ -23,6 +23,7 @@ public class DateTimePlaceholderMeta extends FieldMetaBuilder<DateTimePlaceholde
 				DateTimePlaceholderDTO_.customField
 		);
 		fields.setPlaceholder(DateTimePlaceholderDTO_.customField, "29.05.2023 11:25");
+		fields.setPlaceholder(DateTimePlaceholderDTO_.customFieldRO, "29.05.2023 11:25");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

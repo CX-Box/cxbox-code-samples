@@ -21,6 +21,7 @@ public class MyExample64Meta extends FieldMetaBuilder<MyExample64DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample64DTO_.customField);
 		fields.setPlaceholder(MyExample64DTO_.customField, "100000.00");
+		fields.setPlaceholder(MyExample64DTO_.customFieldRO, "100000.00");
 	}
 	// --8<-- [end:documentation]
 

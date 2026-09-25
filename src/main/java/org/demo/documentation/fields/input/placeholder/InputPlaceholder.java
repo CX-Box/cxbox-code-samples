@@ -17,4 +17,6 @@ public class InputPlaceholder extends BaseEntity {
 
 	private String customField;
 
+	private String customFieldRO;
+
 }
