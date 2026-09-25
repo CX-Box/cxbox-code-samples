@@ -1,0 +1,38 @@
+{
+  "name": "MyExample4246Line2D",
+  "title": "Sales sum per month and product",
+  "type": "Line2D",
+  "bc": "myExampleBc4246",
+  "fields": [
+    {
+      "title": "Month",
+      "key": "month",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "sum",
+      "type": "number"
+    },
+    {
+      "title": "Product",
+      "key": "productName",
+      "type": "input"
+    },
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart2D": {
+      "xValueFieldKey": "month",
+      "yValueFieldKey": "sum",
+      "groupFieldKey": "productName",
+      "descriptionFieldKey": [
+        "description"
+      ]
+    }
+  }
+}
