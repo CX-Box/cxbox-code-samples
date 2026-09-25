@@ -238,7 +238,7 @@ public abstract class BaseTestForSamples {
 		 */
 		ROTATION_SAFE("rotationSafe"),
 		/**
-		 * {@code UserManager} of oidc-client-ts as before 3.0.2
+		 * Plain {@code UserManager} of oidc-client-ts: the fallback
 		 */
 		ORIGINAL("original");
 
@@ -263,7 +263,7 @@ public abstract class BaseTestForSamples {
 		 */
 		OIDC_RESPONSE("oidcResponse"),
 		/**
-		 * By our parameter {@code sign_in_callback} of {@code redirect_uri}, as before 3.0.2
+		 * By our parameter {@code sign_in_callback} of {@code redirect_uri}: the fallback
 		 */
 		SIGN_IN_CALLBACK_PARAM("signInCallbackParam");
 

@@ -33,7 +33,7 @@ public class PlatformApp {
 	}
 
 	/**
-	 * The "Sign in again?" popup shown on 401 (session expired) and 403 (insufficient permissions)
+	 * The popup shown on 401 ("Session has expired") and 403 ("Insufficient permissions"), with "Sign in again" and "Sign out"
 	 */
 	public static SignInAgainPopup signInAgainPopup() {
 		return new SignInAgainPopup();
