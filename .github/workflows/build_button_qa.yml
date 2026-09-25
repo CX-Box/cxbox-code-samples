@@ -36,6 +36,9 @@ on:
 
 env:
   APP_URL: https://code-samples.cxbox.org/ui/#/
+  # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
+  KEYCLOAK_ADMIN_USER: cxbox_admin
+  KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
   CXBOX_RECORDER:  ${{ github.event.inputs.video_tags == 'true' && 'true' || 'false' }}
   CXBOX_LOGGER:  ${{ github.event.inputs.log_tags == 'true' && 'true' || 'false' }}
 
