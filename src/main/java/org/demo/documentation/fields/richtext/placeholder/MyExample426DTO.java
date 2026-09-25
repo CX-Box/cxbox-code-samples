@@ -14,9 +14,12 @@ public class MyExample426DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField")
 	private String customField;
 
+	private String customFieldRO;
+
 	public MyExample426DTO(MyEntity426 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

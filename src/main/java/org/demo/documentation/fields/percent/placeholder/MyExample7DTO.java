@@ -15,9 +15,12 @@ public class MyExample7DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
 	private Long customField;
 
+	private Long customFieldRO;
+
 	public MyExample7DTO(MyEntity7 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

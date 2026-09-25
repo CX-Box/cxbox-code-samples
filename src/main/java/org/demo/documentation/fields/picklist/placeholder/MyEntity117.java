@@ -18,4 +18,8 @@ public class MyEntity117 extends BaseEntity {
 	@ManyToOne
 	private MyEntity126 customFieldEntity;
 
+	@JoinColumn(name = "CUSTOM_FIELD_RO_ID")
+	@ManyToOne
+	private MyEntity126 customFieldROEntity;
+
 }

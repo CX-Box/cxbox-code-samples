@@ -4,8 +4,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -26,7 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("List. Checking the basic functions for the Time")
 @Epic("application/Samples")
 @Tag("application/Samples")
+@Feature(TimeOnListTest.ARTICLE)
 public class TimeOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/time";
 
 	@Test
 	@Severity(MINOR)
@@ -58,6 +63,20 @@ public class TimeOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.time("Custom Field", "HH:mm:ss")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("11:25:58"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("Time placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.time("Custom Field RO", "HH:mm:ss")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("11:25:58"));
 	}
 

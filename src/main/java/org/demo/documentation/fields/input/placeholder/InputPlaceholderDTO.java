@@ -12,9 +12,12 @@ public class InputPlaceholderDTO extends DataResponseDTO {
 
 	private String customField;
 
+	private String customFieldRO;
+
 	public InputPlaceholderDTO(InputPlaceholder entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

@@ -19,9 +19,13 @@ public class MyExample257DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", multiFieldKey = EnumValueProvider.class, provider = MultiFieldValueProvider.class)
 	private MultivalueField customField;
 
+	private MultivalueField customFieldRO;
+
 	public MyExample257DTO(MyEntity257 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField().stream()
+				.collect(MultivalueField.toMultivalueField(Enum::name, CustomFieldEnum::getValue));
+		this.customFieldRO = entity.getCustomFieldRO().stream()
 				.collect(MultivalueField.toMultivalueField(Enum::name, CustomFieldEnum::getValue));
 	}
 

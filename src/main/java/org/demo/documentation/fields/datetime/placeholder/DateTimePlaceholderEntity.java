@@ -21,4 +21,7 @@ public class DateTimePlaceholderEntity extends BaseEntity {
 	@Column
 	private LocalDateTime customField;
 
+	@Column
+	private LocalDateTime customFieldRO;
+
 }

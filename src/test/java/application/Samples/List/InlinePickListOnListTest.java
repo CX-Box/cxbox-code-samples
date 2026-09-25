@@ -6,8 +6,10 @@ import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.inlinePickList.InlinePickList;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -27,18 +29,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("List")
+@Feature(InlinePickListOnListTest.ARTICLE)
 public class InlinePickListOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/inlinePickList";
 
 	@Test
 	@Tag("Positive")
 	@DisplayName("Test for getting the Placeholder value")
 	@Description("The test gets the value from the placeholder attribute and returns it in String format")
 	void placeholder() {
+		var list = PlatformApp.screen("InlinePickList placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		list.rows().clickRow(0)
+				.inlinePickList("Custom Field")
+				.checkPlaceholder(placeholder -> assertThat(placeholder).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
 		PlatformApp.screen("InlinePickList placeholder")
 				.secondLevelView("List")
 				.listInline("List title")
 				.rows().clickRow(0)
-				.inlinePickList("Custom Field")
+				.inlinePickList("Custom Field RO")
 				.checkPlaceholder(placeholder -> assertThat(placeholder).isEqualTo("Placeholder text"));
 	}
 

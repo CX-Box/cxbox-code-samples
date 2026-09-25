@@ -16,6 +16,7 @@ public class MyExample3097Meta extends FieldMetaBuilder<MyExample3097DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample3097DTO_.customField);
 		fields.setPlaceholder(MyExample3097DTO_.customField, "Placeholder text");
+		fields.setPlaceholder(MyExample3097DTO_.customFieldRO, "Placeholder text");
 	}
 
 	// --8<-- [end:buildRowDependentMeta]

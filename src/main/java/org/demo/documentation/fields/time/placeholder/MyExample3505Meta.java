@@ -15,6 +15,7 @@ public class MyExample3505Meta extends FieldMetaBuilder<MyExample3505DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample3505DTO_.customField);
 		fields.setPlaceholder(MyExample3505DTO_.customField, "11:25:58");
+		fields.setPlaceholder(MyExample3505DTO_.customFieldRO, "11:25:58");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
