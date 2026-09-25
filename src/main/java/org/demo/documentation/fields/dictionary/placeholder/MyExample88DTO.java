@@ -16,9 +16,12 @@ public class MyExample88DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = EnumValueProvider.class)
 	private CustomFieldEnum customField;
 
+	private CustomFieldEnum customFieldRO;
+
 	public MyExample88DTO(MyEntity88 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

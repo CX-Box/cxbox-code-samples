@@ -18,4 +18,7 @@ public class MyEntity3505 extends BaseEntity {
 
 	@Column
 	private LocalDateTime customField;
+
+	@Column
+	private LocalDateTime customFieldRO;
 }

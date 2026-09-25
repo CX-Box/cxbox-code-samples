@@ -18,4 +18,7 @@ public class NumberPlaceholderEntity extends BaseEntity {
 	@Column
 	private Long customField;
 
+	@Column
+	private Long customFieldRO;
+
 }

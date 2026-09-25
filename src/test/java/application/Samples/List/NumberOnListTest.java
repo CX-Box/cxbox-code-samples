@@ -4,8 +4,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +30,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Samples")
 @Tag("List")
 @Tag("NumberList")
+@Feature(NumberOnListTest.ARTICLE)
 public class NumberOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/number";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -55,6 +60,20 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.number("custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("123456"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("Number placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.number("custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("123456"));
 	}
 

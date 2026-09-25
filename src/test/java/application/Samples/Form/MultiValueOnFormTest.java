@@ -5,8 +5,10 @@ import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
 import core.element.widget.field.type.multivalue.Multivalue;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -26,7 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Samples")
 @Tag("Form")
 @Slf4j
+@Feature(MultiValueOnFormTest.ARTICLE)
 public class MultiValueOnFormTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalue";
 
 	@Disabled
 	@Test
@@ -73,6 +78,20 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		form.field((w) -> new Multivalue<>(w, "Custom Field"))
+				.checkPlaceholder(ph -> assertThat(ph).isEqualTo("Placeholder text"));
+		DocShots.png(form.element(), ARTICLE, "img_plchldr_form.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var form = PlatformApp
+				.screen("MultiValue placeholder")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.field((w) -> new Multivalue<>(w, "Custom Field RO"))
 				.checkPlaceholder(ph -> assertThat(ph).isEqualTo("Placeholder text"));
 	}
 

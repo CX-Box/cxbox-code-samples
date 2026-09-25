@@ -6,6 +6,7 @@ import core.config.Constants;
 import core.element.PlatformApp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("List")
+@Feature(MultiValueOnListTest.ARTICLE)
 public class MultiValueOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/multivalue";
 
 	@Disabled("Checked at filtration and sorting")
 	@Test
@@ -68,6 +72,19 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
 		row.multivalue("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("MultiValue placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.multivalue("Custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
 	}
 

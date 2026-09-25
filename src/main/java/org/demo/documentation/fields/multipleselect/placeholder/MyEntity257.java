@@ -23,4 +23,10 @@ public class MyEntity257 extends BaseEntity {
 	@Column(name = "VALUE", nullable = false)
 	private Set<CustomFieldEnum> customField = new HashSet<>();
 
+	@Enumerated(value = EnumType.STRING)
+	@CollectionTable(name = "CUSTOM_FIELD_RO_257", joinColumns = @JoinColumn(name = "MyEntity257_ID"))
+	@ElementCollection(targetClass = CustomFieldEnum.class)
+	@Column(name = "VALUE", nullable = false)
+	private Set<CustomFieldEnum> customFieldRO = new HashSet<>();
+
 }

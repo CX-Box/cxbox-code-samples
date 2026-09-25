@@ -52,6 +52,16 @@ public class PickTreeOnFormTest extends BaseTestForSamples {
 
 	@Test
 	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var form = form("Picktree placeholder");
+		form.pickTree("Custom Field RO")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+	}
+
+	@Test
+	@Tag("Positive")
 	@DisplayName("A test to get the field color value in Hex format")
 	@Description("The test gets the value from the style attribute in RGB format, and then converts it to Hex format")
 	@Disabled
