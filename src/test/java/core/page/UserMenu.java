@@ -37,7 +37,7 @@ public class UserMenu {
 	}
 
 	/**
-	 * "Log out" through the menu, as a user does it (the same thing "Yes" of the "Sign in again?" popup does).
+	 * "Log out" through the menu, as a user does it (the same thing "Sign out" of the popup on 401 and 403 does).
 	 * For cleaning up between tests the OIDC end-session link is faster, see {@link core.config.OidcProvider#logoutUrl}.
 	 */
 	public void logout() {
