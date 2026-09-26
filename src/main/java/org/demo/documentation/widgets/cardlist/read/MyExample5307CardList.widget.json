@@ -1,0 +1,43 @@
+{
+  "name": "MyExample5307CardList",
+  "title": "CardList with read widget",
+  "type": "CardList",
+  "bc": "myexample5307",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "actionGroups": {
+      "include": [
+        "delete"
+      ]
+    },
+    "read": {
+      "widget": "MyExample5307Read"
+    }
+  }
+}
