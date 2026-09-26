@@ -56,5 +56,6 @@ public class MyEntity3073PickPickService extends VersionAwareResponseService<MyE
 				.delete(dlt -> dlt.text("Delete"))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 }

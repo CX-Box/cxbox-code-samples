@@ -13,7 +13,6 @@ public class MyEntity4903FileNamePickPickMeta extends FieldMetaBuilder<MyEntity4
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity4903FileNamePickPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity4903FileNamePickPickDTO_.id);
 		fields.setEnabled(MyEntity4903FileNamePickPickDTO_.customField);
 	}
 

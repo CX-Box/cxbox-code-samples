@@ -24,5 +24,6 @@ public class MyExample336Meta extends FieldMetaBuilder<MyExample336DTO> {
 									 Long parentId) {
 		fields.enableFilter(MyExample336DTO_.customFieldMultiHolder);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

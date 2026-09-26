@@ -26,5 +26,6 @@ public class MyExample3810Meta extends AnySourceFieldMetaBuilder<MyExample3810DT
 		fields.enableFilter(MyExample3810DTO_.customFieldDateTime);
 		fields.enableSort(MyExample3810DTO_.customFieldDateTime);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

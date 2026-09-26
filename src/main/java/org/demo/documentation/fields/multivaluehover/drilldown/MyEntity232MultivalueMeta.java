@@ -20,7 +20,6 @@ public class MyEntity232MultivalueMeta extends FieldMetaBuilder<MyEntity232Multi
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity232MultivalueDTO> fields,
 									  InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.multivaluehover.drilldown.MyEntity232MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivaluehover.drilldown.MyEntity232MultivalueDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -31,5 +30,6 @@ public class MyEntity232MultivalueMeta extends FieldMetaBuilder<MyEntity232Multi
 									 Long parentId) {
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

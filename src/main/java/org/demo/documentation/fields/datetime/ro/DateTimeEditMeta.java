@@ -29,6 +29,7 @@ public class DateTimeEditMeta extends FieldMetaBuilder<DateTimeEditDTO> {
 
 		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

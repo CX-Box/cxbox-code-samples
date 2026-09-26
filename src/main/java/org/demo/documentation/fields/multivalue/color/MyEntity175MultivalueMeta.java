@@ -20,7 +20,6 @@ public class MyEntity175MultivalueMeta extends FieldMetaBuilder<MyEntity175Multi
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity175MultivalueDTO> fields,
 									  InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.multivalue.color.MyEntity175MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivalue.color.MyEntity175MultivalueDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]

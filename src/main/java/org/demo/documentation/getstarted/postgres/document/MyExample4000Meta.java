@@ -20,5 +20,6 @@ public class MyExample4000Meta extends FieldMetaBuilder<MyExample4000DTO> {
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample4000DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

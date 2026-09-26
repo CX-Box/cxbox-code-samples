@@ -13,7 +13,6 @@ public class MyEntity423PickMeta extends FieldMetaBuilder<MyEntity423PickDTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity423PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity423PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity423PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -24,5 +23,6 @@ public class MyEntity423PickMeta extends FieldMetaBuilder<MyEntity423PickDTO> {
 									 Long parentId) {
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

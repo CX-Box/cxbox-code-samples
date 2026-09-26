@@ -17,11 +17,14 @@ public class MyExample300Meta extends FieldMetaBuilder<MyExample300DTO> {
 		fields.setEnabled(MyExample300DTO_.customField);
 		fields.setPlaceholder(MyExample300DTO_.customField, "More than the current date");
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildRowDependentMeta]
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample300DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExample300DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 	// --8<-- [end:buildIndependentMeta]
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputPlaceholderController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	InputPlaceholder(InputPlaceholderService.class);
 	// --8<-- [end:bc]
 

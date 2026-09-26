@@ -23,7 +23,6 @@ public class MyEntity5019PickPickMeta extends FieldMetaBuilder<MyEntity5019PickP
 
 		fields.setEnumValues(MyEntity5019PickPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum2.values());
 		fields.setEnabled(MyEntity5019PickPickDTO_.customFieldDictionary);
-		fields.setEnabled(org.demo.documentation.widgets.property.sethidden.MyEntity5019PickPickDTO_.id);
 		fields.setEnabled(org.demo.documentation.widgets.property.sethidden.MyEntity5019PickPickDTO_.customField);
 	}
 

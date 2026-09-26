@@ -58,6 +58,7 @@ public class MyExample3160Service extends VersionAwareResponseService<MyExample3
 
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 	private ActionResultDTO<MyExample3160DTO> customSaveInvoker(final BusinessComponent bc, final MyExample3160DTO dto) {
 		MyEntity3161 parentEntity = repositoryParent.findById(bc.getParentIdAsLong()).orElse(null);

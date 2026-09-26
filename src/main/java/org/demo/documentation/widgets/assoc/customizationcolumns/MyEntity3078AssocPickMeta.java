@@ -15,7 +15,6 @@ public class MyEntity3078AssocPickMeta extends FieldMetaBuilder<MyEntity3078Asso
 									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity3078AssocPickDTO_.customFieldNumber);
 		fields.setEnabled(MyEntity3078AssocPickDTO_.customFieldText);
-		fields.setEnabled(org.demo.documentation.widgets.assoc.customizationcolumns.MyEntity3078AssocPickDTO_.id);
 		fields.setEnabled(org.demo.documentation.widgets.assoc.customizationcolumns.MyEntity3078AssocPickDTO_.customField);
 	}
 

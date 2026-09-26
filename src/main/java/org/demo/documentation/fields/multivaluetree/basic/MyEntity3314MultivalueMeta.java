@@ -32,5 +32,6 @@ public class MyEntity3314MultivalueMeta extends FieldMetaBuilder<MyEntity3314Mul
 		fields.enableSort(MyEntity3314MultivalueDTO_.customField);
 		fields.enableSort(MyEntity3314MultivalueDTO_.id);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

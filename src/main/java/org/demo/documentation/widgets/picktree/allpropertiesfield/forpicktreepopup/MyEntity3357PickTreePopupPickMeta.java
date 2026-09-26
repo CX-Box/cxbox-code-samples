@@ -21,7 +21,6 @@ public class MyEntity3357PickTreePopupPickMeta extends FieldMetaBuilder<MyEntity
 		fields.setEnabled(MyEntity3357PickTreePopupPickDTO_.customFieldColorValidation);
 		fields.setEnabled(MyEntity3357PickTreePopupPickDTO_.customFieldRequired);
 		fields.setEnabled(MyEntity3357PickTreePopupPickDTO_.customFieldColorSort);
-		fields.setEnabled(MyEntity3357PickTreePopupPickDTO_.id);
 		fields.setEnabled(MyEntity3357PickTreePopupPickDTO_.customField);
 		fields.setPlaceholder(MyEntity3357PickTreePopupPickDTO_.customFieldPlaceholder, "Placeholder text");
 		fields.setRequired(MyEntity3357PickTreePopupPickDTO_.customFieldRequired);

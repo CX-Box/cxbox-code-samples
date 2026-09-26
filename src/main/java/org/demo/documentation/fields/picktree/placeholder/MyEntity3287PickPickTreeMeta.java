@@ -19,7 +19,6 @@ public class MyEntity3287PickPickTreeMeta extends FieldMetaBuilder<MyEntity3287P
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3287PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.picktree.placeholder.MyEntity3287PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picktree.placeholder.MyEntity3287PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -33,5 +32,6 @@ public class MyEntity3287PickPickTreeMeta extends FieldMetaBuilder<MyEntity3287P
 		fields.enableSort(MyEntity3287PickDTO_.customField);
 		fields.enableSort(MyEntity3287PickDTO_.id);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

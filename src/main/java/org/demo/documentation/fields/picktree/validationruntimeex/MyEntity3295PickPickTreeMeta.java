@@ -19,7 +19,6 @@ public class MyEntity3295PickPickTreeMeta extends FieldMetaBuilder<MyEntity3295P
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3295PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.picktree.validationruntimeex.MyEntity3295PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picktree.validationruntimeex.MyEntity3295PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]

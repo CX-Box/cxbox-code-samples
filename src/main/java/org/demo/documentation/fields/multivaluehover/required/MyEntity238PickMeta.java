@@ -13,7 +13,6 @@ public class MyEntity238PickMeta extends FieldMetaBuilder<MyEntity238PickDTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity238PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.multivaluehover.required.MyEntity238PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivaluehover.required.MyEntity238PickDTO_.customField);
 	}
 

@@ -31,5 +31,6 @@ public class MyEntity177MultivalueMeta extends FieldMetaBuilder<MyEntity177Multi
 		fields.enableSort(MyEntity177MultivalueDTO_.customField);
 		fields.enableSort(MyEntity177MultivalueDTO_.id);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

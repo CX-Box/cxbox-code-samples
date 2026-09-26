@@ -13,7 +13,6 @@ public class MyEntity3400InlinePicklistFAPickMeta extends FieldMetaBuilder<MyEnt
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3400InlinePicklistFAPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity3400InlinePicklistFAPickDTO_.id);
 		fields.setEnabled(MyEntity3400InlinePicklistFAPickDTO_.customField);
 	}
 

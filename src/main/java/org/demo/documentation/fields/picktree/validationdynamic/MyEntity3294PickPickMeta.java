@@ -15,7 +15,6 @@ public class MyEntity3294PickPickMeta extends FieldMetaBuilder<MyEntity3294PickP
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3294PickPickDTO> fields,
 									  InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.picktree.validationdynamic.MyEntity3294PickPickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picktree.validationdynamic.MyEntity3294PickPickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -28,5 +27,6 @@ public class MyEntity3294PickPickMeta extends FieldMetaBuilder<MyEntity3294PickP
 		fields.enableSort(MyEntity3294PickPickDTO_.customField);
 		fields.enableSort(MyEntity3294PickPickDTO_.id);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

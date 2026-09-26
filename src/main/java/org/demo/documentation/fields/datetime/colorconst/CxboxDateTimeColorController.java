@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeColorController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateTimeColor(DateTimeColorService.class);
 	// --8<-- [end:bc]
 

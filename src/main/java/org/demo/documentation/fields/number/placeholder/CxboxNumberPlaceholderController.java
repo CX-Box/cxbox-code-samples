@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberPlaceholderController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	numberPlaceholder(NumberPlaceholderService.class);
 	// --8<-- [end:bc]
 

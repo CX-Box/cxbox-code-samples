@@ -19,7 +19,6 @@ public class MyEntity120PickPickListMeta extends FieldMetaBuilder<MyEntity120Pic
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity120PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.picklist.basic.MyEntity120PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picklist.basic.MyEntity120PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
