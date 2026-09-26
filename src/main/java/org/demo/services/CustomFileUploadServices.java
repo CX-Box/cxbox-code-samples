@@ -77,7 +77,7 @@ public class CustomFileUploadServices {
 	}
 
 	@SneakyThrows
-	private CxboxResponseDTO<FileUploadDto> uploadFile(
+	public CxboxResponseDTO<FileUploadDto> uploadFile(
 			String fileName,
 			String contentType,
 			byte[] content
