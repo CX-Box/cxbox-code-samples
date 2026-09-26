@@ -1,0 +1,50 @@
+{
+  "name": "MyExample5302ColorConst",
+  "title": "Document: ${customField}",
+  "type": "CardList",
+  "bc": "myexample5302",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input",
+      "bgColor": "#edaa6a"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "MyExample5302Form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "MyExample5302Form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

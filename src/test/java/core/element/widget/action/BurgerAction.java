@@ -27,6 +27,14 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 		this.burger = getBurger();
 	}
 
+	/** For a row that shows its actions as buttons, not in a burger menu: {@code action} is the button of the action. */
+	protected BurgerAction(ROW row, WIDGET widget, String label, SelenideElement action) {
+		this.row = row;
+		this.widget = widget;
+		this.label = label;
+		this.burger = action;
+	}
+
 	@Override
 	public SelenideElement element() {
 		if (burger == null) {

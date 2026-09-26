@@ -1,0 +1,51 @@
+{
+  "name": "MyExample5307Read",
+  "title": "Selected document",
+  "type": "Info",
+  "bc": "myexample5307",
+  "fields": [
+    {
+      "label": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      },
+      "minRows": 15
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDescription",
+              "span": 5
+            },
+            {
+              "fieldKey": "document",
+              "span": 14
+            },
+            {
+              "fieldKey": "customField",
+              "span": 5
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
