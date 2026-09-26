@@ -16,7 +16,8 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	PICK_TREE_POPUP("PickTreePopup"),
 	ASSOC_LIST_POPUP("AssocListPopup"),
 	PICK_LIST_POPUP("PickListPopup"),
-	CARD_LIST("CardList");
+	CARD_LIST("CardList"),
+	CARD_CAROUSEL_LIST("CardCarouselList");
 
 	private final String type;
 

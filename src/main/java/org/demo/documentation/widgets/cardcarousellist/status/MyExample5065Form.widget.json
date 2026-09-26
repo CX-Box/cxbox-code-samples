@@ -1,0 +1,78 @@
+{
+  "name": "MyExample5065Form",
+  "title": "",
+  "type": "Form",
+  "bc": "myexample5065",
+  "fields": [
+    {
+      "label": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "popup"
+      }
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    },
+    {
+      "label": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "statusColor"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "document",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDescription",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "status",
+              "span": 24
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
