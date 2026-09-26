@@ -16,5 +16,6 @@ public class MyExample4214DTO extends DataResponseDTO {
 
 	private Long value;
 
-	private String description;
+	private String icon;
+
 }

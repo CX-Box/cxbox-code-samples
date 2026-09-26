@@ -1,0 +1,36 @@
+{
+  "name": "MyExample4261ArgFields",
+  "title": "Sales per client",
+  "type": "Pie1D",
+  "bc": "myExampleBc4261",
+  "fields": [
+    {
+      "title": "Sales",
+      "key": "value",
+      "type": "number"
+    },
+    {
+      "title": "Client",
+      "key": "title",
+      "type": "input"
+    },
+    {
+      "title": "Sales count",
+      "key": "salesCount",
+      "type": "number"
+    }
+  ],
+  "options": {
+    "chart1D": {
+      "valueFieldKey": "value",
+      "titleFieldKey": "title",
+      "total": {
+        "func": "sum",
+        "argFieldKeys": [
+          "salesCount"
+        ],
+        "description": "Sales count"
+      }
+    }
+  }
+}
