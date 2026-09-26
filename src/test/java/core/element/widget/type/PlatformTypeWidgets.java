@@ -18,7 +18,8 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	PICK_LIST_POPUP("PickListPopup"),
 	PIE_1D("Pie1D"),
 	COLUMN_2D("Column2D"),
-	LINE_2D("Line2D");
+	LINE_2D("Line2D"),
+	CARD_LIST("CardList");
 
 	private final String type;
 

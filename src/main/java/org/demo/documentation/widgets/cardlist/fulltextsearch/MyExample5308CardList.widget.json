@@ -1,0 +1,53 @@
+{
+  "name": "MyExample5308CardList",
+  "title": "CardList with full text search",
+  "type": "CardList",
+  "bc": "myexample5308",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "MyExample5308Form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "MyExample5308Form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    },
+    "fullTextSearch": {
+      "enabled": true,
+      "placeholder": "Find by title"
+    }
+  }
+}
