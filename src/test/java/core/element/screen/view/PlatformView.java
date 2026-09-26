@@ -5,6 +5,9 @@ import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
+import core.element.widget.chart.Column2DWidget;
+import core.element.widget.chart.Line2DWidget;
+import core.element.widget.chart.Pie1DWidget;
 import core.element.widget.form.PlatformFormWidget;
 import core.element.widget.info.PlatformAdditionalInfoWidget;
 import core.element.widget.info.PlatformInfoWidget;
@@ -112,6 +115,30 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public StatsBlockWidget statBlockByName(String name) {
 		return new StatsBlockWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public Pie1DWidget pie1D(String title) {
+		return new Pie1DWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public Pie1DWidget pie1DByName(String name) {
+		return new Pie1DWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public Column2DWidget column2D(String title) {
+		return new Column2DWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public Column2DWidget column2DByName(String name) {
+		return new Column2DWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public Line2DWidget line2D(String title) {
+		return new Line2DWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public Line2DWidget line2DByName(String name) {
+		return new Line2DWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {
