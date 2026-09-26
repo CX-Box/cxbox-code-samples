@@ -1,0 +1,55 @@
+{
+  "name": "MyExample5305CardList",
+  "title": "CardList with status",
+  "type": "CardList",
+  "bc": "myexample5305",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "statusColor"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "MyExample5305Form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "MyExample5305Form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

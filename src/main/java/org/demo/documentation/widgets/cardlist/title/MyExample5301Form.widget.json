@@ -1,0 +1,64 @@
+{
+  "name": "MyExample5301Form",
+  "title": "",
+  "type": "Form",
+  "bc": "myexample5301",
+  "fields": [
+    {
+      "label": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "popup"
+      }
+    },
+    {
+      "label": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "document",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customField",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDescription",
+              "span": 24
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
