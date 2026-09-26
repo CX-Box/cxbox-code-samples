@@ -1,17 +1,23 @@
 {
   "name": "MyExample4218Pie",
-  "title": "Sales count per client",
+  "title": "Sales per client",
   "type": "Pie1D",
   "bc": "myExampleBc4218",
   "fields": [
     {
-      "title": "value",
+      "title": "Sales",
       "key": "value",
-      "type": "number"
+      "type": "number",
+      "bgColorKey": "color"
     },
     {
-      "title": "title",
+      "title": "Client",
       "key": "title",
+      "type": "input"
+    },
+    {
+      "title": "Color",
+      "key": "color",
       "type": "input"
     }
   ],
@@ -21,7 +27,7 @@
       "titleFieldKey": "title",
       "total": {
         "func": "sum",
-        "description": "Total "
+        "description": "Total"
       }
     }
   }

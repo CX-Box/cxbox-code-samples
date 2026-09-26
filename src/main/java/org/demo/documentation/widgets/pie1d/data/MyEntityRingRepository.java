@@ -9,18 +9,17 @@ import java.util.List;
 
 @Repository
 public interface MyEntityRingRepository extends JpaRepository<MyEntityRingData, Long>, JpaSpecificationExecutor<MyEntityRingData> {
-	@Query("SELECT SUM(customFieldNum) FROM MyEntityRingData group by customField")
-	Long customTotal();
-
 	@Query("""
 			SELECT new org.demo.documentation.widgets.pie1d.data.CustomPrj(
 			min(id),
 			customField,
-			SUM(customFieldNum) ,
+			SUM(customFieldNum),
+			COUNT(id),
 			min(customFieldDictionary),
 			min(customFieldDate))
 			FROM MyEntityRingData
 			GROUP BY customField
+			ORDER BY customField
 			""")
 	List<CustomPrj> getCustomPrj();
 

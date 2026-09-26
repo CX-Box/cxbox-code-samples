@@ -1,19 +1,17 @@
 package org.demo.documentation.widgets.pie1d.icon;
 
+import java.util.List;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
 import org.cxbox.core.dao.impl.AbstractAnySourceBaseDAO;
-import org.demo.documentation.widgets.pie1d.data.CustomPrj;
 import org.demo.documentation.widgets.pie1d.data.MyEntityRingRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -57,16 +55,20 @@ public class MyExample4214Dao extends AbstractAnySourceBaseDAO<MyExample4214DTO>
 		throw new IllegalStateException();
 	}
 
+	// --8<-- [start:getStats]
 	@NonNull
 	private List<MyExample4214DTO> getStats() {
-		List<CustomPrj> data = repository.getCustomPrj();
-		return data.stream()
+		return repository.getCustomPrj().stream()
 				.map(entity -> {
-					MyExample4214DTO myExample4214DTO = new MyExample4214DTO()
+					MyExample4214DTO dto = new MyExample4214DTO()
 							.setTitle(entity.clientName())
-							.setValue(entity.sum());
-					myExample4214DTO.setId(entity.clientId().toString());
-					return myExample4214DTO;
-				}).toList();
+							.setValue(entity.sum())
+							.setIcon("user");
+					dto.setId(entity.clientId().toString());
+					return dto;
+				})
+				.toList();
 	}
+	// --8<-- [end:getStats]
+
 }
