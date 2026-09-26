@@ -29,5 +29,6 @@ public class MyExample323Meta extends FieldMetaBuilder<MyExample323DTO> {
 		fields.setEnumValues(MyExample323DTO_.customField, CustomFieldEnum.values());
 		fields.setEnumValues(MyExample323DTO_.customFieldAdditional,CustomFieldEnum.values());
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

@@ -14,7 +14,6 @@ public class WidgetStylesMultiMultiMultivalueMeta extends FieldMetaBuilder<Widge
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesMultiMultiMultivalueDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(WidgetStylesMultiMultiMultivalueDTO_.id);
 		fields.setEnabled(WidgetStylesMultiMultiMultivalueDTO_.customField);
 	}
 

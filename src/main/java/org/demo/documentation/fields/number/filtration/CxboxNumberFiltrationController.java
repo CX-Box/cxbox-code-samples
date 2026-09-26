@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberFiltrationController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	numberFiltration(NumberFiltrationService.class);
 	// --8<-- [end:bc]
 

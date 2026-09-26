@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateCreateEditController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateCreateEdit(DateCreateEditService.class);
 	// --8<-- [end:bc]
 

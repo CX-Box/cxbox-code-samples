@@ -20,7 +20,6 @@ public class MyEntity199MultivalueMeta extends FieldMetaBuilder<MyEntity199Multi
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity199MultivalueDTO> fields,
 									  InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.multivalue.validationannotation.MyEntity199MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivalue.validationannotation.MyEntity199MultivalueDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -33,5 +32,6 @@ public class MyEntity199MultivalueMeta extends FieldMetaBuilder<MyEntity199Multi
 		fields.enableSort(MyEntity199MultivalueDTO_.customField);
 		fields.enableSort(MyEntity199MultivalueDTO_.id);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

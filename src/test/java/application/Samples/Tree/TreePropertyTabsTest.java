@@ -37,8 +37,8 @@ public class TreePropertyTabsTest extends BaseTestForSamples {
 			{"Widget property Pagination", "nextAndPreviousWithCount", "Tree", "#/screen/myexample3861/view/myexample3862tree", "MyExample3862Tree"},
 			{"Widget property Pagination", "hideLimitOptions", "Tree", "#/screen/myexample3861/view/myexample3865tree", "MyExample3865Tree"},
 			{"Widget property Pagination", "availableLimitsList", "Tree", "#/screen/myexample3861/view/myexample3867tree", "MyExample3867Tree"},
-			{"Widget property export Excel inner source", "List", "", "#/screen/myexample3134/view/myexample3134tree", "MyExample3134Tree"},
-			{"Widget property export Excel any source", "", "", "#/screen/myexample3136", "MyExample3136Tree"},
+			{"Widget property export Excel inner source", "Tree", "", "#/screen/myexample3134/view/myexample3134tree", "MyExample3134Tree"},
+			{"Widget property export Excel any source", "Tree", "", "#/screen/myexample3136/view/myexample3136tree", "MyExample3136Tree"},
 			{"Widget property export Excel postAction", "Tree", "", "#/screen/MyExample6500PostActionExportToExcel/view/myexample6500PostActionExportToExcelTree", "myexample6500PostActionExportToExcelTree"},
 			{"Widget property field setHidden", "Family List, Assoc, Popup, 2D, 1D", "Tree", "#/screen/myexample5019/view/myexample5019tree", "MyExample5019Tree"},
 	};

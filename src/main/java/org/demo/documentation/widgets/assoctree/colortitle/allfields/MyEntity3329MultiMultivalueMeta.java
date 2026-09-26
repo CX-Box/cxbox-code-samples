@@ -37,7 +37,6 @@ public class MyEntity3329MultiMultivalueMeta extends FieldMetaBuilder<MyEntity33
 		fields.setEnabled(MyEntity3329MultiMultivalueDTO_.customFieldColorInlinePicklist);
 		fields.setEnabled(MyEntity3329MultiMultivalueDTO_.customFieldColorMultivalue);
 		fields.setEnabled(MyEntity3329MultiMultivalueDTO_.customFieldColorMultivalueHover);
-		fields.setEnabled(MyEntity3329MultiMultivalueDTO_.id);
 		fields.setEnabled(MyEntity3329MultiMultivalueDTO_.customField);
 	}
 

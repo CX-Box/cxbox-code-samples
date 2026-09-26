@@ -19,7 +19,6 @@ public class MyEntity155PickPickListMeta extends FieldMetaBuilder<MyEntity155Pic
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity155PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.inlinepicklist.validationruntimeex.MyEntity155PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.inlinepicklist.validationruntimeex.MyEntity155PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -32,5 +31,6 @@ public class MyEntity155PickPickListMeta extends FieldMetaBuilder<MyEntity155Pic
 		fields.enableSort(MyEntity155PickDTO_.customField);
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

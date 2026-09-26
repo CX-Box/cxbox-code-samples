@@ -45,6 +45,7 @@ public class MyExample3118Service extends VersionAwareResponseService<MyExample3
 				.save(sv -> sv.text("Save"))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 	// --8<-- [start:validateFields]
 	private void validateFields(BusinessComponent bc, MyExample3118DTO dto) {

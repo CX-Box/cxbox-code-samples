@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberConfirmController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	numberConfirm(NumberConfirmService.class);
 	// --8<-- [end:bc]
 

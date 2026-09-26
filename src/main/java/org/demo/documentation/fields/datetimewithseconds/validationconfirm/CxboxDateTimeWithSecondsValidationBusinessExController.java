@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeWithSecondsValidationBusinessExController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateTimeWithSecondsValidationBusinessEx(DateTimeWithSecondsValidationBusinessExService.class);
 	// --8<-- [end:bc]
 

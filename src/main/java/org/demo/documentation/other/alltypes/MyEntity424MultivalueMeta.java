@@ -13,7 +13,6 @@ public class MyEntity424MultivalueMeta extends FieldMetaBuilder<MyEntity424Multi
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity424MultivalueDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity424MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.other.alltypes.MyEntity424MultivalueDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -24,5 +23,6 @@ public class MyEntity424MultivalueMeta extends FieldMetaBuilder<MyEntity424Multi
 									 Long parentId) {
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

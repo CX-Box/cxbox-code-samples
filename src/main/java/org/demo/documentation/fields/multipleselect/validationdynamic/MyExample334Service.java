@@ -43,8 +43,8 @@ public class MyExample334Service extends VersionAwareResponseService<MyExample33
 							.collect(Collectors.toSet()));
 		}
 		if (data.isFieldChanged(MyExample334DTO_.customFieldAdditional)) {
-			entity.setCustomField(
-					data.getCustomField().getValues()
+			entity.setCustomFieldAdditional(
+					data.getCustomFieldAdditional().getValues()
 							.stream()
 							.map(v -> CustomFieldEnum.getByValue(v.getValue()))
 							.collect(Collectors.toSet()));

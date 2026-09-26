@@ -31,5 +31,6 @@ public class MyExample360Meta extends FieldMetaBuilder<MyExample360DTO> {
 		fields.enableFilter(MyExample360DTO_.informationField);
 		fields.enableFilter(MyExample360DTO_.customFieldAdditional);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

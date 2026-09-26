@@ -43,6 +43,7 @@ public class InputColorConstService extends VersionAwareResponseService<InputCol
 				.save(sv -> sv.text("Save").available(bc -> true))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

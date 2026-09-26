@@ -30,5 +30,6 @@ public class InputCreateEditMeta extends FieldMetaBuilder<InputCreateEditDTO> {
 			fields.setForceActive(InputCreateEditDTO_.customField);
 		}
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

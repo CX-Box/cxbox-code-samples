@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxNumberColorConstController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	numberColorConst(NumberColorConstService.class);
 	// --8<-- [end:bc]
 

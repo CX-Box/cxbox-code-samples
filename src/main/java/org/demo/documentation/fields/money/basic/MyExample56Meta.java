@@ -21,8 +21,10 @@ public class MyExample56Meta extends FieldMetaBuilder<MyExample56DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample56DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 	// --8<-- [end:editable]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample56DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

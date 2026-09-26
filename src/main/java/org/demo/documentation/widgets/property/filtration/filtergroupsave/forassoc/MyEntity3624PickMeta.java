@@ -16,7 +16,6 @@ public class MyEntity3624PickMeta extends FieldMetaBuilder<MyEntity3624PickDTO> 
 									  Long id, Long parentId) {
 		fields.setEnumValues(MyEntity3624PickDTO_.customFieldDictionary, CustomFieldDictionaryEnum.values());
 		fields.setEnabled(MyEntity3624PickDTO_.customFieldDictionary);
-		fields.setEnabled(MyEntity3624PickDTO_.id);
 		fields.setEnabled(MyEntity3624PickDTO_.customField);
 	}
 

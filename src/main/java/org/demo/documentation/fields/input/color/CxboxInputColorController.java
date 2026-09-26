@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputColorController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	InputColor(InputColorService.class);
 	// --8<-- [end:bc]
 

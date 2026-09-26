@@ -15,11 +15,13 @@ public class MyExample4001Meta extends AnySourceFieldMetaBuilder<MyExample4001DT
 									  String id, String parentId) {
 		fields.setEnabled(MyExample4001DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample4001DTO> fields, BcDescription bcDescription,
 									 String parentId) {
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 }

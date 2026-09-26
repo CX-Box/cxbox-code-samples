@@ -13,7 +13,6 @@ public class MyEntity3198PickOnCancelPickMeta extends FieldMetaBuilder<MyEntity3
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3198PickOnCancelPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity3198PickOnCancelPickDTO_.id);
 		fields.setEnabled(MyEntity3198PickOnCancelPickDTO_.customField);
 	}
 

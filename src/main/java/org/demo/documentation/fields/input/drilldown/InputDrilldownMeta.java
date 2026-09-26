@@ -49,5 +49,6 @@ public class InputDrilldownMeta extends FieldMetaBuilder<InputDrilldownDTO> {
 			fields.setForceActive(InputDrilldownDTO_.customField);
 		}
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

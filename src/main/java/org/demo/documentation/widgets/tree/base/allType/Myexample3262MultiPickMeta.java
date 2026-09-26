@@ -13,7 +13,6 @@ public class Myexample3262MultiPickMeta extends FieldMetaBuilder<Myexample3262Mu
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3262MultiPickDTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
-		fields.setEnabled(Myexample3262MultiPickDTO_.id);
 		fields.setEnabled(Myexample3262MultiPickDTO_.customField);
 	}
 

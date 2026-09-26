@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateRequiredController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateRequired(DateRequiredService.class);
 	// --8<-- [end:bc]
 
