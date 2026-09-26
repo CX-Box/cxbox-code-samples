@@ -1,0 +1,30 @@
+{
+  "name": "MyExample4254Column2D",
+  "title": "Sales per client and product",
+  "type": "Column2D",
+  "bc": "myExampleBc4254",
+  "fields": [
+    {
+      "title": "Client",
+      "key": "clientName",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "sum",
+      "type": "number"
+    },
+    {
+      "title": "Product",
+      "key": "productName",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart2D": {
+      "xValueFieldKey": "clientName",
+      "yValueFieldKey": "sum",
+      "groupFieldKey": "productName"
+    }
+  }
+}
