@@ -1,0 +1,32 @@
+{
+  "name": "MyExample4256Column2D",
+  "title": "Sales per client",
+  "type": "Column2D",
+  "bc": "myExampleBc4256",
+  "fields": [
+    {
+      "title": "Client",
+      "key": "clientName",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "sum",
+      "type": "number"
+    },
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart2D": {
+      "xValueFieldKey": "clientName",
+      "yValueFieldKey": "sum",
+      "descriptionFieldKey": [
+        "description"
+      ]
+    }
+  }
+}
