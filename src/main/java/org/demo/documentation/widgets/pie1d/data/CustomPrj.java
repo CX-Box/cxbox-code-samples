@@ -6,6 +6,7 @@ public record CustomPrj(
 		Long clientId,
 		String clientName,
 		Long sum,
+		Long salesCount,
 		CustomFieldStatusEnum status,
 		LocalDateTime saleDate
 ) {
