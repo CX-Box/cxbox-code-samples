@@ -1,0 +1,59 @@
+{
+  "name": "MyExample5008Form",
+  "title": "Form",
+  "type": "Form",
+  "bc": "myexample5008",
+  "fields": [
+    {
+      "label": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId"
+    },
+    {
+      "label": "Custom Field Title",
+      "key": "customFieldTitle",
+      "type": "input"
+    },
+    {
+      "label": "Custom Field Hint",
+      "key": "customFieldHint",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "document",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldTitle",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldHint",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

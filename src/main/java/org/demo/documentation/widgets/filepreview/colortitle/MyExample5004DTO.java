@@ -15,7 +15,9 @@ public class MyExample5004DTO extends DataResponseDTO {
 	private String customField;
 	@SearchParameter(name = "customFieldId")
 	private String customFieldId;
+	// --8<-- [start:colorDTO]
 	private String customFieldColor;
+	// --8<-- [end:colorDTO]
 
 	public MyExample5004DTO(MyEntity5004 entity) {
 		this.id = entity.getId().toString();

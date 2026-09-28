@@ -22,7 +22,8 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	COLUMN_2D("Column2D"),
 	LINE_2D("Line2D"),
 	CARD_LIST("CardList"),
-	CARD_CAROUSEL_LIST("CardCarouselList");
+	CARD_CAROUSEL_LIST("CardCarouselList"),
+	FILE_PREVIEW("FilePreview");
 
 	private final String type;
 
