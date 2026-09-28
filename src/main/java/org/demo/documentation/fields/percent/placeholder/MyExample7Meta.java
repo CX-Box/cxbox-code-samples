@@ -25,6 +25,7 @@ public class MyExample7Meta extends FieldMetaBuilder<MyExample7DTO> {
 				MyExample7DTO_.customField
 		);
 		fields.setPlaceholder(MyExample7DTO_.customField, "17");
+		fields.setPlaceholder(MyExample7DTO_.customFieldRO, "17");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

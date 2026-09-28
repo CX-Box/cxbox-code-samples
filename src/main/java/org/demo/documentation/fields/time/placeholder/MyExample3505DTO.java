@@ -17,8 +17,11 @@ public class MyExample3505DTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = TimeValueProvider.class)
 	private LocalDateTime customField;
 
+	private LocalDateTime customFieldRO;
+
 	public MyExample3505DTO(MyEntity3505 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 }

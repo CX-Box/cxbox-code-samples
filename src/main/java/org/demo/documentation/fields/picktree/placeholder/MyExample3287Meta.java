@@ -21,6 +21,7 @@ public class MyExample3287Meta extends FieldMetaBuilder<MyExample3287DTO> {
 		fields.setEnabled(MyExample3287DTO_.customFieldId);
 		fields.setEnabled(MyExample3287DTO_.customField);
 		fields.setPlaceholder(MyExample3287DTO_.customField, "Placeholder text");
+		fields.setPlaceholder(MyExample3287DTO_.customFieldRO, "Placeholder text");
 	}
 	// --8<-- [end:buildRowDependentMeta]
 

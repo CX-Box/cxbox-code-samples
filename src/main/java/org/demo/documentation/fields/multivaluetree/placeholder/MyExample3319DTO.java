@@ -19,11 +19,17 @@ public class MyExample3319DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldList.id", provider = LongValueProvider.class)
 	private MultivalueField customField;
 
+	private MultivalueField customFieldRO;
+
 	private String customFieldCalc;
 
 	public MyExample3319DTO(MyEntity3319 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomFieldList().stream().collect(MultivalueField.toMultivalueField(
+				e -> String.valueOf(e.getId()),
+				MyEntity3319Multivalue::getCustomField
+		));
+		this.customFieldRO = entity.getCustomFieldROList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
 				MyEntity3319Multivalue::getCustomField
 		));

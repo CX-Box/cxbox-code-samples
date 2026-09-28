@@ -22,4 +22,7 @@ public class DateTimeWithSecondsPlaceholderEntity extends BaseEntity {
 	@Column
 	private LocalDateTime customField;
 
+	@Column
+	private LocalDateTime customFieldRO;
+
 }

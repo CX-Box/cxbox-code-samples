@@ -20,4 +20,8 @@ public class MyEntity88 extends BaseEntity {
 	@Column
 	private CustomFieldEnum customField;
 
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldEnum customFieldRO;
+
 }

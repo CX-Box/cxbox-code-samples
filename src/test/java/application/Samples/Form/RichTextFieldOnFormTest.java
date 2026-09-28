@@ -108,6 +108,18 @@ public class RichTextFieldOnFormTest extends BaseTestForSamples {
 
 	@Test
 	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var form = PlatformApp.screen("RichText placeholder")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.richText("Custom Field RO")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+	}
+
+	@Test
+	@Tag("Positive")
 	@DisplayName("A test to check the field for \"Read-only\"")
 	@Description("The field of the readonly sample cannot be edited.")
 	void readonly() {

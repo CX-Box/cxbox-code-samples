@@ -4,7 +4,9 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +21,10 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Feature(SuggestionPickListOnListTest.ARTICLE)
 public class SuggestionPickListOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/suggestionpicklist";
 
 	@Test
 	@Tag("Positive")
@@ -31,6 +36,20 @@ public class SuggestionPickListOnListTest extends BaseTestForSamples {
 				.listInline("List Widget with suggestionPickList placeholder");
 		var row = list.rows().clickRow(0);
 		row.suggestionPickList("customField")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("SuggestionPickList placeholder")
+				.secondLevelView("List")
+				.listInline("List Widget with suggestionPickList placeholder");
+		var row = list.rows().clickRow(0);
+		row.suggestionPickList("customFieldRO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
 	}
 

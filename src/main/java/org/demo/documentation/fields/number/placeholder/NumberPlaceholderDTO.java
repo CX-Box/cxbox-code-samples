@@ -15,9 +15,12 @@ public class NumberPlaceholderDTO extends DataResponseDTO {
 	@SearchParameter(name = "customField", provider = BigDecimalValueProvider.class)
 	private Long customField;
 
+	private Long customFieldRO;
+
 	public NumberPlaceholderDTO(NumberPlaceholderEntity entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldRO = entity.getCustomFieldRO();
 	}
 
 }

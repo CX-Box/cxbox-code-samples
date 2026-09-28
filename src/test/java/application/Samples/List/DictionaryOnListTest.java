@@ -5,8 +5,10 @@ import application.config.BaseTestForSamples;
 import application.custom.Position;
 import core.config.Constants;
 import core.element.PlatformApp;
+import core.util.DocShots;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("Samples")
 @Tag("Samples")
 @Tag("List")
+@Feature(DictionaryOnListTest.ARTICLE)
 public class DictionaryOnListTest extends BaseTestForSamples {
+
+	static final String ARTICLE = "widget/fields/field/dictionary";
 
 	@Test
 	@Severity(CRITICAL)
@@ -63,6 +68,21 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 		var row = list.rows().row(0);
 		row.editRow()
 				.dictionary("Custom Field")
+				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
+		DocShots.png(list.element(), ARTICLE, "img_plchldr_list.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Test for getting the Placeholder value of a read-only field")
+	@Description("The placeholder is shown for a field that is not enabled in the meta as well")
+	void placeholderReadOnly() {
+		var list = PlatformApp.screen("Dictionary enum placeholder")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().row(0);
+		row.editRow()
+				.dictionary("Custom Field RO")
 				.checkPlaceholder(pl -> assertThat(pl).isEqualTo("Placeholder text"));
 	}
 
