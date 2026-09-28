@@ -14,6 +14,8 @@ import core.element.widget.list.realization.inline.gh.PlatformGHWidgetInline;
 import core.element.widget.list.realization.inline.list.PlatformListWidgetInline;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineForm;
+import core.element.widget.cardlist.CardCarouselListWidget;
+import core.element.widget.cardlist.CardListWidget;
 import core.element.widget.statblock.StatsBlockWidget;
 import core.expectation.ExpectationPattern;
 
@@ -112,6 +114,22 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public StatsBlockWidget statBlockByName(String name) {
 		return new StatsBlockWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public CardListWidget cardList(String title) {
+		return new CardListWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public CardListWidget cardListByName(String name) {
+		return new CardListWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public CardCarouselListWidget cardCarouselList(String title) {
+		return new CardCarouselListWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public CardCarouselListWidget cardCarouselListByName(String name) {
+		return new CardCarouselListWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {
