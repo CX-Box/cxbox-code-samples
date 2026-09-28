@@ -34,5 +34,6 @@ public class InputColorMeta extends FieldMetaBuilder<InputColorDTO> {
 			fields.setForceActive(InputColorDTO_.customField);
 		}
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

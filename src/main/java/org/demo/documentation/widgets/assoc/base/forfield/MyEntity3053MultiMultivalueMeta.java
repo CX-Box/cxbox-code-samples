@@ -15,7 +15,6 @@ public class MyEntity3053MultiMultivalueMeta extends FieldMetaBuilder<MyEntity30
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3053MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
 		fields.setEnabled(MyEntity3053MultiMultivalueDTO_.customFieldNew);
-		fields.setEnabled(MyEntity3053MultiMultivalueDTO_.id);
 		fields.setEnabled(MyEntity3053MultiMultivalueDTO_.customField);
 	}
 

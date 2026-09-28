@@ -32,6 +32,7 @@ public class MyExample431Meta extends FieldMetaBuilder<MyExample431DTO> {
 		fields.enableFilter(MyExample431DTO_.customField);
 		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

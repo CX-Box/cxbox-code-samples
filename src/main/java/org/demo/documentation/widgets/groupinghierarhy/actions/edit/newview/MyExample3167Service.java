@@ -21,6 +21,7 @@ public class MyExample3167Service extends VersionAwareResponseService<MyExample3
 	@Getter(onMethod_ = @Override)
 	private final Class<MyExample3167Meta> meta = MyExample3167Meta.class;
 
+	// --8<-- [start:doCreateEntity]
 	@Override
 	protected CreateResult<MyExample3167DTO> doCreateEntity(MyEntity3167 entity, BusinessComponent bc) {
 		repository.save(entity);
@@ -42,6 +43,7 @@ public class MyExample3167Service extends VersionAwareResponseService<MyExample3
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:getActions]
 	@Override
 	public Actions<MyExample3167DTO> getActions() {
 		return Actions.<MyExample3167DTO>builder()
@@ -78,6 +80,7 @@ public class MyExample3167Service extends VersionAwareResponseService<MyExample3
 				)
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

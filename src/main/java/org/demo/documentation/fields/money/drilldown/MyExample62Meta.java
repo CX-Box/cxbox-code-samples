@@ -27,8 +27,10 @@ public class MyExample62Meta extends FieldMetaBuilder<MyExample62DTO> {
 				"/screen/myexample62/view/myexample62form/" + PlatformMyExample62Controller.myExampleBc62 + "/" + id
 		);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 	// --8<-- [end:drilldown]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample62DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

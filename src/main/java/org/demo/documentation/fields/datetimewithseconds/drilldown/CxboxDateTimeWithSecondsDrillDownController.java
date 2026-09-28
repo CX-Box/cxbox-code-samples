@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateTimeWithSecondsDrillDownController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateTimeWithSecondsDrillDown(DateTimeWithSecondsDrillDownService.class);
 	// --8<-- [end:bc]
 

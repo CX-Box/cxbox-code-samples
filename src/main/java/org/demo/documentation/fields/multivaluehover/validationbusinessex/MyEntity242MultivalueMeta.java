@@ -17,7 +17,6 @@ public class MyEntity242MultivalueMeta extends FieldMetaBuilder<MyEntity242Multi
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity242MultivalueDTO> fields,
 									  InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.multivaluehover.validationbusinessex.MyEntity242MultivalueDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.multivaluehover.validationbusinessex.MyEntity242MultivalueDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -28,5 +27,6 @@ public class MyEntity242MultivalueMeta extends FieldMetaBuilder<MyEntity242Multi
 									 Long parentId) {
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

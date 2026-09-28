@@ -85,5 +85,6 @@ public class MyExample421Meta extends FieldMetaBuilder<MyExample421DTO> {
 		fields.enableFilter(MyExample421DTO_.hiddenType);
 		fields.enableFilter(MyExample421DTO_.inputField);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

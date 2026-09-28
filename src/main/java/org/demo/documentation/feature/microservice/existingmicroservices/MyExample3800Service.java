@@ -49,5 +49,6 @@ public class MyExample3800Service extends AnySourceVersionAwareResponseService<M
 								.build()).
 				build();
 	}
+	// --8<-- [end:getActions]
 
 }

@@ -16,7 +16,6 @@ public class Myexample3261Pick0Meta extends FieldMetaBuilder<Myexample3261Pick0D
 		fields.setEnabled(Myexample3261Pick0DTO_.mnemonic);
 		fields.setEnabled(Myexample3261Pick0DTO_.code);
 		fields.setEnabled(Myexample3261Pick0DTO_.description);
-		fields.setEnabled(Myexample3261Pick0DTO_.id);
 		fields.setEnabled(Myexample3261Pick0DTO_.department);
 	}
 

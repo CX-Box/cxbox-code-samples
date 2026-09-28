@@ -14,7 +14,6 @@ public class MyEntity3052PicklistPickMeta extends FieldMetaBuilder<MyEntity3052P
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3052PicklistPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity3052PicklistPickDTO_.id);
 		fields.setEnabled(MyEntity3052PicklistPickDTO_.customField);
 	}
 

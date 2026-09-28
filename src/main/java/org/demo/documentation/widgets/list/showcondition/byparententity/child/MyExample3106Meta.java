@@ -22,5 +22,6 @@ public class MyExample3106Meta extends FieldMetaBuilder<MyExample3106DTO> {
 	public void buildIndependentMeta(FieldsMeta<MyExample3106DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		fields.enableFilter(MyExample3106DTO_.customField);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

@@ -31,6 +31,7 @@ public class DateValidationRuntimeExEntityMeta extends FieldMetaBuilder<DateVali
 									 InnerBcDescription bcDescription, Long parentId) {
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

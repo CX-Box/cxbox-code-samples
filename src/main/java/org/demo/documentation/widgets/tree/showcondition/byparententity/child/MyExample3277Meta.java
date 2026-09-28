@@ -27,5 +27,6 @@ public class MyExample3277Meta extends FieldMetaBuilder<MyExample3277DTO> {
 		fields.enableFilter(MyExample3277DTO_.customFieldMoney);
 		fields.enableFilter(MyExample3277DTO_.customField);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

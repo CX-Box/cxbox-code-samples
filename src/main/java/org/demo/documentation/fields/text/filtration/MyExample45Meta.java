@@ -31,6 +31,7 @@ public class MyExample45Meta extends FieldMetaBuilder<MyExample45DTO> {
 		fields.enableFilter(MyExample45DTO_.customField);
 		fields.enableSort(MyExample45DTO_.customField);
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

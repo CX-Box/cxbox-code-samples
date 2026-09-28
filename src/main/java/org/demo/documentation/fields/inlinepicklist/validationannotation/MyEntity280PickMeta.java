@@ -19,7 +19,6 @@ public class MyEntity280PickMeta extends FieldMetaBuilder<MyEntity280PickDTO> {
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity280PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity280PickDTO_.id);
 		fields.setEnabled(MyEntity280PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -32,5 +31,6 @@ public class MyEntity280PickMeta extends FieldMetaBuilder<MyEntity280PickDTO> {
 		fields.enableSort(MyEntity280PickDTO_.customField);
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

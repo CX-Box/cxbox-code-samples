@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputDrilldownController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	InputDrilldown(InputDrilldownService.class);
 	// --8<-- [end:bc]
 

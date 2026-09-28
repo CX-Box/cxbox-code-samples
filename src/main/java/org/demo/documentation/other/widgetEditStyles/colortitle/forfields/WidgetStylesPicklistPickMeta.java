@@ -14,7 +14,6 @@ public class WidgetStylesPicklistPickMeta extends FieldMetaBuilder<WidgetStylesP
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<WidgetStylesPicklistPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(WidgetStylesPicklistPickDTO_.id);
 		fields.setEnabled(WidgetStylesPicklistPickDTO_.customField);
 	}
 

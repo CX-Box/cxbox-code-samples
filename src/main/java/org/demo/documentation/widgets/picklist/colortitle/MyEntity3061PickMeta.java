@@ -41,7 +41,6 @@ public class MyEntity3061PickMeta extends FieldMetaBuilder<MyEntity3061PickDTO> 
 		fields.setEnabled(MyEntity3061PickDTO_.customFieldColorInlinePicklist);
 		fields.setEnabled(MyEntity3061PickDTO_.customFieldColorMultivalue);
 		fields.setEnabled(MyEntity3061PickDTO_.customFieldColorMultivalueHover);
-		fields.setEnabled(MyEntity3061PickDTO_.id);
 		fields.setEnabled(MyEntity3061PickDTO_.customField);
 	}
 

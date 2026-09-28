@@ -39,6 +39,7 @@ public class MyExample3131Service extends VersionAwareResponseService<MyExample3
 				.save(sv -> sv.text("Save"))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

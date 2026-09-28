@@ -19,7 +19,6 @@ public class MyEntity124PickPickListMeta extends FieldMetaBuilder<MyEntity124Pic
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity124PickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(org.demo.documentation.fields.picklist.drilldown.MyEntity124PickDTO_.id);
 		fields.setEnabled(org.demo.documentation.fields.picklist.drilldown.MyEntity124PickDTO_.customField);
 	}
 	// --8<-- [end:buildRowDependentMeta]
@@ -34,5 +33,6 @@ public class MyEntity124PickPickListMeta extends FieldMetaBuilder<MyEntity124Pic
 
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

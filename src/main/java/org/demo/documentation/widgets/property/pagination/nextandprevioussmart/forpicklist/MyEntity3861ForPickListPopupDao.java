@@ -147,6 +147,7 @@ public class MyEntity3861ForPickListPopupDao extends AbstractAnySourceBaseDAO<My
 		).getBody();
 	}
 	// --8<-- [end:update]
+	// --8<-- [end:update]
 
 	@Override
 	// --8<-- [start:update]

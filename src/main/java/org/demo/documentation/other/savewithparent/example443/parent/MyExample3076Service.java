@@ -56,5 +56,6 @@ public class MyExample3076Service extends AnySourceVersionAwareResponseService<M
 				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 }

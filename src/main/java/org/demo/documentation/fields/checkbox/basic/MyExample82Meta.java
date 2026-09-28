@@ -34,5 +34,6 @@ public class MyExample82Meta extends FieldMetaBuilder<MyExample82DTO> {
 			fields.setForceActive(MyExample82DTO_.customField);
 		}
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

@@ -29,5 +29,6 @@ public class MyExample236Meta extends FieldMetaBuilder<MyExample236DTO> {
 		fields.enableFilter(MyExample236DTO_.customFieldMultiHover);
 
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 }

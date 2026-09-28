@@ -46,14 +46,14 @@ public class MyExample3613Meta extends FieldMetaBuilder<MyExample3613DTO> {
 		fields.setDrilldown(
 				MyExample3613DTO_.customFieldRelative,
 				DrillDownType.RELATIVE,
-				"/screen/myexample3613/view/myexample3613form/" + CxboxMyExample3613Controller.myexample3613 + "/" + id
+				"ui/#/screen/myexample3613/view/myexample3613form/" + CxboxMyExample3613Controller.myexample3613 + "/" + id
 		);
 		// --8<-- [end:buildRowDependentMetaRELATIVE]
 		// --8<-- [start:buildRowDependentMetaRELATIVE_NEW]
 		fields.setDrilldown(
 				MyExample3613DTO_.customFieldRelativeNew,
 				DrillDownType.RELATIVE_NEW,
-				"/screen/myexample3613/view/myexample3613form/" + CxboxMyExample3613Controller.myexample3613 + "/" + id
+				"ui/#/screen/myexample3613/view/myexample3613form/" + CxboxMyExample3613Controller.myexample3613 + "/" + id
 		);
 		// --8<-- [end:buildRowDependentMetaRELATIVE_NEW]
 	}

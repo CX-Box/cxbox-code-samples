@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxMaxInputController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	maxInput(MaxInputService.class);
 	// --8<-- [end:bc]
 

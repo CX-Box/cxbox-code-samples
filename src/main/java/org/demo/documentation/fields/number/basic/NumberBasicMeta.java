@@ -29,6 +29,7 @@ public class NumberBasicMeta extends FieldMetaBuilder<NumberBasicDTO> {
 	public void buildIndependentMeta(FieldsMeta<NumberBasicDTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

@@ -29,6 +29,7 @@ public class DateTimeWithSecondsCreateEditMeta extends FieldMetaBuilder<DateTime
 									 InnerBcDescription bcDescription, Long parentId) {
 		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

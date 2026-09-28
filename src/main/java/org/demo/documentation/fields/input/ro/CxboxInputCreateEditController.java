@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxInputCreateEditController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	InputCreateEdit(InputCreateEditService.class);
 	// --8<-- [end:bc]
 

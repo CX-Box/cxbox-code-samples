@@ -32,6 +32,7 @@ public class MyExample11Meta extends FieldMetaBuilder<MyExample11DTO> {
 	public void buildIndependentMeta(FieldsMeta<MyExample11DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		//
 	}
+	// --8<-- [end:buildIndependentMeta]
 
 
 }

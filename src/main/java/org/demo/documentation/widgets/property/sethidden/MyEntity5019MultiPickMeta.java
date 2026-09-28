@@ -23,7 +23,6 @@ public class MyEntity5019MultiPickMeta extends FieldMetaBuilder<MyEntity5019Mult
 
 		fields.setEnumValues(MyEntity5019MultiPickDTO_.customFieldDictionary, CustomFieldDictionaryEnum1.values());
 		fields.setEnabled(MyEntity5019MultiPickDTO_.customFieldDictionary);
-		fields.setEnabled(org.demo.documentation.widgets.property.sethidden.MyEntity5019MultiPickDTO_.id);
 		fields.setEnabled(org.demo.documentation.widgets.property.sethidden.MyEntity5019MultiPickDTO_.customField);
 	}
 

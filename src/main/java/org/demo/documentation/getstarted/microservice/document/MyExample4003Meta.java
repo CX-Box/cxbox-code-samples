@@ -14,11 +14,13 @@ public class MyExample4003Meta extends AnySourceFieldMetaBuilder<MyExample4003DT
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4003DTO> fields, BcDescription bc,
 									  String id, String parentId) {
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample4003DTO> fields, BcDescription bcDescription,
 									 String parentId) {
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 }

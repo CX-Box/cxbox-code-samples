@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxDateSortingController implements EnumBcIdentifier {
 
 
+	// --8<-- [start:bc]
 	dateSorting(DateSortingService.class);
 	// --8<-- [end:bc]
 

@@ -13,7 +13,6 @@ public class MyEntity4903OCPPickPickMeta extends FieldMetaBuilder<MyEntity4903OC
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity4903OCPPickPickDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity4903OCPPickPickDTO_.id);
 		fields.setEnabled(MyEntity4903OCPPickPickDTO_.customField);
 	}
 

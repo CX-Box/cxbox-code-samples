@@ -76,6 +76,7 @@ public class MyExample3274Service extends VersionAwareResponseService<MyExample3
 				)
 				.build();
 	}
+	// --8<-- [end:getActions]
 
 
 }

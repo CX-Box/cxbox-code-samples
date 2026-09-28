@@ -14,7 +14,6 @@ public class MyEntity3600PickMultivalueMeta extends FieldMetaBuilder<MyEntity360
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyEntity3600PickMultivalueDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
-		fields.setEnabled(MyEntity3600PickMultivalueDTO_.id);
 		fields.setEnabled(MyEntity3600PickMultivalueDTO_.customField);
 	}
 

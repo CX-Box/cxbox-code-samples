@@ -28,7 +28,9 @@ public class MyExample9Service extends VersionAwareResponseService<MyExample9DTO
 	// --8<-- [start:doUpdateEntity]
 	@Override
 	protected ActionResultDTO<MyExample9DTO> doUpdateEntity(MyEntity9 entity, MyExample9DTO data, BusinessComponent bc) {
-
+		if (data.isFieldChanged(MyExample9DTO_.customField)) {
+			entity.setCustomField(data.getCustomField());
+		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 	// --8<-- [end:doUpdateEntity]

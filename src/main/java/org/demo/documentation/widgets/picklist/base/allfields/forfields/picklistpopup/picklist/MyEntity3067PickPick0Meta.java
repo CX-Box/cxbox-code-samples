@@ -38,7 +38,6 @@ public class MyEntity3067PickPick0Meta extends FieldMetaBuilder<MyEntity3067Pick
 		fields.setEnabled(MyEntity3067PickPick0DTO_.customFieldInlinePicklist);
 		fields.setEnabled(MyEntity3067PickPick0DTO_.customFieldMultivalue);
 		fields.setEnabled(MyEntity3067PickPick0DTO_.customFieldMultivalueHover);
-		fields.setEnabled(MyEntity3067PickPick0DTO_.id);
 		fields.setEnabled(MyEntity3067PickPick0DTO_.customFieldPick);
 	}
 

@@ -154,6 +154,7 @@ public class MyEntity3861Dao extends AbstractAnySourceBaseDAO<MyEntity3861OutSer
 		).getBody();
 	}
 	// --8<-- [end:update]
+	// --8<-- [end:update]
 
 	@Override
 	// --8<-- [start:update]

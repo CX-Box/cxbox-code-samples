@@ -21,8 +21,10 @@ public class MyExample61Meta extends FieldMetaBuilder<MyExample61DTO> {
 									  Long id, Long parentId) {
 
 	}
+	// --8<-- [end:buildRowDependentMeta]
 	// --8<-- [end:ro]
 
+	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample61DTO> fields, InnerBcDescription bcDescription, Long parentId) {
 		if (configuration.getForceActiveEnabled()) {

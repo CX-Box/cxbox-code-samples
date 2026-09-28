@@ -17,6 +17,7 @@ public class MyExample3077Meta extends AnySourceFieldMetaBuilder<MyExample3077DT
 		fields.setEnabled(MyExample3077DTO_.customField);
 		fields.setRequired(MyExample3077DTO_.customField);
 	}
+	// --8<-- [end:buildRowDependentMeta]
 
 
 	@Override

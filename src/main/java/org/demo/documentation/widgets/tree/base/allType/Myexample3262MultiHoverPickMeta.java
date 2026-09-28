@@ -13,7 +13,6 @@ public class Myexample3262MultiHoverPickMeta extends FieldMetaBuilder<Myexample3
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3262MultiHoverPickDTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
-		fields.setEnabled(Myexample3262MultiHoverPickDTO_.id);
 		fields.setEnabled(Myexample3262MultiHoverPickDTO_.customField);
 	}
 
