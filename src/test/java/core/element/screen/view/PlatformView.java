@@ -19,6 +19,7 @@ import core.element.widget.list.realization.inline.list.PlatformListWidgetInline
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineForm;
 import core.element.widget.cardlist.CardListWidget;
+import core.element.widget.filepreview.FilePreviewWidget;
 import core.element.widget.statblock.StatsBlockWidget;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
@@ -168,6 +169,14 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public CardListWidget cardListByName(String name) {
 		return new CardListWidget(PlatformIdentifier.NAME, name);
+	}
+
+	public FilePreviewWidget filePreview(String title) {
+		return new FilePreviewWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	public FilePreviewWidget filePreviewByName(String name) {
+		return new FilePreviewWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {

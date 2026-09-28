@@ -17,4 +17,6 @@ public class MyEntity5006 extends BaseEntity {
 	private String customField;
 	@Column
 	private String customFieldId;
+	@Column
+	private Boolean customFieldShowCondition;
 }
