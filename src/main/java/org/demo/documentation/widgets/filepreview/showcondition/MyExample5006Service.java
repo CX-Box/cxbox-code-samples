@@ -28,6 +28,7 @@ public class MyExample5006Service extends VersionAwareResponseService<MyExample5
 	protected ActionResultDTO<MyExample5006DTO> doUpdateEntity(MyEntity5006 entity, MyExample5006DTO data, BusinessComponent bc) {
 		setIfChanged(data, MyExample5006DTO_.customFieldId, entity::setCustomFieldId);
 		setIfChanged(data, MyExample5006DTO_.customField, entity::setCustomField);
+		setIfChanged(data, MyExample5006DTO_.customFieldShowCondition, entity::setCustomFieldShowCondition);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 

@@ -135,6 +135,10 @@ public abstract class BaseTestForSamples {
 			options.setCapability("goog:loggingPrefs", pref);
 		}
 		System.setProperty("chromeoptions.prefs", "credentials_enable_service=false, password_manager_enabled=false");
+		if (DocShots.enabled()) {
+			// Selenide makes Chrome download pdf files instead of showing them; the doc pictures need the pdf on the page
+			options.setExperimentalOption("prefs", Map.of("plugins.always_open_pdf_externally", false));
+		}
 		return options;
 	}
 

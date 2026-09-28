@@ -1,19 +1,19 @@
 {
-  "name": "MyExample5006Form",
+  "name": "MyExample5011Form",
   "title": "Form",
   "type": "Form",
-  "bc": "myexample5006",
+  "bc": "myexample5011",
   "fields": [
+    {
+      "label": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId"
+    },
     {
       "label": "Custom Field",
       "key": "customField",
-      "type": "fileUpload",
-      "fileIdKey": "customFieldId"
-    },
-    {
-      "label": "Show preview",
-      "key": "customFieldShowCondition",
-      "type": "checkbox"
+      "type": "input"
     }
   ],
   "options": {
@@ -27,7 +27,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customField",
+              "fieldKey": "document",
               "span": 12
             }
           ]
@@ -35,7 +35,7 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldShowCondition",
+              "fieldKey": "customField",
               "span": 12
             }
           ]
