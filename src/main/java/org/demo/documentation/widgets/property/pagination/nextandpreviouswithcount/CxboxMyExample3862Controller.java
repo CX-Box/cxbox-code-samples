@@ -7,6 +7,7 @@ import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forassoc.MyEntity3862AssocPickService;
 import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forpicklist.MyEntity3862PickPickService;
+import org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forcardlist.MyEntity3862CardService;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -14,7 +15,8 @@ public enum CxboxMyExample3862Controller implements EnumBcIdentifier {
 
 
 	myexample3862(MyExample3862Service.class), myEntity3862AssocPick(myexample3862, MyEntity3862AssocPickService.class),
-	myEntity3862PickPick(myexample3862, MyEntity3862PickPickService.class);
+	myEntity3862PickPick(myexample3862, MyEntity3862PickPickService.class),
+	myEntity3862Card(MyEntity3862CardService.class);
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample3862Controller> Holder = new Holder<>(

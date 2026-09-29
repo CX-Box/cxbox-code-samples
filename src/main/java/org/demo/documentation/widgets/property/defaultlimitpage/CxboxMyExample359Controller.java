@@ -7,6 +7,7 @@ import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
 import org.cxbox.core.crudma.bc.impl.BcDescription;
 import org.demo.documentation.widgets.property.defaultlimitpage.forassoc.MyEntity359AssocPickService;
 import org.demo.documentation.widgets.property.defaultlimitpage.forpick.MyEntity359PickPickService;
+import org.demo.documentation.widgets.property.defaultlimitpage.forcardlist.MyEntity359CardService;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -15,7 +16,8 @@ public enum CxboxMyExample359Controller implements EnumBcIdentifier {
 
 	myexample359(MyExample359Service.class),
 	myEntity359PickPick(myexample359, MyEntity359PickPickService.class),
-	myEntity359AssocPick(myexample359, MyEntity359AssocPickService.class);
+	myEntity359AssocPick(myexample359, MyEntity359AssocPickService.class),
+	myEntity359Card(MyEntity359CardService.class);
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample359Controller> Holder = new Holder<>(

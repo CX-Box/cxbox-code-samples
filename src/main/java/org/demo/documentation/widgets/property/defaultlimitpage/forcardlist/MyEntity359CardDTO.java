@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.cardlist.base;
+package org.demo.documentation.widgets.property.defaultlimitpage.forcardlist;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample5300DTO extends DataResponseDTO {
+public class MyEntity359CardDTO extends DataResponseDTO {
 
 	private String document;
 
@@ -18,7 +18,7 @@ public class MyExample5300DTO extends DataResponseDTO {
 
 	private String customFieldDescription;
 
-	public MyExample5300DTO(MyEntity5300 entity) {
+	public MyEntity359CardDTO(MyEntity359Card entity) {
 		this.id = entity.getId().toString();
 		this.document = entity.getDocument();
 		this.documentId = entity.getDocumentId();

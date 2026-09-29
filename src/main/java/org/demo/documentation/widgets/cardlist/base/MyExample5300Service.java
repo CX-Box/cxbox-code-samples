@@ -7,8 +7,6 @@ import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
-import org.demo.conf.cxbox.extension.fulltextsearch.FullTextSearchExt;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @SuppressWarnings("java:S1170")
@@ -47,16 +45,5 @@ public class MyExample5300Service extends VersionAwareResponseService<MyExample5
 				.build();
 	}
 	// --8<-- [end:getActions]
-
-
-	@Override
-	protected Specification<MyEntity5300> getSpecification(BusinessComponent bc) {
-		var specification = super.getSpecification(bc);
-		return FullTextSearchExt.getFullTextSearchFilterParam(bc)
-				.map(value -> org.cxbox.api.data.dao.SpecificationUtils.and(
-						(Specification<MyEntity5300>) (root, query, cb) -> FullTextSearchExt.likeIgnoreCase(value, cb, root.get(MyEntity5300_.customField)),
-						specification))
-				.orElse(specification);
-	}
 
 }

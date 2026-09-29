@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.cardlist.base;
+package org.demo.documentation.widgets.property.filtration.fulltextsearch.forcardlist;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample5300DTO extends DataResponseDTO {
+public class MyEntity3614CardDTO extends DataResponseDTO {
 
 	private String document;
 
@@ -18,7 +18,7 @@ public class MyExample5300DTO extends DataResponseDTO {
 
 	private String customFieldDescription;
 
-	public MyExample5300DTO(MyEntity5300 entity) {
+	public MyEntity3614CardDTO(MyEntity3614Card entity) {
 		this.id = entity.getId().toString();
 		this.document = entity.getDocument();
 		this.documentId = entity.getDocumentId();
