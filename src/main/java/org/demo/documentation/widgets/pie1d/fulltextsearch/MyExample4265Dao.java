@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.dao.AnySourceBaseDAO;
@@ -48,7 +48,7 @@ public class MyExample4265Dao extends AbstractAnySourceBaseDAO<MyExample4265DTO>
 	public Page<MyExample4265DTO> getList(final BusinessComponent bc, final QueryParameters queryParameters) {
 		Optional<String> text = FullTextSearchExt.getFullTextSearchFilterParam(bc);
 		return new PageImpl<>(getStats().stream()
-				.filter(dto -> text.map(value -> StringUtils.containsIgnoreCase(dto.getTitle(), value)).orElse(true))
+				.filter(dto -> text.map(value -> Strings.CI.contains(dto.getTitle(), value)).orElse(true))
 				.toList());
 	}
 	// --8<-- [end:getList]

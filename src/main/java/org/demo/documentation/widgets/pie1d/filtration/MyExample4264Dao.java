@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.cxbox.core.controller.param.FilterParameter;
 import org.cxbox.core.controller.param.QueryParameters;
 import org.cxbox.core.controller.param.SearchOperation;
@@ -51,7 +51,7 @@ public class MyExample4264Dao extends AbstractAnySourceBaseDAO<MyExample4264DTO>
 		for (FilterParameter filter : queryParameters.getFilter()) {
 			if (MyExample4264DTO_.title.getName().equals(filter.getName())
 					&& filter.getOperation() == SearchOperation.CONTAINS) {
-				stats = stats.filter(dto -> StringUtils.containsIgnoreCase(dto.getTitle(), filter.getStringValue()));
+				stats = stats.filter(dto -> Strings.CI.contains(dto.getTitle(), filter.getStringValue()));
 			}
 		}
 		return new PageImpl<>(stats.toList());
