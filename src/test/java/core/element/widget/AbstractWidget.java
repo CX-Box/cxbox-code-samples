@@ -42,12 +42,12 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 	}
 
 	/** The widget without waiting for it: a widget hidden by its showCondition is not on the page. */
-	static SelenideElement widgetByTitle(TypeWidget type, String title) {
+	protected static SelenideElement widgetByTitle(TypeWidget type, String title) {
 		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-title='" + title
 				+ "']");
 	}
 
-	static SelenideElement widgetByName(TypeWidget type, String name) {
+	protected static SelenideElement widgetByName(TypeWidget type, String name) {
 		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-name='" + name
 				+ "']");
 	}

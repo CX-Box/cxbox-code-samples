@@ -15,16 +15,19 @@ public class MyExample4214Service extends AnySourceVersionAwareResponseService<M
 
 	@Getter(onMethod_ = @Override)
 	private final Class<MyExample4214Meta> meta = MyExample4214Meta.class;
+
 	@Getter(onMethod_ = @Override)
 	private final Class<MyExample4214Dao> dao = MyExample4214Dao.class;
 
 	@Override
 	protected CreateResult<MyExample4214DTO> doCreateEntity(MyExample4214DTO entity, BusinessComponent bc) {
-		return new CreateResult<>(entityToDto(bc, entity));
+		throw new IllegalStateException();
 	}
 
 	@Override
-	protected ActionResultDTO<MyExample4214DTO> doUpdateEntity(MyExample4214DTO entity, MyExample4214DTO data, BusinessComponent bc) {
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+	protected ActionResultDTO<MyExample4214DTO> doUpdateEntity(MyExample4214DTO entity, MyExample4214DTO data,
+			BusinessComponent bc) {
+		throw new IllegalStateException();
 	}
+
 }

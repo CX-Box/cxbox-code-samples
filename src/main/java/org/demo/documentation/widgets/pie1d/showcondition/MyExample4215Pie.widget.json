@@ -1,17 +1,23 @@
 {
   "name": "MyExample4215Pie",
-  "title": "Sales count per client",
+  "title": "Show condition widget",
   "type": "Pie1D",
   "bc": "myExampleBc4215",
+  "showCondition": {
+    "bcName": "myExampleBc4215Parent",
+    "params": {
+      "fieldKey": "customFieldShowCondition",
+      "value": true
+    }
+  },
   "fields": [
     {
-      "title": "value",
+      "title": "Sales",
       "key": "value",
-      "type": "number",
-      "drillDown": true
+      "type": "number"
     },
     {
-      "title": "title",
+      "title": "Client",
       "key": "title",
       "type": "input"
     }
@@ -22,7 +28,7 @@
       "titleFieldKey": "title",
       "total": {
         "func": "sum",
-        "description": "Total "
+        "description": "Total"
       }
     }
   }
