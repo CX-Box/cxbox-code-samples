@@ -1,8 +1,8 @@
 {
-  "name": "MyExample5300CardList",
-  "title": "CardList",
+  "name": "MyExample3614CardList",
+  "title": "CardList FullTextSearch",
   "type": "CardList",
-  "bc": "myexample5300",
+  "bc": "myEntity3614Card",
   "fields": [
     {
       "title": "Document",
@@ -32,11 +32,11 @@
       "descriptionFieldKey": "customFieldDescription"
     },
     "create": {
-      "widget": "MyExample5300Form",
+      "widget": "MyExample3614CardForm",
       "style": "popup"
     },
     "edit": {
-      "widget": "MyExample5300Form",
+      "widget": "MyExample3614CardForm",
       "style": "popup"
     },
     "actionGroups": {
@@ -44,6 +44,10 @@
         "create",
         "delete"
       ]
+    },
+    "fullTextSearch": {
+      "enabled": true,
+      "placeholder": "Find by title or description"
     }
   }
 }

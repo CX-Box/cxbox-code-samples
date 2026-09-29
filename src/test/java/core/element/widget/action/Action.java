@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
+import io.qameta.allure.Allure;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -121,6 +123,26 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	public W click(String name) {
 		action(name).click();
 		return this.widget;
+	}
+
+	/**
+	 * Uploads the files with the upload button of the widget, like the choice of the files in the dialog of the button
+	 * ({@code associate} with {@code "subtype": "multiFileUpload"}). Waits until the files are uploaded and the widget
+	 * shows them. Top level actions only.
+	 */
+	public W setValue(File... files) {
+		if (parent != null) {
+			throw new UnsupportedOperationException("setValue supports top level actions only");
+		}
+		return Allure.step("Uploading the files with the action \"" + name + "\"", step -> {
+			AbstractWidget.logTime(step);
+			SelenideElement input = element().closest(".ant-upload").$("input[type='file']");
+			// the files are uploaded one by one, then the widget sends them with associate and reads the records again
+			PageRequests.runAndWaitDelayedRequests(() -> input.uploadFile(files),
+					widget.getExpectations().getTimeout(), widget.getExpectations().getOverTimeout());
+			waitOperationFinished();
+			return widget;
+		});
 	}
 	@Override
 	public SelenideElement element() {

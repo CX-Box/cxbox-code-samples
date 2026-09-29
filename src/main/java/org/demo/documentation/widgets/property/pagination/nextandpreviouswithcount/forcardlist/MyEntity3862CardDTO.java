@@ -1,4 +1,4 @@
-package org.demo.documentation.widgets.cardlist.base;
+package org.demo.documentation.widgets.property.pagination.nextandpreviouswithcount.forcardlist;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyExample5300DTO extends DataResponseDTO {
+public class MyEntity3862CardDTO extends DataResponseDTO {
 
 	private String document;
 
@@ -18,7 +18,7 @@ public class MyExample5300DTO extends DataResponseDTO {
 
 	private String customFieldDescription;
 
-	public MyExample5300DTO(MyEntity5300 entity) {
+	public MyEntity3862CardDTO(MyEntity3862Card entity) {
 		this.id = entity.getId().toString();
 		this.document = entity.getDocument();
 		this.documentId = entity.getDocumentId();
