@@ -14,6 +14,7 @@ public class MyExample5006Meta extends FieldMetaBuilder<MyExample5006DTO> {
 									  Long id, Long parentId) {
 		fields.setEnabled(MyExample5006DTO_.customFieldId);
 		fields.setEnabled(MyExample5006DTO_.customField);
+		fields.setEnabled(MyExample5006DTO_.customFieldShowCondition);
 	}
 
 	@Override

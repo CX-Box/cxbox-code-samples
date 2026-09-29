@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.core.file.dto.CxboxResponseDTO;
 import org.cxbox.core.file.dto.FileUploadDto;
-import org.demo.services.CustomFileUploadServices;
+import org.demo.services.SampleFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MyEntity5007TestDataLoadService {
 
-	private final CustomFileUploadServices customFileUploadServices;
+	private final SampleFiles sampleFiles;
 	@Autowired
 	MyEntity5007Repository repository;
 	@Autowired
@@ -25,7 +25,7 @@ public class MyEntity5007TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadPdf("1");
+		CxboxResponseDTO<FileUploadDto> file = sampleFiles.contract();
 		repository.save(new MyEntity5007().setCustomField(file.getData().getName())
 				.setCustomFieldId(file.getData().getId()));
 	}
