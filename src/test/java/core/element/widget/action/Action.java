@@ -19,6 +19,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
+import io.qameta.allure.Allure;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +33,6 @@ import java.time.Duration;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static com.codeborne.selenide.FileDownloadMode.FOLDER;
 import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -193,6 +193,20 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 			uploadAndWait(widget.element().$(".ant-upload-drag input[type='file']"), files);
 		});
 		return this.widget;
+	}
+	public W setValue(File... files) {
+		if (parent != null) {
+			throw new UnsupportedOperationException("setValue supports top level actions only");
+		}
+		return Allure.step("Uploading the files with the action \"" + name + "\"", step -> {
+			AbstractWidget.logTime(step);
+			SelenideElement input = element().closest(".ant-upload").$("input[type='file']");
+			// the files are uploaded one by one, then the widget sends them with associate and reads the records again
+			PageRequests.runAndWaitDelayedRequests(() -> input.uploadFile(files),
+					widget.getExpectations().getTimeout(), widget.getExpectations().getOverTimeout());
+			waitOperationFinished();
+			return widget;
+		});
 	}
 
 	/**

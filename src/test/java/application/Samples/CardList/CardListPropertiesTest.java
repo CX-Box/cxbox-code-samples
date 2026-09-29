@@ -7,6 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/** The CardList widget: title, status, drilldown and the read widget. */
+/** The CardList widget: title, status, drilldown, the read widget and the CardList tabs of the property samples. */
 @DisplayName("CardList. Properties")
 @Epic("Samples")
 @Feature(CardListPropertiesTest.ARTICLE)
@@ -136,6 +137,88 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		DocShots.stop();
 		cards.fullTextSearch("");
 		assertThat(cards.rows().streamCurrentPage()).hasSize(5);
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Multi-upload files")
+	@Description("The Add Files button uploads the file, the file becomes a new card")
+	void multiUpload() {
+		var cards = PlatformApp.screen("File options multi-upload files")
+				.secondLevelView("CardList")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample6100/view/myexample6100cardlist"))
+				.cardListByName("MyExample6100CardList");
+		long before = cards.rows().streamCurrentPage().count();
+		DocShots.gif(ARTICLE, "multiupload.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
+		cards.actions().action("Add Files").setValue(CardListBasicTest.resourceFile("Hope_of_Humanity.jpg"));
+		assertThat(cards.rows().streamCurrentPage()).hasSize((int) before + 1);
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Hope_of_Humanity.jpg"));
+		DocShots.stop();
+		cards.rows().row(0).burgerAction("Delete").click();
+		assertThat(cards.rows().streamCurrentPage()).hasSize((int) before);
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@Feature("widget/type/property/filtration")
+	@DisplayName("Full text search: the CardList tab of the property sample")
+	@Description("The search box leaves the cards with the text in the title or in the description")
+	void fullTextSearchPropertySample() {
+		var screen = PlatformApp.screen("Widget property Filtration");
+		screen.secondLevelView("Widget property FullTextSearch");
+		var cards = screen.thirdLevelView("CardList")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3616/view/myexample3614cardlist"))
+				.cardListByName("MyExample3614CardList");
+		DocShots.gif("widget/type/property/filtration", "fulltextsearch_cardlist.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
+		cards.fullTextSearch("weekly");
+		assertThat(cards.rows().streamCurrentPage()).hasSize(1);
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Meeting notes"));
+		DocShots.stop();
+		cards.fullTextSearch("");
+		assertThat(cards.rows().streamCurrentPage()).hasSize(5);
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@Feature("widget/type/property/pagination")
+	@DisplayName("Pagination nextAndPreviousWithCount: the CardList tab of the property sample")
+	@Description("The pagination shows the pages from the count of the records, the next page shows the rest of the cards")
+	void paginationPropertySample() {
+		var screen = PlatformApp.screen("Widget property Pagination");
+		screen.secondLevelView("nextAndPreviousWithCount");
+		var cards = screen.thirdLevelView("CardList")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3862cardlist"))
+				.cardListByName("MyExample3862CardList");
+		AtomicInteger pages = new AtomicInteger();
+		cards.pagination().checkPageCount(pages::set);
+		assertThat(pages.get()).isEqualTo(2);
+		DocShots.gif("widget/type/property/pagination", "nextAndPreviousWithCount_cardlist.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
+		cards.pagination().nextPage();
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Contract"));
+		cards.pagination().firstPage();
+		DocShots.stop();
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@Feature("widget/type/property/defaultlimitpage")
+	@DisplayName("Default page limit: the CardList tab of the property sample")
+	@Description("The page limit of the business component from BC_PROPERTIES cuts the page to 2 cards")
+	void defaultLimitPropertySample() {
+		var cards = PlatformApp.screen("Widget property Default limit page")
+				.secondLevelView("CardList")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample359/view/myexample359cardlist"))
+				.cardListByName("MyExample359CardList");
+		assertThat(cards.rows().streamCurrentPage()).hasSize(2);
+		AtomicInteger pages = new AtomicInteger();
+		cards.pagination().checkPageCount(pages::set);
+		assertThat(pages.get()).isEqualTo(3);
+		DocShots.png(cards.element(), "widget/type/property/defaultlimitpage", "cardlist_default_limit.png", 1660, 760);
 	}
 
 }
