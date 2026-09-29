@@ -1,0 +1,32 @@
+{
+  "name": "MyExample4265Pie",
+  "title": "Sales per client",
+  "type": "Pie1D",
+  "bc": "myExampleBc4265",
+  "fields": [
+    {
+      "title": "Sales",
+      "key": "value",
+      "type": "number"
+    },
+    {
+      "title": "Client",
+      "key": "title",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart1D": {
+      "valueFieldKey": "value",
+      "titleFieldKey": "title",
+      "total": {
+        "func": "sum",
+        "description": "Total"
+      }
+    },
+    "fullTextSearch": {
+      "enabled": true,
+      "placeholder": "Find by client"
+    }
+  }
+}
