@@ -1,0 +1,46 @@
+{
+  "name": "MyExample3713MassList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3713mass",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "title": "File Encrypted",
+      "key": "fileEncrypt",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "encrypt",
+        "actionName": "massDocumentEncrypt",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "massDocumentEncrypt"
+      ]
+    }
+  }
+}
