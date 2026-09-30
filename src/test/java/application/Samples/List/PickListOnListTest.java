@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("List. Checking the basic functions for the PickList in the widget List")
 @Epic("Samples")
+@Feature(PickListOnListTest.ARTICLE)
 @Tag("Samples")
 @Tag("List")
 @Feature(PickListOnListTest.ARTICLE)
@@ -145,26 +146,34 @@ public class PickListOnListTest extends BaseTestForSamples {
 		var list = PlatformApp.screen("Picklist filtration")
 				.secondLevelView("List")
 				.listInline("List title");
+		DocShots.gif(ARTICLE, "img_filtr_list.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		list.headers().filter(fb -> fb.input("Custom Field", "Abs"));
 		var values = list.rows().streamCurrentPage()
 				.map(r -> r.pickList("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(values).isEqualTo(List.of("Abs data"));
+		list.headers().clearFilters();
+		DocShots.stop();
 	}
 
 	@Test
 	@Tag("Positive")
 	@DisplayName("The filtration by popup test")
-	@Description("The \"...\" button of the column filter opens the PickListPopup; the chosen record filters the list by id.")
+	@Description("The \"...\" button of the column filter opens the PickListPopup; the chosen record filters the list by id, and the \"...\" button is highlighted while this filter is applied.")
 	void filtrationPopup() {
 		var list = PlatformApp.screen("Picklist filtration")
 				.secondLevelView("List")
 				.listInline("List title");
+		DocShots.gif(ARTICLE, "img_filtr_popup_list.gif", 1660, 760, DocShots.Frame.WITH_SIDEBAR);
 		list.headers().filter(fb -> fb.pickList("Custom Field", List.of("Abs data")));
 		var values = list.rows().streamCurrentPage()
 				.map(r -> r.pickList("Custom Field").getValue())
 				.collect(Collectors.toList());
 		assertThat(values).isEqualTo(List.of("Abs data"));
+		list.headers().checkPopupFilterActive("Custom Field", active -> assertThat(active).isTrue());
+		DocShots.stop();
+		list.headers().clearFilters();
+		list.headers().checkPopupFilterActive("Custom Field", active -> assertThat(active).isFalse());
 	}
 
 	@Test
