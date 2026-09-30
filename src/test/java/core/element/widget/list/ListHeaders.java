@@ -16,6 +16,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 // need List widget
 @Slf4j
@@ -91,6 +92,23 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 		filterIcon.click();
 		moreButton.shouldNotBe(Condition.visible, widget().getExpectations().getTimeout());
 		return this;
+	}
+
+	/**
+	 * Chooses the filter group in the select above the table (BC_FILTER_GROUPS or a saved personal filter group).
+	 * "Show all" is the text of the select without a group, not an item: the group is reset by {@link #clearFilters()}.
+	 */
+	public W filterGroup(String name) {
+		widget().element()
+				.$("div[class*=\"Header__filtersContainer\"] .ant-select")
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+				.click();
+		$$("div.ant-select-dropdown:not(.ant-select-dropdown-hidden) li.ant-select-dropdown-menu-item")
+				.findBy(Condition.exactText(name))
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+				.click();
+		widget().getExpectations().getWaitAllElements(widget().element());
+		return widget();
 	}
 
 	public HeaderColumn<W, ROWS, ROW> headerColumn(String name) {

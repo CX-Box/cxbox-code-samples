@@ -1,6 +1,7 @@
 package core.element.screen.view;
 
 import com.codeborne.selenide.ElementsCollection;
+import core.common.Identifier;
 import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
@@ -19,6 +20,8 @@ import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline
 import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineForm;
 import core.element.widget.cardlist.CardListWidget;
 import core.element.widget.statblock.StatsBlockWidget;
+import core.element.widget.type.PlatformTypeWidgets;
+import core.element.widget.type.TypeWidget;
 import core.expectation.ExpectationPattern;
 
 import java.util.function.Consumer;
@@ -68,6 +71,24 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public PlatformListWidgetInlineForm listInlineFormByName(String name) {
 		return new PlatformListWidgetInlineForm(PlatformIdentifier.NAME, name);
+	}
+
+	/** AdditionalList widget: a List of its own type with the same API. */
+	public PlatformListWidgetInline additionalList(String title) {
+		return additionalList(PlatformIdentifier.TITLE, title);
+	}
+
+	public PlatformListWidgetInline additionalListByName(String name) {
+		return additionalList(PlatformIdentifier.NAME, name);
+	}
+
+	private static PlatformListWidgetInline additionalList(Identifier identifier, String textIdentifier) {
+		return new PlatformListWidgetInline(identifier, textIdentifier) {
+			@Override
+			public TypeWidget getType() {
+				return PlatformTypeWidgets.ADDITIONAL_LIST;
+			}
+		};
 	}
 
 	public PlatformAdditionalInfoWidget additionalInfo(String title) {

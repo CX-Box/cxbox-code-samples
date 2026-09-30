@@ -38,7 +38,7 @@ public abstract class AbstractFilter<
 	@Getter()
 	private final VALUE value;
 
-	SelenideElement formFilter = $("div[class*=\"ant-popover ant-popover-placement\"]");
+	SelenideElement formFilter = $("div.ant-popover[class*=\"ant-popover-placement\"]");
 
 	public AbstractFilter(WIDGET widget, PARENT parent, VALUE value) {
 		this.widget = widget;
@@ -54,7 +54,7 @@ public abstract class AbstractFilter<
 	public abstract SELF filter(VALUE value);
 
 	public String formFilter() {
-		return "div[class*=\"ant-popover ant-popover-placement\"]";
+		return "div.ant-popover[class*=\"ant-popover-placement\"]";
 	}
 
 	public PARENT apply() {

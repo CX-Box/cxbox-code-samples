@@ -82,11 +82,11 @@ jobs:
 
       - name: Run default tests
         if: ${{ inputs.fork_count == 0 }}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**  test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**  test
 
       - name: Run default tests in parallel
         if: ${{ inputs.fork_count != 0 }}
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.CardList.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.CardList.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test
 
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -99,10 +99,18 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
+        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
+        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
+          # a docker:// step does not read action.yml: its defaults are passed here
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_tests_repo: ${{ github.repository }}
+          github_server_url: ${{ github.server_url }}
           allure_results: target/allure-results
           gh_pages: gh-pages/main
           allure_report: allure-report
@@ -173,12 +181,12 @@ jobs:
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test    
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test    
 
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.CardList.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest, application.Samples.Feature.** test       
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest, application.Samples.Feature.** test       
 
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -191,10 +199,18 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
+        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
+        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
+          # a docker:// step does not read action.yml: its defaults are passed here
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_tests_repo: ${{ github.repository }}
+          github_server_url: ${{ github.server_url }}
           allure_results: target/allure-results
           gh_pages: gh-pages/manual
           allure_report: allure-report
@@ -284,12 +300,12 @@ jobs:
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test   
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test   
 
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test       
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** test       
 
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -302,10 +318,18 @@ jobs:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
 
       - name: Test here and host elsewhere
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
+        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
+        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
+          # a docker:// step does not read action.yml: its defaults are passed here
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_tests_repo: ${{ github.repository }}
+          github_server_url: ${{ github.server_url }}
           allure_results: target/allure-results
           gh_pages: gh-pages/manual
           allure_report: allure-report

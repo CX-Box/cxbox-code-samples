@@ -7,6 +7,7 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	INFO("Info"),
 	FORM("Form"),
 	LIST("List"),
+	ADDITIONAL_LIST("AdditionalList"),
 	ADDITIONAL_INFO("AdditionalInfo"),
 	GROUPING_HIERARCHY("GroupingHierarchy"),
 	INLINE_FORM("InlineForm"),
