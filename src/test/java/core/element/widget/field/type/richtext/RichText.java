@@ -112,14 +112,14 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	/**
-	 * Empties the field the way the user does (select all, delete) and waits until the application has the
-	 * empty value, so a Save right after it sends the empty value.
+	 * Empties the field the way the user does (select all, delete) and leaves it, so the application has
+	 * the empty value.
 	 */
 	@Override
 	public SELF clear() {
 		Allure.step("Clearing the field", () -> onField(field -> {
 			RichTextCanvas.clearAsUser(field);
-			Selenide.Wait().until(driver -> RichTextCanvas.applied(field));
+			RichTextCanvas.leave(field);
 			return field;
 		}));
 		return asSelf();
@@ -171,7 +171,8 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	// ---- what the user does ---------------------------------------------------------------------
 
 	/**
-	 * Clears the field, types {@code text}, selects all of it and runs {@code actions} on the field.
+	 * Clears the field, types {@code text}, selects all of it, runs {@code actions} on the field and leaves
+	 * the field, so the application has the value.
 	 * In the actions {@code f.bold()} is Bold over the whole text, {@code f.bold(0, 6)} over characters
 	 * 0-6. Read the result with {@link #getValue}.
 	 */
@@ -183,6 +184,10 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		});
 		type(text);
 		actions.accept(selectAll());
+		onField(field -> {
+			RichTextCanvas.leave(field);
+			return field;
+		});
 		return asSelf();
 	}
 
