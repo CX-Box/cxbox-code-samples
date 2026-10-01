@@ -26,12 +26,9 @@ public class AssocTreeModal<W extends AbstractWidget<ExpectationPattern, W>> ext
 
 	public AssocTreeModal(W widget) {
 		super(widget, POPUP_TYPE);
-		name();
 	}
 
 	private static final String POPUP_TYPE = "AssocTreePopup";
-
-	private String name;
 
 	/** The popup container, whether it is opened or not. */
 	public static SelenideElement modalElement() {
@@ -81,14 +78,6 @@ public class AssocTreeModal<W extends AbstractWidget<ExpectationPattern, W>> ext
 	@Deprecated(since = "CXBOX-1341", forRemoval = true)
 	public TreePopupRows rowActions() {
 		return new TreePopupRows(modal, widget.getExpectations(), PlatformTypeWidgets.ASSOC_TREE_POPUP);
-	}
-
-	/** The widget name is read once: the popup may be closed by the time the widget of the popup is asked for. */
-	private String name() {
-		if (name == null) {
-			name = modal.getAttribute("data-test-widget-name");
-		}
-		return name;
 	}
 
 	/** Row of the popup by the value of the column. */

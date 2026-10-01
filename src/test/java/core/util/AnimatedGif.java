@@ -25,6 +25,8 @@ public final class AnimatedGif {
 	 */
 	public static void write(List<BufferedImage> frames, List<Integer> delays, Path file) throws IOException {
 		Files.createDirectories(file.getParent());
+		// the image stream does not truncate an existing file: a shorter GIF would keep the tail of the old one
+		Files.deleteIfExists(file);
 		ImageWriter writer = ImageIO.getImageWritersByFormatName("gif").next();
 		try (ImageOutputStream out = ImageIO.createImageOutputStream(file.toFile())) {
 			writer.setOutput(out);

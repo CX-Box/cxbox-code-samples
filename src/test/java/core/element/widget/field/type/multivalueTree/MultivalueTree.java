@@ -1,7 +1,5 @@
 package core.element.widget.field.type.multivalueTree;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.FieldType;
 import core.element.widget.field.PlatformFieldType;
@@ -30,16 +28,9 @@ public class MultivalueTree<W extends AbstractWidget<ExpectationPattern, W>> ext
 	}
 
 	/** Opens the AssocTreePopup of the field and returns it for step-by-step checks. */
+	@Override
 	public AssocTreeModal<W> openPopup() {
-		widget().getExpectations().getWaitAllFields();
-		SelenideElement icon = element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-		SelenideElement modal = AssocTreeModal.modalElement();
-		for (int attempt = 0; attempt < 3 && !modal.is(Condition.visible); attempt++) {
-			icon.click();
-			modal.is(Condition.visible, widget().getExpectations().getTimeout());
-		}
+		clickIconUntilShown(AssocTreeModal.modalElement());
 		AssocTreeModal<W> popup = new AssocTreeModal<>(widget());
 		TreeNavigation.waitLoaded(popup.element(), widget().getExpectations());
 		return popup;

@@ -3,6 +3,8 @@ package core.element.widget.field.type.multivalue;
 import com.codeborne.selenide.*;
 import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
+import core.element.widget.list.realization.inline.list.PlatformListPopupWidgetInline;
+import core.element.widget.type.PlatformTypeWidgets;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,8 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	protected final SelenideElement modal;
 
+	private String name;
+
 	public MultivalueModal(W widget) {
 		this(widget, "AssocListPopup");
 	}
@@ -36,6 +40,20 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		this.modal = $("div[data-test-widget-type=\"" + popupType + "\"]")
 				.shouldBe(visible, widget.getExpectations().getOverTimeout())
 				.shouldBe(exist, widget.getExpectations().getOverTimeout());
+		name();
+	}
+
+	/** The list of the popup with the standard List API: rows, headers, full text search. */
+	public PlatformListPopupWidgetInline list() {
+		return new PlatformListPopupWidgetInline(PlatformTypeWidgets.ASSOC_LIST_POPUP, name());
+	}
+
+	/** The widget name is read once: the popup may be closed by the time the widget of the popup is asked for. */
+	protected String name() {
+		if (name == null) {
+			name = modal.getAttribute("data-test-widget-name");
+		}
+		return name;
 	}
 
 	public void setValues(String name, List<String> values) {

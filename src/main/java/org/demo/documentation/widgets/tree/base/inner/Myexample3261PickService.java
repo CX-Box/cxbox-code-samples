@@ -40,12 +40,14 @@ public class Myexample3261PickService extends VersionAwareResponseService<Myexam
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
+	// --8<-- [start:getSpecification]
 	@Override
 	protected Specification<Myexample3261> getSpecification(BusinessComponent bc) {
 		var fullTextSearchFilterParam = FullTextSearchExt.getFullTextSearchFilterParam(bc);
 		var specification = super.getSpecification(bc);
 		return fullTextSearchFilterParam.map(e -> and(repository.getFullTextSearchSpecification(e), specification)).orElse(specification);
 	}
+	// --8<-- [end:getSpecification]
 
 
 }

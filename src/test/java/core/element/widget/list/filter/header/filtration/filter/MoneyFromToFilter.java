@@ -36,17 +36,17 @@ public class MoneyFromToFilter<
 		}
 		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER)
 				.click();
-		$("div[class*=\"ant-popover ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
+		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();
-		$("div[class*=\"ant-popover ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
+		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(values.get(0));
 
-		$("div[class*=\"ant-popover ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
+		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();
-		$("div[class*=\"ant-popover ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
+		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(values.get(1));
 		return (SELF) this;

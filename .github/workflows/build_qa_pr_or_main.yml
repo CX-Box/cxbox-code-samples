@@ -137,7 +137,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
         # Saves test execution result:
@@ -194,10 +194,18 @@ jobs:
       # Also loads previous history from gh-pages
       # to preserve trends and statistics between workflow runs.
       - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
+        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
+        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
+          # a docker:// step does not read action.yml: its defaults are passed here
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_tests_repo: ${{ github.repository }}
+          github_server_url: ${{ github.server_url }}
           allure_results: target/allure-results
           # Directory containing old test results  - all pr
           gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
@@ -521,7 +529,7 @@ jobs:
             -Dsurefire.forkCount=3 \
             -Dsurefire.threadCount=1 \
             -Dsurefire.reuseForks=true \
-            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
+            -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.** \
             test
 
 
@@ -547,10 +555,18 @@ jobs:
 
       # Generates Allure report for main branch.
       - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub: the action itself builds it before every job
+        # from public.ecr.aws, which answers 429 now and then. Republish after a new version of the action:
+        # docker build -t cxbox/allure-report-action:vX https://github.com/simple-elf/allure-report-action.git#vX && docker push cxbox/allure-report-action:vX
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
+          # a docker:// step does not read action.yml: its defaults are passed here
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_tests_repo: ${{ github.repository }}
+          github_server_url: ${{ github.server_url }}
 
           allure_results: target/allure-results
           # Existing history location for main branch.

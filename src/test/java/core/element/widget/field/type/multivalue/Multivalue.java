@@ -9,6 +9,7 @@ import core.element.widget.field.AbstractFieldImpl;
 import core.element.widget.field.FieldType;
 import core.element.widget.field.PlatformFieldType;
 import core.element.widget.field.attribute.checkable.*;
+import core.element.widget.type.PlatformTypeWidgets;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +104,24 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	protected MultivalueModal<W> modal() {
 		return new MultivalueModal<>(widget());
+	}
+
+	/** Opens the AssocListPopup of the field and returns it for step-by-step checks. */
+	public MultivalueModal<W> openPopup() {
+		clickIconUntilShown(Selenide.$("div[data-test-widget-type=\"" + PlatformTypeWidgets.ASSOC_LIST_POPUP.getType() + "\"]"));
+		return modal();
+	}
+
+	/** Clicks the icon of the field until the popup is shown, at most three times. */
+	protected void clickIconUntilShown(SelenideElement popup) {
+		widget().getExpectations().getWaitAllFields();
+		SelenideElement icon = element()
+				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+		for (int attempt = 0; attempt < 3 && !popup.is(Condition.visible); attempt++) {
+			icon.click();
+			popup.is(Condition.visible, widget().getExpectations().getTimeout());
+		}
 	}
 
 	@Override
