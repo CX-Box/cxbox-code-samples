@@ -994,6 +994,10 @@ public class RichTextOnFormTest extends BaseTestForSamples {
 			dbInput(fld, "- one\n  - two\n    - three", "a nested list needs the Tab key, the toolbar has no button for it");
 			dbInput(fld, "1. one\n  - nested", "a nested list needs the Tab key, the toolbar has no button for it");
 			dbOldSpellingInput(fld, "1. one\n   - nested", "1. one\n  - nested");
+			dbInput(fld, "1. one\n  ```\n  code\n  ```", "the toolbar takes a code block out of the list");
+			dbInput(fld, "1. one\n\n  two\n\n  three", "the toolbar has no button for a second paragraph in a list item");
+			dbInput(fld, "9. nine\n10. ten\n  ```\n  code\n  ```", "the toolbar takes a code block out of the list");
+			dbInput(fld, "1. one\n  - a\n  \n    b", "the toolbar has no button for a second paragraph in a list item");
 			dbInput(fld, "3. three\n4. four", "a list that starts from 3 cannot be made with the toolbar");
 			dbInput(fld, "- one\ntwo", "the editor never writes this spelling itself");
 			dbOldSpellingInput(fld, "- one\n  two", "- one\ntwo");
