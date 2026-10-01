@@ -102,35 +102,20 @@ final class RichTextCanvas {
 				""", field, markdown));
 	}
 
-	/** Empties the editor the way the user does (select all, delete): unlike {@link #load}, the application gets the change. */
+	/**
+	 * Empties the editor the way the user does (select all, delete): unlike {@link #load}, it is a change
+	 * of the user, and the application gets it when the user leaves the field.
+	 */
 	static void clearAsUser(SelenideElement field) {
 		check(executeJavaScript(FIND_EDITOR + "editor.chain().focus().clearContent(true).run(); return {ok: true};", field));
 	}
 
 	/**
-	 * Whether the application already has the value the editor shows, as a change of the field. The editor
-	 * passes a change on after a short pause (DEBOUNCE_MS in ui/src/components/RichText/wysiwyg/hooks.ts), so a
-	 * Save right after the change can still send the old value. The change is read from the store
-	 * ({@code view.pendingDataChanges}): the props in the React tree above the editor can be an older copy.
+	 * Takes the focus out of the field, like a click outside it. The field gives its value to the application
+	 * only then, like the other typed fields (input, text, number).
 	 */
-	static boolean applied(SelenideElement field) {
-		return "true".equals(value(executeJavaScript(FIND_EDITOR + """
-				var store = null;
-				for (var f = fiber, hops = 0; f && hops < 200 && !store; hops++, f = f.return) {
-				  var p = f.memoizedProps;
-				  if (p && p.store && typeof p.store.getState === 'function' && p.store.getState().view) { store = p.store; }
-				}
-				if (!store) { return {error: 'the store was not found above the editor in the React tree'}; }
-				var key = arguments[0].getAttribute('data-test-field-key'), md = editor.getMarkdown();
-				var changes = store.getState().view.pendingDataChanges || {}, applied = false;
-				Object.keys(changes).forEach(function (bc) {
-				  Object.keys(changes[bc] || {}).forEach(function (id) {
-				    var v = (changes[bc][id] || {})[key];
-				    if (v !== undefined && (v || '') === md) { applied = true; }
-				  });
-				});
-				return {value: String(applied)};
-				""", field)));
+	static void leave(SelenideElement field) {
+		check(executeJavaScript(FIND_EDITOR + "editor.commands.blur(); return {ok: true};", field));
 	}
 
 	/** Adds plain text at the end: a line break is Shift+Enter, an empty line starts a new paragraph. */

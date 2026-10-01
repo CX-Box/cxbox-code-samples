@@ -83,9 +83,15 @@ public final class RichTextUtil {
 		check("DB input: open it once more → still unchanged", markdown, () -> field.setValue(field.setValue(markdown).getValue()).getValue());
 	}
 
+	/**
+	 * The steps of {@code field.userInput}, without leaving the field at the end: the value is read from the
+	 * editor, the application does not need it. Leaving sends a request for every line of the suite and makes
+	 * the suite two times longer.
+	 */
 	private static String build(RichText<?, ?> field, String text, Consumer<RichText<?, ?>> actions) {
 		try {
-			return field.userInput(text, actions).getValue();
+			actions.accept(field.setValue("").type(text).selectAll());
+			return field.getValue();
 		} catch (RichText.Refused greyedOut) {
 			return REFUSED;
 		}
