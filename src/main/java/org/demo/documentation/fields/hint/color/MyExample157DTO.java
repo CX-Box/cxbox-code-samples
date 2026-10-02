@@ -12,9 +12,12 @@ public class MyExample157DTO extends DataResponseDTO {
 
 	private String customField;
 
+	private String customFieldColor;
+
 	public MyExample157DTO(MyEntity157 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldColor = "#eda6a6";
 	}
 
 }

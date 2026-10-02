@@ -1,7 +1,9 @@
 package core.element.widget.field.type.hint;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.field.AbstractFieldImpl;
@@ -13,6 +15,8 @@ import core.element.widget.info.PlatformInfoWidget;
 import core.element.widget.list.ListWidget;
 import core.expectation.ExpectationPattern;
 import org.openqa.selenium.StaleElementReferenceException;
+
+import java.util.function.Consumer;
 
 public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Hint<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, Hint<W, SELF>> implements
 		Clear<W, String, Hint<W, SELF>>,
@@ -61,6 +65,18 @@ public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 			return "span[class*=\"ReadOnlyField\"]";
 		}
 		return super.valueTag();
+	}
+
+	/**
+	 * Clicks the drilldown link of the field and passes the url opened by the click.
+	 */
+	public void drilldown(Consumer<String> consumer) {
+		String oldUrl = WebDriverRunner.url();
+		element().$("a")
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+				.click();
+		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(oldUrl));
+		consumer.accept(WebDriverRunner.url());
 	}
 
 	protected SelenideElement parentElement() {
