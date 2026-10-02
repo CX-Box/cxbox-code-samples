@@ -317,4 +317,21 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("MultipleSelect basic").secondLevelView("List").listInline("List title").element()));
 	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test for checking the width of the drop-down list with long values")
+	@Description("The test gets the field width and the option width and checks that the list is no wider than the limit")
+	void dropDownWidth() {
+		var list = PlatformApp.screen("MultipleSelect long values")
+				.secondLevelView("List")
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		row.multipleSelect("Custom Field")
+				.checkDropDownWidth((fieldWidth, optionWidth) -> {
+					assertThat(optionWidth).isGreaterThanOrEqualTo(fieldWidth);
+					assertThat(optionWidth).isLessThanOrEqualTo((int) (fieldWidth * Constants.DropDown.MULTIPLE_SELECT_MAX_COLS * 1.05));
+				});
+		DocShots.png(ARTICLE, "img_dropdown_width_list.png", 1660, 760);
+	}
 }

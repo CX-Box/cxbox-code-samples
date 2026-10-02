@@ -271,4 +271,20 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Dictionary enum basic").secondLevelView("Form").form("Form title").element()));
 	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A test for checking the width of the drop-down list with long values")
+	@Description("The test gets the field width and the option width and checks that the list is no wider than the limit")
+	void dropDownWidth() {
+		PlatformApp.screen("Dictionary enum long values")
+				.secondLevelView("Form")
+				.form("Form title")
+				.dictionary("Custom Field")
+				.checkDropDownWidth((fieldWidth, optionWidth) -> {
+					assertThat(optionWidth).isGreaterThanOrEqualTo(fieldWidth);
+					assertThat(optionWidth).isLessThanOrEqualTo((int) (fieldWidth * Constants.DropDown.DICTIONARY_MAX_COLS * 1.05));
+				});
+		DocShots.png(ARTICLE, "img_dropdown_width_form.png", 1660, 760);
+	}
 }

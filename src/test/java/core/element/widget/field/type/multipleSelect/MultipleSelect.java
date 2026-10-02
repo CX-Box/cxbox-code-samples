@@ -34,7 +34,10 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		ValueCheckable<W, Set<String>, SELF>,
 		DrillDownSupportCheckable<W, Set<String>, Boolean, SELF>,
 		RequiredCheckable<W, Set<String>, String, SELF>,
-		MaxInputCheckable<W, Set<String>, Integer, SELF> {
+		MaxInputCheckable<W, Set<String>, Integer, SELF>,
+		DropDownWidthCheckable<W, Set<String>, SELF> {
+
+	protected final String MENU_OPTIONS = "div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']";
 
 	private final String title;
 
@@ -94,7 +97,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			step.parameter("values", values);
 
 			values.forEach(value -> {
-				boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+				boolean doesNotExist = !$(MENU_OPTIONS)
 						.is(Condition.visible, widget().getExpectations().getTimeout());
 				if (doesNotExist) {
 					element().click();
@@ -105,7 +108,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 							.click();
 				}
 				$("body").sendKeys(Keys.ESCAPE);
-				$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+				$(MENU_OPTIONS)
 						.is(Condition.hidden, widget().getExpectations().getTimeout());
 			});
 		});
@@ -154,12 +157,17 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		return (SELF) this;
 	}
 
+	@Override
+	public SelenideElement dropDownOption() {
+		return $(MENU_OPTIONS).$(By.tagName("li"));
+	}
+
 	protected SelenideElement getOption(String nameRadio) {
 		return getOptionsMultipleSelect().find(Condition.match("check action name: " + nameRadio, b -> b.getText().equals(nameRadio)));
 	}
 
 	protected ElementsCollection getOptionsMultipleSelect() {
-		return $("div[class^=\"ant-select-dropdown MultipleSelectField__dropDownMenu\"]")
+		return $(MENU_OPTIONS)
 				.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
