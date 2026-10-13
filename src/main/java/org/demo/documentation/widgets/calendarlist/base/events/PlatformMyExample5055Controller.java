@@ -1,0 +1,55 @@
+package org.demo.documentation.widgets.calendarlist.base.events;
+
+import lombok.Getter;
+import org.cxbox.api.data.BcIdentifier;
+import org.cxbox.core.crudma.bc.EnumBcIdentifier;
+import org.cxbox.core.crudma.bc.impl.AbstractEnumBcSupplier;
+import org.cxbox.core.crudma.bc.impl.BcDescription;
+import org.springframework.stereotype.Component;
+
+@Getter
+public enum PlatformMyExample5055Controller implements EnumBcIdentifier {
+
+	// @formatter:off
+	myexample5055(MyExample5055Service.class);
+	// @formatter:on
+
+	public static final EnumBcIdentifier.Holder<PlatformMyExample5055Controller> Holder = new Holder<>(
+			PlatformMyExample5055Controller.class);
+
+	private final BcDescription bcDescription;
+
+	PlatformMyExample5055Controller(String parentName, Class<?> serviceClass, boolean refresh) {
+		this.bcDescription = buildDescription(parentName, serviceClass, refresh);
+	}
+
+	PlatformMyExample5055Controller(String parentName, Class<?> serviceClass) {
+		this(parentName, serviceClass, false);
+	}
+
+	PlatformMyExample5055Controller(BcIdentifier parent, Class<?> serviceClass, boolean refresh) {
+		this(parent == null ? null : parent.getName(), serviceClass, refresh);
+	}
+
+	PlatformMyExample5055Controller(BcIdentifier parent, Class<?> serviceClass) {
+		this(parent, serviceClass, false);
+	}
+
+	PlatformMyExample5055Controller(Class<?> serviceClass, boolean refresh) {
+		this((String) null, serviceClass, refresh);
+	}
+
+	PlatformMyExample5055Controller(Class<?> serviceClass) {
+		this((String) null, serviceClass, false);
+	}
+
+	@Component
+	public static class BcSupplier extends AbstractEnumBcSupplier<PlatformMyExample5055Controller> {
+
+		public BcSupplier() {
+			super(PlatformMyExample5055Controller.Holder);
+		}
+
+	}
+
+}

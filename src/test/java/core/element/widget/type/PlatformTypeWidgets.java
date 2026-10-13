@@ -20,7 +20,9 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	PIE_1D("Pie1D"),
 	COLUMN_2D("Column2D"),
 	LINE_2D("Line2D"),
-	CARD_LIST("CardList");
+	CARD_LIST("CardList"),
+	CALENDAR_LIST("CalendarList"),
+	CALENDAR_YEAR_LIST("CalendarYearList");
 
 	private final String type;
 
