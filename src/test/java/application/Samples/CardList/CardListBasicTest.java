@@ -64,7 +64,7 @@ public class CardListBasicTest extends BaseTestForSamples {
 	}
 
 	@SneakyThrows
-	private static File resourceFile(String name) {
+	static File resourceFile(String name) {
 		return new File(CardListBasicTest.class.getClassLoader().getResource(name).toURI());
 	}
 
@@ -108,6 +108,54 @@ public class CardListBasicTest extends BaseTestForSamples {
 		cards.rows().row(0).burgerAction("Delete").click();
 		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.stop();
+	}
+
+	private static CardListWidget cardsWithView() {
+		return PlatformApp.currentScreen().view().cardListByName("MyExample5309CardList");
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Create with view")
+	@Description("Add drills down to the form view, Save and Close returns to the cards with the new card")
+	void createWithView() {
+		var cards = PlatformApp.screen("CardList with view").view().cardListByName("MyExample5309CardList");
+		DocShots.gif(ARTICLE, "create_with_view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
+		cards.actions().click("Add");
+		var form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		form.fileUpload("Document").setValue(resourceFile("Hope_of_Humanity.jpg"));
+		form.input("Custom Field").setValue("New document");
+		form.actions().action("Save and Close").click();
+		cards = cardsWithView();
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("New document"));
+		DocShots.stop();
+
+		cards.rows().row(0).burgerAction("Delete").click();
+		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Edit with view")
+	@Description("Edit of the card drills down to the form view, Save and Close returns to the cards with the changed card")
+	void editWithView() {
+		var cards = PlatformApp.screen("CardList with view").view().cardListByName("MyExample5309CardList");
+		DocShots.gif(ARTICLE, "edit_with_view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
+		cards.rows().row(0).burgerAction("Edit").click();
+		var form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		form.input("Custom Field Description").setValue("Issued to the Branch office");
+		form.actions().action("Save and Close").click();
+		cards = cardsWithView();
+		cards.rows().row(0).checkDescription(description -> assertThat(description).isEqualTo("Issued to the Branch office"));
+		DocShots.stop();
+
+		cards.rows().row(0).burgerAction("Edit").click();
+		form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		form.input("Custom Field Description").setValue("Issued to the Main office");
+		form.actions().action("Save and Close").click();
+		cardsWithView().rows().row(0).checkDescription(description -> assertThat(description).isEqualTo("Issued to the Main office"));
 	}
 
 }
