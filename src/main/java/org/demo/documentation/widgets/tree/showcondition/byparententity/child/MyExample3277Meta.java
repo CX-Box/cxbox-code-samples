@@ -6,24 +6,21 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyExample3277Meta extends FieldMetaBuilder<MyExample3277DTO> {
 	// --8<-- [start:buildRowDependentMeta]
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3277DTO> fields, InnerBcDescription bcDescription,
 	                                  Long id, Long parentId) {
-		fields.setDisabled(MyExample3277DTO_.parentTreeId);
-		fields.setDisabled(MyExample3277DTO_.customFieldMoney);
-
-		fields.setDisabled(MyExample3277DTO_.isLeaf);
-		fields.setDisabled(MyExample3277DTO_.customField);
+		fields.setEnabled(MyExample3277DTO_.customField);
+		fields.setEnabled(MyExample3277DTO_.customFieldMoney);
 	}
 	// --8<-- [end:buildRowDependentMeta]
 
 	// --8<-- [start:buildIndependentMeta]
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample3277DTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.enableFilter(MyExample3277DTO_.parentTreeId);
 		fields.enableFilter(MyExample3277DTO_.customFieldMoney);
 		fields.enableFilter(MyExample3277DTO_.customField);
 	}

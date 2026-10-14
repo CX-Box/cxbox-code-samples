@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample3267Controller implements EnumBcIdentifier {
 
 
-	myexample3267(MyExample3267Service.class), myEntity3267PicklistPickTreePopup(myexample3267, MyEntity3267PicklistPickService.class), myEntity3267InlinePicklistPickTreePopup(myexample3267, MyEntity3267InlinePicklistPickService.class), myEntity3267MultiMultiAssocTreePopup(myexample3267, MyEntity3267MultiMultiMultivalueService.class), myEntity3267MultiAssocTreePopup(myexample3267, MyEntity3267MultiMultivalueService.class);
+	myexample3267(MyExample3267Service.class), myEntity3267PicklistPickTreePopup(myexample3267, MyEntity3267PicklistPickService.class), myEntity3267InlinePicklistPickTreePopup(myexample3267, MyEntity3267InlinePicklistPickService.class), myEntity3267MultiMultiAssocTreePopup(myexample3267, MyEntity3267MultiMultivalueService.class), myEntity3267MultiAssocTreePopup(myexample3267, MyEntity3267MultiMultiMultivalueService.class);
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample3267Controller> Holder = new Holder<>(

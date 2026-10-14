@@ -38,45 +38,21 @@ public class MyExample3267Service extends VersionAwareResponseService<MyExample3
 
 	@Override
 	protected ActionResultDTO<MyExample3267DTO> doUpdateEntity(Myexample3262 entity, MyExample3267DTO data, BusinessComponent bc) {
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorInput)) {
-			entity.setCustomField(data.getCustomFieldColorInput());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorText)) {
-			entity.setCustomFieldText(data.getCustomFieldColorText());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorDateTime)) {
-			entity.setCustomFieldDateTime(data.getCustomFieldColorDateTime());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorCheckbox)) {
-			entity.setCustomFieldCheckbox(data.getCustomFieldColorCheckbox());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorDate)) {
-			entity.setCustomFieldDate(data.getCustomFieldColorDate());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorDateTimeWithSeconds)) {
-			entity.setCustomFieldDateTimeWithSeconds(data.getCustomFieldColorDateTimeWithSeconds());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorDictionary)) {
-			entity.setCustomFieldDictionary(data.getCustomFieldColorDictionary());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorFileUploadeId)) {
-			entity.setCustomFieldFileUploadId(data.getCustomFieldColorFileUploadeId());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorFileUploade)) {
-			entity.setCustomFieldFileUpload(data.getCustomFieldColorFileUploade());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorNumber)) {
-			entity.setCustomFieldNumber(data.getCustomFieldColorNumber());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorPercent)) {
-			entity.setCustomFieldPercent(data.getCustomFieldColorPercent());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorMoney)) {
-			entity.setCustomFieldMoney(data.getCustomFieldColorMoney());
-		}
-		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorRadio)) {
-			entity.setCustomFieldRadio(data.getCustomFieldColorRadio());
-		}
+		setIfChanged(data, MyExample3267DTO_.customField, entity::setCustomField);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorInput, entity::setCustomField);
+		setIfChanged(data, MyExample3267DTO_.customFieldText, entity::setCustomFieldText);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorText, entity::setCustomFieldText);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorDateTime, entity::setCustomFieldDateTime);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorCheckbox, entity::setCustomFieldCheckbox);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorDate, entity::setCustomFieldDate);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorDateTimeWithSeconds, entity::setCustomFieldDateTimeWithSeconds);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorDictionary, entity::setCustomFieldDictionary);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorFileUploadeId, entity::setCustomFieldFileUploadId);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorFileUploade, entity::setCustomFieldFileUpload);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorNumber, entity::setCustomFieldNumber);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorPercent, entity::setCustomFieldPercent);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorMoney, entity::setCustomFieldMoney);
+		setIfChanged(data, MyExample3267DTO_.customFieldColorRadio, entity::setCustomFieldRadio);
 		if (data.isFieldChanged(MyExample3267DTO_.customFieldColorPicklistId)) {
 			entity.setCustomFieldPickListEntity(data.getCustomFieldColorPicklistId() != null
 					? entityManager.getReference(Myexample3262Pick.class, data.getCustomFieldColorPicklistId())
@@ -105,10 +81,7 @@ public class MyExample3267Service extends VersionAwareResponseService<MyExample3
 					.map(e -> entityManager.getReference(Myexample3262MultiHover.class, e))
 					.toList());
 		}
-		if (data.isFieldChanged(MyExample3267DTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
-		}
-		return new ActionResultDTO<>(entityToDto(bc, entity));
+		return new ActionResultDTO<>(entityToDto(bc, repository.save(entity)));
 	}
 
 	// --8<-- [start:getActions]

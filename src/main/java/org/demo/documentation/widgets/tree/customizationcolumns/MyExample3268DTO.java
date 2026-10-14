@@ -33,7 +33,7 @@ public class MyExample3268DTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldDate", provider = DateValueProvider.class)
 	private LocalDateTime customFieldDate;
 	@SearchParameter(name = "customFieldCheckbox", provider = BooleanValueProvider.class)
-	private Boolean customFieldCheckBox;
+	private Boolean customFieldCheckbox;
 	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
 	private CustomFieldDictionaryEnum customFieldDictionary;
 
@@ -81,7 +81,7 @@ public class MyExample3268DTO extends DataResponseDTO {
 		this.customField = entity.getCustomField();
 		this.customFieldInput = entity.getCustomField();
 		this.customFieldDate = entity.getCustomFieldDate();
-		this.customFieldCheckBox = entity.getCustomFieldCheckbox();
+		this.customFieldCheckbox = entity.getCustomFieldCheckbox();
 		this.customFieldDictionary = entity.getCustomFieldDictionary();
 
 		this.customFieldMultivalueHoverDisplayedKey = StringUtils.abbreviate(entity.getCustomFieldMultivalueHoverList().stream().map(Myexample3262MultiHover::getCustomField

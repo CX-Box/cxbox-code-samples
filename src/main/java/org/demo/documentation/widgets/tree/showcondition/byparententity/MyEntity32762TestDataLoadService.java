@@ -56,26 +56,13 @@ public class MyEntity32762TestDataLoadService {
 					.setParentTreeId(root5.getId());
 			repositoryParent.save(child);
 		}
-		// root 1: without Child
-
-		MyEntity3277 root77_1 = createBaseEntity77("Root 1 without children");
-		repositoryChild.save(root77_1);
-		//root 2:without Child
-		MyEntity3277 root77_2 = createBaseEntity77("Root 2 (without children)");
-		repositoryChild.save(root77_2);
-		//root 3:without Child
-		MyEntity3277 root77_3 = createBaseEntity77("Root 3 (without children)");
-		repositoryChild.save(root77_3);
-		//root 4:without Child
-		MyEntity3277 root77_4 = createBaseEntity77("Root 4 (without children)");
-		repositoryChild.save(root77_4);
-		//root 5
-		MyEntity3277 root77_5 = createBaseEntity77("Root 5 (with children)");
-		repositoryChild.save(root77_5);
-		//----Create 3 child for root5----
-		for (int i = 1; i <= 3; i++) {
-			MyEntity3277 child = createBaseEntity77("Child " + i + " of Root 5").setParentTreeId(root5.getId());
-			repositoryChild.save(child);
+		// child widget: the tree of each parent record (root with children, the first child has a child, root without children)
+		for (MyEntity3276 parent : repositoryParent.findAll()) {
+			MyEntity3277 root77_1 = repositoryChild.save(createBaseEntity77("Root 1 (with children)", parent, null));
+			MyEntity3277 child77_1 = repositoryChild.save(createBaseEntity77("Child 1 of Root 1", parent, root77_1));
+			repositoryChild.save(createBaseEntity77("Child 2 of Root 1", parent, root77_1));
+			repositoryChild.save(createBaseEntity77("Child 1 of Child 1", parent, child77_1));
+			repositoryChild.save(createBaseEntity77("Root 2 (without children)", parent, null));
 		}
 	}
 
@@ -84,9 +71,12 @@ public class MyEntity32762TestDataLoadService {
 
 	}
 
-	private MyEntity3277 createBaseEntity77(String customFieldValue) {
-		return new MyEntity3277().setCustomField(customFieldValue).setCustomFieldMoney(12345.67);
-
+	private MyEntity3277 createBaseEntity77(String customFieldValue, MyEntity3276 parent, MyEntity3277 parentTree) {
+		return new MyEntity3277()
+				.setCustomField(customFieldValue)
+				.setCustomFieldMoney(12345.67)
+				.setCustomFieldEntity(parent)
+				.setParentTreeId(parentTree == null ? null : parentTree.getId());
 	}
 
 }
