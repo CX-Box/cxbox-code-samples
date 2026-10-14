@@ -22,7 +22,7 @@ public class MyEntity3022 extends BaseEntity {
 	private CustomFieldDictionaryEnum customFieldDictionary;
 
 	@Column
-	private String parentId;
+	private Long parentId;
 
 	@OneToMany(
 			mappedBy = "parentId",

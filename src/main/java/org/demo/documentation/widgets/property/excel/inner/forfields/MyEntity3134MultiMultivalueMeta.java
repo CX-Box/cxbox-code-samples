@@ -6,7 +6,6 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3134MultiMultivalueMeta extends FieldMetaBuilder<MyEntity3134MultiMultivalueDTO> {
 
@@ -21,7 +20,8 @@ public class MyEntity3134MultiMultivalueMeta extends FieldMetaBuilder<MyEntity31
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity3134MultiMultivalueDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
-
+		fields.enableFilter(MyEntity3134MultiMultivalueDTO_.customField);
+		fields.enableFilter(MyEntity3134MultiMultivalueDTO_.parentId);
 	}
 
 }

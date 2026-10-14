@@ -39,15 +39,16 @@ public class MyEntity359TestDataLoadService {
 		repositoryAssoc.save(new MyEntity359Assoc().setCustomField("test data 7"));
 		repositoryAssoc.save(new MyEntity359Assoc().setCustomField("test data 8"));
 
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 1"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 2"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 3"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 4"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 5"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 6"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 7"));
-		repositoryPick.save(new MyEntity359Pick().setCustomField("test data 8"));
-
+		repositoryPick.deleteAll();
+		// values of the pickList field: a tree with more records than the page limit (2) on the root level and in a node
+		MyEntity359Pick pick1 = savePick("test data 1", null);
+		MyEntity359Pick pick2 = savePick("test data 2", null);
+		savePick("test data 3", null);
+		MyEntity359Pick pick4 = savePick("test data 4", pick1);
+		savePick("test data 5", pick1);
+		savePick("test data 6", pick1);
+		savePick("test data 7", pick4);
+		savePick("test data 8", pick2);
 
 		// root 1: without Child
 		MyEntity359 root1 = createBaseEntity("Root 1");
@@ -76,6 +77,12 @@ public class MyEntity359TestDataLoadService {
 					.setParentId(root5.getId());
 			repository.save(child);
 		}
+	}
+
+	private MyEntity359Pick savePick(String customField, MyEntity359Pick parent) {
+		return repositoryPick.save(new MyEntity359Pick()
+				.setCustomField(customField)
+				.setParentId(parent == null ? null : parent.getId()));
 	}
 
 	private MyEntity359 createBaseEntity(String customFieldValue) {

@@ -88,6 +88,8 @@ public class MyExample3267DTO extends DataResponseDTO {
 		this.customFieldTextColor = "#a6eda6";
 		// --8<-- [end:colorDTO]
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
+		this.customFieldColorInput = entity.getCustomField();
+		this.customFieldColorText = entity.getCustomFieldText();
 		this.customFieldColorHint = entity.getCustomFieldHint();
 		this.customFieldColorMultivalueHover = entity.getCustomFieldMultivalueHoverList().stream().collect(MultivalueField.toMultivalueField(
 				e -> String.valueOf(e.getId()),
@@ -110,11 +112,11 @@ public class MyExample3267DTO extends DataResponseDTO {
 		this.customFieldColorInlinePicklist = Optional.ofNullable(entity.getCustomFieldInlineEntity())
 				.map(e -> e.getCustomField())
 				.orElse(null);
-		this.customFieldColorInlinePicklistId = Optional.ofNullable(entity.getCustomFieldPickListEntity())
+		this.customFieldColorPicklistId = Optional.ofNullable(entity.getCustomFieldPickListEntity())
 				.map(e -> e.getId())
 				.orElse(null);
 		this.customFieldColorPicklist = Optional.ofNullable(entity.getCustomFieldPickListEntity())
-				.map(e -> e.getCustomField2())
+				.map(e -> e.getCustomField())
 				.orElse(null);
 		this.customFieldColorPercent = entity.getCustomFieldPercent();
 		this.customFieldColorNumber = entity.getCustomFieldNumber();

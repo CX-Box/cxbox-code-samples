@@ -6,7 +6,6 @@ import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("EmptyMethod")
 @Service
 public class MyEntity3134PickPickMeta extends FieldMetaBuilder<MyEntity3134PickPickDTO> {
 
@@ -21,7 +20,8 @@ public class MyEntity3134PickPickMeta extends FieldMetaBuilder<MyEntity3134PickP
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyEntity3134PickPickDTO> fields, InnerBcDescription bcDescription,
 									 Long parentId) {
-
+		fields.enableFilter(MyEntity3134PickPickDTO_.customField);
+		fields.enableFilter(MyEntity3134PickPickDTO_.parentId);
 	}
 
 }
