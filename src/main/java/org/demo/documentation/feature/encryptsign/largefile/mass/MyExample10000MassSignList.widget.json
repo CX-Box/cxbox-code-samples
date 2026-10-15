@@ -1,0 +1,48 @@
+{
+  "name": "MyExample10000MassSignList",
+  "title": "Mass operation: Sign, detached",
+  "type": "List",
+  "bc": "myexample10000mass",
+  "fields": [
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "title": "Signature",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    },
+    {
+      "title": "Last operation",
+      "key": "lastOperation",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "sign",
+        "signaturePackage": "detached",
+        "actionName": "massDocumentSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "massDocumentSign"
+      ]
+    }
+  }
+}

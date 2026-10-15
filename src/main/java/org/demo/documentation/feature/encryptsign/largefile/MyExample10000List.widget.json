@@ -1,0 +1,44 @@
+{
+  "name": "MyExample10000List",
+  "title": "Files",
+  "type": "List",
+  "bc": "myexample10000",
+  "fields": [
+    {
+      "title": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "title": "Signature",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    },
+    {
+      "title": "Encrypted file",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
+      "title": "Last operation",
+      "key": "lastOperation",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

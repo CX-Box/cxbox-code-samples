@@ -1,0 +1,89 @@
+{
+  "name": "MyExample10000SignEncryptDetachedForm",
+  "title": "Sign and encrypt: Detached",
+  "type": "Form",
+  "bc": "myexample10000",
+  "fields": [
+    {
+      "label": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "label": "Signature",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    },
+    {
+      "label": "Encrypted file",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "signAndEncrypt",
+        "signaturePackage": "detached",
+        "actionName": "documentSignEncrypt",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentSignEncrypt",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "description",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileSignRO",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileEncryptRO",
+              "span": 24
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

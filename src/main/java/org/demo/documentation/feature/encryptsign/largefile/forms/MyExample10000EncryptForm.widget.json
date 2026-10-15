@@ -1,0 +1,72 @@
+{
+  "name": "MyExample10000EncryptForm",
+  "title": "Encrypt: Encrypt",
+  "type": "Form",
+  "bc": "myexample10000",
+  "fields": [
+    {
+      "label": "Description",
+      "key": "description",
+      "type": "input"
+    },
+    {
+      "label": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId"
+    },
+    {
+      "label": "Encrypted file",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "encrypt",
+        "actionName": "documentEncrypt",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "documentEncrypt",
+        "cancel-create"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "description",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "file",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "fileEncryptRO",
+              "span": 24
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
