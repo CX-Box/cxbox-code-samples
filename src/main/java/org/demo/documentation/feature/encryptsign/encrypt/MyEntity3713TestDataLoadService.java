@@ -2,6 +2,7 @@ package org.demo.documentation.feature.encryptsign.encrypt;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.cxbox.core.file.dto.CxboxResponseDTO;
@@ -27,9 +28,11 @@ public class MyEntity3713TestDataLoadService {
 	public void load() {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
-		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadPdf("1");
-
-		repository.save(new Myexample3713().setFile(file.getData().getName()).setFileId(file.getData().getId()));
+		// several rows for the mass operation
+		for (String fileName : List.of("1", "2", "3")) {
+			CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadPdf(fileName);
+			repository.save(new Myexample3713().setFile(file.getData().getName()).setFileId(file.getData().getId()));
+		}
 
 	}
 
