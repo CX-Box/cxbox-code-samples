@@ -28,6 +28,9 @@ public class MyExample3614Meta extends FieldMetaBuilder<MyExample3614DTO> {
 		fields.enableFilter(MyExample3614DTO_.parentId);
 		fields.enableFilter(MyExample3614DTO_.customFieldPicklist);
 		fields.enableFilter(MyExample3614DTO_.customFieldMultivalueDisplayedKey);
+		fields.enableFilter(MyExample3614DTO_.address);
+		fields.enableFilter(MyExample3614DTO_.fullName);
+		fields.enableFilter(MyExample3614DTO_.customField);
 		fields.enableSort(MyExample3614DTO_.address);
 		fields.enableSort(MyExample3614DTO_.fullName);
 		fields.enableSort(MyExample3614DTO_.customField);
