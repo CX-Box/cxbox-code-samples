@@ -40,6 +40,11 @@ import static com.codeborne.selenide.Selenide.$;
 @Slf4j
 public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements SingleElement {
 
+	/**
+	 * The widget sends the records of the uploaded files at once after the last file
+	 */
+	private static final Duration UPLOAD_RECORDS_START = Duration.ofSeconds(1);
+
 	@Getter(AccessLevel.PROTECTED)
 	private final W widget;
 
@@ -169,6 +174,47 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	@SneakyThrows
 	public File download(String name) {
 		return Allure.step(message("action.download", name), () -> action(name).element().download(DownloadOptions.using(FOLDER)));
+	}
+
+	/**
+	 * The button of the action that chooses files ({@code subtype multiFileUpload}) gets the files, as the user chooses
+	 * them in the window of the browser. Waits until the uploaded files come to the widget.
+	 */
+	public W upload(String name, File... files) {
+		Allure.step(message("action.upload", name), () -> {
+			StepReport.value(Stream.of(files).map(File::getName).toList());
+			uploadAndWait(action(name).element().closest(".ant-upload").$("input[type='file']"), files);
+		});
+		return this.widget;
+	}
+
+	/**
+	 * The zone above the panel of the widget ({@code mode file-upload-dnd} of the button) gets the files, as the user
+	 * drops them on it. Waits until the uploaded files come to the widget.
+	 */
+	public W uploadToDropZone(File... files) {
+		Allure.step(message("action.uploadToDropZone"), () -> {
+			StepReport.value(Stream.of(files).map(File::getName).toList());
+			uploadAndWait(widget.element().$(".ant-upload-drag input[type='file']"), files);
+		});
+		return this.widget;
+	}
+
+	/**
+	 * The files go one by one, each with its line in the window of the upload progress; when the last one is done, the
+	 * widget sends the records of the files. The wait is for the end of every line, then for these requests.
+	 */
+	private void uploadAndWait(SelenideElement input, File... files) {
+		var timeout = widget.getExpectations().getOverTimeout();
+		PageRequests.runAndWaitDelayedRequests(() -> {
+			input.uploadFile(files);
+			for (var file : files) {
+				var line = $("[data-test-file-upload-prgress-item='true'][data-test-file-name='" + file.getName() + "']");
+				line.shouldNotHave(Condition.attributeMatching("data-test-file-status", "init|uploading"), timeout);
+				line.shouldHave(Condition.attribute("data-test-file-status", "done").because(line.getAttribute("data-test-file-status-information")));
+			}
+		}, UPLOAD_RECORDS_START, timeout);
+		waitOperationFinished();
 	}
 	@Override
 	public SelenideElement element() {

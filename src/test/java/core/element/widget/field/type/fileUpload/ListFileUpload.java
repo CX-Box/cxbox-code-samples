@@ -45,7 +45,12 @@ public class ListFileUpload<
 
 	@Override
 	public File getValue() {
-		return element().$("button").download(DownloadOptions.using(FOLDER));
+		var button = element().$("button");
+		// an empty field shows the button without a file name: there is nothing to download, as other empty fields give null
+		if (button.text().isBlank()) {
+			return null;
+		}
+		return button.download(DownloadOptions.using(FOLDER));
 	}
 
 	@Override
