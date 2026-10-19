@@ -111,8 +111,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form");
 		var radio = form.radio("Custom Field");
-		radio.setValue("Low");
-		form.errorPopup()
+		form.expectErrorPopup(() -> radio.setValue("Low"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Text.textRadioContains("High")))
 				.close();
@@ -128,8 +127,7 @@ public class RadioOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var radio = form.radio("Custom Field");
-		radio.setValue("Low");
-		form.errorPopup()
+		form.expectErrorPopup(() -> radio.setValue("Low"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

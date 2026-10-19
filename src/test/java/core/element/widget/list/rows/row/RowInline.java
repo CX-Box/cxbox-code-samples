@@ -3,11 +3,13 @@ package core.element.widget.list.rows.row;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.rows.RowsInline;
+import io.qameta.allure.Allure;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.StaleElementReferenceException;
 
 import static com.codeborne.selenide.Condition.attribute;
+import static core.util.i18n.CoreMessageSource.message;
 
 
 public abstract class RowInline<
@@ -37,5 +39,12 @@ public abstract class RowInline<
 
 	public abstract SELF editRow();
 
+	/** Selects the row with a click: it becomes the active record of the widget, the widgets below show its data */
+	public SELF select() {
+		return Allure.step(message("row.select"), () -> {
+			element().click();
+			return self();
+		});
+	}
 
 }

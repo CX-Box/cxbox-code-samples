@@ -1,5 +1,8 @@
 package core.element.widget.field.type.inlinePickList;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.field.type.ParentRow;
@@ -11,7 +14,6 @@ import io.qameta.allure.Allure;
 
 import java.util.function.Consumer;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ListInlinePickList<
 		W extends ListWidget<W, RR, R>,
@@ -41,9 +43,8 @@ public class ListInlinePickList<
 
 	@Override
 	public ListInlinePickList<W, RR, R> setValue(String value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("PickList", value);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
 			element()
 					.$("div[class*=\"ant-select-selection\"]")
@@ -64,8 +65,7 @@ public class ListInlinePickList<
 
 	@Override
 	public ListInlinePickList<W, RR, R> checkReadOnly(Consumer<Boolean> expectedReadOnly) {
-		return Allure.step("Checking the field for \"ReadOnly\"", step -> {
-			logTime(step);
+		return Allure.step(message("field.readOnly", getFieldIdentifier()), step -> {
 			Boolean disabled = element().shouldBe(Condition.exist)
 					.$("input[class=\"ant-select-search__field\"]")
 					.has(Condition.attribute("disabled"));

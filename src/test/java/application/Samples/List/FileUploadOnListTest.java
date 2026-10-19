@@ -164,10 +164,11 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.fileUpload("Custom Field")
-				.setValue(fileFromResource).popup().close();
-		row.burgerAction("Save").click();
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.fileUpload("Custom Field")
+					.setValue(fileFromResource).popup().close();
+			row.burgerAction("Save").click();
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.LessSize))
@@ -185,9 +186,10 @@ public class FileUploadOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.fileUpload("Custom Field")
-				.setValue(fileFromResource).popup().close();
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.fileUpload("Custom Field")
+					.setValue(fileFromResource).popup().close();
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

@@ -149,8 +149,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.radio("Custom Field").setValue("Low");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.radio("Custom Field").setValue("Low"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Text.textRadioContains("High")))
@@ -167,8 +166,7 @@ public class RadioOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.radio("Custom Field").setValue("Low");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.radio("Custom Field").setValue("Low"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

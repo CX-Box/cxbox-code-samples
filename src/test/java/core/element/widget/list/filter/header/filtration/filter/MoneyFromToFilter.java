@@ -9,7 +9,6 @@ import core.element.widget.list.rows.row.PlatformRow;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$;
 
 public class MoneyFromToFilter<
 		WIDGET extends ListWidget<WIDGET, ROWS, ROW>,
@@ -36,17 +35,17 @@ public class MoneyFromToFilter<
 		}
 		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER)
 				.click();
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-start-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-start-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(values.get(0));
 
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-end-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-end-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-end-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(values.get(1));
 		return (SELF) this;

@@ -57,7 +57,7 @@ public class ListMultipleSelect
 	@Override
 	public ListMultipleSelect<W, RR, R> addValue(@NonNull Set<String> values) {
 		values.forEach(value -> {
-			boolean doesNotExist = !$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+			boolean doesNotExist = !openList()
 					.is(Condition.visible, widget().getExpectations().getTimeout());
 			if (doesNotExist) {
 				element().click();
@@ -68,7 +68,7 @@ public class ListMultipleSelect
 						.click();
 			}
 			$("body").sendKeys(Keys.ESCAPE);
-			$("div[class^='ant-select-dropdown MultipleSelectField__dropDownMenu']")
+			openList()
 					.is(Condition.hidden, widget().getExpectations().getTimeout());
 		});
 

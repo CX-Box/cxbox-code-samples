@@ -67,7 +67,7 @@ public class ListPopupFilter<
 		SelenideElement popup = $(FILTER_POPUP);
 		popup.$("button[data-test-widget-list-save]").click();
 		popup.shouldNot(Condition.exist, getWidget().getExpectations().getTimeout());
-		getWidget().getExpectations().getWaitAllElements(getWidget().element());
+		getWidget().element();
 		return getParent();
 	}
 

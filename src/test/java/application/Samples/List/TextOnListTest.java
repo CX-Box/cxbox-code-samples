@@ -151,8 +151,7 @@ public class TextOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.text("Custom Field").setValue("1234");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.text("Custom Field").setValue("1234"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -169,8 +168,7 @@ public class TextOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.text("Custom Field").setValue("Test");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.text("Custom Field").setValue("Test"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

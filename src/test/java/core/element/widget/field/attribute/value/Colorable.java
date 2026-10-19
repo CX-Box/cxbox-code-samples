@@ -1,5 +1,7 @@
 package core.element.widget.field.attribute.value;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import core.config.Constants;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.AbstractField;
@@ -10,13 +12,11 @@ import io.qameta.allure.Allure;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public interface Colorable<W extends AbstractWidget<ExpectationPattern, W>, VF, V, SELF extends ColorCheckable<W, VF, V, SELF>> extends AbstractField<ExpectationPattern, W, VF, SELF> {
 
 	default String color() {
-		return Allure.step("Getting the field color in Hex format", step -> {
-			logTime(step);
+		return Allure.step(message("field.color", getFieldIdentifier()), step -> {
 			String style = getValueByAttribute("style");
 			Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
 			Matcher matcher = pattern.matcher(style);

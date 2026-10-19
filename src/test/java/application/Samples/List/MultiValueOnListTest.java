@@ -144,8 +144,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multivalue("Custom Field").clearWithModal();
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.multivalue("Custom Field").clearWithModal())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -162,8 +161,7 @@ public class MultiValueOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multivalue("Custom Field").deleteValueFromField();
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.multivalue("Custom Field").deleteValueFromField())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

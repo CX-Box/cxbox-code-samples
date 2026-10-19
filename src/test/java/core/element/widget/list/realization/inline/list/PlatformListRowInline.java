@@ -1,5 +1,8 @@
 package core.element.widget.list.realization.inline.list;
 
+import io.qameta.allure.Allure;
+import static core.util.i18n.CoreMessageSource.message;
+
 import core.element.widget.list.rows.row.RowInline;
 
 public class PlatformListRowInline extends
@@ -15,7 +18,9 @@ public class PlatformListRowInline extends
 
 	@Override
 	public PlatformListRowInline editRow() {
-		element().click();
-		return new PlatformListRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		return Allure.step(message("row.edit"), () -> {
+			element().click();
+			return new PlatformListRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		});
 	}
 }

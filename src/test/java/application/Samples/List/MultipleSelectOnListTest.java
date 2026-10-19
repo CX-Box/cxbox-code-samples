@@ -156,8 +156,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multipleSelect("Custom Field").addValue(Set.of("Middle"));
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.multipleSelect("Custom Field").addValue(Set.of("Middle")))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo("The field  can contain 'High'"))
@@ -178,8 +177,7 @@ public class MultipleSelectOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multipleSelect("Custom Field").addValue(Set.of("Middle"));
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.multipleSelect("Custom Field").addValue(Set.of("Middle")))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

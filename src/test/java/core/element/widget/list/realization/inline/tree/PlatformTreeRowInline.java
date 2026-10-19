@@ -1,5 +1,8 @@
 package core.element.widget.list.realization.inline.tree;
 
+import io.qameta.allure.Allure;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.list.rows.row.RowInline;
 import core.element.widget.tree.TreeNavigation;
@@ -27,8 +30,10 @@ public class PlatformTreeRowInline extends
 
 	@Override
 	public PlatformTreeRowInline editRow() {
-		element().click();
-		return new PlatformTreeRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		return Allure.step(message("row.edit"), () -> {
+			element().click();
+			return new PlatformTreeRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		});
 	}
 
 	@Override

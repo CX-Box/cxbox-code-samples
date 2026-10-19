@@ -14,7 +14,7 @@ public class CardListRows extends RowsInlineForm<CardListRows, CardListWidget, C
 
 	@Override
 	public ElementsCollection element() {
-		widget().getExpectations().getWaitAllElements(widget().element());
+		widget().element();
 		return widget().element()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$("div[" + ROW_ID_ATTRIBUTE + "]");

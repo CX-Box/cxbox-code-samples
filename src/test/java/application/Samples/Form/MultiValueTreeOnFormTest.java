@@ -152,8 +152,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
-		multivalue.clear();
-		var error = form.errorPopup()
+		var error = form.expectErrorPopup(() -> multivalue.clear())
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
 		DocShots.png(ARTICLE, "img_business_error.png", 1600, 1000);
@@ -170,8 +169,7 @@ public class MultiValueTreeOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multivalue = form.field((w) -> new MultivalueTree<>(w, "Custom Field"));
-		multivalue.clearValue("Test data", false);
-		var error = form.errorPopup()
+		var error = form.expectErrorPopup(() -> multivalue.clearValue("Test data", false))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError));
 		DocShots.png(ARTICLE, "img_runtime_error.png", 1600, 1000);

@@ -1,5 +1,7 @@
 package core.element.widget.field.type.fileUpload;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.DownloadOptions;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +18,6 @@ import java.io.File;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class FileUploadRO<W extends AbstractWidget<ExpectationPattern, W>> extends AbstractFieldImpl<ExpectationPattern, W, File, FileUploadRO<W>> implements
 		PlaceholderSupportedCheckable<W, File, FileUploadRO<W>>,
@@ -67,8 +68,7 @@ public class FileUploadRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 	}
 
 	public FileUploadRO<W> checkFileNameInField(Consumer<String> value) {
-		return Allure.step("Getting the file name in the field", step -> {
-			logTime(step);
+		return Allure.step(message("field.fileName", getFieldIdentifier()), step -> {
 			value.accept(element()
 					.$(valueTag())
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())

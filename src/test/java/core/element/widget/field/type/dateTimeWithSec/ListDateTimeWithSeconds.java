@@ -1,5 +1,8 @@
 package core.element.widget.field.type.dateTimeWithSec;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -13,7 +16,6 @@ import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 import java.time.LocalDateTime;
@@ -24,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class ListDateTimeWithSeconds<
@@ -61,8 +62,7 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public LocalDateTime getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			element();
 			String date = getUniversalText(element().shouldBe(Condition.exist).find(valueTag()));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
@@ -72,34 +72,24 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public ListDateTimeWithSeconds<W, RR, R> setValue(LocalDateTime value) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
+		Allure.step(message("field.calendarSet", getFieldIdentifier()), step -> {
 			clear();
 			setFocusField();
-			step.parameter("LocalDateTime with sec", value);
+			StepReport.value(value);
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 
 					.click();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 
 					.setValue(formattedDateTimeWithSecond(value));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.shouldHave(Condition.value(formattedDateTimeWithSecond(value)));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
@@ -114,8 +104,7 @@ public class ListDateTimeWithSeconds<
 	}
 
 	private void setFocusField() {
-		Allure.step("Focus on the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.focus", getFieldIdentifier()), () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
@@ -134,7 +123,7 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public ListDateTimeWithSeconds<W, RR, R> checkColor(Consumer<String> checkColor) {
-		return Allure.step("Getting the field color in Hex format", step -> {
+		return Allure.step(message("field.color", getFieldIdentifier()), step -> {
 			String color = element().$("span").getAttribute("style");
 			Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");
 			Matcher matcher = pattern.matcher(color);
@@ -156,8 +145,7 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public ListDateTimeWithSeconds<W, RR, R> clear() {
-		return Allure.step("Clearing the field through the cross icon", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 
@@ -169,8 +157,7 @@ public class ListDateTimeWithSeconds<
 	}
 
 	private ListDateTimeWithSeconds<W, RR, R> clearWithInput() {
-		return Allure.step("Clearing the field through the input value", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clearInput", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 
@@ -183,8 +170,7 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public ListDateTimeWithSeconds<W, RR, R> checkRequired(Consumer<String> checkRequired) {
-		return Allure.step("Get validation message", step -> {
-			logTime(step);
+		return Allure.step(message("field.validationMessage", getFieldIdentifier()), step -> {
 			// move the mouse away to the corner: the center of the body may be over the field itself,
 			// then the hover below does not enter the field and its error tooltip does not open
 			Selenide.actions()
@@ -206,6 +192,5 @@ public class ListDateTimeWithSeconds<
 	public R row() {
 		return row;
 	}
-
 
 }

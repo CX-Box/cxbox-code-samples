@@ -110,8 +110,7 @@ public class DateTimeOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateTimeField = form.dateTime("custom Field");
-		dateTimeField.setValue(dateTime);
-		form.errorPopup()
+		form.expectErrorPopup(() -> dateTimeField.setValue(dateTime))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate))
@@ -128,8 +127,7 @@ public class DateTimeOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateTimeField = form.dateTime("custom Field");
-		dateTimeField.clear();
-		form.errorPopup()
+		form.expectErrorPopup(() -> dateTimeField.clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

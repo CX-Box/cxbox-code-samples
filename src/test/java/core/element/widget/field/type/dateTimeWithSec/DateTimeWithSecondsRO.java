@@ -1,5 +1,8 @@
 package core.element.widget.field.type.dateTimeWithSec;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -15,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class DateTimeWithSecondsRO<W extends AbstractWidget<ExpectationPattern, W>, SELF extends DateTimeWithSecondsRO<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, LocalDateTime, SELF> implements
 		ColorCheckable<W, LocalDateTime, String, SELF>,
@@ -39,8 +41,7 @@ public class DateTimeWithSecondsRO<W extends AbstractWidget<ExpectationPattern, 
 
 	@Override
 	public LocalDateTime getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 
 			String date = element().shouldBe(Condition.exist).$(valueTag()).getText();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
@@ -50,7 +51,8 @@ public class DateTimeWithSecondsRO<W extends AbstractWidget<ExpectationPattern, 
 
 	@Override
 	public SELF setValue(LocalDateTime value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			return (SELF) this;
 		});
 	}

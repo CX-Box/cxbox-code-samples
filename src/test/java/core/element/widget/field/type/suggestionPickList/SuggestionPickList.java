@@ -1,5 +1,8 @@
 package core.element.widget.field.type.suggestionPickList;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +19,6 @@ import io.qameta.allure.Allure;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 
 public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>, SELF extends SuggestionPickList<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SuggestionPickList<W, SELF>> implements
@@ -43,8 +45,7 @@ public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>,
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return getUniversalText(element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout()));
@@ -53,9 +54,8 @@ public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>,
 
 	@Override
 	public SuggestionPickList<W, SELF> setValue(String value) {
-		Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("Suggestion Pick List", value);
+		Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			SelenideElement field = element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
@@ -82,9 +82,8 @@ public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>,
 	 * @return List(String)
 	 */
 	public List<String> getOptions(String value) {
-		return Allure.step("Getting a list of matching options by symbols " + value, step -> {
-			logTime(step);
-			step.parameter("Symbols", value);
+		return Allure.step(message("field.suggestions", getFieldIdentifier(), value), step -> {
+			step.parameter(message("parameter.symbols"), value);
 
 			element()
 					.$(valueTag())
@@ -104,8 +103,7 @@ public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>,
 	}
 
 	public SuggestionPickList<W, SELF> clear() {
-		Allure.step("Clearing the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 
 			element().click();
 			element().hover();

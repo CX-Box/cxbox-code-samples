@@ -1,5 +1,8 @@
 package core.element.widget.field.type.multipleSelect;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -13,7 +16,6 @@ import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Disabled;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class MultipleSelectRO<W extends AbstractWidget<ExpectationPattern, W>, SELF extends MultipleSelectRO<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SELF> implements
 		Clear<W, String, SELF>,
@@ -38,8 +40,7 @@ public class MultipleSelectRO<W extends AbstractWidget<ExpectationPattern, W>, S
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return element()
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.$(valueTag())

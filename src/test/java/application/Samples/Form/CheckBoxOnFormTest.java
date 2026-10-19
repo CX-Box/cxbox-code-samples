@@ -94,9 +94,10 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var checkbox = form.checkbox("Custom Field");
-		checkbox.checkValue(act -> assertThat(act).isFalse());
-		checkbox.setValue(true).setValue(false);
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			checkbox.checkValue(act -> assertThat(act).isFalse());
+			checkbox.setValue(true).setValue(false);
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo("The field can contain only 'True'"))
@@ -116,8 +117,7 @@ public class CheckBoxOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var checkbox = form.checkbox("Custom Field");
-		checkbox.setValue(true);
-		form.errorPopup()
+		form.expectErrorPopup(() -> checkbox.setValue(true))
 				.checkTitleAndMessage(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

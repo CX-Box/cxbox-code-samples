@@ -1,11 +1,14 @@
 package core.element.widget.field.type.multivalue;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.*;
 import com.google.common.base.Preconditions;
 import core.element.widget.AbstractWidget;
 import core.element.widget.list.realization.inline.list.PlatformListPopupWidgetInline;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.expectation.ExpectationPattern;
+import core.util.report.StepReport;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -14,13 +17,13 @@ import org.openqa.selenium.StaleElementReferenceException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byTagAndText;
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
@@ -57,10 +60,11 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	public void setValues(String name, List<String> values) {
+		var missing = new ArrayList<>(values);
 		while (true) {
-			Selenide.sleep(1000); //TODO >> After adding skeleton at multivalue popup add popup wait
-			setValuesOnCurrentPage(name, values, true);
-			if (isLastPage()) {
+			missing.removeAll(setValuesOnCurrentPage(name, values, true));
+			// the values are often on the first pages: the popup is not turned to its end once every value is ticked
+			if (missing.isEmpty() || isLastPage()) {
 				break;
 			}
 			pressRight(1);
@@ -70,20 +74,23 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	protected boolean isLastPage() {
 		return this.modal
-				.$("li[title=\"Next Page\"][aria-disabled=\"true\"]")
+				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
 	}
 
 	protected void pressRight(int number) {
-		Allure.step("Clicking on the button \"Right\"", step -> {
-			logTime(step);
-			step.parameter("Number of clicks", number);
+		Allure.step(message("modal.nextPage"), step -> {
+			step.parameter(message("parameter.clicks"), number);
 
 			for (int i = 0; i < number; i++) {
 				if (getPages() > 1) {
+					var page = Integer.parseInt(this.modal.$("li.ant-pagination-item-active").getAttribute("title"));
 					this.modal.$("i[class=\"anticon anticon-right\"]")
 							.shouldBe(Condition.visible, widget.getExpectations().getOverTimeout())
 							.click();
+					// the next page is open when its number is active, as the table waits for its page
+					this.modal.$("li.ant-pagination-item-active[title=\"" + (page + 1) + "\"]")
+							.should(Condition.exist, widget.getExpectations().getTimeout());
 				}
 
 			}
@@ -91,8 +98,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	private int getPages() {
-		return Allure.step("Getting the number of pages in a pagination", step -> {
-			logTime(step);
+		return Allure.step(message("modal.pages"), step -> {
 
 			return modal.$("div[data-test-widget-list-pagination=\"true\"]")
 					.shouldBe(Condition.visible, widget.getExpectations().getOverTimeout())
@@ -104,21 +110,27 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 		return modal.$$(By.cssSelector("table > tbody > tr"));
 	}
 
-	protected void setValuesOnCurrentPage(String columnName, List<String> values, Boolean status) {
+	/**
+	 * Ticks or unticks the values found on the open page and gives them
+	 */
+	protected List<String> setValuesOnCurrentPage(String columnName, List<String> values, Boolean status) {
 		widget.getExpectations().getWaitAllElements(this.modal);
 		modal.shouldBe(Condition.visible, widget.getExpectations().getTimeout());
-		rows()
+		var found = rows()
 				.shouldBe(CollectionCondition.sizeGreaterThan(0))
 				.stream()
-				.filter(r -> values.contains(getColumnByName(columnName, r).getText()))
-				.forEach(row -> {
-					SelenideElement checkbox = getSelectionRow(row);
+				.map(r -> Map.entry(r, StepReport.read(message("modal.row"), () -> getColumnByName(columnName, r).getText())))
+				.filter(row -> values.contains(row.getValue()))
+				.toList();
+		found.forEach(row -> StepReport.service(message(status ? "modal.check" : "modal.uncheck", row.getValue()), () -> {
+					SelenideElement checkbox = getSelectionRow(row.getKey());
 					if (checkbox.isSelected() != status) {
 						checkbox.click();
 					}
 					// the popup re-renders after a click: the state is checked, not assumed
 					checkbox.shouldBe(status ? Condition.selected : Condition.not(Condition.selected), widget.getExpectations().getTimeout());
-				});
+				}));
+		return found.stream().map(Map.Entry::getValue).toList();
 	}
 
 	protected SelenideElement getSelectionRow(SelenideElement row) {
@@ -181,8 +193,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	protected void close() {
-		Allure.step("Clicking on the button Close", step -> {
-			logTime(step);
+		Allure.step(message("modal.close"), step -> {
 
 			getSubmitButton()
 					.click();
@@ -190,8 +201,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	public void clear(Boolean close) {
-		Allure.step("Clearing the field", step -> {
-			logTime(step);
+		Allure.step(message("modal.clear"), step -> {
 			ElementsCollection icons = this.modal
 					.$("div[class=\"ant-modal-title\"]")
 					.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
@@ -210,8 +220,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	public void clearWithValue(String value, Boolean close) {
-		Allure.step("Clearing the field", step -> {
-			logTime(step);
+		Allure.step(message("modal.clear"), step -> {
 			this.modal
 					.$("div[class=\"ant-modal-title\"]")
 					.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
@@ -224,7 +233,6 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			}
 		});
 
-
 	}
 
 	public void setValueAll() {
@@ -234,14 +242,10 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	public void setValueAll(boolean close) {
-		Allure.step("Setting all values", step -> {
-			logTime(step);
+		Allure.step(message("modal.selectAll"), step -> {
 			while (true) {
 				if (!getCheckBoxAll().isSelected()) {
 					getCheckBoxAll().click();
-				}
-				if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-					return;
 				}
 
 				if (isLastPage()) {

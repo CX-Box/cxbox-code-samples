@@ -118,8 +118,7 @@ public class PickTreeOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
 	void businessException() {
 		var form = form("Picktree validation business exception");
-		form.pickTree(FIELD).setValue(FIELD, "1234");
-		var error = form.errorPopup()
+		var error = form.expectErrorPopup(() -> form.pickTree(FIELD).setValue(FIELD, "1234"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
 		DocShots.png(ARTICLE, "img_business_error.png", 1600, 1000);
@@ -133,8 +132,7 @@ public class PickTreeOnFormTest extends BaseTestForSamples {
 	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated")
 	void runtimeException() {
 		var form = form("Picktree runtime");
-		form.pickTree(FIELD).setValue(FIELD, "Test data");
-		var error = form.errorPopup()
+		var error = form.expectErrorPopup(() -> form.pickTree(FIELD).setValue(FIELD, "Test data"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError));
 		DocShots.png(ARTICLE, "img_runtime_error.png", 1600, 1000);

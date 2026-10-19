@@ -1,5 +1,8 @@
 package core.element.widget.field.type.time;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -22,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Time<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, LocalDateTime, SELF> implements
@@ -53,8 +55,7 @@ public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public LocalDateTime getValue() {
-		return Allure.step("Getting time value from the field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			log.info("Getting time value from the field {}", format);
 			String time = getUniversalText(element()
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
@@ -68,9 +69,8 @@ public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public SELF setValue(LocalDateTime value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("Date  with Seconds", value);
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
 			setFocusField();
 			Calendar.setTimeField(value.format(DateTimeFormatter.ofPattern(format)));
@@ -93,8 +93,7 @@ public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 	}
 
 	private void setFocusField() {
-		Allure.step("Focus on the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.focus", getFieldIdentifier()), () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
@@ -104,8 +103,7 @@ public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public SELF clear() {
-		Allure.step("Clearing the time field using cross icon", step -> {
-			logTime(step);
+		StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")

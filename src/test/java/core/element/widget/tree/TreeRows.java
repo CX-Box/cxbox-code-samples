@@ -27,7 +27,7 @@ public interface TreeRows<W extends AbstractWidget<ExpectationPattern, W>, ROW> 
 
 	/** Loaded rows of the owner; pseudo rows and rows of other owners are excluded. */
 	default ElementsCollection ownerRows() {
-		widget().getExpectations().getWaitAllElements(widget().element());
+		widget().element();
 		return TreeNavigation.childRows(widget().element()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout()), parentKey());
 	}

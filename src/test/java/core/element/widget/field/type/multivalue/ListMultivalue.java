@@ -1,5 +1,8 @@
 package core.element.widget.field.type.multivalue;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
@@ -27,7 +30,6 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ListMultivalue<
 		W extends ListWidget<W, RR, R>,
@@ -57,15 +59,15 @@ public class ListMultivalue<
 
 	@Override
 	public List<String> getValue() {
-		return element()
+		return StepReport.read(this, () -> element()
 				.$$(By.tagName("span"))
-				.texts();
+				.texts());
 	}
 
 	@Override
 	public ListMultivalue<W, RR, R> setValue(List<String> value) {
-		return Allure.step("Set value on field", step -> {
-			logTime(step);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			SelenideElement container = element().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 
 
@@ -117,8 +119,7 @@ public class ListMultivalue<
 
 	@Override
 	public ListMultivalue<W, RR, R> checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			String placeholder = element()
 					.$("div[data-text]")
 					.getAttribute("data-text");
@@ -129,7 +130,7 @@ public class ListMultivalue<
 
 	@Override
 	public ListMultivalue<W, RR, R> checkColor(Consumer<String> checkColor) {
-		return Allure.step("Getting color for field", step -> {
+		return Allure.step(message("field.color", getFieldIdentifier()), step -> {
 			String color = element().$(" p")
 					.getAttribute("style");
 			Pattern pattern = Pattern.compile("rgb\\((\\d{1,3}, \\d{1,3}, \\d{1,3})\\)");

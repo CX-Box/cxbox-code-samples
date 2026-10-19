@@ -1,5 +1,8 @@
 package core.element.widget.list.realization.inline.gh;
 
+import io.qameta.allure.Allure;
+import static core.util.i18n.CoreMessageSource.message;
+
 import core.element.widget.list.rows.row.RowInline;
 
 public class PlatformGHRowInline extends
@@ -16,7 +19,9 @@ public class PlatformGHRowInline extends
 
 	@Override
 	public PlatformGHRowInline editRow() {
-		element().click();
-		return new PlatformGHRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		return Allure.step(message("row.edit"), () -> {
+			element().click();
+			return new PlatformGHRowInline(getParent(), getPageIndex(), getRowKey(), true);
+		});
 	}
 }

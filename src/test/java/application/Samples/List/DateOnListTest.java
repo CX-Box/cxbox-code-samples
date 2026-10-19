@@ -148,8 +148,7 @@ public class DateOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.date("custom Field").setValue(date);
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.date("custom Field").setValue(date))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate))
@@ -166,9 +165,10 @@ public class DateOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.date("custom Field").clear();
-		row.burgerAction("Save").click();
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.date("custom Field").clear();
+			row.burgerAction("Save").click();
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

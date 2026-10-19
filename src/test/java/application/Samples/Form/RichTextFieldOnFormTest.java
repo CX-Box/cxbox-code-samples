@@ -140,9 +140,10 @@ public class RichTextFieldOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("RichText validation business exception")
 				.secondLevelView("Form")
 				.form("Form title");
-		form.richText("Custom Field").userInput(LONG_TEXT, f -> {
-		});
-		var popup = form.errorPopup()
+		var popup = form.expectErrorPopup(() -> {
+			form.richText("Custom Field").userInput(LONG_TEXT, f -> {
+			});
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(MAX_50_CHARACTERS));
@@ -159,9 +160,10 @@ public class RichTextFieldOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("RichText validation runtime exception")
 				.secondLevelView("Form")
 				.form("Form title");
-		form.richText("Custom Field").userInput("A new note.", f -> {
-		});
-		var popup = form.errorPopup()
+		var popup = form.expectErrorPopup(() -> {
+			form.richText("Custom Field").userInput("A new note.", f -> {
+			});
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError));

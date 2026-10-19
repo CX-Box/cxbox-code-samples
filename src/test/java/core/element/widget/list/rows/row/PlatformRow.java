@@ -1,5 +1,6 @@
 package core.element.widget.list.rows.row;
 
+import static core.util.i18n.CoreMessageSource.message;
 import core.element.widget.action.BurgerAction;
 import core.element.widget.field.type.checkbox.ListCheckBox;
 import core.element.widget.field.type.date.ListDate;
@@ -50,6 +51,13 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 		this.parent = parent;
 		this.pageIndex = pageIndex;
 		this.rowKey = rowKey;
+	}
+
+	/**
+	 * The row in the technical lines of the report: «строка id 1121762»
+	 */
+	public String describe() {
+		return message("report.row", rowKey);
 	}
 
 	public BurgerAction<SELF, ROWS, WIDGET> burgerAction(String label) {

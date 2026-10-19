@@ -1,5 +1,8 @@
 package core.element.widget.field.type.multivalueHover;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -13,7 +16,6 @@ import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class MultivalueHover<W extends AbstractWidget<ExpectationPattern, W>, SELF extends MultivalueHover<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, MultivalueHover<W, SELF>> implements
 		Clear<W, String, MultivalueHover<W, SELF>>,
@@ -40,8 +42,7 @@ public class MultivalueHover<W extends AbstractWidget<ExpectationPattern, W>, SE
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())

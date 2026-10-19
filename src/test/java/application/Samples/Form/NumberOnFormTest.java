@@ -140,8 +140,7 @@ public class NumberOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var numberField = form.number("custom Field");
-		numberField.setValue(new BigDecimal("1234"));
-		form.errorPopup()
+		form.expectErrorPopup(() -> numberField.setValue(new BigDecimal("1234")))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.MoreThatNumber))
 				.close();
@@ -157,9 +156,10 @@ public class NumberOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var numberField = form.number("custom Field");
-		numberField.clear();
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			numberField.clear();
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

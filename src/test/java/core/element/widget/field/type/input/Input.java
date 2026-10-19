@@ -1,5 +1,8 @@
 package core.element.widget.field.type.input;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -11,9 +14,7 @@ import core.element.widget.field.attribute.checkable.*;
 import core.element.widget.field.attribute.custom.Clear;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
-import org.openqa.selenium.Keys;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class Input<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Input<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SELF> implements
 		Clear<W, String, SELF>,
@@ -54,8 +55,7 @@ public class Input<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return getUniversalText(element()
 					.shouldBe(Condition.exist)
 					.$(valueTag()));
@@ -65,24 +65,14 @@ public class Input<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public SELF setValue(String value) {
-		element().shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-		element().click();
-		element()
-				.$(valueTag())
-				.shouldBe(Condition.interactable)
-				.clear();
-		element()
-				.$(valueTag())
-				.shouldBe(Condition.interactable)
-				.setValue(value);
-		element()
-				.$(valueTag())
-				.shouldNot(Condition.empty);
-		element()
-				.$(valueTag())
-				.sendKeys(Keys.TAB);
-		return (SELF) this;
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
+			element().shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
+					.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			element().click();
+			typeOver(element().$(valueTag()).shouldBe(Condition.interactable), value);
+			return (SELF) this;
+		});
 	}
 
 }

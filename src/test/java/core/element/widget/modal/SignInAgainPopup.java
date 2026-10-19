@@ -1,5 +1,7 @@
 package core.element.widget.modal;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
@@ -11,7 +13,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 /**
  * The popup of a lost session. The backend answered 401 (the session has expired) or 403 (insufficient permissions), see
@@ -55,8 +56,7 @@ public class SignInAgainPopup implements SingleElement {
 	}
 
 	public SignInAgainPopup checkReason(Consumer<Reason> checkReason) {
-		return Allure.step("Getting the reason", step -> {
-			logTime(step);
+		return Allure.step(message("signIn.reason"), step -> {
 			var status = root.shouldBe(Condition.exist, APPEARS_WITHIN).getAttribute("data-test-auth-error-popup-status");
 			checkReason.accept("403".equals(status) ? Reason.INSUFFICIENT_PERMISSIONS : Reason.SESSION_EXPIRED);
 			return this;
@@ -64,8 +64,7 @@ public class SignInAgainPopup implements SingleElement {
 	}
 
 	public SignInAgainPopup checkTitle(Consumer<String> checkTitle) {
-		return Allure.step("Getting the header value", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 			checkTitle.accept(getTextElement("[data-test-auth-error-popup-title]"));
 			return this;
 		});
@@ -75,16 +74,14 @@ public class SignInAgainPopup implements SingleElement {
 	 * The text under the title (in soft mode the hint that the popup can be closed to copy unsaved data)
 	 */
 	public SignInAgainPopup checkMessage(Consumer<String> checkMessage) {
-		return Allure.step("Getting the message text", step -> {
-			logTime(step);
+		return Allure.step(message("popup.message"), step -> {
 			checkMessage.accept(getTextElement("[data-test-auth-error-popup-hint]"));
 			return this;
 		});
 	}
 
 	public SignInAgainPopup checkTitleAndMessage(Consumer<String> checkTitle, Consumer<String> checkMessage) {
-		return Allure.step("Getting the header value", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 			checkTitle.accept(getTextElement("[data-test-auth-error-popup-title]"));
 			checkMessage.accept(getTextElement("[data-test-auth-error-popup-hint]"));
 			return this;
@@ -96,8 +93,7 @@ public class SignInAgainPopup implements SingleElement {
 	 * what the user has typed on the screen is not lost
 	 */
 	public SignInAgainPopup checkProviderNotReachable(Consumer<String> checkMessage) {
-		return Allure.step("Getting the message that the provider is not reachable", step -> {
-			logTime(step);
+		return Allure.step(message("signIn.providerUnreachable"), step -> {
 			checkMessage.accept(getTextElement("[data-test-auth-error-popup-redirect-failed]"));
 			return this;
 		});
@@ -107,8 +103,7 @@ public class SignInAgainPopup implements SingleElement {
 	 * Hands over what "Copy details" put on the clipboard
 	 */
 	public SignInAgainPopup checkDetails(Consumer<ErrorDetails> checkDetails) {
-		return Allure.step("Getting the copied details", step -> {
-			logTime(step);
+		return Allure.step(message("popup.copiedDetails"), step -> {
 			checkDetails.accept(copyDetails());
 			return this;
 		});
@@ -118,8 +113,7 @@ public class SignInAgainPopup implements SingleElement {
 	 * Hands over what "Copy details" put on the clipboard and what the expanded panel shows
 	 */
 	public SignInAgainPopup checkDetails(BiConsumer<ErrorDetails, RequestDetails> checkDetails) {
-		return Allure.step("Getting the copied and the expanded details", step -> {
-			logTime(step);
+		return Allure.step(message("popup.copiedExpandedDetails"), step -> {
 			checkDetails.accept(copyDetails(), expandDetails());
 			return this;
 		});
@@ -177,8 +171,7 @@ public class SignInAgainPopup implements SingleElement {
 	}
 
 	private void clickButton(String label, String locator) {
-		Allure.step("Clicking on the " + label + " button", step -> {
-			logTime(step);
+		Allure.step(message("action.click", label), step -> {
 			element().$(locator)
 					.shouldBe(Condition.enabled, expectations.getTimeout())
 					.click();

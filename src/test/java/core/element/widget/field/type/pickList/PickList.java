@@ -1,5 +1,8 @@
 package core.element.widget.field.type.pickList;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
@@ -18,7 +21,6 @@ import io.qameta.allure.Allure;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Condition.exist;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF extends PickList<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SELF> implements
 		Clear<W, String, SELF>,
@@ -44,8 +46,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
@@ -61,8 +62,8 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	@Deprecated
 	@Override
 	public SELF setValue(String value) {
-		return Allure.step("Set value on field", step -> {
-			logTime(step);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			ElementsCollection icons = element()
 					.shouldBe(exist, widget().getExpectations().getTimeout())
 					.$$("i[class=\"anticon anticon-close\"]");
@@ -80,8 +81,8 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	public SELF setValue(String columnName, String value) {
-		return Allure.step("Set value on field", step -> {
-			logTime(step);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 
 			ElementsCollection icons = element()
 					.shouldBe(exist, widget().getExpectations().getTimeout())
@@ -137,8 +138,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public SELF clear() {
-		Allure.step("Clearing the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 
 			element()
 					.$(clearIconSelector())
@@ -157,8 +157,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			System.out.println("Checking placeholder " + valueTag());
 			String actualPlaceholder = element()
 					.shouldBe(Condition.exist)

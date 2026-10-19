@@ -1,5 +1,7 @@
 package core.element.widget.cardlist;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +18,6 @@ import java.util.function.Consumer;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.WebDriverConditions.url;
-import static core.element.widget.AbstractWidget.logTime;
 
 /**
  * A card of the CardList widget. The card shows the parts set in {@code options.card} of the widget, not the fields,
@@ -37,19 +38,19 @@ public class CardListRow extends RowInlineForm<CardListRow, CardListRows, CardLi
 
 	/** Passes the title of the card to the check: the field from {@code titleFieldKey} or the file name. */
 	public CardListRow checkTitle(Consumer<String> checkTitle) {
-		checkTitle.accept(text("Getting the title of the card", "div[class*='CardCarouselList__title']"));
+		checkTitle.accept(text(message("card.title"), "div[class*='CardCarouselList__title']"));
 		return this;
 	}
 
 	/** Passes the description of the card to the check: the field from {@code descriptionFieldKey}. */
 	public CardListRow checkDescription(Consumer<String> checkDescription) {
-		checkDescription.accept(text("Getting the description of the card", "div[class*='CardCarouselList__description']"));
+		checkDescription.accept(text(message("card.description"), "div[class*='CardCarouselList__description']"));
 		return this;
 	}
 
 	/** Passes the status of the card to the check: the value of the first dictionary field. */
 	public CardListRow checkStatus(Consumer<String> checkStatus) {
-		checkStatus.accept(text("Getting the status of the card", "div[class*='CardCarouselList__status']"));
+		checkStatus.accept(text(message("card.status"), "div[class*='CardCarouselList__status']"));
 		return this;
 	}
 
@@ -60,7 +61,7 @@ public class CardListRow extends RowInlineForm<CardListRow, CardListRows, CardLi
 	@Override
 	public PlatformFormWidget clickPencil() {
 		if (!Selenide.$(FILE_VIEWER_POPUP).is(Condition.visible)) {
-			clickCardButton("Clicking the pencil of the card", "edit");
+			clickCardButton(message("card.edit"), "edit");
 		}
 		return new PlatformFormWidget(PlatformIdentifier.NONE, null) {
 			@Override
@@ -73,15 +74,14 @@ public class CardListRow extends RowInlineForm<CardListRow, CardListRows, CardLi
 
 	/** Opens the file of the card for viewing; the card has the eye when the widget has no {@code options.edit}. */
 	public FileViewerPopup clickEye() {
-		clickCardButton("Clicking the eye of the card", "eye");
+		clickCardButton(message("card.view"), "eye");
 		SelenideElement popup = Selenide.$(FILE_VIEWER_POPUP).shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 		return new FileViewerPopup(popup, widget().element());
 	}
 
 	/** Clicks the link of the card title and passes the new page address to the check. */
 	public CardListRow drilldown(Consumer<String> checkUrl) {
-		Allure.step("Click-through when clicking on the title of the card", step -> {
-			logTime(step);
+		Allure.step(message("card.drilldown"), step -> {
 			String oldUrl = WebDriverRunner.url();
 			element().$("div[class*='CardCarouselList__title'] i[class*='anticon-link']")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
@@ -103,14 +103,12 @@ public class CardListRow extends RowInlineForm<CardListRow, CardListRows, CardLi
 
 	private String text(String stepName, String selector) {
 		return Allure.step(stepName, step -> {
-			logTime(step);
 			return element().$(selector).shouldBe(Condition.visible, widget().getExpectations().getTimeout()).getText();
 		});
 	}
 
 	private void clickCardButton(String stepName, String icon) {
 		Allure.step(stepName, step -> {
-			logTime(step);
 			hovered().$("i[aria-label='icon: " + icon + "']")
 					.closest("button")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())

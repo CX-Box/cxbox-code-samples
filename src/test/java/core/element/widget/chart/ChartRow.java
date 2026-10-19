@@ -1,11 +1,14 @@
 package core.element.widget.chart;
 
-import static core.element.widget.AbstractWidget.logTime;
+import static core.util.i18n.CoreMessageSource.message;
+
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import java.util.function.Consumer;
+import static com.codeborne.selenide.Selenide.webdriver;
+import static com.codeborne.selenide.WebDriverConditions.url;
 
 /**
  * A record of a chart: a bar, a point or a segment. {@link #drilldown} and {@link #hover} act on the element of the
@@ -34,19 +37,17 @@ public abstract class ChartRow<W extends ChartWidget<W>, SELF extends ChartRow<W
 	 * consumer.
 	 */
 	public void drilldown(Consumer<String> consumer) {
-		Allure.step("Drilldown from the record " + record.values(), step -> {
-			logTime(step);
+		Allure.step(message("chart.drilldown", record.values()), step -> {
 			String url = WebDriverRunner.url();
 			widget.clickRecord(record.id());
-			Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(url));
+			webdriver().shouldNotHave(url(url), widget.getExpectations().getTimeout());
 			consumer.accept(WebDriverRunner.url());
 		});
 	}
 
 	/** Moves the mouse over the element of the record: the chart shows the tooltip of the record. */
 	public SELF hover() {
-		return Allure.step("Hover over the record " + record.values(), step -> {
-			logTime(step);
+		return Allure.step(message("chart.hover", record.values()), step -> {
 			widget.hoverRecord(record.id());
 			return self();
 		});

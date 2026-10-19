@@ -12,6 +12,7 @@ import core.element.widget.field.attribute.checkable.PlaceholderSupportedCheckab
 import core.element.widget.field.attribute.checkable.ReadOnlyCheckable;
 import core.element.widget.field.attribute.checkable.ValueCheckable;
 import core.expectation.ExpectationPattern;
+import core.util.report.StepReport;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -37,11 +38,11 @@ public class MultivalueRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 
 	@Override
 	public List<String> getValue() {
-		return element()
+		return StepReport.read(this, () -> element()
 //				.$("div[class*=\"InfoCell__fieldData\"]")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(valueTag())
-				.texts();
+				.texts());
 	}
 
 	@Override

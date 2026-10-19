@@ -1,5 +1,8 @@
 package core.element.widget.field.type.input;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -18,7 +21,8 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static core.element.widget.AbstractWidget.logTime;
+import static com.codeborne.selenide.Selenide.webdriver;
+import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class ListInput<
 		W extends ListWidget<W, RR, R>,
@@ -51,22 +55,19 @@ public class ListInput<
 
 	@Override
 	public String getValue() {
-		return getUniversalText(element().$(valueTag())
+		return StepReport.read(this, () -> getUniversalText(element().$(valueTag())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout()));
+				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())));
 	}
 
 	@Override
 	public ListInput<W, RR, R> setValue(String value) {
-		element().$(fieldType().getValueTagFocused())
-				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-				.clear();
-		element().$(fieldType().getValueTagFocused())
-				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-				.setValue(value)
-				.shouldNot(Condition.empty)
-				.sendKeys(Keys.TAB);
-		return this;
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
+			typeOver(element().$(fieldType().getValueTagFocused()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()),
+					value);
+			return this;
+		});
 	}
 
 	@Override
@@ -80,8 +81,7 @@ public class ListInput<
 
 	@Override
 	public ListInput<W, RR, R> checkReadOnly(Consumer<Boolean> expectedReadOnly) {
-		return Allure.step("Checking the field for \"ReadOnly\"", step -> {
-			logTime(step);
+		return Allure.step(message("field.readOnly", getFieldIdentifier()), step -> {
 			Boolean disabled = element().shouldBe(Condition.exist)
 					.$(fieldType().getValueTagFocused())
 					.has(Condition.attribute("disabled"));
@@ -96,7 +96,7 @@ public class ListInput<
 		element().$(valueTag()).shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$("span:has(a)")
 				.click();
-		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().contains(url));
+		webdriver().shouldNotHave(url(url), widget().getExpectations().getTimeout());
 		widget().getExpectations().getContextMenu();
 		$x("//body").exists();
 		consumer.accept(WebDriverRunner.url());
@@ -115,8 +115,7 @@ public class ListInput<
 
 	@Override
 	public ListInput<W, RR, R> clear() {
-		return Allure.step("Clearing the field", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
@@ -135,8 +134,7 @@ public class ListInput<
 
 	@Override
 	public ListInput<W, RR, R> checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting placeholder the field", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			String actualPlaceholder = element()
 
 					.shouldBe(Condition.exist)

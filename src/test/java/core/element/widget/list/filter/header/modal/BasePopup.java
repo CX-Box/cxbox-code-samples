@@ -1,5 +1,8 @@
 package core.element.widget.list.filter.header.modal;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+import io.qameta.allure.Allure;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -45,17 +48,28 @@ public abstract class BasePopup<E> {
 	}
 
 	/**
-	 * Clicking on the button Ok
+	 * Clicking on the button Ok, found by its test mark: its text depends on the language
 	 */
 	public void clickOk() {
-		clickButton("Ok");
+		Allure.step(message("popup.ok"), () -> clickMarked("ok"));
 	}
 
 	/**
-	 * Clicking on the button Cancel
+	 * Clicking on the button Cancel, found by its test mark
 	 */
 	public void clickCancel() {
-		clickButton("Cancel");
+		Allure.step(message("popup.cancel"), () -> clickMarked("cancel"));
+	}
+
+	/**
+	 * The button with the mark {@code data-test-<popup>-popup-button-<button>}, as the confirm popup of a widget finds it;
+	 * the line of the report names the pressed button
+	 */
+	private void clickMarked(String button) {
+		var found = findPopup().$("[data-test-" + popup + "-popup-button-" + button + "=\"true\"]")
+				.shouldBe(Condition.enabled, expectationPattern.getTimeout());
+		StepReport.value(found.getText());
+		found.click();
 	}
 
 	/**
@@ -91,9 +105,11 @@ public abstract class BasePopup<E> {
 	 * @return String
 	 */
 	public String getTextElement(String locator) {
-		return findPopup()
+		var text = findPopup()
 				.$(locator)
 				.shouldBe(Condition.visible, expectationPattern.getTimeout())
 				.text();
+		StepReport.value(text);
+		return text;
 	}
 }

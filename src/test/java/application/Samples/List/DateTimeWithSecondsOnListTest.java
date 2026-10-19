@@ -154,9 +154,10 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dateTimeWithSec("Custom Field").setValue(dateTime);
-		row.burgerAction("Save").click();
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.dateTimeWithSec("Custom Field").setValue(dateTime);
+			row.burgerAction("Save").click();
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate))
@@ -173,8 +174,7 @@ public class DateTimeWithSecondsOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dateTimeWithSec("custom Field").clear();
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.dateTimeWithSec("custom Field").clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

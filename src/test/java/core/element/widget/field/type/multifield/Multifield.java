@@ -1,5 +1,8 @@
 package core.element.widget.field.type.multifield;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -17,7 +20,6 @@ import org.openqa.selenium.StaleElementReferenceException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class Multifield<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Multifield<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, List<MultifieldContainer>, SELF> implements
 		Clear<W, List<MultifieldContainer>, SELF>,
@@ -43,8 +45,7 @@ public class Multifield<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public List<MultifieldContainer> getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			ElementsCollection elements = elements();
 			List<MultifieldContainer> result = new ArrayList<>(elements.size());
 			for (SelenideElement i : elements) {

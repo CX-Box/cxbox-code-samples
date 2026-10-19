@@ -1,5 +1,7 @@
 package core.element.widget.modal;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 /**
  * The row every error popup has under its message: the "Copy details" link and the arrow that expands the request details on screen.
@@ -40,11 +41,13 @@ class RequestErrorDetailsRow {
 	 * "Copy details": puts the details on the clipboard as JSON and reads them back the way a user does, by pasting into a text input
 	 */
 	ErrorDetails copy() {
-		return Allure.step("Copy details", step -> {
-			logTime(step);
-			popup.$("[data-test-request-error-details-button-copy]").shouldBe(Condition.visible, expectations.getTimeout()).click();
-			$(".ant-message .ant-message-success").shouldBe(Condition.visible, expectations.getTimeout());
-			return parse(new Sidebar().readClipboard());
+		return Allure.step(message("popup.copyDetails"), step -> {
+			// the message «copied» and the clipboard are outside of the popup: the work with the open popup goes on
+			return ErrorPopupException.inside(() -> {
+				popup.$("[data-test-request-error-details-button-copy]").shouldBe(Condition.visible, expectations.getTimeout()).click();
+				$(".ant-message .ant-message-success").shouldBe(Condition.visible, expectations.getTimeout());
+				return parse(new Sidebar().readClipboard());
+			});
 		});
 	}
 
@@ -53,8 +56,7 @@ class RequestErrorDetailsRow {
 	 * "status code + status text" and "method + url" are split, the dates converted back to ISO.
 	 */
 	RequestDetails expand() {
-		return Allure.step("Expand details", step -> {
-			logTime(step);
+		return Allure.step(message("popup.expandDetails"), step -> {
 			if (!value("sessionId").is(Condition.visible)) {
 				popup.$("[data-test-request-error-details-button-toggle]").shouldBe(Condition.visible, expectations.getTimeout()).click();
 			}

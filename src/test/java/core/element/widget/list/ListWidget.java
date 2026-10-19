@@ -1,5 +1,7 @@
 package core.element.widget.list;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
@@ -11,7 +13,6 @@ import core.element.widget.list.rows.row.PlatformRow;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.Keys;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS extends PlatformRows<ROWS, SELF, ROW>, ROW extends PlatformRow<ROW, ROWS, SELF>> extends PlatformWidget<SELF> {
 
@@ -53,8 +54,7 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 	 * shows the found records. The widget searches from three characters; an empty text shows all records again.
 	 */
 	public SELF fullTextSearch(String text) {
-		return Allure.step("Full text search: " + text, step -> {
-			logTime(step);
+		return Allure.step(message("list.search", text), step -> {
 			SelenideElement input = element().$("input[data-test-widget-full-text-search]")
 					.shouldBe(Condition.visible, getExpectations().getTimeout());
 			// clear() does not reach the React handler, so the text is removed as by the user;

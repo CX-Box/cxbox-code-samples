@@ -10,7 +10,7 @@ import net.jcip.annotations.ThreadSafe;
  * <br> 2) additionalText is constructor input param
  * <br>
  * <br>
- * Example: {@code application.Samples.Form.HintOnFormTest.filtration → application.Samples.Form.HintOnFormTest#filtration}
+ * Example: {@code application.Samples.Form.HintOnFormTest.filtration -> application.Samples.Form.HintOnFormTest#filtration}
  * <br>
  * Usage:
  * <pre>{@code

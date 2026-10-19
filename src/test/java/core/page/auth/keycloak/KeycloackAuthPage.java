@@ -1,5 +1,7 @@
 package core.page.auth.keycloak;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -13,7 +15,6 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPassword {
 
@@ -40,10 +41,8 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 	 * another user is logged out first).
 	 */
 	public void checkUserOrElseAuthWithUsernameAndPassword(String username, String password, URI appUri) {
-		Allure.step(
-				"Checking the signed in user " + username + " or else authorization", step -> {
-					logTime(step);
-					step.parameter("login", username);
+		Allure.step(message("auth.check", username), step -> {
+					step.parameter(message("parameter.login"), username);
 					// the same address with another hash is not loaded again
 					Selenide.open("about:blank");
 					Selenide.open(appUri.toString());
@@ -57,7 +56,7 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 						return;
 					}
 					String signedInUsername = signedInUsername();
-					step.parameter("signed in user", signedInUsername);
+					step.parameter(message("parameter.user"), signedInUsername);
 					if (!username.equalsIgnoreCase(signedInUsername)) {
 						logout(appUri);
 						authWithUsernameAndPassword(username, password, appUri);
@@ -68,10 +67,8 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 
 	@Override
 	public void authWithUsernameAndPassword(String login, String password, URI appUri) {
-		Allure.step(
-				"Authorization via KeyCloak with login: " + login + " and password", step -> {
-					logTime(step);
-					step.parameter("login", login);
+		Allure.step(message("auth.login", login), step -> {
+					step.parameter(message("parameter.login"), login);
 					enterUsername(login);
 					enterPassword(password);
 					clickSignInButton();
@@ -81,10 +78,8 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 
 
 	private void enterUsername(String login) {
-		Allure.step(
-				"Entering a username: " + login, step -> {
-					logTime(step);
-					step.parameter("login", login);
+		Allure.step(message("auth.username", login), step -> {
+					step.parameter(message("parameter.login"), login);
 					KeycloackAuthPage.login
 							.shouldBe(Condition.enabled)
 							.setValue(login);
@@ -93,9 +88,7 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 	}
 
 	private void enterPassword(String password) {
-		Allure.step(
-				"Entering a password", step -> {
-					logTime(step);
+		Allure.step(message("auth.password"), step -> {
 					KeycloackAuthPage.password
 							.shouldBe(Condition.enabled)
 							.setValue(password);
@@ -104,9 +97,7 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 	}
 
 	private void clickSignInButton() {
-		Allure.step(
-				"Clicking on the Login button", step -> {
-					logTime(step);
+		Allure.step(message("auth.submit"), step -> {
 					signInButton
 							.shouldBe(Condition.visible)
 							.click();
@@ -143,9 +134,7 @@ public class KeycloackAuthPage extends AuthPage implements AuthWithUsernameAndPa
 
 	/** Direct link logout is x3 faster than logout with the UI button; the login form opens after it. */
 	private static void logout(URI appUri) {
-		Allure.step(
-				"Logout", step -> {
-					logTime(step);
+		Allure.step(message("auth.logout"), step -> {
 					String logoutUrl = OidcProvider.ofApp(appUri).logoutUrl(appUri);
 					Selenide.executeJavaScript("sessionStorage.clear(); localStorage.clear();");
 					Selenide.open(logoutUrl);

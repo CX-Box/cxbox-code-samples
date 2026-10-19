@@ -1,5 +1,7 @@
 package core.page;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.expectation.CxBoxExpectations;
@@ -8,7 +10,6 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 /**
  * The left sidebar of the application (menu and its search field).
@@ -24,8 +25,7 @@ public class Sidebar {
 	 * The browser must have been granted clipboard access first.
 	 */
 	public String readClipboard() {
-		return Allure.step("Read the clipboard through the sidebar search field", step -> {
-			logTime(step);
+		return Allure.step(message("sidebar.clipboard"), step -> {
 			// no click: a modal mask may cover the field, sendKeys focuses it anyway
 			search.shouldBe(Condition.visible, expectations.getTimeout()).sendKeys(Keys.chord(Keys.CONTROL, "v"));
 			String text = search.shouldNotBe(Condition.empty, expectations.getTimeout()).getValue();

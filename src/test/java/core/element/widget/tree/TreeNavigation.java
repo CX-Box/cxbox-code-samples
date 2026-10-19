@@ -1,5 +1,6 @@
 package core.element.widget.tree;
 
+import core.element.widget.action.PageRequests;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -60,8 +61,12 @@ public final class TreeNavigation {
 	/** Types into the full text search field of the container and waits for the result. */
 	public static void fullTextSearch(SelenideElement container, String text, ExpectationPattern expectations) {
 		SelenideElement input = container.$(FULL_TEXT_SEARCH).shouldBe(Condition.visible, expectations.getTimeout());
-		input.clear();
-		input.setValue(text);
+		// the search goes with a delay after the last key; a popup opened filtered by the chosen records shows the counter
+		// of the filter before the search, so the request of the search is waited for, as the list does
+		PageRequests.runAndWaitDelayedRequests(() -> {
+			input.clear();
+			input.setValue(text);
+		}, expectations.getTimeout(), expectations.getOverTimeout());
 		container.$(FILTER_SHOWN).should(Condition.exist, expectations.getTimeout());
 		waitLoaded(container, expectations);
 	}

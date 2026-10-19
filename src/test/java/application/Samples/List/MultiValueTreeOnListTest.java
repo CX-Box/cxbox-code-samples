@@ -149,8 +149,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multivalueTree("Custom Field").clearWithModal();
-		var error = list.errorPopup()
+		var error = list.expectErrorPopup(() -> row.multivalueTree("Custom Field").clearWithModal())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters));
@@ -168,8 +167,7 @@ public class MultiValueTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.multivalueTree("Custom Field").deleteValueFromField();
-		var error = list.errorPopup()
+		var error = list.expectErrorPopup(() -> row.multivalueTree("Custom Field").deleteValueFromField())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError));

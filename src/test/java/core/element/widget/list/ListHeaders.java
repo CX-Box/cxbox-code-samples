@@ -1,9 +1,15 @@
 package core.element.widget.list;
 
+import core.util.report.StepReport;
+import java.util.List;
+import static core.util.i18n.CoreMessageSource.message;
+
+import io.qameta.allure.Allure;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import core.common.IterableElement;
+import core.element.widget.action.PageRequests;
 import core.element.widget.list.filter.header.filtration.FB;
 import core.element.widget.list.filter.header.filtration.FC;
 import core.element.widget.list.filter.header.filtration.SB;
@@ -13,6 +19,7 @@ import core.element.widget.list.rows.row.PlatformRow;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.StaleElementReferenceException;
 
+import java.time.Duration;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -21,6 +28,11 @@ import static com.codeborne.selenide.Selenide.$$;
 // need List widget
 @Slf4j
 public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends PlatformRows<ROWS, W, ROW>, ROW extends PlatformRow<ROW, ROWS, W>> implements IterableElement {
+
+	/**
+	 * A filter sends the request of the rows at once after the click
+	 */
+	private static final Duration REQUEST_START = Duration.ofMillis(500);
 
 	private final W widget;
 
@@ -33,7 +45,7 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 
 	@Override
 	public ElementsCollection element() throws StaleElementReferenceException {
-		widget().getExpectations().getWaitAllElements(widget().element());
+		widget().element();
 		return this.widget().element()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$("table").shouldBe(Condition.visible, widget().getExpectations().getTimeout())
@@ -42,6 +54,15 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 	}
 
 	// ui filtration
+	/** The texts of the headers of the columns */
+	public List<String> names() {
+		return Allure.step(message("list.headers"), () -> {
+			var names = element().texts();
+			StepReport.list(names, "columns");
+			return names;
+		});
+	}
+
 	public ListHeaders<W, ROWS, ROW> filter(Consumer<FB<W, ?, ?, ?>> fb) {
 		FB<W, ?, ?, ?> FBRInstance = new FB<>(FC.getContainer(), widget, this);
 		fb.accept(FBRInstance);
@@ -71,12 +92,14 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 
 	/** Clicks "Clear N filter(s)" above the table when filters are applied. */
 	public W clearFilters() {
-		SelenideElement clear = widget().element().$$("a").findBy(Condition.text("filter"));
-		if (clear.exists()) {
-			clear.click();
-			widget().getExpectations().getWaitAllElements(widget().element());
-		}
-		return widget();
+		return Allure.step(message("filters.clearAll"), () -> {
+			SelenideElement clear = widget().element().$$("a").findBy(Condition.text("filter"));
+			if (clear.exists()) {
+				PageRequests.runAndWaitDelayedRequests(clear::click, REQUEST_START, widget().getExpectations().getOverTimeout());
+				widget().element();
+			}
+			return widget();
+		});
 	}
 
 	/**
@@ -99,16 +122,19 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 	 * "Show all" is the text of the select without a group, not an item: the group is reset by {@link #clearFilters()}.
 	 */
 	public W filterGroup(String name) {
-		widget().element()
-				.$("div[class*=\"Header__filtersContainer\"] .ant-select")
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.click();
-		$$("div.ant-select-dropdown:not(.ant-select-dropdown-hidden) li.ant-select-dropdown-menu-item")
-				.findBy(Condition.exactText(name))
-				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.click();
-		widget().getExpectations().getWaitAllElements(widget().element());
-		return widget();
+		return Allure.step(message("list.filterGroup", name), () -> {
+			widget().element()
+					.$("div[class*=\"Header__filtersContainer\"] .ant-select")
+					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+					.click();
+			var group = $$("div.ant-select-dropdown:not(.ant-select-dropdown-hidden) li.ant-select-dropdown-menu-item")
+					.findBy(Condition.exactText(name))
+					.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			// the table shows the old rows until the new ones come: the rows are read after the answer, as fullTextSearch does
+			PageRequests.runAndWaitDelayedRequests(group::click, REQUEST_START, widget().getExpectations().getOverTimeout());
+			widget().element();
+			return widget();
+		});
 	}
 
 	public HeaderColumn<W, ROWS, ROW> headerColumn(String name) {

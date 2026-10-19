@@ -1,5 +1,8 @@
 package core.expectation;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import application.config.props.Env;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
@@ -12,7 +15,6 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static core.element.widget.AbstractWidget.logTime;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 @Slf4j
@@ -59,8 +61,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 	@Override
 	public void getWaitAllElementsWidget(String title) {
 
-		Allure.step("Waiting for all elements to be visible for the widget " + title, step -> {
-			logTime(step);
+		StepReport.service(message("wait.widgetElements", title), () -> {
 
 			String widget = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
 			Selenide.Wait()
@@ -80,8 +81,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 	@Override
 	public void getWaitAllRowsWidget(String title) {
-		Allure.step("Waiting for all rows to be visible for the widget " + title, step -> {
-			logTime(step);
+		StepReport.service(message("wait.widgetRows", title), () -> {
 
 			String widgetSelector = "div[data-test=\"WIDGET\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
 			String rowSelector = "tr[data-test-widget-list-row-id][data-test-widget-list-row-type=\"Row\"]";
@@ -108,8 +108,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 	@Override
 	public void getWaitAllFields() {
-		Allure.step("Waiting for all fields on the page to be visible", step -> {
-			logTime(step);
+		StepReport.service(message("wait.fields"), () -> {
 
 			String fieldsSelector = "div[data-test=\"FIELD\"][data-test-field-type]";
 			Selenide.Wait()
@@ -131,8 +130,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 	@Override
 	public void getWaitElement(String type, String title) {
-		Allure.step("Waiting for an element to be visible by type " + type + " and by heading " + title, step -> {
-			logTime(step);
+		StepReport.service(message("wait.widgetByTitle", type, title), () -> {
 
 			String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
 
@@ -154,8 +152,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 
 	public void getWaitElementWithText(String type, String title) {
-		Allure.step("Waiting for an element to be visible by type " + type + " and by heading " + title, step -> {
-			logTime(step);
+		StepReport.service(message("wait.widgetByTitle", type, title), () -> {
 
 			String elementSelector = "div[data-test=\"" + type.toUpperCase().strip() + "\"][data-test-widget-type][data-test-widget-title=\"" + title + "\"]";
 
@@ -179,8 +176,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 	@Override
 	public void getWaitAllElements(SelenideElement webElement) {
 
-		Allure.step("Waiting for all WebElement elements to be visible " + webElement, step -> {
-			logTime(step);
+		StepReport.service(message("wait.webElement", StepReport.element(webElement)), () -> {
 
 			Selenide.Wait()
 					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))
@@ -197,8 +193,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 	@Override
 	public void getWaitAllElements(String cssSelector) {
-		Allure.step("Waiting for all elements to be visible by Css Selector " + cssSelector, step -> {
-			logTime(step);
+		StepReport.service(message("wait.css", cssSelector), () -> {
 
 			Selenide.Wait()
 					.withTimeout(getTimeout().multipliedBy(getRetryNumber()))

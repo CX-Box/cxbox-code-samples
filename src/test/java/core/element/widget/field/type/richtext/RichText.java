@@ -1,9 +1,11 @@
 package core.element.widget.field.type.richtext;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
-import static core.element.widget.AbstractWidget.logTime;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -92,8 +94,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	/** The markdown the field stores for what is in the editor now. */
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return onField(RichTextCanvas::markdown);
 		});
 	}
@@ -101,8 +102,8 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	/** Opens {@code markdown} the way the application opens a value from the database. */
 	@Override
 	public SELF setValue(String markdown) {
-		Allure.step("Setting a value in a field: " + printable(markdown), step -> {
-			logTime(step);
+		Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(printable(markdown));
 			onField(field -> {
 				RichTextCanvas.load(field, markdown);
 				return field;
@@ -117,7 +118,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	 */
 	@Override
 	public SELF clear() {
-		Allure.step("Clearing the field", () -> onField(field -> {
+		Allure.step(message("field.clear", getFieldIdentifier()), () -> onField(field -> {
 			RichTextCanvas.clearAsUser(field);
 			Selenide.Wait().until(driver -> RichTextCanvas.applied(field));
 			return field;
@@ -127,8 +128,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public SELF checkReadOnly(Consumer<Boolean> expectedReadOnly) {
-		return Allure.step("Checking the field for \"ReadOnly\"", step -> {
-			logTime(step);
+		return Allure.step(message("field.readOnly", getFieldIdentifier()), step -> {
 			expectedReadOnly.accept(element().$(".ProseMirror").has(attribute("contenteditable", "false")));
 			return asSelf();
 		});
@@ -141,8 +141,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	 */
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			expectedPlaceholder.accept(onField(field -> {
 				SelenideElement empty = field.$(".ProseMirror p.is-editor-empty");
 				if (!empty.exists()) {
@@ -161,8 +160,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	 * "..." that opens the full value.
 	 */
 	public SELF checkTruncated(Consumer<Boolean> expectedTruncated) {
-		return Allure.step("Checking that the value is cut to the field height", step -> {
-			logTime(step);
+		return Allure.step(message("field.cut", getFieldIdentifier()), step -> {
 			expectedTruncated.accept(onField(field -> field.$("[class*='moreButton']").exists()));
 			return asSelf();
 		});
@@ -191,7 +189,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	 * break in the text is Shift+Enter, an empty line is Enter.
 	 */
 	public SELF type(String text) {
-		Allure.step("Typing: " + printable(text), () -> onField(field -> {
+		Allure.step(message("field.type", getFieldIdentifier(), printable(text)), () -> onField(field -> {
 			RichTextCanvas.type(field, text);
 			return field;
 		}));
@@ -208,7 +206,7 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	/** Selects characters {@code from} (inclusive) to {@code to} (exclusive). */
 	public SELF select(int from, int to) {
-		Allure.step("Selecting [" + from + ", " + to + ")", () -> onField(field -> {
+		Allure.step(message("richText.select", from, to), () -> onField(field -> {
 			RichTextCanvas.select(field, from, to);
 			return field;
 		}));
@@ -220,10 +218,10 @@ public class RichText<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		try {
 			RichTextToolbar.click(action);
 		} catch (Refused greyedOut) {
-			Allure.step("Clicking " + action + " → the button is greyed out");
+			Allure.step(message("richText.clickDisabled", action));
 			throw greyedOut;
 		}
-		Allure.step("Clicking " + action);
+		Allure.step(message("richText.click", action));
 		return asSelf();
 	}
 
