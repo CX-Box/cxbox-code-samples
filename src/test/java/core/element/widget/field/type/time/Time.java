@@ -103,6 +103,9 @@ public class Time<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public SELF clear() {
+		if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+			return (SELF) this;
+		}
 		StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 
 			element()

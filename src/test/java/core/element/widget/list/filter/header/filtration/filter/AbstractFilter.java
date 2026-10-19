@@ -4,14 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.list.HeaderColumn;
 import core.element.widget.list.ListWidget;
-import core.element.widget.list.filter.header.modal.Popup;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.$;
 
@@ -56,7 +53,6 @@ public abstract class AbstractFilter<
 		return formFilter;
 	}
 
-
 	public abstract SELF filter(VALUE value);
 
 	public String formFilter() {
@@ -97,15 +93,6 @@ public abstract class AbstractFilter<
 
 	protected PARENT column() {
 		return parent;
-	}
-
-	protected Optional<Popup> findPopup() {
-		if (buttonPopup().is(Condition.exist)) {
-			buttonPopup().click();
-			return Optional.of(new Popup());
-		} else {
-			return Optional.empty();
-		}
 	}
 
 	protected void clickFilterIcon() {

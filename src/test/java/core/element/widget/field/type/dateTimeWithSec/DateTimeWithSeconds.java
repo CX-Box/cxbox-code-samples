@@ -71,6 +71,9 @@ public class DateTimeWithSeconds<W extends AbstractWidget<ExpectationPattern, W>
 
 	@Override
 	public SELF clear() {
+		if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+			return (SELF) this;
+		}
 		return StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")

@@ -10,6 +10,7 @@ import core.element.widget.action.Action;
 import core.element.widget.action.PageRequests;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
+import core.util.report.StepReport;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.Keys;
 
@@ -54,7 +55,7 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 	 * shows the found records. The widget searches from three characters; an empty text shows all records again.
 	 */
 	public SELF fullTextSearch(String text) {
-		return Allure.step(message("list.search", text), step -> {
+		return Allure.step(message("list.search", text, label()), step -> {
 			SelenideElement input = element().$("input[data-test-widget-full-text-search]")
 					.shouldBe(Condition.visible, getExpectations().getTimeout());
 			// clear() does not reach the React handler, so the text is removed as by the user;
@@ -66,6 +67,7 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 				}
 			}, getExpectations().getTimeout(), getExpectations().getOverTimeout());
 			element().$(".ant-spin-spinning").shouldNot(Condition.exist, getExpectations().getOverTimeout());
+			StepReport.count(element().$$("tbody tr[data-test-widget-list-row-type='Row']").size(), "found");
 			return self();
 		});
 	}

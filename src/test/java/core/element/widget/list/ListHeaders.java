@@ -93,7 +93,8 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 	/** Clicks "Clear N filter(s)" above the table when filters are applied. */
 	public W clearFilters() {
 		return Allure.step(message("filters.clearAll"), () -> {
-			SelenideElement clear = widget().element().$$("a").findBy(Condition.text("filter"));
+			// the link has a text in the language of the user, "Clear 2 filters"
+			SelenideElement clear = widget().element().$("a[data-test-widget-list-clear-filters='true']");
 			if (clear.exists()) {
 				PageRequests.runAndWaitDelayedRequests(clear::click, REQUEST_START, widget().getExpectations().getOverTimeout());
 				widget().element();

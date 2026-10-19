@@ -19,7 +19,9 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
@@ -105,6 +107,25 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.setValue(upload)
 				.popup()
 				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of("FILE_1.pdf", "done"))))
+				.close();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("A file with a long name")
+	@Description("The field shows a name longer than 54 characters shortened in the middle: the file is set, the upload popup has its whole name")
+	void longName() throws IOException {
+		var upload = Files.createTempDirectory("long-name").resolve("a-file-with-a-long-name-that-the-field-shortens-in-the-middle.pdf");
+		try (var pdf = getClass().getClassLoader().getResourceAsStream("FILE_1.pdf")) {
+			Files.copy(pdf, upload);
+		}
+		var form = PlatformApp.screen("FileUpload basic")
+				.secondLevelView("Form")
+				.form("Form title");
+		form.fileUpload("Custom Field")
+				.setValue(upload.toFile())
+				.popup()
+				.checkFileNameAndStatusUpload(ns -> assertThat(ns).isEqualTo(List.of(Pair.of(upload.getFileName().toString(), "done"))))
 				.close();
 	}
 

@@ -154,13 +154,13 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 
 	/** {@link #clickWithDrilldown()} of the button with the name */
 	public void clickWithDrilldown(String name) {
-		Allure.step(message("action.click", name), () -> {
+		Allure.step(message("action.clickIn", name, widget.label()), () -> {
 			action(name).clickWithDrilldown();
 		});
 	}
 
 	public W click(String name) {
-		Allure.step(message("action.click", name), () -> {
+		Allure.step(message("action.clickIn", name, widget.label()), () -> {
 			action(name).click();
 		});
 		return this.widget;
@@ -173,7 +173,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	 */
 	@SneakyThrows
 	public File download(String name) {
-		return Allure.step(message("action.download", name), () -> action(name).element().download(DownloadOptions.using(FOLDER)));
+		return Allure.step(message("action.download", name, widget.label()), () -> action(name).element().download(DownloadOptions.using(FOLDER)));
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	 * them in the window of the browser. Waits until the uploaded files come to the widget.
 	 */
 	public W upload(String name, File... files) {
-		Allure.step(message("action.upload", name), () -> {
+		Allure.step(message("action.upload", name, widget.label()), () -> {
 			StepReport.value(Stream.of(files).map(File::getName).toList());
 			uploadAndWait(action(name).element().closest(".ant-upload").$("input[type='file']"), files);
 		});
@@ -193,7 +193,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	 * drops them on it. Waits until the uploaded files come to the widget.
 	 */
 	public W uploadToDropZone(File... files) {
-		Allure.step(message("action.uploadToDropZone"), () -> {
+		Allure.step(message("action.uploadToDropZone", widget.label()), () -> {
 			StepReport.value(Stream.of(files).map(File::getName).toList());
 			uploadAndWait(widget.element().$(".ant-upload-drag input[type='file']"), files);
 		});
