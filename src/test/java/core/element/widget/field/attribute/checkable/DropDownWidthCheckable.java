@@ -1,5 +1,7 @@
 package core.element.widget.field.attribute.checkable;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -9,7 +11,6 @@ import io.qameta.allure.Allure;
 
 import java.util.function.BiConsumer;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 /**
  * Field with a drop-down list that is allowed to be wider than the field itself.
@@ -26,8 +27,7 @@ public interface DropDownWidthCheckable<W extends AbstractWidget<ExpectationPatt
 	 */
 	@SuppressWarnings("unchecked")
 	default SELF checkDropDownWidth(BiConsumer<Integer, Integer> checkWidth) {
-		Allure.step("Getting the width of the field and of a drop-down list option", step -> {
-			logTime(step);
+		Allure.step(message("field.dropDownWidth", getFieldIdentifier()), step -> {
 			SelenideElement field = element().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 			int fieldWidth = field.getSize().getWidth();
 			field.click();
@@ -35,8 +35,8 @@ public interface DropDownWidthCheckable<W extends AbstractWidget<ExpectationPatt
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.getSize()
 					.getWidth();
-			step.parameter("field width", fieldWidth);
-			step.parameter("option width", optionWidth);
+			step.parameter(message("parameter.fieldWidth"), fieldWidth);
+			step.parameter(message("parameter.optionWidth"), optionWidth);
 			checkWidth.accept(fieldWidth, optionWidth);
 		});
 		return (SELF) this;

@@ -110,8 +110,7 @@ public class DateOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateField = form.date("custom Field");
-		dateField.setValue(date);
-		form.errorPopup()
+		form.expectErrorPopup(() -> dateField.setValue(date))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate))
@@ -129,9 +128,10 @@ public class DateOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dateField = form.date("custom Field");
-		dateField.setValue(date);
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			dateField.setValue(date);
+			form.actions().action("Save").click();
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

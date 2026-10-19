@@ -136,8 +136,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multipleSelect = form.multipleSelect("Custom Field");
-		multipleSelect.addValue(Set.of("Middle"));
-		form.errorPopup()
+		form.expectErrorPopup(() -> multipleSelect.addValue(Set.of("Middle")))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo("The field  can contain 'High'"))
@@ -154,8 +153,7 @@ public class MultipleSelectOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multipleSelect = form.multipleSelect("Custom Field");
-		multipleSelect.addValue(Set.of("Middle"));
-		form.errorPopup()
+		form.expectErrorPopup(() -> multipleSelect.addValue(Set.of("Middle")))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

@@ -150,8 +150,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multivalue = form.field((w) -> new Multivalue<>(w, "Custom Field"));
-		multivalue.clear();
-		form.errorPopup()
+		form.expectErrorPopup(() -> multivalue.clear())
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
 				.close();
@@ -167,8 +166,7 @@ public class MultiValueOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var multivalue = form.field((w) -> new Multivalue<>(w, "Custom Field"));
-		multivalue.clearValue("Test data", false);
-		form.errorPopup()
+		form.expectErrorPopup(() -> multivalue.clearValue("Test data", false))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

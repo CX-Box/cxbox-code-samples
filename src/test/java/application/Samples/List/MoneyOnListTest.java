@@ -177,8 +177,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.money("Custom Field").setValue(number);
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.money("Custom Field").setValue(number))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.InvalidNumberDigits))
@@ -196,8 +195,7 @@ public class MoneyOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.money("Custom Field").setValue(number);
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.money("Custom Field").setValue(number))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

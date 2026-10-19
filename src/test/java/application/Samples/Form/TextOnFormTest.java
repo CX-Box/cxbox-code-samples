@@ -143,8 +143,7 @@ public class TextOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("Text validation business exception")
 				.secondLevelView("Form")
 				.form("Form title");
-		form.text("Custom Field").setValue("1234");
-		form.errorPopup()
+		form.expectErrorPopup(() -> form.text("Custom Field").setValue("1234"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -160,8 +159,7 @@ public class TextOnFormTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("Text validation runtime exception")
 				.secondLevelView("Form")
 				.form("Form title");
-		form.text("Custom Field").setValue("Test");
-		form.errorPopup()
+		form.expectErrorPopup(() -> form.text("Custom Field").setValue("Test"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

@@ -77,7 +77,7 @@ public abstract class TreeWidgetInline<
 
 	public SELF filterMore() {
 		element().$(TreeNavigation.FILTER_MORE).click();
-		getExpectations().getWaitAllElements(element());
+		element();
 		return self();
 	}
 

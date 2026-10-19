@@ -1,5 +1,7 @@
 package core.element.widget;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
@@ -25,20 +27,40 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 		this.expectations = expectations;
 	}
 
-	public static void logTime(Allure.StepContext step) {
-		step.parameter("startTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")));
-	}
-
 	public abstract TypeWidget getType();
 
+	/**
+	 * The widget in the technical lines of the report: the type of the widget by default
+	 */
+	public String describe() {
+		return getType().getType();
+	}
+
+	/**
+	 * Whether the widget is on the page now, without waiting for it. An operation can take the page away from the widget
+	 * (a drilldown, a closed popup), and then there is nothing to wait for on the widget. True by default: a widget that
+	 * cannot tell is waited for as before.
+	 */
+	public boolean isOnPage() {
+		return true;
+	}
+
 	protected SelenideElement getWidgetElementByTitle(TypeWidget type, String title) {
-		return widgetByTitle(type, title)
-				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
+		return loaded(widgetByTitle(type, title));
 	}
 
 	protected SelenideElement getWidgetElementByName(TypeWidget type, String name) {
-		return widgetByName(type, name)
-				.shouldBe(Condition.visible, expectations.getOverTimeout()).shouldNotBe(Condition.empty, expectations.getOverTimeout());
+		return loaded(widgetByName(type, name));
+	}
+
+	/**
+	 * The widget is shown and its data came: no skeleton and no loading spinner in it. The text of the widget is not read:
+	 * reading it takes long on a big table, and a widget can have no text at all (a button with an icon only, no title).
+	 */
+	private SelenideElement loaded(SelenideElement widget) {
+		widget.shouldBe(Condition.visible, expectations.getOverTimeout())
+				.$(".ant-skeleton, .ant-spin-spinning").shouldNot(Condition.exist, expectations.getOverTimeout());
+		return widget;
 	}
 
 	/** The widget without waiting for it: a widget hidden by its showCondition is not on the page. */

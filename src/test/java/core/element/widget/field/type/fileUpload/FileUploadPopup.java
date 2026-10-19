@@ -1,5 +1,7 @@
 package core.element.widget.field.type.fileUpload;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -15,7 +17,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F extends AbstractFieldImpl<ExpectationPattern, W, File, F>> {
 
@@ -29,8 +30,7 @@ public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F 
 	}
 
 	public FileUploadPopup<W, F> checkTitle(Consumer<String> title) {
-		return Allure.step("Getting the header value", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 			title.accept(popup
 					.$("div[class=\"ant-notification-notice-message\"]")
 					.shouldBe(Condition.visible, cxBoxExpectations.getTimeout())
@@ -46,8 +46,7 @@ public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F 
 	 */
 
 	public FileUploadPopup<W, F> checkFileNameAndStatusUpload(Consumer<List<Pair<String, String>>> checkNameAndStatus) {
-		return Allure.step("Getting a list of files and their status", step -> {
-			logTime(step);
+		return Allure.step(message("upload.files"), step -> {
 
 			List<Pair<String, String>> pairs = new ArrayList<Pair<String, String>>();
 			for (SelenideElement file : getFilesList()) {
@@ -64,8 +63,7 @@ public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F 
 	 * Closing window
 	 */
 	public F close() {
-		return Allure.step("Closing window", step -> {
-			logTime(step);
+		return Allure.step(message("popup.close"), step -> {
 
 			popup
 					.$("i[aria-label=\"icon: close\"]")

@@ -123,8 +123,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dictionary = form.dictionary("Custom Field");
-		dictionary.setValue("Middle");
-		form.errorPopup()
+		form.expectErrorPopup(() -> dictionary.setValue("Middle"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Text.textOnly("'High'")))
@@ -141,8 +140,7 @@ public class DictionaryOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var dictionary = form.dictionary("Custom Field");
-		dictionary.clear();
-		form.errorPopup()
+		form.expectErrorPopup(() -> dictionary.clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

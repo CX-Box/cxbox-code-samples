@@ -1,5 +1,8 @@
 package core.element.widget.field.type.dateTime;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.field.type.ParentRow;
@@ -14,7 +17,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ListDateTime<
 		W extends ListWidget<W, RR, R>,
@@ -44,8 +46,7 @@ public class ListDateTime<
 
 	@Override
 	public LocalDateTime getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			String date;
 			if (row instanceof RowInline<?, ?, ?> rowInline && !rowInline.getIsEdit()) {
 				date = element().shouldBe(Condition.exist).$(valueTag()).getText();

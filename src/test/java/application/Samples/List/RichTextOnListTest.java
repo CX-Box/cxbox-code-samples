@@ -173,9 +173,10 @@ public class RichTextOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.richText("Custom Field").userInput(LONG_TEXT, f -> {
-		});
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.richText("Custom Field").userInput(LONG_TEXT, f -> {
+			});
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(MAX_50_CHARACTERS))
@@ -192,9 +193,10 @@ public class RichTextOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.richText("Custom Field").userInput("A new note.", f -> {
-		});
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.richText("Custom Field").userInput("A new note.", f -> {
+			});
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

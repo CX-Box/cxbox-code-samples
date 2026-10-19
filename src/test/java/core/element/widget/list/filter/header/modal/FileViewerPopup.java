@@ -1,5 +1,7 @@
 package core.element.widget.list.filter.header.modal;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +18,6 @@ import java.io.File;
 import static com.codeborne.selenide.DownloadOptions.using;
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static core.element.widget.AbstractWidget.logTime;
 
 @RequiredArgsConstructor
 public class FileViewerPopup {
@@ -33,8 +34,7 @@ public class FileViewerPopup {
 	 * @return String
 	 */
 	public String getTitle() {
-		return Allure.step("Getting the header", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 
 			return popup
 					.$("span[class*=\"Header__title\"]")
@@ -56,8 +56,7 @@ public class FileViewerPopup {
 	 * Clicking on the button FullScreen
 	 */
 	public void switchFullscreenMode() {
-		Allure.step("Clicking on the button FullScreen", step -> {
-			logTime(step);
+		Allure.step(message("viewer.fullScreen"), step -> {
 
 			getButtons()
 					.findBy(Condition.text("Fullscreen"))
@@ -74,8 +73,7 @@ public class FileViewerPopup {
 	 */
 	@SneakyThrows
 	public File getValueFile() {
-		return Allure.step("Getting a file from a field in File format", step -> {
-			logTime(step);
+		return Allure.step(message("viewer.file"), step -> {
 
 			File file = getButtons()
 					.findBy(Condition.text("Download"))
@@ -94,10 +92,9 @@ public class FileViewerPopup {
 	 * @param count  Number of clicks
 	 */
 	public void clickPaginationButton(String button, int count) {
-		Allure.step("Page navigation. Clicking on " + button + ", " + count + " times", step -> {
-			logTime(step);
-			step.parameter("Button's name", button);
-			step.parameter("Count of click", count);
+		Allure.step(message("viewer.pages", button, count), step -> {
+			step.parameter(message("parameter.button"), button);
+			step.parameter(message("parameter.clicks"), count);
 
 			SelenideElement element = popup.$("div[class*=\"ArrowPagination__compact\"]")
 					.shouldBe(Condition.visible, waitingForTests.getTimeout());
@@ -128,8 +125,7 @@ public class FileViewerPopup {
 	 * @return 1 of 3
 	 */
 	public String getPagePagination() {
-		return Allure.step("Getting the current page", step -> {
-			logTime(step);
+		return Allure.step(message("viewer.currentPage"), step -> {
 
 			return popup
 					.$("div[class*=\"ArrowPagination__compact\"]")
@@ -142,8 +138,7 @@ public class FileViewerPopup {
 	 * Closing FileViewer Popup
 	 */
 	public void closePopup() {
-		Allure.step("Closing FileViewer Popup", step -> {
-			logTime(step);
+		Allure.step(message("viewer.close"), step -> {
 
 			popup.$("div[class=\"ant-modal-header\"]")
 					.$("i[aria-label=\"icon: close\"]")

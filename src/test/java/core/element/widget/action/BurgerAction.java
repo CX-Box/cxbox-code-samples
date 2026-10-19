@@ -1,5 +1,8 @@
 package core.element.widget.action;
 
+import io.qameta.allure.Allure;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
@@ -8,7 +11,6 @@ import core.common.SingleElement;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
-import org.openqa.selenium.By;
 
 public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS extends PlatformRows<ROWS, WIDGET, ROW>, WIDGET extends ListWidget<WIDGET, ROWS, ROW>> implements SingleElement {
 
@@ -30,6 +32,11 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 		this.widget = widget;
 		this.label = label;
 		this.burger = action;
+	}
+
+	/** Whether the menu of the row has the item */
+	public boolean exists() {
+		return Allure.step(message("row.menuItem", label), () -> element() != null);
 	}
 
 	@Override
@@ -66,13 +73,12 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 	}
 
 	public ROW click() {
-		if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
+		return Allure.step(message("row.menu", label), () -> {
+			PageRequests.track();
+			element().click();
+			waitOperationFinished();
 			return row;
-		}
-		PageRequests.track();
-		element().click();
-		waitOperationFinished();
-		return row;
+		});
 	}
 
 	/**
@@ -84,7 +90,8 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 		PageRequests.waitDone(widget.getExpectations().getOverTimeout());
 		Selenide.Wait().withTimeout(widget.getExpectations().getOverTimeout()).until(driver -> {
 			try {
-				return !widget.element().$(".ant-spin-spinning").exists();
+				// the widget that is gone is not looked for: the look up waits for it the whole timeout
+				return !widget.isOnPage() || !widget.element().$(".ant-spin-spinning").exists();
 			} catch (RuntimeException | AssertionError e) {
 				return true;
 			}

@@ -28,12 +28,19 @@ public class DictionaryFilter<
 	public SELF filter(String value) {
 		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER)
 				.click();
-		getOptionDictionary(value)
-				.shouldBe(Condition.enabled, getWidget().getExpectations().getTimeout())
-				.$(By.tagName("label"))
-				.click();
+		// the list keeps its filter: a value chosen already is not clicked, the click would take it off (as MultipleSelectFilter)
+		if (!isSelected(value)) {
+			getOptionDictionary(value)
+					.shouldBe(Condition.enabled, getWidget().getExpectations().getTimeout())
+					.$(By.tagName("label"))
+					.click();
+		}
 
 		return (SELF) this;
+	}
+
+	private boolean isSelected(String value) {
+		return getOptionDictionary(value).$("input[type='checkbox']").isSelected();
 	}
 
 
@@ -44,12 +51,12 @@ public class DictionaryFilter<
 	}
 
 	private ElementsCollection getOptionsDictionary() {
-		return $("form[class=\"ant-form ant-form-vertical\"]")
+		return formFilter.$("form[class=\"ant-form ant-form-vertical\"]")
 				.$$(By.tagName("li"));
 	}
 
 	public void setApply() {
-		$("div[class=\"ant-popover-inner-content\"]")
+		formFilter.$("div[class=\"ant-popover-inner-content\"]")
 				.$("button[data-test-filter-popup-apply=\"true\"]")
 				.shouldBe(Condition.visible)
 				.click();

@@ -1,11 +1,15 @@
 package core.element.widget;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.modal.ConfirmPopup;
 import core.element.widget.modal.ErrorPopup;
+import core.element.widget.modal.ErrorPopupException;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
@@ -34,11 +38,17 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		this.textIdentifier = textIdentifier;
 	}
 
+	/**
+	 * The widget in the technical lines of the report: «список ApplicationDocList (ищется по имени)»
+	 */
+	@Override
+	public String describe() {
+		return StepReport.widget(getType().getType(), textIdentifier, getIdentifier().equals(PlatformIdentifier.NAME));
+	}
+
 	@Override
 	public SelenideElement element() {
-		return Allure.step("Getting  Widget by heading (Title) " + textIdentifier, step -> {
-			logTime(step);
-			step.parameter("Widget title", textIdentifier);
+		return StepReport.service(message("widget.get", describe()), () -> {
 			if (getIdentifier().equals(PlatformIdentifier.NAME)) {
 				return getWidgetElementByName(getType(), textIdentifier).scrollTo();
 
@@ -50,14 +60,20 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		});
 	}
 
+	/** The widget is on the page while its element is there: after a drilldown or a closed popup it is not */
+	@Override
+	public boolean isOnPage() {
+		return (getIdentifier().equals(PlatformIdentifier.NAME)
+				? widgetByName(getType(), textIdentifier)
+				: widgetByTitle(getType(), textIdentifier)).exists();
+	}
+
 	/**
 	 * Whether the widget is shown on the page: a widget hidden by its showCondition is not. The check is made when the
 	 * widgets of the page have no loading spinner.
 	 */
 	public boolean isVisible() {
-		return Allure.step("Getting the visibility of the widget " + textIdentifier, step -> {
-			logTime(step);
-			step.parameter("Widget title", textIdentifier);
+		return Allure.step(message("widget.visible", textIdentifier), step -> {
 			Selenide.Wait().withTimeout(getExpectations().getOverTimeout()).until(driver ->
 					!Selenide.$("div[data-test='WIDGET'] .ant-spin-spinning, div[data-test='WIDGET'] [data-test-loading]").exists());
 			SelenideElement widget = getIdentifier().equals(PlatformIdentifier.NAME)
@@ -75,17 +91,46 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 
 
 	public ErrorPopup<SELF> errorPopup() {
-		return Allure.step("Validation of the modal window", step -> {
-			logTime(step);
-			return new ErrorPopup<>(widget());
+		return new ErrorPopup<>(widget());
+	}
+
+	/**
+	 * The action that ends with the error popup of the application, as {@code assertThrows} of JUnit: the popup can come
+	 * anywhere inside the action ({@link ErrorPopupException}) or after it. The popup is given to the checks.
+	 *
+	 * <h5>Usage Example</h5>
+	 * <pre>{@code
+	 * list.expectErrorPopup(() -> row.dictionary("Custom Field").setValue("Middle"))
+	 *         .checkTitleAndMessage(
+	 *                 title -> assertThat(title).isEqualTo("Error"),
+	 *                 message -> assertThat(message).isEqualTo("System error"))
+	 *         .close();
+	 * }</pre>
+	 *
+	 * <h5>Not recommended: try / catch</h5>
+	 * The same check without this method. The report has no line that the popup is expected, so the stopped action looks
+	 * like a failure, and an action without the popup passes unnoticed.
+	 * <pre>{@code
+	 * try {
+	 *     row.dictionary("Custom Field").setValue("Middle");
+	 * } catch (ErrorPopupException e) {
+	 *     e.popup()
+	 *             .checkTitleAndMessage(
+	 *                     title -> assertThat(title).isEqualTo("Error"),
+	 *                     message -> assertThat(message).isEqualTo("System error"))
+	 *             .close();
+	 * }
+	 * }</pre>
+	 */
+	public ErrorPopup<SELF> expectErrorPopup(Runnable action) {
+		return Allure.step(message("errorPopup.expect"), () -> {
+			ErrorPopupException.expect(action, getExpectations().getTimeout());
+			return errorPopup();
 		});
 	}
 
 	public ConfirmPopup<SELF> confirmPopup() {
-		return Allure.step("Confirm popup", step -> {
-			logTime(step);
-			return new ConfirmPopup<>(widget());
-		});
+		return new ConfirmPopup<>(widget());
 	}
 
 	public void checkPositionAtElement (SIDE side, SelenideElement element) {

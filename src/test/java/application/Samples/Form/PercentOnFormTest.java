@@ -132,9 +132,10 @@ public class PercentOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var percentField = form.percent("custom Field");
-		percentField.setValue(new BigDecimal("3"));
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			percentField.setValue(new BigDecimal("3"));
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.MoreThatPercent))
 				.close();
@@ -150,9 +151,10 @@ public class PercentOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var percentField = form.percent("custom Field");
-		percentField.clear();
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			percentField.clear();
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

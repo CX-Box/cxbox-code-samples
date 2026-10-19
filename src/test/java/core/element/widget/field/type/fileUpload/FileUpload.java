@@ -1,5 +1,8 @@
 package core.element.widget.field.type.fileUpload;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.DownloadOptions;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +19,6 @@ import java.io.File;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF extends FileUpload<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, File, SELF> implements
 		PlaceholderSupportedCheckable<W, File, SELF>,
@@ -41,14 +43,15 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public File getValue() {
-		return element().$("button").download(DownloadOptions.using(FOLDER));
+		return Allure.step(message("field.download", getFieldIdentifier()), step -> {
+			return element().$("button").download(DownloadOptions.using(FOLDER));
+		});
 	}
 
 	@Override
 	public SELF setValue(File value) {
-		return Allure.step("Uploading a file to the {value} field", step -> {
-			logTime(step);
-			step.parameter("File", value.getName());
+		return Allure.step(message("field.upload", getFieldIdentifier()), step -> {
+			StepReport.value(value.getName());
 			element().$(valueTag()).uploadFile(value);
 			element()
 					.$("button")
@@ -84,8 +87,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	public SELF checkFileNameInField(Consumer<String> value) {
-		return Allure.step("Getting the file name in the field", step -> {
-			logTime(step);
+		return Allure.step(message("field.fileName", getFieldIdentifier()), step -> {
 			value.accept(element()
 					.$(valueTag())
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
@@ -95,8 +97,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	public String getFileNameInField() {
-		return Allure.step("Getting the file name in the field", step -> {
-			logTime(step);
+		return Allure.step(message("field.fileName", getFieldIdentifier()), step -> {
 			return element()
 					.$(valueTag())
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
@@ -109,8 +110,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	public SELF clear() {
-		return Allure.step("Clearing the field. Deleting a file.", step -> {
-			logTime(step);
+		return Allure.step(message("field.deleteFile", getFieldIdentifier()), step -> {
 			element().$("i[title=\"Delete\"]")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
@@ -122,8 +122,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	public SELF checkNoFileInField() {
-		return Allure.step("Assert that no file is present in the field", step -> {
-			logTime(step);
+		return Allure.step(message("field.noFile", getFieldIdentifier()), step -> {
 			element()
 					.$("button")
 					.shouldNot(Condition.exist, widget().getExpectations().getTimeout());

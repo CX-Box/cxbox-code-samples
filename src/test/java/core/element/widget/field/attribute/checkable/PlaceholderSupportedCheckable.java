@@ -1,5 +1,7 @@
 package core.element.widget.field.attribute.checkable;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.AbstractField;
@@ -8,14 +10,12 @@ import io.qameta.allure.Allure;
 
 import java.util.function.Consumer;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 
 public interface PlaceholderSupportedCheckable<W extends AbstractWidget<ExpectationPattern, W>, VF, SELF extends PlaceholderSupportedCheckable<W, VF, SELF>> extends AbstractField<ExpectationPattern, W, VF, SELF> {
 
 	default SELF checkPlaceholderSupported(Consumer<Boolean> consumer) {
-		Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			boolean isPlaceholder = element()
 					.shouldBe(Condition.exist)
 					.$(valueTag())

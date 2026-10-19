@@ -1,5 +1,8 @@
 package core.element.widget.modal;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
@@ -11,7 +14,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> implements SingleElement {
 
@@ -37,23 +39,24 @@ public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> impleme
 	@Override
 	public SelenideElement element() {
 		if (selenideElement == null) {
-			selenideElement = $("div[data-test-error-popup=\"true\"]")
-					.shouldBe(Condition.exist, expectations.getTimeout());
+			selenideElement = StepReport.service(message("popup.get", message("report.popup.message")),
+					() -> $("div[data-test-error-popup=\"true\"]").shouldBe(Condition.exist, expectations.getTimeout()));
 		}
 		return selenideElement;
 	}
 
 	public W close() {
-		element().$("span[class=\"ant-modal-close-x\"]")
-				.shouldBe(Condition.exist, expectations.getTimeout())
-				.click();
-		element().$("span[class=\"ant-modal-close-x\"]").shouldNot(Condition.exist, expectations.getTimeout());
-		return widget;
+		return Allure.step(message("popup.close"), () -> {
+			element().$("span[class=\"ant-modal-close-x\"]")
+					.shouldBe(Condition.exist, expectations.getTimeout())
+					.click();
+			element().$("span[class=\"ant-modal-close-x\"]").shouldNot(Condition.exist, expectations.getTimeout());
+			return widget;
+		});
 	}
 
 	public ErrorPopup<W> checkTitle(Consumer<String> checkTitle) {
-		return Allure.step("Getting the header value", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 			checkTitle.accept(getTextElement(" header span"));
 			return this;
 		});
@@ -61,16 +64,14 @@ public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> impleme
 	}
 
 	public ErrorPopup<W> checkMessage(Consumer<String> checkMessage) {
-		return Allure.step("Getting the message text", step -> {
-			logTime(step);
+		return Allure.step(message("popup.message"), step -> {
 			checkMessage.accept(getTextElement("span[class=\"ant-form-item-children\"]"));
 			return this;
 		});
 	}
 
 	public ErrorPopup<W> checkTitleAndMessage(Consumer<String> checkTitle, Consumer<String> checkMessage) {
-		return Allure.step("Getting the header value", step -> {
-			logTime(step);
+		return Allure.step(message("popup.header"), step -> {
 			checkTitle.accept(getTextElement(" header span"));
 			checkMessage.accept(getTextElement("span[class=\"ant-form-item-children\"]"));
 			return this;
@@ -81,8 +82,7 @@ public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> impleme
 	 * Hands over what "Copy details" put on the clipboard
 	 */
 	public ErrorPopup<W> checkDetails(Consumer<ErrorDetails> checkDetails) {
-		return Allure.step("Getting the copied details", step -> {
-			logTime(step);
+		return Allure.step(message("popup.copiedDetails"), step -> {
 			checkDetails.accept(copyDetails());
 			return this;
 		});
@@ -92,8 +92,7 @@ public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> impleme
 	 * Hands over what "Copy details" put on the clipboard and what the expanded panel shows
 	 */
 	public ErrorPopup<W> checkDetails(BiConsumer<ErrorDetails, RequestDetails> checkDetails) {
-		return Allure.step("Getting the copied and the expanded details", step -> {
-			logTime(step);
+		return Allure.step(message("popup.copiedExpandedDetails"), step -> {
 			checkDetails.accept(copyDetails(), expandDetails());
 			return this;
 		});
@@ -112,10 +111,12 @@ public class ErrorPopup<W extends AbstractWidget<ExpectationPattern, W>> impleme
 	}
 
 	private String getTextElement(String locator) {
-		return element()
+		var text = element()
 				.$(locator)
 				.shouldBe(Condition.visible, expectations.getTimeout())
 				.text();
+		StepReport.value(text);
+		return text;
 	}
 
 	public W and() {

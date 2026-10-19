@@ -131,8 +131,7 @@ public class InputTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form");
 		var input = form.input("customField");
-		input.setValue("5700");
-		form.errorPopup()
+		form.expectErrorPopup(() -> input.setValue("5700"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
 				.close();
@@ -148,8 +147,7 @@ public class InputTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form");
 		var input = form.input("customField");
-		input.setValue("1234");
-		form.errorPopup()
+		form.expectErrorPopup(() -> input.setValue("1234"))
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

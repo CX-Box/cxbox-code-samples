@@ -14,9 +14,12 @@ import core.element.widget.field.attribute.custom.Clear;
 import core.element.widget.info.PlatformInfoWidget;
 import core.element.widget.list.ListWidget;
 import core.expectation.ExpectationPattern;
+import core.util.report.StepReport;
 import org.openqa.selenium.StaleElementReferenceException;
 
 import java.util.function.Consumer;
+import static com.codeborne.selenide.Selenide.webdriver;
+import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Hint<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, Hint<W, SELF>> implements
 		Clear<W, String, Hint<W, SELF>>,
@@ -42,7 +45,7 @@ public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public String getValue() {
-		return element().$(valueTag()).getText();
+		return StepReport.read(this, () -> element().$(valueTag()).getText());
 	}
 
 	@Deprecated
@@ -75,7 +78,7 @@ public class Hint<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 		element().$("a")
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
-		Selenide.Wait().until(webDriver -> !webDriver.getCurrentUrl().equals(oldUrl));
+		webdriver().shouldNotHave(url(oldUrl), widget().getExpectations().getTimeout());
 		consumer.accept(WebDriverRunner.url());
 	}
 

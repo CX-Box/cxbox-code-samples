@@ -1,5 +1,7 @@
 package core.element.widget.field.type.multivalueTree;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import core.config.Constants;
 import core.element.widget.field.FieldType;
 import core.element.widget.field.PlatformFieldType;
@@ -37,7 +39,7 @@ public class ListMultivalueTree<
 	/** The read-only cell of a multivalueTree lists the records in a colored span, not in the hover paragraph of multivalue. */
 	@Override
 	public ListMultivalue<W, RR, R> checkColor(Consumer<String> checkColor) {
-		return Allure.step("Getting color for field", step -> {
+		return Allure.step(message("field.color", getFieldIdentifier()), step -> {
 			String style = element().$("span[style*=\"background-color\"], p[style*=\"background-color\"]").getAttribute("style");
 			Matcher matcher = Pattern.compile("rgb\\((\\d{1,3}), (\\d{1,3}), (\\d{1,3})\\)").matcher(String.valueOf(style));
 			if (matcher.find()) {

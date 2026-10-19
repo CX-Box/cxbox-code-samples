@@ -1,6 +1,7 @@
 package core.element.widget.field.type.checkbox;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import core.element.widget.field.type.ParentRow;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.rows.PlatformRows;
@@ -40,5 +41,14 @@ public class ListCheckBox<
 
 	public R row() {
 		return row;
+	}
+
+	/**
+	 * The field is looked for inside its row, as every field of a row: the checkbox of the form looks in the whole widget
+	 * and took the checkbox of the first row
+	 */
+	@Override
+	protected SelenideElement parentElement() {
+		return row().element();
 	}
 }

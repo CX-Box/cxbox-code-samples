@@ -1,5 +1,7 @@
 package core.element.widget.list.filter.header.modal;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.expectation.CxBoxExpectations;
@@ -8,7 +10,6 @@ import io.qameta.allure.Allure;
 
 import java.util.Objects;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 @Deprecated
 public class ShowMessage {
@@ -27,8 +28,7 @@ public class ShowMessage {
 	 * @return String
 	 */
 	public String getIcon() {
-		return Allure.step("Getting the icon test", step -> {
-			logTime(step);
+		return Allure.step(message("message.icon"), step -> {
 
 			return Objects.requireNonNull(alert
 					.$("i[class*=\"anticon\"]").$("svg")
@@ -43,8 +43,7 @@ public class ShowMessage {
 	 * @return String
 	 */
 	public String getAlertMessage() {
-		return Allure.step("Getting the message text", step -> {
-			logTime(step);
+		return Allure.step(message("popup.message"), step -> {
 
 			return alert
 					.$("span[class=\"ant-alert-message\"]")
@@ -59,8 +58,7 @@ public class ShowMessage {
 	 * @return String
 	 */
 	public String getAlertDescription() {
-		return Allure.step("Getting the Message Description", step -> {
-			logTime(step);
+		return Allure.step(message("message.description"), step -> {
 
 			return alert
 					.$("span[class=\"ant-alert-description\"]")
@@ -74,8 +72,7 @@ public class ShowMessage {
 	 * Closing the message
 	 */
 	public void close() {
-		Allure.step("Closing the message", step -> {
-			logTime(step);
+		Allure.step(message("message.close"), step -> {
 
 			alert
 					.$("button[type=\"button\"][class=\"ant-alert-close-icon\"]")

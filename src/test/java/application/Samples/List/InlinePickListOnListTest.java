@@ -225,13 +225,11 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 //        assertThat(popup.get().errorPopup().getTitle()).isEqualTo(Constants.ErrorPopup.ErrorTitle);
 //        assertThat(popup.get().errorPopup().getMessage()).isEqualTo(Constants.OnlyLetters);
 //        popup.get().errorPopup().close();
-		PlatformApp.screen("InlinePickList validation business exception")
+		var list = PlatformApp.screen("InlinePickList validation business exception")
 				.secondLevelView("List")
-				.listInline("List title")
-				.rows().clickRow(0)
-				.inlinePickList("Custom Field")
-				.setValue("Test data")
-				.widget().errorPopup()
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		list.expectErrorPopup(() -> row.inlinePickList("Custom Field").setValue("Test data"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters)
@@ -244,13 +242,11 @@ public class InlinePickListOnListTest extends BaseTestForSamples {
 	@DisplayName("Run-time exception validation test")
 	@Description("The test sets the value in the field. After approval, the popup window, the title, the text in it, and the buttons are validated.")
 	void runtimeException() {
-		PlatformApp.screen("InlinePickList validation runtime exception")
+		var list = PlatformApp.screen("InlinePickList validation runtime exception")
 				.secondLevelView("List")
-				.listInline("List title")
-				.rows().clickRow(0)
-				.inlinePickList("Custom Field")
-				.clear()
-				.widget().errorPopup()
+				.listInline("List title");
+		var row = list.rows().clickRow(0);
+		list.expectErrorPopup(() -> row.inlinePickList("Custom Field").clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError)

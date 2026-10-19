@@ -8,7 +8,6 @@ import core.element.widget.list.rows.row.PlatformRow;
 
 import java.math.BigDecimal;
 
-import static com.codeborne.selenide.Selenide.$;
 
 public class MoneyFilter<
 		WIDGET extends ListWidget<WIDGET, ROWS, ROW>,
@@ -33,10 +32,10 @@ public class MoneyFilter<
 		}
 		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER)
 				.click();
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.click();
-		$("div.ant-popover[class*=\"ant-popover-placement\"]").$("input[data-test-filter-popup-value=\"true\"]")
+		formFilter.$("input[data-test-filter-popup-value=\"true\"]")
 				.shouldBe(Condition.editable, getWidget().getExpectations().getTimeout())
 				.setValue(str);
 

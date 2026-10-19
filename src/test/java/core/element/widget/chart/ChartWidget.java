@@ -1,5 +1,7 @@
 package core.element.widget.chart;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.HoverOptions;
@@ -173,8 +175,7 @@ public abstract class ChartWidget<SELF extends ChartWidget<SELF>> extends Platfo
 
 	/** Switches the widget to the chart or to the table by the gear menu. */
 	public SELF mode(Mode mode) {
-		return Allure.step("Switching the chart to the mode " + mode.title, step -> {
-			logTime(step);
+		return Allure.step(message("chart.mode", mode.title), step -> {
 			return settings().select(mode.title);
 		});
 	}

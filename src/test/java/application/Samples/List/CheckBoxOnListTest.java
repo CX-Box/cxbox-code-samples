@@ -181,10 +181,11 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 				.clickRow(0);
 		var checkBox = row
 				.checkBox("Custom Field");
-		checkBox.setValue(true);
-		checkBox.setValue(false);
-		checkBox.checkValue(value -> assertThat(value).isFalse());
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			checkBox.setValue(true);
+			checkBox.setValue(false);
+			checkBox.checkValue(value -> assertThat(value).isFalse());
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Text.textOnly("'True'")))
@@ -205,9 +206,10 @@ public class CheckBoxOnListTest extends BaseTestForSamples {
 				.clickRow(0);
 		var checkBox = row
 				.checkBox("Custom Field");
-		checkBox.setValue(true);
-		checkBox.setValue(false);
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			checkBox.setValue(true);
+			checkBox.setValue(false);
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

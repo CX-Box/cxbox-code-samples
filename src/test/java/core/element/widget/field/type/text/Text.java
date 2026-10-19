@@ -1,5 +1,7 @@
 package core.element.widget.field.type.text;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.FieldType;
@@ -11,7 +13,6 @@ import io.qameta.allure.Allure;
 
 import java.util.function.Consumer;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class Text<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Text<W, SELF>> extends Input<W, SELF> {
 
@@ -34,8 +35,7 @@ public class Text<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 
 	@Override
 	public SELF checkReadOnly(Consumer<Boolean> expectedReadOnly) {
-		return Allure.step("Checking the field for \"ReadOnly\"", step -> {
-			logTime(step);
+		return Allure.step(message("field.readOnly", getFieldIdentifier()), step -> {
 			boolean disabled = element().$(valueTag())
 					.has(Condition.attribute("disabled"));
 			expectedReadOnly.accept(disabled);

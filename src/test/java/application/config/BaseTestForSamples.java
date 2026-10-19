@@ -20,7 +20,6 @@ import core.config.selenide.BrowserDevTools;
 import core.element.PlatformApp;
 import core.page.auth.keycloak.KeycloackAuthPage;
 import core.util.DocShots;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.listener.TestLifecycleListener;
@@ -34,9 +33,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LoggingPreferences;
-import org.selenide.videorecorder.core.RecordingMode;
+import org.openqa.selenium.manager.SeleniumManager;
 import org.selenide.videorecorder.core.VideoSaveMode;
 
 import java.time.Duration;
@@ -46,7 +46,6 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static core.element.widget.AbstractWidget.logTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,8 +71,8 @@ public abstract class BaseTestForSamples {
 
 	@BeforeAll
 	public static void setUpAllure() {
-		WebDriverManager.chromedriver().setup();
 		Configuration.browser = "chrome";
+		useChrome("154");
 		Configuration.headless = false;
 		Configuration.timeout = 10000;
 		Configuration.browserSize = DocShots.enabled() ? DocShots.browserSize() : "1280x800";
@@ -84,13 +83,9 @@ public abstract class BaseTestForSamples {
 			Configuration.proxyEnabled = true;
 		}
 		if (Env.videoEnabled()) {
+			// the screencast of Chrome (AllureVideoRecorder): the video of a failed test goes to the report
 			System.setProperty("selenide.video.enabled", String.valueOf(true));
 			System.setProperty("selenide.video.save.mode", VideoSaveMode.FAILED_ONLY.name());
-			System.setProperty("selenide.video.directory", "target/videos");
-			System.setProperty("selenide.video.mode", RecordingMode.ALL.name());
-			System.setProperty("selenide.video.fps", String.valueOf(10));
-			//0 (lossless) to 51 (the lowest quality)
-			System.setProperty("selenide.video.crf", String.valueOf(0));
 		}
 		Configuration.browserCapabilities = getChromeOptions().addArguments(DocShots.chromeArguments());
 
@@ -108,6 +103,19 @@ public abstract class BaseTestForSamples {
 		AppChecks.waitAppStarted(Env.uri(), Duration.ofMinutes(5), Duration.ofSeconds(5));
 	}
 
+	/**
+	 * Chrome for Testing of a fixed version on any machine: the runner image of GitHub brings a new Chrome every week, and
+	 * Chrome 155 of 2026-10-12 failed WebSocketSessionTest. The version is raised on purpose.
+	 * Selenium Manager is called once here, as WebDriverManager was: for each session Selenium calls it through the proxy of
+	 * Selenide (CXBOX_LOGGER), and in CI that proxy breaks the download of Chrome.
+	 */
+	private static void useChrome(String version) {
+		if (System.getProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY) == null) {
+			var paths = SeleniumManager.getInstance().getBinaryPaths(List.of("--browser", "chrome", "--browser-version", version));
+			System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, paths.getDriverPath());
+			Configuration.browserBinary = paths.getBrowserPath();
+		}
+	}
 
 	@NonNull
 	private static ChromeOptions getChromeOptions() {
@@ -166,7 +174,6 @@ public abstract class BaseTestForSamples {
 	protected void login(String login, String password) {
 		Allure.step(
 				"Login", step -> {
-					logTime(step);
 					Selenide.open(Env.uri().toString());
 					new KeycloackAuthPage().authWithUsernameAndPassword(login, password, Env.uri());
 					Selenide.Wait().withMessage("the application has not stored the signed-in user").until(driver -> OidcProvider.isUserStored());
@@ -184,7 +191,6 @@ public abstract class BaseTestForSamples {
 	protected void logout() {
 		Allure.step(
 				"Logout", step -> {
-					logTime(step);
 					String logoutUrl = oidc().logoutUrl(Env.uri());
 					executeJavaScript("sessionStorage.clear(); localStorage.clear();");
 					Selenide.open(logoutUrl);

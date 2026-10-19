@@ -1,5 +1,8 @@
 package core.element.widget.field.type.dateTime;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -19,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 @Getter
 public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF extends DateTime<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, LocalDateTime, SELF> implements
@@ -45,10 +47,9 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public LocalDateTime getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			String date;
-			if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
+			if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
 				date = element().shouldBe(Condition.exist).$(valueTag()).getText();
 			} else {
 				date = element().shouldBe(Condition.exist).$(valueTag()).getValue();
@@ -60,9 +61,8 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public SELF setValue(LocalDateTime value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("Date  with Seconds", value);
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
 			setFocusField();
 			Calendar.setDateField(Calendar.formattedDateTime(value));
@@ -74,8 +74,7 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	@SuppressWarnings("unchecked")
 	@Override
 	public SELF clear() {
-		return Allure.step("Clearing the field through the cross icon", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 					.hover()
@@ -88,7 +87,7 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public String valueTag() {
-		if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
+		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
 			return "span[class*='ReadOnlyField'";
 		}
 		return super.valueTag();
@@ -100,8 +99,7 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	private void setFocusField() {
-		Allure.step("Focus on the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.focus", getFieldIdentifier()), () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())

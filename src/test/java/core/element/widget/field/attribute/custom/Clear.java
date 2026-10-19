@@ -1,5 +1,8 @@
 package core.element.widget.field.attribute.custom;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.AbstractField;
@@ -7,7 +10,6 @@ import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.Keys;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 
 public interface Clear<W extends AbstractWidget<ExpectationPattern, W>, VF, SELF extends Clear<W, VF, SELF>> extends AbstractField<ExpectationPattern, W, VF, SELF> {
@@ -18,8 +20,7 @@ public interface Clear<W extends AbstractWidget<ExpectationPattern, W>, VF, SELF
 
 	@SuppressWarnings("unchecked")
 	default SELF clear() {
-		return Allure.step("Clearing the field", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 			element()
 					.$(valueTag())
 					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())

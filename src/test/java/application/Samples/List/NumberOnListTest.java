@@ -161,8 +161,7 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.number("custom Field").setValue(new BigDecimal(1234));
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.number("custom Field").setValue(new BigDecimal(1234)))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatNumber))
@@ -179,9 +178,10 @@ public class NumberOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.number("custom Field").clear();
-		row.burgerActionClick("Save");
-		list.errorPopup()
+		list.expectErrorPopup(() -> {
+			row.number("custom Field").clear();
+			row.burgerActionClick("Save");
+		})
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

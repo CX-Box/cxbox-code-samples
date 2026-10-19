@@ -1,5 +1,8 @@
 package core.element.widget.field.type.inlinePickList;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -21,7 +24,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SELF extends InlinePickList<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SELF> implements
@@ -48,16 +50,15 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public String getValue() {
-		return element()
+		return StepReport.read(this, () -> element()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.text();
+				.text());
 	}
 
 	@Override
 	public SELF setValue(String value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("PickList", value);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
 			element().click();
 			element().$(valueTag())
@@ -96,8 +97,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	public List<String> getOptions() {
-		return Allure.step("Getting a list of options", step -> {
-			logTime(step);
+		return Allure.step(message("field.options", getFieldIdentifier()), step -> {
 			element()
 					.$("div[class=\"ant-select-selection-selected-value\"]")
 					.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
@@ -109,8 +109,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 
 			String text = element()
 					.$("div[class=\"ant-select-selection__placeholder\"]")
@@ -121,8 +120,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	public SELF clear() {
-		return Allure.step("Clearing the field", step -> {
-			logTime(step);
+		return StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 			boolean iconClear = element()
 					.$("span[class=\"ant-select-selection__clear\"]")
 					.is(Condition.exist);

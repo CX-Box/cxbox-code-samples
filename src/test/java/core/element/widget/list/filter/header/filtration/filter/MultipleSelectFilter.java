@@ -50,7 +50,7 @@ public class MultipleSelectFilter<
 	}
 
 	private ElementsCollection getOptionsMultipleSelect() {
-		return $("div[class=\"ant-popover-inner\"]")
+		return formFilter.$("div[class=\"ant-popover-inner\"]")
 				.$("form[class=\"ant-form ant-form-vertical\"]")
 				.$$(By.tagName("li"));
 	}

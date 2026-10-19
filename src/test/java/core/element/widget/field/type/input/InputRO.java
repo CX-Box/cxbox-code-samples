@@ -1,5 +1,8 @@
 package core.element.widget.field.type.input;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
@@ -15,8 +18,8 @@ import org.openqa.selenium.By;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.Wait;
-import static core.element.widget.AbstractWidget.logTime;
+import static com.codeborne.selenide.Selenide.webdriver;
+import static com.codeborne.selenide.WebDriverConditions.url;
 
 @Slf4j
 @Getter
@@ -47,8 +50,7 @@ public class InputRO<W extends AbstractWidget<ExpectationPattern, W>> extends In
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			if (element()
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 					.$(valueTag()).is(Condition.visible)) {
@@ -67,11 +69,10 @@ public class InputRO<W extends AbstractWidget<ExpectationPattern, W>> extends In
 
 	@Override
 	public void drilldown(Consumer<String> consumer) {
-		Allure.step("Clicking on a hyperlink in the text or by clicking on a special element", step -> {
-			logTime(step);
+		Allure.step(message("field.drilldown", getFieldIdentifier()), step -> {
 			String oldUrl = WebDriverRunner.url();
 			element().$(valueTag()).getWrappedElement().findElement(By.cssSelector("span:has(a)")).click();
-			Wait().until(webDriver -> !webDriver.getCurrentUrl().contains(oldUrl));
+			webdriver().shouldNotHave(url(oldUrl), widget().getExpectations().getTimeout());
 			widget().getExpectations().getContextMenu();
 			$x("//body").exists();
 			consumer.accept(WebDriverRunner.url());

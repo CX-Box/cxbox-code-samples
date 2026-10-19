@@ -1,5 +1,7 @@
 package core.element.widget.list.filter.header.modal;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -10,7 +12,6 @@ import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.codeborne.selenide.Selenide.$$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class FilterGroupSettingsPopup {
@@ -28,8 +29,7 @@ public class FilterGroupSettingsPopup {
 	 * @param name filter name
 	 */
 	public void setName(String name) {
-		Allure.step("Setting the filter name " + name, step -> {
-			logTime(step);
+		Allure.step(message("filters.setName", name), step -> {
 
 			SelenideElement input = POPUP.$("input").shouldBe(Condition.enabled, expectationPattern.getTimeout());
 			if (!input.has(Condition.attribute("disabled"))) {
@@ -44,8 +44,7 @@ public class FilterGroupSettingsPopup {
 	 * Creating a filter
 	 */
 	public void clickButtonCreate() {
-		Allure.step("Creating a filter", step -> {
-			logTime(step);
+		Allure.step(message("filters.create"), step -> {
 
 			SelenideElement create = POPUP.$("button[type=\"submit\"]").shouldBe(Condition.enabled, expectationPattern.getTimeout());
 			if (!create.has(Condition.attribute("disabled"))) {
@@ -71,8 +70,7 @@ public class FilterGroupSettingsPopup {
 	 * @return String
 	 */
 	public String getFilterSettings() {
-		return Allure.step("Getting a list of created filters", step -> {
-			logTime(step);
+		return Allure.step(message("filters.list"), step -> {
 
 			if (settingsFilter() == null) {
 				log.info("Сохраненных фильтров нет");
@@ -86,8 +84,7 @@ public class FilterGroupSettingsPopup {
 	 * Cleaning of all filters
 	 */
 	public void clearAllFilterSettings() {
-		Allure.step("Cleaning of all filters", step -> {
-			logTime(step);
+		Allure.step(message("filters.clearAll"), step -> {
 			// size() does not wait: the popup may still be opening
 			POPUP.shouldBe(Condition.visible, expectationPattern.getTimeout());
 			ElementsCollection icons = POPUP.$$("div[class*=\"FilterSettingModal__filterGroups\"] i[aria-label=\"icon: close\"]");
@@ -100,8 +97,7 @@ public class FilterGroupSettingsPopup {
 
 	/** Closes the popup by the cross in its header. */
 	public void close() {
-		Allure.step("Closing the filter group settings", step -> {
-			logTime(step);
+		Allure.step(message("filters.close"), step -> {
 			POPUP.$("button.ant-modal-close").shouldBe(Condition.visible, expectationPattern.getTimeout()).click();
 			waitClosed();
 		});

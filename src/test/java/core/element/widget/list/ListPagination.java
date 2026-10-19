@@ -1,5 +1,8 @@
 package core.element.widget.list;
 
+import core.util.report.StepReport;
+import io.qameta.allure.Allure;
+import static core.util.i18n.CoreMessageSource.message;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -66,14 +69,17 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	}
 
 	private ListPagination<W> changePage(String arrow, int step) {
-		SelenideElement widgetElement = getWidget().element();
-		int target = Integer.parseInt(widgetElement.$("li." + ACTIVE_PAGE).getAttribute("title")) + step;
-		widgetElement.$(arrow)
-				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-				.scrollIntoView("{ block: \"center\", behavior: \"smooth\" }")
-				.click();
-		waitPageLoaded(widgetElement, target);
-		return this;
+		return Allure.step(message("list.page"), () -> {
+			SelenideElement widgetElement = getWidget().element();
+			int target = Integer.parseInt(widgetElement.$("li." + ACTIVE_PAGE).getAttribute("title")) + step;
+			StepReport.value(target);
+			widgetElement.$(arrow)
+					.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
+					.scrollIntoView("{ block: \"center\", behavior: \"smooth\" }")
+					.click();
+			waitPageLoaded(widgetElement, target);
+			return this;
+		});
 	}
 
 	/**
@@ -102,9 +108,9 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 
 	@Override
 	public boolean isLastPage() {
-		widget.getExpectations().getWaitAllElements(widget.element());
+		widget.element();
 		return this.widget.element()
-				.$("li[title=\"Next Page\"][aria-disabled=\"true\"]")
+				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
 	}
 

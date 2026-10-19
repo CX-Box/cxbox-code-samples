@@ -1,5 +1,8 @@
 package core.element.widget.field.type.checkbox;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -11,7 +14,6 @@ import core.element.widget.field.attribute.checkable.*;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class CheckBox<W extends AbstractWidget<ExpectationPattern, W>, SELF extends CheckBox<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, Boolean, CheckBox<W, SELF>> implements
 		ColorCheckable<W, Boolean, String, CheckBox<W, SELF>>,
@@ -39,8 +41,7 @@ public class CheckBox<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public Boolean getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return element()
 					.shouldBe(Condition.exist)
 					.$(valueTag())
@@ -50,14 +51,16 @@ public class CheckBox<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 
 	@Override
 	public SELF setValue(Boolean value) {
-		if (value.equals(getValue())) {
-			return (SELF) this;
-		}
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("value", value);
-			element().shouldBe(Condition.editable, widget().getExpectations().getTimeout());
-			element().$(valueTag()).click();
+		return Allure.step(message("field.tick", getFieldIdentifier()), step -> {
+			StepReport.value(value);
+			if (value.equals(getValue())) {
+				StepReport.note(message("field.alreadySet"));
+			} else {
+				StepReport.service(message("field.click"), () -> {
+					element().shouldBe(Condition.editable, widget().getExpectations().getTimeout());
+					element().$(valueTag()).click();
+				});
+			}
 			return (SELF) this;
 		});
 

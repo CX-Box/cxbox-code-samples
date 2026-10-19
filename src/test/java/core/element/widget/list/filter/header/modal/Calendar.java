@@ -1,5 +1,8 @@
 package core.element.widget.list.filter.header.modal;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.*;
 import core.expectation.CxBoxExpectations;
 import core.expectation.ExpectationPattern;
@@ -8,16 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class Calendar {
@@ -33,9 +33,8 @@ public class Calendar {
 	 * @param field Field
 	 */
 	public static void findCalendar(SelenideElement field) {
-		Allure.step("Validating the calendar window", step -> {
-			logTime(step);
-			step.parameter("Field", field);
+		Allure.step(message("calendar.validate"), step -> {
+			step.parameter(message("parameter.field"), field);
 			if (PANEL_CALENDAR.is(Condition.disappear)) {
 				field
 						.$("i[aria-label=\"icon: calendar\"]")
@@ -49,8 +48,7 @@ public class Calendar {
 	 * Clearing the calendar
 	 */
 	public static void clear() {
-		Allure.step("Clearing the field in calendar", step -> {
-			logTime(step);
+		StepReport.service(message("calendar.clear"), () -> {
 
 			PANEL_CALENDAR
 					.$("input")
@@ -59,39 +57,28 @@ public class Calendar {
 		});
 	}
 
-
 	/**
 	 * Setup date
 	 *
 	 * @param date LocalDate
 	 */
 	public static void setDate(LocalDate date) {
-		Allure.step("Setting the " + date + " in calendar", step -> {
-			logTime(step);
-			step.parameter("Date", date);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(date);
 
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.click();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.setValue(formattedDate(date));
 
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.shouldHave(Condition.value(formattedDate(date)));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
@@ -101,9 +88,8 @@ public class Calendar {
 	}
 
 	public static void setDateField(String value) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
-			step.parameter(" set value", value);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(value);
 			if (value == null || value.isBlank()) {
 				PANEL_CALENDAR
 						.$("input")
@@ -114,26 +100,14 @@ public class Calendar {
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.click();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]"))
-					.is(Condition.exist, Duration.of(500, ChronoUnit.MILLIS))) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.setValue(value);
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]"))
-					.is(Condition.exist, Duration.of(500, ChronoUnit.MILLIS))) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.shouldHave(Condition.value(value));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]"))
-					.is(Condition.exist, Duration.of(500, ChronoUnit.MILLIS))) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
@@ -143,9 +117,8 @@ public class Calendar {
 	}
 
 	public static void setDateField(List<String> value) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
-			step.parameter(" set value", value);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(value);
 			value.forEach(Calendar::setDateField);
 		});
 
@@ -157,9 +130,8 @@ public class Calendar {
 	 * @param value LocalDateTime
 	 */
 	public static void setDateTimeWithSecond(String value) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
-			step.parameter("LocalDateTime with sec", value);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(value);
 			if (value == null || value.isBlank()) {
 				PANEL_CALENDAR
 						.$("input")
@@ -170,24 +142,15 @@ public class Calendar {
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.click();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.setValue(value);
 
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.shouldHave(Condition.value(value));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
@@ -201,9 +164,8 @@ public class Calendar {
 	}
 
 	public static void setTimeField(String value, boolean isManualButtonClick) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
-			step.parameter("LocalDateTime with sec", value);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(value);
 			if (value == null || value.isBlank()) {
 				PANEL_CALENDAR
 						.$("input")
@@ -214,23 +176,14 @@ public class Calendar {
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.click();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			TIME_PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.setValue(value);
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			TIME_PANEL_CALENDAR
 					.$("input")
 					.shouldBe(Condition.enabled, expectationPattern.getTimeout())
 					.shouldHave(Condition.value(value));
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]")).exists()) {
-				return;
-			}
 			if (isManualButtonClick) {
 				$("div[class='ant-time-picker-panel-addon']").$("button[class*='ant-btn-primary']").click();
 
@@ -245,9 +198,8 @@ public class Calendar {
 	}
 
 	public static void setTimeField(List<String> value) {
-		Allure.step("Setting the " + value + " in calendar", step -> {
-			logTime(step);
-			step.parameter(" set value", value);
+		StepReport.service(message("calendar.set"), () -> {
+			StepReport.value(value);
 			IntStream.range(0, value.size())
 					.forEach(i -> {
 						var val = value.get(i);
@@ -269,8 +221,7 @@ public class Calendar {
 	 * Set the date for today
 	 */
 	public static void setToday() {
-		Allure.step("Set the date for today", step -> {
-			logTime(step);
+		StepReport.service(message("calendar.today"), () -> {
 
 			PANEL_CALENDAR
 					.$("a[class=\"ant-calendar-today-btn \"]")
@@ -302,9 +253,8 @@ public class Calendar {
 	 * @param actionName Button's name
 	 */
 	public static void clickButton(String actionName) {
-		Allure.step("Clicking on the button " + actionName + " in calendar", step -> {
-			logTime(step);
-			step.parameter("Button's name", actionName);
+		Allure.step(message("calendar.button", actionName), step -> {
+			step.parameter(message("parameter.button"), actionName);
 
 			SelenideElement button = getButton(actionName);
 			button.shouldBe(Condition.enabled, expectationPattern.getTimeout()).click();
@@ -350,6 +300,5 @@ public class Calendar {
 			throw new IllegalArgumentException("Некорректный формат даты. Должен быть dd.MM.yyyy HH:mm:ss");
 		}
 	}
-
 
 }

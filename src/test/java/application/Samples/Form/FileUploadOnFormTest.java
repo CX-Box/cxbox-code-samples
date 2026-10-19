@@ -140,11 +140,12 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
-				.popup()
-				.close();
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
+					.popup()
+					.close();
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.LessSize))
 				.close();
@@ -160,10 +161,11 @@ public class FileUploadOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var fileUpload = form.fileUpload("Custom Field");
-		fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
-				.popup()
-				.close();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			fileUpload.setValue(getFileFromResource("FILE_1.pdf"))
+					.popup()
+					.close();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

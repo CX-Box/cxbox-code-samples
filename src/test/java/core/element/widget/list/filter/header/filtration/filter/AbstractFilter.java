@@ -32,13 +32,19 @@ public abstract class AbstractFilter<
 	@Getter(AccessLevel.PROTECTED)
 	private final WIDGET widget;
 
-	@Getter(AccessLevel.PROTECTED)
+	@Getter
 	private final PARENT parent;
 
 	@Getter()
 	private final VALUE value;
 
-	SelenideElement formFilter = $("div.ant-popover[class*=\"ant-popover-placement\"]");
+	/**
+	 * The open filter popover. A closed popover stays in the page hidden, so the first popover of the page may belong to
+	 * another column.
+	 */
+	private static final String OPEN_POPOVER = "div.ant-popover[class*=\"ant-popover-placement\"]:not(.ant-popover-hidden)";
+
+	SelenideElement formFilter = $(OPEN_POPOVER);
 
 	public AbstractFilter(WIDGET widget, PARENT parent, VALUE value) {
 		this.widget = widget;
@@ -54,18 +60,18 @@ public abstract class AbstractFilter<
 	public abstract SELF filter(VALUE value);
 
 	public String formFilter() {
-		return "div.ant-popover[class*=\"ant-popover-placement\"]";
+		return OPEN_POPOVER;
 	}
 
 	public PARENT apply() {
-		SelenideElement button = $("button[data-test-filter-popup-apply=\"true\"]");
+		SelenideElement button = formFilter.$("button[data-test-filter-popup-apply=\"true\"]");
 		button.shouldBe(Condition.exist).click();
 		waitFilterApplied(button);
 		return this.parent;
 	}
 
 	public PARENT setClear() {
-		SelenideElement button = $("button[data-test-filter-popup-clear=\"true\"]");
+		SelenideElement button = formFilter.$("button[data-test-filter-popup-clear=\"true\"]");
 		button.shouldBe(Condition.exist).click();
 		waitFilterApplied(button);
 		return this.parent;

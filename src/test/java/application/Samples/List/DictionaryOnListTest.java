@@ -155,8 +155,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dictionary("Custom Field").setValue("Middle");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.dictionary("Custom Field").setValue("Middle"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Text.textOnly("'High'")))
@@ -173,8 +172,7 @@ public class DictionaryOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dictionary("Custom Field").setValue("Middle");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.dictionary("Custom Field").setValue("Middle"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

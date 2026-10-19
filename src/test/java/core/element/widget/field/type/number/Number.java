@@ -1,5 +1,8 @@
 package core.element.widget.field.type.number;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -12,11 +15,10 @@ import core.element.widget.field.attribute.custom.Clear;
 import core.element.widget.info.PlatformInfoWidget;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
-import org.openqa.selenium.Keys;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Number<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, BigDecimal, SELF> implements
 		Clear<W, BigDecimal, SELF>,
@@ -43,8 +45,7 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 
 	@Override
 	public BigDecimal getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			String str = getUniversalText(element()
 					.shouldBe(Condition.exist)
 					.$(valueTag()));
@@ -60,22 +61,11 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 
 	@Override
 	public SELF setValue(BigDecimal value) {
-		Allure.step("Setting the " + value + " value in the field", step -> {
-			logTime(step);
-			step.parameter("Number", value);
+		Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 
 			element().click();
-			element()
-					.$(valueTag())
-					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-					.clear();
-			element()
-					.$(valueTag())
-					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-					.setValue(String.valueOf(value));
-			element()
-					.$(valueTag())
-					.sendKeys(Keys.TAB);
+			typeOver(element().$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()), Objects.toString(value, ""));
 		});
 
 		return (SELF) this;

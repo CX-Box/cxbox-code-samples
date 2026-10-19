@@ -1,5 +1,8 @@
 package core.element.widget.field.type.fileUpload;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.DownloadOptions;
 import com.codeborne.selenide.SelenideElement;
@@ -16,7 +19,6 @@ import java.io.File;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ListFileUpload<
 		W extends ListWidget<W, RR, R>,
@@ -48,9 +50,8 @@ public class ListFileUpload<
 
 	@Override
 	public ListFileUpload<W, RR, R> setValue(File value) {
-		return Allure.step("Uploading a file to the {value} field", step -> {
-			logTime(step);
-			step.parameter("File", value.getName());
+		return Allure.step(message("field.upload", getFieldIdentifier()), step -> {
+			StepReport.value(value.getName());
 			element().$(valueTag()).uploadFile(value);
 			element()
 					.$("button")
@@ -82,8 +83,7 @@ public class ListFileUpload<
 	}
 
 	public ListFileUpload<W, RR, R> clear() {
-		return Allure.step("Clearing the field. Deleting a file.", step -> {
-			logTime(step);
+		return Allure.step(message("field.deleteFile", getFieldIdentifier()), step -> {
 			element();
 			element().find("i[title=\"Delete\"]")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())

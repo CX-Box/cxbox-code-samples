@@ -1,5 +1,8 @@
 package core.element.widget.field.type.multipleSelect;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
@@ -24,7 +27,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SELF extends MultipleSelect<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, Set<String>, SELF> implements
 		Clear<W, Set<String>, SELF>,
@@ -53,8 +56,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public Set<String> getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			List<String> list = element()
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 					.$$("div[data-test-field-multipleselect-current-item=\"true\"]").texts();
@@ -65,9 +67,8 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public SELF setValue(Set<String> value) {
-		Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("values", value);
+		Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
 			addValue(value);
 		});
@@ -80,8 +81,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			String actualPlaceholder = element()
 					.$("div[class=\"ant-select-selection__placeholder\"]")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
@@ -92,12 +92,11 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	public SELF addValue(@NonNull Set<String> values) {
-		Allure.step("Setting the " + values + " in the field", step -> {
-			logTime(step);
-			step.parameter("values", values);
+		Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(values);
 
 			values.forEach(value -> {
-				boolean doesNotExist = !$(MENU_OPTIONS)
+				boolean doesNotExist = !openList()
 						.is(Condition.visible, widget().getExpectations().getTimeout());
 				if (doesNotExist) {
 					element().click();
@@ -108,7 +107,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 							.click();
 				}
 				$("body").sendKeys(Keys.ESCAPE);
-				$(MENU_OPTIONS)
+				openList()
 						.is(Condition.hidden, widget().getExpectations().getTimeout());
 			});
 		});
@@ -120,24 +119,21 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	protected Set<String> getOptions() {
-		return Allure.step("Getting a list of options", step -> {
-			logTime(step);
+		return Allure.step(message("field.options", getFieldIdentifier()), step -> {
 			element().click();
 			return new HashSet<>(getOptionsMultipleSelect().texts());
 		});
 	}
 
 	public SELF checkOptions(Consumer<Set<String>> options) {
-		Allure.step("Checking the options", step -> {
-			logTime(step);
+		Allure.step(message("field.checkOptions", getFieldIdentifier()), step -> {
 			options.accept(getOptions());
 		});
 		return (SELF) this;
 	}
 
 	public SELF checkStatusOption(String name, Consumer<Boolean> isSelected) {
-		Allure.step("Checking the options", step -> {
-			logTime(step);
+		Allure.step(message("field.checkOptions", getFieldIdentifier()), step -> {
 			element().click();
 			isSelected.accept(isOptionSelected(name));
 			$("body").sendKeys(Keys.ESCAPE);
@@ -146,8 +142,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	}
 
 	public SELF checkStatusOptions(Map<String, Consumer<Boolean>> options) {
-		Allure.step("Checking the options", step -> {
-			logTime(step);
+		Allure.step(message("field.checkOptions", getFieldIdentifier()), step -> {
 			options.forEach((key, value) -> {
 				element().click();
 				value.accept(isOptionSelected(key));
@@ -159,15 +154,23 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public SelenideElement dropDownOption() {
-		return $(MENU_OPTIONS).$(By.tagName("li"));
+		return openList().$(By.tagName("li"));
 	}
 
 	protected SelenideElement getOption(String nameRadio) {
 		return getOptionsMultipleSelect().find(Condition.match("check action name: " + nameRadio, b -> b.getText().equals(nameRadio)));
 	}
 
+	/**
+	 * The drop-down list that is open now: antd keeps the closed list of a field in the page hidden, so the first list of
+	 * the page can be the list of another field
+	 */
+	protected SelenideElement openList() {
+		return $$(MENU_OPTIONS).findBy(Condition.visible);
+	}
+
 	protected ElementsCollection getOptionsMultipleSelect() {
-		return $(MENU_OPTIONS)
+		return openList()
 				.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
@@ -177,8 +180,7 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		if (false) {
 			return Clear.super.clear();
 		}
-		Allure.step("Clearing the field", step -> {
-			logTime(step);
+		StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 			ElementsCollection closeX = element()
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 					.$$("i[aria-label=\"icon: close\"]");

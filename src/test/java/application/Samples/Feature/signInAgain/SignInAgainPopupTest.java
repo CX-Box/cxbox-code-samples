@@ -664,9 +664,7 @@ public class SignInAgainPopupTest extends BaseTestForSamples {
 	@Test
 	@DisplayName("Copy details on a business error popup (a record that does not exist)")
 	public void businessError_copyDetails() {
-		open(Env.uri() + FORM_VIEW_URL + MISSING_RECORD_ID);
-
-		PlatformApp.errorPopup()
+		PlatformApp.expectErrorPopup(() -> open(Env.uri() + FORM_VIEW_URL + MISSING_RECORD_ID))
 				.checkMessage(message -> assertThat(message).isNotBlank())
 				.checkDetails((cp, exp) -> assertThat(exp).isEqualTo(cp.request()))
 				.checkDetails(cp -> assertThat(cp.errorType()).isEqualTo("BusinessError"))
@@ -683,9 +681,7 @@ public class SignInAgainPopupTest extends BaseTestForSamples {
 		var form = PlatformApp.screen("Input validation runtime exception")
 				.secondLevelView("Form")
 				.form("Form");
-		form.input("customField").setValue("1234");
-
-		form.errorPopup()
+		form.expectErrorPopup(() -> form.input("customField").setValue("1234"))
 				.checkMessage(message -> assertThat(message).isNotBlank())
 				.checkDetails((cp, exp) -> assertThat(exp).isEqualTo(cp.request()))
 				.checkDetails(cp -> assertThat(cp.errorType()).isEqualTo("SystemError"))

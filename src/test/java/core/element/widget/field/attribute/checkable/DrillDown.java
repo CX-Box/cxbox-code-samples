@@ -1,5 +1,7 @@
 package core.element.widget.field.attribute.checkable;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.WebDriverRunner;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.AbstractField;
@@ -13,7 +15,6 @@ import java.util.function.Consumer;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.WebDriverConditions.url;
-import static core.element.widget.AbstractWidget.logTime;
 
 
 public interface DrillDown<W extends AbstractWidget<ExpectationPattern, W>, VF, V, SELF extends DrillDown<W, VF, V, SELF>> extends AbstractField<ExpectationPattern, W, VF, SELF> {
@@ -21,8 +22,7 @@ public interface DrillDown<W extends AbstractWidget<ExpectationPattern, W>, VF, 
 	@SuppressWarnings("unchecked")
 	// TODO >> !! >> drilldown with filter ( on self !!!)
 	default void drilldown(Consumer<V> consumer) {
-		Allure.step("Click-through when clicking on a hyperlink or a special element in a field", step -> {
-			logTime(step);
+		Allure.step(message("field.drilldown", getFieldIdentifier()), step -> {
 			String drilldownHolder = "i[class=\"anticon anticon-link\"]";
 			if (
 					this.fieldType().equals(PlatformFieldType.DATE_TIME_WITH_SECONDS_LIST)

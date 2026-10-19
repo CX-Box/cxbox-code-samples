@@ -1,5 +1,8 @@
 package core.element.widget.field.type.number;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.field.type.ParentRow;
@@ -11,7 +14,6 @@ import io.qameta.allure.Allure;
 
 import java.math.BigDecimal;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 public class ListNumber
 		<
@@ -49,8 +51,7 @@ public class ListNumber
 		if (row instanceof RowInline<?, ?, ?> pri && pri.getIsEdit()) {
 			return super.getValue();
 		}
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			String str = element()
 					.shouldBe(Condition.exist)
 					.$(valueTag())

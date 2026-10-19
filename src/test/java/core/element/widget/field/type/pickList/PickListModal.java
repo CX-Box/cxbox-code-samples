@@ -1,5 +1,7 @@
 package core.element.widget.field.type.pickList;
 
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -22,7 +24,6 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
@@ -104,20 +105,23 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	private boolean isLastPage() {
 		return this.modal
-				.$("li[title=\"Next Page\"][aria-disabled=\"true\"]")
+				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.interactable));
 	}
 
 	private void pressRight(int number) {
-		Allure.step("Clicking on the button \"Right\"", step -> {
-			logTime(step);
-			step.parameter("Number of clicks", number);
+		Allure.step(message("modal.nextPage"), step -> {
+			step.parameter(message("parameter.clicks"), number);
 
 			for (int i = 0; i < number; i++) {
 				if (getPages() > 1) {
+					var page = Integer.parseInt(this.modal.$("li.ant-pagination-item-active").getAttribute("title"));
 					this.modal.$("i[class=\"anticon anticon-right\"]")
 							.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 							.click();
+					// the next page is open when its number is active, as the table waits for its page
+					this.modal.$("li.ant-pagination-item-active[title=\"" + (page + 1) + "\"]")
+							.should(Condition.exist, widget.getExpectations().getTimeout());
 				}
 
 			}
@@ -126,8 +130,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	private int getPages() {
-		return Allure.step("Getting the number of pages in a pagination", step -> {
-			logTime(step);
+		return Allure.step(message("modal.pages"), step -> {
 
 			return modal.$("div[data-test-widget-list-pagination=\"true\"]")
 					.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
@@ -137,8 +140,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	/** Closes the popup: the Close button when the widget has one, otherwise the cross of the dialog. */
 	public void close() {
-		Allure.step("Clicking on the button Close", step -> {
-			logTime(step);
+		Allure.step(message("modal.close"), step -> {
 			modal.$("button[data-test-widget-list-close=\"true\"], button.ant-modal-close")
 					.shouldBe(visible, widget.getExpectations().getTimeout())
 					.click();

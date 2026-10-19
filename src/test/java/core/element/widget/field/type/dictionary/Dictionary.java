@@ -1,10 +1,13 @@
 package core.element.widget.field.type.dictionary;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
+import core.element.widget.action.PageRequests;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.field.AbstractFieldImpl;
 import core.element.widget.field.FieldType;
@@ -18,11 +21,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Dictionary<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, SELF> implements
 		Clear<W, String, SELF>,
@@ -31,9 +35,16 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		ReadOnlyCheckable<W, String, Boolean, SELF>,
 		ValueCheckable<W, String, SELF>,
 		DrillDownSupportCheckable<W, String, Boolean, SELF>,
+		DrillDown<W, String, String, SELF>,
 		RequiredCheckable<W, String, String, SELF>,
 		MaxInputCheckable<W, String, Integer, SELF>,
 		DropDownWidthCheckable<W, String, SELF> {
+
+	/**
+	 * A field with forceActive sends its request at once after the change, the dependent fields change with the answer;
+	 * a field without it costs this wait
+	 */
+	private static final Duration FORCE_ACTIVE_REQUEST_START = Duration.ofSeconds(1);
 
 	protected final String MENU_OPTIONS ="div.ant-select-dropdown.ant-select-dropdown--single" +
 			"[class*='ant-select-dropdown-placement-']";
@@ -53,8 +64,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			return element()
 					.$(valueTag())
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
@@ -64,25 +74,21 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public SELF setValue(String value) {
-		return Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("value", value);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			clear();
-			if (Selenide.$(By.cssSelector("div[data-test-error-popup=\"true\"]"))
-					.is(Condition.exist, widget().getExpectations().getTimeout())) {
-				return (SELF) this;
-			}
+			// no wait for an error popup after the clear: it waited the whole timeout on every value. A popup that comes takes
+			// the click on the field, the test fails, and the screenshot shows the popup
 			element().click();
-			getOptionDictionary(value)
-					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-					.click();
+			var option = getOptionDictionary(value).shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			PageRequests.runAndWaitDelayedRequests(option::click, FORCE_ACTIVE_REQUEST_START, widget().getExpectations().getOverTimeout());
 			return (SELF) this;
 		});
 	}
 
 	@Override
 	public String valueTag() {
-		if (widget().getClass().isAssignableFrom(PlatformInfoWidget.class)) {
+		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
 			return "div[data-test-field-value=\"true\"]";
 		}
 		return "[data-test-field-dictionary-item=\"true\"]";
@@ -94,10 +100,11 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	public List<String> getOptions() {
-		return Allure.step("Getting a list of options from a drop-down list", step -> {
-			logTime(step);
+		return Allure.step(message("field.options", getFieldIdentifier()), step -> {
 			element().click();
-			return getOptionsDictionary().texts();
+			var options = getOptionsDictionary().texts();
+			StepReport.list(options, "options");
+			return options;
 		});
 	}
 
@@ -108,7 +115,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public SelenideElement dropDownOption() {
-		return $(MENU_OPTIONS).$(By.tagName("li"));
+		return openList().$(By.tagName("li"));
 	}
 
 	private SelenideElement getOptionDictionary(String value) {
@@ -118,18 +125,25 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	}
 
 	private ElementsCollection getOptionsDictionary() {
-		return $(MENU_OPTIONS)
+		return openList()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.tagName("li"));
 	}
 
+	/**
+	 * The drop-down list that is open now: antd keeps the closed list of a field in the page hidden, so the first list of
+	 * the page can be the list of a field filled before (a form with several dictionaries)
+	 */
+	private SelenideElement openList() {
+		return $$(MENU_OPTIONS).findBy(Condition.visible);
+	}
+
 	@Override
 	public SELF clear() {
-		return Allure.step("Clearing the field through the cross icon", step -> {
-			logTime(step);
-			if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
-				return (SELF) this;
-			}
+		if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+			return (SELF) this;
+		}
+		return StepReport.service(message("field.clearOld", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")
 					.hover()
@@ -141,8 +155,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public SELF checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting placeholder", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			String text = element()
 					.$("div[class=\"ant-select-selection__placeholder\"]")
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())

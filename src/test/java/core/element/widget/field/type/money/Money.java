@@ -1,5 +1,8 @@
 package core.element.widget.field.type.money;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
@@ -19,7 +22,6 @@ import java.math.RoundingMode;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Selenide.$;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Money<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, BigDecimal, SELF> implements
@@ -47,8 +49,7 @@ public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public BigDecimal getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			String str = element()
 					.shouldBe(Condition.exist)
 					.$(valueTag())
@@ -78,9 +79,8 @@ public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public SELF setValue(BigDecimal value) {
-		return Allure.step("Setting the " + value + " value in the field", step -> {
-			logTime(step);
-			step.parameter("BigDecimal", value);
+		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 
 			String str = value.toString();
 			String pattern = "^\\d+,\\d+$";
@@ -107,8 +107,7 @@ public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	}
 
 	protected Integer getDigits() {
-		return Allure.step("Getting the number of digits after the decimal point", step -> {
-			logTime(step);
+		return Allure.step(message("field.digits", getFieldIdentifier()), step -> {
 			// this need because we clear with
 			if (element().$(valueTag()).getAttribute("digits") == null) {
 				return null;
@@ -119,8 +118,7 @@ public class Money<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 
 	public SELF checkCurrencyValue(Consumer<String> currency) {
-		return Allure.step("Check a currencySign in a field", step -> {
-			logTime(step);
+		return Allure.step(message("field.currency", getFieldIdentifier()), step -> {
 			String selectorSign = "span";
 			if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
 				selectorSign = valueTag();

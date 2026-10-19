@@ -106,9 +106,10 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 				.view()
 				.form("Form");
 		var suggestionPickList = form.suggestionPickList("customField");
-		suggestionPickList.setValue("Test data9");
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			suggestionPickList.setValue("Test data9");
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
 				.close();
@@ -124,9 +125,10 @@ public class SuggestionPickListOnFormTest extends BaseTestForSamples {
 				.view()
 				.form("Form");
 		var suggestionPickList = form.suggestionPickList("customField");
-		suggestionPickList.setValue("Test data9");
-		form.actions().action("Save").click();
-		form.errorPopup()
+		form.expectErrorPopup(() -> {
+			suggestionPickList.setValue("Test data9");
+			form.actions().action("Save").click();
+		})
 				.checkTitle(title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE))
 				.checkMessage(message -> assertThat(message).isEqualTo(Constants.SystemError))
 				.close();

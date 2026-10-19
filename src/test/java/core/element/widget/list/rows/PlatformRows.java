@@ -1,5 +1,8 @@
 package core.element.widget.list.rows;
 
+import static core.util.i18n.CoreMessageSource.message;
+import core.util.report.StepReport;
+import io.qameta.allure.Allure;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import core.element.widget.list.ListWidget;
@@ -24,7 +27,7 @@ public abstract class PlatformRows<SELF extends PlatformRows<SELF, WIDGET, ROW>,
 
 	@Override
 	public ElementsCollection element() {
-		widget().getExpectations().getWaitAllElements(widget().element());
+		widget().element();
 		return widget().element()
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.$$(By.cssSelector("table > tbody > tr"));
@@ -36,7 +39,11 @@ public abstract class PlatformRows<SELF extends PlatformRows<SELF, WIDGET, ROW>,
 	// this get all rows ( <tr> ) from table, this get from current page only
 	public Stream<ROW> streamCurrentPage() {
 		StreamHelper<WIDGET, SELF, ROW> streamHelper = new StreamHelper<>(widget());
-		return streamHelper.streamCurrentPage();
+		return Allure.step(message("rows.currentPage"), step -> {
+			var rows = streamHelper.streamCurrentPage().toList();
+			StepReport.count(rows.size(), "rows");
+			return rows.stream();
+		});
 	}
 
 

@@ -1,5 +1,8 @@
 package core.element.widget.field.type.radio;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -22,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends Radio<W, SELF>> extends AbstractFieldImpl<ExpectationPattern, W, String, Radio<W, SELF>> implements
@@ -49,8 +51,7 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 
 	@Override
 	public String getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 
 			if (valueTag().contains("span")) {
 				return getUniversalText(element().$(valueTag()));
@@ -68,9 +69,8 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	@Override
 	public Radio<W, SELF> setValue(String value) {
 
-		Allure.step("Setting the " + value + " in the field", step -> {
-			logTime(step);
-			step.parameter("Radio name", value);
+		Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 
 			getRadio(value)
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
@@ -94,8 +94,7 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	 */
 
 	public Map<String, Boolean> getValues() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 
 			HashMap<String, Boolean> values = new HashMap<>();
 			List<String> list = getContainersActions().texts();
@@ -109,8 +108,7 @@ public class Radio<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	}
 
 	public SELF checkOption(Consumer<Map<String, Boolean>> options) {
-		Allure.step("Check radio options", step -> {
-			logTime(step);
+		Allure.step(message("field.checkOptions", getFieldIdentifier()), step -> {
 			options.accept(getValues());
 
 		});

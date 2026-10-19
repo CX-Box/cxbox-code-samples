@@ -1,9 +1,13 @@
 package core.element.widget.field.type.multivalue;
 
+import core.util.report.StepReport;
+import static core.util.i18n.CoreMessageSource.message;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
+import core.element.widget.action.PageRequests;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.field.AbstractFieldImpl;
 import core.element.widget.field.FieldType;
@@ -21,7 +25,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.Condition.exist;
-import static core.element.widget.AbstractWidget.logTime;
 
 @Slf4j
 public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends AbstractFieldImpl<ExpectationPattern, W, List<String>, Multivalue<W>> implements
@@ -30,6 +33,12 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 		ReadOnlyCheckable<W, List<String>, String, Multivalue<W>>,
 		ValueCheckable<W, List<String>, Multivalue<W>>,
 		RequiredCheckable<W, List<String>, String, Multivalue<W>> {
+
+	/**
+	 * A field with forceActive sends its request at once after the change, the dependent fields change with the answer;
+	 * a field without it costs this wait
+	 */
+	private static final Duration FORCE_ACTIVE_REQUEST_START = Duration.ofSeconds(1);
 
 	private final String name;
 
@@ -45,8 +54,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	@Override
 	public List<String> getValue() {
-		return Allure.step("Getting a value from a field", step -> {
-			logTime(step);
+		return StepReport.read(this, () -> {
 			List<String> strings = element()
 					.$(valueTag())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
@@ -59,8 +67,8 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	@Override
 	public Multivalue<W> setValue(List<String> value) {
-		return Allure.step("Set value on field", step -> {
-			logTime(step);
+		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
+			StepReport.value(value);
 			SelenideElement container = element().shouldBe(exist, widget().getExpectations().getTimeout());
 			int multivalueElementCount = container.$$("i.anticon-close").size();
 			if (multivalueElementCount > 0) {
@@ -90,7 +98,8 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 
-			modal().setValues(name, value);
+			PageRequests.runAndWaitDelayedRequests(() -> modal().setValues(name, value), FORCE_ACTIVE_REQUEST_START,
+					widget().getExpectations().getOverTimeout());
 			return this;
 		});
 
@@ -126,8 +135,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	@Override
 	public Multivalue<W> checkPlaceholder(Consumer<String> expectedPlaceholder) {
-		return Allure.step("Getting the Placeholder value", step -> {
-			logTime(step);
+		return Allure.step(message("field.placeholder", getFieldIdentifier()), step -> {
 			String placeholder = element()
 					.$("span[class=\"ant-form-item-children\"] div div")
 					.getAttribute("data-text");

@@ -1,5 +1,7 @@
 package core.element.widget.field;
 
+import static core.util.i18n.CoreMessageSource.message;
+import io.qameta.allure.Allure;
 import com.codeborne.selenide.Condition;
 import core.common.SingleElement;
 import core.element.widget.AbstractWidget;
@@ -15,6 +17,9 @@ public interface AbstractField<
 
 	S widget();
 
+	/** How the field was found: its title or name, for the steps of the report */
+	String getFieldIdentifier();
+
 	@Deprecated
 	FieldType fieldType();
 
@@ -25,7 +30,9 @@ public interface AbstractField<
 	String valueTag();
 
 	default boolean exist() {
-		return element().shouldBe(Condition.exist, widget().getExpectations().getTimeout()).exists();
+		return Allure.step(message("field.exist", getFieldIdentifier()), step -> {
+			return element().shouldBe(Condition.exist, widget().getExpectations().getTimeout()).exists();
+		});
 	}
 
 	default SELF checkExist(Consumer<Boolean> exist) {

@@ -153,8 +153,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dateTime("custom Field").setValue(dateTime);
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.dateTime("custom Field").setValue(dateTime))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.MoreThatCurrentDate))
@@ -171,8 +170,7 @@ public class DateTimeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.dateTime("custom Field").clear();
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.dateTime("custom Field").clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

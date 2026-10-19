@@ -161,8 +161,7 @@ public class InputOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List");
 		var row = list.rows().clickRow(0);
-		row.input("customField").setValue("5700");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.input("customField").setValue("5700"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -179,8 +178,7 @@ public class InputOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List");
 		var row = list.rows().clickRow(0);
-		row.input("customField").setValue("1234");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.input("customField").setValue("1234"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

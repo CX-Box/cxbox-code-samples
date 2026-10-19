@@ -151,8 +151,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var inlinePickList = form.inlinePickList("Custom Field");
-		inlinePickList.setValue("Test data");
-		form.errorPopup()
+		form.expectErrorPopup(() -> inlinePickList.setValue("Test data"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -169,8 +168,7 @@ public class InlinePickListOnFormTest extends BaseTestForSamples {
 				.secondLevelView("Form")
 				.form("Form title");
 		var inlinePickList = form.inlinePickList("Custom Field");
-		inlinePickList.clear();
-		form.errorPopup()
+		form.expectErrorPopup(() -> inlinePickList.clear())
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))

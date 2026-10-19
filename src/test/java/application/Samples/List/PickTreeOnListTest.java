@@ -204,8 +204,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.pickTree("Custom Field").setValue("1234");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.pickTree("Custom Field").setValue("1234"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.OnlyLetters))
@@ -222,8 +221,7 @@ public class PickTreeOnListTest extends BaseTestForSamples {
 				.secondLevelView("List")
 				.listInline("List title");
 		var row = list.rows().clickRow(0);
-		row.pickTree("Custom Field").setValue("Test data");
-		list.errorPopup()
+		list.expectErrorPopup(() -> row.pickTree("Custom Field").setValue("Test data"))
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ErrorPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SystemError))
