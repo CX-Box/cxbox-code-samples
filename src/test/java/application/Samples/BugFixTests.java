@@ -35,4 +35,20 @@ public class BugFixTests extends BaseTestForSamples {
 	var row = list.rows().clickRow(0);
 	row.text("Custom Field");
 	}
+
+	@Test
+	@DisplayName("Row menu of the second list on a view")
+	@Description("The view has two lists, each with the row menu. The test changes a row of the second list and saves it by the row menu of this list.")
+	public void rowMenuOfSecondList() {
+		//CXBOX-1371
+		var list = PlatformApp.screen("List widget title")
+				.secondLevelView("List widget empty title")
+				.listInlineByName("MyExample3104EmptyTitle");
+		var row = list.rows().clickRow(0);
+		row.input("Custom Field widget2: Empty Title").setValue("Row menu of the second list");
+		row.burgerAction("Save").click();
+		list.rows().row(0)
+				.input("Custom Field widget2: Empty Title")
+				.checkValue(value -> assertThat(value).isEqualTo("Row menu of the second list"));
+	}
 }
