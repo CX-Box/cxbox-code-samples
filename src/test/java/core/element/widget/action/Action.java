@@ -40,11 +40,6 @@ import static com.codeborne.selenide.Selenide.$;
 @Slf4j
 public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements SingleElement {
 
-	/**
-	 * The widget sends the records of the uploaded files at once after the last file
-	 */
-	private static final Duration UPLOAD_RECORDS_START = Duration.ofSeconds(1);
-
 	@Getter(AccessLevel.PROTECTED)
 	private final W widget;
 
@@ -206,14 +201,16 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	 */
 	private void uploadAndWait(SelenideElement input, File... files) {
 		var timeout = widget.getExpectations().getOverTimeout();
-		PageRequests.runAndWaitDelayedRequests(() -> {
+		// a request for each file, then one request makes the records of all the files: the widget sends it after a render,
+		// when the last file is done, so the requests are counted
+		PageRequests.runAndWaitRequests(() -> {
 			input.uploadFile(files);
 			for (var file : files) {
 				var line = $("[data-test-file-upload-prgress-item='true'][data-test-file-name='" + file.getName() + "']");
 				line.shouldNotHave(Condition.attributeMatching("data-test-file-status", "init|uploading"), timeout);
 				line.shouldHave(Condition.attribute("data-test-file-status", "done").because(line.getAttribute("data-test-file-status-information")));
 			}
-		}, UPLOAD_RECORDS_START, timeout);
+		}, files.length + 1, timeout);
 		waitOperationFinished();
 	}
 	@Override
