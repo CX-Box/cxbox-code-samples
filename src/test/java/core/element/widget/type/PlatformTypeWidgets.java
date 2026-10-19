@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum PlatformTypeWidgets implements TypeWidget {
 	INFO("Info"),
 	FORM("Form"),
+	FORM_POPUP("FormPopup"),
 	LIST("List"),
 	ADDITIONAL_LIST("AdditionalList"),
 	ADDITIONAL_INFO("AdditionalInfo"),

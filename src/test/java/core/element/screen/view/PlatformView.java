@@ -9,6 +9,7 @@ import core.element.widget.PlatformIdentifier;
 import core.element.widget.chart.Column2DWidget;
 import core.element.widget.chart.Line2DWidget;
 import core.element.widget.chart.Pie1DWidget;
+import core.element.widget.form.PlatformFormPopupWidget;
 import core.element.widget.form.PlatformFormWidget;
 import core.element.widget.info.PlatformAdditionalInfoWidget;
 import core.element.widget.info.PlatformInfoWidget;
@@ -42,6 +43,16 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public PlatformFormWidget formByName(String name) {
 		return new PlatformFormWidget(PlatformIdentifier.NAME, name);
+	}
+
+	/** The form in a window ({@link PlatformFormPopupWidget}) by the title of the widget */
+	public PlatformFormPopupWidget formPopup(String title) {
+		return new PlatformFormPopupWidget(PlatformIdentifier.TITLE, title);
+	}
+
+	/** The form in a window ({@link PlatformFormPopupWidget}) by the name of the widget */
+	public PlatformFormPopupWidget formPopupByName(String name) {
+		return new PlatformFormPopupWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public PlatformInfoWidget info(String title) {

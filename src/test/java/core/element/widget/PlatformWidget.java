@@ -7,6 +7,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
+import core.element.widget.form.PlatformFormPopupWidget;
 import core.element.widget.modal.ConfirmPopup;
 import core.element.widget.modal.ErrorPopup;
 import core.element.widget.modal.ErrorPopupException;
@@ -17,6 +18,7 @@ import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -131,6 +133,19 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 
 	public ConfirmPopup<SELF> confirmPopup() {
 		return new ConfirmPopup<>(widget());
+	}
+
+	/**
+	 * The window with a form that the action of this widget opened with {@code PreAction.confirmWithWidget}, as
+	 * {@link #confirmPopup()} for {@code PreAction.confirm}. One window is open at a time: it is the widget
+	 * {@code FormPopup} with the window inside.
+	 */
+	public PlatformFormPopupWidget confirmWithWidgetPopup() {
+		var name = Selenide.$$("div[data-test-widget-type='FormPopup']")
+				.findBy(Condition.match("the open window", popup -> !popup.findElements(By.cssSelector(".ant-modal-content")).isEmpty()))
+				.shouldBe(Condition.exist, getExpectations().getTimeout())
+				.getAttribute("data-test-widget-name");
+		return new PlatformFormPopupWidget(PlatformIdentifier.NAME, name);
 	}
 
 	public void checkPositionAtElement (SIDE side, SelenideElement element) {
