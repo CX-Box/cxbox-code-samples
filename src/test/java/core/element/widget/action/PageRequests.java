@@ -67,6 +67,20 @@ public final class PageRequests {
 		waitDone(done);
 	}
 
+	/**
+	 * Runs the action and waits until it has sent at least {@code count} requests, then until they are done and rendered.
+	 * For an action whose last request goes after a render of the page: a time window can miss it under load.
+	 */
+	static void runAndWaitRequests(Runnable action, int count, Duration timeout) {
+		track();
+		long before = sent();
+		action.run();
+		Selenide.Wait().withTimeout(timeout)
+				.withMessage("The page sent fewer than " + count + " requests")
+				.until(driver -> sent() >= before + count);
+		waitDone(timeout);
+	}
+
 	private static long sent() {
 		try {
 			Number sent = Selenide.executeJavaScript(SENT);
