@@ -48,6 +48,31 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		return StepReport.widget(getType().getType(), textIdentifier, getIdentifier().equals(PlatformIdentifier.NAME));
 	}
 
+	/**
+	 * The widget in the lines of the scenario: its kind and its title as the user sees it («Форма «Заявка»»), its name
+	 * when it has no title
+	 */
+	@Override
+	public String label() {
+		var title = getIdentifier().equals(PlatformIdentifier.TITLE)
+				? textIdentifier
+				: widgetByName(getType(), textIdentifier).getAttribute("data-test-widget-title");
+		return StepReport.widgetKind(getType().getType()) + " «" + (title == null || title.isBlank() ? textIdentifier : title) + "»";
+	}
+
+	/**
+	 * The title of the widget as shown, with the values of its fields put into it ({@code ${field}}); empty when the
+	 * widget has no title
+	 */
+	public String title() {
+		return Allure.step(message("widget.title", label()), () -> {
+			var title = element().$("h2");
+			var text = title.exists() ? title.text() : "";
+			StepReport.value(text);
+			return text;
+		});
+	}
+
 	@Override
 	public SelenideElement element() {
 		return StepReport.service(message("widget.get", describe()), () -> {

@@ -16,6 +16,7 @@ import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 
 import java.io.File;
+import java.util.regex.Pattern;
 import java.util.function.Consumer;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
@@ -53,9 +54,10 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		return Allure.step(message("field.upload", getFieldIdentifier()), step -> {
 			StepReport.value(value.getName());
 			element().$(valueTag()).uploadFile(value);
+			// a long name is shown shortened in the middle, the title of the link keeps the whole name
 			element()
-					.$("button")
-					.shouldHave(Condition.text(value.getName()), widget().getExpectations().getTimeout());
+					.$("[class*='downloadLink'][title]")
+					.shouldHave(Condition.attributeMatching("title", ".* " + Pattern.quote(value.getName())), widget().getExpectations().getTimeout());
 			return (SELF) this;
 		});
 	}

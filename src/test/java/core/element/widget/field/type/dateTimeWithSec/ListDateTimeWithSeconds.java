@@ -145,6 +145,9 @@ public class ListDateTimeWithSeconds<
 
 	@Override
 	public ListDateTimeWithSeconds<W, RR, R> clear() {
+		if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+			return this;
+		}
 		return StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")

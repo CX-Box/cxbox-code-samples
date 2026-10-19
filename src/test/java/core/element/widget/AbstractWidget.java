@@ -37,6 +37,13 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 	}
 
 	/**
+	 * The widget in the lines of the scenario, as the user sees it: the type of the widget by default
+	 */
+	public String label() {
+		return getType().getType();
+	}
+
+	/**
 	 * Whether the widget is on the page now, without waiting for it. An operation can take the page away from the widget
 	 * (a drilldown, a closed popup), and then there is nothing to wait for on the widget. True by default: a widget that
 	 * cannot tell is waited for as before.

@@ -74,6 +74,9 @@ public class DateTime<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	@SuppressWarnings("unchecked")
 	@Override
 	public SELF clear() {
+		if (!element().$("i[aria-label=\"icon: close-circle\"]").exists()) {
+			return (SELF) this;
+		}
 		return StepReport.service(message("field.clearCross", getFieldIdentifier()), () -> {
 			element()
 					.$("i[aria-label=\"icon: close-circle\"]")

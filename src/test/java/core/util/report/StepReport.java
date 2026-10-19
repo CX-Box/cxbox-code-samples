@@ -127,10 +127,21 @@ public class StepReport {
 	 * заголовку)». {@code type} is the type of the widget of the meta.
 	 */
 	public static String widget(String type, String identifier, boolean byName) {
-		var kind = type.contains("Popup") ? "popup" : type.startsWith("List") ? "list" : type.startsWith("Form") ? "form"
-				: type.startsWith("Info") ? "info" : "other";
 		var shown = byName ? identifier : "«" + identifier + "»";
-		return message("report.widget." + kind, type) + " " + shown + " (" + message(byName ? "report.byName" : "report.byTitle") + ")";
+		return message("report.widget." + kind(type), type) + " " + shown + " (" + message(byName ? "report.byName" : "report.byTitle") + ")";
+	}
+
+	/**
+	 * The kind of a widget at the start of a line of the scenario: «Список», «Форма», «Попап»
+	 */
+	public static String widgetKind(String type) {
+		var word = message("report.widget." + kind(type), type);
+		return word.substring(0, 1).toUpperCase() + word.substring(1);
+	}
+
+	private static String kind(String type) {
+		return type.contains("Popup") ? "popup" : type.startsWith("List") ? "list" : type.startsWith("Form") ? "form"
+				: type.startsWith("Info") ? "info" : "other";
 	}
 
 	/**

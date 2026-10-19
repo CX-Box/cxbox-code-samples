@@ -100,6 +100,23 @@ public class DateOnFormTest extends BaseTestForSamples {
 	}
 
 	@Test
+	@Tag("Positive")
+	@DisplayName("Setting a value in an empty field")
+	@Description("An empty field has no cross to clear it: the value is set at once")
+	void editEmpty() {
+		LocalDate date = LocalDate.of(2024, 12, 5);
+		var form = PlatformApp.screen("Date basic")
+				.secondLevelView("Form")
+				.form("Form title");
+		var dateField = form.date("custom Field");
+		LocalDate defaultDate = dateField.getValue();
+		dateField.clear()
+				.setValue(date)
+				.checkValue(av -> assertThat(av).isEqualTo(date));
+		dateField.setValue(defaultDate);
+	}
+
+	@Test
 	@Severity(CRITICAL)
 	@Tag("Negative")
 	@DisplayName("Business Exception Validation Test")

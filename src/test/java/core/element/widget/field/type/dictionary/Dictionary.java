@@ -76,9 +76,8 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	public SELF setValue(String value) {
 		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
 			StepReport.value(value);
-			clear();
-			// no wait for an error popup after the clear: it waited the whole timeout on every value. A popup that comes takes
-			// the click on the field, the test fails, and the screenshot shows the popup
+			// no clear: the chosen option replaces the value, and a clear sends an empty value first (one more forceActive
+			// request, an error on a required field)
 			element().click();
 			var option = getOptionDictionary(value).shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 			PageRequests.runAndWaitDelayedRequests(option::click, FORCE_ACTIVE_REQUEST_START, widget().getExpectations().getOverTimeout());
