@@ -33,6 +33,7 @@ import java.time.Duration;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import static com.codeborne.selenide.FileDownloadMode.FOLDER;
 import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -194,6 +195,12 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 		});
 		return this.widget;
 	}
+
+	/**
+	 * Uploads the files with the upload button of the widget, like the choice of the files in the dialog of the button
+	 * ({@code associate} with {@code "subtype": "multiFileUpload"}). Waits until the files are uploaded and the widget
+	 * shows them. Top level actions only.
+	 */
 	public W setValue(File... files) {
 		if (parent != null) {
 			throw new UnsupportedOperationException("setValue supports top level actions only");
