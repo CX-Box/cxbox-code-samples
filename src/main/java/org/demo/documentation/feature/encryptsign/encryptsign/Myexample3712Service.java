@@ -3,6 +3,7 @@ package org.demo.documentation.feature.encryptsign.encryptsign;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.MessageType;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -63,7 +64,7 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 				&& data.isFieldChanged(Myexample3712DTO_.fileSign) &&
 				!data.getFileSign().isEmpty() && !data.getFileEncrypt().isEmpty()) {
 			String zipName = entity.getFile().substring(0, entity.getFile().indexOf('.')) + ".zip";
-			String uploadId = createAndUploadZip(data, entity, zipName);
+			String uploadId = uploadZip(zipName, entity.getFileId(), entity.getFileEncryptId(), entity.getFileSignId());
 			entity.setFileEncryptAndSignId(uploadId);
 			entity.setFileEncryptAndSign(zipName);
 		}
@@ -102,44 +103,26 @@ public class Myexample3712Service extends VersionAwareResponseService<Myexample3
 	}
 	// --8<-- [end:getActions]
 
-	// --8<-- [start:createAndUploadZip]
-	public String createAndUploadZip(Myexample3712DTO dto, Myexample3712 entity, String zipName) {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ZipOutputStream zipOut = new ZipOutputStream(baos);
-
-			addFile(zipOut, entity.getFile(), entity.getFile().getBytes());
-			addFile(zipOut, dto.getFileSign(), dto.getFileSign().getBytes());
-			addFile(zipOut, dto.getFileEncrypt(), dto.getFileEncrypt().getBytes());
-
-			zipOut.finish();
-			return cxboxFileService.upload(
-					new FileDownloadDto(
-							() -> new ByteArrayInputStream(baos.toByteArray()),
-							baos.toByteArray().length,
-							zipName,
-							"application/zip"
-					),
-					null
-			);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+	// --8<-- [start:uploadZip]
+	@SneakyThrows
+	private String uploadZip(String zipName, String... fileIds) {
+		var zipBytes = new ByteArrayOutputStream();
+		try (var zip = new ZipOutputStream(zipBytes)) {
+			for (String fileId : fileIds) {
+				FileDownloadDto file = cxboxFileService.download(fileId, null);
+				zip.putNextEntry(new ZipEntry(file.getName()));
+				try (InputStream content = file.getContent().get()) {
+					content.transferTo(zip);
+				}
+				zip.closeEntry();
+			}
 		}
+		byte[] content = zipBytes.toByteArray();
+		return cxboxFileService.upload(
+				new FileDownloadDto(() -> new ByteArrayInputStream(content), content.length, zipName, "application/zip"),
+				null
+		);
 	}
-	// --8<-- [end:createAndUploadZip]
+	// --8<-- [end:uploadZip]
 
-	// --8<-- [start:addFile]
-	private void addFile(ZipOutputStream zipOut, String fileName, byte[] content) throws IOException {
-		if (content == null || content.length == 0) {
-			return;
-		}
-
-		ZipEntry zipEntry = new ZipEntry(fileName);
-
-		zipOut.putNextEntry(zipEntry);
-		zipOut.write(content);
-		zipOut.closeEntry();
-	}
-
-	// --8<-- [end:addFile]
 }

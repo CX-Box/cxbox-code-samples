@@ -3,27 +3,19 @@ package org.demo.documentation.feature.encryptsign.signencrypt;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.MessageType;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
-import org.cxbox.core.file.dto.FileDownloadDto;
-import org.cxbox.core.file.service.CxboxFileService;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.demo.documentation.feature.encryptsign.signencrypt.enums.StatusSignEncryptEnum;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.Optional;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @Service
 @Getter
@@ -35,8 +27,6 @@ public class Myexample3714Service extends VersionAwareResponseService<Myexample3
 	private final Class<Myexample3714MetaBuilder> meta = Myexample3714MetaBuilder.class;
 
 	private final MyEntity3714Repository myexample3714Repository;
-
-	private final CxboxFileService cxboxFileService;
 
 	@Override
 	protected Specification<Myexample3714> getSpecification(BusinessComponent bc) {
@@ -59,14 +49,6 @@ public class Myexample3714Service extends VersionAwareResponseService<Myexample3
 		setIfChanged(data, Myexample3714DTO_.fileEncryptAndSign, entity::setFileEncryptAndSign);
 		setIfChanged(data, Myexample3714DTO_.fileId, entity::setFileId);
 		setIfChanged(data, Myexample3714DTO_.file, entity::setFile);
-		if (data.isFieldChanged(Myexample3714DTO_.fileEncrypt)
-				&& data.isFieldChanged(Myexample3714DTO_.fileSign) &&
-				!data.getFileSign().isEmpty() && !data.getFileEncrypt().isEmpty()) {
-			String zipName = entity.getFile().substring(0, entity.getFile().indexOf('.')) + ".zip";
-			String uploadId = uploadZip(zipName, entity.getFileId(), entity.getFileEncryptId(), entity.getFileSignId());
-			entity.setFileEncryptAndSignId(uploadId);
-			entity.setFileEncryptAndSign(zipName);
-		}
 		return new ActionResultDTO<>(entityToDto(bc, myexample3714Repository.save(entity)))
 				.setAction(PostAction.refreshBc(bc));
 	}
@@ -99,24 +81,5 @@ public class Myexample3714Service extends VersionAwareResponseService<Myexample3
 				.build();
 	}
 	// --8<-- [end:getActions]
-	@SneakyThrows
-	private String uploadZip(String zipName, String... fileIds) {
-		var zipBytes = new ByteArrayOutputStream();
-		try (var zip = new ZipOutputStream(zipBytes)) {
-			for (String fileId : fileIds) {
-				FileDownloadDto file = cxboxFileService.download(fileId, null);
-				zip.putNextEntry(new ZipEntry(file.getName()));
-				try (InputStream content = file.getContent().get()) {
-					content.transferTo(zip);
-				}
-				zip.closeEntry();
-			}
-		}
-		byte[] content = zipBytes.toByteArray();
-		return cxboxFileService.upload(
-				new FileDownloadDto(() -> new ByteArrayInputStream(content), content.length, zipName, "application/zip"),
-				null
-		);
-	}
 
 }
