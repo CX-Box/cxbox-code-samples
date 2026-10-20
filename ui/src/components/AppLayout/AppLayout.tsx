@@ -9,7 +9,6 @@ import View from '../View/View'
 import ModalInvoke from '../ModalInvoke/ModalInvoke'
 import SystemNotifications from '../SystemNotifications/SystemNotifications'
 import ErrorPopup from '../containers/ErrorPopup/ErrorPopup'
-import AuthErrorPopup from '@components/AuthErrorPopup/AuthErrorPopup'
 import { useAppDispatch, useAppSelector } from '@store'
 import Notifications from '@components/Notifications/Notifications'
 import { Login } from '../Login/Login'
@@ -51,7 +50,6 @@ export const AppLayout: React.FC = () => {
                 <Spin wrapperClassName={styles.appSpin} spinning={appSpinning}>
                     <DevPanel />
                     <ErrorPopup />
-                    <AuthErrorPopup />
                     <ModalInvoke />
                     <SystemNotifications />
                     <Layout className={styles.appLayout}>
@@ -65,10 +63,7 @@ export const AppLayout: React.FC = () => {
             </Layout>
         </Router>
     ) : (
-        <div className={styles.spinContainer}>
-            {noSSO ? <Login /> : <Spin size="large" />}
-            <AuthErrorPopup />
-        </div>
+        <div className={styles.spinContainer}>{noSSO ? <Login /> : <Spin size="large" />}</div>
     )
 }
 

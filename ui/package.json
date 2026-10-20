@@ -83,33 +83,6 @@
     },
     "ignorePatterns": [
       "public/cadesplugin_api.js"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "src/**/*.ts",
-          "src/**/*.tsx"
-        ],
-        "excludedFiles": [
-          "src/auth/**"
-        ],
-        "rules": {
-          "no-restricted-imports": [
-            "warn",
-            {
-              "paths": [
-                {
-                  "name": "oidc-client-ts",
-                  "message": "oidc-client-ts is used in src/auth only: a UserManager created by hand has no guard, see src/auth/rotationSafeUserManager"
-                }
-              ],
-              "patterns": [
-                "**/auth/rotationSafeUserManager/*"
-              ]
-            }
-          ]
-        }
-      }
     ]
   },
   "browserslist": {
@@ -251,7 +224,7 @@
     "prosemirror-state": "^1.4.4",
     "prosemirror-tables": "^1.8.5",
     "prosemirror-transform": "^1.12.0",
-    "prosemirror-view": "^1.41.8",
+    "prosemirror-view": "^1.42.6",
     "webpack-dev-server/launch-editor": "^2.14.1",
     "shell-quote": "1.11.0",
     "axios/form-data": "^4.0.6",
@@ -260,6 +233,11 @@
     "browserslist": "4.29.2",
     "colord": "2.10.0",
     "body-parser": "1.20.8",
-    "moment": "2.31.0"
+    "moment": "2.31.0",
+    "proxy-addr": "2.0.8",
+    "compression": "1.8.2",
+    "on-headers": "1.1.0",
+    "source-map-js": "1.2.2",
+    "traverse": "0.3.10"
   }
 }

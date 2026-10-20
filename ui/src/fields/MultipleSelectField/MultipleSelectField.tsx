@@ -2,8 +2,7 @@ import React, { useCallback, useMemo, useRef } from 'react'
 import { Icon, Select as AntdSelect } from 'antd'
 import { connect } from 'react-redux'
 import cn from 'classnames'
-import useSelectDropdown from '@hooks/useSelectDropdown'
-import { multipleSelect_dropDownMaxCols } from '@fields/MultipleSelectField/constants'
+import useFixSelectDropdownForScroll from '@hooks/useFixSelectDropdownForScroll'
 import Select, { SelectProps } from '@components/ui/Select/Select'
 import { buildBcUrl } from '@utils/buildBcUrl'
 import { RootState } from '@store'
@@ -30,11 +29,7 @@ const MultipleSelectField: React.FunctionComponent<MultipleSelectFieldProps> = p
         return values?.map(item => {
             const valueIndex = value?.findIndex(v => v.value === item.value)
             return (
-                <Option
-                    key={item.value}
-                    title={item.value}
-                    label={<div data-test-field-multipleselect-current-item={true}>{item.value}</div>}
-                >
+                <Option key={item.value} label={<div data-test-field-multipleselect-current-item={true}>{item.value}</div>}>
                     <Checkbox checked={valueIndex >= 0} />
                     <span className={styles.span} data-test-field-multipleselect-item={true}>
                         {item.value}
@@ -53,15 +48,12 @@ const MultipleSelectField: React.FunctionComponent<MultipleSelectFieldProps> = p
         [onChange]
     )
 
-    const dropdown = useSelectDropdown(selectRef, multipleSelect_dropDownMaxCols)
-
     const extendedProps: SelectProps<string[]> = {
         ...props,
         forwardedRef: selectRef,
         className: styles.multipleSelect,
         dropdownClassName: styles.dropDownMenu,
-        dropdownMatchSelectWidth: false,
-        ...dropdown,
+        onDropdownVisibleChange: useFixSelectDropdownForScroll(selectRef),
         mode: 'multiple',
         optionLabelProp: 'label',
         value: value?.map(i => i.value),

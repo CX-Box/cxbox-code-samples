@@ -54,7 +54,6 @@ export function getFilterType(fieldType: string) {
         case FieldType.inlinePickList:
         case FieldType.pickList:
         case FieldType.input:
-        case FieldType.hint:
         case FieldType.fileUpload:
         case FieldType.text: {
             return FilterType.contains
