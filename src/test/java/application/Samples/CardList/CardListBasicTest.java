@@ -97,7 +97,7 @@ public class CardListBasicTest extends BaseTestForSamples {
 		var cards = cards();
 		DocShots.gif(ARTICLE, "create.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		cards.actions().click("Add");
-		var form = cards.rows().row(0).clickPencil();
+		var form = cards.rows().row(0).inlineForm();
 		form.fileUpload("Document").setValue(resourceFile("Hope_of_Humanity.jpg"));
 		form.input("Custom Field").setValue("New document");
 		form.actions().action("Save").click();

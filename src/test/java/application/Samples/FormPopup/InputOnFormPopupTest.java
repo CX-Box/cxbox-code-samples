@@ -130,6 +130,8 @@ public class InputOnFormPopupTest extends BaseTestForSamples {
 				.confirmWithWidgetPopup();
 		formPopup.input("customField").setValue("5700");
 		formPopup.checkTitle(title -> assertThat(title).isEqualTo("CustomTitleText"))
+				.checkOkText(text -> assertThat(text).isEqualTo("CustomYesText"))
+				.checkCancelText(text -> assertThat(text).isEqualTo("CustomNoText"))
 				.clickOk();
 	}
 

@@ -60,5 +60,10 @@ public class Constants {
 		 * Window title
 		 */
 		public static final String TITLE = "Are you sure?";
+		/**
+		 * Default texts of the buttons
+		 */
+		public static final String OK = "Ok";
+		public static final String CANCEL = "Cancel";
 	}
 }

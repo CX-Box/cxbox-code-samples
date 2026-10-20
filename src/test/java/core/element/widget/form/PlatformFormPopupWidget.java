@@ -3,6 +3,7 @@ package core.element.widget.form;
 import static core.util.i18n.CoreMessageSource.message;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
@@ -21,6 +22,8 @@ import java.util.function.Consumer;
  * var popup = form.confirmWithWidgetPopup();      // or view.formPopup("FormPopup"), view.formPopupByName(...)
  * popup.input("customField").setValue("5700");
  * popup.checkTitle(title -> assertThat(title).isEqualTo("CustomTitleText"))
+ *         .checkOkText(text -> assertThat(text).isEqualTo("CustomYesText"))
+ *         .checkCancelText(text -> assertThat(text).isEqualTo("CustomNoText"))
  *         .clickOk();
  * }</pre>
  */
@@ -46,6 +49,20 @@ public class PlatformFormPopupWidget extends PlatformFormWidget {
 			checkTitle.accept(title);
 			return this;
 		});
+	}
+
+	/**
+	 * Passes the text of OK to the check: {@code yesText} of the pre action or the default one
+	 */
+	public PlatformFormPopupWidget checkOkText(Consumer<String> checkText) {
+		return checkButtonText("ok", message("popup.okText"), checkText);
+	}
+
+	/**
+	 * Passes the text of Cancel to the check: {@code noText} of the pre action or the default one
+	 */
+	public PlatformFormPopupWidget checkCancelText(Consumer<String> checkText) {
+		return checkButtonText("cancel", message("popup.cancelText"), checkText);
 	}
 
 	/**
@@ -76,10 +93,23 @@ public class PlatformFormPopupWidget extends PlatformFormWidget {
 	 * The button with the mark {@code data-test-popup-button-<button>}; the line of the report names the pressed button
 	 */
 	private void clickMarked(String button) {
-		var found = element().$("[data-test-popup-button-" + button + "=\"true\"]")
-				.shouldBe(Condition.enabled, getExpectations().getTimeout());
+		var found = marked(button);
 		StepReport.value(found.getText());
 		found.click();
+	}
+
+	private PlatformFormPopupWidget checkButtonText(String button, String line, Consumer<String> checkText) {
+		return Allure.step(line, step -> {
+			var text = marked(button).getText();
+			StepReport.value(text);
+			checkText.accept(text);
+			return this;
+		});
+	}
+
+	private SelenideElement marked(String button) {
+		return element().$("[data-test-popup-button-" + button + "=\"true\"]")
+				.shouldBe(Condition.enabled, getExpectations().getTimeout());
 	}
 
 }

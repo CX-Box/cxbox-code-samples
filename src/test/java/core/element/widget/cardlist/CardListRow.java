@@ -54,15 +54,16 @@ public class CardListRow extends RowInlineForm<CardListRow, CardListRows, CardLi
 		return this;
 	}
 
-	/**
-	 * The form from {@code options.edit} in the file popup. After {@code Add} the popup with the form from
-	 * {@code options.create} is already open, then the pencil is not clicked.
-	 */
+	/** Clicks the pencil of the card and returns the form from {@code options.edit} in the file popup */
 	@Override
 	public PlatformFormWidget clickPencil() {
-		if (!Selenide.$(FILE_VIEWER_POPUP).is(Condition.visible)) {
-			clickCardButton(message("card.edit"), "edit");
-		}
+		clickCardButton(message("card.edit"), "edit");
+		return inlineForm();
+	}
+
+	/** The form in the file popup that is already open, without a click: {@code Add} opens it with {@code options.create} */
+	@Override
+	public PlatformFormWidget inlineForm() {
 		return new PlatformFormWidget(PlatformIdentifier.NONE, null) {
 			@Override
 			public SelenideElement element() {

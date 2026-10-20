@@ -16,13 +16,15 @@ public class PlatformGHRowInlineForm extends
 
 	@Override
 	public PlatformInlineFormWidget clickPencil() {
-		getParent().element().findBy(attribute("data-row-key", getRowKey() + "-extra-row"));
-		boolean exists = getParent().element()
+		element().$("i[aria-label='icon: edit']").click();
+		return inlineForm();
+	}
+
+	@Override
+	public PlatformInlineFormWidget inlineForm() {
+		getParent().element()
 				.findBy(attribute("data-row-key", getRowKey() + "-extra-row"))
-				.is(Condition.visible, widget().getExpectations().getTimeout());
-		if (!exists) {
-			element().$("i[aria-label='icon: edit']").click();
-		}
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 		return new PlatformInlineFormWidget(PlatformIdentifier.NONE, null, new PlatformGHRowInlineForm(getParent(), 0, this.getRowKey() + "-extra-row"), this.getRowKey());
 	}
 

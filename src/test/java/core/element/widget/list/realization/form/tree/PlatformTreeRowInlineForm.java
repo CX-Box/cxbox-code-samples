@@ -31,11 +31,14 @@ public class PlatformTreeRowInlineForm extends
 
 	@Override
 	public PlatformInlineFormWidget clickPencil() {
-		SelenideElement extraRow = widget().element().$("tr[data-row-key=\"" + EXTRA_ROW + getRowKey() + "\"]");
-		if (!extraRow.is(Condition.visible, widget().getExpectations().getTimeout())) {
-			element().$("i[aria-label='icon: edit']").click();
-			extraRow.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-		}
+		element().$("i[aria-label='icon: edit']").click();
+		return inlineForm();
+	}
+
+	@Override
+	public PlatformInlineFormWidget inlineForm() {
+		widget().element().$("tr[data-row-key=\"" + EXTRA_ROW + getRowKey() + "\"]")
+				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 		return new PlatformInlineFormWidget(PlatformIdentifier.NONE, null,
 				new PlatformTreeRowInlineForm(getParent(), 0, EXTRA_ROW + this.getRowKey()), this.getRowKey());
 	}
