@@ -45,6 +45,21 @@ public class PickListPopupTest extends BaseTestForSamples {
 	}
 
 	@Test
+	@Tag("Positive")
+	@DisplayName("A value from the next page of a popup with arrows")
+	@Description("The popup with the pagination nextAndPreviousSmart has the arrows without page numbers: the value of the second page is found by the arrow")
+	void paginationArrows() {
+		var screen = PlatformApp.screen("Widget property Pagination");
+		screen.secondLevelView("nextAndPreviousSmart");
+		var form = screen.thirdLevelView("PickListPopup")
+				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3861picklistpopup"))
+				.formByName("MyExample3861ForPickListPopup");
+		var field = form.pickList("Custom Field PickList");
+		field.setValue("Custom Field", "test data2");
+		field.checkValue(v -> assertThat(v).isEqualTo("test data2"));
+	}
+
+	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("Constant title of the popup")

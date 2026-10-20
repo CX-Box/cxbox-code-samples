@@ -63,7 +63,7 @@ public class Multifield<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	@Override
 	public SelenideElement element() throws StaleElementReferenceException {
-		return parentElement().$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + title + "\"]")
+		return parentElement().$$(fieldSelector("title", title))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());

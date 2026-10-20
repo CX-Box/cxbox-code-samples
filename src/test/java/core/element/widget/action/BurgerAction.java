@@ -1,10 +1,11 @@
 package core.element.widget.action;
 
 import io.qameta.allure.Allure;
+import static com.codeborne.selenide.Selenide.$;
 import static core.util.i18n.CoreMessageSource.message;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
@@ -19,11 +20,14 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 	private final ROW row;
 	private SelenideElement burger;
 
+	private static final String BUTTON = "button[data-test-widget-list-row-action=\"true\"]";
+
+	private static final String OPEN_MENU = "div.ant-dropdown:not(.ant-dropdown-hidden)";
+
 	public BurgerAction(ROW row, WIDGET widget, String label) {
 		this.row = row;
 		this.widget = widget;
 		this.label = label;
-		this.burger = getBurger();
 	}
 
 	/** For a row that shows its actions as buttons, not in a burger menu: {@code action} is the button of the action. */
@@ -34,42 +38,46 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 		this.burger = action;
 	}
 
-	/** Whether the menu of the row has the item */
+	/** Whether the menu of the row has the item; the menu is closed after the look, an empty menu has none */
 	public boolean exists() {
-		return Allure.step(message("row.menuItem", label), () -> element() != null);
+		return Allure.step(message("row.menuItem", label), () -> {
+			var found = openMenu().texts().contains(label);
+			menuButton().click();
+			$(OPEN_MENU).shouldNot(Condition.exist, widget.getExpectations().getTimeout());
+			return found;
+		});
 	}
 
 	@Override
 	public SelenideElement element() {
 		if (burger == null) {
-			burger = getBurger();
+			burger = openMenu().findBy(Condition.exactText(label)).shouldBe(Condition.visible, widget.getExpectations().getTimeout())
+					.scrollIntoView("{block: \"center\"}");
 		}
 		return burger;
 	}
 
-	private SelenideElement getBurger() {
-		row.element()
-				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
-				.hover();
-		row.element()
-				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
-				.hover();
-		// each list has its own button and menu of the row, the first ones of the page can belong to another list
-		widget.element().$("button[data-test-widget-list-row-action=\"true\"]")
-				.shouldBe(Condition.exist, widget.getExpectations().getTimeout())
-				.hover()
-				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
-				.click();
-		return widget.element()
-				.$$("ul[class=\"ant-dropdown-menu ant-dropdown-menu-light ant-dropdown-menu-root ant-dropdown-menu-vertical\"]")
-				.findBy(Condition.visible)
-				.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
-				.$$("li[data-test-widget-list-row-action-item=\"true\"]")
-				.shouldHave(CollectionCondition.sizeGreaterThan(0), widget.getExpectations().getTimeout())
-				.stream()
-				.filter(se -> se.getText().equals(label))
-				.findFirst()
-				.map(se -> se.scrollIntoView("{block: \"center\"}")).orElse(null);
+	/** The items of the open menu of the row: by the test attribute, the menu can be an ant-dropdown-menu or an ant-menu */
+	private ElementsCollection openMenu() {
+		row.element().shouldBe(Condition.visible, widget.getExpectations().getTimeout()).hover();
+		// the mouse stays on the row: a notice of the application can cover the button and stays open while hovered
+		menuButton().shouldBe(Condition.visible, widget.getExpectations().getTimeout()).click();
+		var menu = openMenuElement().shouldBe(Condition.visible, widget.getExpectations().getTimeout());
+		// the menu loads the meta of the row first: its items come after the skeleton
+		menu.$("[data-test-loading]").shouldNot(Condition.exist, widget.getExpectations().getTimeout());
+		return menu.$$("li[data-test-widget-list-row-action-item=\"true\"]");
+	}
+
+	/** The open menu: the box draws it in the list, a project can draw it in the page, as antd does by default */
+	private SelenideElement openMenuElement() {
+		var inList = widget.element().$(OPEN_MENU);
+		return inList.exists() ? inList : $(OPEN_MENU);
+	}
+
+	/** The button of the row, or the one button of the list shown on the hover of a row */
+	private SelenideElement menuButton() {
+		var inRow = row.element().$(BUTTON);
+		return inRow.exists() ? inRow : widget.element().$(BUTTON);
 	}
 
 	public ROW click() {

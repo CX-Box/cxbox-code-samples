@@ -1,5 +1,6 @@
 package core.element.widget.field.type.multivalue;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -67,6 +68,14 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	@Override
 	public Multivalue<W> setValue(List<String> value) {
+		return setValue(name, value);
+	}
+
+	/**
+	 * Chooses the values found in the column of the popup: the column can have another title than the field.
+	 * {@link #setValue(List)} looks in the column with the title of the field.
+	 */
+	public Multivalue<W> setValue(String column, List<String> value) {
 		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
 			StepReport.value(value);
 			SelenideElement container = element().shouldBe(exist, widget().getExpectations().getTimeout());
@@ -94,11 +103,11 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 			}
 
 			element()
-					.$("div[data-test-field-multivalue-icon=\"true\"]")
+					.$(config().selectors.multivalueIcon)
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 
-			PageRequests.runAndWaitDelayedRequests(() -> modal().setValues(name, value), FORCE_ACTIVE_REQUEST_START,
+			PageRequests.runAndWaitDelayedRequests(() -> modal().setValues(column, value), FORCE_ACTIVE_REQUEST_START,
 					widget().getExpectations().getOverTimeout());
 			return this;
 		});
@@ -112,12 +121,12 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 	}
 
 	protected MultivalueModal<W> modal() {
-		return new MultivalueModal<>(widget());
+		return config().parts.multivalueModal.create(widget());
 	}
 
 	/** Opens the AssocListPopup of the field and returns it for step-by-step checks. */
 	public MultivalueModal<W> openPopup() {
-		clickIconUntilShown(Selenide.$("div[data-test-widget-type=\"" + PlatformTypeWidgets.ASSOC_LIST_POPUP.getType() + "\"]"));
+		clickIconUntilShown(Selenide.$("div" + config().selectors.widgetTypeAttribute(PlatformTypeWidgets.ASSOC_LIST_POPUP.getType())));
 		return modal();
 	}
 
@@ -125,7 +134,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 	protected void clickIconUntilShown(SelenideElement popup) {
 		widget().getExpectations().getWaitAllFields();
 		SelenideElement icon = element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 		for (int attempt = 0; attempt < 3 && !popup.is(Condition.visible); attempt++) {
 			icon.click();
@@ -151,7 +160,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	public Multivalue<W> clear(boolean close) {
 		element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		modal().clear(close);
@@ -160,7 +169,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	public Multivalue<W> clearValue(String value, boolean close) {
 		element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		modal().clearWithValue(value, close);
@@ -169,7 +178,7 @@ public class Multivalue<W extends AbstractWidget<ExpectationPattern, W>> extends
 
 	public Multivalue<W> setAll(boolean close) {
 		element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		modal().setValueAll(close);

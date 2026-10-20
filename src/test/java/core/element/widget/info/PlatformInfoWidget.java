@@ -2,6 +2,7 @@ package core.element.widget.info;
 
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
+import core.element.widget.action.Action;
 import core.element.widget.field.type.checkbox.CheckBox;
 import core.element.widget.field.type.date.Date;
 import core.element.widget.field.type.dateTime.DateTime;
@@ -27,6 +28,8 @@ import core.element.widget.field.type.time.Time;
 import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
 
+import static core.element.PlatformApp.config;
+
 public class PlatformInfoWidget extends PlatformWidget<PlatformInfoWidget> {
 
 	public PlatformInfoWidget(Identifier identifier, String textIdenfier) {
@@ -34,75 +37,75 @@ public class PlatformInfoWidget extends PlatformWidget<PlatformInfoWidget> {
 	}
 
 	public InputRO<? extends PlatformInfoWidget> input(String title) {
-		return new InputRO<>(title, this);
+		return config().parts.info.input.apply(this, title);
 	}
 
 	public CheckBox<? extends PlatformInfoWidget, ?> checkbox(String title) {
-		return new CheckBox<>(title, this);
+		return config().parts.info.checkbox.apply(this, title);
 	}
 
 	public DateTimeWithSecondsRO<PlatformInfoWidget, ?> dateTimeWithSeconds(String title) {
-		return new DateTimeWithSecondsRO<>(title, this);
+		return config().parts.info.dateTimeWithSeconds.apply(this, title);
 	}
 
 	public Date<PlatformInfoWidget, ?> date(String title) {
-		return new Date<>(title, this);
+		return config().parts.info.date.apply(this, title);
 	}
 
 	public DateTime<PlatformInfoWidget, ?> dateTime(String title) {
-		return new DateTime<>(this, title);
+		return config().parts.info.dateTime.apply(this, title);
 	}
 
 	public Dictionary<PlatformInfoWidget, ?> dictionary(String title) {
-		return new Dictionary<>(this, title);
+		return config().parts.info.dictionary.apply(this, title);
 	}
 
 	public FileUploadRO<? extends PlatformInfoWidget> fileUpload(String title) {
-		return new FileUploadRO<>(this, title);
+		return config().parts.info.fileUpload.apply(this, title);
 	}
 
 	public Percent<PlatformInfoWidget, ?> percent(String title) {
-		return new Percent<>(this, title);
+		return config().parts.info.percent.apply(this, title);
 	}
 
 	public Hint<PlatformInfoWidget, ?> hint(String title) {
-		return new Hint<>(this, title);
+		return config().parts.info.hint.apply(this, title);
 	}
 
 	public Money<PlatformInfoWidget, ?> money(String title) {
-		return new Money<>(this, title);
+		return config().parts.info.money.apply(this, title);
 	}
 
 	public Multifield<PlatformInfoWidget, ?> multiField(String title) {
-		return new Multifield<>(this, title);
+		return config().parts.info.multiField.apply(this, title);
 	}
 
 	public MultipleSelectRO<PlatformInfoWidget, ?> multipleSelect(String title) {
-		return new MultipleSelectRO<>(this, title);
+		return config().parts.info.multipleSelect.apply(this, title);
 	}
 
 	public MultivalueHover<PlatformInfoWidget, ?> multivalueHover(String title) {
-		return new MultivalueHover<>(this, title);
+		return config().parts.info.multivalueHover.apply(this, title);
 	}
 
 	public MultivalueRO<PlatformInfoWidget> multivalue(String title) {
-		return new MultivalueRO<>(this, title);
+		return config().parts.info.multivalue.apply(this, title);
 	}
 
 	public Radio<PlatformInfoWidget, ?> radio(String title) {
-		return new Radio<>(this, title);
+		return config().parts.info.radio.apply(this, title);
 	}
 
 	public Number<PlatformInfoWidget, ?> number(String title) {
-		return new Number<>(this, title);
+		return config().parts.info.number.apply(this, title);
 	}
 
 	public Text<PlatformInfoWidget, ?> text(String title) {
-		return new Text<>(this, title);
+		return config().parts.info.text.apply(this, title);
 	}
 
 	public RichText<PlatformInfoWidget, ?> richText(String title) {
-		return new RichText<>(this, title);
+		return config().parts.info.richText.apply(this, title);
 	}
 
 	public Time<PlatformInfoWidget, ?> time(String title, String format) {
@@ -110,15 +113,20 @@ public class PlatformInfoWidget extends PlatformWidget<PlatformInfoWidget> {
 	}
 
 	public PickList<PlatformInfoWidget, ?> pickList(String title) {
-		return new PickList<>(this, title);
+		return config().parts.info.pickList.apply(this, title);
 	}
 
 	public PickTree<PlatformInfoWidget, ?> pickTree(String title) {
-		return new PickTree<>(this, title);
+		return config().parts.info.pickTree.apply(this, title);
+	}
+
+	/** The buttons of the info widget */
+	public Action<PlatformInfoWidget> actions() {
+		return config().parts.actions.create(this);
 	}
 
 	public MultivalueTreeRO<PlatformInfoWidget> multivalueTree(String title) {
-		return new MultivalueTreeRO<>(this, title);
+		return config().parts.info.multivalueTree.apply(this, title);
 	}
 
 	@Override

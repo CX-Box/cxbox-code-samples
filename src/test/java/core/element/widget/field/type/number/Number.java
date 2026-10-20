@@ -1,5 +1,6 @@
 package core.element.widget.field.type.number;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -64,8 +65,10 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 		Allure.step(message("field.set", getFieldIdentifier()), step -> {
 			StepReport.value(value);
 
-			element().click();
-			typeOver(element().$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()), Objects.toString(value, ""));
+			// the field is looked up once: each look up waits for the widget
+			var field = element();
+			field.click();
+			typeOver(field.$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()), Objects.toString(value, ""));
 		});
 
 		return (SELF) this;
@@ -79,7 +82,7 @@ public class Number<W extends AbstractWidget<ExpectationPattern, W>, SELF extend
 	@Override
 	public String valueTag() {
 		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
-			return "span[class*='ReadOnlyField__readOnlyField']";
+			return config().selectors.infoNumberValue;
 		}
 		return super.valueTag();
 	}

@@ -105,12 +105,14 @@ public class SuggestionPickList<W extends AbstractWidget<ExpectationPattern, W>,
 	public SuggestionPickList<W, SELF> clear() {
 		StepReport.service(message("field.clear", getFieldIdentifier()), () -> {
 
-			element().click();
-			element().hover();
-			if (element()
+			// the field is looked up once: each look up waits for the widget
+			var field = element();
+			field.click();
+			field.hover();
+			if (field
 					.$("i[class=\"anticon anticon-close-circle\"]")
 					.is(Condition.visible)) {
-				element()
+				field
 						.$("i[class=\"anticon anticon-close-circle\"]")
 						.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 						.click();

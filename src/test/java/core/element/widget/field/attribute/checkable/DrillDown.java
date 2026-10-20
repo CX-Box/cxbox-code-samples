@@ -1,5 +1,6 @@
 package core.element.widget.field.attribute.checkable;
 
+import static core.element.PlatformApp.config;
 import static core.util.i18n.CoreMessageSource.message;
 
 import com.codeborne.selenide.WebDriverRunner;
@@ -23,14 +24,14 @@ public interface DrillDown<W extends AbstractWidget<ExpectationPattern, W>, VF, 
 	// TODO >> !! >> drilldown with filter ( on self !!!)
 	default void drilldown(Consumer<V> consumer) {
 		Allure.step(message("field.drilldown", getFieldIdentifier()), step -> {
-			String drilldownHolder = "i[class=\"anticon anticon-link\"]";
+			String drilldownHolder = config().selectors.drilldown;
 			if (
 					this.fieldType().equals(PlatformFieldType.DATE_TIME_WITH_SECONDS_LIST)
 							|| this.fieldType().equals(PlatformFieldType.DATE)
 							|| this.fieldType().equals(PlatformFieldType.DATE_TIME)
 							|| this.fieldType().equals(PlatformFieldType.MONEY)
 							|| this.fieldType().equals(PlatformFieldType.TEXT)) {
-				drilldownHolder = "span a";
+				drilldownHolder = config().selectors.drilldownText;
 			}
 			String oldUrl = WebDriverRunner.url();
 			element().find(drilldownHolder).click();

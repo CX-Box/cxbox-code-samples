@@ -1,5 +1,6 @@
 package core.element.widget.modal;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -12,7 +13,7 @@ import io.qameta.allure.Allure;
 
 import java.util.function.Consumer;
 
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> implements SingleElement {
 
@@ -43,7 +44,7 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 
 	public ConfirmPopup<W> checkMessage(Consumer<String> checkMessage) {
 		return Allure.step(message("popup.message"), step -> {
-			checkMessage.accept(getTextElement("p"));
+			checkMessage.accept(getTextElement(config().selectors.confirmMessage));
 			return this;
 		});
 	}
@@ -51,7 +52,7 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 	public ConfirmPopup<W> checkTitleAndMessage(Consumer<String> title, Consumer<String> message) {
 		return Allure.step(message("popup.message"), step -> {
 			title.accept(getTextElement("div[class=\"ant-modal-title\""));
-			message.accept(getTextElement("p"));
+			message.accept(getTextElement(config().selectors.confirmMessage));
 			return this;
 		});
 	}
@@ -73,7 +74,9 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 	public SelenideElement element() {
 		if (selenideElement == null) {
 			selenideElement = StepReport.service(message("popup.get", message("report.popup.confirm")),
-					() -> $("div[data-test-confirm-popup=\"true\"]").shouldBe(Condition.exist, widget.getExpectations().getTimeout()));
+					// a closed antd modal stays in the page hidden
+					() -> $$("div[data-test-confirm-popup=\"true\"]").findBy(Condition.visible)
+							.shouldBe(Condition.visible, widget.getExpectations().getTimeout()));
 		}
 		return selenideElement;
 	}
@@ -120,7 +123,7 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 	 * language and on the operation («Подтверждаю», «Да»), the line of the report names it
 	 */
 	private SelenideElement button(String button) {
-		return getContainer().$("[data-test-confirm-popup-button-" + button + "=\"true\"]")
+		return getContainer().$("ok".equals(button) ? config().selectors.confirmOk : config().selectors.confirmCancel)
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout());
 	}
 

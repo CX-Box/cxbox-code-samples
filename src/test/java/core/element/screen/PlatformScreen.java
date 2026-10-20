@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
+import static core.element.PlatformApp.config;
 
 @Slf4j
 public class PlatformScreen extends AbstractScreen {
@@ -30,7 +31,7 @@ public class PlatformScreen extends AbstractScreen {
 			// the name is the title of the item (CXBOX-121), not its whole text: a project may show a counter or an icon in the
 			// item. It is compared like Condition.exactText: ignoring case and extra spaces
 			$x("//aside[@data-test='LEFT_SIDER']//ul[@data-test='MAIN_MENU']//li[@data-test='MAIN_MENU_ITEM']"
-					+ "[translate(normalize-space(@title), '" + UPPER_CASE + "', '" + LOWER_CASE + "')="
+					+ "[translate(normalize-space(" + config().selectors.menuItemName + "), '" + UPPER_CASE + "', '" + LOWER_CASE + "')="
 					+ xpathLiteral(name.strip().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT)) + "]")
 					.shouldBe(Condition.enabled)
 					// the menu can be long: the item is scrolled to the middle first, otherwise the sticky footer of the sidebar intercepts the click
@@ -91,7 +92,7 @@ public class PlatformScreen extends AbstractScreen {
 	}
 
 	public PlatformView view() {
-		return new PlatformView();
+		return config().parts.view.get();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package core.element.widget.field.type.fileUpload;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -45,7 +46,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	@Override
 	public File getValue() {
 		return Allure.step(message("field.download", getFieldIdentifier()), step -> {
-			return element().$("button").download(DownloadOptions.using(FOLDER));
+			return element().$(config().selectors.fileUploadFile).download(DownloadOptions.using(FOLDER));
 		});
 	}
 
@@ -117,7 +118,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 			element()
-					.$("button")
+					.$(config().selectors.fileUploadFile)
 					.shouldNot(Condition.exist, widget().getExpectations().getTimeout());
 			return (SELF) this;
 		});
@@ -126,7 +127,7 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	public SELF checkNoFileInField() {
 		return Allure.step(message("field.noFile", getFieldIdentifier()), step -> {
 			element()
-					.$("button")
+					.$(config().selectors.fileUploadFile)
 					.shouldNot(Condition.exist, widget().getExpectations().getTimeout());
 			return (SELF) this;
 		});

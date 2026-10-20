@@ -56,7 +56,7 @@ public class FileUploadRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 	@Override
 	public SelenideElement element() {
 		return widget().element().
-				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
+				$$(fieldSelector("title", identifier))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());

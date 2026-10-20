@@ -108,6 +108,22 @@ public class HintOnListTest extends BaseTestForSamples {
 	}
 
 	@Test
+	@Severity(MINOR)
+	@Tag("Negative")
+	@DisplayName("Filtering test with no matching records")
+	@Description("A filter that no record matches gives an empty list, and an empty list has no pagination.")
+	void filtrationNothingFound() {
+		var list = PlatformApp.screen("Hint filtration")
+				.secondLevelView("List")
+				.listInline("List title");
+		list.headers().filter(fb -> fb.hint("Custom Field", "no such value"));
+		var actualData = list.rows().streamAllPages()
+				.map(r -> r.hint("Custom Field").getValue())
+				.collect(Collectors.toList());
+		assertThat(actualData).isEqualTo(List.of());
+	}
+
+	@Test
 	void position() {
 		assertTrue(Position.checkPosition(302, 94, PlatformApp.screen("Hint basic").secondLevelView("List").listInline("List title").element()));
 	}

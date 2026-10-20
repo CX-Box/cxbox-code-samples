@@ -17,6 +17,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
+import static core.element.PlatformApp.config;
 
 @Getter
 public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends AbstractWidget<EP, SELF>> implements SingleElement {
@@ -70,15 +72,18 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 		return widget;
 	}
 
-	/** The widget without waiting for it: a widget hidden by its showCondition is not on the page. */
+	/**
+	 * The widget without waiting for it: a widget hidden by its showCondition is not on the page. Of the widgets with the
+	 * same title the shown one: a closed antd popup stays in the page hidden.
+	 */
 	protected static SelenideElement widgetByTitle(TypeWidget type, String title) {
-		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-title='" + title
-				+ "']");
+		return $$("div[data-test='WIDGET']" + config().selectors.widgetTypeAttribute(type.getType()) + "[data-test-widget-title='" + title
+				+ "']").findBy(Condition.visible);
 	}
 
 	protected static SelenideElement widgetByName(TypeWidget type, String name) {
-		return $("div[data-test='WIDGET'][data-test-widget-type='" + type.getType() + "'][data-test-widget-name='" + name
-				+ "']");
+		return $$("div[data-test='WIDGET']" + config().selectors.widgetTypeAttribute(type.getType()) + "[data-test-widget-name='" + name
+				+ "']").findBy(Condition.visible);
 	}
 
 
@@ -87,7 +92,7 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 	}
 
 	public PlatformView view() {
-		return new PlatformView();
+		return config().parts.view.get();
 	}
 
 	public <FT, F extends AbstractField<EP, SELF, FT, F>> F field(Function<SELF, F> field) {

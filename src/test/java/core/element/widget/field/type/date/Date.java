@@ -1,5 +1,6 @@
 package core.element.widget.field.type.date;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -51,7 +52,7 @@ public class Date<W extends AbstractWidget<ExpectationPattern, W>, SELF extends 
 	@Override
 	public String valueTag() {
 		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass()) || PlatformAdditionalInfoWidget.class.isAssignableFrom(widget().getClass())) {
-			return "span[class*='ReadOnlyField'";
+			return config().selectors.infoDateValue;
 		}
 		return super.valueTag();
 	}

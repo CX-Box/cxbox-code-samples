@@ -93,14 +93,25 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 	/** Clicks "Clear N filter(s)" above the table when filters are applied. */
 	public W clearFilters() {
 		return Allure.step(message("filters.clearAll"), () -> {
-			// the link has a text in the language of the user, "Clear 2 filters"
-			SelenideElement clear = widget().element().$("a[data-test-widget-list-clear-filters='true']");
+			// the text is in the language of the user, "Clear 2 filters"; a project can draw a button instead of the link
+			SelenideElement clear = widget().element().$("[data-test-widget-list-clear-filters='true']");
 			if (clear.exists()) {
-				PageRequests.runAndWaitDelayedRequests(clear::click, REQUEST_START, widget().getExpectations().getOverTimeout());
+				// a fixed header can cover it
+				PageRequests.runAndWaitDelayedRequests(() -> clear.scrollIntoView("{block: \"center\"}").click(), REQUEST_START,
+						widget().getExpectations().getOverTimeout());
 				widget().element();
+			} else {
+				StepReport.note(message("list.noFilters"));
 			}
 			return widget();
 		});
+	}
+
+	/**
+	 * The list without a filter group, whatever the previous steps chose: the box resets the group with the filters
+	 */
+	public W showAll() {
+		return Allure.step(message("list.showAll"), this::clearFilters);
 	}
 
 	/**

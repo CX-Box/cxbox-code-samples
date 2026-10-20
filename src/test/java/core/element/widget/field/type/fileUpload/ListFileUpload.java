@@ -1,5 +1,6 @@
 package core.element.widget.field.type.fileUpload;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -46,7 +47,7 @@ public class ListFileUpload<
 
 	@Override
 	public File getValue() {
-		var button = element().$("button");
+		var button = element().$(config().selectors.listFileUploadFile);
 		// an empty field shows the button without a file name: there is nothing to download, as other empty fields give null
 		if (button.text().isBlank()) {
 			return null;
@@ -75,7 +76,7 @@ public class ListFileUpload<
 	@Override
 	public SelenideElement element() {
 		return row.element().
-				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
+				$$(fieldSelector("title", identifier))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
@@ -101,7 +102,7 @@ public class ListFileUpload<
 
 	public ListFileUpload<W, RR, R> checkFieldIsEmpty(Consumer<Boolean> fieldIsEmpty) {
 		element();
-		boolean isFieldIsEmpty = !element().$("button").shouldNot(Condition.exist, widget().getExpectations().getTimeout()).exists();
+		boolean isFieldIsEmpty = !element().$(config().selectors.listFileUploadFile).shouldNot(Condition.exist, widget().getExpectations().getTimeout()).exists();
 		fieldIsEmpty.accept(isFieldIsEmpty);
 		return this;
 	}

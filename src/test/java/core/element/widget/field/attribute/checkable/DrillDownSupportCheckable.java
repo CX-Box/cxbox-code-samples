@@ -1,5 +1,6 @@
 package core.element.widget.field.attribute.checkable;
 
+import static core.element.PlatformApp.config;
 import core.element.widget.AbstractWidget;
 import core.element.widget.field.AbstractField;
 import core.expectation.ExpectationPattern;
@@ -11,7 +12,7 @@ public interface DrillDownSupportCheckable<W extends AbstractWidget<ExpectationP
 
 	@SuppressWarnings("unchecked")
 	default SELF checkDrillDownSupported(Consumer<V> drillDown) {
-		V isDrillDownSupported = (V) Boolean.valueOf(!element().$(valueTag()).getWrappedElement().findElements(By.cssSelector("span:has(a)")).isEmpty());
+		V isDrillDownSupported = (V) Boolean.valueOf(!element().$(valueTag()).getWrappedElement().findElements(By.cssSelector(config().selectors.link)).isEmpty());
 		drillDown.accept(isDrillDownSupported);
 		return (SELF) this;
 	}

@@ -67,10 +67,11 @@ public class Input<W extends AbstractWidget<ExpectationPattern, W>, SELF extends
 	public SELF setValue(String value) {
 		return Allure.step(message("field.set", getFieldIdentifier()), step -> {
 			StepReport.value(value);
-			element().shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
+			// the field is looked up once: each look up waits for the widget
+			var field = element().shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-			element().click();
-			typeOver(element().$(valueTag()).shouldBe(Condition.interactable), value);
+			field.click();
+			typeOver(field.$(valueTag()).shouldBe(Condition.interactable), value);
 			return (SELF) this;
 		});
 	}
