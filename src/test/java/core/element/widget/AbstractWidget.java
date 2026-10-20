@@ -27,6 +27,10 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 		this.expectations = expectations;
 	}
 
+	public static void logTime(Allure.StepContext step) {
+		step.parameter("startTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")));
+	}
+
 	public abstract TypeWidget getType();
 
 	/**
