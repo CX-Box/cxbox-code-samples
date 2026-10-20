@@ -82,7 +82,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 	private static void createInlineForm(PlatformTreePopupWidgetInlineForm tree, String article, String picture, String field, int width, int height) {
 		DocShots.gif(article, picture, width, height, DocShots.Frame.WITH_SIDEBAR);
 		tree.actions().click("Add");
-		var form = tree.rows().row(0).clickPencil();
+		var form = tree.rows().row(0).inlineForm();
 		String value = unique("Popup form");
 		form.input(field).setValue(value);
 		form.actions().action("Save").click();

@@ -30,7 +30,11 @@ public abstract class RowInlineForm<
 		return self();
 	}
 
+	/** Clicks the pencil of the row and returns the form that it opens */
 	public abstract FORMWIDGET clickPencil();
+
+	/** The form that is already open in the row, without a click: {@code Add} opens it for a new row */
+	public abstract FORMWIDGET inlineForm();
 
 //	public PlatformInlineFormWidget clickPencil() {
 //		getParent().element().findBy(attribute("data-row-key", getRowKey() + "-extra-row"));

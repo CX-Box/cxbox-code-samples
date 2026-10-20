@@ -173,6 +173,8 @@ public class DateOnFormTest extends BaseTestForSamples {
 				.checkTitleAndMessage(
 						title -> assertThat(title).isEqualTo(Constants.ConfirmPopup.TITLE),
 						message -> assertThat(message).isEqualTo(Constants.SaveValue))
+				.checkOkText(text -> assertThat(text).isEqualTo(Constants.ConfirmPopup.OK))
+				.checkCancelText(text -> assertThat(text).isEqualTo(Constants.ConfirmPopup.CANCEL))
 				.clickOk();
 
 		dateField.setValue(defaultDate);

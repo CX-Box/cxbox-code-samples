@@ -110,7 +110,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		var list = popup.listInlineForm();
 		DocShots.gif(ARTICLE, "create_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		list.actions().click("Add");
-		var form = list.rows().row(0).clickPencil();
+		var form = list.rows().row(0).inlineForm();
 		String value = unique("Popup form");
 		form.input("Custom Field Pick").setValue(value);
 		form.actions().action("Save").click();

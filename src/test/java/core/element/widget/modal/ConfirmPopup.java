@@ -78,6 +78,20 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 		return selenideElement;
 	}
 
+	/**
+	 * Passes the text of OK to the check: {@code yesText} of the pre action or the default one
+	 */
+	public ConfirmPopup<W> checkOkText(Consumer<String> checkText) {
+		return checkButtonText("ok", message("popup.okText"), checkText);
+	}
+
+	/**
+	 * Passes the text of Cancel to the check: {@code noText} of the pre action or the default one
+	 */
+	public ConfirmPopup<W> checkCancelText(Consumer<String> checkText) {
+		return checkButtonText("cancel", message("popup.cancelText"), checkText);
+	}
+
 	public void clickOk() {
 		Allure.step(message("popup.ok"), () -> clickButton("ok"));
 	}
@@ -86,15 +100,28 @@ public class ConfirmPopup<W extends AbstractWidget<ExpectationPattern, W>> imple
 		Allure.step(message("popup.cancel"), () -> clickButton("cancel"));
 	}
 
+	private void clickButton(String button) {
+		var found = button(button);
+		StepReport.value(found.getText());
+		found.click();
+	}
+
+	private ConfirmPopup<W> checkButtonText(String button, String line, Consumer<String> checkText) {
+		return Allure.step(line, step -> {
+			var text = button(button).getText();
+			StepReport.value(text);
+			checkText.accept(text);
+			return this;
+		});
+	}
+
 	/**
 	 * The button by its test mark ({@code data-test-confirm-popup-button-ok}, {@code -cancel}): its text depends on the
 	 * language and on the operation («Подтверждаю», «Да»), the line of the report names it
 	 */
-	private void clickButton(String button) {
-		var found = getContainer().$("[data-test-confirm-popup-button-" + button + "=\"true\"]")
+	private SelenideElement button(String button) {
+		return getContainer().$("[data-test-confirm-popup-button-" + button + "=\"true\"]")
 				.shouldBe(Condition.enabled, widget.getExpectations().getTimeout());
-		StepReport.value(found.getText());
-		found.click();
 	}
 
 	private SelenideElement getContainer() {

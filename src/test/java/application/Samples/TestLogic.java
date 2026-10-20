@@ -68,7 +68,7 @@ public class TestLogic extends BaseTestForSamples {
 				.listInlineForm("List")
 				.actions().action("Add").click()
 				.rows()
-				.row(0).clickPencil()
+				.row(0).inlineForm()
 				.input("Custom Field")
 				.setValue("test 123")
 				.widget()

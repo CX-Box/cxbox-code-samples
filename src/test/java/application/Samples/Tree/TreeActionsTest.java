@@ -73,7 +73,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3279tree"))
 				.treeInlineFormByName("MyExample3279Tree");
 		tree.actions().click("Add");
-		var form = tree.rows().row(0).clickPencil();
+		var form = tree.rows().row(0).inlineForm();
 		DocShots.png(tree.element(), ARTICLE, "create_inline_form.png", 1600, 1000);
 		String value = unique("Inline-form root");
 		form.input(FIELD).setValue(value);
