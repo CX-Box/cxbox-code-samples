@@ -33,6 +33,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
+import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
 
 // TODO add to burger and check logic
@@ -171,6 +172,30 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	}
 
 	/**
+	 * The button of the action that chooses files ({@code subtype multiFileUpload}) gets the files, as the user chooses
+	 * them in the window of the browser. Waits until the uploaded files come to the widget.
+	 */
+	public W upload(String name, File... files) {
+		Allure.step(message("action.upload", name, widget.label()), () -> {
+			StepReport.value(Stream.of(files).map(File::getName).toList());
+			uploadAndWait(action(name).element().closest(".ant-upload").$("input[type='file']"), files);
+		});
+		return this.widget;
+	}
+
+	/**
+	 * The zone above the panel of the widget ({@code mode file-upload-dnd} of the button) gets the files, as the user
+	 * drops them on it. Waits until the uploaded files come to the widget.
+	 */
+	public W uploadToDropZone(File... files) {
+		Allure.step(message("action.uploadToDropZone", widget.label()), () -> {
+			StepReport.value(Stream.of(files).map(File::getName).toList());
+			uploadAndWait(widget.element().$(".ant-upload-drag input[type='file']"), files);
+		});
+		return this.widget;
+	}
+
+	/**
 	 * Uploads the files with the upload button of the widget, like the choice of the files in the dialog of the button
 	 * ({@code associate} with {@code "subtype": "multiFileUpload"}). Waits until the files are uploaded and the widget
 	 * shows them. Top level actions only.
@@ -248,6 +273,13 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 			StepReport.value(names);
 			return names;
 		});
+	}
+
+	public W checkExistActionsBlocks() {
+		widget.element()
+				.findAll(by("type", "button"))
+				.shouldBe(CollectionCondition.sizeGreaterThan(0));
+		return this.widget;
 	}
 
 
