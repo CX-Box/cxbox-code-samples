@@ -265,7 +265,9 @@ jobs:
       # Also loads previous history from gh-pages
       # to preserve trends and statistics between workflow runs.
       - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub, as in build_button_qa.yml: the action itself builds
+        # it before every job from public.ecr.aws, which answers 429 now and then and fails the whole job before the tests
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
@@ -636,7 +638,9 @@ jobs:
 
       # Generates Allure report for main branch.
       - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.15
+        # image of simple-elf/allure-report-action v1.15 on Docker Hub, as in build_button_qa.yml: the action itself builds
+        # it before every job from public.ecr.aws, which answers 429 now and then and fails the whole job before the tests
+        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
         id: allure-report
         with:
