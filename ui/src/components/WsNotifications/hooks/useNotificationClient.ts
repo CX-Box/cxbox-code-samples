@@ -3,16 +3,14 @@ import { useDispatch } from 'react-redux'
 import { AxiosError } from 'axios'
 import { actions, interfaces } from '@cxbox-ui/core'
 import showSocketNotification from '../ShowSocketNotification'
-import { brokerURL, heartbeatIncoming, heartbeatOutgoing, maxReconnectDelay, reconnectDelay } from '@constants/notification'
+import { brokerURL, heartbeatIncoming, heartbeatOutgoing, reconnectDelay } from '@constants/notification'
 import { Client, IFrame } from '@stomp/stompjs'
 import { SocketNotification } from '@interfaces/notification'
 import { createUserSubscribeUrl } from '../utils'
-import { store, useAppSelector } from '@store'
+import { useAppSelector } from '@store'
 import { EFeatureSettingKey } from '@interfaces/session'
 import { EDrillDownTooltipValue } from '@components/ui/DrillDown/constants'
-import { showAuthErrorPopup } from '@actions'
-import { platformSession } from '../../../auth/platformSession'
-import { isAuthErrorSnoozed } from '../../../reducers/session'
+import { Auth } from '../../../auth'
 
 const { ApplicationErrorType } = interfaces
 
@@ -22,45 +20,17 @@ const notificationClient = new Client({
     heartbeatIncoming: heartbeatIncoming,
     heartbeatOutgoing: heartbeatOutgoing,
     beforeConnect: async () => {
-        if (!store.getState().session.active) {
-            await notificationClient.deactivate()
-            return
-        }
-        const startedAt = new Date().toISOString()
         try {
-            notificationClient.brokerURL = await platformSession.authorizeWebSocketUrl(brokerURL)
-        } catch (error) {
-            const delay = backOff()
-            console.warn(
-                `Websocket handshake skipped: no valid token (the session is over or the OIDC provider is unreachable), next attempt in ${
-                    delay / 1000
-                }s`,
-                error
-            )
-            await notificationClient.deactivate()
-            setTimeout(() => notificationClient.activate(), delay)
-            if (!isAuthErrorSnoozed(store.getState().session)) {
-                store.dispatch(
-                    showAuthErrorPopup({
-                        statusCode: 401,
-                        method: 'CONNECT',
-                        url: brokerURL,
-                        startedAt,
-                        finishedAt: new Date().toISOString(),
-                        responseData: error instanceof Error ? error.message : undefined
-                    })
-                )
-            }
-        }
-    },
-    onWebSocketClose: backOff
-})
+            const user = await Auth.getInstance().getUser()
 
-// stompjs 7.0 has no backoff of its own
-function backOff() {
-    notificationClient.reconnectDelay = Math.min(notificationClient.reconnectDelay * 2, maxReconnectDelay)
-    return notificationClient.reconnectDelay
-}
+            if (user && user.access_token) {
+                notificationClient.brokerURL = brokerURL + '?access_token=' + encodeURI(user.access_token)
+            }
+        } catch (error) {
+            console.error('Failed to get access token for WebSocket connection', error)
+        }
+    }
+})
 
 export function useNotificationClient(subscribeCallback?: (messageBody: SocketNotification) => void) {
     const dispatch = useDispatch()
@@ -133,7 +103,6 @@ export function useNotificationClient(subscribeCallback?: (messageBody: SocketNo
     useEffect(() => {
         if (!disableWebSocketNotification && !notificationClient.active && userId) {
             notificationClient.onConnect = frame => {
-                notificationClient.reconnectDelay = reconnectDelay
                 handleStompConnectRef.current(frame, createUserSubscribeUrl(userId))
             }
 

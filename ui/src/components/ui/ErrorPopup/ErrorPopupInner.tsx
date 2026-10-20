@@ -14,9 +14,6 @@ export interface ErrorPopupInnerProps {
     forceBusinessMessage?: React.ReactNode
     onClose?: () => void
 
-    /** Replaces the built-in "Details" collapse */
-    requestDetails?: React.ReactNode
-
     exportStateEnabled?: boolean // manage the export button
     onExportState?: () => void
     children?: React.ReactNode
@@ -30,8 +27,7 @@ const ErrorPopupInner: React.FC<ErrorPopupInnerProps> = ({
     exportStateEnabled,
     onExportState,
     children,
-    forceBusinessMessage,
-    requestDetails
+    forceBusinessMessage
 }) => {
     const errorRef = React.useRef<HTMLTextAreaElement>(null)
     const systemError = error as interfaces.SystemError
@@ -74,15 +70,7 @@ const ErrorPopupInner: React.FC<ErrorPopupInnerProps> = ({
                     {error.type === ApplicationErrorType.NetworkError && t('There is no connection to the server')}
                 </Form.Item>
 
-                {error.type === ApplicationErrorType.SystemError && requestDetails && (
-                    <Form.Item label={t('Error code')}>
-                        <span data-test-error-popup-code={systemError.code}>{systemError.code}</span>
-                    </Form.Item>
-                )}
-
-                {requestDetails && <Form.Item>{requestDetails}</Form.Item>}
-
-                {error.type === ApplicationErrorType.SystemError && !requestDetails && (
+                {error.type === ApplicationErrorType.SystemError && (
                     <Form.Item label={t('Error code')}>
                         {systemError.code}
                         <Collapse bordered={false}>
