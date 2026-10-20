@@ -195,6 +195,26 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	}
 
 	/**
+	 * Uploads the files with the upload button of the widget, like the choice of the files in the dialog of the button
+	 * ({@code associate} with {@code "subtype": "multiFileUpload"}). Waits until the files are uploaded and the widget
+	 * shows them. Top level actions only.
+	 */
+	public W setValue(File... files) {
+		if (parent != null) {
+			throw new UnsupportedOperationException("setValue supports top level actions only");
+		}
+		return Allure.step("Uploading the files with the action \"" + name + "\"", step -> {
+			AbstractWidget.logTime(step);
+			SelenideElement input = element().closest(".ant-upload").$("input[type='file']");
+			// the files are uploaded one by one, then the widget sends them with associate and reads the records again
+			PageRequests.runAndWaitDelayedRequests(() -> input.uploadFile(files),
+					widget.getExpectations().getTimeout(), widget.getExpectations().getOverTimeout());
+			waitOperationFinished();
+			return widget;
+		});
+	}
+
+	/**
 	 * The files go one by one, each with its line in the window of the upload progress; when the last one is done, the
 	 * widget sends the records of the files. The wait is for the end of every line, then for these requests.
 	 */
