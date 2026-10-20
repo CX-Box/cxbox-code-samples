@@ -25,16 +25,15 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 
 import java.io.File;
-import java.time.Duration;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.FileDownloadMode.FOLDER;
 import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selenide.$;
+import static core.element.PlatformApp.config;
 
 // TODO add to burger and check logic
 @Slf4j
@@ -70,7 +69,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 
 	@SneakyThrows
 	public Action<W> action(String name) {
-		Action<W> wAction = new Action<>(this.widget);
+		Action<W> wAction = config().parts.actions.create(this.widget);
 		wAction.setParent(current);
 		wAction.setName(name);
 		wAction.setCurrent(wAction);
@@ -80,7 +79,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 
 	@SneakyThrows
 	public Action<W> action(String name, String iconName) {
-		Action<W> wAction = new Action<>(this.widget);
+		Action<W> wAction = config().parts.actions.create(this.widget);
 		wAction.setParent(current);
 		wAction.setName(name);
 		wAction.setIconName(iconName);
@@ -91,7 +90,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 
 	@SneakyThrows
 	public Action<W> actionWithIcon(String iconName) {
-		Action<W> wAction = new Action<>(this.widget);
+		Action<W> wAction = config().parts.actions.create(this.widget);
 		wAction.setParent(current);
 		wAction.setIconName(iconName);
 		wAction.setCurrent(wAction);
@@ -215,32 +214,25 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	}
 	@Override
 	public SelenideElement element() {
-		Duration timeout = this.widget.getExpectations().getTimeout();
-		Stream<SelenideElement> stream = null;
-		if (parent == null) {
-			stream = buttons()
-					.shouldHave(CollectionCondition.sizeGreaterThan(0), timeout)
-					.asFixedIterable().stream();
-		}else{
-			stream = widget.element()
-					.$("div[class*='Operations__operations']")
-					.$("div[class*='OperationsGroup__overlayContainer']")
-					.shouldBe(Condition.visible, timeout)
-					.$$("li[data-test-widget-action-item='true'] div.ant-spin-container")
-					.shouldHave(CollectionCondition.sizeGreaterThan(0), timeout)
-					.asFixedIterable().stream();
-		}
-
-		return stream
-				.filter(this.condition)
-				.findFirst()
-				.orElseThrow(() -> new NoSuchElementException("No such element"));
+		var items = parent == null ? buttons()
+				: widget.element().$$("li[data-test-widget-action-item='true']").filterBy(Condition.visible);
+		// the panel is drawn again after an action: wait for the button; keep the found one, its text can change on click
+		var button = $(items.findBy(Condition.match("the action " + (name != null ? name : iconName), element -> condition.test($(element))))
+				.shouldBe(Condition.visible, this.widget.getExpectations().getTimeout()).toWebElement());
+		// a fixed header can cover the button
+		return button.scrollIntoView("{block: \"center\"}");
 	}
 
 
 	/** The buttons of the panel of the widget */
 	protected ElementsCollection buttons() {
-		return widget.element().$("div[class*='Operations__operations']").$$("button");
+		return panel().$$(config().selectors.actionsButton);
+	}
+
+	/** The panel of the actions; the widget itself when the project has no panel element */
+	private SelenideElement panel() {
+		var panel = config().selectors.actions;
+		return panel.isEmpty() ? widget.element() : widget.element().$(panel);
 	}
 
 	/** The texts of the visible buttons of the panel */

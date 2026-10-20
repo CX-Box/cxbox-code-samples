@@ -1,5 +1,6 @@
 package core.page;
 
+import static core.element.PlatformApp.config;
 import static core.util.i18n.CoreMessageSource.message;
 
 import com.codeborne.selenide.CollectionCondition;
@@ -47,7 +48,7 @@ public class UserMenu {
 	 * The wrapper of the button of the active role is marked as checked
 	 */
 	protected SelenideElement activeRoleItem() {
-		return menu().$("[class*='checked'] [data-test-menu-user-role]");
+		return menu().$(config().selectors.userMenuActiveRole);
 	}
 
 	protected void open() {

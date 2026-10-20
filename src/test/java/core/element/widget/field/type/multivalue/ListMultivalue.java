@@ -1,5 +1,6 @@
 package core.element.widget.field.type.multivalue;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -97,7 +98,7 @@ public class ListMultivalue<
 				return this;
 			}
 			element()
-					.$("div[data-test-field-multivalue-icon=\"true\"]")
+					.$(config().selectors.multivalueIcon)
 					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 					.click();
 
@@ -113,7 +114,7 @@ public class ListMultivalue<
 	}
 
 	protected MultivalueModal<W> modal() {
-		return new MultivalueModal<>(widget());
+		return config().parts.multivalueModal.create(widget());
 	}
 
 
@@ -185,7 +186,7 @@ public class ListMultivalue<
 
 	public ListMultivalue<W, RR, R> clearWithModal(boolean close) {
 		element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		modal().clear(close);
@@ -199,7 +200,7 @@ public class ListMultivalue<
 
 	public ListMultivalue<W, RR, R> setAllModal(boolean close) {
 		element()
-				.$("div[data-test-field-multivalue-icon=\"true\"]")
+				.$(config().selectors.multivalueIcon)
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
 				.click();
 		modal().setValueAll(close);

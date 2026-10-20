@@ -1,5 +1,6 @@
 package core.element.widget.list;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import io.qameta.allure.Allure;
 import static core.util.i18n.CoreMessageSource.message;
@@ -17,6 +18,9 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	private static final String LOADING_SPINNER = ".ant-spin-spinning";
 
 	private static final String ACTIVE_PAGE = "ant-pagination-item-active";
+
+	/** A row of records or of groups, a card */
+	private static final String ROWS = "[data-test-widget-list-row-id]";
 
 	@Getter(value = AccessLevel.PROTECTED)
 	private final W widget;
@@ -46,9 +50,12 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 	// Rows
 	@Override
 	public ListPagination<W> firstPage() {
+		if (!hasPagination()) {
+			return this;
+		}
 		SelenideElement widgetElement = getWidget().element();
 		SelenideElement first = widgetElement
-				.$("div[data-test-widget-list-pagination=\"true\"] li[title=\"1\"]")
+				.$(config().selectors.pagination).$("li[title=\"1\"]")
 				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout());
 		if (!first.has(Condition.cssClass(ACTIVE_PAGE))) {
 			first.click();
@@ -95,10 +102,13 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 
 
 	private int getPages() {
+		if (!hasPagination()) {
+			return 1;
+		}
 		return this.getWidget().element()
-				.$("div[data-test-widget-list-pagination=\"true\"]")
+				.$(config().selectors.pagination)
 				.shouldBe(Condition.visible, getWidget().getExpectations().getTimeout())
-				.$$("li[tabindex=\"0\"].ant-pagination-item").size();
+				.$$(config().selectors.paginationPage).size();
 	}
 
 	@Override
@@ -108,10 +118,22 @@ public class ListPagination<W extends AbstractWidget<ExpectationPattern, W>> imp
 
 	@Override
 	public boolean isLastPage() {
-		widget.element();
-		return this.widget.element()
+		return !hasPagination() || this.widget.element()
 				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
+	}
+
+	/**
+	 * A list without records has no pagination: one page. The pagination of a list with records comes after its rows,
+	 * with the count of the records, so it is waited for
+	 */
+	private boolean hasPagination() {
+		var widgetElement = widget.element();
+		if (widgetElement.$$(ROWS).isEmpty()) {
+			return false;
+		}
+		widgetElement.$(config().selectors.pagination).shouldBe(Condition.exist, widget.getExpectations().getTimeout());
+		return true;
 	}
 
 	@Override

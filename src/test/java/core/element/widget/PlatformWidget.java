@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
+import static core.element.PlatformApp.config;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
@@ -87,12 +88,15 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 		});
 	}
 
-	/** The widget is on the page while its element is there: after a drilldown or a closed popup it is not */
+	/**
+	 * The widget is on the page while its element is shown: after a drilldown it is gone, a closed antd popup stays in the
+	 * page hidden
+	 */
 	@Override
 	public boolean isOnPage() {
 		return (getIdentifier().equals(PlatformIdentifier.NAME)
 				? widgetByName(getType(), textIdentifier)
-				: widgetByTitle(getType(), textIdentifier)).exists();
+				: widgetByTitle(getType(), textIdentifier)).is(Condition.visible);
 	}
 
 	/**
@@ -157,7 +161,7 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 	}
 
 	public ConfirmPopup<SELF> confirmPopup() {
-		return new ConfirmPopup<>(widget());
+		return config().parts.confirmPopup.create(widget());
 	}
 
 	/**
@@ -170,7 +174,7 @@ public abstract class PlatformWidget<SELF extends PlatformWidget<SELF>> extends
 				.findBy(Condition.match("the open window", popup -> !popup.findElements(By.cssSelector(".ant-modal-content")).isEmpty()))
 				.shouldBe(Condition.exist, getExpectations().getTimeout())
 				.getAttribute("data-test-widget-name");
-		return new PlatformFormPopupWidget(PlatformIdentifier.NAME, name);
+		return config().parts.widgets.formPopup.apply(PlatformIdentifier.NAME, name);
 	}
 
 	public void checkPositionAtElement (SIDE side, SelenideElement element) {

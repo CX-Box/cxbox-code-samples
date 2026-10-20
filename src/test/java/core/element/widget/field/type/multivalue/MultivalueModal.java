@@ -1,5 +1,6 @@
 package core.element.widget.field.type.multivalue;
 
+import static core.element.PlatformApp.config;
 import static core.util.i18n.CoreMessageSource.message;
 
 import com.codeborne.selenide.*;
@@ -28,6 +29,9 @@ import static com.codeborne.selenide.Selenide.$;
 @Slf4j
 public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
+	/** The next arrow of the pagination without page numbers (ArrowPagination) */
+	private static final String ARROW_NEXT = "[data-test-widget-list-pagination-next=\"true\"]";
+
 	protected final W widget;
 
 	protected final SelenideElement modal;
@@ -40,7 +44,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	protected MultivalueModal(W widget, String popupType) {
 		this.widget = widget;
-		this.modal = $("div[data-test-widget-type=\"" + popupType + "\"]")
+		this.modal = $("div" + config().selectors.widgetTypeAttribute(popupType))
 				.shouldBe(visible, widget.getExpectations().getOverTimeout())
 				.shouldBe(exist, widget.getExpectations().getOverTimeout());
 		name();
@@ -73,6 +77,10 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	protected boolean isLastPage() {
+		var arrow = this.modal.$(ARROW_NEXT);
+		if (arrow.exists()) {
+			return !arrow.isEnabled();
+		}
 		return this.modal
 				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.enabled));
@@ -83,7 +91,13 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			step.parameter(message("parameter.clicks"), number);
 
 			for (int i = 0; i < number; i++) {
-				if (getPages() > 1) {
+				var arrow = this.modal.$(ARROW_NEXT);
+				if (arrow.exists()) {
+					// no page number to wait for: the next page is open when its first row is another one
+					var firstRow = rows().first().getAttribute("data-row-key");
+					arrow.shouldBe(Condition.enabled, widget.getExpectations().getTimeout()).click();
+					rows().first().shouldNotHave(Condition.attribute("data-row-key", firstRow), widget.getExpectations().getTimeout());
+				} else if (getPages() > 1) {
 					var page = Integer.parseInt(this.modal.$("li.ant-pagination-item-active").getAttribute("title"));
 					this.modal.$("i[class=\"anticon anticon-right\"]")
 							.shouldBe(Condition.visible, widget.getExpectations().getOverTimeout())
@@ -188,7 +202,7 @@ public class MultivalueModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	protected SelenideElement getSubmitButton() {
 		return this.modal
-				.$("button[data-test-widget-list-close=\"true\"]")
+				.$(config().selectors.multivalueSave)
 				.shouldBe(Condition.visible, widget.getExpectations().getTimeout());
 	}
 

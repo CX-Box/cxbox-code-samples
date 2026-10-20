@@ -1,5 +1,6 @@
 package core.element.widget.field.type.input;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -71,7 +72,7 @@ public class InputRO<W extends AbstractWidget<ExpectationPattern, W>> extends In
 	public void drilldown(Consumer<String> consumer) {
 		Allure.step(message("field.drilldown", getFieldIdentifier()), step -> {
 			String oldUrl = WebDriverRunner.url();
-			element().$(valueTag()).getWrappedElement().findElement(By.cssSelector("span:has(a)")).click();
+			element().$(valueTag()).getWrappedElement().findElement(By.cssSelector(config().selectors.link)).click();
 			webdriver().shouldNotHave(url(oldUrl), widget().getExpectations().getTimeout());
 			widget().getExpectations().getContextMenu();
 			$x("//body").exists();

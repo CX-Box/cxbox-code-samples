@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import static core.util.i18n.CoreMessageSource.message;
 
 import com.codeborne.selenide.WebDriverRunner;
+import core.config.PlatformConfig;
 import core.element.widget.modal.SignInAgainPopup;
 import core.element.widget.modal.ErrorPopup;
 import core.element.widget.modal.ErrorPopupException;
@@ -13,16 +14,35 @@ import core.element.screen.PlatformScreen;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.function.Consumer;
+
 
 @Slf4j
 public class PlatformApp {
 
+	private static PlatformConfig config = new PlatformConfig();
+
+	/**
+	 * Sets the core up for a project whose UI differs from the box: its selectors and its parts
+	 * ({@link PlatformConfig}). The base test of the project calls it before the tests; without it the core is the box.
+	 */
+	public static void configure(Consumer<PlatformConfig> setup) {
+		var project = new PlatformConfig();
+		setup.accept(project);
+		config = project;
+	}
+
+	/** The settings of the core: the box, or the ones of {@link #configure} */
+	public static PlatformConfig config() {
+		return config;
+	}
+
 	public static PlatformScreen screen(String name) {
-		return new PlatformScreen(name);
+		return config.parts.screen.apply(name);
 	}
 
 	public static PlatformScreen currentScreen() {
-		return new PlatformScreen();
+		return config.parts.currentScreen.get();
 	}
 
 	/**
@@ -68,7 +88,7 @@ public class PlatformApp {
 	}
 
 	public static UserMenu userMenu() {
-		return new UserMenu();
+		return config.parts.userMenu.get();
 	}
 
 }

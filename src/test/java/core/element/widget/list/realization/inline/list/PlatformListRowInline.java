@@ -5,6 +5,8 @@ import static core.util.i18n.CoreMessageSource.message;
 
 import core.element.widget.list.rows.row.RowInline;
 
+import static core.element.PlatformApp.config;
+
 public class PlatformListRowInline extends
 		RowInline<PlatformListRowInline, PlatformListRowsInline, PlatformListWidgetInline> {
 
@@ -20,7 +22,7 @@ public class PlatformListRowInline extends
 	public PlatformListRowInline editRow() {
 		return Allure.step(message("row.edit"), () -> {
 			element().click();
-			return new PlatformListRowInline(getParent(), getPageIndex(), getRowKey(), true);
+			return config().parts.list.row.create(getParent(), getPageIndex(), getRowKey(), true);
 		});
 	}
 }

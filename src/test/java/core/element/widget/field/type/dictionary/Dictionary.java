@@ -1,5 +1,6 @@
 package core.element.widget.field.type.dictionary;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -78,7 +79,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 			StepReport.value(value);
 			// no clear: the chosen option replaces the value, and a clear sends an empty value first (one more forceActive
 			// request, an error on a required field)
-			element().click();
+			open();
 			var option = getOptionDictionary(value).shouldBe(Condition.visible, widget().getExpectations().getTimeout());
 			PageRequests.runAndWaitDelayedRequests(option::click, FORCE_ACTIVE_REQUEST_START, widget().getExpectations().getOverTimeout());
 			return (SELF) this;
@@ -88,9 +89,9 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	@Override
 	public String valueTag() {
 		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
-			return "div[data-test-field-value=\"true\"]";
+			return config().selectors.infoDictionaryValue;
 		}
-		return "[data-test-field-dictionary-item=\"true\"]";
+		return config().selectors.dictionaryValue;
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 
 	public List<String> getOptions() {
 		return Allure.step(message("field.options", getFieldIdentifier()), step -> {
-			element().click();
+			open();
 			var options = getOptionsDictionary().texts();
 			StepReport.list(options, "options");
 			return options;
@@ -135,6 +136,11 @@ public class Dictionary<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 	 */
 	private SelenideElement openList() {
 		return $$(MENU_OPTIONS).findBy(Condition.visible);
+	}
+
+	/** A click on the select itself: the middle of the field is empty when the label is above the select in a tall row */
+	private void open() {
+		element().$(".ant-select-selection").click();
 	}
 
 	@Override

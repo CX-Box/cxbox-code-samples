@@ -8,6 +8,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import io.qameta.allure.Allure;
 
+import static core.element.PlatformApp.config;
+
 public abstract class AbstractLevelMenu extends PlatformView {
 
 	public abstract ElementsCollection element();
@@ -31,7 +33,7 @@ public abstract class AbstractLevelMenu extends PlatformView {
 					.shouldBe(Condition.enabled)
 					.scrollIntoView("{block: \"nearest\", inline: \"nearest\"}")
 					.click();
-			return new PlatformView();
+			return config().parts.view.get();
 		});
 	}
 }

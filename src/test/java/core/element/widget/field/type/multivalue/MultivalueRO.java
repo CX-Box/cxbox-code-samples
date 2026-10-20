@@ -59,7 +59,7 @@ public class MultivalueRO<W extends AbstractWidget<ExpectationPattern, W>> exten
 	@Override
 	public SelenideElement element() {
 		return widget().element().
-				$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + identifier + "\"]")
+				$$(fieldSelector("title", identifier))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.$("div[class*=\"InfoCell__fieldData\"]")

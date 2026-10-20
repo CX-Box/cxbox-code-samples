@@ -14,6 +14,8 @@ import core.util.report.StepReport;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.Keys;
 
+import static core.element.PlatformApp.config;
+
 
 public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS extends PlatformRows<ROWS, SELF, ROW>, ROW extends PlatformRow<ROW, ROWS, SELF>> extends PlatformWidget<SELF> {
 
@@ -37,7 +39,7 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 	}
 
 	public Action<SELF> actions() {
-		return new Action<>(self());
+		return config().parts.actions.create(self());
 	}
 
 	/** data-test attribute that holds the column title in the table header. */

@@ -1,5 +1,6 @@
 package core.element.widget.field.type.dictionary;
 
+import static core.element.PlatformApp.config;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.field.type.ParentRow;
@@ -28,10 +29,10 @@ public class ListDictionary<
 	public String valueTag() {
 		if (row instanceof RowInline<?, ?, ?> rowInline) {
 			if (!rowInline.getIsEdit()) {
-				return "div[class*='Dictionary']";
+				return config().selectors.listDictionaryValue;
 			}
 		}
-		return "span";
+		return config().selectors.listDictionaryEditValue;
 	}
 
 	@Override

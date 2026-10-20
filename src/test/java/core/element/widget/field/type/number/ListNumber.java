@@ -1,5 +1,6 @@
 package core.element.widget.field.type.number;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -41,7 +42,7 @@ public class ListNumber
 	@Override
 	public String valueTag() {
 		if (row instanceof RowInline<?, ?, ?> pri && !pri.getIsEdit()) {
-			return "span[class*='ReadOnlyField__readOnlyField']";
+			return config().selectors.listNumberValue;
 		}
 		return super.valueTag();
 	}

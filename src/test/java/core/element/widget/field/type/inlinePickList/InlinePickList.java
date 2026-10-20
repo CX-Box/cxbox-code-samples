@@ -60,8 +60,10 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		return Allure.step(message("field.choose", getFieldIdentifier()), step -> {
 			StepReport.value(value);
 			clear();
-			element().click();
-			element().$(valueTag())
+			// the field is looked up once: each look up waits for the widget
+			var field = element();
+			field.click();
+			field.$(valueTag())
 					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
 					.setValue(value);
 			widget().getExpectations().getWaitAllElements($("body"));
@@ -78,7 +80,7 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 
 	@Override
 	public SelenideElement element() throws StaleElementReferenceException {
-		return parentElement().$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + title + "\"]")
+		return parentElement().$$(fieldSelector("title", title))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());

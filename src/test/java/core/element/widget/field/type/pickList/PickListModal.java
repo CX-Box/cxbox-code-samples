@@ -1,6 +1,7 @@
 package core.element.widget.field.type.pickList;
 
 import static core.util.i18n.CoreMessageSource.message;
+import static core.element.PlatformApp.config;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
@@ -27,6 +28,10 @@ import static com.codeborne.selenide.Selenide.$;
 
 @Slf4j
 public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
+
+	/** The next arrow of the pagination without page numbers (ArrowPagination) */
+	private static final String ARROW_NEXT = "[data-test-widget-list-pagination-next=\"true\"]";
+
 	private final W widget;
 
 	private final SelenideElement modal;
@@ -35,7 +40,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 
 	public PickListModal(W widget) {
 		this.widget = widget;
-		this.modal = $("div[data-test-widget-type=\"PickListPopup\"]")
+		this.modal = $("div" + config().selectors.widgetTypeAttribute(PlatformTypeWidgets.PICK_LIST_POPUP.getType()))
 				.shouldBe(visible, widget.getExpectations().getTimeout())
 				.shouldBe(exist, widget.getExpectations().getTimeout());
 		name();
@@ -85,7 +90,7 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			}
 			pressRight(1);
 		}
-		$("div[data-test-widget-type=\"PickListPopup\"]").shouldNotBe(visible, widget.getExpectations().getTimeout());
+		$("div" + config().selectors.widgetTypeAttribute(PlatformTypeWidgets.PICK_LIST_POPUP.getType())).shouldNotBe(visible, widget.getExpectations().getTimeout());
 	}
 
 	private boolean setValuesOnCurrentPage(String columnName, String value) {
@@ -104,6 +109,10 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	private boolean isLastPage() {
+		var arrow = this.modal.$(ARROW_NEXT);
+		if (arrow.exists()) {
+			return !arrow.isEnabled();
+		}
 		return this.modal
 				.$("li.ant-pagination-next[aria-disabled=\"true\"]")
 				.is(Condition.anyOf(Condition.visible, Condition.interactable));
@@ -114,7 +123,14 @@ public class PickListModal<W extends AbstractWidget<ExpectationPattern, W>> {
 			step.parameter(message("parameter.clicks"), number);
 
 			for (int i = 0; i < number; i++) {
-				if (getPages() > 1) {
+				var arrow = this.modal.$(ARROW_NEXT);
+				if (arrow.exists()) {
+					// no page number to wait for: the next page is open when its first row is another one
+					var rows = this.modal.$$(By.cssSelector("table > tbody > tr"));
+					var firstRow = rows.first().getAttribute("data-row-key");
+					arrow.shouldBe(Condition.enabled, widget.getExpectations().getTimeout()).click();
+					rows.first().shouldNotHave(Condition.attribute("data-row-key", firstRow), widget.getExpectations().getTimeout());
+				} else if (getPages() > 1) {
 					var page = Integer.parseInt(this.modal.$("li.ant-pagination-item-active").getAttribute("title"));
 					this.modal.$("i[class=\"anticon anticon-right\"]")
 							.shouldBe(Condition.visible, widget.getExpectations().getTimeout())

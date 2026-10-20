@@ -63,8 +63,10 @@ public class Percent<W extends AbstractWidget<ExpectationPattern, W>, SELF exten
 		Allure.step(message("field.set", getFieldIdentifier()), step -> {
 			StepReport.value(value);
 
-			element().click();
-			typeOver(element().$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()), Objects.toString(value, ""));
+			// the field is looked up once: each look up waits for the widget
+			var field = element();
+			field.click();
+			typeOver(field.$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout()), Objects.toString(value, ""));
 		});
 		return this;
 	}

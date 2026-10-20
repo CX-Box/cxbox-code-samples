@@ -1,5 +1,6 @@
 package core.element.widget.field.type.pickList;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -47,10 +48,10 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	@Override
 	public String getValue() {
 		return StepReport.read(this, () -> {
-			return element()
+			// the text of the value, or the value of an input (pickListValue of a project)
+			return getUniversalText(element()
 					.$(valueTag())
-					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-					.getText();
+					.shouldBe(Condition.visible, widget().getExpectations().getTimeout()));
 		});
 
 	}
@@ -106,11 +107,11 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	protected String popupIconSelector() {
-		return "i[data-test-field-picklist-popup=\"true\"]";
+		return config().selectors.pickListPopupIcon;
 	}
 
 	protected String clearIconSelector() {
-		return "i[data-test-field-picklist-clear=\"true\"]";
+		return config().selectors.pickListClearIcon;
 	}
 
 	/** Clicks the popup icon; the first click may only focus the field, so the click is repeated until a popup is shown. */
@@ -118,7 +119,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		SelenideElement icon = element()
 				.$(popupIconSelector())
 				.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
-		SelenideElement modal = Selenide.$("div[data-test-widget-type$=\"Popup\"] .ant-modal");
+		SelenideElement modal = Selenide.$(config().selectors.pickListPopup);
 		for (int attempt = 0; attempt < 3 && !modal.is(Condition.visible); attempt++) {
 			icon.click();
 			modal.is(Condition.visible, widget().getExpectations().getTimeout());
@@ -126,14 +127,14 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 	}
 
 	protected void pickInModal(String columnName, String value) {
-		new PickListModal<>(widget()).setValue(columnName, value);
+		config().parts.pickListPopup.create(widget()).setValue(columnName, value);
 	}
 
 	/** Opens the PickListPopup of the field and returns it for step-by-step checks (a pickTree field opens its tree popup with {@code openPopup()}). */
 	public PickListModal<W> openListPopup() {
 		widget().getExpectations().getWaitAllFields();
 		openPopupIcon();
-		return new PickListModal<>(widget());
+		return config().parts.pickListPopup.create(widget());
 	}
 
 	@Override
@@ -152,7 +153,7 @@ public class PickList<W extends AbstractWidget<ExpectationPattern, W>, SELF exte
 		if (PlatformInfoWidget.class.isAssignableFrom(widget().getClass())) {
 			return "span[class*=\"ReadOnlyField\"]";
 		}
-		return super.valueTag();
+		return config().selectors.pickListValue;
 	}
 
 	@Override

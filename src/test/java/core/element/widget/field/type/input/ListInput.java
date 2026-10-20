@@ -1,5 +1,6 @@
 package core.element.widget.field.type.input;
 
+import static core.element.PlatformApp.config;
 import core.util.report.StepReport;
 import static core.util.i18n.CoreMessageSource.message;
 
@@ -73,7 +74,7 @@ public class ListInput<
 	@Override
 	public SelenideElement element() {
 		return row.element()
-				.$$("div[data-test-field-type='" + fieldType().getType() + "'][data-test-field-title=\"" + name + "\"]")
+				.$$(fieldSelector("title", name))
 				.get(0)
 				.scrollIntoView("{block: \"center\"}")
 				.shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
@@ -94,7 +95,7 @@ public class ListInput<
 	public void drilldown(Consumer<String> consumer) {
 		String url = WebDriverRunner.url();
 		element().$(valueTag()).shouldBe(Condition.visible, widget().getExpectations().getTimeout())
-				.$("span:has(a)")
+				.$(config().selectors.link)
 				.click();
 		webdriver().shouldNotHave(url(url), widget().getExpectations().getTimeout());
 		widget().getExpectations().getContextMenu();

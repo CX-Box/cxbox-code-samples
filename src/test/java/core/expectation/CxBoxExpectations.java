@@ -54,7 +54,7 @@ public class CxBoxExpectations implements ExpectationPattern {
 
 	@Override
 	public void getContextMenu() {
-		Selenide.Wait().until(visibilityOfAllElements(ContextUtils.MAIN_CONTEXT));
+		Selenide.Wait().until(visibilityOfAllElements(ContextUtils.mainContext()));
 	}
 
 

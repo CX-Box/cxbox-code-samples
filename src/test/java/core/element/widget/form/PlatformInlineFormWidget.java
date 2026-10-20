@@ -25,6 +25,8 @@ import core.element.widget.type.PlatformTypeWidgets;
 import core.element.widget.type.TypeWidget;
 import lombok.extern.slf4j.Slf4j;
 
+import static core.element.PlatformApp.config;
+
 @Slf4j
 public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormWidget> {
 
@@ -110,7 +112,7 @@ public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormW
 
 
 	public Action<PlatformInlineFormWidget> actions() {
-		return new Action<>(this);
+		return config().parts.actions.create(this);
 	}
 
 	@Override
