@@ -22,6 +22,9 @@ concurrency:
 # Global workflow environment variables
 env:
   APP_URL: http://localhost:81/ui/#/ # Test application URL
+  # Autotests of both jobs, a Surefire -Dtest pattern. A new package under application.Samples runs without an edit here;
+  # a package is left out with a '!' entry.
+  TESTS: 'application.Samples.**,!application.Samples.AdditionalInfo.**,!application.Samples.FormPopup.**,!application.Samples.HiddenOnTests'
   # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
   KEYCLOAK_ADMIN_USER: cxbox_admin
   KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
@@ -149,7 +152,6 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.Column2D.**
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
           COMPILE_CODE=$?
           if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi
@@ -591,7 +593,6 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.Column2D.**
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
           COMPILE_CODE=$?
           if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi
