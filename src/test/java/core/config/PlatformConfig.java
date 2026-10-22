@@ -161,6 +161,24 @@ public class PlatformConfig {
 		public String pagination = "div[data-test-widget-list-pagination=\"true\"]";
 		public String paginationPage = "li[tabindex=\"0\"].ant-pagination-item";
 
+		/**
+		 * A button of the steps of a mass operation by its text in the box: Next, Back, Cancel, Close. A project whose UI
+		 * translates them gives its text: {@code text -> Map.of("Next", "Далее").getOrDefault(text, text)}
+		 */
+		public Function<String, String> massOperationButton = text -> text;
+
+		/** The steps of a mass operation, the passed ones, the check box of a row in the step Select rows */
+		public String massOperationStep = "div.ant-steps-item";
+		public String massOperationDoneStep = "div.ant-steps-item-finish";
+		public String massOperationRowCheckbox = "td.ant-table-selection-column input";
+
+		/** The confirm button of the form in the step Confirm operation: the first one, its text is the yesText */
+		public String massOperationConfirm = "div[class*='ConfirmWithForm__actions'] button";
+
+		/** The result of a row in the step View results: done or failed; a row without them was not done */
+		public String massOperationRowDone = "i[aria-label='icon: check-circle']";
+		public String massOperationRowFailed = "i[aria-label='icon: close-square']";
+
 		/** The active role in the user menu */
 		public String userMenuActiveRole = "[class*='checked'] [data-test-menu-user-role]";
 
