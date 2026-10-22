@@ -7,6 +7,7 @@ import application.config.BaseTestForSamples;
 import core.element.PlatformApp;
 import core.element.widget.chart.ChartWidget.Mode;
 import core.element.widget.chart.Column2DWidget;
+import core.element.widget.chart.Line2DWidget;
 import core.element.widget.chart.Pie1DWidget;
 import core.element.widget.list.realization.inline.list.PlatformListWidgetInline;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
@@ -141,6 +142,21 @@ public class SortingTest extends BaseTestForSamples {
 		table.headers().sort(sb -> sb.sort("Sum, $"));
 		// the first click sorts in the descending order: the client with the biggest sum comes first
 		assertThat(values(table, "Client")).first().isEqualTo("Info Trust");
+		chart.mode(Mode.CHART);
+		DocShots.stop();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Line2D in the table mode")
+	@Description("The sort of the table mode; the chart draws the points in the sorted order")
+	void line2D() {
+		Line2DWidget chart = PlatformApp.screen("Line2D sorting").view().line2D("Sales sum per month");
+		DocShots.gif(ARTICLE, "sorting_line2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.headers().sort(sb -> sb.sort("Sum, $"));
+		// the first click sorts in the descending order: the month with the biggest sum comes first
+		assertThat(values(table, "Month")).first().isEqualTo("Jun");
 		chart.mode(Mode.CHART);
 		DocShots.stop();
 	}
