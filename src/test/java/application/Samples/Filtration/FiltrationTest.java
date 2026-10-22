@@ -8,6 +8,7 @@ import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.screen.view.PlatformView;
 import core.element.widget.chart.ChartWidget.Mode;
+import core.element.widget.chart.Column2DWidget;
 import core.element.widget.chart.Pie1DWidget;
 import core.element.widget.field.type.multivalue.Multivalue;
 import core.element.widget.form.PlatformFormWidget;
@@ -68,6 +69,8 @@ public class FiltrationTest extends BaseTestForSamples {
 	private static final String DEPARTMENT = "Минстроя";
 
 	private static final String PIE_TITLE = "Sales per client";
+
+	private static final String COLUMN_2D_TITLE = "Sales per client";
 
 	// --- by fields ---
 
@@ -194,6 +197,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		DocShots.stop();
 	}
 
+	@Test
+	@Tag("Positive")
+	@DisplayName("by fields: Column2D in the table mode")
+	@Description("The filter of the table mode; the chart draws only the filtered records")
+	void byFieldsColumn2D() {
+		Column2DWidget chart = PlatformApp.screen("Column2D widget filtration").view().column2D(COLUMN_2D_TITLE);
+		DocShots.gif(ARTICLE, "filtration_column2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.headers().filter(fb -> fb.input("Client", "Trade"));
+		assertThat(values(table, "Client")).hasSize(3).allMatch(client -> client.contains("Trade"));
+		chart.mode(Mode.CHART);
+		assertThat(chart.bars()).hasSize(3);
+		DocShots.stop();
+	}
+
 	// --- by fulltextsearch ---
 
 	@Test
@@ -296,6 +314,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		DocShots.stop();
 	}
 
+	@Test
+	@Tag("Positive")
+	@DisplayName("by fulltextsearch: Column2D in the table mode")
+	@Description("The search of the table mode; the chart draws only the found records")
+	void fullTextSearchColumn2D() {
+		Column2DWidget chart = PlatformApp.screen("Column2D widget fulltextsearch").view().column2D(COLUMN_2D_TITLE);
+		DocShots.gif(ARTICLE, "fulltextsearch_column2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.fullTextSearch("Trade");
+		assertThat(values(table, "Client")).hasSize(3).allMatch(client -> client.contains("Trade"));
+		chart.mode(Mode.CHART);
+		assertThat(chart.bars()).hasSize(3);
+		DocShots.stop();
+	}
+
 	// --- by personal filter group ---
 
 	@Test
@@ -368,6 +401,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		assertThat(values(table, "Client")).hasSize(4);
 		chart.mode(Mode.CHART);
 		assertThat(chart.segments()).hasSize(4);
+		DocShots.stop();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("by filter group: Column2D in the table mode")
+	@Description("The group chosen in the table mode; the chart draws only the records of the group")
+	void filterGroupColumn2D() {
+		Column2DWidget chart = PlatformApp.screen("Column2D widget filter group").view().column2D(COLUMN_2D_TITLE);
+		DocShots.gif(ARTICLE, "filter_group_save_column2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.headers().filterGroup("Sum from 4000");
+		assertThat(values(table, "Client")).hasSize(2);
+		chart.mode(Mode.CHART);
+		assertThat(chart.bars()).hasSize(2);
 		DocShots.stop();
 	}
 
