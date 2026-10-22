@@ -24,14 +24,22 @@ public class Myexample3261AnyService extends AnySourceVersionAwareResponseServic
 
 	@Override
 	protected CreateResult<Myexample3261AnyDTO> doCreateEntity(Myexample3261AnyDTO entity, BusinessComponent bc) {
-		return new CreateResult<>(entityToDto(bc, getBaseDao().create(bc, entity)))
-				.setAction(PostAction.refreshBc(bc));
+		return new CreateResult<>(entityToDto(bc, entity));
 	}
 
 	@Override
 	protected ActionResultDTO<Myexample3261AnyDTO> doUpdateEntity(Myexample3261AnyDTO entity, Myexample3261AnyDTO data, BusinessComponent bc) {
-		return new ActionResultDTO<>(entityToDto(bc, getBaseDao().update(bc, entity)))
-				.setAction(PostAction.refreshBc(bc));
+		setIfChanged(data, Myexample3261AnyDTO_.department, entity::setDepartment);
+		setIfChanged(data, Myexample3261AnyDTO_.lastName, entity::setLastName);
+		setIfChanged(data, Myexample3261AnyDTO_.firstName, entity::setFirstName);
+		setIfChanged(data, Myexample3261AnyDTO_.middleName, entity::setMiddleName);
+		return new ActionResultDTO<>(entityToDto(bc, entity)).setAction(PostAction.refreshBc(bc));
+	}
+
+	/** Deleting the last user of a department leaves the department row, so the tree is reloaded. */
+	@Override
+	public ActionResultDTO<Myexample3261AnyDTO> deleteEntity(BusinessComponent bc) {
+		return super.deleteEntity(bc).setAction(PostAction.refreshBc(bc));
 	}
 
 	@Override

@@ -147,8 +147,12 @@ jobs:
       - name: Run Tests
         id: run_tests
         continue-on-error: true
+        # a hung test ends the step instead of holding the runner: the whole run takes 30-50 minutes
+        timeout-minutes: 60
         run: |
           set +e
+          # the exit code of "wait" is the code of mvn, not of tee
+          set -o pipefail
           TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
           COMPILE_CODE=$?
@@ -157,18 +161,18 @@ jobs:
           # back where they run together, so the runner keeps three browsers either way
           FAST_FORKS=3
           if [ "${{ matrix.java }}" = "17" ]; then FAST_FORKS=2; fi
-          mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast > target/tests-fast.log 2>&1 &
+          mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast 2>&1 \
+            | sed -u 's/^/[fast] /' | tee target/tests-fast.log &
           FAST_PID=$!
           SLOW_CODE=0
           SLOW_PID=""
           if [ "${{ matrix.java }}" = "17" ]; then
-            mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow > target/tests-slow.log 2>&1 &
+            mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow 2>&1 \
+              | sed -u 's/^/[slow] /' | tee target/tests-slow.log &
             SLOW_PID=$!
           fi
           wait $FAST_PID; FAST_CODE=$?
           if [ -n "$SLOW_PID" ]; then wait $SLOW_PID; SLOW_CODE=$?; fi
-          echo "::group::Tests without the slow ones"; cat target/tests-fast.log; echo "::endgroup::"
-          if [ -n "$SLOW_PID" ]; then echo "::group::Slow tests"; cat target/tests-slow.log; echo "::endgroup::"; fi
           mkdir -p target/allure-results
           cp -r target/allure-results-fast/. target/allure-results/ 2>/dev/null || true
           cp -r target/allure-results-slow/. target/allure-results/ 2>/dev/null || true
@@ -195,6 +199,24 @@ jobs:
         with:
           name: keycloak-log-${{ matrix.java }}
           path: keycloak-${{ matrix.java }}.log
+
+        # The tests wait for the application in @BeforeAll of every class (AppChecks, five minutes), so an application that
+        # has not started looks like hung tests. Whether its container is up and why it has not started is in its own log.
+      - name: App log
+        if: always()
+        run: |
+          docker compose -f docker-compose-test.yml ps -a || true
+          docker compose -f docker-compose-test.yml logs --no-color --timestamps cxbox-code-samples-test > app-${{ matrix.java }}.log 2>&1 || true
+          echo "::group::App: start and errors"
+          grep -nE "Started Application|APPLICATION FAILED|ERROR|Caused by|Exception" app-${{ matrix.java }}.log | head -100 || true
+          echo "::endgroup::"
+
+      - name: Upload App log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-log-${{ matrix.java }}
+          path: app-${{ matrix.java }}.log
 
         # Saves test execution result:
         # success / failure / cancelled
@@ -589,6 +611,8 @@ jobs:
       - name: Run Tests
         id: run_tests
         continue-on-error: true
+        # a hung test ends the step instead of holding the runner: the whole run takes 30-50 minutes
+        timeout-minutes: 60
         run: |
           set +e
           TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**

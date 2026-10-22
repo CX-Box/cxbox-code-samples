@@ -14,6 +14,8 @@ public class MyExample3136Meta extends AnySourceFieldMetaBuilder<MyExample3136DT
 	// --8<-- [start:buildRowDependentMeta]
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample3136DTO> fields, BcDescription bcDescription,
 									  String id, String parentId) {
+		fields.setEnabled(MyExample3136DTO_.customField);
+		fields.setEnabled(MyExample3136DTO_.customFieldDateTime);
 	}
 
 	// --8<-- [end:buildRowDependentMeta]

@@ -6,16 +6,14 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
-import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.widgets.tree.showcondition.byparententity.PlatformMyExample3277Controller;
 import org.demo.documentation.widgets.tree.showcondition.byparententity.parent.MyEntity3276;
 import org.demo.documentation.widgets.tree.showcondition.byparententity.parent.MyEntity3276Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings({"java:S1170", "EmptyMethod"})
+@SuppressWarnings("java:S1170")
 @RequiredArgsConstructor
 @Service
 public class MyExample3277Service extends VersionAwareResponseService<MyExample3277DTO, MyEntity3277> {
@@ -46,30 +44,16 @@ public class MyExample3277Service extends VersionAwareResponseService<MyExample3
 
 	@Override
 	protected ActionResultDTO<MyExample3277DTO> doUpdateEntity(MyEntity3277 entity, MyExample3277DTO data, BusinessComponent bc) {
-		setIfChanged(data, MyExample3277DTO_.parentTreeId, entity::setParentTreeId);
-		setIfChanged(data, MyExample3277DTO_.customFieldMoney, entity::setCustomFieldMoney);
 		setIfChanged(data, MyExample3277DTO_.customField, entity::setCustomField);
-		MyExample3277DTO dto = entityToDto(bc, repository.save(entity));
-
-		if (data.isFieldChanged(MyExample3277DTO_.isLeaf)) {
-			dto.setIsLeaf(!repository.existsByParentTreeId(String.valueOf(entity.getId())));
-		}
-
-		return new ActionResultDTO<>(dto).setAction(
-				PostAction.refreshBc(PlatformMyExample3277Controller.myexample3277
-				));
+		setIfChanged(data, MyExample3277DTO_.customFieldMoney, entity::setCustomFieldMoney);
+		return new ActionResultDTO<>(entityToDto(bc, repository.save(entity)));
 	}
 
 	// --8<-- [start:getActions]
 	@Override
 	public Actions<MyExample3277DTO> getActions() {
 		return Actions.<MyExample3277DTO>builder()
-				.action(act -> act.action("save", "save")
-						.invoker((bc, dto) -> {
-							return new ActionResultDTO<MyExample3277DTO>().setAction(
-									PostAction.refreshBc(PlatformMyExample3277Controller.myexample3277
-									));
-						}))
+				.save(sv -> sv.text("Save"))
 				.create(crt -> crt)
 				.delete(dlt -> dlt)
 				.build();

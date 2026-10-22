@@ -12,6 +12,7 @@ import org.demo.documentation.widgets.tree.base.allType.entity.Myexample3262Pick
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldMultipleSelectEnum;
 import org.demo.documentation.widgets.tree.base.allType.enums.CustomFieldRadioEnum;
+import org.demo.documentation.widgets.tree.base.allType.repository.MyEntity3262MultiRepository;
 import org.demo.documentation.widgets.tree.base.allType.repository.MyEntity3262PickRepository;
 import org.demo.documentation.widgets.tree.base.allType.repository.MyEntity3262Repository;
 import org.demo.services.CustomFileUploadServices;
@@ -32,6 +33,8 @@ public class MyEntity3262TestDataLoadService {
 	@Autowired
 	MyEntity3262PickRepository repositoryPick;
 	@Autowired
+	MyEntity3262MultiRepository repositoryMulti;
+	@Autowired
 	InternalAuthorizationService authzService;
 
 	@Transactional
@@ -41,27 +44,25 @@ public class MyEntity3262TestDataLoadService {
 
 		repository.deleteAll();
 		repositoryPick.deleteAll();
-		repositoryPick.deleteAll();
+		repositoryMulti.deleteAll();
 
 		CxboxResponseDTO<FileUploadDto> file = customFileUploadServices.uploadTxt("sample");
 
+		// values of the pick fields: a tree of 3 levels, shown by PickTreePopup in "Tree widget customization columns"
+		Myexample3262Pick pickGroup1 = savePick("Pick group 1", "Pick group 1", null);
+		Myexample3262Pick pickEntity = savePick("PickList target", "Inline PickList target", pickGroup1);
+		Myexample3262Pick inlineEntity = savePick("PickList target2", "Inline PickList target2", pickGroup1);
+		Myexample3262Pick pickGroup2 = savePick("Pick group 2", "Pick group 2", null);
+		Myexample3262Pick pickGroup21 = savePick("Pick group 2.1", "Pick group 2.1", pickGroup2);
+		savePick("PickList target3", "Inline PickList target3", pickGroup21);
 
-		Myexample3262Multi multi1 = new Myexample3262Multi().setCustomField("Multivalue option 1");
-		Myexample3262Multi multi2 = new Myexample3262Multi().setCustomField("Multivalue option 2");
-		List<Myexample3262Multi> multiList = Arrays.asList(multi1, multi2);
-
-
-		Myexample3262MultiHover hover1 = new Myexample3262MultiHover()
-				.setCustomField("Hover option A (long description for tooltip)");
-		Myexample3262MultiHover hover2 = new Myexample3262MultiHover()
-				.setCustomField("Hover option B (another long text)");
-		List<Myexample3262MultiHover> hoverList = Arrays.asList(hover1, hover2);
-
-		Myexample3262Pick pickEntity = new Myexample3262Pick().setCustomField("PickList target").setCustomField2("Inline PickList target");
-		repositoryPick.save(pickEntity);
-
-		Myexample3262Pick inlineEntity = new Myexample3262Pick().setCustomField("PickList target2").setCustomField2("Inline PickList target2");
-		repositoryPick.save(inlineEntity);
+		// values of the multivalue fields: two groups of options, shown by AssocTreePopup in "Tree widget customization columns"
+		Myexample3262Multi multiGroup1 = saveMulti("Multivalue group 1", null);
+		Myexample3262Multi multiGroup2 = saveMulti("Multivalue group 2", null);
+		List<Myexample3262Multi> multiOptions = new ArrayList<>();
+		for (int i = 1; i <= 8; i++) {
+			multiOptions.add(saveMulti("Multivalue option " + i, i <= 4 ? multiGroup1 : multiGroup2));
+		}
 
 		// root 1: without Child
 		Myexample3262 root1 = createBaseEntity("Root 1 without children")
@@ -69,10 +70,8 @@ public class MyEntity3262TestDataLoadService {
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldFileUploadId(file.getData().getId())
-				.setCustomFieldMultivalueList(multiList)
-				.setCustomFieldMultivalueHoverList(hoverList);
-
-		repository.save(root1);
+				.setCustomFieldMultivalueHoverList(hoverList());
+		save(root1, multiOptions.subList(0, 2));
 
 		// root 2: without Child
 		Myexample3262 root2 = createBaseEntity("Root 2 (without children)")
@@ -80,38 +79,16 @@ public class MyEntity3262TestDataLoadService {
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldFileUploadId(file.getData().getId());
-		repository.save(root2);
-
-		Myexample3262Multi multi3 = new Myexample3262Multi().setCustomField("Multivalue option 3");
-		Myexample3262Multi multi4 = new Myexample3262Multi().setCustomField("Multivalue option 4");
-
-		List<Myexample3262Multi> multiList2 = Arrays.asList(multi3, multi4);
-
-		Myexample3262MultiHover hover3 = new Myexample3262MultiHover()
-				.setCustomField("Hover option A (long description for tooltip)");
-		Myexample3262MultiHover hover4 = new Myexample3262MultiHover()
-				.setCustomField("Hover option B (another long text)");
-
-		List<Myexample3262MultiHover> hoverList2 = Arrays.asList(hover3, hover4);
+		save(root2, List.of());
 
 		// root 3: without Child
 		Myexample3262 root3 = createBaseEntity("Root 3  (without children)")
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldPickListEntity(pickEntity)
-				.setCustomFieldFileUploadId(file.getData().getId()).setCustomFieldMultivalueList(multiList2)
-				.setCustomFieldMultivalueHoverList(hoverList2);
-		repository.save(root3);
-
-		Myexample3262Multi multi5 = new Myexample3262Multi().setCustomField("Multivalue option 5");
-		Myexample3262Multi multi6 = new Myexample3262Multi().setCustomField("Multivalue option 6");
-		List<Myexample3262Multi> multiList3 = Arrays.asList(multi5, multi6);
-
-		Myexample3262MultiHover hover5 = new Myexample3262MultiHover()
-				.setCustomField("Hover option A (long description for tooltip)");
-		Myexample3262MultiHover hover6 = new Myexample3262MultiHover()
-				.setCustomField("Hover option B (another long text)");
-		List<Myexample3262MultiHover> hoverList3 = Arrays.asList(hover5, hover6);
+				.setCustomFieldFileUploadId(file.getData().getId())
+				.setCustomFieldMultivalueHoverList(hoverList());
+		save(root3, multiOptions.subList(2, 4));
 
 		// root 4: without Child
 		Myexample3262 root4 = createBaseEntity("Root 4 (without children)")
@@ -119,19 +96,8 @@ public class MyEntity3262TestDataLoadService {
 				.setCustomFieldInlineEntity(inlineEntity)
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldFileUploadId(file.getData().getId())
-				.setCustomFieldMultivalueList(multiList3)
-				.setCustomFieldMultivalueHoverList(hoverList3);
-		repository.save(root4);
-
-
-		Myexample3262Multi multi7 = new Myexample3262Multi().setCustomField("Multivalue option 7");
-		Myexample3262Multi multi8 = new Myexample3262Multi().setCustomField("Multivalue option 8");
-		List<Myexample3262Multi> multiList5 = Arrays.asList(multi7, multi8);
-		Myexample3262MultiHover hover7 = new Myexample3262MultiHover()
-				.setCustomField("Hover option A (long description for tooltip)");
-		Myexample3262MultiHover hover8 = new Myexample3262MultiHover()
-				.setCustomField("Hover option B (another long text)");
-		List<Myexample3262MultiHover> hoverList5 = Arrays.asList(hover7, hover8);
+				.setCustomFieldMultivalueHoverList(hoverList());
+		save(root4, multiOptions.subList(4, 6));
 
 		// root 5
 		Myexample3262 root5 = createBaseEntity("Root 5 (with children)")
@@ -139,25 +105,57 @@ public class MyEntity3262TestDataLoadService {
 				.setCustomFieldFileUpload(file.getData().getName())
 				.setCustomFieldPickListEntity(pickEntity)
 				.setCustomFieldFileUploadId(file.getData().getId())
-				.setCustomFieldMultivalueList(multiList5)
-				.setCustomFieldMultivalueHoverList(hoverList5);
-		repository.save(root5);
+				.setCustomFieldMultivalueHoverList(hoverList());
+		save(root5, multiOptions.subList(6, 8));
 
-		// ---- Create 3 child for root5 ----
+		// ---- Create 3 child for root5, the first child has 2 children (leaves) ----
 		for (int i = 1; i <= 3; i++) {
 			Myexample3262 child = createBaseEntity("Child " + i + " of Root 5")
 					.setParentId(root5.getId())
 					.setCustomFieldFileUpload(file.getData().getName())
-					.setCustomFieldFileUploadId(file.getData().getId());
-			child.setCustomFieldPickListEntity(pickEntity)
+					.setCustomFieldFileUploadId(file.getData().getId())
+					.setCustomFieldPickListEntity(pickEntity)
 					.setCustomFieldInlineEntity(inlineEntity)
-					.setCustomFieldMultivalueList(Arrays.asList(new Myexample3262Multi().setCustomField("Multivalue option " + i),
-							new Myexample3262Multi().setCustomField("Multivalue option " + (i + 1))))
-					.setCustomFieldMultivalueHoverList(Arrays.asList(new Myexample3262MultiHover()
-							.setCustomField("Hover option B (another long text)"), new Myexample3262MultiHover()
-							.setCustomField("Hover option B (another long text)")));
-			repository.save(child);
+					.setCustomFieldMultivalueHoverList(hoverList());
+			save(child, multiOptions.subList(i - 1, i + 1));
+			if (i == 1) {
+				for (int j = 1; j <= 2; j++) {
+					Myexample3262 grandchild = createBaseEntity("Child " + j + " of Child 1")
+							.setParentId(child.getId())
+							.setCustomFieldPickListEntity(pickEntity)
+							.setCustomFieldInlineEntity(inlineEntity);
+					save(grandchild, multiOptions.subList(0, 1));
+				}
+			}
 		}
+	}
+
+	private Myexample3262Pick savePick(String customField, String customField2, Myexample3262Pick parent) {
+		return repositoryPick.save(new Myexample3262Pick()
+				.setCustomField(customField)
+				.setCustomField2(customField2)
+				.setParentId(parent == null ? null : parent.getId()));
+	}
+
+	private Myexample3262Multi saveMulti(String customField, Myexample3262Multi parent) {
+		return repositoryMulti.save(new Myexample3262Multi()
+				.setCustomField(customField)
+				.setParentId(parent == null ? null : parent.getId()));
+	}
+
+	private List<Myexample3262MultiHover> hoverList() {
+		return new ArrayList<>(List.of(
+				new Myexample3262MultiHover().setCustomField("Hover option A (long description for tooltip)"),
+				new Myexample3262MultiHover().setCustomField("Hover option B (another long text)")
+		));
+	}
+
+	// the options are already saved and shared by several records: persist of a new record rejects them, merge accepts them.
+	// They are read again before every save: a merge may raise their version, and a merge of a stale copy fails.
+	private void save(Myexample3262 entity, List<Myexample3262Multi> multivalue) {
+		repository.save(entity);
+		entity.setCustomFieldMultivalueList(repositoryMulti.findAllById(multivalue.stream().map(Myexample3262Multi::getId).toList()));
+		repository.save(entity);
 	}
 
 	private Myexample3262 createBaseEntity(String customFieldValue) {

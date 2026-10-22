@@ -27,17 +27,10 @@ public class MyExample3276Service extends VersionAwareResponseService<MyExample3
 
 	@Override
 	protected ActionResultDTO<MyExample3276DTO> doUpdateEntity(MyEntity3276 entity, MyExample3276DTO data, BusinessComponent bc) {
-		setIfChanged(data, MyExample3276DTO_.parentTreeId, entity::setParentTreeId);
-		setIfChanged(data, MyExample3276DTO_.customFieldMoney, entity::setCustomFieldMoney);
-		setIfChanged(data, MyExample3276DTO_.parentId, entity::setParentId);
+		setIfChanged(data, MyExample3276DTO_.customField, entity::setCustomField);
 		setIfChanged(data, MyExample3276DTO_.customFieldNumber, entity::setCustomFieldNumber);
-		if (data.isFieldChanged(MyExample3276DTO_.customField)) {
-			entity.setCustomField(data.getCustomField());
-		}
-		MyExample3276DTO dto = entityToDto(bc, repository.save(entity));
-		dto.setIsLeaf(!repository.existsByParentId(String.valueOf(entity.getId())));
-
-		return new ActionResultDTO<>(dto);
+		setIfChanged(data, MyExample3276DTO_.customFieldMoney, entity::setCustomFieldMoney);
+		return new ActionResultDTO<>(entityToDto(bc, repository.save(entity)));
 	}
 
 	// --8<-- [start:getActions]

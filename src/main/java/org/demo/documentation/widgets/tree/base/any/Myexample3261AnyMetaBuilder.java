@@ -12,6 +12,15 @@ public class Myexample3261AnyMetaBuilder extends AnySourceFieldMetaBuilder<Myexa
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<Myexample3261AnyDTO> fields, BcDescription bcDescription, String id,
 	                                  String parentId) {
+		fields.setEnabled(Myexample3261AnyDTO_.department);
+		fields.setRequired(Myexample3261AnyDTO_.department);
+		if (Myexample3261AnyDAO.isNew(id) || Myexample3261AnyDAO.hasUser(id)) {
+			fields.setEnabled(
+					Myexample3261AnyDTO_.lastName,
+					Myexample3261AnyDTO_.firstName,
+					Myexample3261AnyDTO_.middleName
+			);
+		}
 	}
 
 	@Override

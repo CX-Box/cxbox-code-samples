@@ -25,6 +25,8 @@ public interface MydepartmensRepository extends JpaRepository<Mydepartments, Lon
 				FullTextSearchExt.likeIgnoreCase(value, cb, root.get(Mydepartments_.departmentName));
 	}
 
+	boolean existsByParentId(Long parentId);
+
 	// ============ QUERIES ============
 
 	String BASE_SELECT = """
@@ -38,7 +40,8 @@ public interface MydepartmensRepository extends JpaRepository<Mydepartments, Lon
            u.firstName AS firstName,
            u.middleName AS middleName,
            CONCAT(u.lastName, ' ', u.firstName, ' ', u.middleName) AS fullName,
-           CASE WHEN mydept.parentId IS NULL THEN FALSE ELSE TRUE END AS isLeaf
+           CASE WHEN EXISTS (SELECT 1 FROM Mydepartments child WHERE child.parentId = mydept.id)
+                THEN FALSE ELSE TRUE END AS isLeaf
     FROM Mydepartments mydept
     LEFT JOIN mydept.fullNameList u
     LEFT JOIN Mydepartments parentDept ON parentDept.id = mydept.parentId

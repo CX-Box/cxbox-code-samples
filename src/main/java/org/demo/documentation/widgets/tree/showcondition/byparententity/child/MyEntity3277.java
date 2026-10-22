@@ -8,6 +8,9 @@ import org.cxbox.model.core.entity.BaseEntity;
 import org.demo.documentation.widgets.tree.showcondition.byparententity.BaseTreeEntity;
 import org.demo.documentation.widgets.tree.showcondition.byparententity.parent.MyEntity3276;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -27,4 +30,8 @@ public class MyEntity3277 extends BaseEntity implements BaseTreeEntity {
 
 	@Column
 	private Long parentTreeId;
+
+	@OneToMany(mappedBy = "parentTreeId", fetch = FetchType.LAZY)
+	private List<MyEntity3277> children = new ArrayList<>();
+
 }
