@@ -44,6 +44,12 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 	 */
 	private static final Duration FORCE_ACTIVE_REQUEST_START = Duration.ofMillis(200);
 
+	/**
+	 * The field searches 500 ms after the last key and draws the found options anew: a click on an option while the list
+	 * is drawn anew is lost, the field stays empty
+	 */
+	private static final Duration SEARCH_REQUEST_START = Duration.ofSeconds(1);
+
 	private final String title;
 
 	public InlinePickList(W widget, String title) {
@@ -71,9 +77,8 @@ public class InlinePickList<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			// the field is looked up once: each look up waits for the widget
 			var field = element();
 			field.click();
-			field.$(valueTag())
-					.shouldBe(Condition.interactable, widget().getExpectations().getTimeout())
-					.setValue(value);
+			var input = field.$(valueTag()).shouldBe(Condition.interactable, widget().getExpectations().getTimeout());
+			PageRequests.runAndWaitDelayedRequests(() -> input.setValue(value), SEARCH_REQUEST_START, widget().getExpectations().getOverTimeout());
 			widget().getExpectations().getWaitAllElements($("body"));
 			// the dropdown is found before the choice: a field with forceActive is drawn again after the choice and removes
 			// its dropdown from the page, so a dropdown found after the choice never comes
