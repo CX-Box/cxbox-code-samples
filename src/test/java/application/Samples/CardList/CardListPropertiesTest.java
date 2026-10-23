@@ -151,7 +151,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 				.cardListByName("MyExample6100CardList");
 		long before = cards.rows().streamCurrentPage().count();
 		DocShots.gif(ARTICLE, "multiupload.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
-		cards.actions().action("Add Files").setValue(CardListBasicTest.resourceFile("Hope_of_Humanity.jpg"));
+		cards.actions().upload("Add Files", CardListBasicTest.resourceFile("Hope_of_Humanity.jpg"));
 		assertThat(cards.rows().streamCurrentPage()).hasSize((int) before + 1);
 		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Hope_of_Humanity.jpg"));
 		DocShots.stop();

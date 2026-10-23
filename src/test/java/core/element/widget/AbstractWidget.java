@@ -9,11 +9,8 @@ import core.element.screen.view.PlatformView;
 import core.element.widget.field.AbstractField;
 import core.element.widget.type.TypeWidget;
 import core.expectation.ExpectationPattern;
-import io.qameta.allure.Allure;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -27,10 +24,6 @@ public abstract class AbstractWidget<EP extends ExpectationPattern, SELF extends
 
 	public AbstractWidget(EP expectations) {
 		this.expectations = expectations;
-	}
-
-	public static void logTime(Allure.StepContext step) {
-		step.parameter("startTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy")));
 	}
 
 	public abstract TypeWidget getType();
