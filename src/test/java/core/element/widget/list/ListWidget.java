@@ -42,6 +42,18 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 		return config().parts.actions.create(self());
 	}
 
+	/**
+	 * Starts the mass operation of the list by its button ({@code options.massOp}): the list shows the steps of the
+	 * operation, the first one is Select rows
+	 */
+	public MassOperation<SELF> massOperation(String action) {
+		return Allure.step(message("mass.start", action, label()), step -> {
+			actions().action(action).click();
+			element().$(config().selectors.massOperationStep).shouldBe(Condition.visible, getExpectations().getOverTimeout());
+			return new MassOperation<>(self());
+		});
+	}
+
 	/** data-test attribute that holds the column title in the table header. */
 	public String headerTitleAttribute() {
 		return "data-test-widget-list-header-column-title";

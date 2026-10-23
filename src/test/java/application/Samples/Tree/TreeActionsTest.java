@@ -77,7 +77,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		DocShots.png(tree.element(), ARTICLE, "create_inline_form.png", 1600, 1000);
 		String value = unique("Inline-form root");
 		form.input(FIELD).setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		assertRowShown(tree, value);
 	}
 
@@ -138,7 +138,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		DocShots.png(tree.element(), ARTICLE, "edit_inline_form.png", 1600, 1000);
 		String value = unique("Edited inline-form");
 		form.input(FIELD).setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		assertRowShown(tree, value);
 	}
 

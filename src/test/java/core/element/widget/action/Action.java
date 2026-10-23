@@ -39,6 +39,9 @@ import static core.element.PlatformApp.config;
 @Slf4j
 public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements SingleElement {
 
+	/** An item of an open group of the panel */
+	private static final String ITEM = "li[data-test-widget-action-item='true']";
+
 	@Getter(AccessLevel.PROTECTED)
 	private final W widget;
 
@@ -235,7 +238,7 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 	@Override
 	public SelenideElement element() {
 		var items = parent == null ? buttons()
-				: widget.element().$$("li[data-test-widget-action-item='true']").filterBy(Condition.visible);
+				: widget.element().$$(ITEM).filterBy(Condition.visible);
 		// the panel is drawn again after an action: wait for the button; keep the found one, its text can change on click
 		var button = $(items.findBy(Condition.match("the action " + (name != null ? name : iconName), element -> condition.test($(element))))
 				.shouldBe(Condition.visible, this.widget.getExpectations().getTimeout()).toWebElement());
@@ -264,6 +267,33 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 					.texts();
 			StepReport.value(names);
 			return names;
+		});
+	}
+
+	/**
+	 * Whether the panel has the action; for an action of a group ({@code actions().action("Действия").action("Добавить")})
+	 * whether the group has the item, the group is closed after the look. A group the panel does not show has no items
+	 */
+	public boolean exists() {
+		if (parent == null) {
+			return Allure.step(message("action.exists", name), () -> {
+				waitOperationFinished();
+				return buttons().filterBy(Condition.visible).asFixedIterable().stream().anyMatch(condition);
+			});
+		}
+		return Allure.step(message("action.groupItem", name, parent.name), () -> {
+			waitOperationFinished();
+			var group = buttons().filterBy(Condition.visible).asFixedIterable().stream().filter(parent.condition).findFirst();
+			if (group.isEmpty()) {
+				return false;
+			}
+			group.get().click();
+			var found = widget.element().$$(ITEM).filterBy(Condition.visible)
+					.shouldHave(CollectionCondition.sizeGreaterThan(0), widget.getExpectations().getTimeout())
+					.asFixedIterable().stream().anyMatch(condition);
+			group.get().click();
+			widget.element().$$(ITEM).filterBy(Condition.visible).shouldHave(CollectionCondition.size(0), widget.getExpectations().getTimeout());
+			return found;
 		});
 	}
 

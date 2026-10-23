@@ -113,7 +113,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		var form = list.rows().row(0).inlineForm();
 		String value = unique("Popup form");
 		form.input("Custom Field Pick").setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		int index = savedRowIndex(list, value);
 		DocShots.stop();
 		assertThat(index).as("the saved row is shown").isNotNegative();
@@ -175,14 +175,14 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		String original = form.input(FIELD).getValue();
 		String value = unique("Popup form edited");
 		form.input(FIELD).setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		int index = rowIndex(list, value);
 		DocShots.stop();
 		assertThat(index).as("the edited row is shown").isNotNegative();
 		// the sample data is restored
 		form = list.rows().row(index).clickPencil();
 		form.input(FIELD).setValue(original);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		assertThat(rowIndex(list, original)).as("the original value is restored").isNotNegative();
 		popup.close();
 	}
