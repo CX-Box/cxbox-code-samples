@@ -15,10 +15,12 @@ public class MyExample5006DTO extends DataResponseDTO {
 	private String customField;
 	@SearchParameter(name = "customFieldId")
 	private String customFieldId;
+	private Boolean customFieldShowCondition;
 
 	public MyExample5006DTO(MyEntity5006 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
 		this.customFieldId = entity.getCustomFieldId();
+		this.customFieldShowCondition = entity.getCustomFieldShowCondition();
 	}
 }
