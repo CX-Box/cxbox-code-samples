@@ -9,6 +9,7 @@ import core.element.screen.PlatformScreen;
 import core.element.screen.view.PlatformView;
 import core.element.widget.chart.ChartWidget.Mode;
 import core.element.widget.chart.Column2DWidget;
+import core.element.widget.chart.Line2DWidget;
 import core.element.widget.chart.Pie1DWidget;
 import core.element.widget.field.type.multivalue.Multivalue;
 import core.element.widget.form.PlatformFormWidget;
@@ -71,6 +72,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	private static final String PIE_TITLE = "Sales per client";
 
 	private static final String COLUMN_2D_TITLE = "Sales per client";
+	private static final String LINE_2D_TITLE = "Sales sum per month";
 
 	// --- by fields ---
 
@@ -212,6 +214,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		DocShots.stop();
 	}
 
+	@Test
+	@Tag("Positive")
+	@DisplayName("by fields: Line2D in the table mode")
+	@Description("The filter of the table mode; the chart draws only the filtered records")
+	void byFieldsLine2D() {
+		Line2DWidget chart = PlatformApp.screen("Line2D filtration").view().line2D(LINE_2D_TITLE);
+		DocShots.gif(ARTICLE, "filtration_line2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.headers().filter(fb -> fb.input("Month", "Ma"));
+		assertThat(values(table, "Month")).hasSize(2).allMatch(month -> month.contains("Ma"));
+		chart.mode(Mode.CHART);
+		assertThat(chart.points()).hasSize(2);
+		DocShots.stop();
+	}
+
 	// --- by fulltextsearch ---
 
 	@Test
@@ -329,6 +346,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		DocShots.stop();
 	}
 
+	@Test
+	@Tag("Positive")
+	@DisplayName("by fulltextsearch: Line2D in the table mode")
+	@Description("The search of the table mode; the chart draws only the found records")
+	void fullTextSearchLine2D() {
+		Line2DWidget chart = PlatformApp.screen("Line2D fulltextsearch").view().line2D(LINE_2D_TITLE);
+		DocShots.gif(ARTICLE, "fulltextsearch_line2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.fullTextSearch("Mar");
+		assertThat(values(table, "Month")).containsExactly("Mar");
+		chart.mode(Mode.CHART);
+		assertThat(chart.points()).hasSize(1);
+		DocShots.stop();
+	}
+
 	// --- by personal filter group ---
 
 	@Test
@@ -416,6 +448,21 @@ public class FiltrationTest extends BaseTestForSamples {
 		assertThat(values(table, "Client")).hasSize(2);
 		chart.mode(Mode.CHART);
 		assertThat(chart.bars()).hasSize(2);
+		DocShots.stop();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("by filter group: Line2D in the table mode")
+	@Description("The group chosen in the table mode; the chart draws only the records of the group")
+	void filterGroupLine2D() {
+		Line2DWidget chart = PlatformApp.screen("Line2D filter group").view().line2D(LINE_2D_TITLE);
+		DocShots.gif(ARTICLE, "filter_group_save_line2d.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		var table = chart.mode(Mode.TABLE).table();
+		table.headers().filterGroup("Sum from 5000");
+		assertThat(values(table, "Month")).hasSize(3);
+		chart.mode(Mode.CHART);
+		assertThat(chart.points()).hasSize(3);
 		DocShots.stop();
 	}
 

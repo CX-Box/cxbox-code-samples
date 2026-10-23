@@ -36,6 +36,9 @@ on:
 
 env:
   APP_URL: https://code-samples.cxbox.org/ui/#/
+  # Autotests of "All tests", a Surefire -Dtest pattern. A new package under application.Samples runs without an edit here;
+  # a package is left out with a '!' entry.
+  TESTS: 'application.Samples.**,!application.Samples.FormPopup.**,!application.Samples.HiddenOnTests'
   # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
   KEYCLOAK_ADMIN_USER: cxbox_admin
   KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
@@ -85,11 +88,11 @@ jobs:
 
       - name: Run default tests
         if: ${{ inputs.fork_count == 0 }}
-        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.**  test
+        run: mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest="$TESTS"  test
 
       - name: Run default tests in parallel
         if: ${{ inputs.fork_count != 0 }}
-        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.CardList.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.** test
+        run: mvn --batch-mode -DrunTests=true  -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest="$TESTS" test
 
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -184,12 +187,12 @@ jobs:
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.** test    
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest="$TESTS" test    
 
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.AdditionalInfo.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.** test       
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest="$TESTS" test       
 
       - name: Get Allure history
         uses: actions/checkout@v4
@@ -303,12 +306,12 @@ jobs:
       - name: Run default tests in parallel
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count != 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.** test   
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=classes -Dsurefire.forkCount=${{ github.event.inputs.fork_count }} -Dsurefire.threadCount=1 -Dsurefire.reuseForks=true -Dtest="$TESTS" test   
 
       - name: Run default tests
         if: ${{inputs.choice-test == 'All tests' && inputs.fork_count == 0 }}
         run: |
-          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.AdditionalInfo.**,application.Samples.Line2D.**,application.Samples.Column2D.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.CardList.**,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.CardCarouselList.** test       
+          mvn --batch-mode -DrunTests=true -Dsurefire.parallel=none -Dtest="$TESTS" test       
 
       - name: Get Allure history
         uses: actions/checkout@v4
