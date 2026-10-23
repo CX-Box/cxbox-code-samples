@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Form. Checking action group with only text, only icon and mixed")
 @Epic("Samples")
@@ -57,5 +58,19 @@ public class ActionGroupTest extends BaseTestForSamples {
 		widget.actions().action("Actions", "bars").action("text","file-text").click();
 		widget.actions().action("Actions", "bars").action("edit", "edit").click();
 		widget.actions().action("Actions", "bars").action("delete", "delete").click();
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Check whether a group has an item")
+	@Description("Verify that exists() finds the items and the button of the group and tells them from missing ones")
+	void checkActionGroupItemExists() {
+		var app = PlatformApp.screen("Group action");
+		var widget = app.view().listInline("Action with text");
+		assertThat(widget.actions().action("only text").exists()).isTrue();
+		assertThat(widget.actions().action("only text").action("edit").exists()).isTrue();
+		assertThat(widget.actions().action("only text").action("copy").exists()).isFalse();
+		assertThat(widget.actions().action("other text").action("edit").exists()).isFalse();
 	}
 }
