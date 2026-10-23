@@ -9,6 +9,7 @@ import core.element.screen.PlatformScreen;
 import core.element.screen.view.PlatformView;
 import core.element.widget.AbstractWidget;
 import core.element.widget.action.Action;
+import core.element.widget.cardlist.CardCarouselListWidget;
 import core.element.widget.cardlist.CardListWidget;
 import core.element.widget.chart.Column2DWidget;
 import core.element.widget.chart.Line2DWidget;
@@ -220,6 +221,7 @@ public class PlatformConfig {
 		public WidgetPart<Column2DWidget> column2D = Column2DWidget::new;
 		public WidgetPart<Line2DWidget> line2D = Line2DWidget::new;
 		public WidgetPart<CardListWidget> cardList = CardListWidget::new;
+		public WidgetPart<CardCarouselListWidget> cardCarouselList = CardCarouselListWidget::new;
 
 	}
 
