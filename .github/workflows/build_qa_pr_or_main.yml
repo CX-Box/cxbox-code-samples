@@ -149,7 +149,7 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**
+          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.Column2D.**
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
           COMPILE_CODE=$?
           if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi
@@ -591,7 +591,7 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**
+          TESTS=application.Samples.Form.**,application.Samples.Info.**,application.Samples.List.**,application.Samples.Tree.**,application.Samples.Popup.**,application.Samples.StatsBlock.**,application.Samples.CardList.**,application.Samples.Pie1D.**,application.Samples.Filtration.**,application.Samples.Sorting.**,application.Samples.BugFixTests,application.Samples.DictionaryAdministrationTest,application.Samples.Feature.**,application.Samples.Column2D.**
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
           COMPILE_CODE=$?
           if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi

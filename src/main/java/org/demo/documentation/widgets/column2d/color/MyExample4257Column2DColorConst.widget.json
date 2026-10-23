@@ -1,0 +1,31 @@
+{
+  "name": "MyExample4257Column2DColorConst",
+  "title": "Sales per client and product",
+  "type": "Column2D",
+  "bc": "myExampleBc4257",
+  "fields": [
+    {
+      "title": "Client",
+      "key": "clientName",
+      "type": "input",
+      "bgColor": "#EDA6A6"
+    },
+    {
+      "title": "Sum, $",
+      "key": "sum",
+      "type": "number"
+    },
+    {
+      "title": "Product",
+      "key": "productName",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart2D": {
+      "xValueFieldKey": "clientName",
+      "yValueFieldKey": "sum",
+      "groupFieldKey": "productName"
+    }
+  }
+}
