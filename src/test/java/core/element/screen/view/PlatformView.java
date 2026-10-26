@@ -21,6 +21,7 @@ import core.element.widget.list.realization.form.tree.PlatformTreeWidgetInlineFo
 import core.element.widget.cardlist.CardCarouselListWidget;
 import core.element.widget.cardlist.CardListWidget;
 import core.element.widget.filepreview.FilePreviewWidget;
+import core.element.widget.group.WidgetGroup;
 import core.element.widget.statblock.StatsBlockWidget;
 import core.expectation.ExpectationPattern;
 
@@ -187,6 +188,11 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public FilePreviewWidget filePreviewByName(String name) {
 		return new FilePreviewWidget(PlatformIdentifier.NAME, name);
+	}
+
+	/** The group of widgets of the view ({@code view.json -> groups}) by the name of its main (first) widget */
+	public WidgetGroup widgetGroup(String mainWidgetName) {
+		return new WidgetGroup(mainWidgetName);
 	}
 
 	public <T extends AbstractWidget<ExpectationPattern, T>> T widget(Supplier<T> supplier) {
