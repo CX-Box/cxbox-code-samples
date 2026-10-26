@@ -1,0 +1,46 @@
+{
+  "name": "MyExample3711MassList",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3711mass",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "title": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "sign",
+        "actionName": "massDocumentSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "massDocumentSign"
+      ]
+    }
+  }
+}

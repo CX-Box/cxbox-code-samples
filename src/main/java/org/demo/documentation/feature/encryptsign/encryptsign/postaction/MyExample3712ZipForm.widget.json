@@ -1,8 +1,8 @@
 {
-  "name": "MyExample3714ZipForm",
+  "name": "MyExample3712ZipForm",
   "title": "",
   "type": "Form",
-  "bc": "myexample3714",
+  "bc": "myexample3712",
   "fields": [
     {
       "label": "File",
@@ -36,8 +36,8 @@
   "options": {
     "cryptoGenerator": [
       {
-        "type": "signAndEncrypt",
-        "actionName": "documentSignEncrypt",
+        "type": "encryptAndSign",
+        "actionName": "documentEncryptSign",
         "documentFileIdKey": "fileId",
         "documentFileNameKey": "file",
         "signatureFileIdKey": "fileSignId",
@@ -50,7 +50,7 @@
       "include": [
         "create",
         "save",
-        "documentSignEncrypt",
+        "documentEncryptSign",
         "cancel-create"
       ]
     },
