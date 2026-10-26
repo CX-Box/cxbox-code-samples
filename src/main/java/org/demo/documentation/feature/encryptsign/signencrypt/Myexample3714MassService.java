@@ -32,6 +32,8 @@ public class Myexample3714MassService extends VersionAwareResponseService<Myexam
 
 	@Override
 	protected ActionResultDTO<Myexample3714DTO> doUpdateEntity(Myexample3714 entity, Myexample3714DTO data, BusinessComponent bc) {
+		setIfChanged(data, Myexample3714DTO_.file, entity::setFile);
+		setIfChanged(data, Myexample3714DTO_.fileId, entity::setFileId);
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -39,6 +41,10 @@ public class Myexample3714MassService extends VersionAwareResponseService<Myexam
 	@Override
 	public Actions<Myexample3714DTO> getActions() {
 		return Actions.<Myexample3714DTO>builder()
+				.create(crt -> crt.text("Add"))
+				.save(sv -> sv.text("Save"))
+				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
+				.delete(dlt -> dlt.text("Delete"))
 				.action(act -> act
 						.action("massDocumentSignEncrypt", "Mass Document Sign Encrypt")
 						.massInvoker((bc, data, ids) -> {
