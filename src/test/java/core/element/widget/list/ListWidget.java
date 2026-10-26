@@ -74,4 +74,11 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 		});
 	}
 
+	/** Text of the full text search field of the widget ({@code options.fullTextSearch}): empty when nothing is searched. */
+	public String fullTextSearchValue() {
+		return element().$("input[data-test-widget-full-text-search]")
+				.shouldBe(Condition.visible, getExpectations().getTimeout())
+				.getValue();
+	}
+
 }
