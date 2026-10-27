@@ -13,6 +13,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 
@@ -20,12 +21,16 @@ import org.junit.jupiter.api.Tag;
  * Mass signing and encrypting, List and GroupingHierarchy of the four operation types. The browser of the tests has no
  * CryptoPro plugin: the steps are checked up to the certificate selection, which then offers only Back.
  */
+@Disabled("Excluded from the build and the local runs")
 @DisplayName("Mass signing and encrypting")
 @Epic("Samples")
 @Feature("widget/type/property/massoperations/sign")
 @Tag("Samples")
 @Tag("MassOperations")
 public class MassSignTest extends BaseTestForSamples {
+
+	/** One row without a value of customFieldDictionary and one row of each value: High, Middle, Low. */
+	private static final String[] ROWS = {"FILE_10.pdf", "FILE_1.pdf", "FILE_4.pdf", "FILE_7.pdf"};
 
 	@ParameterizedTest(name = "{0}: {2}")
 	@CsvSource({
@@ -45,9 +50,9 @@ public class MassSignTest extends BaseTestForSamples {
 	void steps(String screen, String action, String view, String widget) {
 		var mass = start(screen, action, view, widget);
 		assertThat(mass.step()).isEqualTo("Select rows");
-		mass.selectFirst(2).click("Next");
+		mass.select(ROWS).click("Next");
 		assertThat(mass.step()).isEqualTo("Review rows");
-		assertThat(mass.rows()).hasSize(2);
+		assertThat(mass.rows()).containsExactlyInAnyOrder(ROWS);
 		mass.click("Next");
 		assertThat(mass.step()).isEqualTo("Certificate selection");
 		assertThat(mass.buttons()).contains("Back");

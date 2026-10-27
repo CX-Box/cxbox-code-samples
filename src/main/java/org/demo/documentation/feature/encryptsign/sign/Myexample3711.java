@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.encryptsign.sign.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.feature.encryptsign.sign.enums.StatusSignEnum;
 
 
@@ -45,4 +46,8 @@ public class Myexample3711 extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	@Column
 	private StatusSignEnum status = StatusSignEnum.NO_SIGNED;
+
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
 }
