@@ -62,7 +62,7 @@ public class Myexample3713Service extends VersionAwareResponseService<Myexample3
 							});
 							return new ActionResultDTO<Myexample3713DTO>()
 									.setAction(PostAction.showMessage(
-											MessageType.INFO, "Action documentSign was invoked"
+											MessageType.INFO, "Action documentEncrypt was invoked"
 									));
 						})
 				)
