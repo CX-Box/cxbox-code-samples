@@ -1,0 +1,45 @@
+{
+  "name": "myexample6102DeleteGH",
+  "title": "Delete",
+  "type": "GroupingHierarchy",
+  "bc": "myexample6102",
+  "fields": [
+    {
+      "title": "Id",
+      "key": "id",
+      "type": "hidden"
+    },
+    {
+      "title": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Custom Field Checkbox",
+      "key": "customFieldCheckbox",
+      "type": "checkbox"
+    },
+    {
+      "title": "customField",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "massOp": {
+      "pickMapFieldKey": "id"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "massDelete",
+        "save"
+      ]
+    }
+  }
+}
