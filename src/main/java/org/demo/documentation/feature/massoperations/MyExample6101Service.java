@@ -144,10 +144,12 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 							return MassDTO.fail(id, "cannot update Error");
 						}
 						MyEntity6101 myEntity6101 = repository.getReferenceById(Long.parseLong(id));
-						if (!onlyCheckboxChange) {
+						if (onlyCheckboxChange) {
+							myEntity6101.setCustomFieldCheckbox(true);
+						} else {
 							myEntity6101.setCustomFieldDictionary(data.getCustomFieldDictionary());
+							myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
 						}
-						myEntity6101.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
 						return MassDTO.success(id);
 					} catch (Exception e) {
 						return MassDTO.fail(id, "cannot update");
