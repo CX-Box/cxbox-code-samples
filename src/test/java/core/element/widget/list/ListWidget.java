@@ -47,6 +47,11 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 		return "data-test-widget-list-header-column-title";
 	}
 
+	/** The mass-operation mode of the widget, started by the button of a mass action. */
+	public MassOperation<SELF> massOperation() {
+		return new MassOperation<>(self());
+	}
+
 	/** The gear menu of the widget. */
 	public WidgetSettings<SELF> settings() {
 		return new WidgetSettings<>(self());
