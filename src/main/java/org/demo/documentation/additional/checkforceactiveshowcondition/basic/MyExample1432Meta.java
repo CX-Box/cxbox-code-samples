@@ -1,11 +1,11 @@
-package org.demo.documentation.additional.forceactiveshowcondition;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;
 import org.cxbox.core.dto.rowmeta.RowDependentFieldsMeta;
 import org.cxbox.core.service.rowmeta.FieldMetaBuilder;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.AccountableCrsEnum;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.CrsStatusEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.AccountableCrsEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.CrsStatusEnum;
 import org.springframework.stereotype.Service;
 
 @Service

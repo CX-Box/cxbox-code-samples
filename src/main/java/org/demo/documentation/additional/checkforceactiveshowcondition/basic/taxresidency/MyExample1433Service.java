@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.taxresidency;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.service.action.Actions;
 import org.cxbox.model.core.entity.BaseEntity_;
-import org.demo.documentation.additional.forceactiveshowcondition.MyEntity1432Repository;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.MyEntity1432Repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

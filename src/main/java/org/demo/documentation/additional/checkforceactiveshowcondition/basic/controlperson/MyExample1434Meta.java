@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.controlperson;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

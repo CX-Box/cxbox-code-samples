@@ -1,15 +1,15 @@
-package org.demo.documentation.additional.forceactiveshowcondition;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.cxbox.api.service.session.InternalAuthorizationService;
-import org.demo.documentation.additional.forceactiveshowcondition.controlperson.MyEntity1434;
-import org.demo.documentation.additional.forceactiveshowcondition.controlperson.MyEntity1434Repository;
-import org.demo.documentation.additional.forceactiveshowcondition.controlperson.taxresidency.MyEntity1435;
-import org.demo.documentation.additional.forceactiveshowcondition.controlperson.taxresidency.MyEntity1435Repository;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.CrsStatusEnum;
-import org.demo.documentation.additional.forceactiveshowcondition.taxresidency.MyEntity1433;
-import org.demo.documentation.additional.forceactiveshowcondition.taxresidency.MyEntity1433Repository;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.MyEntity1434;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.MyEntity1434Repository;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.taxresidency.MyEntity1435;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.taxresidency.MyEntity1435Repository;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.CrsStatusEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency.MyEntity1433;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency.MyEntity1433Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

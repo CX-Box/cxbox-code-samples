@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.enums;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
