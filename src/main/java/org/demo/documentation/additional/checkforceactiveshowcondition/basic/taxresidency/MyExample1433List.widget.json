@@ -1,0 +1,35 @@
+{
+  "name": "MyExample1433List",
+  "title": "Child list. Shown if Accountable CRS = Accountable",
+  "type": "List",
+  "bc": "myexample1433",
+  "showCondition": {
+    "bcName": "myexample1432",
+    "params": {
+      "fieldKey": "accountableCrsShowCondition",
+      "value": true
+    }
+  },
+  "fields": [
+    {
+      "title": "Country",
+      "key": "country",
+      "type": "input"
+    },
+    {
+      "title": "TIN",
+      "key": "tin",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete",
+        "save"
+      ],
+      "defaultSave": "save"
+    }
+  }
+}

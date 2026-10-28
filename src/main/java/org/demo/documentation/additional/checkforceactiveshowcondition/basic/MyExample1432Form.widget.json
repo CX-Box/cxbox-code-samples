@@ -1,0 +1,46 @@
+{
+  "name": "MyExample1432Form",
+  "title": "Parent form. Accountable CRS is forceActive",
+  "type": "Form",
+  "bc": "myexample1432",
+  "fields": [
+    {
+      "label": "CRS status",
+      "key": "crsStatus",
+      "type": "radio",
+      "direction": "vertical"
+    },
+    {
+      "label": "Accountable CRS",
+      "key": "accountableCrs",
+      "type": "radio"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    },
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "crsStatus",
+              "span": 24
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "accountableCrs",
+              "span": 24
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
