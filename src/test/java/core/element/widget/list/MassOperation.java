@@ -11,6 +11,7 @@ import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
 import core.util.report.StepReport;
 import io.qameta.allure.Allure;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -130,6 +131,31 @@ public class MassOperation<W extends AbstractWidget<ExpectationPattern, W>> {
 					.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
 					.click();
 		});
+		return this;
+	}
+
+	/**
+	 * The step "Certificate selection" of the mass signing and encrypting: waits for the certificates of the CryptoPro
+	 * plugin and chooses the certificate with this text in every certificate field (for signing, for encryption).
+	 */
+	public MassOperation<W> certificate(String certificate, Duration timeout) {
+		Allure.step(message("mass.certificate", certificate, widget.label()), step -> {
+			var fields = widget.element().$$("[class*='CryptoGeneratorContent'] .ant-select-selection")
+					.shouldHave(CollectionCondition.sizeGreaterThan(0), timeout);
+			for (SelenideElement field : fields.asFixedIterable()) {
+				field.click();
+				$$(".ant-select-dropdown:not(.ant-select-dropdown-hidden) li.ant-select-dropdown-menu-item")
+						.findBy(Condition.text(certificate))
+						.shouldBe(Condition.visible, widget.getExpectations().getTimeout())
+						.click();
+			}
+		});
+		return this;
+	}
+
+	/** Waits for the step, e.g. "View results" after the files are processed by the CryptoPro plugin. */
+	public MassOperation<W> waitStep(String title, Duration timeout) {
+		activeStep().shouldHave(Condition.exactText(title), timeout);
 		return this;
 	}
 

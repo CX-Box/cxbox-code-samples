@@ -37,6 +37,18 @@ public class Env {
 		return required("KEYCLOAK_ADMIN_PASSWORD");
 	}
 
+	/**
+	 * Text of the CryptoPro certificate for the signing and encrypting tests, as the certificate field shows it
+	 * (e.g. "Issued: 28.09.2026 13:44:31"): the certificate must be installed with the CryptoPro plugin in the browser
+	 */
+	public static String cryptoProCertificate() {
+		var value = System.getenv("CRYPTOPRO_CERTIFICATE");
+		if (value == null || value.isBlank()) {
+			throw new IllegalStateException("CRYPTOPRO_CERTIFICATE is not set (a certificate installed with the CryptoPro plugin in the browser)");
+		}
+		return value;
+	}
+
 	private static String required(String name) {
 		var value = System.getenv(name);
 		if (value == null || value.isBlank()) {
