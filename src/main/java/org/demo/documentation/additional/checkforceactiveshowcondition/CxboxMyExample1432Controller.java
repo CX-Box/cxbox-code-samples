@@ -10,7 +10,6 @@ import org.demo.documentation.additional.checkforceactiveshowcondition.basic.con
 import org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.taxresidency.MyExample1435Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency.MyExample1433Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.groupinghierarchy.MyExample1443Service;
-import org.demo.documentation.additional.checkforceactiveshowcondition.manywidgets.MyExample1444Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.outsidehierarchy.MyExample1441Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.outsidehierarchy.MyExample1447Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.parentfilter.MyExample1446Service;
@@ -34,7 +33,6 @@ public enum CxboxMyExample1432Controller implements EnumBcIdentifier {
 		myexample1440(myexample1432, MyExample1440Service.class),
 		myexample1442(myexample1432, MyExample1442Service.class),
 		myexample1443(myexample1432, MyExample1443Service.class),
-		myexample1444(myexample1432, MyExample1444Service.class),
 		myexample1446(myexample1432, MyExample1446Service.class),
 	myexample1447(MyExample1447Service.class),
 		myexample1441(myexample1447, MyExample1441Service.class);

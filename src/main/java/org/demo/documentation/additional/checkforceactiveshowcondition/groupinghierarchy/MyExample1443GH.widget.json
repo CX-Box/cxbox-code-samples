@@ -1,0 +1,32 @@
+{
+  "name": "MyExample1443GH",
+  "title": "GroupingHierarchy. Shown if Accountable CRS = Accountable",
+  "type": "GroupingHierarchy",
+  "bc": "myexample1443",
+  "showCondition": {
+    "bcName": "myexample1432",
+    "params": {
+      "fieldKey": "accountableCrsShowCondition",
+      "value": true
+    }
+  },
+  "fields": [
+    {
+      "title": "CRS status",
+      "key": "crsStatus",
+      "type": "dictionary"
+    },
+    {
+      "title": "Country",
+      "key": "country",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "crsStatus"
+      ]
+    }
+  }
+}

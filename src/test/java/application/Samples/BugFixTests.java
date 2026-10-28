@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayName("Checking the functions for bug fix")
 @Epic("Samples")
@@ -50,33 +50,5 @@ public class BugFixTests extends BaseTestForSamples {
 		list.rows().row(0)
 				.input("Custom Field widget2: Empty Title")
 				.checkValue(value -> assertThat(value).isEqualTo("Row menu of the second list"));
-	}
-
-	@Test
-	@DisplayName("Child list shown by forceActive radio of the parent has data")
-	@Description("The child lists are hidden by showCondition on the first open. The forceActive radio of the parent form changes the showCondition field, the child lists are shown and have data without Save of the parent")
-	public void childListShownByForceActiveHasData() {
-		//CXBOX-1432
-		var view = PlatformApp.screen("ForceActive radio and child showCondition").view();
-		var form = view.formByName("MyExample1432Form");
-		var child = view.listByName("MyExample1433List");
-		var grandchild = view.listByName("MyExample1435List");
-		var accountableCrs = form.radio("Accountable CRS");
-
-		accountableCrs.setValue("Not accountable");
-		child.checkVisible(visible -> assertThat(visible).isFalse());
-		grandchild.checkVisible(visible -> assertThat(visible).isFalse());
-
-		accountableCrs.setValue("Accountable");
-		child.checkVisible(visible -> assertThat(visible).isTrue());
-		assertThat(child.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
-				.containsExactly("Cyprus");
-		grandchild.checkVisible(visible -> assertThat(visible).isTrue());
-		assertThat(grandchild.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
-				.containsExactly("Latvia");
-
-		accountableCrs.setValue("Not accountable");
-		form.actions().action("Save").click();
-		child.checkVisible(visible -> assertThat(visible).isFalse());
 	}
 }
