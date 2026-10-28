@@ -1,11 +1,11 @@
-package org.demo.documentation.additional.forceactiveshowcondition;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.AccountableCrsEnum;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.CrsStatusEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.AccountableCrsEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.CrsStatusEnum;
 
 @Getter
 @Setter

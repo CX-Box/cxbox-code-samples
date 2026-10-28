@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.additional.forceactiveshowcondition.enums.CrsStatusEnum;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.enums.CrsStatusEnum;
 
 @Entity
 @Getter

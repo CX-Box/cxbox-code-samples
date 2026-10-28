@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

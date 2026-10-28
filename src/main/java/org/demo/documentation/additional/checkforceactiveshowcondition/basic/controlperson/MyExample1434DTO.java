@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.controlperson;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.taxresidency;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

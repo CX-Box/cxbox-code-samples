@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.controlperson.taxresidency;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.controlperson.taxresidency;
 
 import org.cxbox.core.crudma.bc.impl.InnerBcDescription;
 import org.cxbox.core.dto.rowmeta.FieldsMeta;

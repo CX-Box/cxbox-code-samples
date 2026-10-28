@@ -1,4 +1,4 @@
-package org.demo.documentation.additional.forceactiveshowcondition.controlperson;
+package org.demo.documentation.additional.checkforceactiveshowcondition.basic.taxresidency;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,19 +9,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cxbox.model.core.entity.BaseEntity;
-import org.demo.documentation.additional.forceactiveshowcondition.MyEntity1432;
+import org.demo.documentation.additional.checkforceactiveshowcondition.basic.MyEntity1432;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyEntity1434 extends BaseEntity {
+public class MyEntity1433 extends BaseEntity {
 
 	@Column
-	private String fullName;
+	private String country;
 
 	@Column
-	private String inn;
+	private String tin;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARENT_ID")
