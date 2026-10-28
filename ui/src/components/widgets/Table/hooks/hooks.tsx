@@ -31,24 +31,6 @@ function useFiltersGroupName(bcName: string | undefined) {
     return { filterGroupName, setFilterGroupName }
 }
 
-/**
- * Removes all filters of the bc and reloads its data.
- */
-export const useClearAllFilters = (bcName: string) => {
-    const hasBcTree = useAppSelector(selectHasBcTree(bcName))
-    const dispatch = useDispatch()
-
-    return useCallback(() => {
-        dispatch(actions.bcRemoveAllFilters({ bcName }))
-
-        if (hasBcTree) {
-            dispatch(treeActions.applyFilter({ bcName }))
-        } else {
-            dispatch(actions.bcForceUpdate({ bcName }))
-        }
-    }, [dispatch, bcName, hasBcTree])
-}
-
 export const useFilterGroups = (meta?: AppWidgetMeta) => {
     const bcName = meta?.bcName ?? ''
     const {
@@ -99,7 +81,15 @@ export const useFilterGroups = (meta?: AppWidgetMeta) => {
 
     const dispatch = useDispatch()
 
-    const clearAllFilters = useClearAllFilters(bcName)
+    const clearAllFilters = useCallback(() => {
+        dispatch(actions.bcRemoveAllFilters({ bcName }))
+
+        if (hasBcTree) {
+            dispatch(treeActions.applyFilter({ bcName: bcName as string }))
+        } else {
+            dispatch(actions.bcForceUpdate({ bcName }))
+        }
+    }, [dispatch, bcName, hasBcTree])
 
     const resetFilters = useCallback(() => {
         dispatch(actions.bcRemoveAllFilters({ bcName }))

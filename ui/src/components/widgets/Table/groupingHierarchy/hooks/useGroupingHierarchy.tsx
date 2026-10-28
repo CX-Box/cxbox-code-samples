@@ -17,8 +17,7 @@ import { getProcessedAggFields } from '@components/widgets/Table/groupingHierarc
 
 export const useGroupingHierarchy = <T extends CustomDataItem>(
     meta: AppWidgetGroupingHierarchyMeta,
-    isGroupingHierarchy: boolean = false,
-    hideEmptyGroups: boolean = false
+    isGroupingHierarchy: boolean = false
 ) => {
     const [enabledGrouping, setEnabledGrouping] = useState<boolean>(false)
     const groupingHierarchy = meta.options?.groupingHierarchy
@@ -42,29 +41,9 @@ export const useGroupingHierarchy = <T extends CustomDataItem>(
     const { tree, nodeDictionary, groupsDictionary, defaultExtendedDictionary } = useMemo(
         () =>
             isGroupingHierarchy
-                ? createTree(
-                      bcData,
-                      sortedGroupKeys,
-                      meta.fields,
-                      hideEmptyGroups ? null : groupingHierarchyEmptyNodes,
-                      sorters,
-                      filters,
-                      aggFields,
-                      aggLevels
-                  )
+                ? createTree(bcData, sortedGroupKeys, meta.fields, groupingHierarchyEmptyNodes, sorters, filters, aggFields, aggLevels)
                 : { tree: undefined, nodeDictionary: undefined, groupsDictionary: undefined, defaultExtendedDictionary: undefined },
-        [
-            aggFields,
-            aggLevels,
-            bcData,
-            filters,
-            groupingHierarchyEmptyNodes,
-            hideEmptyGroups,
-            isGroupingHierarchy,
-            meta.fields,
-            sortedGroupKeys,
-            sorters
-        ]
+        [aggFields, aggLevels, bcData, filters, groupingHierarchyEmptyNodes, isGroupingHierarchy, meta.fields, sortedGroupKeys, sorters]
     )
     const { expandedParentRowKeys, changeExpand, clearExpand } = useExpandableGroup()
 
