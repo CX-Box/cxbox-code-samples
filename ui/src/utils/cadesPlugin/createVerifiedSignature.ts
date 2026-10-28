@@ -10,9 +10,8 @@ export default async function createVerifiedSignature(
     {
         cadesType = DEFAULT_SIGNATURE_TYPE,
         signaturePackage = DEFAULT_SIGNATURE_PACKAGE,
-        tsaUrl = TSA_URL,
-        verify = true
-    }: { cadesType?: SignatureType; signaturePackage?: SignaturePackage; tsaUrl?: string; verify?: boolean }
+        tsaUrl = TSA_URL
+    }: { cadesType?: SignatureType; signaturePackage?: SignaturePackage; tsaUrl?: string }
 ): Promise<string> {
     let base64Data: string
 
@@ -24,9 +23,7 @@ export default async function createVerifiedSignature(
 
     const signature = await createSignatureForBase64(certificate, base64Data, { cadesType, signaturePackage, tsaUrl })
 
-    if (verify) {
-        await verifySignature(signature, base64Data, { cadesType, signaturePackage })
-    }
+    await verifySignature(signature, base64Data, { cadesType, signaturePackage })
 
     return signature
 }

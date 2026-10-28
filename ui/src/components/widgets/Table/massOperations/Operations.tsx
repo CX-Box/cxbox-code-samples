@@ -20,7 +20,6 @@ export interface OperationsProps extends Partial<TagsProps> {
         disabled?: boolean
         hidden?: boolean
         hint?: string
-        loading?: boolean
         onClick?: () => void
     }
 }
@@ -38,8 +37,9 @@ const Operations: React.FC<OperationsProps> = ({ operations, getOperationProps, 
 
     const getMenuItem = useCallback(
         operation => {
-            const { hint: propsHint, ...operationProps } = getOperationProps?.(operation.type) ?? {}
-            const hint = propsHint ?? operation.hint
+            const operationProps = getOperationProps?.(operation.type)
+            const hint = operationProps?.hint ?? operation.hint
+            delete operationProps?.['hint']
 
             return (
                 <Menu.Item
@@ -97,8 +97,9 @@ const Operations: React.FC<OperationsProps> = ({ operations, getOperationProps, 
                 {otherOperations.map((operationOrGroup, i) => {
                     if (isMassOperationGroup(operationOrGroup)) {
                         const group = operationOrGroup
-                        const { hint: propsHint, ...groupProps } = getOperationProps?.(group.type) ?? {}
-                        const hint = propsHint ?? group.hint
+                        const groupProps = getOperationProps?.(group.type)
+                        const hint = groupProps?.hint ?? group.hint
+                        delete groupProps?.['hint']
 
                         return hasVisibleOperationsInGroups(group) ? (
                             <Dropdown
@@ -129,8 +130,9 @@ const Operations: React.FC<OperationsProps> = ({ operations, getOperationProps, 
                     }
 
                     const operation = operationOrGroup
-                    const { hint: propsHint, ...operationProps } = getOperationProps?.(operation.type) ?? {}
-                    const hint = propsHint ?? operation.hint
+                    const operationProps = getOperationProps?.(operation.type)
+                    const hint = operationProps?.hint ?? operation.hint
+                    delete operationProps?.['hint']
 
                     return (
                         <Tooltip key={operation.type} trigger="hover" title={hint && t(hint)}>

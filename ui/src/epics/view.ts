@@ -234,13 +234,10 @@ export const sendOperationEpic: RootEpic = (action$, state$, { api }) =>
             const ids =
                 currentOperation?.scope === 'mass' && selectedRows?.length
                     ? selectedRows.map(
-                          (row): Omit<DataItem, 'vstamp'> => ({
-                              id: row.id as string,
-                              // mass signing: files of the row, or its result if the frontend could not process it
-                              options: row.options,
-                              success: row.success,
-                              errorMessage: row.errorMessage
-                          })
+                          row =>
+                              ({
+                                  id: row.id as string
+                              } as DataItem)
                       )
                     : undefined
             const isMassOperation = currentOperationScope === 'mass'
