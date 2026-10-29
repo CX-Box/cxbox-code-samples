@@ -11,12 +11,12 @@ import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.MassActionResultDTO;
 import org.cxbox.core.dto.rowmeta.PostAction;
+import org.cxbox.core.dto.rowmeta.PreAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
-import org.demo.documentation.feature.massoperations.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.feature.massoperations.gh.enums.CustomFieldDictionaryEnum;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,18 +50,57 @@ public class MyExample6102Service extends VersionAwareResponseService<MyExample6
 				.save(sv -> sv.text("Save"))
 				.cancelCreate(ccr -> ccr.text("Cancel").available(bc -> true))
 				.delete(dlt -> dlt.text("Delete"))
+
+				// --8<-- [start:massEdit]
 				.action(act -> act
 						.action("massEdit", "Mass Edit")
+						.withPreAction(PreAction.confirmWithWidget("myexample6102Form",
+								cfw -> cfw))
 						.scope(ActionScope.MASS)
-						.available(bc -> {
-							return true;
-						})
 						.massInvoker((bc, data, ids) -> {
 							var massResult = getMassDTO(data, ids, false);
 							return new MassActionResultDTO<MyExample6102DTO>(massResult)
-									.setAction(PostAction.showMessage(MessageType.INFO, "The bulk field processing operation is complete"));
+									.setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
 						})
 				)
+				// --8<-- [end:massEdit]
+
+				// --8<-- [start:massCheckboxTrue]
+				.action(act -> act
+						.action("massCheckboxTrue", "Mass Set Checkbox true")
+						.scope(ActionScope.MASS)
+						.massInvoker((bc, data, ids) -> {
+							var massResult = getMassDTO(data, ids, true);
+							return new MassActionResultDTO<MyExample6102DTO>(massResult)
+									.setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
+						})
+				)
+				// --8<-- [end:massCheckboxTrue]
+
+				// --8<-- [start:massDelete]
+				.action(act -> act
+						.action("massDelete", "Mass Delete")
+						.scope(ActionScope.MASS)
+						.massInvoker((bc, data, ids) -> {
+							var massResult = ids.stream()
+									.map(id -> {
+										try {
+											MyEntity6102 myEntity6102 = repository.findById(Long.parseLong(id)).orElseThrow();
+											if (myEntity6102.getCustomFieldDictionary() == CustomFieldDictionaryEnum.ERROR) {
+												return MassDTO.fail(id, "cannot delete Error");
+											}
+											repository.delete(myEntity6102);
+											return MassDTO.success(id);
+										} catch (Exception e) {
+											return MassDTO.fail(id, "cannot delete");
+										}
+									})
+									.collect(Collectors.toSet());
+							return new MassActionResultDTO<MyExample6102DTO>(massResult)
+									.setAction(PostAction.showMessage(MessageType.INFO, "The fields mass operation was completed!"));
+						})
+				)
+				// --8<-- [end:massDelete]
 				.build();
 	}
 
@@ -70,17 +109,16 @@ public class MyExample6102Service extends VersionAwareResponseService<MyExample6
 		return ids.stream()
 				.map(id -> {
 					try {
-						MyEntity6102 myEntity6102BD = repository.findById(Long.parseLong(id)).orElseThrow();
-						if (myEntity6102BD.getCustomFieldDictionary() != null
-
-								&& Objects.equals(myEntity6102BD.getCustomFieldDictionary().getValue(), CustomFieldDictionaryEnum.ERROR.getValue())) {
+						MyEntity6102 myEntity6102 = repository.findById(Long.parseLong(id)).orElseThrow();
+						if (myEntity6102.getCustomFieldDictionary() == CustomFieldDictionaryEnum.ERROR) {
 							return MassDTO.fail(id, "cannot update Error");
 						}
-						MyEntity6102 myEntity6102 = repository.getReferenceById(Long.parseLong(id));
-						if (!onlyCheckboxChange) {
+						if (onlyCheckboxChange) {
+							myEntity6102.setCustomFieldCheckbox(true);
+						} else {
 							myEntity6102.setCustomFieldDictionary(data.getCustomFieldDictionary());
+							myEntity6102.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
 						}
-						myEntity6102.setCustomFieldCheckbox(data.getCustomFieldCheckbox());
 						return MassDTO.success(id);
 					} catch (Exception e) {
 						return MassDTO.fail(id, "cannot update");
