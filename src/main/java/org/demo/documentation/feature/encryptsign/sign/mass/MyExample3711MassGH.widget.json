@@ -1,0 +1,59 @@
+{
+  "name": "MyExample3711MassGH",
+  "title": "",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3711mass",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "label": "Custom Field Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "File Signed",
+      "key": "fileSignRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileSignId"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ]
+    },
+    "cryptoGenerator": [
+      {
+        "type": "sign",
+        "actionName": "massDocumentSign",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "signatureFileIdKey": "fileSignId",
+        "signatureFileNameKey": "fileSign"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "create",
+        "massDocumentSign",
+        "save",
+        "delete"
+      ]
+    }
+  }
+}
