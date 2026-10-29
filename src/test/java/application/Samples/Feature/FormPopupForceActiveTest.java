@@ -31,6 +31,7 @@ public class FormPopupForceActiveTest extends BaseTestForSamples {
 				.actions().click("Activate FormPopup");
 		var formPopup = PlatformApp.currentScreen().view().formPopupByName("InputBasicFormPopup");
 		var input = formPopup.input("customField");
+		var initialValue = input.getValue();
 		var inputElement = input.element().$(input.valueTag()).getWrappedElement();
 		long requestsBefore = BrowserDevTools.networkRequests().stream()
 				.filter(request -> request.url().contains("/row-meta/"))
@@ -46,7 +47,9 @@ public class FormPopupForceActiveTest extends BaseTestForSamples {
 		} finally {
 			BrowserDevTools.delayNetwork(Duration.ZERO);
 		}
-		input.checkValue(value -> assertThat(value).isEqualTo("5700"));
+		input.checkValue(value -> assertThat(value).isEqualTo("5700"))
+				.setValue(initialValue)
+				.checkValue(value -> assertThat(value).isEqualTo(initialValue));
 		formPopup.clickOk();
 	}
 
