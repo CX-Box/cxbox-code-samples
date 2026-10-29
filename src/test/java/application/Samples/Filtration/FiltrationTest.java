@@ -4,6 +4,8 @@ import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import application.config.BaseTestForSamples;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.ElementsCollection;
 import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.screen.view.PlatformView;
@@ -391,6 +393,38 @@ public class FiltrationTest extends BaseTestForSamples {
 		personalFilterGroup(tree, "filtergroup_tree.gif", SAVED_GROUP + "Tree");
 	}
 
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("by personal filter group: List with FullTextSearch")
+	@Description("The text of the full text search is saved in the group together with the filters of the columns and is searched again when the group is applied")
+	void personalFilterGroupFullTextSearch() {
+		var list = view(PERSONAL_FILTER_GROUP, "List with FullTextSearch").listInline("List FullTextSearch and personal filter group");
+		String group = SAVED_GROUP + "FullTextSearch";
+		DocShots.gif(ARTICLE, "filtergroup_fulltextsearch.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		list.fullTextSearch("Soviet");
+		list.headers().filter(fb -> fb.input("customField", "data"));
+		assertThat(values(list, "Address")).containsExactly("Moscow, Dmitrov, st. Soviet, 14");
+		list.settings().select("Save filters");
+		var save = new FilterGroupSettingsPopup();
+		save.setName(group);
+		save.clickButtonCreate();
+		list.headers().clearFilters();
+		// the table draws the rows again after the answer
+		rows(list).shouldHave(CollectionCondition.size(5));
+		assertThat(list.fullTextSearchValue()).isEmpty();
+		list.headers().filterGroup(group);
+		rows(list).shouldHave(CollectionCondition.size(1));
+		assertThat(list.fullTextSearchValue()).isEqualTo("Soviet");
+		assertThat(values(list, "Address")).containsExactly("Moscow, Dmitrov, st. Soviet, 14");
+		DocShots.stop();
+		list.headers().clearFilters();
+		list.settings().select("Save filters");
+		var saved = new FilterGroupSettingsPopup();
+		saved.clearAllFilterSettings();
+		saved.close();
+	}
+
 	// --- by filter group ---
 
 	@Test
@@ -519,6 +553,10 @@ public class FiltrationTest extends BaseTestForSamples {
 
 	private static List<String> values(PlatformListWidgetInline list, String column) {
 		return list.rows().streamCurrentPage().map(row -> row.input(column).getValue()).toList();
+	}
+
+	private static ElementsCollection rows(PlatformListWidgetInline list) {
+		return list.element().$$("tbody tr[data-test-widget-list-row-type='Row']");
 	}
 
 	private static List<String> departments(PlatformTreeWidgetInline tree) {
