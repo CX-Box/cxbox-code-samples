@@ -4,6 +4,7 @@ import io.minio.MinioClient;
 import io.minio.ObjectWriteResponse;
 import io.minio.PutObjectArgs;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -19,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class CustomFileUploadServices {
 
@@ -26,6 +28,9 @@ public class CustomFileUploadServices {
 
 	private final MinioClient minioClient;
 	private final String defaultBucketName;
+
+	/** After the first failed upload the next ones are skipped: the start does not wait for MinIO for every file. */
+	private volatile boolean minioUnavailable;
 
 	public CustomFileUploadServices(
 			MinioClient minioClient,
@@ -76,31 +81,44 @@ public class CustomFileUploadServices {
 		}
 	}
 
-	@SneakyThrows
+	/**
+	 * Uploads a test data file to MinIO. Used by the test data loaders on the application start (@PostConstruct):
+	 * if MinIO is not available, the application starts anyway - the records get the file id, but the file itself
+	 * is not uploaded (restart the application after MinIO is up to upload the files).
+	 * Otherwise the start fails and the container restarts in a loop.
+	 */
 	public CxboxResponseDTO<FileUploadDto> uploadFile(
 			String fileName,
 			String contentType,
 			byte[] content
 	) {
-
-		ObjectWriteResponse response = minioClient.putObject(
-				PutObjectArgs.builder()
-						.bucket(defaultBucketName)
-						.object(UUID.randomUUID().toString())
-						.contentType(contentType)
-						.userMetadata(Map.of(FILENAME_FIELD, fileName))
-						.stream(
-								new ByteArrayInputStream(content),
-								Long.valueOf(content.length),
-								-1L
-						)
-						.build()
-		);
+		String id = UUID.randomUUID().toString();
+		if (!minioUnavailable) {
+			try {
+				ObjectWriteResponse response = minioClient.putObject(
+						PutObjectArgs.builder()
+								.bucket(defaultBucketName)
+								.object(id)
+								.contentType(contentType)
+								.userMetadata(Map.of(FILENAME_FIELD, fileName))
+								.stream(
+										new ByteArrayInputStream(content),
+										Long.valueOf(content.length),
+										-1L
+								)
+								.build()
+				);
+				id = response.object();
+			} catch (Exception e) {
+				minioUnavailable = true;
+				log.warn("MinIO is not available, the test data files are not uploaded (bucket {}): {}", defaultBucketName, e.toString());
+			}
+		}
 
 		return new CxboxResponseDTO<FileUploadDto>()
 				.setData(
 						new FileUploadDto(
-								response.object(),
+								id,
 								fileName,
 								contentType
 						)
