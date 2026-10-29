@@ -231,77 +231,68 @@ jobs:
           path: gh-pages
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           fetch-depth: 1
+          # only the history of the trend is read, the reports of all pull requests are not needed
+          sparse-checkout: pull_request/trend
         # ├── gh-pages/
         # │   └── pull_request/
-        # │     └── 125/
-        # │         ├── java-17/
-         #│         │   ├── index.html
-         #│         │   ├── data/
-         #│         │   └── history/
-         #│         │       ├── history.json
-         #│         │       ├── trend.json
-         #│         │       └── retries-trend.json
-         #│         │
-         #│         └── java-21/
-         #│            ├── index.html
-         #│            └── history/
+        # │       └── trend/              # the history shared by all pull requests
+        # │           ├── java-17/
+        # │           │   ├── history.json
+        # │           │   ├── history-trend.json
+        # │           │   ├── duration-trend.json
+        # │           │   ├── categories-trend.json
+        # │           │   └── retry-trend.json
+        # │           └── java-21/
 
-        # trend visual file ->/history/history-trend.json
-      - name: Copy trend history
-        if: always()
-        run: |
-          mkdir -p allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history
-          
-          cp -r gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/* \
-                allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}/history/ || true
-        # workspace
-        # allure-report/
-        # └── 125/                         # Pull Request number
-        #     └── java-17/                  # Java version used for test execution
-        #         └── history/              # Previous Allure history data
-        #             ├── history.json      # Test execution history (previous runs)
-        #             ├── trend.json        # Trend data for Allure Trend widget
-        #             └── retries-trend.json # Retry statistics history
-
-      # Generates a new Allure report based on test results.
-      # Also loads previous history from gh-pages
-      # to preserve trends and statistics between workflow runs.
+      # Generates a new Allure report with the trend of the last 10 pull requests: one point is one pull request.
+      # The history is shared by all pull requests (pull_request/trend/java-NN), and the point of this pull request, left by
+      # its earlier commit, is replaced by the new one.
+      # allure generate is called by hand, not through the entrypoint of the action: the entrypoint reads the history from
+      # <gh_pages>/last-history, which the published report does not have (its history is in history/), and it writes the
+      # executor.json itself, with an empty build number when the action is used as docker:// (the defaults of action.yml
+      # are not applied there). So the trend always had one point.
+      # The image is simple-elf/allure-report-action v1.15 on Docker Hub, as in build_button_qa.yml: the action itself builds
+      # it before every job from public.ecr.aws, which answers 429 now and then and fails the whole job before the tests.
+      # docker run is used and not "uses: docker://": the runner passes JAVA_HOME of setup-java into such a container.
       - name: Generate Allure report
-        # image of simple-elf/allure-report-action v1.15 on Docker Hub, as in build_button_qa.yml: the action itself builds
-        # it before every job from public.ecr.aws, which answers 429 now and then and fails the whole job before the tests
-        uses: docker://cxbox/allure-report-action:v1.15
         if: always()
-        id: allure-report
-        with:
-          allure_results: target/allure-results
-          # Directory containing old test results  - all pr
-          gh_pages: gh-pages/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-          allure_report: allure-report/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-          allure_history: allure-history/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-          github_repo: CX-Box/cxbox-code-samples-allure
-          github_repo_owner: CX-Box
-          report_url: https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-${{ matrix.java }}
-          # How many last Allure runs should be stored inside the `history` of a single report.
-          keep_reports: 5
+        env:
+          PR: ${{ github.event.pull_request.number }}
+          JAVA: ${{ matrix.java }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          REPORT=allure-report/$PR/java-$JAVA
+          TREND=allure-report/trend/java-$JAVA
+          PREV=gh-pages/pull_request/trend/java-$JAVA
+          mkdir -p target/allure-results/history "$TREND"
+          for f in "$PREV"/*.json; do
+            [ -f "$f" ] || continue
+            name=$(basename "$f")
+            case "$name" in
+              # the trend is sorted by the number of the pull request, the newest first: 9 others and this one make 10
+              *-trend.json) jq --arg pr "$PR" '[.[] | select((.buildOrder | tostring) != $pr)] | .[:9]' "$f" > "target/allure-results/history/$name" ;;
+              *) cp "$f" target/allure-results/history/ ;;
+            esac
+          done
+          # buildOrder is the label of a point in the trend, reportUrl is where a click on it leads
+          jq -n --argjson order "$PR" --arg name "PR #$PR" --arg build "$BUILD_URL" \
+            --arg url "https://cx-box.github.io/cxbox-code-samples-allure/pull_request/$PR/java-$JAVA/" \
+            '{name: "GitHub Actions", type: "github", buildOrder: $order, buildName: $name, buildUrl: $build, reportName: $name, reportUrl: $url}' \
+            > target/allure-results/executor.json
+          docker run --rm -v "$PWD:/w" -w /w --entrypoint allure cxbox/allure-report-action:v1.15 \
+            generate --clean target/allure-results -o "$REPORT"
+          cp -r "$REPORT/history/." "$TREND/"
 
         # workspace
-        # ├── allure-history/
-        # │   └── java-${{ matrix.java }}/
-        # │       └── history/
-        # │           ├── history.json
-        # │           ├── trend.json
-        # │           └── retries-trend.json
-        # │
         # └── allure-report/
-        #     └── ${{ github.event.pull_request.number }}/
-        #         └── java-${{ matrix.java }}/
-        #             ├── index.html
-        #             ├── data/
-        #             ├── widgets/
-        #             └── history/
-        #                 ├── history.json
-        #                 ├── trend.json
-        #                 └── retries-trend.json
+        #     ├── ${{ github.event.pull_request.number }}/
+        #     │   └── java-${{ matrix.java }}/
+        #     │       ├── index.html
+        #     │       ├── data/
+        #     │       ├── widgets/
+        #     │       └── history/
+        #     └── trend/
+        #         └── java-${{ matrix.java }}/   # the same history/, for the next pull request
 
         # Uploads generated Allure report as workflow artifact.
       # To prevent reports from different Java matrix jobs from overwriting each other,
