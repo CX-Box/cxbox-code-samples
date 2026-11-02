@@ -58,7 +58,8 @@ public class MassOperationsWithConfirmTest extends BaseTestForSamples {
 		var gh = view("Basic GH").groupingHierarchyInlineByName("myexample6102GH");
 		DocShots.gif(ARTICLE, "mass_gh.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		gh.actions().click("Mass Edit");
-		var mass = gh.massOperation();
+		// the rows of a group with several records are shown when the group is expanded
+		var mass = gh.expandAll().massOperation();
 		run(mass, "High", "test data2", "test data6");
 		DocShots.stop();
 		assertThat(mass.results()).isEqualTo(Map.of("test data2", SUCCESS, "test data6", FAIL));

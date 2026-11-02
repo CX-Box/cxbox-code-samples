@@ -40,8 +40,9 @@ public class MassDeleteTest extends BaseTestForSamples {
 		var list = view("List").listInlineByName("myexample6101Delete");
 		var name = newName();
 		list.actions().click("Add");
-		list.rows().row(0).input("customField").setValue(name);
-		list.actions().click("Save");
+		var row = list.rows().row(0);
+		row.input("customField").setValue(name);
+		row.burgerAction("Save").click();
 		DocShots.gif(ARTICLE, "mass_delete.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		list.actions().click("Mass Delete");
 		var mass = list.massOperation();
@@ -63,8 +64,9 @@ public class MassDeleteTest extends BaseTestForSamples {
 		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102DeleteGH");
 		var name = newName();
 		gh.actions().click("Add");
-		gh.rows().row(0).input("customField").setValue(name);
-		gh.actions().click("Save");
+		var row = gh.rows().row(0);
+		row.input("customField").setValue(name);
+		row.burgerAction("Save").click();
 		DocShots.gif(ARTICLE, "mass_delete_gh.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		gh.actions().click("Mass Delete");
 		var mass = gh.massOperation();

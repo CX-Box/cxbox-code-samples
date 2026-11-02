@@ -56,7 +56,8 @@ public class MassOperationsWithoutConfirmTest extends BaseTestForSamples {
 		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102CheckboxTrueGH");
 		DocShots.gif(ARTICLE, "mass_gh_without_confirm.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		gh.actions().click("Mass Set Checkbox true");
-		var mass = gh.massOperation();
+		// the rows of a group with several records are shown when the group is expanded
+		var mass = gh.expandAll().massOperation();
 		run(mass, "test data3", "test data5", "test data6");
 		DocShots.stop();
 		assertThat(mass.results()).isEqualTo(Map.of("test data3", SUCCESS, "test data5", SUCCESS, "test data6", FAIL));

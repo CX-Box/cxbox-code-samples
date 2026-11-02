@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The mass-operation mode of a List or a GroupingHierarchy widget ({@code ActionScope.MASS}): the steps on the left,
@@ -42,7 +43,13 @@ public class MassOperation<W extends AbstractWidget<ExpectationPattern, W>> {
 		}
 	}
 
-	private static final String ROWS = "tbody tr[data-test-widget-list-row-type='Row']";
+	/** Row and GroupingRow: a group of GroupingHierarchy with one record shows the record in the row of the group. */
+	private static final String ROWS = "tbody tr[data-test-widget-list-row-type$='Row']";
+
+	/** By the icons of the results: a row of a group has the expand icon too. */
+	private static final String RESULT_ICON = Arrays.stream(Result.values())
+			.map(result -> "td i[aria-label='icon: " + result.icon + "']")
+			.collect(Collectors.joining(", "));
 
 	private final W widget;
 
@@ -166,9 +173,8 @@ public class MassOperation<W extends AbstractWidget<ExpectationPattern, W>> {
 		return Allure.step(message("mass.results", widget.label()), step -> {
 			activeStep().shouldHave(Condition.exactText("View results"), widget.getExpectations().getTimeout());
 			Map<String, Result> results = new LinkedHashMap<>();
-			for (SelenideElement row : widget.element().$$(ROWS).asFixedIterable()) {
-				var icon = row.$("td i[aria-label^='icon: ']").getAttribute("aria-label");
-				results.put(row.$("[data-test-field-key='" + rowKey + "']").getText(), Result.byIcon(icon));
+			for (SelenideElement cell : rowsElements().asFixedIterable()) {
+				results.put(cell.getText(), Result.byIcon(cell.closest("tr").$(RESULT_ICON).getAttribute("aria-label")));
 			}
 			StepReport.value(results);
 			return results;
@@ -196,7 +202,8 @@ public class MassOperation<W extends AbstractWidget<ExpectationPattern, W>> {
 	}
 
 	private ElementsCollection rowsElements() {
-		return widget.element().$$(ROWS + " [data-test-field-key='" + rowKey + "']");
+		// a group row without its own record has the cell of the field, empty
+		return widget.element().$$(ROWS + " [data-test-field-key='" + rowKey + "']").exclude(Condition.empty);
 	}
 
 	private SelenideElement activeStep() {

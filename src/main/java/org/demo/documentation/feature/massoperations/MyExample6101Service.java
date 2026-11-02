@@ -34,6 +34,13 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 
 	@Override
 	protected ActionResultDTO<MyExample6101DTO> doUpdateEntity(MyEntity6101 entity, MyExample6101DTO data, BusinessComponent bc) {
+		// the values of a mass action form go to massInvoker: it checks each selected row, so the current row stays as it is here
+		if (!data.getMassIds_().isEmpty()) {
+			var formValues = entityToDto(bc, entity);
+			setIfChanged(data, MyExample6101DTO_.customFieldCheckbox, formValues::setCustomFieldCheckbox);
+			setIfChanged(data, MyExample6101DTO_.customFieldDictionary, formValues::setCustomFieldDictionary);
+			return new ActionResultDTO<>(formValues);
+		}
 		setIfChanged(data, MyExample6101DTO_.customFieldCheckbox, entity::setCustomFieldCheckbox);
 		setIfChanged(data, MyExample6101DTO_.customFieldDictionary, entity::setCustomFieldDictionary);
 		setIfChanged(data, MyExample6101DTO_.customField, entity::setCustomField);
