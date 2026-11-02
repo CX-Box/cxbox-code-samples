@@ -1,8 +1,8 @@
 {
-  "name": "MyExample3711MassGH",
+  "name": "myexample3712massgh",
   "title": "",
   "type": "GroupingHierarchy",
-  "bc": "myexample3711mass",
+  "bc": "myexample3712mass",
   "fields": [
     {
       "title": "File",
@@ -25,6 +25,12 @@
       "type": "dictionary"
     },
     {
+      "title": "File Encrypted",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
       "title": "File Signed",
       "key": "fileSignRO",
       "type": "fileUpload",
@@ -39,18 +45,20 @@
     },
     "cryptoGenerator": [
       {
-        "type": "sign",
-        "actionName": "massDocumentSign",
+        "type": "encryptAndSign",
+        "actionName": "massDocumentEncryptSign",
         "documentFileIdKey": "fileId",
         "documentFileNameKey": "file",
         "signatureFileIdKey": "fileSignId",
-        "signatureFileNameKey": "fileSign"
+        "signatureFileNameKey": "fileSign",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt"
       }
     ],
     "actionGroups": {
       "include": [
         "create",
-        "massDocumentSign",
+        "massDocumentEncryptSign",
         "save",
         "delete"
       ]

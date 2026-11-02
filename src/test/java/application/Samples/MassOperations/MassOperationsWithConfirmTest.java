@@ -37,7 +37,7 @@ public class MassOperationsWithConfirmTest extends BaseTestForSamples {
 	@DisplayName("List: the values of the form go to the selected rows")
 	@Description("Select rows, review, confirm with the form, view results: the row with the dictionary value Error fails, the others succeed")
 	void list() {
-		var list = view("Basic List widget").listInlineByName("myexample6101List");
+		var list = view("Basic List widget").listInlineByName("myexample6101list");
 		DocShots.gif(ARTICLE, "mass_list.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		list.actions().click("Mass Edit");
 		var mass = list.massOperation();
@@ -55,7 +55,7 @@ public class MassOperationsWithConfirmTest extends BaseTestForSamples {
 	@DisplayName("GroupingHierarchy: the values of the form go to the selected rows")
 	@Description("The same steps in GroupingHierarchy: the rows are grouped by the dictionary field, the row of the group Error fails")
 	void groupingHierarchy() {
-		var gh = view("Basic GH").groupingHierarchyInlineByName("myexample6102GH");
+		var gh = view("Basic GH").groupingHierarchyInlineByName("myexample6102gh");
 		DocShots.gif(ARTICLE, "mass_gh.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		gh.actions().click("Mass Edit");
 		// the rows of a group with several records are shown when the group is expanded
@@ -73,7 +73,7 @@ public class MassOperationsWithConfirmTest extends BaseTestForSamples {
 	@DisplayName("Custom title and texts of the confirmation")
 	@Description("PreAction.confirmWithWidget with title, yesText and noText: the confirmation shows them, the no button closes the mass operation")
 	void customTitle() {
-		var list = view("Custom Title on Confirm operation").listInlineByName("myexample6101ListTitle");
+		var list = view("Custom Title on Confirm operation").listInlineByName("myexample6101listtitle");
 		list.actions().click("Mass Edit With Custom Text");
 		var mass = list.massOperation()
 				.select("test data 2")
@@ -90,7 +90,7 @@ public class MassOperationsWithConfirmTest extends BaseTestForSamples {
 	@DisplayName("Back and Cancel")
 	@Description("Back returns to the previous step, Cancel leaves the mass-operation mode without changes")
 	void backAndCancel() {
-		var list = view("Basic List widget").listInlineByName("myexample6101List");
+		var list = view("Basic List widget").listInlineByName("myexample6101list");
 		list.actions().click("Mass Edit");
 		var mass = list.massOperation().select("test data 4", "test data 5");
 		assertThat(mass.step()).isEqualTo("Select rows");

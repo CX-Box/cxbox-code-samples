@@ -35,7 +35,7 @@ public class MassOperationsWithoutConfirmTest extends BaseTestForSamples {
 	@DisplayName("List: Apply sets the checkbox in the selected rows")
 	@Description("Select rows, review, Apply: the row with the dictionary value Error fails, the others succeed")
 	void list() {
-		var list = view("List").listInlineByName("myexample6101CheckboxTrueList");
+		var list = view("List").listInlineByName("myexample6101checkboxtruelist");
 		DocShots.gif(ARTICLE, "mass_list_without_confirm.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		list.actions().click("Mass Set Checkbox true");
 		var mass = list.massOperation();
@@ -53,7 +53,7 @@ public class MassOperationsWithoutConfirmTest extends BaseTestForSamples {
 	@DisplayName("GroupingHierarchy: Apply sets the checkbox in the selected rows")
 	@Description("The same steps in GroupingHierarchy: the rows are grouped by the dictionary field, the row of the group Error fails")
 	void groupingHierarchy() {
-		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102CheckboxTrueGH");
+		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102checkboxtruegh");
 		DocShots.gif(ARTICLE, "mass_gh_without_confirm.gif", 1280, 800, DocShots.Frame.WITHOUT_SIDEBAR);
 		gh.actions().click("Mass Set Checkbox true");
 		// the rows of a group with several records are shown when the group is expanded

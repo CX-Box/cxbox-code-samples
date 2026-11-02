@@ -61,7 +61,7 @@ public class MyExample6102Service extends VersionAwareResponseService<MyExample6
 				// --8<-- [start:massEdit]
 				.action(act -> act
 						.action("massEdit", "Mass Edit")
-						.withPreAction(PreAction.confirmWithWidget("myexample6102Form",
+						.withPreAction(PreAction.confirmWithWidget("myexample6102form",
 								cfw -> cfw))
 						.scope(ActionScope.MASS)
 						.massInvoker((bc, data, ids) -> {

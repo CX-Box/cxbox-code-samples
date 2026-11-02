@@ -34,14 +34,14 @@ public class MassSignTest extends BaseTestForSamples {
 
 	@ParameterizedTest(name = "{0}: {2}")
 	@CsvSource({
-			"Signing documents using QES with CryptoPro, Mass Document Sign, List, MyExample3711MassList",
-			"Signing documents using QES with CryptoPro, Mass Document Sign, GroupingHierarchy, MyExample3711MassGH",
-			"Encrypting documents with CryptoPro, Mass Document Encrypt, List, MyExample3713MassList",
-			"Encrypting documents with CryptoPro, Mass Document Encrypt, GroupingHierarchy, MyExample3713MassGH",
-			"Signing and encrypting documents using QES with CryptoPro, Mass Document Sign Encrypt, List, MyExample3714MassList",
-			"Signing and encrypting documents using QES with CryptoPro, Mass Document Sign Encrypt, GroupingHierarchy, MyExample3714MassGH",
-			"Encrypting and signing documents using QES with CryptoPro, Mass Document Encrypt Sign, List, MyExample3712MassList",
-			"Encrypting and signing documents using QES with CryptoPro, Mass Document Encrypt Sign, GroupingHierarchy, MyExample3712MassGH"
+			"Signing documents using QES with CryptoPro, Mass Document Sign, List, myexample3711masslist",
+			"Signing documents using QES with CryptoPro, Mass Document Sign, GroupingHierarchy, myexample3711massgh",
+			"Encrypting documents with CryptoPro, Mass Document Encrypt, List, myexample3713masslist",
+			"Encrypting documents with CryptoPro, Mass Document Encrypt, GroupingHierarchy, myexample3713massgh",
+			"Signing and encrypting documents using QES with CryptoPro, Mass Document Sign Encrypt, List, myexample3714masslist",
+			"Signing and encrypting documents using QES with CryptoPro, Mass Document Sign Encrypt, GroupingHierarchy, myexample3714massgh",
+			"Encrypting and signing documents using QES with CryptoPro, Mass Document Encrypt Sign, List, myexample3712masslist",
+			"Encrypting and signing documents using QES with CryptoPro, Mass Document Encrypt Sign, GroupingHierarchy, myexample3712massgh"
 	})
 	@Severity(CRITICAL)
 	@Tag("Positive")

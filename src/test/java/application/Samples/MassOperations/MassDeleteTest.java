@@ -37,7 +37,7 @@ public class MassDeleteTest extends BaseTestForSamples {
 	@DisplayName("List: the selected rows are deleted")
 	@Description("A new row and the row with the dictionary value Error are deleted: the new row is gone, the Error row fails and stays")
 	void list() {
-		var list = view("List").listInlineByName("myexample6101Delete");
+		var list = view("List").listInlineByName("myexample6101delete");
 		var name = newName();
 		list.actions().click("Add");
 		var row = list.rows().row(0);
@@ -61,7 +61,7 @@ public class MassDeleteTest extends BaseTestForSamples {
 	@DisplayName("GroupingHierarchy: the selected rows are deleted")
 	@Description("The same steps in GroupingHierarchy: the new row is gone, the row of the group Error fails and stays")
 	void groupingHierarchy() {
-		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102DeleteGH");
+		var gh = view("GroupingHierarchy").groupingHierarchyInlineByName("myexample6102deletegh");
 		var name = newName();
 		gh.actions().click("Add");
 		var row = gh.rows().row(0);
