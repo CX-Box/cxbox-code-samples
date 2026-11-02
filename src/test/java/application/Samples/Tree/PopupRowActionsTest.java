@@ -148,7 +148,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 				.screen("PickTreePopup widget action")
 				.secondLevelView("Delete")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3354form"))
-				.formByName("MyExample3354Form");
+				.formByName("myexample3354form");
 		var popup = form.pickTree("Custom Field Delete").openPopup();
 		createInlineAndDelete(popup.tree(), PICK, "create_inline.gif", "actiondelete.gif", 1200, 760);
 		popup.close();
@@ -165,7 +165,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Create");
 		var list = screen.thirdLevelView("Inline-form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3348listinlineform"))
-				.listByName("MyExample3348ListInlineForm");
+				.listByName("myexample3348listinlineform");
 		var popup = list.rows().clickRow(0).pickTree("Custom Field Pick").openPopup();
 		createInlineForm(popup.treeInlineForm(), PICK, "create_with_widget.gif", "Custom Field Pick", 1200, 900);
 		popup.close();
@@ -182,7 +182,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 				.screen("PickTreePopup widget action")
 				.secondLevelView("CancelCreate")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3356form"))
-				.formByName("MyExample3356Form");
+				.formByName("myexample3356form");
 		var popup = form.pickTree(FIELD).openPopup();
 		int before = popup.tree().rows().element().size();
 		createAndCancel(popup.tree(), PICK, "actioncancel.gif", 1200, 760);
@@ -201,7 +201,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("CancelCreate");
 		var form = screen.thirdLevelView("Action cancel-create OnCancel")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3356formoncancel"))
-				.formByName("MyExample3356FormOnCancel");
+				.formByName("myexample3356formoncancel");
 		var popup = form.pickTree(FIELD).openPopup();
 		createAndCancel(popup.tree(), PICK, "actioncanceloncancel.gif", 1200, 760);
 		// the onCancel action of the sample drills down to the create view
@@ -219,7 +219,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Edit");
 		var list = screen.thirdLevelView("Inline-Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3353/view/myexample3353listinlineform"))
-				.listByName("MyExample3353ListInlineForm");
+				.listByName("myexample3353listinlineform");
 		var popup = list.rows().clickRow(0).pickTree("Custom Field PickTree").openPopup();
 		editInlineForm(popup.treeInlineForm(), PICK, "edit_inline_form.gif", FIELD, 1200, 900);
 		popup.close();
@@ -236,7 +236,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Create");
 		var form = screen.thirdLevelView("Create Inline")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331create"))
-				.formByName("MyExample3331FormCreate");
+				.formByName("myexample3331formcreate");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		createInlineAndDelete(popup.tree(), ASSOC, "assoc_create_inline.gif", "actiondelete.gif", 1200, 760);
 		popup.closeModal();
@@ -253,7 +253,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget action")
 				.secondLevelView("Create")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331inlinecreate"))
-				.formByName("MyExample3331Form");
+				.formByName("myexample3331form");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		createInlineForm(popup.treeInlineForm(), ASSOC, "assoc_create_with_widget.gif", FIELD, 1200, 900);
 		popup.closeModal();
@@ -270,7 +270,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Edit");
 		var form = screen.thirdLevelView("Edit Inline")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331edit"))
-				.formByName("MyExample3331Edit");
+				.formByName("myexample3331edit");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		editInline(popup.tree(), ASSOC, "assoc_edit_basic.gif", 1200, 760);
 		popup.closeModal();
@@ -287,7 +287,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget action")
 				.secondLevelView("Edit")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3331/view/myexample3331editinlineform"))
-				.formByName("MyExample3331FormEdit");
+				.formByName("myexample3331formedit");
 		var popup = form.multivalueTree(FIELD).openPopup();
 		editInlineForm(popup.treeInlineForm(), ASSOC, "assoc_edit_with_widget.gif", FIELD, 1200, 900);
 		popup.closeModal();

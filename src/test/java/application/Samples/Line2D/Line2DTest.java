@@ -70,7 +70,7 @@ public class Line2DTest extends BaseTestForSamples {
 		Line2DWidget constTitle = view.line2D(TITLE);
 		DocShots.png(constTitle.element(), ARTICLE, "title.png", WIDTH, HEIGHT);
 
-		Line2DWidget emptyTitle = view.line2DByName("MyExample4241Line2DEmptyTitle");
+		Line2DWidget emptyTitle = view.line2DByName("myexample4241line2demptytitle");
 		emptyTitle.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(emptyTitle.element(), ARTICLE, "title_empty.png", WIDTH, HEIGHT);
 	}

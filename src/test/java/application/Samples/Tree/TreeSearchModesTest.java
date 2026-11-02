@@ -46,7 +46,7 @@ public class TreeSearchModesTest extends BaseTestForSamples {
 	private PlatformTreeWidgetInline treeWithFilter(String search) {
 		var tree = PlatformApp.screen("Tree widget basic")
 				.secondLevelView("Business example")
-				.treeByName("myexample3261TreeList");
+				.treeByName("myexample3261treelist");
 		tree.waitLoaded();
 		tree.headers().clearFilters();
 		tree.waitLoaded();

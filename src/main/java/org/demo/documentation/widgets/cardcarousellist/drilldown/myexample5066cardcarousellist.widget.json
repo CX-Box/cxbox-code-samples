@@ -1,0 +1,50 @@
+{
+  "name": "myexample5066cardcarousellist",
+  "title": "CardCarouselList with drilldown",
+  "type": "CardCarouselList",
+  "bc": "myexample5066",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      },
+      "drillDown": true
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "myexample5066form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "myexample5066form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

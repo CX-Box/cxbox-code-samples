@@ -1,0 +1,56 @@
+{
+  "name": "myexample5064cardcarousellist",
+  "title": "Show condition widget",
+  "type": "CardCarouselList",
+  "bc": "myexample5064",
+  "showCondition": {
+    "bcName": "myexample5063",
+    "params": {
+      "fieldKey": "customFieldShowCondition",
+      "value": true
+    }
+  },
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "myexample5064form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "myexample5064form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

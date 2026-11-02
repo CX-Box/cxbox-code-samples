@@ -117,25 +117,25 @@ public class MyExample3027Service extends VersionAwareResponseService<MyExample3
 		return Actions.<MyExample3027DTO>builder()
 				.action(act -> act
 						.action("save-send-color-const-all", "Save and send on approval")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConstAll", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3027formpopupcolorconstall", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
 				)
 				.action(act -> act
 						.action("save-send-color-all", "Save and send on approval")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupAll", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3027formpopupall", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
 				)
 				.action(act -> act
 						.action("save-send-color-const", "Save and send on approval")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopupColorConst", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3027formpopupcolorconst", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
 				)
 				.action(act -> act
 						.action("save-send-color", "Save and send on approval")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3027FormPopup", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3027formpopup", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3027DTO>())
 
 				)

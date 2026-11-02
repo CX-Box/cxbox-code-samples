@@ -51,7 +51,7 @@ public class InputCreateEditService extends VersionAwareResponseService<InputCre
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputCreateEditFormPopup",
+								"inputcreateeditformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

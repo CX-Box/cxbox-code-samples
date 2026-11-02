@@ -68,7 +68,7 @@ public class FilePreviewBasicTest extends BaseTestForSamples {
 	@DisplayName("Empty title")
 	void emptyTitle() {
 		var preview = PlatformApp.screen("FilePreview title").secondLevelView("FilePreview empty title")
-				.filePreviewByName("MyExample5007FilePreviewTitleEmpty");
+				.filePreviewByName("myexample5007filepreviewtitleempty");
 		preview.viewer().getTitle();
 		DocShots.png(ARTICLE, "emptytitle.png", 1660, 760);
 	}
@@ -78,7 +78,7 @@ public class FilePreviewBasicTest extends BaseTestForSamples {
 	@DisplayName("Calculated title color")
 	void titleColor() {
 		var preview = PlatformApp.screen("FilePreview colortitle").secondLevelView("calc")
-				.filePreviewByName("MyExample5004FilePreviewCalc");
+				.filePreviewByName("myexample5004filepreviewcalc");
 		preview.viewer().getTitle();
 		DocShots.png(ARTICLE, "colorwidget.png", 1660, 760);
 	}
@@ -89,8 +89,8 @@ public class FilePreviewBasicTest extends BaseTestForSamples {
 	@Description("The widget always takes the right half of the view; a second FilePreview on the view is not shown")
 	void onlyFirstWidget() {
 		var view = PlatformApp.screen("FilePreview layout").secondLevelView("Two widgets FilePreview");
-		view.filePreviewByName("MyExample5005FilePreview").checkVisible(visible -> assertThat(visible).isTrue());
-		view.filePreviewByName("MyExample5005FilePreviewOther").checkVisible(visible -> assertThat(visible).isFalse());
+		view.filePreviewByName("myexample5005filepreview").checkVisible(visible -> assertThat(visible).isTrue());
+		view.filePreviewByName("myexample5005filepreviewother").checkVisible(visible -> assertThat(visible).isFalse());
 	}
 
 }

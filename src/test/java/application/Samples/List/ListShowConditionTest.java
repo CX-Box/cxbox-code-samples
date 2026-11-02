@@ -38,8 +38,8 @@ public class ListShowConditionTest extends BaseTestForSamples {
 		var view = PlatformApp.screen("List widget show condition")
 				.secondLevelView("Show condition by current entity")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3101"));
-		var form = view.formByName("MyExample3101");
-		var list = view.listByName("MyExample31012");
+		var form = view.formByName("myexample3101");
+		var list = view.listByName("myexample31012");
 		var customField = form.number("Custom Field");
 		BigDecimal initialValue = customField.getValue();
 
@@ -70,8 +70,8 @@ public class ListShowConditionTest extends BaseTestForSamples {
 		var view = PlatformApp.screen("List widget show condition")
 				.secondLevelView("Show condition by parent entity")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3101/view/myexample3106showcond"));
-		var parent = view.formByName("MyExample3100parent");
-		var child = view.listByName("MyExample3106child");
+		var parent = view.formByName("myexample3100parent");
+		var child = view.listByName("myexample3106child");
 		var customFieldNumber = parent.number("Custom Field Number");
 		BigDecimal initialValue = customFieldNumber.getValue();
 

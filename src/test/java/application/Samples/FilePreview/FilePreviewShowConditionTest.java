@@ -31,8 +31,8 @@ public class FilePreviewShowConditionTest extends BaseTestForSamples {
 	@Description("The file is shown while Show preview of the record is set; the condition is recalculated on save")
 	void showConditionByCurrentEntity() {
 		var view = PlatformApp.screen("FilePreview show condition").view();
-		var form = view.formByName("MyExample5006Form");
-		var preview = view.filePreviewByName("MyExample5006FilePreview");
+		var form = view.formByName("myexample5006form");
+		var preview = view.filePreviewByName("myexample5006filepreview");
 		var showPreview = form.checkbox("Show preview");
 		preview.checkVisible(visible -> assertThat(visible).isTrue());
 

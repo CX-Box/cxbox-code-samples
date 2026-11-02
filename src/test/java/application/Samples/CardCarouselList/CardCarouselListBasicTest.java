@@ -29,7 +29,7 @@ public class CardCarouselListBasicTest extends BaseTestForSamples {
 	static final String ARTICLE = "widget/type/cardcarousellist";
 
 	private static CardCarouselListWidget cards() {
-		return PlatformApp.screen("CardCarouselList basic").view().cardCarouselListByName("MyExample5060CardCarouselList");
+		return PlatformApp.screen("CardCarouselList basic").view().cardCarouselListByName("myexample5060cardcarousellist");
 	}
 
 	@SneakyThrows

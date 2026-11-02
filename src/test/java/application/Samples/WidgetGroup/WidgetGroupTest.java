@@ -31,9 +31,9 @@ public class WidgetGroupTest extends BaseTestForSamples {
 
 	private static final String SCREEN = "Widget Collapse";
 
-	private static final String GROUP_CHILD = "MyExample3022GroupChild";
+	private static final String GROUP_CHILD = "myexample3022groupchild";
 
-	private static final String OUTSIDE = "MyExample3022Outside";
+	private static final String OUTSIDE = "myexample3022outside";
 
 	@Test
 	@Severity(CRITICAL)
@@ -43,11 +43,11 @@ public class WidgetGroupTest extends BaseTestForSamples {
 			+ "the Header collapses the Form, Info, List and GroupingHierarchy and expands them back, the other groups stay as they are")
 	void allWidgetTypes() {
 		var view = PlatformApp.screen(SCREEN).secondLevelView("All widget types");
-		var header = view.widgetGroup("MyExample3022Header");
-		var stats = view.widgetGroup("MyExample4203StatBlocs");
-		var charts = view.widgetGroup("MyExample3022RingProcessl");
-		var additional = view.widgetGroup("MyExample3022AdditionalInfo");
-		String[] headerGroup = {"MyExample3022Form", "MyExample3022Info", "MyExample3022List", "MyExample3022GroupingHierarchy"};
+		var header = view.widgetGroup("myexample3022header");
+		var stats = view.widgetGroup("myexample4203statblocs");
+		var charts = view.widgetGroup("myexample3022ringprocessl");
+		var additional = view.widgetGroup("myexample3022additionalinfo");
+		String[] headerGroup = {"myexample3022form", "myexample3022info", "myexample3022list", "myexample3022groupinghierarchy"};
 
 		header.checkCollapsed(collapsed -> assertThat(collapsed).isFalse());
 		stats.checkCollapsed(collapsed -> assertThat(collapsed).isFalse());
@@ -63,11 +63,11 @@ public class WidgetGroupTest extends BaseTestForSamples {
 		for (String widget : headerGroup) {
 			header.checkWidgetShown(widget, shown -> assertThat(shown).isFalse());
 		}
-		header.checkWidgetShown("MyExample3022Header", shown -> assertThat(shown).isTrue());
-		stats.checkWidgetShown("MyExample3022Steps", shown -> assertThat(shown).isTrue());
-		charts.checkWidgetShown("MyExample3022DashboardList", shown -> assertThat(shown).isTrue());
+		header.checkWidgetShown("myexample3022header", shown -> assertThat(shown).isTrue());
+		stats.checkWidgetShown("myexample3022steps", shown -> assertThat(shown).isTrue());
+		charts.checkWidgetShown("myexample3022dashboardlist", shown -> assertThat(shown).isTrue());
 		stats.collapse();
-		stats.checkWidgetShown("MyExample3022Steps", shown -> assertThat(shown).isFalse());
+		stats.checkWidgetShown("myexample3022steps", shown -> assertThat(shown).isFalse());
 		header.expand();
 		stats.expand();
 		DocShots.stop();
@@ -75,7 +75,7 @@ public class WidgetGroupTest extends BaseTestForSamples {
 		for (String widget : headerGroup) {
 			header.checkWidgetShown(widget, shown -> assertThat(shown).isTrue());
 		}
-		stats.checkWidgetShown("MyExample3022Steps", shown -> assertThat(shown).isTrue());
+		stats.checkWidgetShown("myexample3022steps", shown -> assertThat(shown).isTrue());
 	}
 
 	@ParameterizedTest(name = "{0}")
@@ -139,7 +139,7 @@ public class WidgetGroupTest extends BaseTestForSamples {
 	@Description("The main widget has no title: the page does not fail, the toggle is shown on the empty title and collapses the group")
 	void mainWidgetWithoutTitle() {
 		var view = mainWidgetView("Without title");
-		var group = view.widgetGroup("MyExample3022NoTitle");
+		var group = view.widgetGroup("myexample3022notitle");
 
 		group.checkCollapsed(collapsed -> assertThat(collapsed).isFalse())
 				.checkWidgetShown(GROUP_CHILD, shown -> assertThat(shown).isTrue());
@@ -162,19 +162,19 @@ public class WidgetGroupTest extends BaseTestForSamples {
 			+ "the collapsed group is expanded by the toggle")
 	void collapsedCondition() {
 		var view = PlatformApp.screen(SCREEN).secondLevelView("Collapse with collapsedCondition");
-		var collapsedByDefault = view.widgetGroup("MyExample3022RingProcessl");
-		var expandedByDefault = view.widgetGroup("MyExample3022List");
+		var collapsedByDefault = view.widgetGroup("myexample3022ringprocessl");
+		var expandedByDefault = view.widgetGroup("myexample3022list");
 
 		collapsedByDefault.checkCollapsed(collapsed -> assertThat(collapsed).isTrue())
-				.checkWidgetShown("MyExample3022Funnel", shown -> assertThat(shown).isFalse())
-				.checkWidgetShown("MyExample3022DashboardList", shown -> assertThat(shown).isFalse());
+				.checkWidgetShown("myexample3022funnel", shown -> assertThat(shown).isFalse())
+				.checkWidgetShown("myexample3022dashboardlist", shown -> assertThat(shown).isFalse());
 		expandedByDefault.checkCollapsed(collapsed -> assertThat(collapsed).isFalse())
-				.checkWidgetShown("MyExample3022Form", shown -> assertThat(shown).isTrue());
+				.checkWidgetShown("myexample3022form", shown -> assertThat(shown).isTrue());
 		DocShots.png($("main"), ARTICLE, "collapsedcondition.png", 1600, 1000);
 
 		collapsedByDefault.toggleClick()
-				.checkWidgetShown("MyExample3022Funnel", shown -> assertThat(shown).isTrue())
-				.checkWidgetShown("MyExample3022DashboardList", shown -> assertThat(shown).isTrue());
+				.checkWidgetShown("myexample3022funnel", shown -> assertThat(shown).isTrue())
+				.checkWidgetShown("myexample3022dashboardlist", shown -> assertThat(shown).isTrue());
 	}
 
 	private static PlatformView mainWidgetView(String tab) {

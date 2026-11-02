@@ -1,0 +1,50 @@
+{
+  "name": "myexample3011picklistpopup",
+  "title": "PickListPopup widget",
+  "type": "Form",
+  "bc": "myexample3011",
+  "fields": [
+    {
+      "label": "Pick List Mode default",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity3012Pick",
+      "pickMap": {
+        "customFieldPickList": "customFieldDictionary",
+        "customFieldPickListId": "id"
+      }
+    },
+    {
+      "label": "Inline Pick List Mode Icon",
+      "key": "customFieldDictionaryInlinePickList",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity3013Pick",
+      "pickMap": {
+        "customFieldDictionaryInlinePickList": "customFieldDictionary",
+        "customFieldDictionaryInlinePickListId": "id"
+      }
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldPickList",
+              "span": 12
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldDictionaryInlinePickList",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

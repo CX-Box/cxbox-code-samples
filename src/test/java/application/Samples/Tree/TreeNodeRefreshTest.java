@@ -32,7 +32,7 @@ public class TreeNodeRefreshTest extends BaseTestForSamples {
 
 	private static final String VIEW = "myexample3265tree";
 
-	private static final String WIDGET = "MyExample3265Tree";
+	private static final String WIDGET = "myexample3265tree";
 
 	private static final String FIELD = "Custom Field";
 

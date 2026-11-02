@@ -43,7 +43,7 @@ public class AssocTreePopupSelectionTest extends BaseTestForSamples {
 	private AssocTreeModal<PlatformFormWidget> openPopup() {
 		var form = PlatformApp.screen("Tree widget basic")
 				.secondLevelView("Business example")
-				.formByName("MyExample3263List");
+				.formByName("myexample3263list");
 		return form.multivalueTree("Departments Assoc").openPopup();
 	}
 

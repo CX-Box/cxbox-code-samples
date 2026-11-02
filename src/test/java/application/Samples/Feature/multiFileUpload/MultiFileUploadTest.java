@@ -30,7 +30,7 @@ public class MultiFileUploadTest extends BaseTestForSamples {
 	void button() throws IOException {
 		var screen = PlatformApp.screen("File options multi-upload files");
 		screen.secondLevelView("Button And Multi-upload files");
-		var list = screen.thirdLevelView("Button").listInlineByName("MyExample6100DefaultList");
+		var list = screen.thirdLevelView("Button").listInlineByName("myexample6100defaultlist");
 		var first = file();
 		var second = file();
 		list.actions().upload("Add Files", first, second);
@@ -54,7 +54,7 @@ public class MultiFileUploadTest extends BaseTestForSamples {
 	void dropZone() throws IOException {
 		var screen = PlatformApp.screen("File options multi-upload files");
 		screen.secondLevelView("Button And Multi-upload files");
-		var list = screen.thirdLevelView("Multi-upload files").listInlineByName("MyExample6100FileList");
+		var list = screen.thirdLevelView("Multi-upload files").listInlineByName("myexample6100filelist");
 		var first = file();
 		var second = file();
 		list.actions().uploadToDropZone(first, second);

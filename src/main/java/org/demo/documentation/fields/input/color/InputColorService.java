@@ -50,7 +50,7 @@ public class InputColorService extends VersionAwareResponseService<InputColorDTO
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputColorFormPopup",
+								"inputcolorformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

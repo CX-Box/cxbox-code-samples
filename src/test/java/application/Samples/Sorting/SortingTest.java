@@ -73,7 +73,7 @@ public class SortingTest extends BaseTestForSamples {
 	@DisplayName("Tree")
 	@Description("The records are sorted inside a node; the hierarchy is not changed")
 	void tree() {
-		var tree = PlatformApp.screen("Tree widget basic").secondLevelView("Tree Basic").treeByName("MyExample3281Tree");
+		var tree = PlatformApp.screen("Tree widget basic").secondLevelView("Tree Basic").treeByName("myexample3281tree");
 		tree.waitLoaded();
 		DocShots.gif(ARTICLE, "sorting_tree.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
 		// the roots already go in the descending order: the second click shows the change
@@ -87,7 +87,7 @@ public class SortingTest extends BaseTestForSamples {
 	@DisplayName("AssocTreePopup")
 	@Description("The records of the popup are sorted inside a node")
 	void assocTreePopup() {
-		var form = PlatformApp.screen("MultivalueTree sorting").secondLevelView("Form").formByName("MyExample3323Form");
+		var form = PlatformApp.screen("MultivalueTree sorting").secondLevelView("Form").formByName("myexample3323form");
 		DocShots.gif(ARTICLE, "sorting_assoctree.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.multivalueTree("Custom Field").openPopup();
 		var tree = popup.tree();
@@ -104,7 +104,7 @@ public class SortingTest extends BaseTestForSamples {
 	@DisplayName("PickTreePopup")
 	@Description("The records of the popup are sorted inside a node")
 	void pickTreePopup() {
-		var form = PlatformApp.screen("Picktree sorting").secondLevelView("Form").formByName("MyExample3290Form");
+		var form = PlatformApp.screen("Picktree sorting").secondLevelView("Form").formByName("myexample3290form");
 		DocShots.gif(ARTICLE, "sorting_picktree.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.pickTree("Custom Field").openPopup();
 		var tree = popup.tree();

@@ -55,7 +55,7 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputBasicFormPopup",
+								"inputbasicformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")
@@ -70,7 +70,7 @@ public class InputBasicService extends VersionAwareResponseService<InputBasicDTO
 						.action("activateFormPopupNoTitle", "Activate FormPopup without title")
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
-						.withPreAction(PreAction.confirmWithWidget("InputBasicFormPopupNoTitle", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("inputbasicformpopupnotitle", cfw -> cfw))
 						.invoker((bc, dto) ->
 								new ActionResultDTO<InputBasicDTO>().setAction(PostAction.showMessage(
 										MessageType.INFO, "Action activateFormPopupNoTitle was invoked"

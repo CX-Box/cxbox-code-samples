@@ -1,0 +1,42 @@
+{
+  "title": "AssocTreePopup widget custom save",
+  "name": "myentity3334multiassoctreepopup",
+  "type": "AssocTreePopup",
+  "bc": "myEntity3334MultiAssocTreePopup",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "id",
+      "key": "id",
+      "type": "text"
+    },
+    {
+      "title": "Parent Id",
+      "key": "parentId",
+      "type": "hidden"
+    },
+    {
+      "title": "Is Leaf",
+      "key": "isLeaf",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "create": {
+      "widget": "myentity3334multiformpopup"
+    },
+    "edit": {
+      "widget": "myentity3334multiformpopup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

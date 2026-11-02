@@ -62,7 +62,7 @@ public class InputValidationBusinessExceptionService extends
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputValidationBusinessExceptionFormPopup",
+								"inputvalidationbusinessexceptionformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

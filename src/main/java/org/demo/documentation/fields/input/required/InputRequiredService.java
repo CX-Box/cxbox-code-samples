@@ -52,7 +52,7 @@ public class InputRequiredService extends VersionAwareResponseService<InputRequi
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputRequiredFormPopup",
+								"inputrequiredformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

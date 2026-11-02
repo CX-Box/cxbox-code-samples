@@ -1,0 +1,36 @@
+{
+  "name": "myexample3124maxgh",
+  "title": "GroupingHierarchy (GH) widget aggregate `max`",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3124",
+  "fields": [
+    {
+      "title": "Type of property",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Insurance amount",
+      "key": "customFieldNumber",
+      "type": "number"
+    },
+    {
+      "title": "Description",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ],
+      "aggFields": [
+        {
+          "fieldKey": "customFieldNumber",
+          "func": "max"
+        }
+      ]
+    }
+  }
+}

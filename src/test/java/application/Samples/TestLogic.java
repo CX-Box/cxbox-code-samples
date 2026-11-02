@@ -109,7 +109,7 @@ public class TestLogic extends BaseTestForSamples {
 	public void testStatBlock() {
 		StatsBlockWidget statsBlockWidget = PlatformApp.screen("StatsBlock widget filter for List widget")
 				.view()
-				.statBlockByName("MyExample4210List");
+				.statBlockByName("myexample4210list");
 
 
 		PlatformListRowsInline rows = PlatformApp.screen("StatsBlock widget filter for List widget")

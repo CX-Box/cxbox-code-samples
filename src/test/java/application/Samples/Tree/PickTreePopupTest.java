@@ -48,7 +48,7 @@ public class PickTreePopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickTreePopup widget with title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3344form"))
-				.formByName("MyExample3344Form");
+				.formByName("myexample3344form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).isEqualTo("Constant Title");
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupWithTitle.png", 1600, 1000);
@@ -65,7 +65,7 @@ public class PickTreePopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickTreePopup widget without title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3345form"))
-				.formByName("MyExample3345Form");
+				.formByName("myexample3345form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).isEmpty();
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupWithoutTitle.png", 1600, 1000);
@@ -83,7 +83,7 @@ public class PickTreePopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickTreePopup widget calculated title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3344/view/myexample3347form"))
-				.formByName("MyExample3347Form");
+				.formByName("myexample3347form");
 		var popup = form.pickTree(FIELD).openPopup();
 		assertThat(popup.title()).startsWith("customFieldPick:");
 		DocShots.png(popup.dialog(), ARTICLE, "pickTreePopupCalculatedTitle.png", 1600, 1000);
@@ -98,7 +98,7 @@ public class PickTreePopupTest extends BaseTestForSamples {
 				.screen("PickTreePopup widget color title")
 				.secondLevelView("Color")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3341/view/myexample3341form"))
-				.formByName("MyExample3341Form");
+				.formByName("myexample3341form");
 		var popup = form.pickTree("Custom Field Picktree").openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
 		popup.tree().rows().row(0).expandRow();
@@ -116,7 +116,7 @@ public class PickTreePopupTest extends BaseTestForSamples {
 				.screen("Tree widget basic")
 				.secondLevelView("Business example")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3261/view/myexample3261list"))
-				.formByName("MyExample3263List");
+				.formByName("myexample3263list");
 		var popup = form.pickTree("Department Pick").openPopup();
 		var tree = popup.tree();
 		int roots = tree.rows().element().size();

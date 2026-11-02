@@ -36,7 +36,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		constant.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(constant.element(), ARTICLE, "consttitle.png", 1660, 1100);
 
-		var empty = screen.secondLevelView("Empty title").cardListByName("MyExample5301EmptyTitle");
+		var empty = screen.secondLevelView("Empty title").cardListByName("myexample5301emptytitle");
 		empty.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(empty.element(), ARTICLE, "emptytitle.png", 1660, 1100);
 	}
@@ -48,7 +48,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@Description("The title shows the field of the selected card with the calculated color")
 	void titleColor() {
 		var cards = PlatformApp.screen("CardList color title").secondLevelView("Calculated color")
-				.cardListByName("MyExample5302CardList");
+				.cardListByName("myexample5302cardlist");
 		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(cards.element(), ARTICLE, "colorwidget.png", 1660, 1100);
 	}
@@ -60,7 +60,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@Description("The first dictionary field is shown in the middle of the card")
 	void status() {
 		var cards = PlatformApp.screen("CardList status").view()
-				.cardListByName("MyExample5305CardList");
+				.cardListByName("myexample5305cardlist");
 		cards.rows().row(0).checkStatus(status -> assertThat(status).isEqualTo("Rejected"));
 		cards.rows().row(1).checkStatus(status -> assertThat(status).isEqualTo("Approved"));
 		cards.rows().row(2).checkStatus(status -> assertThat(status).isEqualTo("New"));
@@ -74,10 +74,10 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@Description("A click on the title with the link opens the form of the record of the card")
 	void drilldown() {
 		var cards = PlatformApp.screen("CardList drilldown").view()
-				.cardListByName("MyExample5306CardList");
+				.cardListByName("myexample5306cardlist");
 		DocShots.gif(ARTICLE, "drilldown.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.rows().row(2).drilldown(url -> assertThat(url).contains("/view/myexample5306form/"));
-		PlatformApp.currentScreen().view().formByName("MyExample5306DrillDownForm")
+		PlatformApp.currentScreen().view().formByName("myexample5306drilldownform")
 				.input("Custom Field").checkValue(value -> assertThat(value).isEqualTo("Price list"));
 		DocShots.stop();
 	}
@@ -89,7 +89,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@Description("The read widget above the strip shows the file of the selected card")
 	void read() {
 		var cards = PlatformApp.screen("CardList read").view()
-				.cardListByName("MyExample5307CardList");
+				.cardListByName("myexample5307cardlist");
 		DocShots.gif(ARTICLE, "read.gif", 1900, 1250, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.rows().row(2).click();
 		cards.rows().row(2).checkTitle(title -> assertThat(title).isEqualTo("Price list"));
@@ -104,7 +104,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@DisplayName("The eye opens the file")
 	@Description("Without options.edit the card has the eye, it opens the file in a popup")
 	void view() {
-		var cards = PlatformApp.screen("CardList read").view().cardListByName("MyExample5307CardList");
+		var cards = PlatformApp.screen("CardList read").view().cardListByName("myexample5307cardlist");
 		DocShots.gif(ARTICLE, "view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		var viewer = cards.rows().row(0).clickEye();
 		assertThat(viewer.getTitle()).isEqualTo("Certificate.png");
@@ -118,7 +118,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@DisplayName("Main visual parts of the card")
 	@Description("The card shows the preview, the status, the title, the description and the actions")
 	void parts() {
-		var cards = PlatformApp.screen("CardList status").view().cardListByName("MyExample5305CardList");
+		var cards = PlatformApp.screen("CardList status").view().cardListByName("myexample5305cardlist");
 		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(cards.element(), ARTICLE, "parts.png", 1660, 1100);
 	}
@@ -129,7 +129,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 	@DisplayName("Full text search")
 	@Description("The search box of the widget leaves the cards with the text in the title")
 	void fullTextSearch() {
-		var cards = PlatformApp.screen("CardList full text search").view().cardListByName("MyExample5308CardList");
+		var cards = PlatformApp.screen("CardList full text search").view().cardListByName("myexample5308cardlist");
 		DocShots.gif(ARTICLE, "fulltextsearch.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.fullTextSearch("Invoice");
 		assertThat(cards.rows().streamCurrentPage()).hasSize(1);
@@ -148,7 +148,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		var cards = PlatformApp.screen("File options multi-upload files")
 				.secondLevelView("CardList")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample6100/view/myexample6100cardlist"))
-				.cardListByName("MyExample6100CardList");
+				.cardListByName("myexample6100cardlist");
 		long before = cards.rows().streamCurrentPage().count();
 		DocShots.gif(ARTICLE, "multiupload.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.actions().upload("Add Files", CardListBasicTest.resourceFile("Hope_of_Humanity.jpg"));
@@ -170,7 +170,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		screen.secondLevelView("Widget property FullTextSearch");
 		var cards = screen.thirdLevelView("CardList")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3616/view/myexample3614cardlist"))
-				.cardListByName("MyExample3614CardList");
+				.cardListByName("myexample3614cardlist");
 		DocShots.gif("widget/type/property/filtration", "fulltextsearch_cardlist.gif", 1660, 1100, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.fullTextSearch("weekly");
 		assertThat(cards.rows().streamCurrentPage()).hasSize(1);
@@ -191,7 +191,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		screen.secondLevelView("nextAndPreviousWithCount");
 		var cards = screen.thirdLevelView("CardList")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3862cardlist"))
-				.cardListByName("MyExample3862CardList");
+				.cardListByName("myexample3862cardlist");
 		AtomicInteger pages = new AtomicInteger();
 		cards.pagination().checkPageCount(pages::set);
 		assertThat(pages.get()).isEqualTo(2);
@@ -213,7 +213,7 @@ public class CardListPropertiesTest extends BaseTestForSamples {
 		var cards = PlatformApp.screen("Widget property Default limit page")
 				.secondLevelView("CardList")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample359/view/myexample359cardlist"))
-				.cardListByName("MyExample359CardList");
+				.cardListByName("myexample359cardlist");
 		assertThat(cards.rows().streamCurrentPage()).hasSize(2);
 		AtomicInteger pages = new AtomicInteger();
 		cards.pagination().checkPageCount(pages::set);

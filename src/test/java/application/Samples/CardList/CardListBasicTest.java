@@ -29,7 +29,7 @@ public class CardListBasicTest extends BaseTestForSamples {
 	static final String ARTICLE = "widget/type/cardlist";
 
 	private static CardListWidget cards() {
-		return PlatformApp.screen("CardList basic").view().cardListByName("MyExample5300CardList");
+		return PlatformApp.screen("CardList basic").view().cardListByName("myexample5300cardlist");
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class CardListBasicTest extends BaseTestForSamples {
 	}
 
 	private static CardListWidget cardsWithView() {
-		return PlatformApp.currentScreen().view().cardListByName("MyExample5309CardList");
+		return PlatformApp.currentScreen().view().cardListByName("myexample5309cardlist");
 	}
 
 	@Test
@@ -120,10 +120,10 @@ public class CardListBasicTest extends BaseTestForSamples {
 	@DisplayName("Create with view")
 	@Description("Add drills down to the form view, Save and Close returns to the cards with the new card")
 	void createWithView() {
-		var cards = PlatformApp.screen("CardList with view").view().cardListByName("MyExample5309CardList");
+		var cards = PlatformApp.screen("CardList with view").view().cardListByName("myexample5309cardlist");
 		DocShots.gif(ARTICLE, "create_with_view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		cards.actions().click("Add");
-		var form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		var form = PlatformApp.currentScreen().view().formByName("myexample5309form");
 		form.fileUpload("Document").setValue(resourceFile("Hope_of_Humanity.jpg"));
 		form.input("Custom Field").setValue("New document");
 		form.actions().action("Save and Close").click();
@@ -141,10 +141,10 @@ public class CardListBasicTest extends BaseTestForSamples {
 	@DisplayName("Edit with view")
 	@Description("Edit of the card drills down to the form view, Save and Close returns to the cards with the changed card")
 	void editWithView() {
-		var cards = PlatformApp.screen("CardList with view").view().cardListByName("MyExample5309CardList");
+		var cards = PlatformApp.screen("CardList with view").view().cardListByName("myexample5309cardlist");
 		DocShots.gif(ARTICLE, "edit_with_view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		cards.rows().row(0).burgerAction("Edit").click();
-		var form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		var form = PlatformApp.currentScreen().view().formByName("myexample5309form");
 		form.input("Custom Field Description").setValue("Issued to the Branch office");
 		form.actions().action("Save and Close").click();
 		cards = cardsWithView();
@@ -152,7 +152,7 @@ public class CardListBasicTest extends BaseTestForSamples {
 		DocShots.stop();
 
 		cards.rows().row(0).burgerAction("Edit").click();
-		form = PlatformApp.currentScreen().view().formByName("MyExample5309Form");
+		form = PlatformApp.currentScreen().view().formByName("myexample5309form");
 		form.input("Custom Field Description").setValue("Issued to the Main office");
 		form.actions().action("Save and Close").click();
 		cardsWithView().rows().row(0).checkDescription(description -> assertThat(description).isEqualTo("Issued to the Main office"));

@@ -138,11 +138,11 @@ public class MyExample5555TaskService extends VersionAwareResponseService<TaskDT
 				)
 				.action(act -> act
 						.action("save-send-application", "Save and send on approval")
-						.withPreAction(confirmWithComment("Save and send on approval", "taskApprovalFormPopup"))
+						.withPreAction(confirmWithComment("Save and send on approval", "taskapprovalformpopup"))
 						.invoker((bc, data) -> withApproval()))
 				.action(act -> act
 						.action("save-send-task", "Save and send on approval")
-						.withPreAction(confirmWithComment("Save and send on approval", "taskFormPopup"))
+						.withPreAction(confirmWithComment("Save and send on approval", "taskformpopup"))
 						.invoker((bc, data) -> withApproval())
 				)
 				.cancelCreate(ccr -> ccr.text("Cancel"))

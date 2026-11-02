@@ -119,7 +119,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fields: AssocListPopup")
 	@Description("The filter of a column of the popup leaves the records with the value")
 	void byFieldsAssocListPopup() {
-		var form = view(PERSONAL_FILTER_GROUP, "AssocListPopup").formByName("MyExample3616ListForAssoc");
+		var form = view(PERSONAL_FILTER_GROUP, "AssocListPopup").formByName("myexample3616listforassoc");
 		DocShots.gif(ARTICLE, "filtration_assoc.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.field(w -> new Multivalue<>(w, "Custom Field Multivalue")).openPopup().list();
 		popup.headers().filter(fb -> fb.input("Custom Field", "data 4"));
@@ -132,7 +132,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fields: PickListPopup")
 	@Description("The filter of a column of the popup leaves the records with the value")
 	void byFieldsPickListPopup() {
-		var form = view(FULL_TEXT_SEARCH, "PickListPopup").formByName("MyExample3614ListForPicklist");
+		var form = view(FULL_TEXT_SEARCH, "PickListPopup").formByName("myexample3614listforpicklist");
 		DocShots.gif(ARTICLE, "filtration_picklist.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.pickList("Custom Field PickList").openListPopup();
 		popup.list().headers().filter(fb -> fb.input("Custom Field", "data3"));
@@ -147,7 +147,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fields: Tree")
 	@Description("The filter of a column of the tree shows the found records by the search mode")
 	void byFieldsTree() {
-		var tree = tree(PERSONAL_FILTER_GROUP, "Tree", "MyExample3616Tree");
+		var tree = tree(PERSONAL_FILTER_GROUP, "Tree", "myexample3616tree");
 		DocShots.gif(ARTICLE, "filtration_tree.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
 		tree.headers().filter(fb -> fb.input("Custom Field New", "new 2"));
 		tree.shouldShow(1);
@@ -251,7 +251,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fulltextsearch: AssocListPopup")
 	@Description("The search text of the popup leaves the records where one of the columns contains it")
 	void fullTextSearchAssocListPopup() {
-		var form = view(FULL_TEXT_SEARCH, "AssocListPopup").formByName("MyExample3614ListForAssoc");
+		var form = view(FULL_TEXT_SEARCH, "AssocListPopup").formByName("myexample3614listforassoc");
 		DocShots.gif(ARTICLE, "fulltextsearch_assoc.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.field(w -> new Multivalue<>(w, "Custom Field Multivalue")).openPopup().list();
 		popup.fullTextSearch("text2");
@@ -264,7 +264,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fulltextsearch: PickListPopup")
 	@Description("The search text of the popup leaves the records where one of the columns contains it")
 	void fullTextSearchPickListPopup() {
-		var form = view(FULL_TEXT_SEARCH, "PickListPopup").formByName("MyExample3614ListForPicklist");
+		var form = view(FULL_TEXT_SEARCH, "PickListPopup").formByName("myexample3614listforpicklist");
 		DocShots.gif(ARTICLE, "fulltextsearch_picklist.gif", POPUP_WIDTH, POPUP_HEIGHT, DocShots.Frame.WITH_SIDEBAR);
 		var popup = form.pickList("Custom Field PickList").openListPopup();
 		popup.list().fullTextSearch("text2");
@@ -279,7 +279,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by fulltextsearch: Tree")
 	@Description("The search text of the tree shows the found records by the search mode")
 	void fullTextSearchTree() {
-		var tree = tree(FULL_TEXT_SEARCH, "Tree", "MyExample3614Tree");
+		var tree = tree(FULL_TEXT_SEARCH, "Tree", "myexample3614tree");
 		DocShots.gif(ARTICLE, "fulltextsearch_tree.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
 		tree.fullTextSearch("Neal");
 		tree.shouldShow(2);
@@ -389,7 +389,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by personal filter group: Tree")
 	@Description("The filter is saved as a group of the user and applied again from the select above the tree")
 	void personalFilterGroupTree() {
-		var tree = tree(PERSONAL_FILTER_GROUP, "Tree", "MyExample3616Tree");
+		var tree = tree(PERSONAL_FILTER_GROUP, "Tree", "myexample3616tree");
 		personalFilterGroup(tree, "filtergroup_tree.gif", SAVED_GROUP + "Tree");
 	}
 
@@ -451,7 +451,7 @@ public class FiltrationTest extends BaseTestForSamples {
 	@DisplayName("by filter group: Tree")
 	@Description("The group chosen above the tree shows the records of the group by the search mode")
 	void filterGroupTree() {
-		var tree = tree(FILTER_GROUP, "Tree", "MyExample3618Tree");
+		var tree = tree(FILTER_GROUP, "Tree", "myexample3618tree");
 		filterGroup(tree, "filter_group_save_tree.gif");
 	}
 
@@ -548,7 +548,7 @@ public class FiltrationTest extends BaseTestForSamples {
 
 	/** The form of the business example of the tree samples with the fields that open the tree popups. */
 	private static PlatformFormWidget businessExample() {
-		return PlatformApp.screen("Tree widget basic").secondLevelView("Business example").formByName("MyExample3263List");
+		return PlatformApp.screen("Tree widget basic").secondLevelView("Business example").formByName("myexample3263list");
 	}
 
 	private static List<String> values(PlatformListWidgetInline list, String column) {
