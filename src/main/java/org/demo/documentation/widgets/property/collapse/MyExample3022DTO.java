@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
-import org.cxbox.core.util.filter.provider.impl.StringValueProvider;
+import org.cxbox.core.util.filter.provider.impl.LongValueProvider;
 import org.demo.documentation.widgets.property.collapse.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.widgets.property.collapse.enums.EditStep;
 
@@ -21,8 +21,8 @@ public class MyExample3022DTO extends DataResponseDTO {
 	private CustomFieldDictionaryEnum customFieldDictionary;
 	private EditStep editStep;
 	private Boolean isLeaf;
-	@SearchParameter(name = "parentId", provider = StringValueProvider.class)
-	private String parentId;
+	@SearchParameter(name = "parentId", provider = LongValueProvider.class)
+	private Long parentId;
 
 	public MyExample3022DTO(MyEntity3022 entity) {
 		this.id = entity.getId().toString();
