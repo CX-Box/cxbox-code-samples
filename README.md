@@ -11,7 +11,7 @@ login: `demo`, password: `demo`
 * git
 * docker
 * docker-compose
-
+ 
 ## Getting started with docker
 * install dependencies and build front-end
 ```
