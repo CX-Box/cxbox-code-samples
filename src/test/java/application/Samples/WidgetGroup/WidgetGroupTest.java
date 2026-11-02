@@ -80,19 +80,19 @@ public class WidgetGroupTest extends BaseTestForSamples {
 
 	@ParameterizedTest(name = "{0}")
 	@CsvSource({
-			"Header, MyExample3022Header, " + GROUP_CHILD,
-			"Form, MyExample3022Form, " + GROUP_CHILD,
-			"Info, MyExample3022Info, " + GROUP_CHILD,
-			"List, MyExample3022List, " + GROUP_CHILD,
-			"GroupingHierarchy, MyExample3022GroupingHierarchy, " + GROUP_CHILD,
-			"AdditionalInfo, MyExample3022AdditionalInfo, MyExample3022AdditionalList",
-			"AdditionalList, MyExample3022AdditionalList, MyExample3022AdditionalInfo",
-			"StatsBlock, MyExample4203StatBlocs, " + GROUP_CHILD,
-			"Steps, MyExample3022Steps, " + GROUP_CHILD,
-			"DashboardList, MyExample3022DashboardList, " + GROUP_CHILD,
-			"Funnel, MyExample3022Funnel, " + GROUP_CHILD,
-			"RingProgress, MyExample3022RingProcessl, " + GROUP_CHILD,
-			"Tree, MyExample3022Tree, " + GROUP_CHILD
+			"Header, myexample3022header, " + GROUP_CHILD,
+			"Form, myexample3022form, " + GROUP_CHILD,
+			"Info, myexample3022info, " + GROUP_CHILD,
+			"List, myexample3022list, " + GROUP_CHILD,
+			"GroupingHierarchy, myexample3022groupinghierarchy, " + GROUP_CHILD,
+			"AdditionalInfo, myexample3022additionalinfo, myexample3022additionallist",
+			"AdditionalList, myexample3022additionallist, myexample3022additionalinfo",
+			"StatsBlock, myexample4203statblocs, " + GROUP_CHILD,
+			"Steps, myexample3022steps, " + GROUP_CHILD,
+			"DashboardList, myexample3022dashboardlist, " + GROUP_CHILD,
+			"Funnel, myexample3022funnel, " + GROUP_CHILD,
+			"RingProgress, myexample3022ringprocessl, " + GROUP_CHILD,
+			"Tree, myexample3022tree, " + GROUP_CHILD
 	})
 	@Severity(CRITICAL)
 	@Tag("Positive")
