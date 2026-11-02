@@ -43,7 +43,7 @@ public class BugFixTests extends BaseTestForSamples {
 		//CXBOX-1371
 		var list = PlatformApp.screen("List widget title")
 				.secondLevelView("List widget empty title")
-				.listInlineByName("MyExample3104EmptyTitle");
+				.listInlineByName("myexample3104emptytitle");
 		var row = list.rows().clickRow(0);
 		row.input("Custom Field widget2: Empty Title").setValue("Row menu of the second list");
 		row.burgerAction("Save").click();

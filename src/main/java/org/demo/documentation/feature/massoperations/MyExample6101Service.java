@@ -51,7 +51,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 				// --8<-- [start:massEdit]
 				.action(act -> act
 						.action("massEdit", "Mass Edit")
-						.withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+						.withPreAction(PreAction.confirmWithWidget("myexample6101form",
 								cfw -> cfw))
 						.scope(ActionScope.MASS)
 						.massInvoker((bc, data, ids) -> {
@@ -76,7 +76,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 				// --8<-- [start:massEditCustomTitle]
 				.action(act -> act
 						.action("massEditCustomTitle", "Mass Edit With Custom Text")
-						.withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+						.withPreAction(PreAction.confirmWithWidget("myexample6101form",
 								cfw -> cfw.noText("It is text no")
 										.title("Mass Edit Title")
 										.yesText("It is text yes")))
@@ -92,7 +92,7 @@ public class MyExample6101Service extends VersionAwareResponseService<MyExample6
 				// --8<-- [start:massEditWithoutTitle]
 				.action(act -> act
 						.action("massEditWithoutTitle", "Mass Edit Without Custom Text")
-						.withPreAction(PreAction.confirmWithWidget("myexample6101Form",
+						.withPreAction(PreAction.confirmWithWidget("myexample6101form",
 								cfw -> cfw.withoutTitle()))
 						.scope(ActionScope.MASS)
 						.massInvoker((bc, data, ids) -> {

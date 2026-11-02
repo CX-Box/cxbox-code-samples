@@ -29,18 +29,18 @@ public class TreePropertyTabsTest extends BaseTestForSamples {
 	/** screen, view, tree widget */
 	/** The screen title, the tabs of the second and third level (empty: none), the address of the view, the widget. */
 	private static final String[][] TABS = {
-			{"Widget property Filtration", "Widget property FullTextSearch", "Tree", "#/screen/myexample3616/view/myexample3614tree", "MyExample3614Tree"},
-			{"Widget property Filtration", "Widget property personal filter group", "Tree", "#/screen/myexample3616/view/myexample3616tree", "MyExample3616Tree"},
-			{"Widget property Filtration", "Widget property filter group", "Tree", "#/screen/myexample3616/view/myexample3618tree", "MyExample3618Tree"},
-			{"Widget property Pagination", "nextAndPreviousWithHasNext", "Tree", "#/screen/myexample3861/view/myexample3860tree", "MyExample3860Tree"},
-			{"Widget property Pagination", "nextAndPreviousSmart", "Tree", "#/screen/myexample3861/view/myexample3861tree", "MyExample3861Tree"},
-			{"Widget property Pagination", "nextAndPreviousWithCount", "Tree", "#/screen/myexample3861/view/myexample3862tree", "MyExample3862Tree"},
-			{"Widget property Pagination", "hideLimitOptions", "Tree", "#/screen/myexample3861/view/myexample3865tree", "MyExample3865Tree"},
-			{"Widget property Pagination", "availableLimitsList", "Tree", "#/screen/myexample3861/view/myexample3867tree", "MyExample3867Tree"},
-			{"Widget property export Excel inner source", "Tree", "", "#/screen/myexample3134/view/myexample3134tree", "MyExample3134Tree"},
-			{"Widget property export Excel any source", "Tree", "", "#/screen/myexample3136/view/myexample3136tree", "MyExample3136Tree"},
-			{"Widget property export Excel postAction", "Tree", "", "#/screen/MyExample6500PostActionExportToExcel/view/myexample6500PostActionExportToExcelTree", "myexample6500PostActionExportToExcelTree"},
-			{"Widget property field setHidden", "Family List, Assoc, Popup, 2D, 1D", "Tree", "#/screen/myexample5019/view/myexample5019tree", "MyExample5019Tree"},
+			{"Widget property Filtration", "Widget property FullTextSearch", "Tree", "#/screen/myexample3616/view/myexample3614tree", "myexample3614tree"},
+			{"Widget property Filtration", "Widget property personal filter group", "Tree", "#/screen/myexample3616/view/myexample3616tree", "myexample3616tree"},
+			{"Widget property Filtration", "Widget property filter group", "Tree", "#/screen/myexample3616/view/myexample3618tree", "myexample3618tree"},
+			{"Widget property Pagination", "nextAndPreviousWithHasNext", "Tree", "#/screen/myexample3861/view/myexample3860tree", "myexample3860tree"},
+			{"Widget property Pagination", "nextAndPreviousSmart", "Tree", "#/screen/myexample3861/view/myexample3861tree", "myexample3861tree"},
+			{"Widget property Pagination", "nextAndPreviousWithCount", "Tree", "#/screen/myexample3861/view/myexample3862tree", "myexample3862tree"},
+			{"Widget property Pagination", "hideLimitOptions", "Tree", "#/screen/myexample3861/view/myexample3865tree", "myexample3865tree"},
+			{"Widget property Pagination", "availableLimitsList", "Tree", "#/screen/myexample3861/view/myexample3867tree", "myexample3867tree"},
+			{"Widget property export Excel inner source", "Tree", "", "#/screen/myexample3134/view/myexample3134tree", "myexample3134tree"},
+			{"Widget property export Excel any source", "Tree", "", "#/screen/myexample3136/view/myexample3136tree", "myexample3136tree"},
+			{"Widget property export Excel postAction", "Tree", "", "#/screen/MyExample6500PostActionExportToExcel/view/myexample6500PostActionExportToExcelTree", "myexample6500postactionexporttoexceltree"},
+			{"Widget property field setHidden", "Family List, Assoc, Popup, 2D, 1D", "Tree", "#/screen/myexample5019/view/myexample5019tree", "myexample5019tree"},
 	};
 
 	@Test

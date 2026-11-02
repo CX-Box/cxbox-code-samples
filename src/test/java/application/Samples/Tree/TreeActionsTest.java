@@ -50,7 +50,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 				.screen("Tree widget action basic")
 				.secondLevelView("Action create")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3265tree"))
-				.treeByName("MyExample3265Tree");
+				.treeByName("myexample3265tree");
 		tree.waitLoaded();
 		tree.actions().click("Add");
 		var row = tree.rows().row(0);
@@ -71,7 +71,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Action create");
 		var tree = screen.thirdLevelView("Create inline-form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3279tree"))
-				.treeInlineFormByName("MyExample3279Tree");
+				.treeInlineFormByName("myexample3279tree");
 		tree.actions().click("Add");
 		var form = tree.rows().row(0).inlineForm();
 		DocShots.png(tree.element(), ARTICLE, "create_inline_form.png", 1600, 1000);
@@ -91,15 +91,15 @@ public class TreeActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Action create");
 		var tree = screen.thirdLevelView("create with view")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3266tree"))
-				.treeByName("MyExample3266Tree");
+				.treeByName("myexample3266tree");
 		tree.waitLoaded();
 		tree.actions().click("Add");
-		var form = PlatformApp.currentScreen().view().formByName("MyExample3266Form");
+		var form = PlatformApp.currentScreen().view().formByName("myexample3266form");
 		DocShots.png(form.element(), ARTICLE, "create_with_view.png", 1600, 1000);
 		String value = unique("With view root");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save and Close").click();
-		tree = PlatformApp.currentScreen().view().treeByName("MyExample3266Tree");
+		tree = PlatformApp.currentScreen().view().treeByName("myexample3266tree");
 		assertRowShown(tree, value);
 	}
 
@@ -113,7 +113,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 				.screen("Tree widget action basic")
 				.secondLevelView("Edit")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3273tree"))
-				.treeByName("MyExample3273Tree");
+				.treeByName("myexample3273tree");
 		tree.waitLoaded();
 		var row = tree.rows().clickRow(1);
 		DocShots.png(tree.element(), ARTICLE, "edit_inline.png", 1600, 1000);
@@ -133,7 +133,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Edit");
 		var tree = screen.thirdLevelView("Edit inline-form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3275tree"))
-				.treeInlineFormByName("MyExample3275Tree");
+				.treeInlineFormByName("myexample3275tree");
 		var form = tree.rows().row(1).clickPencil();
 		DocShots.png(tree.element(), ARTICLE, "edit_inline_form.png", 1600, 1000);
 		String value = unique("Edited inline-form");
@@ -152,15 +152,15 @@ public class TreeActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Edit");
 		var tree = screen.thirdLevelView("Edit with view")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3265/view/myexample3274tree"))
-				.treeByName("MyExample3274Tree");
+				.treeByName("myexample3274tree");
 		tree.waitLoaded();
 		tree.rows().clickRow(1).burgerAction("Edit").click();
-		var form = PlatformApp.currentScreen().view().formByName("MyExample3274Form");
+		var form = PlatformApp.currentScreen().view().formByName("myexample3274form");
 		DocShots.png(form.element(), ARTICLE, "edit_with_view.png", 1600, 1000);
 		String value = unique("Edited with view");
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save and Close").click();
-		tree = PlatformApp.currentScreen().view().treeByName("MyExample3274Tree");
+		tree = PlatformApp.currentScreen().view().treeByName("myexample3274tree");
 		assertRowShown(tree, value);
 	}
 

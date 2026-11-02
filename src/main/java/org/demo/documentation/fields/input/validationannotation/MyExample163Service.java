@@ -52,7 +52,7 @@ public class MyExample163Service extends VersionAwareResponseService<MyExample16
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"MyExample163FormPopup",
+								"myexample163formpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

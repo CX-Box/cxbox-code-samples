@@ -65,7 +65,7 @@ public class Column2DTest extends BaseTestForSamples {
 		Column2DWidget constTitle = screen.secondLevelView("Constant title").column2D("Sales per client");
 		DocShots.png(constTitle.element(), ARTICLE, "consttitle.png", WIDTH, HEIGHT);
 
-		Column2DWidget emptyTitle = screen.secondLevelView("Empty title").column2DByName("MyExample4253Column2DEmptyTitle");
+		Column2DWidget emptyTitle = screen.secondLevelView("Empty title").column2DByName("myexample4253column2demptytitle");
 		emptyTitle.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(emptyTitle.element(), ARTICLE, "emptytitle.png", WIDTH, HEIGHT);
 	}
@@ -76,8 +76,8 @@ public class Column2DTest extends BaseTestForSamples {
 	@Description("The chart is shown while Custom Field of the form is greater than 5; the condition is recalculated on save")
 	void showCondition() {
 		var view = PlatformApp.screen("Column2D widget show condition").view();
-		var form = view.formByName("MyExample4276Form");
-		Column2DWidget chart = view.column2DByName("MyExample4276Column2D");
+		var form = view.formByName("myexample4276form");
+		Column2DWidget chart = view.column2DByName("myexample4276column2d");
 		var customField = form.number("Custom Field");
 		BigDecimal initialValue = customField.getValue();
 
@@ -104,7 +104,7 @@ public class Column2DTest extends BaseTestForSamples {
 	@Description("groupFieldKey splits every client by product; stack puts the bars of a client one on another")
 	void group() {
 		var screen = PlatformApp.screen("Column2D widget group");
-		Column2DWidget grouped = screen.secondLevelView("Grouped").column2DByName("MyExample4254Column2D");
+		Column2DWidget grouped = screen.secondLevelView("Grouped").column2DByName("myexample4254column2d");
 		DocShots.png(grouped.element(), ARTICLE, "group.png", WIDTH, HEIGHT);
 		assertThat(grouped.bars()
 				.filter(row -> "Info Trust".equals(row.xValueField().getValue()))
@@ -115,7 +115,7 @@ public class Column2DTest extends BaseTestForSamples {
 		table.rows().row(0).input("Product").checkValue(value -> assertThat(value).isEqualTo("Equipment"));
 		grouped.mode(Mode.CHART);
 
-		Column2DWidget stacked = screen.secondLevelView("Stacked").column2DByName("MyExample4254Column2DStack");
+		Column2DWidget stacked = screen.secondLevelView("Stacked").column2DByName("myexample4254column2dstack");
 		DocShots.png(stacked.element(), ARTICLE, "stack.png", WIDTH, HEIGHT);
 	}
 
@@ -150,13 +150,13 @@ public class Column2DTest extends BaseTestForSamples {
 	@Description("bgColorKey on the X field colors the groups by the data; bgColor gives all bars one color")
 	void color() {
 		var screen = PlatformApp.screen("Column2D widget color");
-		Column2DWidget calculated = screen.secondLevelView("Calculated color").column2DByName("MyExample4257Column2D");
+		Column2DWidget calculated = screen.secondLevelView("Calculated color").column2DByName("myexample4257column2d");
 		DocShots.png(calculated.element(), ARTICLE, "colorcalculated.png", WIDTH, HEIGHT);
 		calculated.bars()
 				.filter(row -> "Expertise".equals(row.groupField().getValue()))
 				.forEach(row -> row.bgColor().checkValue(color -> assertThat(color).isEqualTo("#30BA8F")));
 
-		Column2DWidget constant = screen.secondLevelView("Constant color").column2DByName("MyExample4257Column2DColorConst");
+		Column2DWidget constant = screen.secondLevelView("Constant color").column2DByName("myexample4257column2dcolorconst");
 		DocShots.png(constant.element(), ARTICLE, "colorconst.png", WIDTH, HEIGHT);
 		constant.bars()
 				.forEach(row -> row.bgColor().checkValue(color -> assertThat(color).isEqualTo("#EDA6A6")));

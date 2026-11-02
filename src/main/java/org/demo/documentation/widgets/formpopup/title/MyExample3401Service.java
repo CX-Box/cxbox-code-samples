@@ -43,13 +43,13 @@ public class MyExample3401Service extends VersionAwareResponseService<MyExample3
 		return Actions.<MyExample3401DTO>builder()
 				.action(act -> act
 						.action("see-constant-title", "See constant title")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3401Formpopup", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3401formpopup", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3401DTO>())
 
 				)
 				.action(act -> act
 						.action("see-custom-title", "See custom title")
-						.withPreAction(PreAction.confirmWithWidget("MyExample3401FormpopupCustomTitle", cfw -> cfw))
+						.withPreAction(PreAction.confirmWithWidget("myexample3401formpopupcustomtitle", cfw -> cfw))
 						.invoker((bc, dto) -> new ActionResultDTO<MyExample3401DTO>())
 
 				)

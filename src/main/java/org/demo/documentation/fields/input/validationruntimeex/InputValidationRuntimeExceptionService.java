@@ -58,7 +58,7 @@ public class InputValidationRuntimeExceptionService extends
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputValidationRuntimeExceptionFormPopup",
+								"inputvalidationruntimeexceptionformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

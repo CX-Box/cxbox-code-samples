@@ -1,0 +1,33 @@
+{
+  "name": "myexample6100cardlist",
+  "title": "CardList",
+  "type": "CardList",
+  "bc": "myexample6100",
+  "fields": [
+    {
+      "title": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    }
+  ],
+  "options": {
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "associate",
+        "delete"
+      ]
+    }
+  }
+}

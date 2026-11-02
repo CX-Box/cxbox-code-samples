@@ -1,0 +1,35 @@
+{
+  "name": "myexample4215pie",
+  "title": "Show condition widget",
+  "type": "Pie1D",
+  "bc": "myExampleBc4215",
+  "showCondition": {
+    "bcName": "myExampleBc4215Parent",
+    "params": {
+      "fieldKey": "customFieldShowCondition",
+      "value": true
+    }
+  },
+  "fields": [
+    {
+      "title": "Sales",
+      "key": "value",
+      "type": "number"
+    },
+    {
+      "title": "Client",
+      "key": "title",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "chart1D": {
+      "valueFieldKey": "value",
+      "titleFieldKey": "title",
+      "total": {
+        "func": "sum",
+        "description": "Total"
+      }
+    }
+  }
+}

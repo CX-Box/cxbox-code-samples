@@ -1,0 +1,48 @@
+{
+  "name": "myexample5061emptytitle",
+  "type": "CardCarouselList",
+  "bc": "myexample5061",
+  "fields": [
+    {
+      "title": "Document",
+      "key": "document",
+      "type": "fileUpload",
+      "fileIdKey": "documentId",
+      "preview": {
+        "enabled": true,
+        "mode": "inline"
+      }
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Custom Field Description",
+      "key": "customFieldDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "card": {
+      "valueFieldKey": "document",
+      "titleFieldKey": "customField",
+      "descriptionFieldKey": "customFieldDescription"
+    },
+    "create": {
+      "widget": "myexample5061form",
+      "style": "popup"
+    },
+    "edit": {
+      "widget": "myexample5061form",
+      "style": "popup"
+    },
+    "actionGroups": {
+      "include": [
+        "create",
+        "delete"
+      ]
+    }
+  }
+}

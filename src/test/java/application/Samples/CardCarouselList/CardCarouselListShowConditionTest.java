@@ -36,8 +36,8 @@ public class CardCarouselListShowConditionTest extends BaseTestForSamples {
 	@Description("The cards are shown while Custom Field Number of the parent form is greater than 5; the condition is recalculated on save")
 	void showConditionByParentEntity() {
 		var view = PlatformApp.screen("CardCarouselList show condition").view();
-		var parent = view.formByName("MyExample5063Parent");
-		var cards = view.cardCarouselListByName("MyExample5064CardCarouselList");
+		var parent = view.formByName("myexample5063parent");
+		var cards = view.cardCarouselListByName("myexample5064cardcarousellist");
 		var customFieldNumber = parent.number("Custom Field Number");
 		BigDecimal initialValue = customFieldNumber.getValue();
 

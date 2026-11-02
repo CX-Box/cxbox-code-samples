@@ -39,8 +39,8 @@ public class StatsBlockShowConditionTest extends BaseTestForSamples {
 		var view = PlatformApp.screen("StatsBlock show condition")
 				.view()
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample4230"));
-		var parent = view.formByName("MyExample4232Parent");
-		var stats = view.statBlockByName("MyExample4233Child");
+		var parent = view.formByName("myexample4232parent");
+		var stats = view.statBlockByName("myexample4233child");
 		var customFieldNumber = parent.number("Custom Field Number");
 		BigDecimal initialValue = customFieldNumber.getValue();
 

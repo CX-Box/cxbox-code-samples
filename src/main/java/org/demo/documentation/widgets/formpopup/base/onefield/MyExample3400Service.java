@@ -67,7 +67,7 @@ public class MyExample3400Service extends VersionAwareResponseService<MyExample3
 						.withAutoSaveBefore()
 						.action("save-send", "Save and send on approval")
 						.withPreAction(PreAction.confirmWithWidget(
-								"MyExample3400Formpopup", cfw -> cfw
+								"myexample3400formpopup", cfw -> cfw
 										.title("Approve?")
 										.yesText("Approve and Save")
 										.noText("Cancel")))

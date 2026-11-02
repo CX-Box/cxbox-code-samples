@@ -64,7 +64,7 @@ public class MyExample5019Service extends VersionAwareResponseService<MyExample5
 		return Actions.<MyExample5019DTO>builder()
 				.action(act -> act
 						.action("save-send", "see FormPopup")
-						.withPreAction(PreAction.confirmWithWidget("MyExample5019Formpopup", cfw -> cfw
+						.withPreAction(PreAction.confirmWithWidget("myexample5019formpopup", cfw -> cfw
 								.title("Approval?")
 								.yesText("Approve and Save")
 								.noText("Cancel")))

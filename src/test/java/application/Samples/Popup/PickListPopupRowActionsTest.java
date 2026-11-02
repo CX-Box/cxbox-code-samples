@@ -75,7 +75,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 				.screen("PickListPopup widget action")
 				.secondLevelView("Create")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3072inlinecreatelist"))
-				.listByName("MyExample3072List");
+				.listByName("myexample3072list");
 		var popup = page.rows().clickRow(0).pickList("Custom Field Pick").openListPopup();
 		var list = popup.list();
 		DocShots.gif(ARTICLE, "create_inline.gif", 1200, 760, DocShots.Frame.WITH_SIDEBAR);
@@ -105,7 +105,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Create");
 		var page = screen.thirdLevelView("Inline-form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3072listinlineform"))
-				.listByName("MyExample3072ListInlineForm");
+				.listByName("myexample3072listinlineform");
 		var popup = page.rows().clickRow(0).pickList("Custom Field Pick").openListPopup();
 		var list = popup.listInlineForm();
 		DocShots.gif(ARTICLE, "create_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
@@ -132,7 +132,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 				.screen("PickListPopup widget action")
 				.secondLevelView("CancelCreate")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3198form"))
-				.formByName("MyExample3198Form");
+				.formByName("myexample3198form");
 		var popup = form.pickList(FIELD).openListPopup();
 		int before = popup.list().rows().element().size();
 		createAndCancel(popup.list(), "actioncancel.gif", 1200, 760);
@@ -150,7 +150,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("CancelCreate");
 		var form = screen.thirdLevelView("Action cancel-create OnCancel")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3198formoncancel"))
-				.formByName("MyExample3198FormOnCancel");
+				.formByName("myexample3198formoncancel");
 		var popup = form.pickList(FIELD).openListPopup();
 		createAndCancel(popup.list(), "actioncanceloncancel.gif", 1200, 760);
 		// the onCancel action of the sample drills down to the create view
@@ -167,7 +167,7 @@ public class PickListPopupRowActionsTest extends BaseTestForSamples {
 		screen.secondLevelView("Edit");
 		var page = screen.thirdLevelView("Inline-Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3092/view/myexample3092listinlineform"))
-				.listByName("MyExample3092ListInlineForm");
+				.listByName("myexample3092listinlineform");
 		var popup = page.rows().clickRow(0).pickList("Custom Field PickList").openListPopup();
 		var list = popup.listInlineForm();
 		DocShots.gif(ARTICLE, "edit_with_widget.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);

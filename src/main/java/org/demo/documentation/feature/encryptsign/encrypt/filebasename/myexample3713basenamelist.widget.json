@@ -1,0 +1,55 @@
+{
+  "name": "myexample3713basenamelist",
+  "title": "",
+  "type": "List",
+  "bc": "myexample3713",
+  "fields": [
+    {
+      "title": "File",
+      "key": "file",
+      "type": "fileUpload",
+      "fileIdKey": "fileId",
+      "preview": {
+        "enabled": true
+      }
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "dictionary",
+      "bgColorKey": "color"
+    },
+    {
+      "title": "File Encrypted",
+      "key": "fileEncryptRO",
+      "type": "fileUpload",
+      "fileIdKey": "fileEncryptId"
+    },
+    {
+      "title": "File Encrypt Name",
+      "key": "NAME_FILE_OVERRIDE_ENCRYPT",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "cryptoGenerator": [
+      {
+        "type": "encrypt",
+        "actionName": "documentEncrypt",
+        "documentFileIdKey": "fileId",
+        "documentFileNameKey": "file",
+        "encryptedFileIdKey": "fileEncryptId",
+        "encryptedFileNameKey": "fileEncrypt",
+        "encryptedFileBaseNameKey": "NAME_FILE_OVERRIDE_ENCRYPT"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "save",
+        "create",
+        "documentEncrypt",
+        "cancel-create"
+      ]
+    }
+  }
+}

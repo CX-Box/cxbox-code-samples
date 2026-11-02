@@ -68,7 +68,7 @@ public class Pie1DTest extends BaseTestForSamples {
 		Pie1DWidget constTitle = screen.secondLevelView("Constant title").pie1D(TITLE);
 		DocShots.png(constTitle.element(), ARTICLE, "consttitle.png", WIDTH, HEIGHT);
 
-		Pie1DWidget emptyTitle = screen.secondLevelView("Constant title empty").pie1DByName("MyExample4217Pie");
+		Pie1DWidget emptyTitle = screen.secondLevelView("Constant title empty").pie1DByName("myexample4217pie");
 		emptyTitle.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(emptyTitle.element(), ARTICLE, "empytitle.png", WIDTH, HEIGHT);
 	}
@@ -102,22 +102,22 @@ public class Pie1DTest extends BaseTestForSamples {
 	@Description("options.chart1D.total sets the text in the center: func over the value or over argFieldKeys, a constant value, innerSpace 0 draws a full pie")
 	void total() {
 		var screen = PlatformApp.screen("Pie1D total");
-		Pie1DWidget sum = screen.secondLevelView("Aggregate function").pie1DByName("MyExample4261Sum");
+		Pie1DWidget sum = screen.secondLevelView("Aggregate function").pie1DByName("myexample4261sum");
 		sum.checkTotal(total -> assertThat(total).contains("Total").contains("62364"));
 		DocShots.png(sum.element(), ARTICLE, "totalfunc.png", WIDTH, HEIGHT);
 
-		Pie1DWidget avg = screen.secondLevelView("Average").pie1DByName("MyExample4261Avg");
+		Pie1DWidget avg = screen.secondLevelView("Average").pie1DByName("myexample4261avg");
 		avg.checkTotal(total -> assertThat(total).contains("Average").contains("6929.33"));
 
-		Pie1DWidget argFields = screen.secondLevelView("Aggregate other field").pie1DByName("MyExample4261ArgFields");
+		Pie1DWidget argFields = screen.secondLevelView("Aggregate other field").pie1DByName("myexample4261argfields");
 		argFields.checkTotal(total -> assertThat(total).contains("Sales count").contains("66"));
 		DocShots.png(argFields.element(), ARTICLE, "totalargfields.png", WIDTH, HEIGHT);
 
-		Pie1DWidget value = screen.secondLevelView("Constant text").pie1DByName("MyExample4261Value");
+		Pie1DWidget value = screen.secondLevelView("Constant text").pie1DByName("myexample4261value");
 		value.checkTotal(total -> assertThat(total.trim()).isEqualTo("Q3"));
 		DocShots.png(value.element(), ARTICLE, "totalvalue.png", WIDTH, HEIGHT);
 
-		Pie1DWidget innerSpace = screen.secondLevelView("Without hole").pie1DByName("MyExample4261InnerSpace");
+		Pie1DWidget innerSpace = screen.secondLevelView("Without hole").pie1DByName("myexample4261innerspace");
 		innerSpace.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(innerSpace.element(), ARTICLE, "totalinnerspace.png", WIDTH, HEIGHT);
 	}
@@ -128,9 +128,9 @@ public class Pie1DTest extends BaseTestForSamples {
 	@Description("valuePosition puts the values inside the segments (default) or outside the pie")
 	void labelPosition() {
 		var screen = PlatformApp.screen("Pie1D label position");
-		Pie1DWidget inner = screen.secondLevelView("Inner").pie1DByName("MyExample4262Inner");
+		Pie1DWidget inner = screen.secondLevelView("Inner").pie1DByName("myexample4262inner");
 		DocShots.png(inner.element(), ARTICLE, "labelinner.png", WIDTH, HEIGHT);
-		Pie1DWidget outer = screen.secondLevelView("Outer").pie1DByName("MyExample4262Outer");
+		Pie1DWidget outer = screen.secondLevelView("Outer").pie1DByName("myexample4262outer");
 		outer.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(outer.element(), ARTICLE, "labelouter.png", WIDTH, HEIGHT);
 	}
@@ -175,8 +175,8 @@ public class Pie1DTest extends BaseTestForSamples {
 		var view = PlatformApp.screen("Pie1D show condition")
 				.secondLevelView("Show condition by parent entity")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample4215"));
-		var parent = view.formByName("MyExample4215Parent");
-		Pie1DWidget chart = view.pie1DByName("MyExample4215Pie");
+		var parent = view.formByName("myexample4215parent");
+		Pie1DWidget chart = view.pie1DByName("myexample4215pie");
 		var customFieldNumber = parent.number("Custom Field Number");
 		BigDecimal initialValue = customFieldNumber.getValue();
 

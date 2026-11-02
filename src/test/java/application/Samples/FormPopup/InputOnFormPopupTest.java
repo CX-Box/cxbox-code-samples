@@ -71,7 +71,7 @@ public class InputOnFormPopupTest extends BaseTestForSamples {
 				.secondLevelView("FormPopup")
 				.form("Activate FormPopup")
 				.actions().click("Activate FormPopup");
-		var formPopup = PlatformApp.currentScreen().view().formPopupByName("InputBasicFormPopup");
+		var formPopup = PlatformApp.currentScreen().view().formPopupByName("inputbasicformpopup");
 		formPopup.input("customField")
 				.setValue("5700")
 				.checkValue(value -> assertThat(value).isEqualTo("5700"))

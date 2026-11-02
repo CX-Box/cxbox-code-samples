@@ -40,14 +40,14 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 	private PlatformTreeWidgetInline basicTree() {
 		return PlatformApp.screen("Tree widget basic")
 				.secondLevelView("Tree Basic")
-				.treeByName("MyExample3281Tree");
+				.treeByName("myexample3281tree");
 	}
 
 	/** Business example: more roots and more children than the page size; the default filter is cleared. */
 	private PlatformTreeWidgetInline bigTree() {
 		var tree = PlatformApp.screen("Tree widget basic")
 				.secondLevelView("Business example")
-				.treeByName("myexample3261TreeList");
+				.treeByName("myexample3261treelist");
 		tree.waitLoaded();
 		tree.headers().clearFilters();
 		return tree.waitLoaded();
@@ -157,7 +157,7 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample359/view/myexample359tree"));
 		// TODO CXBOX-1394: a tree opened by a tab after a view of the same bc stays empty until the page is reloaded
 		Selenide.refresh();
-		var tree = view.treeByName("MyExample359Tree");
+		var tree = view.treeByName("myexample359tree");
 		tree.waitLoaded();
 		assertThat(tree.rows().element().size()).isGreaterThan(0);
 		assertThat(tree.pagination().isLastPage()).isFalse();
@@ -173,7 +173,7 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 				.screen("Tree widget customization columns")
 				.secondLevelView("Tree widget")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3268/view/myexample3268tree"))
-				.treeByName("MyExample3268Tree");
+				.treeByName("myexample3268tree");
 		tree.waitLoaded();
 		DocShots.png(tree.settings().open(), ARTICLE, "columns_menu.png", 1600, 1000);
 		tree.settings().close();
@@ -181,14 +181,14 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 				.screen("Tree widget customization columns")
 				.secondLevelView("Tree widget hidden columns")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3268/view/myexample3268listhidden"))
-				.treeByName("MyExample3268TreeHiddenFields");
+				.treeByName("myexample3268treehiddenfields");
 		int hiddenColumns = TreeNavigation.columnNames(hidden.element(), hidden.getExpectations()).size();
 		DocShots.png(hidden.element(), ARTICLE, "columns_hidden.png", 1600, 1000);
 		var all = PlatformApp
 				.screen("Tree widget customization columns")
 				.secondLevelView("Tree widget all fields")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3268/view/myexample3268listallfields"))
-				.treeByName("MyExample3268TreeAllFields");
+				.treeByName("myexample3268treeallfields");
 		int allColumns = TreeNavigation.columnNames(all.element(), all.getExpectations()).size();
 		DocShots.png(all.element(), ARTICLE, "columns_all.png", 1600, 1000);
 		assertThat(allColumns).isGreaterThan(hiddenColumns);
@@ -204,7 +204,7 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 		var view = screen.thirdLevelView("Tree").checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3860tree"));
 		// TODO CXBOX-1394: a tree opened by a tab after a view of the same bc stays empty until the page is reloaded
 		Selenide.refresh();
-		nodeMore(view.treeByName("MyExample3860Tree"), "more_hasnext.png");
+		nodeMore(view.treeByName("myexample3860tree"), "more_hasnext.png");
 	}
 
 	/** nextAndPreviousSmart: More is shown while the backend returns more records than the limit of the node. */
@@ -217,7 +217,7 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 		var view = screen.thirdLevelView("Tree").checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3861tree"));
 		// TODO CXBOX-1394: a tree opened by a tab after a view of the same bc stays empty until the page is reloaded
 		Selenide.refresh();
-		nodeMore(view.treeByName("MyExample3861Tree"), "more_smart.png");
+		nodeMore(view.treeByName("myexample3861tree"), "more_smart.png");
 	}
 
 	/** The root has more children than the page: More loads the next page and keeps the loaded rows. */

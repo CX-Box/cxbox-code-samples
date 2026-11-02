@@ -55,7 +55,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget basic")
 				.secondLevelView("List")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3330/view/myexample3330list"))
-				.listByName("MyExample3330List");
+				.listByName("myexample3330list");
 		assertThat(list.rows().element().size()).isGreaterThan(0);
 		DocShots.png(list.element(), ARTICLE, "assoc_list.png", 1600, 1000);
 		DocShots.png(list.element(), ARTICLE, "assoc_list_button.png", 1600, 1000);
@@ -63,7 +63,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget basic")
 				.secondLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3330/view/myexample3330form"))
-				.formByName("MyExample3330Form");
+				.formByName("myexample3330form");
 		DocShots.png(form.element(), ARTICLE, "assoc_form.png", 1600, 1000);
 		var popup = form.multivalueTree(FIELD).openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
@@ -80,7 +80,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget action button")
 				.checkUrl(url -> assertThat(url).endsWith("#/screen/myexample3333"))
 				.view()
-				.formByName("MyExample3333Form");
+				.formByName("myexample3333form");
 		DocShots.png(form.element(), ARTICLE, "choose_button.png", 1600, 1000);
 		form.actions().action("Popup Assoc").click();
 		AssocTreeModal.modalElement().shouldBe(Condition.visible, form.getExpectations().getTimeout());
@@ -96,7 +96,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget title")
 				.secondLevelView("AssocTreePopup widget const title")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3336/view/myexample3336title"))
-				.formByName("MyExample3336WithTitle");
+				.formByName("myexample3336withtitle");
 		var popup = form.multivalueTree("Custom Field Multivalue").openPopup();
 		assertThat(popup.title()).isEqualTo("AssocTreePopup with title");
 		DocShots.png(popup.dialog(), ARTICLE, "consttitle.png", 1600, 1000);
@@ -105,7 +105,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget title")
 				.secondLevelView("AssocTreePopup widget empty title")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3336/view/myexample3336emptytitle"))
-				.formByName("MyExample3336EmptyTitle");
+				.formByName("myexample3336emptytitle");
 		popup = form.multivalueTree("Custom Field Multivalue").openPopup();
 		assertThat(popup.title()).isEmpty();
 		DocShots.png(popup.dialog(), ARTICLE, "empytitle.png", 1600, 1000);
@@ -120,7 +120,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("AssocTreePopup widget color title")
 				.secondLevelView("Color")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3329/view/myexample3332color"))
-				.formByName("MyExample3332Color");
+				.formByName("myexample3332color");
 		var popup = form.multivalueTree("Custom Field Multi").openPopup();
 		assertThat(popup.tree().rows().element().size()).isGreaterThan(0);
 		popup.tree().rows().row(0).expandRow();
@@ -138,7 +138,7 @@ public class AssocTreePopupTest extends BaseTestForSamples {
 				.screen("Tree widget basic")
 				.secondLevelView("Business example")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3261/view/myexample3261list"))
-				.formByName("MyExample3263List");
+				.formByName("myexample3263list");
 		var popup = form.multivalueTree("Departments Assoc").openPopup();
 		popup.expand("Departments", NODE);
 		assertThat(popup.children("Departments", NODE)).isNotEmpty();

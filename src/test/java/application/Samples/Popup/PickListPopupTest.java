@@ -35,7 +35,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 				.screen("PickListPopup widget basic")
 				.secondLevelView("PickListPopup List Widget")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3067/view/myexample3079list"))
-				.listByName("MyExample3079List");
+				.listByName("myexample3079list");
 		var row = list.rows().clickRow(0);
 		var field = row.pickList("Custom Field Pick List");
 		DocShots.gif(ARTICLE, "pickListPopupBasic.gif", 1660, 760, DocShots.Frame.WITH_SIDEBAR);
@@ -53,7 +53,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 		screen.secondLevelView("nextAndPreviousSmart");
 		var form = screen.thirdLevelView("PickListPopup")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3861/view/myexample3861picklistpopup"))
-				.formByName("MyExample3861ForPickListPopup");
+				.formByName("myexample3861forpicklistpopup");
 		var field = form.pickList("Custom Field PickList");
 		field.setValue("Custom Field", "test data2");
 		field.checkValue(v -> assertThat(v).isEqualTo("test data2"));
@@ -68,7 +68,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickListPopup widget with title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3068/view/myexample3068form"))
-				.formByName("MyExample3068Form");
+				.formByName("myexample3068form");
 		var popup = form.pickList(FIELD).openListPopup();
 		assertThat(popup.title()).isEqualTo("Constant Title");
 		DocShots.png(popup.dialog(), ARTICLE, "pickListPopupWithTitle.png", 1600, 1000);
@@ -83,7 +83,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickListPopup widget without title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3068/view/myexample3069form"))
-				.formByName("MyExample3069Form");
+				.formByName("myexample3069form");
 		var popup = form.pickList(FIELD).openListPopup();
 		assertThat(popup.title()).isEmpty();
 		DocShots.png(popup.dialog(), ARTICLE, "pickListPopupWithoutTitle.png", 1600, 1000);
@@ -99,7 +99,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 		screen.secondLevelView("PickListPopup widget calculated title");
 		var form = screen.thirdLevelView("Form")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3068/view/myexample3071form"))
-				.formByName("MyExample3071Form");
+				.formByName("myexample3071form");
 		var popup = form.pickList(FIELD).openListPopup();
 		assertThat(popup.title()).startsWith("customFieldPick:");
 		DocShots.png(popup.dialog(), ARTICLE, "pickListPopupCalculatedTitle.png", 1600, 1000);
@@ -114,7 +114,7 @@ public class PickListPopupTest extends BaseTestForSamples {
 				.screen("PickListPopup widget color title")
 				.secondLevelView("Color")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample3060/view/myexample3060form"))
-				.formByName("MyExample3060Form");
+				.formByName("myexample3060form");
 		var popup = form.pickList("Custom Field Picklist").openListPopup();
 		assertThat(popup.list().rows().element().size()).isGreaterThan(0);
 		DocShots.png(popup.dialog(), ARTICLE, "pickListPopupColor.png", 1600, 1000);

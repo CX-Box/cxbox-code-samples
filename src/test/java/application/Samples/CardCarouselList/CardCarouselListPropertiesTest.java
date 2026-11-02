@@ -35,7 +35,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 		constant.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(constant.element(), ARTICLE, "consttitle.png", 1660, 760);
 
-		var empty = screen.secondLevelView("Empty title").cardCarouselListByName("MyExample5061EmptyTitle");
+		var empty = screen.secondLevelView("Empty title").cardCarouselListByName("myexample5061emptytitle");
 		empty.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(empty.element(), ARTICLE, "emptytitle.png", 1660, 760);
 	}
@@ -47,7 +47,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("The title shows the field of the selected card with the calculated color")
 	void titleColor() {
 		var cards = PlatformApp.screen("CardCarouselList color title").secondLevelView("Calculated color")
-				.cardCarouselListByName("MyExample5062CardCarouselList");
+				.cardCarouselListByName("myexample5062cardcarousellist");
 		cards.rows().row(0).checkTitle(title -> assertThat(title).isEqualTo("Certificate"));
 		DocShots.png(cards.element(), ARTICLE, "colorwidget.png", 1660, 760);
 	}
@@ -59,7 +59,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("The first dictionary field is shown in the middle of the card")
 	void status() {
 		var cards = PlatformApp.screen("CardCarouselList status").view()
-				.cardCarouselListByName("MyExample5065CardCarouselList");
+				.cardCarouselListByName("myexample5065cardcarousellist");
 		cards.rows().row(0).checkStatus(status -> assertThat(status).isEqualTo("Rejected"));
 		cards.rows().row(1).checkStatus(status -> assertThat(status).isEqualTo("Approved"));
 		cards.rows().row(2).checkStatus(status -> assertThat(status).isEqualTo("New"));
@@ -73,10 +73,10 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("A click on the title with the link opens the form of the record of the card")
 	void drilldown() {
 		var cards = PlatformApp.screen("CardCarouselList drilldown").view()
-				.cardCarouselListByName("MyExample5066CardCarouselList");
+				.cardCarouselListByName("myexample5066cardcarousellist");
 		DocShots.gif(ARTICLE, "drilldown.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.rows().row(2).drilldown(url -> assertThat(url).contains("/view/myexample5066form/"));
-		PlatformApp.currentScreen().view().formByName("MyExample5066DrillDownForm")
+		PlatformApp.currentScreen().view().formByName("myexample5066drilldownform")
 				.input("Custom Field").checkValue(value -> assertThat(value).isEqualTo("Price list"));
 		DocShots.stop();
 	}
@@ -88,7 +88,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("The read widget above the strip shows the file of the selected card")
 	void read() {
 		var cards = PlatformApp.screen("CardCarouselList read").view()
-				.cardCarouselListByName("MyExample5067CardCarouselList");
+				.cardCarouselListByName("myexample5067cardcarousellist");
 		DocShots.gif(ARTICLE, "read.gif", 1900, 1250, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.rows().row(2).click();
 		cards.rows().row(2).checkTitle(title -> assertThat(title).isEqualTo("Price list"));
@@ -104,7 +104,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("The card shows the preview, the status, the title and the description")
 	void mainVisualParts() {
 		var cards = PlatformApp.screen("CardCarouselList status").view()
-				.cardCarouselListByName("MyExample5065CardCarouselList");
+				.cardCarouselListByName("myexample5065cardcarousellist");
 		cards.rows().row(0)
 				.checkStatus(status -> assertThat(status).isEqualTo("Rejected"))
 				.checkTitle(title -> assertThat(title).isEqualTo("Certificate"))
@@ -119,7 +119,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("Without options.edit the card has the eye; it opens the file of the card in the popup")
 	void view() {
 		var cards = PlatformApp.screen("CardCarouselList read").view()
-				.cardCarouselListByName("MyExample5067CardCarouselList");
+				.cardCarouselListByName("myexample5067cardcarousellist");
 		DocShots.gif(ARTICLE, "view.gif", 1200, 900, DocShots.Frame.WITH_SIDEBAR);
 		var viewer = cards.rows().row(0).clickEye();
 		assertThat(viewer.getTitle()).isEqualTo("Certificate.png");
@@ -134,7 +134,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 	@Description("The search box of the widget leaves the cards with the text in the title")
 	void fullTextSearch() {
 		var cards = PlatformApp.screen("CardCarouselList full text search").view()
-				.cardCarouselListByName("MyExample5068CardCarouselList");
+				.cardCarouselListByName("myexample5068cardcarousellist");
 		DocShots.gif(ARTICLE, "fulltextsearch.gif", 1660, 760, DocShots.Frame.WITHOUT_SIDEBAR);
 		cards.fullTextSearch("Invoice");
 		assertThat(cards.rows().streamCurrentPage()).hasSize(1);
@@ -153,7 +153,7 @@ public class CardCarouselListPropertiesTest extends BaseTestForSamples {
 		var cards = PlatformApp.screen("File options multi-upload files")
 				.secondLevelView("CardCarouselList")
 				.checkUrl(url -> assertThat(url).contains("#/screen/myexample6100/view/myexample6100cardcarousellist"))
-				.cardCarouselListByName("MyExample6100CardCarouselList");
+				.cardCarouselListByName("myexample6100cardcarousellist");
 		long before = cards.rows().streamCurrentPage().count();
 		cards.actions().upload("Add Files", CardCarouselListBasicTest.resourceFile("Hope_of_Humanity.jpg"));
 		assertThat(cards.rows().streamCurrentPage()).hasSize((int) before + 1);

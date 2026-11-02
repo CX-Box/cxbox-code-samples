@@ -51,7 +51,7 @@ public class InputPlaceholderService extends VersionAwareResponseService<InputPl
 						.scope(ActionScope.BC)
 						.available(ActionAvailableChecker.ALWAYS_TRUE)
 						.withPreAction(PreAction.confirmWithWidget(
-								"InputPlaceholderFormPopup",
+								"inputplaceholderformpopup",
 								cfw -> cfw
 										.title("CustomTitleText")
 										.yesText("CustomYesText")

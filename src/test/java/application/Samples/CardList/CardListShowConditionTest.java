@@ -36,8 +36,8 @@ public class CardListShowConditionTest extends BaseTestForSamples {
 	@Description("The cards are shown while Custom Field Number of the parent form is greater than 5; the condition is recalculated on save")
 	void showConditionByParentEntity() {
 		var view = PlatformApp.screen("CardList show condition").view();
-		var parent = view.formByName("MyExample5303Parent");
-		var cards = view.cardListByName("MyExample5313CardList");
+		var parent = view.formByName("myexample5303parent");
+		var cards = view.cardListByName("myexample5313cardlist");
 		var customFieldNumber = parent.number("Custom Field Number");
 		BigDecimal initialValue = customFieldNumber.getValue();
 
