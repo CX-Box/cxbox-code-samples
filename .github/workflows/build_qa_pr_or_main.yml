@@ -138,8 +138,8 @@ jobs:
       # threadCount=1:
       # uses one thread inside each JVM process.
       #
-      # continue-on-error:
-      # allows workflow execution to continue if tests fail.
+      # A failure of this step fails the job. The steps after it have if: always(), so the logs, the allure report and the
+      # cleanup are not lost.
       # The slow tests (@Tag("Slow")) wait out the lifetime of an access token, about ten minutes in total. In one run they
       # hold a fork and its browser all that time: the queue of the other classes waits, and the neighbours of that fork
       # meet a frozen tab. They run as a second surefire process instead, in its own fork with its own browser, at the
@@ -149,7 +149,6 @@ jobs:
       # Java 21 job keeps three browsers instead of four.
       - name: Run Tests
         id: run_tests
-        continue-on-error: true
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
@@ -502,6 +501,13 @@ jobs:
             
             [Allure Report]( https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-21/)
 
+      # A cancelled test job is "cancelled", not "failure": this job, which always runs, turns it into a failure as well.
+      - name: Fail if tests did not pass
+        if: always()
+        run: |
+          echo "tests: ${{ needs.build-qa-pr-and-check-autotests.result }}"
+          [ "${{ needs.build-qa-pr-and-check-autotests.result }}" = "success" ]
+
   build-qa-main-and-check-autotests:
     # Run workflow only after push to main branch.
     # Does not run for Pull Requests.
@@ -579,9 +585,9 @@ jobs:
 
       # The same split as in the job of a pull request: the slow tests run as a second process, in the Java 17 job only.
       # In one run with the rest they left the browsers of their forks frozen, and the next classes there failed.
+      # A failure of this step fails the job, the steps after it have if: always().
       - name: Run Tests
         id: run_tests
-        continue-on-error: true
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
@@ -723,3 +729,10 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Java 17: https://cx-box.github.io/cxbox-code-samples-allure/main/java-17/" >> $GITHUB_STEP_SUMMARY
           echo "Java 21: https://cx-box.github.io/cxbox-code-samples-allure/main/java-21/" >> $GITHUB_STEP_SUMMARY
+
+      # A cancelled test job is "cancelled", not "failure": this job, which always runs, turns it into a failure as well.
+      - name: Fail if tests did not pass
+        if: always()
+        run: |
+          echo "tests: ${{ needs.build-qa-main-and-check-autotests.result }}"
+          [ "${{ needs.build-qa-main-and-check-autotests.result }}" = "success" ]

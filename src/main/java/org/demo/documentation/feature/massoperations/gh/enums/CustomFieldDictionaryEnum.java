@@ -13,6 +13,7 @@ import java.util.Objects;
 public enum CustomFieldDictionaryEnum {
 	HIGH("High"),
 	MIDDLE("Middle"),
+	ERROR("Error"),
 	LOW("Low");
 
 	@JsonValue

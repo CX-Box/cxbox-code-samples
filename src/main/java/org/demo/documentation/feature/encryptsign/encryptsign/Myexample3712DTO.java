@@ -7,6 +7,7 @@ import org.cxbox.api.data.dto.DataResponseDTO;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.encryptsign.encryptsign.enums.CustomFieldDictionaryEnum;
 import org.demo.documentation.feature.encryptsign.encryptsign.enums.StatusEncryptSignEnum;
 
 import java.util.Optional;
@@ -51,6 +52,9 @@ public class Myexample3712DTO extends DataResponseDTO {
 
 	private String color;
 
+	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
+	private CustomFieldDictionaryEnum customFieldDictionary;
+
 	public Myexample3712DTO(Myexample3712 entity) {
 		this.id = Optional.of(entity).map(BaseEntity::getId).map(String::valueOf).orElse(null);
 		this.file = entity.getFile();
@@ -65,6 +69,7 @@ public class Myexample3712DTO extends DataResponseDTO {
 		this.fileSignId = entity.getFileSignId();
 		this.status = entity.getStatus();
 		this.color = Optional.ofNullable(entity.getStatus()).map(StatusEncryptSignEnum.colors::get).orElse(null);
+		this.customFieldDictionary = entity.getCustomFieldDictionary();
 	}
 
 }
