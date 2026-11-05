@@ -65,7 +65,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	}
 
 	private static long getRequests(String api, String bcName) {
-		var url = Pattern.compile(".*/api/v1/" + api + "/.*/" + bcName + "(\\?.*)?$");
+		// the row meta url ends with the id of the record
+		var url = Pattern.compile(".*/api/v1/" + api + "/.*/" + bcName + "(/[^/?]+)?(\\?.*)?$");
 		return BrowserDevTools.networkRequests().stream()
 				.filter(request -> "GET".equals(request.method()) && url.matcher(request.url()).matches())
 				.count();
@@ -299,7 +300,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	@Test
 	@Tag("Positive")
 	@DisplayName("9. Parent list without records")
-	@Description("The parent list is shown and has no records, its child list with showCondition has no parent cursor. forceActive shows the empty child list, the data of the child is not requested")
+	@Description("The parent list is shown and has no records, its child list with showCondition has no parent cursor. forceActive shows the empty child list, the data of the child is not requested, the loaded empty parent list is not requested again")
 	void emptyParentList() {
 		var view = view("Empty parent");
 		var form = parentForm(view);
@@ -313,6 +314,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 		assertThat(child.rows().streamCurrentPage()).isEmpty();
 		assertThat(dataRequests("myexample1454")).isZero();
 		assertThat(rowMetaRequests("myexample1454")).isZero();
+		assertThat(dataRequests("myexample1453")).isZero();
+		assertThat(rowMetaRequests("myexample1453")).isZero();
 
 		restoreParent(form);
 	}
