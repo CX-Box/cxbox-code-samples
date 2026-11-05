@@ -68,7 +68,7 @@ public class FullTextSearchTest extends BaseTestForSamples {
 		var view = screen.thirdLevelView("Tree");
 		// TODO CXBOX-1394: a tree opened by a tab after a view of the same bc stays empty until the page is reloaded
 		Selenide.refresh();
-		var tree = view.treeByName("MyExample3614Tree");
+		var tree = view.treeByName("myexample3614tree");
 		// the first request of a sample after the start of the application is slow
 		tree.element().shouldBe(Condition.visible, tree.getExpectations().getTimeout().multipliedBy(10));
 		tree.waitLoaded();
