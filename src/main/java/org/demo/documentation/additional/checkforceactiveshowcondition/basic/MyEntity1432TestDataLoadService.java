@@ -13,6 +13,11 @@ import org.demo.documentation.additional.checkforceactiveshowcondition.basic.tax
 import org.demo.documentation.additional.checkforceactiveshowcondition.common.MyEntity1436;
 import org.demo.documentation.additional.checkforceactiveshowcondition.common.MyEntity1436Repository;
 import org.demo.documentation.additional.checkforceactiveshowcondition.groupinghierarchy.MyExample1443Service;
+import org.demo.documentation.additional.checkforceactiveshowcondition.hiddenchain.MyExample1448Service;
+import org.demo.documentation.additional.checkforceactiveshowcondition.hiddenchain.MyExample1449Service;
+import org.demo.documentation.additional.checkforceactiveshowcondition.hiddenchain.MyExample1450Service;
+import org.demo.documentation.additional.checkforceactiveshowcondition.nowidgetparent.MyExample1451Service;
+import org.demo.documentation.additional.checkforceactiveshowcondition.nowidgetparent.MyExample1452Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.outsidehierarchy.MyExample1441Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.outsidehierarchy.MyExample1447Service;
 import org.demo.documentation.additional.checkforceactiveshowcondition.parentfilter.MyExample1446Service;
@@ -78,6 +83,15 @@ public class MyEntity1432TestDataLoadService {
 
 		repository1436.save(child(MyExample1446Service.SCENARIO, parent, "Active record").setCrsStatus(CrsStatusEnum.ACTIVE_NFE));
 		repository1436.save(child(MyExample1446Service.SCENARIO, parent, "Passive record").setCrsStatus(CrsStatusEnum.PASSIVE_NFE));
+
+		MyEntity1436 hiddenChild = repository1436.save(child(MyExample1448Service.SCENARIO, parent, "Hidden child"));
+		MyEntity1436 hiddenGrandchild = repository1436.save(child(MyExample1449Service.SCENARIO, null, "Hidden grandchild")
+				.setOwnerId(hiddenChild.getId()));
+		repository1436.save(child(MyExample1450Service.SCENARIO, null, "Hidden great-grandchild").setOwnerId(hiddenGrandchild.getId()));
+
+		MyEntity1436 noWidgetParent = repository1436.save(child(MyExample1451Service.SCENARIO, parent, "No widget parent"));
+		repository1436.save(child(MyExample1452Service.SCENARIO, null, "Child of no widget parent").setOwnerId(noWidgetParent.getId()));
+		// myexample1453 (MyExample1453Service) has no records: myexample1454 has no parent cursor
 	}
 
 	private static MyEntity1436 child(String scenario, MyEntity1432 parent, String country) {

@@ -54,7 +54,18 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	 * GET data requests of the bc since {@link BrowserDevTools#clearNetworkLog()}
 	 */
 	private static long dataRequests(String bcName) {
-		var url = Pattern.compile(".*/api/v1/data/.*/" + bcName + "(\\?.*)?$");
+		return getRequests("data", bcName);
+	}
+
+	/**
+	 * GET row meta requests of the bc since {@link BrowserDevTools#clearNetworkLog()}
+	 */
+	private static long rowMetaRequests(String bcName) {
+		return getRequests("row-meta", bcName);
+	}
+
+	private static long getRequests(String api, String bcName) {
+		var url = Pattern.compile(".*/api/v1/" + api + "/.*/" + bcName + "(\\?.*)?$");
 		return BrowserDevTools.networkRequests().stream()
 				.filter(request -> "GET".equals(request.method()) && url.matcher(request.url()).matches())
 				.count();
@@ -229,6 +240,79 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 		form.actions().action("Save").click();
 		assertThat(child.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
 				.containsExactly("Passive record");
+
+		restoreParent(form);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("7. Chain of hidden bc: only the top bc is requested, the others are loaded by its cascade")
+	@Description("The child, the grandchild and the great-grandchild lists are hidden on the first open, none of them has data and cursor. forceActive shows all of them: the data of the top bc without data is requested, its descendants get the data and the row meta from its cascade once, without row meta requests by an empty parent cursor")
+	void hiddenChainLoadedByTopBc() {
+		var view = view("Hidden chain");
+		var form = parentForm(view);
+		var child = view.listByName("MyExample1448List");
+		var grandchild = view.listByName("MyExample1449List");
+		var greatGrandchild = view.listByName("MyExample1450List");
+
+		child.checkVisible(visible -> assertThat(visible).isFalse());
+		greatGrandchild.checkVisible(visible -> assertThat(visible).isFalse());
+
+		BrowserDevTools.clearNetworkLog();
+		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
+		assertThat(child.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
+				.containsExactly("Hidden child");
+		assertThat(grandchild.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
+				.containsExactly("Hidden grandchild");
+		assertThat(greatGrandchild.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
+				.containsExactly("Hidden great-grandchild");
+		Selenide.sleep(1000);
+		// the view opened from the menu of the screen already has the data of myexample1448 (the first level children of
+		// myexample1432 are fetched on the view change regardless of showCondition), then myexample1449 is the top bc without data
+		assertThat(dataRequests("myexample1448")).isLessThanOrEqualTo(1);
+		assertThat(dataRequests("myexample1449")).isEqualTo(1);
+		assertThat(dataRequests("myexample1450")).isEqualTo(1);
+		assertThat(rowMetaRequests("myexample1449")).isEqualTo(1);
+		assertThat(rowMetaRequests("myexample1450")).isEqualTo(1);
+
+		restoreParent(form);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("8. Parent bc without widget on the view")
+	@Description("The list with showCondition is the child of a bc that has no widget on the view. forceActive shows the list with the data of the current record of that bc")
+	void parentBcWithoutWidget() {
+		var view = view("Parent without widget");
+		var form = parentForm(view);
+		var child = view.listByName("MyExample1452List");
+
+		child.checkVisible(visible -> assertThat(visible).isFalse());
+		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
+		child.checkVisible(visible -> assertThat(visible).isTrue());
+		assertThat(child.rows().streamCurrentPage().map(row -> row.input("Country").getValue()))
+				.containsExactly("Child of no widget parent");
+
+		restoreParent(form);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("9. Parent list without records")
+	@Description("The parent list is shown and has no records, its child list with showCondition has no parent cursor. forceActive shows the empty child list, the data of the child is not requested")
+	void emptyParentList() {
+		var view = view("Empty parent");
+		var form = parentForm(view);
+		var child = view.listByName("MyExample1454List");
+
+		child.checkVisible(visible -> assertThat(visible).isFalse());
+		BrowserDevTools.clearNetworkLog();
+		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
+		child.checkVisible(visible -> assertThat(visible).isTrue());
+		Selenide.sleep(1000);
+		assertThat(child.rows().streamCurrentPage()).isEmpty();
+		assertThat(dataRequests("myexample1454")).isZero();
+		assertThat(rowMetaRequests("myexample1454")).isZero();
 
 		restoreParent(form);
 	}
