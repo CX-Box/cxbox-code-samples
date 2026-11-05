@@ -14,6 +14,7 @@ import core.element.widget.form.PlatformFormWidget;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import java.util.regex.Pattern;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -300,24 +301,31 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	@Test
 	@Tag("Positive")
 	@DisplayName("9. Parent list without records")
-	@Description("The parent list is shown and has no records, its child list with showCondition has no parent cursor. forceActive shows the empty child list, the data of the child is not requested, the loaded empty parent list is not requested again")
+	@Description("The parent list is shown and has no records, its child list with showCondition has no parent cursor. forceActive shows the empty child list, the data of the child is not requested, the loaded empty parent list is not requested again. The same after the child list is hidden and shown again")
 	void emptyParentList() {
 		var view = view("Empty parent");
 		var form = parentForm(view);
 		var child = view.listByName("MyExample1454List");
+		var softly = new SoftAssertions();
 
 		child.checkVisible(visible -> assertThat(visible).isFalse());
-		BrowserDevTools.clearNetworkLog();
-		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
-		child.checkVisible(visible -> assertThat(visible).isTrue());
-		Selenide.sleep(1000);
-		assertThat(child.rows().streamCurrentPage()).isEmpty();
-		assertThat(dataRequests("myexample1454")).isZero();
-		assertThat(rowMetaRequests("myexample1454")).isZero();
-		assertThat(dataRequests("myexample1453")).isZero();
-		assertThat(rowMetaRequests("myexample1453")).isZero();
+		for (var attempt = 1; attempt <= 2; attempt++) {
+			BrowserDevTools.clearNetworkLog();
+			form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
+			child.checkVisible(visible -> assertThat(visible).isTrue());
+			Selenide.sleep(1000);
+			assertThat(child.rows().streamCurrentPage()).isEmpty();
+			softly.assertThat(dataRequests("myexample1454")).as("data of myexample1454, attempt %s", attempt).isZero();
+			softly.assertThat(rowMetaRequests("myexample1454")).as("row meta of myexample1454, attempt %s", attempt).isZero();
+			softly.assertThat(dataRequests("myexample1453")).as("data of myexample1453, attempt %s", attempt).isZero();
+			softly.assertThat(rowMetaRequests("myexample1453")).as("row meta of myexample1453, attempt %s", attempt).isZero();
+
+			form.radio(ACCOUNTABLE_CRS).setValue("Not accountable");
+			child.checkVisible(visible -> assertThat(visible).isFalse());
+		}
 
 		restoreParent(form);
+		softly.assertAll();
 	}
 
 }
