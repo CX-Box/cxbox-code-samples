@@ -77,6 +77,7 @@ public class MyExample6157Dao extends AbstractAnySourceBaseDAO<MyExample6157DTO>
 							.setSourceNodeId(sourceId)
 							.setTargetNodeId(targetId)
 							.setTargetNodeName(node.getName())
+							.setTargetNodeExpanded(true)
 							.setTargetNodeColor(color)
 							.setEdgeColor(color)
 							.setEdgeValue(node.getSum());

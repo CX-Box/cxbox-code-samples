@@ -20,6 +20,8 @@ public class MyExample6163DTO extends DataResponseDTO {
 
 	private String targetNodeDescription;
 
+	private Boolean targetNodeExpanded;
+
 	private Long edgeValue;
 
 	private String edgeDescription;

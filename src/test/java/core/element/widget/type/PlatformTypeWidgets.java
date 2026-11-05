@@ -21,6 +21,9 @@ public enum PlatformTypeWidgets implements TypeWidget {
 	PIE_1D("Pie1D"),
 	COLUMN_2D("Column2D"),
 	LINE_2D("Line2D"),
+	DUAL_AXES_2D("DualAxes2D"),
+	RELATION_GRAPH("RelationGraph"),
+	CALENDAR_YEAR_LIST("CalendarYearList"),
 	CARD_LIST("CardList"),
 	CARD_CAROUSEL_LIST("CardCarouselList"),
 	FILE_PREVIEW("FilePreview");

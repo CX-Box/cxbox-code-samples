@@ -73,6 +73,7 @@ public class MyExample6160Dao extends AbstractAnySourceBaseDAO<MyExample6160DTO>
 							.setSourceNodeId(sourceId)
 							.setTargetNodeId(targetId)
 							.setTargetNodeName(node.getName())
+							.setTargetNodeExpanded(true)
 							.setEdgeValue(node.getSum());
 					dto.setId(targetId + "_" + Optional.ofNullable(sourceId).orElse(""));
 					return dto;
@@ -83,6 +84,7 @@ public class MyExample6160Dao extends AbstractAnySourceBaseDAO<MyExample6160DTO>
 					.setSourceNodeId(e.getSourceNodeId())
 					.setTargetNodeId(e.getTargetNodeId())
 					.setTargetNodeName(e.getTargetNodeName())
+					.setTargetNodeExpanded(true)
 					.setEdgeValue(e.getEdgeValue());
 			duplicate.setId(e.getId() + "_duplicate");
 			edges.add(duplicate);

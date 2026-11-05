@@ -18,6 +18,8 @@ public class MyExample6157DTO extends DataResponseDTO {
 
 	private String targetNodeName;
 
+	private Boolean targetNodeExpanded;
+
 	private String targetNodeColor;
 
 	private Long edgeValue;
