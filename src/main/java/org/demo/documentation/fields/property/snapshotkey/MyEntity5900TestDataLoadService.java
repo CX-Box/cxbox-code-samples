@@ -3,6 +3,9 @@ package org.demo.documentation.fields.property.snapshotkey;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.demo.documentation.fields.property.snapshotkey.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,8 @@ public class MyEntity5900TestDataLoadService {
 		MyEntity5900Pick pickNew = pickRepository.save(new MyEntity5900Pick().setCustomField("New data"));
 		pickRepository.save(new MyEntity5900Pick().setCustomField("Other data"));
 
-		repository.save(new MyEntity5900()
+		List<MyEntity5900> scenarios = new ArrayList<>();
+		scenarios.add(new MyEntity5900()
 				.setScenario("1. Value changed")
 				.setInputField("New value").setInputFieldSnapshot("Old value")
 				.setTextField("The quick red fox jumped over the lazy dog")
@@ -51,7 +55,7 @@ public class MyEntity5900TestDataLoadService {
 				.setDictionaryField(CustomFieldEnum.HIGH).setDictionaryFieldSnapshot(CustomFieldEnum.LOW)
 				.setRadioField(CustomFieldEnum.HIGH).setRadioFieldSnapshot(CustomFieldEnum.LOW));
 
-		repository.save(new MyEntity5900()
+		scenarios.add(new MyEntity5900()
 				.setScenario("2. Value not changed")
 				.setInputField("Same value").setInputFieldSnapshot("Same value")
 				.setTextField("The quick brown fox jumps over the lazy dog")
@@ -72,7 +76,7 @@ public class MyEntity5900TestDataLoadService {
 				.setDictionaryField(CustomFieldEnum.MIDDLE).setDictionaryFieldSnapshot(CustomFieldEnum.MIDDLE)
 				.setRadioField(CustomFieldEnum.MIDDLE).setRadioFieldSnapshot(CustomFieldEnum.MIDDLE));
 
-		repository.save(new MyEntity5900()
+		scenarios.add(new MyEntity5900()
 				.setScenario("3. Value added (snapshot is empty)")
 				.setInputField("New value")
 				.setTextField("The quick brown fox jumps over the lazy dog")
@@ -89,7 +93,7 @@ public class MyEntity5900TestDataLoadService {
 				.setDictionaryField(CustomFieldEnum.HIGH)
 				.setRadioField(CustomFieldEnum.HIGH));
 
-		repository.save(new MyEntity5900()
+		scenarios.add(new MyEntity5900()
 				.setScenario("4. Value deleted (current value is empty)")
 				.setInputFieldSnapshot("Old value")
 				.setTextFieldSnapshot("The quick brown fox jumps over the lazy dog")
@@ -106,16 +110,20 @@ public class MyEntity5900TestDataLoadService {
 				.setDictionaryFieldSnapshot(CustomFieldEnum.LOW)
 				.setRadioFieldSnapshot(CustomFieldEnum.LOW));
 
-		repository.save(new MyEntity5900()
+		scenarios.add(new MyEntity5900()
 				.setScenario("5. Values false and 0")
 				.setNumberField(10L).setNumberFieldSnapshot(0L)
 				.setMoneyField(10.0).setMoneyFieldSnapshot(0.0)
 				.setPercentField(0L).setPercentFieldSnapshot(10L)
 				.setCheckboxField(true).setCheckboxFieldSnapshot(false));
 
-		repository.save(new MyEntity5900()
+		scenarios.add(new MyEntity5900()
 				.setScenario("6. Checkbox: true -> false")
 				.setCheckboxField(false).setCheckboxFieldSnapshot(true));
+
+		// the list shows the last saved record first: the scenarios are saved from the last one
+		Collections.reverse(scenarios);
+		repository.saveAll(scenarios);
 	}
 
 }

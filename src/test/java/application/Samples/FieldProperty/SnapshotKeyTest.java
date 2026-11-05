@@ -126,6 +126,8 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		field(falseZero, "percentField").$(PREV).should(exist);
 		field(falseZero, "percentField").$(NEW).shouldNot(exist);
 
+		// 5 records on a page: the last scenario is on the second page
+		widget("myexample5900list").$(".ant-pagination-item-2").click();
 		var checkboxToFalse = row("6. Checkbox: true -> false");
 		field(checkboxToFalse, "checkboxField").$(PREV).should(exist);
 		field(checkboxToFalse, "checkboxField").$(NEW).shouldNot(exist);
