@@ -1,0 +1,196 @@
+{
+  "name": "myexample4300compactlist",
+  "title": "Matching records",
+  "type": "List",
+  "bc": "myExample4300DrillDown",
+  "fields": [
+    {
+      "title": "Input",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "key": "customFieldMultifield",
+      "title": "Text / hint / file upload",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Text",
+          "key": "customFieldText",
+          "type": "text"
+        },
+        {
+          "title": "Hint",
+          "key": "customFieldHint",
+          "type": "hint",
+          "showLength": 100
+        },
+        {
+          "title": "File upload",
+          "key": "customFieldFileUpload",
+          "type": "fileUpload",
+          "fileIdKey": "customFieldFileUploadId"
+        }
+      ]
+    },
+    {
+      "key": "choicesSummary",
+      "title": "Dictionary / enum / radio / multiple select",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Dictionary",
+          "key": "customField4300Dictionary",
+          "type": "dictionary"
+        },
+        {
+          "title": "Enum",
+          "key": "customFieldDictionary",
+          "type": "dictionary"
+        },
+        {
+          "title": "Radio",
+          "key": "customFieldRadio",
+          "type": "radio"
+        },
+        {
+          "title": "Multiple select",
+          "key": "customFieldMultipleSelect",
+          "type": "multipleSelect"
+        }
+      ]
+    },
+    {
+      "key": "numbersSummary",
+      "title": "Number / money / percent",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Number",
+          "key": "customFieldNumber",
+          "type": "number"
+        },
+        {
+          "title": "Money",
+          "key": "customFieldMoney",
+          "digits": 2,
+          "type": "money"
+        },
+        {
+          "title": "Percent",
+          "key": "customFieldPercent",
+          "type": "percent"
+        }
+      ]
+    },
+    {
+      "key": "datesSummary",
+      "title": "Date / date time / date time with seconds",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Date",
+          "key": "customFieldDate",
+          "type": "date"
+        },
+        {
+          "title": "Date time",
+          "key": "customFieldDateTime",
+          "type": "dateTime"
+        },
+        {
+          "title": "Date time with seconds",
+          "key": "customFieldDateTimeWithSeconds",
+          "type": "dateTimeWithSeconds"
+        }
+      ]
+    },
+    {
+      "key": "linksSummary",
+      "title": "Pick list / inline pick list / multivalue / multivalue hover / suggestion pick list",
+      "type": "multifield",
+      "style": "list",
+      "fields": [
+        {
+          "title": "Pick list",
+          "key": "customFieldPickList",
+          "type": "pickList",
+          "popupBcName": "myEntity4300PickList",
+          "pickMap": {
+            "customFieldPickList": "value",
+            "customFieldPickListId": "id"
+          }
+        },
+        {
+          "title": "Inline pick list",
+          "key": "customFieldInlinePickList",
+          "type": "inline-pickList",
+          "popupBcName": "myEntity4300InlinePickList",
+          "pickMap": {
+            "customFieldInlinePickList": "value",
+            "customFieldInlinePickListId": "id"
+          }
+        },
+        {
+          "title": "Multivalue",
+          "key": "customFieldMultivalue",
+          "type": "multivalue",
+          "displayedKey": "customFieldMultivalueDisplayKey",
+          "popupBcName": "myEntity4300Multivalue",
+          "assocValueKey": "id"
+        },
+        {
+          "title": "Multivalue hover",
+          "key": "customFieldMultivalueHover",
+          "assocValueKey": "id",
+          "popupBcName": "myEntity4300MultivalueHover",
+          "type": "multivalueHover",
+          "displayedKey": "customFieldMultivalueHoverDisplayKey"
+        },
+        {
+          "title": "Suggestion pick list",
+          "key": "customFieldHidden",
+          "type": "suggestionPickList",
+          "popupBcName": "myEntity4300InlinePickList",
+          "pickMap": {
+            "customFieldHidden": "value"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Checkbox",
+      "key": "customFieldCheckbox",
+      "type": "checkbox"
+    },
+    {
+      "key": "customFieldPickListId",
+      "title": "Pick ID",
+      "type": "hidden"
+    },
+    {
+      "key": "customFieldInlinePickListId",
+      "title": "Inline ID",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": []
+    },
+    "edit": {
+      "style": "none"
+    }
+  },
+  "showCondition": {
+    "bcName": "myExample4300PostAction",
+    "params": {
+      "fieldKey": "expandedColumns",
+      "value": false
+    }
+  }
+}

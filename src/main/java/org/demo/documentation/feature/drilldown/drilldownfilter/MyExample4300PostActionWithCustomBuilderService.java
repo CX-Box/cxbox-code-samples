@@ -1,25 +1,30 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.DrillDownType;
+import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.dto.multivalue.MultivalueFieldSingleValue;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
 import org.cxbox.core.dto.rowmeta.PostAction;
 import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
+import org.cxbox.dictionary.Dictionary;
+import org.cxbox.dictionary.DictionaryProvider;
+import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
+import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
+import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +35,16 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 	private final Class<MyExample4300PostActionWithCustomBuilderMeta> meta = MyExample4300PostActionWithCustomBuilderMeta.class;
 
 	private final MyEntity4300MultivalueRepository multivalueRepository;
+	private final DictionaryProvider dictionaryProvider;
+
+	@Override
+	protected MyExample4300PostActionWithCustomBuilderDTO entityToDto(BusinessComponent bc, MyEntity4300PostActionWithCustomBuilder entity) {
+		var dto = super.entityToDto(bc, entity);
+		dto.setDictionaryValues(entity.getDictionaryValues().stream().sorted(Comparator.comparing(Dictionary::key))
+				.collect(MultivalueField.toMultivalueField(
+						Dictionary::key, value -> dictionaryProvider.lookupValue(value).getValue())));
+		return dto;
+	}
 
 	@SneakyThrows
 	public static void setAllFieldsToNull(Object obj) {
@@ -74,6 +89,34 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 	protected ActionResultDTO<MyExample4300PostActionWithCustomBuilderDTO> doUpdateEntity(final MyEntity4300PostActionWithCustomBuilder entity,
 																						  final MyExample4300PostActionWithCustomBuilderDTO data,
 																						  final BusinessComponent bc) {
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.rangeFilters, entity::setRangeFilters);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldNumberTo, entity::setCustomFieldNumberTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldMoneyTo, entity::setCustomFieldMoneyTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldPercentTo, entity::setCustomFieldPercentTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldDateTo, entity::setCustomFieldDateTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldDateTimeTo, entity::setCustomFieldDateTimeTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldDateTimeWithSecondsTo, entity::setCustomFieldDateTimeWithSecondsTo);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.dictionaryValue, entity::setDictionaryValue);
+		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldMultifield, entity::setCustomFieldMultifield);
+		if (data.isFieldChanged(MyExample4300PostActionWithCustomBuilderDTO_.checkboxFilter)) {
+			entity.setCustomFieldCheckbox("All".equals(data.getCheckboxFilter()) || data.getCheckboxFilter() == null
+					? null : "Yes".equals(data.getCheckboxFilter()));
+		}
+		if (data.isFieldChanged(MyExample4300PostActionWithCustomBuilderDTO_.dictionaryValues)) {
+			entity.setDictionaryValues(data.getDictionaryValues().getValues().stream()
+					.map(value -> Optional.ofNullable(dictionaryProvider.lookupName(
+							CustomField4300Dictionary.class,
+							value::getValue)).orElseThrow())
+					.collect(Collectors.toSet()));
+		}
+		if (data.isFieldChanged(MyExample4300PostActionWithCustomBuilderDTO_.dictionaryEnumValues)) {
+			entity.setDictionaryEnumValues(data.getDictionaryEnumValues().getValues().stream()
+					.map(value -> CustomField4300DictionaryEnum.getByValue(value.getValue())).collect(Collectors.toSet()));
+		}
+		if (data.isFieldChanged(MyExample4300PostActionWithCustomBuilderDTO_.radioValues)) {
+			entity.setRadioValues(data.getRadioValues().getValues().stream()
+					.map(value -> CustomField4300RadioEnum.getByValue(value.getValue())).collect(Collectors.toSet()));
+		}
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldHidden, entity::setCustomFieldHidden);
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldText, entity::setCustomFieldText);
 		setIfChanged(data, MyExample4300PostActionWithCustomBuilderDTO_.customFieldDateTime, entity::setCustomFieldDateTime);
@@ -122,6 +165,12 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 					: null);
 		}
 
+		if (data.isFieldChanged(MyExample4300PostActionWithCustomBuilderDTO_.customFieldMultivalueHover)) {
+			entity.setMultivalueHoverList(baseDAO.getList(MyEntity4300MultivalueHover.class).stream()
+					.filter(value -> data.getCustomFieldMultivalueHover().getValues().stream()
+							.anyMatch(picked -> picked.getId().equals(String.valueOf(value.getId()))))
+					.toList());
+		}
 		return new ActionResultDTO<>(entityToDto(bc, entity));
 	}
 
@@ -130,51 +179,51 @@ public class MyExample4300PostActionWithCustomBuilderService extends
 
 		return Actions.<MyExample4300PostActionWithCustomBuilderDTO>builder()
 				.action(act -> act
-						.action("filter", "Filter")
+						.action("filter", "Apply filters")
 						.scope(ActionScope.RECORD)
 						.available(bc -> true)
-						.invoker((bc, dto) -> doUpdateEntity(getOneAsEntity(bc), dto, bc)
-								.setAction(PostAction.drillDownWithFilter(
-										DrillDownType.INNER,
-										"screen/MyExample4300/view/MyExample4300PostAction/",
-										fc -> fc.add(
-												CxboxMyExample4300Controller.myExample4300DrillDown,
-												MyExample4300WithDrilldownDTO.class, Custom4300FilterBuilder.type(), fb -> fb
-														.customMultiValue(MyExample4300WithDrilldownDTO_.customFieldMultivalue, dto.getCustomFieldMultivalue())
-														.customMultipleSelect(MyExample4300WithDrilldownDTO_.customFieldMultipleSelect, dto.getCustomFieldMultipleSelect())
-														.customInlinePickList(MyExample4300WithDrilldownDTO_.customFieldInlinePickList, dto.getCustomFieldInlinePickList())
-														.customPickList(MyExample4300WithDrilldownDTO_.customFieldPickList, dto.getCustomFieldPickList())
-														.customRadio(
-																MyExample4300WithDrilldownDTO_.customFieldRadio,
-																Optional.ofNullable(dto.getCustomFieldRadio()).map(List::of).orElse(List.of())
-														)
-														.customMoney(MyExample4300WithDrilldownDTO_.customFieldMoney, dto.getCustomFieldMoney())
-														.customPercent(MyExample4300WithDrilldownDTO_.customFieldPercent, dto.getCustomFieldPercent())
-														.customNumber(MyExample4300WithDrilldownDTO_.customFieldNumber, dto.getCustomFieldNumber())
-														.customFileUpload(MyExample4300WithDrilldownDTO_.customFieldFileUpload, dto.getCustomFieldFileUpload())
-														.customDateTime(MyExample4300WithDrilldownDTO_.customFieldDateTimeWithSeconds, dto.getCustomFieldDateTimeWithSeconds())
-														.customDate(
-																MyExample4300WithDrilldownDTO_.customFieldDate,
-																Optional.ofNullable(dto.getCustomFieldDate()).map(LocalDate::from).orElse(null)
-														)
-														.customCheckbox(MyExample4300WithDrilldownDTO_.customFieldCheckbox, dto.getCustomFieldCheckbox())
-														.customDateTime(MyExample4300WithDrilldownDTO_.customFieldDateTime, dto.getCustomFieldDateTime())
-														.customText(MyExample4300WithDrilldownDTO_.customFieldText, dto.getCustomFieldText())
-														.customInlinePickList(MyExample4300WithDrilldownDTO_.customField, dto.getCustomField())
-										)
+						.withAutoSaveBefore()
+						.invoker((bc, dto) -> new ActionResultDTO<MyExample4300PostActionWithCustomBuilderDTO>()
+								.setAction(MyExample4300DashboardFilters.isEmpty(dto)
+										? PostAction.drillDown(DrillDownType.INNER, MyExample4300DashboardFilters.VIEW)
+										: PostAction.drillDownWithFilter(
+										DrillDownType.INNER, MyExample4300DashboardFilters.VIEW,
+										fc -> fc
+												.add(CxboxMyExample4300Controller.myExample4300DrillDown,
+														MyExample4300WithDrilldownDTO.class,
+														fb -> MyExample4300DashboardFilters.apply(fb, dto))
+												.add(CxboxMyExample4300Controller.myExample4300DashboardStats,
+														MyExample4300WithDrilldownDTO.class,
+														fb -> MyExample4300DashboardFilters.apply(fb, dto))
 								)))
 				)
-				.action(act -> act.action("clear filter", "clear filter")
+				.action(act -> act.action("clear filter", "Clear form")
 						.scope(ActionScope.RECORD)
 						.available(bc -> true)
 						.invoker((bc, dto) -> {
 									MyEntity4300PostActionWithCustomBuilder oneAsEntity = getOneAsEntity(bc);
 									setAllFieldsToNull(oneAsEntity);
-									return new ActionResultDTO<>(entityToDto(bc, oneAsEntity)).setAction(PostAction.refreshBc(bc));
+									oneAsEntity.setRangeFilters(false);
+									return new ActionResultDTO<>(entityToDto(bc, oneAsEntity))
+											.setAction(PostAction.refreshBc(bc))
+											.setAction(PostAction.refreshBc(CxboxMyExample4300Controller.myExample4300DashboardStats));
 								}
 						)
 				)
+				.action(act -> act.action("expand columns", "All columns").scope(ActionScope.RECORD)
+						.available(bc -> !getOneAsEntity(bc).isExpandedColumns())
+						.invoker((bc, dto) -> setExpandedColumns(bc, true)))
+				.action(act -> act.action("compact columns", "Compact columns").scope(ActionScope.RECORD)
+						.available(bc -> getOneAsEntity(bc).isExpandedColumns())
+						.invoker((bc, dto) -> setExpandedColumns(bc, false)))
 				.build();
 	}
 
+	private ActionResultDTO<MyExample4300PostActionWithCustomBuilderDTO> setExpandedColumns(BusinessComponent bc, boolean expanded) {
+		var entity = getOneAsEntity(bc);
+		entity.setExpandedColumns(expanded);
+		return new ActionResultDTO<>(entityToDto(bc, entity))
+				.setAction(PostAction.refreshBc(bc))
+				.setAction(PostAction.refreshBc(CxboxMyExample4300Controller.myExample4300DrillDown));
+	}
 }

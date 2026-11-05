@@ -1,5 +1,10 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.cxbox.api.data.dictionary.SimpleDictionary;
 import org.cxbox.api.data.dto.rowmeta.FieldDTO;
@@ -13,20 +18,18 @@ import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomFiel
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MyExample4300WithDrilldownMeta extends FieldMetaBuilder<MyExample4300WithDrilldownDTO> {
+
 
 	public static final String SCREEN_MY_EXAMPLE_4300_VIEW_MY_EXAMPLE_4300_LIST = "/screen/MyExample4300/view/MyExample4300DrillDown/";
 
 	@Override
 	public void buildRowDependentMeta(RowDependentFieldsMeta<MyExample4300WithDrilldownDTO> fields, InnerBcDescription bcDescription,
 									  Long id, Long parentId) {
+		fields.setDictionaryValues(MyExample4300WithDrilldownDTO_.customField4300Dictionary);
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldHidden);
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldText);
 		fields.setEnabled(MyExample4300WithDrilldownDTO_.customFieldDateTime);
@@ -281,6 +284,7 @@ public class MyExample4300WithDrilldownMeta extends FieldMetaBuilder<MyExample43
 
 	@Override
 	public void buildIndependentMeta(FieldsMeta<MyExample4300WithDrilldownDTO> fields, InnerBcDescription bcDescription, Long parentId) {
+		fields.setDictionaryFilterValues(MyExample4300WithDrilldownDTO_.customField4300Dictionary);
 		fields.setConcreteValues(
 				MyExample4300WithDrilldownDTO_.customFieldMultipleSelect, Arrays.stream(CustomField4300MultipleSelectEnum.values())
 						.map(CustomField4300MultipleSelectEnum::getValue)
@@ -297,8 +301,9 @@ public class MyExample4300WithDrilldownMeta extends FieldMetaBuilder<MyExample43
 		fields.setEnumFilterValues(fields, MyExample4300WithDrilldownDTO_.customFieldRadioMultiField, CustomField4300RadioEnum.values());
 		fields.setEnumFilterValues(fields, MyExample4300WithDrilldownDTO_.customFieldRadio, CustomField4300RadioEnum.values());
 		fields.setEnumFilterValues(fields, MyExample4300WithDrilldownDTO_.customFieldDictionary, CustomField4300DictionaryEnum.values());
+		var summaries = java.util.Set.of("choicesSummary", "numbersSummary", "datesSummary", "linksSummary");
 		for (final FieldDTO field : fields) {
-			field.setFilterable(true);
+			field.setFilterable(!summaries.contains(field.getKey()));
 		}
 	}
 

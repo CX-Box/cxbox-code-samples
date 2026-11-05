@@ -1,5 +1,9 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,14 +12,13 @@ import org.cxbox.core.dto.multivalue.MultivalueField;
 import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider.BaseEnum;
+import org.cxbox.dictionary.Dictionary;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -24,6 +27,10 @@ public class MyExample4300PostActionWithCustomBuilderDTO extends DataResponseDTO
 
 	@SearchParameter(name = "customField")
 	private String customField;
+
+	private MultivalueField dictionaryValues;
+	private MultivalueField dictionaryEnumValues;
+	private MultivalueField radioValues;
 
 	@SearchParameter(name = "customFieldHint")
 	private String customFieldHint;
@@ -92,8 +99,40 @@ public class MyExample4300PostActionWithCustomBuilderDTO extends DataResponseDTO
 	@SearchParameter(name = "customFieldHidden")
 	private String customFieldHidden;
 
+	private String customFieldMultifield;
+	private String checkboxFilter;
+	private Long customFieldNumberTo;
+	private Double customFieldMoneyTo;
+	private Long customFieldPercentTo;
+	private LocalDateTime customFieldDateTo;
+	private LocalDateTime customFieldDateTimeTo;
+	private LocalDateTime customFieldDateTimeWithSecondsTo;
+	private CustomField4300Dictionary dictionaryValue;
+	private boolean expandedColumns;
+	private boolean rangeFilters;
+
+
 	public MyExample4300PostActionWithCustomBuilderDTO(MyEntity4300PostActionWithCustomBuilder entity) {
 		this.id = entity.getId().toString();
+		this.customFieldNumberTo = entity.getCustomFieldNumberTo();
+		this.customFieldMoneyTo = entity.getCustomFieldMoneyTo();
+		this.customFieldPercentTo = entity.getCustomFieldPercentTo();
+		this.customFieldDateTo = entity.getCustomFieldDateTo();
+		this.customFieldDateTimeTo = entity.getCustomFieldDateTimeTo();
+		this.customFieldDateTimeWithSecondsTo = entity.getCustomFieldDateTimeWithSecondsTo();
+		this.dictionaryValue = entity.getDictionaryValue();
+		this.customFieldMultifield = entity.getCustomFieldMultifield();
+		this.expandedColumns = entity.isExpandedColumns();
+		this.rangeFilters = entity.isRangeFilters();
+		this.checkboxFilter = entity.getCustomFieldCheckbox() == null ? "All" : entity.getCustomFieldCheckbox() ? "Yes" : "No";
+		this.dictionaryValues = entity.getDictionaryValues().stream()
+				.sorted(Comparator.comparing(Dictionary::key))
+				.collect(MultivalueField.toMultivalueField(Dictionary::key,
+						Dictionary::key));
+		this.dictionaryEnumValues = entity.getDictionaryEnumValues().stream().sorted()
+				.collect(MultivalueField.toMultivalueField(Enum::name, CustomField4300DictionaryEnum::getValue));
+		this.radioValues = entity.getRadioValues().stream().sorted()
+				.collect(MultivalueField.toMultivalueField(Enum::name, CustomField4300RadioEnum::getValue));
 		this.customField = entity.getCustomField();
 		this.customFieldHint = entity.getCustomFieldHint();
 		this.customFieldMultipleSelect = entity.getCustomFieldMultipleSelect().stream()
