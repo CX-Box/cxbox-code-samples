@@ -28,6 +28,10 @@ env:
   # the admin account of the Keycloak the application uses (KC_BOOTSTRAP_ADMIN_* in docker-compose-test.yml): application.Samples.Feature.signInAgain creates its own users with it
   KEYCLOAK_ADMIN_USER: cxbox_admin
   KEYCLOAK_ADMIN_PASSWORD: ASfj123214LASJhFLASldkasF3LhDGASF
+  # How long the step Run Tests waits for the tests. A test that hangs (a frozen browser, a command of webdriver without an
+  # answer) prints nothing, and the job waited until it was cancelled by hand. After this time the step prints the thread
+  # dumps of all the jvms, which show the test and the command each of them waits in, and stops the tests.
+  TESTS_TIMEOUT_MINUTES: 45
   # CXBOX_LOGGER is off here on purpose. It turns the Selenide proxy on (BaseTestForSamples), and the browser then reaches
   # the application through a tunnel: the "Copy details" test reads CONNECT instead of GET, and the websocket test no longer
   # sees its handshake in the performance log. Both failed with it on, while the 843 ordinary tests passed. Turn it on in
@@ -147,8 +151,12 @@ jobs:
       # Their subject is the browser, the OIDC provider and the ui, not the jvm, so one java version is enough for them:
       # they run in the Java 17 job only, which its name says. Fifteen minutes of waiting are not spent twice, and the
       # Java 21 job keeps three browsers instead of four.
+      # The output of both processes goes to the log at once, each line with [fast] or [slow] in front, and to
+      # target/tests-*.log for the artifact test-logs-NN: a run that hangs or is cancelled still shows how far it got.
       - name: Run Tests
         id: run_tests
+        # a safety net only: the script stops the tests itself after TESTS_TIMEOUT_MINUTES and leaves the thread dumps
+        timeout-minutes: 60
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
@@ -158,23 +166,56 @@ jobs:
           # back where they run together, so the runner keeps three browsers either way
           FAST_FORKS=3
           if [ "${{ matrix.java }}" = "17" ]; then FAST_FORKS=2; fi
-          mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast > target/tests-fast.log 2>&1 &
+          # pipefail: the exit code of the subshell is the one of mvn, not of tee or sed
+          ( set -o pipefail; mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast 2>&1 | tee target/tests-fast.log | sed -u 's/^/[fast] /' ) &
           FAST_PID=$!
           SLOW_CODE=0
           SLOW_PID=""
           if [ "${{ matrix.java }}" = "17" ]; then
-            mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow > target/tests-slow.log 2>&1 &
+            ( set -o pipefail; mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow 2>&1 | tee target/tests-slow.log | sed -u 's/^/[slow] /' ) &
             SLOW_PID=$!
           fi
+          DEADLINE=$((SECONDS + TESTS_TIMEOUT_MINUTES * 60))
+          while kill -0 $FAST_PID 2>/dev/null || { [ -n "$SLOW_PID" ] && kill -0 $SLOW_PID 2>/dev/null; }; do
+            if [ $SECONDS -ge $DEADLINE ]; then
+              echo "::error::The tests did not finish in $TESTS_TIMEOUT_MINUTES minutes. The thread dumps of the jvms are below and in the artifact test-logs-${{ matrix.java }}"
+              # the forks of surefire are the jvms with the tests: their main threads show the test and the call it waits in
+              for pid in $(jps -q); do
+                jstack -l $pid > target/jstack-$pid.txt 2>&1 || continue
+                echo "::group::jstack $(jps -l | grep "^$pid ")"; cat target/jstack-$pid.txt; echo "::endgroup::"
+              done
+              pkill -f surefire; sleep 10; pkill -9 -f surefire; pkill -9 -f chromedriver
+              break
+            fi
+            sleep 20
+          done
           wait $FAST_PID; FAST_CODE=$?
           if [ -n "$SLOW_PID" ]; then wait $SLOW_PID; SLOW_CODE=$?; fi
-          echo "::group::Tests without the slow ones"; cat target/tests-fast.log; echo "::endgroup::"
-          if [ -n "$SLOW_PID" ]; then echo "::group::Slow tests"; cat target/tests-slow.log; echo "::endgroup::"; fi
+          echo "exit codes: fast=$FAST_CODE slow=$SLOW_CODE"
+          [ $FAST_CODE -eq 0 ] && [ $SLOW_CODE -eq 0 ]
+
+      # A separate step, so the allure report has the results of a run that failed, hung or was cancelled too.
+      - name: Collect test results
+        if: always()
+        run: |
           mkdir -p target/allure-results
           cp -r target/allure-results-fast/. target/allure-results/ 2>/dev/null || true
           cp -r target/allure-results-slow/. target/allure-results/ 2>/dev/null || true
-          echo "exit codes: fast=$FAST_CODE slow=$SLOW_CODE"
-          [ $FAST_CODE -eq 0 ] && [ $SLOW_CODE -eq 0 ]
+
+      # The logs of maven, the reports of surefire (with the *.dumpstream of a fork that died), the thread dumps of a run
+      # that hung and the screenshots of the failed tests.
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.java }}
+          if-no-files-found: ignore
+          path: |
+            target/test-compile.log
+            target/tests-*.log
+            target/jstack-*.txt
+            target/surefire-reports-*/
+            target/videos/**/*.png
 
 
         # A screenshot shows what the browser saw, and when several browsers sign in at once that is sometimes the error page
@@ -586,8 +627,10 @@ jobs:
       # The same split as in the job of a pull request: the slow tests run as a second process, in the Java 17 job only.
       # In one run with the rest they left the browsers of their forks frozen, and the next classes there failed.
       # A failure of this step fails the job, the steps after it have if: always().
+      # The output, the watchdog and the artifact test-logs-NN are the same as in the job of a pull request.
       - name: Run Tests
         id: run_tests
+        timeout-minutes: 60
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
@@ -595,23 +638,51 @@ jobs:
           if [ $COMPILE_CODE -ne 0 ]; then cat target/test-compile.log; exit $COMPILE_CODE; fi
           FAST_FORKS=3
           if [ "${{ matrix.java }}" = "17" ]; then FAST_FORKS=2; fi
-          mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast > target/tests-fast.log 2>&1 &
+          ( set -o pipefail; mvn --batch-mode -DrunTests=true -Dtest="$TESTS" -Dsurefire.forkCount=$FAST_FORKS surefire:test@fast 2>&1 | tee target/tests-fast.log | sed -u 's/^/[fast] /' ) &
           FAST_PID=$!
           SLOW_CODE=0
           SLOW_PID=""
           if [ "${{ matrix.java }}" = "17" ]; then
-            mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow > target/tests-slow.log 2>&1 &
+            ( set -o pipefail; mvn --batch-mode -DrunTests=true -Dtest="$TESTS" surefire:test@slow 2>&1 | tee target/tests-slow.log | sed -u 's/^/[slow] /' ) &
             SLOW_PID=$!
           fi
+          DEADLINE=$((SECONDS + TESTS_TIMEOUT_MINUTES * 60))
+          while kill -0 $FAST_PID 2>/dev/null || { [ -n "$SLOW_PID" ] && kill -0 $SLOW_PID 2>/dev/null; }; do
+            if [ $SECONDS -ge $DEADLINE ]; then
+              echo "::error::The tests did not finish in $TESTS_TIMEOUT_MINUTES minutes. The thread dumps of the jvms are below and in the artifact test-logs-${{ matrix.java }}"
+              for pid in $(jps -q); do
+                jstack -l $pid > target/jstack-$pid.txt 2>&1 || continue
+                echo "::group::jstack $(jps -l | grep "^$pid ")"; cat target/jstack-$pid.txt; echo "::endgroup::"
+              done
+              pkill -f surefire; sleep 10; pkill -9 -f surefire; pkill -9 -f chromedriver
+              break
+            fi
+            sleep 20
+          done
           wait $FAST_PID; FAST_CODE=$?
           if [ -n "$SLOW_PID" ]; then wait $SLOW_PID; SLOW_CODE=$?; fi
-          echo "::group::Tests without the slow ones"; cat target/tests-fast.log; echo "::endgroup::"
-          if [ -n "$SLOW_PID" ]; then echo "::group::Slow tests"; cat target/tests-slow.log; echo "::endgroup::"; fi
+          echo "exit codes: fast=$FAST_CODE slow=$SLOW_CODE"
+          [ $FAST_CODE -eq 0 ] && [ $SLOW_CODE -eq 0 ]
+
+      - name: Collect test results
+        if: always()
+        run: |
           mkdir -p target/allure-results
           cp -r target/allure-results-fast/. target/allure-results/ 2>/dev/null || true
           cp -r target/allure-results-slow/. target/allure-results/ 2>/dev/null || true
-          echo "exit codes: fast=$FAST_CODE slow=$SLOW_CODE"
-          [ $FAST_CODE -eq 0 ] && [ $SLOW_CODE -eq 0 ]
+
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.java }}
+          if-no-files-found: ignore
+          path: |
+            target/test-compile.log
+            target/tests-*.log
+            target/jstack-*.txt
+            target/surefire-reports-*/
+            target/videos/**/*.png
 
 
 
