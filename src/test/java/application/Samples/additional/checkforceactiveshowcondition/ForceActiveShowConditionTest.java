@@ -39,7 +39,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	}
 
 	private static PlatformFormWidget parentForm(PlatformView view) {
-		return view.formByName("MyExample1432Form");
+		return view.formByName("myexample1432form");
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void childListShownByForceActiveHasData() {
 		var view = view("Basic");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1433List");
-		var grandchild = view.listByName("MyExample1435List");
+		var child = view.listByName("myexample1433list");
+		var grandchild = view.listByName("myexample1435list");
 
 		child.checkVisible(visible -> assertThat(visible).isFalse());
 		grandchild.checkVisible(visible -> assertThat(visible).isFalse());
@@ -121,8 +121,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void widgetOfAnotherHierarchy() {
 		var view = view("Outside hierarchy");
 		var form = parentForm(view);
-		var owners = view.listByName("MyExample1447List");
-		var child = view.listByName("MyExample1441List");
+		var owners = view.listByName("myexample1447list");
+		var child = view.listByName("myexample1441list");
 
 		// the current owner is the first row of the owners list
 		var ownerNames = owners.rows().streamCurrentPage().map(row -> row.input("Country").getValue()).toList();
@@ -148,7 +148,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void treeShownByForceActive() {
 		var view = view("Tree");
 		var form = parentForm(view);
-		var tree = view.treeByName("MyExample1442Tree");
+		var tree = view.treeByName("myexample1442tree");
 
 		tree.checkVisible(visible -> assertThat(visible).isFalse());
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -165,7 +165,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void groupingHierarchyShownByForceActive() {
 		var view = view("Grouping hierarchy");
 		var form = parentForm(view);
-		var groupingHierarchy = view.groupingHierarchyInlineByName("MyExample1443GH");
+		var groupingHierarchy = view.groupingHierarchyInlineByName("myexample1443gh");
 
 		groupingHierarchy.checkVisible(visible -> assertThat(visible).isFalse());
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -184,8 +184,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void pendingChangesOfChildAreKept() {
 		var view = view("Basic");
 		var form = parentForm(view);
-		var controlPersons = view.listByName("MyExample1434List");
-		var child = view.listByName("MyExample1433List");
+		var controlPersons = view.listByName("myexample1434list");
+		var child = view.listByName("myexample1433list");
 
 		controlPersons.rows().clickRow(0).input("Full name").setValue("Unsaved person");
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -206,8 +206,8 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void severalWidgetsOneRequestEach() {
 		var view = view("Basic");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1433List");
-		var grandchild = view.listByName("MyExample1435List");
+		var child = view.listByName("myexample1433list");
+		var grandchild = view.listByName("myexample1435list");
 
 		BrowserDevTools.clearNetworkLog();
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -231,7 +231,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void childrenByUnsavedParentField() {
 		var view = view("Parent filter");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1446List");
+		var child = view.listByName("myexample1446list");
 
 		form.radio(CRS_STATUS).setValue("Passive non-financial entity");
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -253,9 +253,9 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void hiddenChainLoadedByTopBc() {
 		var view = view("Hidden chain");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1448List");
-		var grandchild = view.listByName("MyExample1449List");
-		var greatGrandchild = view.listByName("MyExample1450List");
+		var child = view.listByName("myexample1448list");
+		var grandchild = view.listByName("myexample1449list");
+		var greatGrandchild = view.listByName("myexample1450list");
 
 		child.checkVisible(visible -> assertThat(visible).isFalse());
 		greatGrandchild.checkVisible(visible -> assertThat(visible).isFalse());
@@ -287,7 +287,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void parentBcWithoutWidget() {
 		var view = view("Parent without widget");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1452List");
+		var child = view.listByName("myexample1452list");
 
 		child.checkVisible(visible -> assertThat(visible).isFalse());
 		form.radio(ACCOUNTABLE_CRS).setValue("Accountable");
@@ -305,7 +305,7 @@ public class ForceActiveShowConditionTest extends BaseTestForSamples {
 	void emptyParentList() {
 		var view = view("Empty parent");
 		var form = parentForm(view);
-		var child = view.listByName("MyExample1454List");
+		var child = view.listByName("myexample1454list");
 		var softly = new SoftAssertions();
 
 		child.checkVisible(visible -> assertThat(visible).isFalse());
