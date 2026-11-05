@@ -6,7 +6,8 @@ import org.cxbox.api.service.session.InternalAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 public class MyEntity5039TestDataLoadService {
@@ -23,11 +24,20 @@ public class MyEntity5039TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 
-		repository.save(new MyExampleBc5039().setCustomField("Meeting 1")
-				.setEndDateTime(LocalDateTime.now())
-				.setStartDateTime(LocalDateTime.now().minusDays(3)));
-        repository.save(new MyExampleBc5039().setCustomField("Meeting 2")
-                .setEndDateTime(LocalDateTime.now().plusMonths(2))
-                .setStartDateTime(LocalDateTime.now().minusDays(2)));
+		// --8<-- [start:events]
+		// an event of the year calendar is one whole day: from 00:00 to 23:59, one event per day
+		int year = LocalDate.now().getYear();
+		saveDayEvent("Meeting 1", LocalDate.of(year, 2, 10));
+		saveDayEvent("Meeting 2", LocalDate.of(year, 4, 22));
+		saveDayEvent("Conference", LocalDate.of(year, 6, 17));
+		saveDayEvent("Release", LocalDate.of(year, 9, 3));
+		saveDayEvent("Annual report", LocalDate.of(year, 12, 15));
+		// --8<-- [end:events]
+	}
+
+	private void saveDayEvent(String name, LocalDate day) {
+		repository.save(new MyExampleBc5039().setCustomField(name)
+				.setStartDateTime(day.atStartOfDay())
+				.setEndDateTime(day.atTime(LocalTime.of(23, 59))));
 	}
 }

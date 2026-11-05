@@ -1,0 +1,43 @@
+{
+  "name": "myexample6162relationgraph",
+  "title": "Sales network",
+  "type": "RelationGraph",
+  "bc": "myExampleBc6162",
+  "fields": [
+    {
+      "title": "Parent company id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company id",
+      "key": "targetNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "edgeValue",
+      "type": "number"
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "dragNode": true,
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeValue"
+        ]
+      }
+    }
+  }
+}

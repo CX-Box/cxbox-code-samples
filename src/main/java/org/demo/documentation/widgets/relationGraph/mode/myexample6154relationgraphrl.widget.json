@@ -1,0 +1,49 @@
+{
+  "name": "myexample6154relationgraphrl",
+  "title": "Mode RL",
+  "type": "RelationGraph",
+  "bc": "myExampleBc6154",
+  "fields": [
+    {
+      "title": "Parent company id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company id",
+      "key": "targetNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "edgeValue",
+      "type": "number"
+    },
+    {
+      "title": "Edge description",
+      "key": "edgeDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "mode": "RL",
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeDescription",
+          "edgeValue"
+        ]
+      }
+    }
+  }
+}

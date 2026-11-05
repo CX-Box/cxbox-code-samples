@@ -1,0 +1,54 @@
+{
+  "name": "myexample6163relationgraph",
+  "title": "Sales network",
+  "type": "RelationGraph",
+  "bc": "myExampleBc6163",
+  "fields": [
+    {
+      "title": "Parent company id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company id",
+      "key": "targetNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "City",
+      "key": "targetNodeDescription",
+      "type": "input"
+    },
+    {
+      "title": "Sum, $",
+      "key": "edgeValue",
+      "type": "number"
+    },
+    {
+      "title": "Edge description",
+      "key": "edgeDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName",
+          "targetNodeDescription"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeDescription",
+          "edgeValue"
+        ]
+      }
+    }
+  }
+}
