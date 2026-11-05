@@ -16,7 +16,7 @@ import org.demo.documentation.additional.checkforceactiveshowcondition.basic.MyE
 @Setter
 @NoArgsConstructor
 public class MyEntity1434 extends BaseEntity {
-
+	//CXBOX-1432
 	@Column
 	private String fullName;
 
