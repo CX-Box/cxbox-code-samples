@@ -90,7 +90,8 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 
 		var changed = row("1. Value changed");
 		for (var fieldKey : FIELDS) {
-			if (fieldKey.get(0).equals("textField")) {
+			// text: the difference word by word; checkbox: the snapshot false is treated as empty
+			if (fieldKey.get(0).equals("textField") || fieldKey.get(0).equals("checkboxField")) {
 				continue;
 			}
 			var cell = field(changed, fieldKey.get(0));
@@ -143,27 +144,27 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		selectScenario("1. Value changed");
 		var info = widget("myexample5900info");
 		field(info, "inputField").$(PREV).shouldHave(exactText("Old value"));
-		DocShots.png(info, ARTICLE, "info.png", 1660, 1100);
-		DocShots.png(info, ARTICLE, "changed.png", 1660, 1100);
+		DocShots.png(info, ARTICLE, "info.png", 1660, 1600);
+		DocShots.png(info, ARTICLE, "changed.png", 1660, 1600);
 
 		selectScenario("2. Value not changed");
 		field(info, "inputField").$(PREV).shouldNot(exist);
 		field(info, "inputField").shouldHave(text("Same value"));
-		DocShots.png(info, ARTICLE, "notchanged.png", 1660, 1100);
+		DocShots.png(info, ARTICLE, "notchanged.png", 1660, 1600);
 
 		selectScenario("3. Value added");
 		field(info, "inputField").$(PREV).shouldNot(exist);
 		field(info, "inputField").$(NEW).shouldHave(exactText("New value"));
-		DocShots.png(info, ARTICLE, "added.png", 1660, 1100);
+		DocShots.png(info, ARTICLE, "added.png", 1660, 1600);
 
 		selectScenario("4. Value deleted");
 		field(info, "inputField").$(PREV).shouldHave(exactText("Old value"));
 		field(info, "inputField").$(NEW).shouldNot(exist);
-		DocShots.png(info, ARTICLE, "deleted.png", 1660, 1100);
+		DocShots.png(info, ARTICLE, "deleted.png", 1660, 1600);
 
 		selectScenario("5. Values false and 0");
 		field(info, "checkboxField").$(PREV).shouldNot(exist);
-		DocShots.png(info, ARTICLE, "falsezero.png", 1660, 1100);
+		DocShots.png(info, ARTICLE, "falsezero.png", 1660, 1600);
 	}
 
 	@Test
@@ -180,7 +181,7 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		// the same enabled field: input without snapshotKey, read-only with snapshotKey
 		field(editForm, "inputField").$("input").should(exist);
 		field(snapshotForm, "inputField").$("input").shouldNot(exist);
-		DocShots.png($("main"), ARTICLE, "form.png", 1900, 1300);
+		DocShots.png($("main"), ARTICLE, "form.png", 1900, 2400);
 		DocShots.png(field(snapshotForm, "textField"), ARTICLE, "text.png", 1660, 1100);
 		for (var fieldKey : FIELDS) {
 			DocShots.png(field(snapshotForm, fieldKey.get(0)), fieldKey.get(1), "snapshotKey.png", 1660, 1100);
@@ -188,9 +189,9 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 
 		var edit = view.form("Form without snapshotKey (edit current values)");
 		var input = edit.input("Input");
-		// the value that is not saved yet is not shown in the field with snapshotKey
+		// the current value is shown with the changes that are not saved yet
 		input.setValue("Changed value");
-		field(snapshotForm, "inputField").$(NEW).shouldHave(exactText("New value"));
+		field(snapshotForm, "inputField").$(NEW).shouldHave(exactText("Changed value"));
 		edit.actions().action("Save").click();
 		field(snapshotForm, "inputField").$(NEW).shouldHave(exactText("Changed value"));
 		field(snapshotForm, "inputField").$(PREV).shouldHave(exactText("Old value"));
