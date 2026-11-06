@@ -1,0 +1,81 @@
+{
+  "name": "myexample3297fieldtypesgh",
+  "title": "Standard aggregate functions by field type",
+  "type": "GroupingHierarchy",
+  "bc": "myexample3297",
+  "fields": [
+    {
+      "title": "Dictionary",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Description",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "number",
+      "key": "customFieldNumber",
+      "type": "number"
+    },
+    {
+      "title": "money",
+      "key": "customFieldMoney",
+      "type": "money"
+    },
+    {
+      "title": "percent",
+      "key": "customFieldPercent",
+      "type": "percent"
+    },
+    {
+      "title": "date",
+      "key": "customFieldDate",
+      "type": "date"
+    },
+    {
+      "title": "dateTime",
+      "key": "customFieldDateTime",
+      "type": "dateTime"
+    },
+    {
+      "title": "input (numeric text)",
+      "key": "customFieldInput",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "groupingHierarchy": {
+      "fields": [
+        "customFieldDictionary"
+      ],
+      "aggFields": [
+        {
+          "fieldKey": "customFieldNumber",
+          "func": "sum"
+        },
+        {
+          "fieldKey": "customFieldMoney",
+          "func": "sum"
+        },
+        {
+          "fieldKey": "customFieldPercent",
+          "func": "sum"
+        },
+        {
+          "fieldKey": "customFieldDate",
+          "func": "max"
+        },
+        {
+          "fieldKey": "customFieldDateTime",
+          "func": "max"
+        },
+        {
+          "fieldKey": "customFieldInput",
+          "func": "sum"
+        }
+      ]
+    }
+  }
+}

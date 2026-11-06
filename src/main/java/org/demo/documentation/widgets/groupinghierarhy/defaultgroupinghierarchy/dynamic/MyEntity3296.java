@@ -1,0 +1,28 @@
+package org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.dynamic;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.dynamic.enums.CustomFieldDictionaryEnum;
+import org.demo.documentation.widgets.groupinghierarhy.defaultgroupinghierarchy.dynamic.enums.CustomFieldDictionaryLevelTwoEnum;
+
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class MyEntity3296 extends BaseEntity {
+	@Column
+	private String customField;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryEnum customFieldDictionary;
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	private CustomFieldDictionaryLevelTwoEnum customFieldDictionaryLevelTwo;
+}
