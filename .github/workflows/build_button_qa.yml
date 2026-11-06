@@ -50,7 +50,7 @@ jobs:
     if: (inputs.choice-test == 'All tests' && github.ref == 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
        APP_URL: http://localhost:81/ui/#/
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
         matrix:
           java: [ '17','21']
@@ -68,7 +68,7 @@ jobs:
           cache: "maven"
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18'
           cashe: "yarn"
@@ -127,7 +127,7 @@ jobs:
           keep_reports: 20
 
       - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
@@ -158,7 +158,7 @@ jobs:
 
   build-qa_manual:
     if: inputs.docker_run == 'https://code-samples.cxbox.org/'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         java: [ '17','21']
@@ -228,7 +228,7 @@ jobs:
 
 
       - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
@@ -253,7 +253,7 @@ jobs:
     if: (inputs.choice-test == 'Package, class or test' || github.ref != 'refs/heads/main') &&  inputs.docker_run == 'Branch in docker'
     env:
       APP_URL: http://localhost:81/ui/#/
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         java: [ '17','21']
@@ -271,7 +271,7 @@ jobs:
           cache: "maven"
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18'
           cache: "yarn"
@@ -346,7 +346,7 @@ jobs:
           keep_reports: 20
 
       - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
