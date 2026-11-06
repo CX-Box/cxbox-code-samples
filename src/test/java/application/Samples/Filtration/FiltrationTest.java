@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import application.config.BaseTestForSamples;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import core.element.PlatformApp;
 import core.element.screen.PlatformScreen;
 import core.element.screen.view.PlatformView;
@@ -30,7 +31,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Filtration. Filter by fields, full text search, personal filter group and filter group on every widget of the article")
+@DisplayName("Filtration. Filter by fields, full text search, personal filter group, filter group, default filter group and deleting of a saved group on every widget of the article")
 @Epic("Samples")
 @Feature(FiltrationTest.ARTICLE)
 @Tag("Samples")
@@ -70,6 +71,26 @@ public class FiltrationTest extends BaseTestForSamples {
 
 	/** A department of the business example of the tree popups. */
 	private static final String DEPARTMENT = "Минстроя";
+
+	/** Tabs and groups of the default filter group samples: 7 records, 4 High, 2 Middle, 1 Low. */
+	private static final String DEFAULT_LIST = "List with default filter group";
+
+	private static final String DEFAULT_TREE = "Tree with default filter group";
+
+	private static final String DEFAULT_BC_FILTER = "Default filter group and BC_PROPERTIES filter";
+
+	private static final String DEFAULT_BC_FILTER_TITLE = "List with BC_PROPERTIES filter and default filter group";
+
+	private static final String HIGH = "Dictionary = High";
+
+	private static final String MIDDLE = "Dictionary = Middle";
+
+	private static final String SHOW_ALL = "Show all";
+
+	private static final String TO_DEFAULT = "To default filter(s)";
+
+	/** Without filters: the first page of the 7 records, the page limit is 5. */
+	private static final int ALL_ON_PAGE = 5;
 
 	private static final String PIE_TITLE = "Sales per client";
 
@@ -498,6 +519,231 @@ public class FiltrationTest extends BaseTestForSamples {
 		chart.mode(Mode.CHART);
 		assertThat(chart.points()).hasSize(3);
 		DocShots.stop();
+	}
+
+	// --- default filter group (CXBOX-1382) ---
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("default filter group: List")
+	@Description("The group with default_filter = true is applied when the view is opened and is marked by the star. "
+			+ "\"To default filter(s)\" is shown when the filters differ from the group and returns the group, "
+			+ "\"Clear N filter(s)\" is shown when filters are applied")
+	void defaultFilterGroupList() {
+		var list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		DocShots.gif(ARTICLE, "default_filter_group_list.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		// 1. the view is opened: the default filter group is applied, only "Clear 1 filter(s)"
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(HIGH);
+		assertThat(dictionaries(list)).hasSize(4).containsOnly("High");
+		assertThat(list.headers().hasClearFilters()).isTrue();
+		assertThat(list.headers().resetFiltersTitle()).isNull();
+		assertThat(list.headers().filterGroups(true)).containsExactly(HIGH);
+		// 2. another group: the filters differ from the default ones, both links
+		list.headers().filterGroup(MIDDLE);
+		assertThat(dictionaries(list)).hasSize(2).containsOnly("Middle");
+		assertThat(list.headers().hasClearFilters()).isTrue();
+		assertThat(list.headers().resetFiltersTitle()).isEqualTo(TO_DEFAULT);
+		// 3. "Clear N filter(s)": all the records, only the reset link
+		list.headers().clearFilters();
+		rows(list).shouldHave(CollectionCondition.size(ALL_ON_PAGE));
+		assertThat(list.headers().hasClearFilters()).isFalse();
+		assertThat(list.headers().resetFiltersTitle()).isEqualTo(TO_DEFAULT);
+		// 4. the reset link: the default filter group again, only "Clear 1 filter(s)"
+		list.headers().resetFilters();
+		rows(list).shouldHave(CollectionCondition.size(4));
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(HIGH);
+		assertThat(list.headers().hasClearFilters()).isTrue();
+		assertThat(list.headers().resetFiltersTitle()).isNull();
+		DocShots.stop();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("default filter group: the filters of the user are kept when the user comes back to the view")
+	@Description("Priority 1: the filters touched by the user (cleared filters too) are kept when the user leaves the view and "
+			+ "comes back; the default filter group is not applied again")
+	void defaultFilterGroupUserFiltersKept() {
+		var list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(HIGH);
+		list.headers().clearFilters();
+		rows(list).shouldHave(CollectionCondition.size(ALL_ON_PAGE));
+		// another view and back
+		view(FILTER_GROUP, "List").listInline("List");
+		list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		rows(list).shouldHave(CollectionCondition.size(ALL_ON_PAGE));
+		assertThat(list.headers().hasClearFilters()).isFalse();
+		assertThat(list.headers().resetFiltersTitle()).isEqualTo(TO_DEFAULT);
+		// the filter of the user is kept too
+		list.headers().filterGroup(MIDDLE);
+		view(FILTER_GROUP, "List").listInline("List");
+		list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		assertThat(dictionaries(list)).hasSize(2).containsOnly("Middle");
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(MIDDLE);
+		list.headers().resetFilters();
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(HIGH);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("default filter group: the page is refreshed")
+	@Description("The filters of the user are not kept after the refresh of the page: the default filter group is applied again")
+	void defaultFilterGroupRefresh() {
+		var list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		list.headers().clearFilters();
+		rows(list).shouldHave(CollectionCondition.size(ALL_ON_PAGE));
+		Selenide.refresh();
+		list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		rows(list).shouldHave(CollectionCondition.size(4));
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(HIGH);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("default filter group: Tree")
+	@Description("The default filter group is applied to the tree when the view is opened; the reset link returns it")
+	void defaultFilterGroupTree() {
+		var tree = tree(FILTER_GROUP, DEFAULT_TREE, "myexample3629tree");
+		DocShots.gif(ARTICLE, "default_filter_group_tree.gif", PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		assertThat(tree.headers().appliedFilterGroup()).isEqualTo(HIGH);
+		assertThat(tree.headers().filterGroups(true)).containsExactly(HIGH);
+		// the search mode of the tree: "shown N" - the records of the group
+		shown(tree, 4);
+		assertThat(tree.headers().resetFiltersTitle()).isNull();
+		tree.headers().filterGroup(MIDDLE);
+		shown(tree, 2);
+		assertThat(tree.headers().resetFiltersTitle()).isEqualTo(TO_DEFAULT);
+		tree.headers().resetFilters();
+		assertThat(tree.headers().appliedFilterGroup()).isEqualTo(HIGH);
+		shown(tree, 4);
+		assertThat(tree.headers().resetFiltersTitle()).isNull();
+		DocShots.stop();
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("default filter group: the filter of BC_PROPERTIES is applied instead of it")
+	@Description("Priority 2: BC_PROPERTIES.FILTER of the business component is applied when the view is opened, "
+			+ "the default filter group is not applied, but is marked by the star; the reset link returns the filter of BC_PROPERTIES")
+	void defaultFilterGroupBcProperties() {
+		var list = view(FILTER_GROUP, DEFAULT_BC_FILTER).listInline(DEFAULT_BC_FILTER_TITLE);
+		assertThat(dictionaries(list)).hasSize(2).containsOnly("Middle");
+		assertThat(list.headers().appliedFilterGroup()).isEqualTo(SHOW_ALL);
+		assertThat(list.headers().filterGroups(true)).containsExactly(HIGH);
+		assertThat(list.headers().resetFiltersTitle()).isNull();
+		list.headers().filterGroup(HIGH);
+		assertThat(dictionaries(list)).hasSize(4).containsOnly("High");
+		assertThat(list.headers().resetFiltersTitle()).isEqualTo(TO_DEFAULT);
+		list.headers().resetFilters();
+		assertThat(dictionaries(list)).hasSize(2).containsOnly("Middle");
+		assertThat(list.headers().resetFiltersTitle()).isNull();
+	}
+
+	// --- delete a saved personal filter group ---
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("delete personal filter group: List")
+	@Description("The user deletes the saved personal filter group by the cross in \"Save filters\": the group disappears "
+			+ "from the select above the table and is not shown after the refresh of the page")
+	void deletePersonalFilterGroupList() {
+		deletePersonalFilterGroup(() -> view(PERSONAL_FILTER_GROUP, "List").listInline("List"), "delete_filter_group_list.gif",
+				SAVED_GROUP + "delete List");
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("delete personal filter group: AdditionalList")
+	@Description("The user deletes the saved personal filter group by the cross in \"Save filters\"")
+	void deletePersonalFilterGroupAdditionalList() {
+		deletePersonalFilterGroup(() -> view(PERSONAL_FILTER_GROUP, "AdditionalList").additionalList("AdditionalList"),
+				"delete_filter_group_addlist.gif", SAVED_GROUP + "delete AdditionalList");
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("delete personal filter group: Tree")
+	@Description("The user deletes the saved personal filter group by the cross in \"Save filters\"")
+	void deletePersonalFilterGroupTree() {
+		deletePersonalFilterGroup(() -> tree(PERSONAL_FILTER_GROUP, "Tree", "myexample3616tree"), "delete_filter_group_tree.gif",
+				SAVED_GROUP + "delete Tree");
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("delete personal filter group: the predefined groups can not be deleted")
+	@Description("\"Save filters\" lists only the personal groups of the user: the groups of BC_FILTER_GROUPS have no cross")
+	void deletePersonalFilterGroupOnlyPersonal() {
+		var list = view(FILTER_GROUP, DEFAULT_LIST).listInline(DEFAULT_LIST);
+		String group = SAVED_GROUP + "personal";
+		removeIfSaved(list, group);
+		list.headers().filterGroup(MIDDLE);
+		list.settings().select("Save filters");
+		var save = new FilterGroupSettingsPopup();
+		// the groups of BC_FILTER_GROUPS are not listed
+		assertThat(save.groups()).doesNotContain(HIGH, MIDDLE);
+		save.setName(group);
+		save.clickButtonCreate();
+		assertThat(list.headers().filterGroups(false)).contains(HIGH, MIDDLE, group);
+		list.settings().select("Save filters");
+		var saved = new FilterGroupSettingsPopup();
+		assertThat(saved.groups()).contains(group).doesNotContain(HIGH, MIDDLE);
+		saved.remove(group);
+		saved.close();
+		assertThat(list.headers().filterGroups(false)).contains(HIGH, MIDDLE).doesNotContain(group);
+		list.headers().resetFilters();
+	}
+
+	/** The group saved by an interrupted run of the test: the names of the groups are unique. */
+	private static void removeIfSaved(ListWidget<?, ?, ?> widget, String group) {
+		widget.settings().select("Save filters");
+		var popup = new FilterGroupSettingsPopup();
+		if (popup.groups().contains(group)) {
+			popup.remove(group);
+		}
+		popup.close();
+	}
+
+	private static void deletePersonalFilterGroup(java.util.function.Supplier<? extends ListWidget<?, ?, ?>> widgetOf, String gif,
+			String group) {
+		var widget = widgetOf.get();
+		removeIfSaved(widget, group);
+		widget.headers().filter(fb -> fb.input("Custom Field New", "new 2"));
+		widget.settings().select("Save filters");
+		var save = new FilterGroupSettingsPopup();
+		save.setName(group);
+		save.clickButtonCreate();
+		widget.headers().clearFilters();
+		assertThat(widget.headers().filterGroups(false)).contains(group);
+		DocShots.gif(ARTICLE, gif, PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
+		widget.settings().select("Save filters");
+		var saved = new FilterGroupSettingsPopup();
+		assertThat(saved.groups()).contains(group);
+		saved.remove(group);
+		assertThat(saved.groups()).doesNotContain(group);
+		saved.close();
+		assertThat(widget.headers().filterGroups(false)).doesNotContain(group);
+		DocShots.stop();
+		// the group is deleted on the server: it is not loaded again with the meta of the screen
+		Selenide.refresh();
+		widget = widgetOf.get();
+		widget.element();
+		var filterGroups = widget.element().$$("div[class*=\"Header__filtersContainer\"] .ant-select");
+		if (!filterGroups.isEmpty()) {
+			assertThat(widget.headers().filterGroups(false)).doesNotContain(group);
+		}
+	}
+
+	private static List<String> dictionaries(PlatformListWidgetInline list) {
+		return list.rows().streamCurrentPage().map(row -> row.dictionary("Custom Field Dictionary").getValue()).toList();
+	}
+
+	/** "shown N" above the tree in the search mode: the number of the found records. */
+	private static void shown(PlatformTreeWidgetInline tree, int count) {
+		tree.element().$("[data-test-widget-tree-filter-shown]")
+				.shouldHave(com.codeborne.selenide.Condition.attribute("data-test-widget-tree-filter-shown", String.valueOf(count)),
+						tree.getExpectations().getTimeout());
 	}
 
 	private static void personalFilterGroup(ListWidget<?, ?, ?> widget, String gif, String group) {

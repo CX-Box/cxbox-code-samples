@@ -95,6 +95,28 @@ public class FilterGroupSettingsPopup {
 		});
 	}
 
+	/** The names of the saved personal filter groups in the popup. */
+	public java.util.List<String> groups() {
+		return Allure.step(message("filters.list"), () -> {
+			POPUP.shouldBe(Condition.visible, expectationPattern.getTimeout());
+			return POPUP.$$("div[class*=\"FilterSettingModal__filterGroups\"] > div").texts().stream()
+					.map(String::trim)
+					.toList();
+		});
+	}
+
+	/** Deletes one saved personal filter group by the cross next to its name. */
+	public void remove(String name) {
+		Allure.step(message("filters.remove", name), step -> {
+			POPUP.shouldBe(Condition.visible, expectationPattern.getTimeout());
+			ElementsCollection groups = POPUP.$$("div[class*=\"FilterSettingModal__filterGroups\"] > div");
+			int before = groups.size();
+			groups.findBy(Condition.exactText(name)).shouldBe(Condition.visible, expectationPattern.getTimeout())
+					.$("i[aria-label=\"icon: close\"]").click();
+			groups.shouldHave(CollectionCondition.size(before - 1), expectationPattern.getTimeout());
+		});
+	}
+
 	/** Closes the popup by the cross in its header. */
 	public void close() {
 		Allure.step(message("filters.close"), step -> {
