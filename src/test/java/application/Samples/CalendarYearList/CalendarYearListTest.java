@@ -77,13 +77,25 @@ public class CalendarYearListTest extends BaseTestForSamples {
 		SelenideElement widget = calendar();
 		widget.$$(".fc-event").shouldHave(CollectionCondition.size(5));
 		DocShots.gif(ARTICLE, "table_mode.gif", 1660, 1000, Frame.WITHOUT_SIDEBAR);
-		widget.$(".anticon-setting").closest("button").click();
-		$(".ant-dropdown:not(.ant-dropdown-hidden)").$$("li").findBy(Condition.text("Table")).click();
+		chooseMode(widget, "Table");
 		widget.$$(".ant-table-tbody tr.ant-table-row").shouldHave(CollectionCondition.size(5));
-		widget.$(".anticon-setting").closest("button").click();
-		$(".ant-dropdown:not(.ant-dropdown-hidden)").$$("li").findBy(Condition.text("Calendar")).click();
+		chooseMode(widget, "Calendar");
 		widget.$$(".fc-event").shouldHave(CollectionCondition.size(5));
 		DocShots.stop();
+	}
+
+	/**
+	 * Chooses the mode in the gear menu of the widget. The group "Mode" of the menu is an li element too, and its text holds
+	 * the texts of all its items: a search of any li by text finds the group, and the click in its middle lands on
+	 * "Calendar". So only the items are searched, by the exact text.
+	 */
+	private static void chooseMode(SelenideElement widget, String mode) {
+		SelenideElement menu = $(".ant-dropdown:not(.ant-dropdown-hidden) ul.ant-dropdown-menu");
+		widget.$(".anticon-setting").closest("button").shouldBe(Condition.visible).click();
+		menu.shouldBe(Condition.visible)
+				.$$("li[role='menuitem']").findBy(Condition.exactText(mode))
+				.shouldBe(Condition.visible)
+				.click();
 	}
 
 }

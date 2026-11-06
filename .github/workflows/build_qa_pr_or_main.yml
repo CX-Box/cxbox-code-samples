@@ -44,7 +44,7 @@ jobs:
     # It will not run for pushes to main or manual workflow execution.
     if: github.event_name == 'pull_request'
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
@@ -92,7 +92,7 @@ jobs:
       # Installs Node.js required for frontend build.
       # Enables Yarn dependency caching.
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18'
           cache: 'yarn'
@@ -205,7 +205,7 @@ jobs:
       # that hung and the screenshots of the failed tests.
       - name: Upload test logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-logs-${{ matrix.java }}
           if-no-files-found: ignore
@@ -232,7 +232,7 @@ jobs:
 
       - name: Upload Keycloak log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: keycloak-log-${{ matrix.java }}
           path: keycloak-${{ matrix.java }}.log
@@ -249,7 +249,7 @@ jobs:
       # It will be downloaded later by publish-summary job.
       - name: Upload test result
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-result-${{ matrix.java }}
           path: test-result-${{ matrix.java }}.txt
@@ -339,7 +339,7 @@ jobs:
       # allure-report -> allure-report-${{ matrix.java }}
       - name: Upload Allure report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: allure-report-${{ matrix.java }}
           path: allure-report
@@ -396,7 +396,7 @@ jobs:
 
     name: Publish Report Links
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     needs: [ build-qa-pr-and-check-autotests ]
     # Runs after both matrix jobs:
@@ -414,7 +414,7 @@ jobs:
       # The reports are restored into the allure-report directory,
       # which will be published to GitHub Pages.
       - name: Download Allure reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: allure-report-*
           path: allure-report
@@ -443,7 +443,7 @@ jobs:
       # Downloads test results from Java 17 and Java 21 jobs
       # Required for the Prepare PR comment step.
       - name: Download results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: test-result-*
           merge-multiple: true
@@ -477,7 +477,7 @@ jobs:
 
       # Publishes Allure reports to separate GitHub Pages repository.
       - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
@@ -523,7 +523,7 @@ jobs:
       # - Java 21 Allure report link
       - name: Comment on Pull Request
         if: always()
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.CODE_SAMPLES_ALLURE }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -552,7 +552,7 @@ jobs:
     # Run workflow only after push to main branch.
     # Does not run for Pull Requests.
     if: github.event_name == 'push'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       actions: write
@@ -593,7 +593,7 @@ jobs:
 
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18'
           cache: 'yarn'
@@ -672,7 +672,7 @@ jobs:
 
       - name: Upload test logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-logs-${{ matrix.java }}
           if-no-files-found: ignore
@@ -731,7 +731,7 @@ jobs:
       # Upload report for publish job.
       - name: Upload Allure report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: allure-main-report-${{ matrix.java }}
           path: allure-report
@@ -762,7 +762,7 @@ jobs:
 
     name: Publish Main Allure Report
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     needs:
       - build-qa-main-and-check-autotests
@@ -774,14 +774,14 @@ jobs:
     steps:
 
       - name: Download Allure reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: allure-main-report-*
           path: allure-report
           merge-multiple: true
 
       - name: Publish main Allure report
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           external_repository: CX-Box/cxbox-code-samples-allure
