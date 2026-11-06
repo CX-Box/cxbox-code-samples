@@ -12,8 +12,10 @@ import core.element.widget.action.Action;
 import core.element.widget.cardlist.CardCarouselListWidget;
 import core.element.widget.cardlist.CardListWidget;
 import core.element.widget.chart.Column2DWidget;
+import core.element.widget.chart.DualAxes2DWidget;
 import core.element.widget.chart.Line2DWidget;
 import core.element.widget.chart.Pie1DWidget;
+import core.element.widget.chart.RelationGraphWidget;
 import core.element.widget.field.type.checkbox.CheckBox;
 import core.element.widget.field.type.date.Date;
 import core.element.widget.field.type.dateTime.DateTime;
@@ -220,6 +222,8 @@ public class PlatformConfig {
 		public WidgetPart<Pie1DWidget> pie1D = Pie1DWidget::new;
 		public WidgetPart<Column2DWidget> column2D = Column2DWidget::new;
 		public WidgetPart<Line2DWidget> line2D = Line2DWidget::new;
+		public WidgetPart<DualAxes2DWidget> dualAxes2D = DualAxes2DWidget::new;
+		public WidgetPart<RelationGraphWidget> relationGraph = RelationGraphWidget::new;
 		public WidgetPart<CardListWidget> cardList = CardListWidget::new;
 		public WidgetPart<CardCarouselListWidget> cardCarouselList = CardCarouselListWidget::new;
 

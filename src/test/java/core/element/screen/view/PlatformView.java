@@ -6,8 +6,10 @@ import core.element.screen.PlatformScreen;
 import core.element.widget.AbstractWidget;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.chart.Column2DWidget;
+import core.element.widget.chart.DualAxes2DWidget;
 import core.element.widget.chart.Line2DWidget;
 import core.element.widget.chart.Pie1DWidget;
+import core.element.widget.chart.RelationGraphWidget;
 import core.element.widget.form.PlatformFormPopupWidget;
 import core.element.widget.form.PlatformFormWidget;
 import core.element.widget.info.PlatformAdditionalInfoWidget;
@@ -165,6 +167,22 @@ public class PlatformView extends AbstractView<PlatformView> {
 
 	public Line2DWidget line2DByName(String name) {
 		return config().parts.widgets.line2D.apply(PlatformIdentifier.NAME, name);
+	}
+
+	public DualAxes2DWidget dualAxes2D(String title) {
+		return config().parts.widgets.dualAxes2D.apply(PlatformIdentifier.TITLE, title);
+	}
+
+	public DualAxes2DWidget dualAxes2DByName(String name) {
+		return config().parts.widgets.dualAxes2D.apply(PlatformIdentifier.NAME, name);
+	}
+
+	public RelationGraphWidget relationGraph(String title) {
+		return config().parts.widgets.relationGraph.apply(PlatformIdentifier.TITLE, title);
+	}
+
+	public RelationGraphWidget relationGraphByName(String name) {
+		return config().parts.widgets.relationGraph.apply(PlatformIdentifier.NAME, name);
 	}
 	public CardListWidget cardList(String title) {
 		return config().parts.widgets.cardList.apply(PlatformIdentifier.TITLE, title);

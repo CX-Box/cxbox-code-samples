@@ -1,0 +1,54 @@
+{
+  "name": "myexample6156relationgraphline",
+  "title": "Edge type line",
+  "type": "RelationGraph",
+  "bc": "myExampleBc6156",
+  "fields": [
+    {
+      "title": "Parent company id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company id",
+      "key": "targetNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "Expanded",
+      "key": "targetNodeExpanded",
+      "type": "hidden"
+    },
+    {
+      "title": "Sum, $",
+      "key": "edgeValue",
+      "type": "number"
+    },
+    {
+      "title": "Edge description",
+      "key": "edgeDescription",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeDescription",
+          "edgeValue"
+        ],
+        "type": "line"
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "myexample6157relationgraph",
+  "title": "Color from a field (bgColorKey)",
+  "type": "RelationGraph",
+  "bc": "myExampleBc6157",
+  "fields": [
+    {
+      "title": "Parent company id",
+      "key": "sourceNodeId",
+      "type": "input"
+    },
+    {
+      "title": "Company id",
+      "key": "targetNodeId",
+      "type": "input",
+      "bgColorKey": "targetNodeColor"
+    },
+    {
+      "title": "Company",
+      "key": "targetNodeName",
+      "type": "input"
+    },
+    {
+      "title": "Expanded",
+      "key": "targetNodeExpanded",
+      "type": "hidden"
+    },
+    {
+      "title": "Sum, $",
+      "key": "edgeValue",
+      "type": "number",
+      "bgColorKey": "edgeColor"
+    }
+  ],
+  "options": {
+    "relationGraph": {
+      "nodes": {
+        "descriptionFieldKeys": [
+          "targetNodeName"
+        ]
+      },
+      "edges": {
+        "labelFieldKeys": [
+          "edgeValue"
+        ]
+      }
+    }
+  }
+}
