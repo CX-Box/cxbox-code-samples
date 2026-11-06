@@ -44,12 +44,7 @@ const WidgetTitle: React.FC<WidgetTitleProps> = ({
     const element = `h${level}`
     const templatedTitle = <TemplatedTitle widgetName={widgetName} title={text ?? ''} id={id} opacity={opacity} />
     const title = isMainWidget ? (
-        <div
-            className={styles.collapse}
-            onClick={handleCollapseClick}
-            data-test-widget-collapse={true}
-            data-test-widget-collapsed={!!isCollapsed}
-        >
+        <div className={styles.collapse} onClick={handleCollapseClick}>
             <Icon className={styles.collapseIcon} type={isCollapsed ? 'right' : 'down'} />
             {templatedTitle}
         </div>
