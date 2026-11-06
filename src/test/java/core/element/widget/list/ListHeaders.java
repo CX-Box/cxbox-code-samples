@@ -149,6 +149,95 @@ public class ListHeaders<W extends ListWidget<W, ROWS, ROW>, ROWS extends Platfo
 		});
 	}
 
+	/**
+	 * The texts of the reset link above the table: the title depends on the default filters of the widget
+	 * (the filter of BC_PROPERTIES or the default filter group, the selected rows of AssocTreePopup).
+	 */
+	public static final List<String> RESET_TITLES = List.of(
+			"Reset filter(s)",
+			"To default filter(s)",
+			"To selected rows filter(s)",
+			"To default and selected rows filter(s)"
+	);
+
+	private SelenideElement filtersContainer() {
+		return widget().element().$("div[class*=\"Header__filtersContainer\"]");
+	}
+
+	/** The text of the select of the filter groups above the table: the applied group or "Show all". */
+	public String appliedFilterGroup() {
+		return Allure.step(message("list.appliedFilterGroup"), () -> {
+			String text = filtersContainer().$(".ant-select-selection-selected-value")
+					.shouldBe(Condition.visible, widget().getExpectations().getTimeout())
+					.getText();
+			StepReport.value(text);
+			return text;
+		});
+	}
+
+	/** Whether the link "Clear N filter(s)" is shown above the table. */
+	public boolean hasClearFilters() {
+		return widget().element().$("[data-test-widget-list-clear-filters='true']").is(Condition.visible);
+	}
+
+	private ElementsCollection resetLinks() {
+		return filtersContainer().$$("a").filterBy(Condition.or("reset link",
+				Condition.exactText(RESET_TITLES.get(0)),
+				Condition.exactText(RESET_TITLES.get(1)),
+				Condition.exactText(RESET_TITLES.get(2)),
+				Condition.exactText(RESET_TITLES.get(3))));
+	}
+
+	/** The title of the reset link above the table, or {@code null} when the link is not shown. */
+	public String resetFiltersTitle() {
+		return Allure.step(message("list.resetFiltersTitle"), () -> {
+			var links = resetLinks();
+			String title = links.isEmpty() ? null : links.first().getText();
+			StepReport.value(title);
+			return title;
+		});
+	}
+
+	/** Clicks the reset link above the table: the default filters of the widget are applied again. */
+	public W resetFilters() {
+		return Allure.step(message("list.resetFilters"), () -> {
+			SelenideElement reset = resetLinks().first().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			PageRequests.runAndWaitDelayedRequests(() -> reset.scrollIntoView("{block: \"center\"}").click(), REQUEST_START,
+					widget().getExpectations().getOverTimeout());
+			widget().element();
+			return widget();
+		});
+	}
+
+	/**
+	 * The names of the groups in the select above the table; {@code starred} - only the groups marked by the star
+	 * (the default filter group). Opens the select and closes it back.
+	 */
+	public List<String> filterGroups(boolean starred) {
+		return Allure.step(message(starred ? "list.starredFilterGroups" : "list.filterGroups"), () -> {
+			SelenideElement select = filtersContainer().$(".ant-select");
+			if (!select.exists()) {
+				// the select is shown only when the business component has filter groups
+				StepReport.list(List.of(), "options");
+				return List.<String>of();
+			}
+			select.shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			select.click();
+			ElementsCollection items = $$("div.ant-select-dropdown:not(.ant-select-dropdown-hidden) li.ant-select-dropdown-menu-item")
+					.filterBy(Condition.visible);
+			items.first().shouldBe(Condition.visible, widget().getExpectations().getTimeout());
+			List<String> names = items.asFixedIterable().stream()
+					.filter(item -> !starred || item.$("i.anticon svg").exists())
+					.map(SelenideElement::getText)
+					.toList();
+			select.click();
+			$$("div.ant-select-dropdown:not(.ant-select-dropdown-hidden)").filterBy(Condition.visible)
+					.shouldHave(com.codeborne.selenide.CollectionCondition.size(0), widget().getExpectations().getTimeout());
+			StepReport.list(names, "options");
+			return names;
+		});
+	}
+
 	public HeaderColumn<W, ROWS, ROW> headerColumn(String name) {
 		return new HeaderColumn<>(
 				name,
