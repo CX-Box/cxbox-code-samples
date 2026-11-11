@@ -1,0 +1,46 @@
+{
+  "name": "myexample5262joblist",
+  "title": "Jobs",
+  "type": "List",
+  "bc": "myexample5262job",
+  "fields": [
+    {
+      "title": "Job Name",
+      "key": "jobName",
+      "type": "input"
+    },
+    {
+      "title": "State",
+      "key": "state",
+      "type": "input"
+    },
+    {
+      "title": "Created At",
+      "key": "createdAt",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "title": "Updated At",
+      "key": "updatedAt",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "title": "Recurring Job Id",
+      "key": "recurringJobId",
+      "type": "input"
+    },
+    {
+      "title": "Job Signature",
+      "key": "jobSignature",
+      "type": "text"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "requeue",
+        "deleteJob"
+      ]
+    }
+  }
+}
