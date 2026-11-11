@@ -1,0 +1,38 @@
+{
+  "name": "myexample5262list",
+  "title": "Records processed by background jobs",
+  "type": "List",
+  "bc": "myexample5262",
+  "fields": [
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "title": "Status",
+      "key": "status",
+      "type": "input"
+    },
+    {
+      "title": "Scheduled Date",
+      "key": "scheduledDate",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "title": "Executed Date",
+      "key": "executedDate",
+      "type": "dateTimeWithSeconds"
+    }
+  ],
+  "options": {
+    "actionGroups": {
+      "include": [
+        "create",
+        "save",
+        "runNow",
+        "runInOneMinute"
+      ]
+    }
+  }
+}
