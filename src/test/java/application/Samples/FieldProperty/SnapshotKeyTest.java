@@ -231,6 +231,92 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		input.setValue("New value");
 		edit.actions().action("Save").click();
 		field(snapshotForm, "inputField").$(NEW).shouldHave(exactText("New value"));
+
+		// PickListPopup: the field of the popup with snapshotKey
+		field(editForm, "pickListField").$("[data-test-field-picklist-popup]").click();
+		var pickPopup = widget("myexample5900pickpopup");
+		var pickChanged = pickPopup.$$("tr").findBy(text("New data")).shouldBe(visible);
+		field(pickChanged, "customField").$(PREV).shouldHave(exactText("Old data"));
+		field(pickChanged, "customField").$(NEW).shouldHave(exactText("New data"));
+		DocShots.png($(".ant-modal-content"), ARTICLE, "picklistpopup.png", 1660, 1100);
+		$(".ant-modal-close").click();
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Other widgets: AdditionalInfo, AdditionalList, GroupingHierarchy, Tree, FormPopup")
+	@Description("The fields with snapshotKey show the previous and the current value in every widget that shows the fields of a record")
+	void otherWidgets() {
+		view("Widgets");
+		selectScenario("1. Value changed");
+
+		var additionalInfo = widget("myexample5900additionalinfo");
+		field(additionalInfo, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		field(additionalInfo, "inputField").$(NEW).shouldHave(exactText("New value"));
+		DocShots.png(additionalInfo, ARTICLE, "additionalinfo.png", 1660, 1100, PADDING);
+
+		var additionalList = widget("myexample5900additionallist");
+		var additionalRow = additionalList.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(additionalRow, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		DocShots.png(additionalList, ARTICLE, "additionallist.png", 1660, 1100, PADDING);
+
+		for (var name : List.of("myexample5900groupinghierarchy", "myexample5900tree")) {
+			var table = widget(name);
+			var changed = table.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+			field(changed, "inputField").$(PREV).shouldHave(exactText("Old value"));
+			field(changed, "inputField").$(NEW).shouldHave(exactText("New value"));
+			field(changed, "dictionaryField").$(PREV).should(exist);
+			var notChanged = table.$$("tr").findBy(text("2. Value not changed")).shouldBe(visible);
+			field(notChanged, "inputField").$(PREV).shouldNot(exist);
+		}
+		DocShots.png(widget("myexample5900groupinghierarchy"), ARTICLE, "groupinghierarchy.png", 1660, 1300, PADDING);
+		DocShots.png(widget("myexample5900tree"), ARTICLE, "tree.png", 1660, 1300, PADDING);
+
+		// FormPopup is opened by the action before it is executed
+		widget("myexample5900popupbutton").$$("button").findBy(text("Show changes")).click();
+		var formPopup = widget("myexample5900formpopup");
+		field(formPopup, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		field(formPopup, "inputField").$(NEW).shouldHave(exactText("New value"));
+		field(formPopup, "inputField").$("input").shouldNot(exist);
+		DocShots.png($(".ant-modal-content"), ARTICLE, "formpopup.png", 1660, 1100);
+		$(".ant-modal-content").$$("button").findBy(text("Cancel")).click();
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("FileUpload: history mode with snapshotFileIdKey")
+	@Description("With snapshotKey and snapshotFileIdKey the read-only field shows the previous file and the current file; "
+			+ "with snapshotKey only the field is shown as usual; the editable field is the usual upload")
+	void fileUpload() {
+		view("FileUpload");
+		var withId = widget("myexample5900filelist");
+		var changed = withId.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(changed, "fileUploadField").$(PREV).shouldHave(text("FILE_old_version.pdf"));
+		field(changed, "fileUploadField").$(NEW).shouldHave(text("FILE_new_version.pdf"));
+		var notChanged = withId.$$("tr").findBy(text("2. Value not changed")).shouldBe(visible);
+		field(notChanged, "fileUploadField").$(PREV).shouldNot(exist);
+		field(notChanged, "fileUploadField").shouldHave(text("FILE_old_version.pdf"));
+		var added = withId.$$("tr").findBy(text("3. Value added")).shouldBe(visible);
+		field(added, "fileUploadField").$(PREV).shouldNot(exist);
+		field(added, "fileUploadField").$(NEW).shouldHave(text("FILE_new_version.pdf"));
+		var deleted = withId.$$("tr").findBy(text("4. Value deleted")).shouldBe(visible);
+		field(deleted, "fileUploadField").$(PREV).shouldHave(text("FILE_old_version.pdf"));
+		field(deleted, "fileUploadField").$(NEW).shouldNot(exist);
+		DocShots.png(withId, ARTICLE, "fileupload.png", 1660, 1300, PADDING);
+
+		// without snapshotFileIdKey the snapshot is not shown
+		var withoutId = widget("myexample5900filelistnoid");
+		var changedNoId = withoutId.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(changedNoId, "fileUploadField").$(PREV).shouldNot(exist);
+		field(changedNoId, "fileUploadField").shouldHave(text("FILE_new_version.pdf"));
+		DocShots.png(withoutId, ARTICLE, "fileupload_without_id.png", 1660, 1300, PADDING);
+
+		// the editable field is the usual upload, the snapshot is not shown
+		var form = widget("myexample5900fileform");
+		field(form, "fileUploadField").$("input[type='file']").should(exist);
+		field(form, "fileUploadField").$(PREV).shouldNot(exist);
 	}
 
 }

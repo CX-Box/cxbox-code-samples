@@ -7,6 +7,8 @@ import org.cxbox.core.crudma.bc.BusinessComponent;
 import org.cxbox.core.crudma.impl.VersionAwareResponseService;
 import org.cxbox.core.dto.rowmeta.ActionResultDTO;
 import org.cxbox.core.dto.rowmeta.CreateResult;
+import org.cxbox.core.dto.rowmeta.PreAction;
+import org.cxbox.core.service.action.ActionScope;
 import org.cxbox.core.service.action.Actions;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,8 @@ public class MyExample5900Service extends VersionAwareResponseService<MyExample5
 		setIfChanged(data, MyExample5900DTO_.checkboxField, entity::setCheckboxField);
 		setIfChanged(data, MyExample5900DTO_.dictionaryField, entity::setDictionaryField);
 		setIfChanged(data, MyExample5900DTO_.radioField, entity::setRadioField);
+		setIfChanged(data, MyExample5900DTO_.fileUploadField, entity::setFileUploadField);
+		setIfChanged(data, MyExample5900DTO_.fileUploadFieldId, entity::setFileUploadFieldId);
 		if (data.isFieldChanged(MyExample5900DTO_.pickListFieldId)) {
 			entity.setPickListEntity(data.getPickListFieldId() != null
 					? entityManager.getReference(MyEntity5900Pick.class, data.getPickListFieldId())
@@ -63,6 +67,16 @@ public class MyExample5900Service extends VersionAwareResponseService<MyExample5
 	public Actions<MyExample5900DTO> getActions() {
 		return Actions.<MyExample5900DTO>builder()
 				.save(sv -> sv.text("Save"))
+				// FormPopup with snapshotKey: the popup is opened before the action
+				.action(act -> act
+						.scope(ActionScope.RECORD)
+						.action("changes", "Show changes")
+						.withPreAction(PreAction.confirmWithWidget(
+								"myexample5900formpopup", cfw -> cfw
+										.title("Changes")
+										.yesText("OK")
+										.noText("Cancel")))
+						.invoker((bc, dto) -> new ActionResultDTO<>()))
 				.build();
 	}
 

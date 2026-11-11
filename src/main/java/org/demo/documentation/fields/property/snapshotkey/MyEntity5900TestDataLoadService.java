@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.cxbox.core.file.dto.FileUploadDto;
 import org.cxbox.api.service.session.InternalAuthorizationService;
+import org.demo.services.CustomFileUploadServices;
 import org.demo.documentation.fields.property.snapshotkey.enums.CustomFieldEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class MyEntity5900TestDataLoadService {
 	MyEntity5900PickRepository pickRepository;
 
 	@Autowired
+	CustomFileUploadServices customFileUploadServices;
+
+	@Autowired
 	InternalAuthorizationService authzService;
 
 	@Transactional
@@ -29,9 +34,12 @@ public class MyEntity5900TestDataLoadService {
 		authzService.loginAs(authzService.createAuthentication(InternalAuthorizationService.VANILLA));
 		repository.deleteAll();
 		pickRepository.deleteAll();
-		MyEntity5900Pick pickOld = pickRepository.save(new MyEntity5900Pick().setCustomField("Old data"));
-		MyEntity5900Pick pickNew = pickRepository.save(new MyEntity5900Pick().setCustomField("New data"));
+		MyEntity5900Pick pickOld = pickRepository.save(new MyEntity5900Pick().setCustomField("Old data").setCustomFieldSnapshot("Old data"));
+		MyEntity5900Pick pickNew = pickRepository.save(new MyEntity5900Pick().setCustomField("New data").setCustomFieldSnapshot("Old data"));
 		pickRepository.save(new MyEntity5900Pick().setCustomField("Other data"));
+
+		FileUploadDto fileOld = customFileUploadServices.uploadPdf("old_version").getData();
+		FileUploadDto fileNew = customFileUploadServices.uploadPdf("new_version").getData();
 
 		List<MyEntity5900> scenarios = new ArrayList<>();
 		scenarios.add(new MyEntity5900()
@@ -53,7 +61,9 @@ public class MyEntity5900TestDataLoadService {
 				.setPickListEntity(pickNew).setPickListFieldSnapshot(pickOld.getCustomField())
 				.setInlinePickListEntity(pickNew).setInlinePickListFieldSnapshot(pickOld.getCustomField())
 				.setDictionaryField(CustomFieldEnum.HIGH).setDictionaryFieldSnapshot(CustomFieldEnum.LOW)
-				.setRadioField(CustomFieldEnum.HIGH).setRadioFieldSnapshot(CustomFieldEnum.LOW));
+				.setRadioField(CustomFieldEnum.HIGH).setRadioFieldSnapshot(CustomFieldEnum.LOW)
+				.setFileUploadField(fileNew.getName()).setFileUploadFieldId(fileNew.getId())
+				.setFileUploadFieldSnapshot(fileOld.getName()).setFileUploadFieldSnapshotId(fileOld.getId()));
 
 		scenarios.add(new MyEntity5900()
 				.setScenario("2. Value not changed")
@@ -74,7 +84,9 @@ public class MyEntity5900TestDataLoadService {
 				.setPickListEntity(pickOld).setPickListFieldSnapshot(pickOld.getCustomField())
 				.setInlinePickListEntity(pickOld).setInlinePickListFieldSnapshot(pickOld.getCustomField())
 				.setDictionaryField(CustomFieldEnum.MIDDLE).setDictionaryFieldSnapshot(CustomFieldEnum.MIDDLE)
-				.setRadioField(CustomFieldEnum.MIDDLE).setRadioFieldSnapshot(CustomFieldEnum.MIDDLE));
+				.setRadioField(CustomFieldEnum.MIDDLE).setRadioFieldSnapshot(CustomFieldEnum.MIDDLE)
+				.setFileUploadField(fileOld.getName()).setFileUploadFieldId(fileOld.getId())
+				.setFileUploadFieldSnapshot(fileOld.getName()).setFileUploadFieldSnapshotId(fileOld.getId()));
 
 		scenarios.add(new MyEntity5900()
 				.setScenario("3. Value added (snapshot is empty)")
@@ -91,7 +103,8 @@ public class MyEntity5900TestDataLoadService {
 				.setPickListEntity(pickNew)
 				.setInlinePickListEntity(pickNew)
 				.setDictionaryField(CustomFieldEnum.HIGH)
-				.setRadioField(CustomFieldEnum.HIGH));
+				.setRadioField(CustomFieldEnum.HIGH)
+				.setFileUploadField(fileNew.getName()).setFileUploadFieldId(fileNew.getId()));
 
 		scenarios.add(new MyEntity5900()
 				.setScenario("4. Value deleted (current value is empty)")
@@ -108,7 +121,8 @@ public class MyEntity5900TestDataLoadService {
 				.setPickListFieldSnapshot(pickOld.getCustomField())
 				.setInlinePickListFieldSnapshot(pickOld.getCustomField())
 				.setDictionaryFieldSnapshot(CustomFieldEnum.LOW)
-				.setRadioFieldSnapshot(CustomFieldEnum.LOW));
+				.setRadioFieldSnapshot(CustomFieldEnum.LOW)
+				.setFileUploadFieldSnapshot(fileOld.getName()).setFileUploadFieldSnapshotId(fileOld.getId()));
 
 		scenarios.add(new MyEntity5900()
 				.setScenario("5. Values false and 0")

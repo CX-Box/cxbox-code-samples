@@ -1,0 +1,45 @@
+{
+  "name": "myexample5900fileform",
+  "title": "FileUpload in Form: snapshotKey and snapshotFileIdKey",
+  "type": "Form",
+  "bc": "myexample5900",
+  "fields": [
+    {
+      "label": "FileUpload",
+      "key": "fileUploadField",
+      "type": "fileUpload",
+      "fileIdKey": "fileUploadFieldId",
+      "snapshotKey": "fileUploadFieldSnapshot",
+      "snapshotFileIdKey": "fileUploadFieldSnapshotId"
+    },
+    {
+      "label": "File snapshot",
+      "key": "fileUploadFieldSnapshot",
+      "type": "hidden"
+    },
+    {
+      "label": "File snapshot id",
+      "key": "fileUploadFieldSnapshotId",
+      "type": "hidden"
+    }
+  ],
+  "options": {
+    "layout": {
+      "rows": [
+        {
+          "cols": [
+            {
+              "fieldKey": "fileUploadField",
+              "span": 12
+            }
+          ]
+        }
+      ]
+    },
+    "actionGroups": {
+      "include": [
+        "save"
+      ]
+    }
+  }
+}

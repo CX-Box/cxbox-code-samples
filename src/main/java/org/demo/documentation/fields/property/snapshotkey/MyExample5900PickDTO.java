@@ -14,9 +14,12 @@ public class MyExample5900PickDTO extends DataResponseDTO {
 	@SearchParameter(name = "customField")
 	private String customField;
 
+	private String customFieldSnapshot;
+
 	public MyExample5900PickDTO(MyEntity5900Pick entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldSnapshot = entity.getCustomFieldSnapshot();
 	}
 
 }
