@@ -31,6 +31,11 @@ env:
   # answer) prints nothing, and the job waited until it was cancelled by hand. After this time the step prints the thread
   # dumps of all the jvms, which show the test and the command each of them waits in, and stops the tests.
   TESTS_TIMEOUT_MINUTES: 45
+  # Every run publishes its allure report into a directory of its own, <...>/java-NN/<run id>-<attempt>/, so the link of
+  # a run is new each time. With one link for all the runs the browser and GitHub Pages showed the report of the run
+  # before, while the new one was already pushed but not yet deployed. <...>/java-NN/ redirects to the latest run.
+  RUN: ${{ github.run_id }}-${{ github.run_attempt }}
+  ALLURE_SITE: https://cx-box.github.io/cxbox-code-samples-allure
   # CXBOX_LOGGER is off here on purpose. It turns the Selenide proxy on (BaseTestForSamples), and the browser then reaches
   # the application through a tunnel: the "Copy details" test reads CONNECT instead of GET, and the websocket test no longer
   # sees its handshake in the performance log. Both failed with it on, while the 843 ordinary tests passed. Turn it on in
@@ -300,7 +305,7 @@ jobs:
           JAVA: ${{ matrix.java }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          REPORT=allure-report/$PR/java-$JAVA
+          REPORT=allure-report/$PR/java-$JAVA/$RUN
           TREND=allure-report/trend/java-$JAVA
           PREV=gh-pages/pull_request/trend/java-$JAVA
           mkdir -p target/allure-results/history "$TREND"
@@ -315,7 +320,7 @@ jobs:
           done
           # buildOrder is the label of a point in the trend, reportUrl is where a click on it leads
           jq -n --argjson order "$PR" --arg name "PR #$PR" --arg build "$BUILD_URL" \
-            --arg url "https://cx-box.github.io/cxbox-code-samples-allure/pull_request/$PR/java-$JAVA/" \
+            --arg url "$ALLURE_SITE/pull_request/$PR/java-$JAVA/$RUN/" \
             '{name: "GitHub Actions", type: "github", buildOrder: $order, buildName: $name, buildUrl: $build, reportName: $name, reportUrl: $url}' \
             > target/allure-results/executor.json
           docker run --rm -v "$PWD:/w" -w /w --entrypoint allure cxbox/allure-report-action:v1.15 \
@@ -326,10 +331,11 @@ jobs:
         # └── allure-report/
         #     ├── ${{ github.event.pull_request.number }}/
         #     │   └── java-${{ matrix.java }}/
-        #     │       ├── index.html
-        #     │       ├── data/
-        #     │       ├── widgets/
-        #     │       └── history/
+        #     │       └── <run id>-<attempt>/
+        #     │           ├── index.html
+        #     │           ├── data/
+        #     │           ├── widgets/
+        #     │           └── history/
         #     └── trend/
         #         └── java-${{ matrix.java }}/   # the same history/, for the next pull request
 
@@ -475,52 +481,73 @@ jobs:
             echo "java21=☕ Java 21 ⚪ Cancelled" >> $GITHUB_OUTPUT
           fi
 
-      # Publishes Allure reports to separate GitHub Pages repository.
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v4
+      # Only the script of the publication is needed from the sources.
+      - name: Checkout publish script
         if: always()
+        uses: actions/checkout@v7
         with:
-          external_repository: CX-Box/cxbox-code-samples-allure
-          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-          publish_branch: gh-pages
-          publish_dir: allure-report
-          destination_dir: pull_request
-          keep_files: true
-          # with keep_files: true = gh-pages
-          #└── pull_request
-          #    ├── 125
-          #    ├── 126
-          #    └── 127
-          #with keep_files: false  = gh-pages
-          #└── pull_request
-          #    └── 127
-          force_orphan: false #delete history commit in gh-pages
+          sparse-checkout: .github/scripts
+          path: src
 
-        # external repository after publish:
-        #
-        # CX-Box/cxbox-code-samples-allure
-        # branch: gh-pages
-        #
-        # gh-pages/
-        # └── pull_request/
-        #     └── 125/
-        #         ├── java-17/
-        #         │   ├── index.html
-        #         │   └── history/
-        #         │       ├── trend.json
-        #         │       └── history.json
-        #         │
-        #         └── java-21/
-        #             ├── index.html
-        #             └── history/
-        #
+      # Publishes Allure reports to separate GitHub Pages repository (see .github/scripts/publish-allure.sh).
+      # The report of this pull request replaces its earlier report as a whole, the trend is replaced too.
+      # The reports of the pull requests closed more than 7 days ago are removed: the site of GitHub Pages is limited to 1 GB,
+      # and it was over it, so no report was deployed at all.
+      #
+      # external repository after publish (CX-Box/cxbox-code-samples-allure, branch gh-pages):
+      # gh-pages/
+      # └── pull_request/
+      #     ├── trend/java-NN/          # the history shared by all pull requests
+      #     └── 125/
+      #         ├── java-17/
+      #         │   ├── index.html      # redirect to the latest run
+      #         │   └── <run id>-<attempt>/
+      #         │       ├── index.html
+      #         │       └── history/
+      #         └── java-21/
+      #             ├── index.html
+      #             └── <run id>-<attempt>/
+      - name: Publish test report
+        id: publish
+        if: always()
+        env:
+          ALLURE_TOKEN: ${{ secrets.CODE_SAMPLES_ALLURE }}
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          OPEN=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 500 --json number --jq '.[].number')
+          RECENT=$(gh pr list --repo "$GITHUB_REPOSITORY" --state closed --limit 500 --search "closed:>=$(date -u -d '-7 days' +%F)" --json number --jq '.[].number')
+          export KEEP_PRS="$PR $(echo $OPEN $RECENT)"
+          echo "the reports of these pull requests are kept: $KEEP_PRS"
+          bash src/.github/scripts/publish-allure.sh "allure-report/$PR:pull_request/$PR" "allure-report/trend:pull_request/trend"
 
+      # The push to gh-pages starts "pages build and deployment" in the allure repository, which takes several minutes.
+      # The comment is written when the report of this run is there, so its link never leads to a page that is not yet
+      # deployed. If it is not deployed in time (the deployment failed), the comment says so.
+      - name: Wait for GitHub Pages
+        id: pages
+        if: always() && steps.publish.outcome == 'success'
+        env:
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          for java in 17 21; do
+            [ -d "allure-report/$PR/java-$java/$RUN" ] || continue
+            URL="$ALLURE_SITE/pull_request/$PR/java-$java/$RUN/"
+            for i in $(seq 1 60); do
+              if curl -sfo /dev/null "$URL"; then echo "deployed: $URL"; continue 2; fi
+              sleep 20
+            done
+            echo "::warning::$URL is not deployed in 20 minutes, see the runs of 'pages build and deployment' in CX-Box/cxbox-code-samples-allure"
+            echo "deployed=false" >> $GITHUB_OUTPUT
+            exit 0
+          done
+          echo "deployed=true" >> $GITHUB_OUTPUT
 
       # Adds Pull Request comment containing:
       # - Java 17 test status
-      # - Java 17 Allure report link
+      # - Java 17 Allure report link of this run
       # - Java 21 test status
-      # - Java 21 Allure report link
+      # - Java 21 Allure report link of this run
       - name: Comment on Pull Request
         if: always()
         uses: peter-evans/create-or-update-comment@v5
@@ -533,13 +560,15 @@ jobs:
             ### QA autotests result
 
             ${{ steps.comment.outputs.java17 }}
-            
-            
-            [Allure Report](https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-17/)
+
+
+            [Allure Report](${{ env.ALLURE_SITE }}/pull_request/${{ github.event.pull_request.number }}/java-17/${{ env.RUN }}/)
 
             ${{ steps.comment.outputs.java21 }}
-            
-            [Allure Report]( https://cx-box.github.io/cxbox-code-samples-allure/pull_request/${{ github.event.pull_request.number }}/java-21/)
+
+            [Allure Report](${{ env.ALLURE_SITE }}/pull_request/${{ github.event.pull_request.number }}/java-21/${{ env.RUN }}/)
+
+            ${{ steps.pages.outputs.deployed != 'true' && '⚠️ The report is not deployed to GitHub Pages yet (or the deployment failed): see the runs of "pages build and deployment" in CX-Box/cxbox-code-samples-allure.' || '' }}
 
       # A cancelled test job is "cancelled", not "failure": this job, which always runs, turns it into a failure as well.
       - name: Fail if tests did not pass
@@ -716,13 +745,13 @@ jobs:
           allure_results: target/allure-results
           # Existing history location for main branch.
           gh_pages: gh-pages/main
-          # Generated report location.
-          allure_report: allure-report/java-${{ matrix.java }}
+          # Generated report location: a directory of its own for every run, see RUN.
+          allure_report: allure-report/java-${{ matrix.java }}/${{ env.RUN }}
           # Allure history storage.
           allure_history: allure-history/java-${{ matrix.java }}
           github_repo: CX-Box/cxbox-code-samples-allure
           github_repo_owner: CX-Box
-          report_url: https://cx-box.github.io/cxbox-code-samples-allure/main/java-${{ matrix.java }}
+          report_url: ${{ env.ALLURE_SITE }}/main/java-${{ matrix.java }}/${{ env.RUN }}
           # Keep last 5 runs inside history.
           keep_reports: 5
 
@@ -780,25 +809,32 @@ jobs:
           path: allure-report
           merge-multiple: true
 
-      - name: Publish main Allure report
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Checkout publish script
         if: always()
+        uses: actions/checkout@v7
         with:
-          external_repository: CX-Box/cxbox-code-samples-allure
-          personal_token: ${{ secrets.CODE_SAMPLES_ALLURE }}
-          publish_branch: gh-pages
-          publish_dir: allure-report
-          destination_dir: main
-          keep_files: true
-          force_orphan: false
+          sparse-checkout: .github/scripts
+          path: src
+
+      # main/java-NN is replaced as a whole by the report of this run (main/java-NN/<run id>-<attempt>/ and the redirect
+      # main/java-NN/index.html to it): with peaceiris/actions-gh-pages and keep_files: true the files of all the earlier
+      # runs stayed in main/java-NN/data, 900 MB each, and GitHub Pages could not deploy the site any more.
+      # main/<run number>/ of build_button_qa.yml are not touched.
+      - name: Publish main Allure report
+        if: always()
+        env:
+          ALLURE_TOKEN: ${{ secrets.CODE_SAMPLES_ALLURE }}
+        run: bash src/.github/scripts/publish-allure.sh "allure-report:main"
 
       - name: Generate and add report URL to Job Summary
         if: always()
         run: |
           echo "### Allure Reports" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Java 17: https://cx-box.github.io/cxbox-code-samples-allure/main/java-17/" >> $GITHUB_STEP_SUMMARY
-          echo "Java 21: https://cx-box.github.io/cxbox-code-samples-allure/main/java-21/" >> $GITHUB_STEP_SUMMARY
+          echo "Java 17: $ALLURE_SITE/main/java-17/$RUN/" >> $GITHUB_STEP_SUMMARY
+          echo "Java 21: $ALLURE_SITE/main/java-21/$RUN/" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The report is shown a few minutes later, when 'pages build and deployment' of CX-Box/cxbox-code-samples-allure is over." >> $GITHUB_STEP_SUMMARY
 
       # A cancelled test job is "cancelled", not "failure": this job, which always runs, turns it into a failure as well.
       - name: Fail if tests did not pass
