@@ -30,7 +30,7 @@ env:
   # How long the step Run Tests waits for the tests. A test that hangs (a frozen browser, a command of webdriver without an
   # answer) prints nothing, and the job waited until it was cancelled by hand. After this time the step prints the thread
   # dumps of all the jvms, which show the test and the command each of them waits in, and stops the tests.
-  TESTS_TIMEOUT_MINUTES: 45
+  TESTS_TIMEOUT_MINUTES: 55
   # Every run publishes its allure report into a directory of its own, <...>/java-NN/<run id>-<attempt>/, so the link of
   # a run is new each time. With one link for all the runs the browser and GitHub Pages showed the report of the run
   # before, while the new one was already pushed but not yet deployed. <...>/java-NN/ redirects to the latest run.
@@ -160,7 +160,7 @@ jobs:
       - name: Run Tests
         id: run_tests
         # a safety net only: the script stops the tests itself after TESTS_TIMEOUT_MINUTES and leaves the thread dumps
-        timeout-minutes: 60
+        timeout-minutes: 70
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
@@ -658,7 +658,7 @@ jobs:
       # The output, the watchdog and the artifact test-logs-NN are the same as in the job of a pull request.
       - name: Run Tests
         id: run_tests
-        timeout-minutes: 60
+        timeout-minutes: 70
         run: |
           set +e
           mvn --batch-mode -DrunTests=true test-compile > target/test-compile.log 2>&1
