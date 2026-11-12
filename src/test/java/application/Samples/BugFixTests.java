@@ -15,7 +15,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -50,5 +54,56 @@ public class BugFixTests extends BaseTestForSamples {
 		list.rows().row(0)
 				.input("Custom Field widget2: Empty Title")
 				.checkValue(value -> assertThat(value).isEqualTo("Row menu of the second list"));
+	}
+
+	@Test
+	@DisplayName("Bulk upload: the error of each file in the upload progress")
+	@Description("Two files of one bulk upload fail with different errors: a business error (error.popup) and a server error (errorMessage). The line of each file in the window of the upload progress shows the error of its own answer, not the standard text.")
+	public void bulkUploadShowsErrorOfEachFile() throws IOException {
+		//CXBOX-1038
+		var list = PlatformApp.screen("Upload errors")
+				.secondLevelView("Upload errors")
+				.listInlineByName("myexample3701list");
+		var business = file("upload-error-business");
+		var server = file("upload-error-server");
+		var progress = list.actions().uploadWithoutCheck("Add Files", business, server);
+
+		assertThat(progress.status(business.getName())).isEqualTo("error");
+		assertThat(progress.status(server.getName())).isEqualTo("error");
+		assertThat(progress.statusInformation(business.getName()))
+				.isEqualTo("File " + business.getName() + " is rejected: the size is over the limit of the sample");
+		assertThat(progress.statusInformation(server.getName()))
+				.contains("File " + server.getName() + " is not saved: the file storage is not available");
+		assertThat(progress.tooltip(business.getName()))
+				.isEqualTo("File " + business.getName() + " is rejected: the size is over the limit of the sample");
+		assertThat(progress.tooltip(server.getName()))
+				.contains("File " + server.getName() + " is not saved: the file storage is not available");
+	}
+
+	@Test
+	@DisplayName("Single file upload: the error of the file in the upload progress")
+	@Description("The upload of a file to the field fails with a server error (errorMessage). The line of the file in the window of the upload progress shows this error, not the standard text.")
+	public void singleUploadShowsErrorOfFile() throws IOException {
+		//CXBOX-1038
+		var form = PlatformApp.screen("Upload errors")
+				.secondLevelView("Upload errors")
+				.formByName("myexample3701form");
+		var server = file("upload-error-server");
+		var progress = form.fileUpload("Custom Field File").uploadWithoutCheck(server);
+
+		assertThat(progress.status(server.getName())).isEqualTo("error");
+		assertThat(progress.tooltip(server.getName()))
+				.contains("File " + server.getName() + " is not saved: the file storage is not available");
+	}
+
+	/**
+	 * A copy of {@code FILE_1.pdf}: the name starts with the prefix of an error of the sample "Upload errors"
+	 */
+	private static File file(String prefix) throws IOException {
+		var file = Files.createTempDirectory("upload-error").resolve(prefix + "-" + UUID.randomUUID() + ".pdf");
+		try (var pdf = BugFixTests.class.getClassLoader().getResourceAsStream("FILE_1.pdf")) {
+			Files.copy(pdf, file);
+		}
+		return file.toFile();
 	}
 }

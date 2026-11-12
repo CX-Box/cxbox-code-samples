@@ -1,0 +1,34 @@
+{
+  "name": "myexample3701list",
+  "title": "Bulk upload",
+  "type": "List",
+  "bc": "myexample3701",
+  "fields": [
+    {
+      "title": "Custom Field File",
+      "key": "customFieldFile",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileId"
+    },
+    {
+      "title": "Custom Field",
+      "key": "customField",
+      "type": "input"
+    }
+  ],
+  "options": {
+    "buttons": [
+      {
+        "actionKey": "associate",
+        "fieldKey": "customFieldFile",
+        "mode": "default-and-file-upload-dnd"
+      }
+    ],
+    "actionGroups": {
+      "include": [
+        "associate",
+        "delete"
+      ]
+    }
+  }
+}

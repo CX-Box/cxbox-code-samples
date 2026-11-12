@@ -17,6 +17,7 @@ import com.codeborne.selenide.DownloadOptions;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.common.SingleElement;
+import core.element.widget.field.type.fileUpload.UploadProgress;
 import core.element.widget.AbstractWidget;
 import core.expectation.ExpectationPattern;
 import lombok.AccessLevel;
@@ -180,6 +181,19 @@ public class Action<W extends AbstractWidget<ExpectationPattern, W>> implements 
 			uploadAndWait(action(name).element().closest(".ant-upload").$("input[type='file']"), files);
 		});
 		return this.widget;
+	}
+
+	/**
+	 * The button of the action gets the files, the result of each file is not checked: the upload of a file may fail.
+	 *
+	 * @return The window of the upload progress, with the result of each file
+	 */
+	public UploadProgress uploadWithoutCheck(String name, File... files) {
+		return Allure.step(message("action.upload", name, widget.label()), () -> {
+			StepReport.value(Stream.of(files).map(File::getName).toList());
+			action(name).element().closest(".ant-upload").$("input[type='file']").uploadFile(files);
+			return new UploadProgress(widget.getExpectations().getOverTimeout());
+		});
 	}
 
 	/**
