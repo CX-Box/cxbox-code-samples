@@ -63,6 +63,19 @@ public class FileUpload<W extends AbstractWidget<ExpectationPattern, W>, SELF ex
 		});
 	}
 
+	/**
+	 * The field gets the file, the result is not checked: the upload may fail.
+	 *
+	 * @return The window of the upload progress, with the result of the file
+	 */
+	public UploadProgress uploadWithoutCheck(File value) {
+		return Allure.step(message("field.upload", getFieldIdentifier()), step -> {
+			StepReport.value(value.getName());
+			element().$(valueTag()).uploadFile(value);
+			return new UploadProgress(widget().getExpectations().getOverTimeout());
+		});
+	}
+
 	@Override
 	protected SelenideElement parentElement() {
 		return widget().element();

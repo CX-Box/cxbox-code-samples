@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.cxbox.core.file.dto.FileDownloadDto;
 import org.cxbox.core.file.service.CxboxFileService;
+import org.demo.documentation.additional.uploaderror.MyExample3701UploadErrors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class FileService implements CxboxFileService {
 	public <D extends FileDownloadDto> String upload(@NonNull D file, @Nullable String source) {
 		var contentType = file.getType();
 		var name = file.getName();
+		MyExample3701UploadErrors.check(name);
 		ObjectWriteResponse objectWriteResponse = minioClient.putObject(PutObjectArgs
 				.builder()
 				.bucket(defaultBucketName)
