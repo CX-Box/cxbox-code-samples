@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+//CXBOX-1218
 @DisplayName("Multi-upload files. Availability of the button and the drag-and-drop zone")
 @Epic("Samples")
 @Feature(MultiUploadAvailabilityTest.ARTICLE)
