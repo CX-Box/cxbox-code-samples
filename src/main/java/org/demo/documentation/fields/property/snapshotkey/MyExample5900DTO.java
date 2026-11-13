@@ -77,6 +77,23 @@ public class MyExample5900DTO extends DataResponseDTO {
 	private CustomFieldEnum radioFieldSnapshot;
 	// --8<-- [end:fields]
 
+	// --8<-- [start:fileUpload]
+	private String fileUploadField;
+
+	private String fileUploadFieldId;
+
+	private String fileUploadFieldSnapshot;
+
+	private String fileUploadFieldSnapshotId;
+	// --8<-- [end:fileUpload]
+
+	/**
+	 * Tree widget: all records are roots
+	 */
+	private Long parentId;
+
+	private Boolean isLeaf = true;
+
 	public MyExample5900DTO(MyEntity5900 entity) {
 		this.id = entity.getId().toString();
 		this.scenario = entity.getScenario();
@@ -116,6 +133,10 @@ public class MyExample5900DTO extends DataResponseDTO {
 		this.dictionaryFieldSnapshot = entity.getDictionaryFieldSnapshot();
 		this.radioField = entity.getRadioField();
 		this.radioFieldSnapshot = entity.getRadioFieldSnapshot();
+		this.fileUploadField = entity.getFileUploadField();
+		this.fileUploadFieldId = entity.getFileUploadFieldId();
+		this.fileUploadFieldSnapshot = entity.getFileUploadFieldSnapshot();
+		this.fileUploadFieldSnapshotId = entity.getFileUploadFieldSnapshotId();
 	}
 
 }

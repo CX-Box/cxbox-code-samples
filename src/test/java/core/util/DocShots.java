@@ -8,14 +8,18 @@ import com.codeborne.selenide.logevents.LogEvent;
 import com.codeborne.selenide.logevents.LogEventListener;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TakesScreenshot;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,6 +63,11 @@ public final class DocShots {
 	private static final String LAST_CLICK = "var c = window.__docShotsClick; return (!c || c.t < arguments[0]) ? null : [c.x, c.y];";
 
 	private static final int CLICK_RADIUS = 14;
+
+	/** Scrolls the element to the middle of the window when it fits into the window and is not fully visible. */
+	private static final String SCROLL_INTO_WINDOW = "var r = arguments[0].getBoundingClientRect();"
+			+ "if (r.height < window.innerHeight && (r.top < 0 || r.bottom > window.innerHeight)) {"
+			+ " arguments[0].scrollIntoView({block: 'center'}); }";
 
 	private static long lastFrameTime;
 
@@ -108,17 +117,67 @@ public final class DocShots {
 	 * @param height  height of the browser window while the picture is taken
 	 */
 	public static void png(SelenideElement element, String article, String file, int width, int height) {
+		png(element, article, file, width, height, 0);
+	}
+
+	/**
+	 * Saves the element with a white margin around it as a PNG of the article.
+	 * The element is scrolled into the window first: only the visible part of the element gets into the screenshot,
+	 * an element below the window is cut.
+	 *
+	 * @param padding margin around the element in pixels, the page around the element is taken
+	 */
+	public static void png(SelenideElement element, String article, String file, int width, int height, int padding) {
 		if (!enabled()) {
 			return;
 		}
 		window(width, height);
+		element.shouldBe(Condition.visible);
+		Selenide.executeJavaScript(SCROLL_INTO_WINDOW, element);
+		Selenide.sleep(300);
 		try {
 			Path target = ROOT.resolve(article).resolve(file);
 			Files.createDirectories(target.getParent());
-			Files.copy(element.shouldBe(Condition.visible).screenshot().toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+			if (padding <= 0) {
+				Files.copy(element.screenshot().toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+				return;
+			}
+			List<?> rect = Selenide.executeJavaScript(
+					"var r = arguments[0].getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom];", element);
+			BufferedImage page = ImageIO.read(new ByteArrayInputStream(
+					((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES)));
+			int x = Math.max(0, (int) Math.floor(((Number) rect.get(0)).doubleValue()) - padding);
+			int y = Math.max(0, (int) Math.floor(((Number) rect.get(1)).doubleValue()) - padding);
+			int right = Math.min(page.getWidth(), (int) Math.ceil(((Number) rect.get(2)).doubleValue()) + padding);
+			int bottom = Math.min(page.getHeight(), (int) Math.ceil(((Number) rect.get(3)).doubleValue()) + padding);
+			ImageIO.write(page.getSubimage(x, y, right - x, bottom - y), "png", target.toFile());
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
+	}
+
+	/**
+	 * Hides the elements of the page in the next pictures, e.g. a field that the article does not describe.
+	 * The elements are hidden only in the browser of the test, until {@link #showHidden()}.
+	 *
+	 * @param css selector of the elements
+	 */
+	public static void hide(String css) {
+		if (!enabled()) {
+			return;
+		}
+		Selenide.executeJavaScript(
+				"var s = document.getElementById('docShotsHidden');"
+						+ "if (!s) { s = document.createElement('style'); s.id = 'docShotsHidden'; document.head.appendChild(s); }"
+						+ "s.textContent += arguments[0] + ' { display: none !important; }';", css);
+	}
+
+	/** Shows the elements hidden by {@link #hide}. */
+	public static void showHidden() {
+		if (!enabled()) {
+			return;
+		}
+		Selenide.executeJavaScript("var s = document.getElementById('docShotsHidden'); if (s) { s.remove(); }");
 	}
 
 	/** Saves the whole page (with the modals) as a PNG of the article. */

@@ -116,4 +116,16 @@ public class MyEntity5900 extends BaseEntity {
 	@Column
 	private CustomFieldEnum radioFieldSnapshot;
 
+	@Column
+	private String fileUploadField;
+
+	@Column
+	private String fileUploadFieldId;
+
+	@Column
+	private String fileUploadFieldSnapshot;
+
+	@Column
+	private String fileUploadFieldSnapshotId;
+
 }

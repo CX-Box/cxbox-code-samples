@@ -16,4 +16,7 @@ public class MyEntity5900Pick extends BaseEntity {
 	@Column
 	private String customField;
 
+	@Column
+	private String customFieldSnapshot;
+
 }

@@ -32,7 +32,9 @@ public class MyExample5900Meta extends FieldMetaBuilder<MyExample5900DTO> {
 				MyExample5900DTO_.inlinePickListField,
 				MyExample5900DTO_.inlinePickListFieldId,
 				MyExample5900DTO_.dictionaryField,
-				MyExample5900DTO_.radioField
+				MyExample5900DTO_.radioField,
+				MyExample5900DTO_.fileUploadField,
+				MyExample5900DTO_.fileUploadFieldId
 		);
 	}
 	// --8<-- [end:buildRowDependentMeta]

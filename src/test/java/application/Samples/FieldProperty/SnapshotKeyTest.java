@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 
 import application.config.BaseTestForSamples;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.PlatformApp;
 import core.element.screen.view.PlatformView;
@@ -38,6 +39,18 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 	private static final String PREV = "[class*='prevValue']";
 
 	private static final String NEW = "[class*='newValue']";
+
+	/** Margin around the widget or the field in the pictures of the articles. */
+	private static final int PADDING = 12;
+
+	/** Margin around a field: the label of the form field is 5 pixels above it and is not taken. The list touches the header of the page. */
+	private static final int FIELD_PADDING = 4;
+
+	/** The article snapshotKey does not describe the checkbox: the field is hidden in its pictures. */
+	private static final String HIDDEN_FIELDS = "[data-test-widget-list-header-column-key='checkboxField'],"
+			+ " td:has(> [data-test-field-key='checkboxField']),"
+			+ " form .ant-col:has(> [data-test-field-key='checkboxField']),"
+			+ " [data-test='FIELD'][data-test-field-key='checkboxField']";
 
 	/**
 	 * Field key of the sample -> folder of the article of the field type
@@ -86,7 +99,9 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 	@Description("Changed - both values, not changed - usual field, empty snapshot - only current, empty current - only previous; false and 0 are treated as empty")
 	void list() {
 		view("List");
-		DocShots.png(widget("myexample5900list"), ARTICLE, "list.png", 1900, 1000);
+		DocShots.hide(HIDDEN_FIELDS);
+		DocShots.png(widget("myexample5900list"), ARTICLE, "list.png", 1900, 1000, FIELD_PADDING);
+		DocShots.showHidden();
 
 		var changed = row("1. Value changed");
 		for (var fieldKey : FIELDS) {
@@ -144,27 +159,31 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		selectScenario("1. Value changed");
 		var info = widget("myexample5900info");
 		field(info, "inputField").$(PREV).shouldHave(exactText("Old value"));
-		DocShots.png(info, ARTICLE, "info.png", 1660, 1600);
-		DocShots.png(info, ARTICLE, "changed.png", 1660, 1600);
+		DocShots.hide(HIDDEN_FIELDS);
+		DocShots.png(info, ARTICLE, "info.png", 1660, 1600, PADDING);
+		DocShots.png(info, ARTICLE, "changed.png", 1660, 1600, PADDING);
 
 		selectScenario("2. Value not changed");
 		field(info, "inputField").$(PREV).shouldNot(exist);
 		field(info, "inputField").shouldHave(text("Same value"));
-		DocShots.png(info, ARTICLE, "notchanged.png", 1660, 1600);
+		DocShots.png(info, ARTICLE, "notchanged.png", 1660, 1600, PADDING);
 
 		selectScenario("3. Value added");
 		field(info, "inputField").$(PREV).shouldNot(exist);
 		field(info, "inputField").$(NEW).shouldHave(exactText("New value"));
-		DocShots.png(info, ARTICLE, "added.png", 1660, 1600);
+		DocShots.png(info, ARTICLE, "added.png", 1660, 1600, PADDING);
 
 		selectScenario("4. Value deleted");
 		field(info, "inputField").$(PREV).shouldHave(exactText("Old value"));
 		field(info, "inputField").$(NEW).shouldNot(exist);
-		DocShots.png(info, ARTICLE, "deleted.png", 1660, 1600);
+		DocShots.png(info, ARTICLE, "deleted.png", 1660, 1600, PADDING);
 
 		selectScenario("5. Values false and 0");
+		field(info, "numberField").$(PREV).shouldNot(exist);
+		field(info, "numberField").$(NEW).shouldHave(exactText("10"));
+		DocShots.png(info, ARTICLE, "falsezero.png", 1660, 1600, PADDING);
+		DocShots.showHidden();
 		field(info, "checkboxField").$(PREV).shouldNot(exist);
-		DocShots.png(info, ARTICLE, "falsezero.png", 1660, 1600);
 	}
 
 	@Test
@@ -181,10 +200,17 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		// the same enabled field: input without snapshotKey, read-only with snapshotKey
 		field(editForm, "inputField").$("input").should(exist);
 		field(snapshotForm, "inputField").$("input").shouldNot(exist);
+		if (DocShots.enabled()) {
+			// the labels of the form are in a separate row: the label of the checkbox is marked to be hidden too
+			Selenide.executeJavaScript("document.querySelectorAll(\"[class*='formLabel']\").forEach(function (l) {"
+					+ " if (l.textContent.trim() === 'Checkbox') { l.parentElement.setAttribute('data-doc-shots-hidden', ''); } });");
+		}
+		DocShots.hide(HIDDEN_FIELDS + ", [data-doc-shots-hidden]");
 		DocShots.png($("main"), ARTICLE, "form.png", 1900, 2400);
-		DocShots.png(field(snapshotForm, "textField"), ARTICLE, "text.png", 1660, 1100);
+		DocShots.png(field(snapshotForm, "textField"), ARTICLE, "text.png", 1660, 1100, FIELD_PADDING);
+		DocShots.showHidden();
 		for (var fieldKey : FIELDS) {
-			DocShots.png(field(snapshotForm, fieldKey.get(0)), fieldKey.get(1), "snapshotKey.png", 1660, 1100);
+			DocShots.png(field(snapshotForm, fieldKey.get(0)), fieldKey.get(1), "snapshotKey.png", 1660, 1100, FIELD_PADDING);
 		}
 
 		var edit = view.form("Form without snapshotKey (edit current values)");
@@ -205,6 +231,92 @@ public class SnapshotKeyTest extends BaseTestForSamples {
 		input.setValue("New value");
 		edit.actions().action("Save").click();
 		field(snapshotForm, "inputField").$(NEW).shouldHave(exactText("New value"));
+
+		// PickListPopup: the field of the popup with snapshotKey
+		field(editForm, "pickListField").$("[data-test-field-picklist-popup]").click();
+		var pickPopup = widget("myexample5900pickpopup");
+		var pickChanged = pickPopup.$$("tr").findBy(text("New data")).shouldBe(visible);
+		field(pickChanged, "customField").$(PREV).shouldHave(exactText("Old data"));
+		field(pickChanged, "customField").$(NEW).shouldHave(exactText("New data"));
+		DocShots.png($(".ant-modal-content"), ARTICLE, "picklistpopup.png", 1660, 1100);
+		$(".ant-modal-close").click();
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("Other widgets: AdditionalInfo, AdditionalList, GroupingHierarchy, Tree, FormPopup")
+	@Description("The fields with snapshotKey show the previous and the current value in every widget that shows the fields of a record")
+	void otherWidgets() {
+		view("Widgets");
+		selectScenario("1. Value changed");
+
+		var additionalInfo = widget("myexample5900additionalinfo");
+		field(additionalInfo, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		field(additionalInfo, "inputField").$(NEW).shouldHave(exactText("New value"));
+		DocShots.png(additionalInfo, ARTICLE, "additionalinfo.png", 1660, 1100, PADDING);
+
+		var additionalList = widget("myexample5900additionallist");
+		var additionalRow = additionalList.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(additionalRow, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		DocShots.png(additionalList, ARTICLE, "additionallist.png", 1660, 1100, PADDING);
+
+		for (var name : List.of("myexample5900groupinghierarchy", "myexample5900tree")) {
+			var table = widget(name);
+			var changed = table.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+			field(changed, "inputField").$(PREV).shouldHave(exactText("Old value"));
+			field(changed, "inputField").$(NEW).shouldHave(exactText("New value"));
+			field(changed, "dictionaryField").$(PREV).should(exist);
+			var notChanged = table.$$("tr").findBy(text("2. Value not changed")).shouldBe(visible);
+			field(notChanged, "inputField").$(PREV).shouldNot(exist);
+		}
+		DocShots.png(widget("myexample5900groupinghierarchy"), ARTICLE, "groupinghierarchy.png", 1660, 1300, PADDING);
+		DocShots.png(widget("myexample5900tree"), ARTICLE, "tree.png", 1660, 1300, PADDING);
+
+		// FormPopup is opened by the action before it is executed
+		widget("myexample5900popupbutton").$$("button").findBy(text("Show changes")).click();
+		var formPopup = widget("myexample5900formpopup");
+		field(formPopup, "inputField").$(PREV).shouldHave(exactText("Old value"));
+		field(formPopup, "inputField").$(NEW).shouldHave(exactText("New value"));
+		field(formPopup, "inputField").$("input").shouldNot(exist);
+		DocShots.png($(".ant-modal-content"), ARTICLE, "formpopup.png", 1660, 1100);
+		$(".ant-modal-content").$$("button").findBy(text("Cancel")).click();
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("FileUpload: history mode with snapshotFileIdKey")
+	@Description("With snapshotKey and snapshotFileIdKey the read-only field shows the previous file and the current file; "
+			+ "with snapshotKey only the field is shown as usual; the editable field is the usual upload")
+	void fileUpload() {
+		view("FileUpload");
+		var withId = widget("myexample5900filelist");
+		var changed = withId.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(changed, "fileUploadField").$(PREV).shouldHave(text("FILE_old_version.pdf"));
+		field(changed, "fileUploadField").$(NEW).shouldHave(text("FILE_new_version.pdf"));
+		var notChanged = withId.$$("tr").findBy(text("2. Value not changed")).shouldBe(visible);
+		field(notChanged, "fileUploadField").$(PREV).shouldNot(exist);
+		field(notChanged, "fileUploadField").shouldHave(text("FILE_old_version.pdf"));
+		var added = withId.$$("tr").findBy(text("3. Value added")).shouldBe(visible);
+		field(added, "fileUploadField").$(PREV).shouldNot(exist);
+		field(added, "fileUploadField").$(NEW).shouldHave(text("FILE_new_version.pdf"));
+		var deleted = withId.$$("tr").findBy(text("4. Value deleted")).shouldBe(visible);
+		field(deleted, "fileUploadField").$(PREV).shouldHave(text("FILE_old_version.pdf"));
+		field(deleted, "fileUploadField").$(NEW).shouldNot(exist);
+		DocShots.png(withId, ARTICLE, "fileupload.png", 1660, 1300, PADDING);
+
+		// without snapshotFileIdKey the snapshot is not shown
+		var withoutId = widget("myexample5900filelistnoid");
+		var changedNoId = withoutId.$$("tr").findBy(text("1. Value changed")).shouldBe(visible);
+		field(changedNoId, "fileUploadField").$(PREV).shouldNot(exist);
+		field(changedNoId, "fileUploadField").shouldHave(text("FILE_new_version.pdf"));
+		DocShots.png(withoutId, ARTICLE, "fileupload_without_id.png", 1660, 1300, PADDING);
+
+		// the editable field is the usual upload, the snapshot is not shown
+		var form = widget("myexample5900fileform");
+		field(form, "fileUploadField").$("input[type='file']").should(exist);
+		field(form, "fileUploadField").$(PREV).shouldNot(exist);
 	}
 
 }
