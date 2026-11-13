@@ -34,8 +34,7 @@ public class FileUploadDnd<W extends AbstractWidget<ExpectationPattern, W>> impl
 
 	/** Checks whether the zone is disabled, i.e. does not accept files. */
 	public W checkDisabled(Consumer<Boolean> disabled) {
-		return Allure.step("Checking the drag-and-drop zone for \"Disabled\"", step -> {
-			AbstractWidget.logTime(step);
+		return Allure.step("Checking the drag-and-drop zone for \"Disabled\"", () -> {
 			disabled.accept(element().$(".ant-upload-disabled").exists());
 			return widget;
 		});
