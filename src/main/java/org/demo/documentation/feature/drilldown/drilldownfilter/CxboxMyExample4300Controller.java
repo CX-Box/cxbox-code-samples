@@ -33,6 +33,8 @@ public enum CxboxMyExample4300Controller implements EnumBcIdentifier {
 		myExample4300DrilldownKeyInlinePickList(myExample4300DrilldownKey, MyExample4300InlinePickListService.class),
 		myExample4300DrilldownKeyMultivalueForm(myExample4300DrilldownKey, MyExample4300MultivalueService.class),
 
+	myExample4300DashboardStats(myExample4300PostAction, MyExample4300DashboardStatsService.class),
+
 	;
 
 	// @formatter:on

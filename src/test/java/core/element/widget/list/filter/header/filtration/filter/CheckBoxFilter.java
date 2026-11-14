@@ -21,36 +21,15 @@ public class CheckBoxFilter<
 
 	@Override
 	public SELF filter(Boolean value) {
-		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER)
-				.click();
-		if (value) {
-			setTrue();
-		} else {
-			setFalse();
+		getParent().element().$(DATA_TEST_WIDGET_LIST_HEADER_COLUM_FILTER).click();
+		var checkbox = formFilter.$("form.ant-form input[type='checkbox']")
+				.shouldBe(Condition.interactable, getWidget().getExpectations().getTimeout());
+		// A false condition needs an onChange even when the initial control is unchecked (no filter).
+		checkbox.click();
+		if (checkbox.isSelected() != value) {
+			checkbox.click();
 		}
+		checkbox.shouldBe(value ? Condition.selected : Condition.not(Condition.selected));
 		return (SELF) this;
 	}
-
-	private void setTrue() {
-		set();
-		if (!getValue()) {
-			set();
-		}
-	}
-
-	private void setFalse() {
-		set();
-		if (getValue()) {
-			set();
-		}
-	}
-
-	private void set() {
-		formFilter
-				.$("form[class=\"ant-form ant-form-vertical\"]")
-				.$("input")
-				.shouldBe(Condition.exist, getWidget().getExpectations().getTimeout())
-				.click();
-	}
-
 }

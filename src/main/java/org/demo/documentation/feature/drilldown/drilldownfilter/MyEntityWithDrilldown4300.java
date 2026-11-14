@@ -10,6 +10,8 @@ import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomFiel
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
 
+import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -98,4 +100,6 @@ public class MyEntityWithDrilldown4300 extends BaseEntity {
 	@ManyToOne
 	private MyEntity4300InlinePickList myEntity4300InlinePickList;
 
+	@Column(name = "CUSTOM_FIELD4300_DICTIONARY")
+	private CustomField4300Dictionary customField4300Dictionary;
 }

@@ -1,13 +1,16 @@
 package core.element.widget.field.type.multipleSelect;
 
 import core.util.report.StepReport;
+
 import static core.util.i18n.CoreMessageSource.message;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
+import core.element.widget.modal.ErrorPopupException;
 import core.element.widget.PlatformIdentifier;
 import core.element.widget.field.AbstractFieldImpl;
 import core.element.widget.field.FieldType;
@@ -91,27 +94,49 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 		return (SELF) this;
 	}
 
+	/**
+	 * Picks the values that are not picked yet until the field shows all of them. The form may be redrawn a moment
+	 * after the previous request (the dropdown gets closed, the picked values are dropped), so the dropdown is
+	 * reopened and the missing values are picked again instead of waiting a fixed time.
+	 */
 	public SELF addValue(@NonNull Set<String> values) {
 		Allure.step(message("field.choose", getFieldIdentifier()), step -> {
 			StepReport.value(values);
-
-			values.forEach(value -> {
-				boolean doesNotExist = !openList()
-						.is(Condition.visible, widget().getExpectations().getTimeout());
-				if (doesNotExist) {
-					element().click();
-				}
-				if (!isOptionSelected(value)) {
-					getOption(value)
-							.shouldBe(Condition.enabled, widget().getExpectations().getTimeout())
-							.click();
-				}
-				$("body").sendKeys(Keys.ESCAPE);
-				openList()
-						.is(Condition.hidden, widget().getExpectations().getTimeout());
-			});
+			Selenide.Wait()
+					.withTimeout(widget().getExpectations().getTimeout().multipliedBy(3))
+					.withMessage("the field \"" + title + "\" holds " + values)
+					.until(driver -> {
+						try {
+							Set<String> missing = new HashSet<>(values);
+							missing.removeAll(currentItems());
+							if (missing.isEmpty()) {
+								return true;
+							}
+							// checked without a timeout: a closed dropdown is the usual state
+							if (!openList().exists()) {
+								element().click();
+							}
+							missing.forEach(value -> {
+								if (!isOptionSelected(value)) {
+									getOption(value).click();
+								}
+							});
+							return false;
+						} catch (ErrorPopupException e) {
+							throw e;
+						} catch (RuntimeException e) {
+							// the field is being redrawn
+							return false;
+						}
+					});
+			$("body").sendKeys(Keys.ESCAPE);
+			openList().should(Condition.disappear, widget().getExpectations().getTimeout());
 		});
 		return (SELF) this;
+	}
+
+	private List<String> currentItems() {
+		return element().$$("div[data-test-field-multipleselect-current-item=\"true\"]").texts();
 	}
 
 	protected Boolean isOptionSelected(String option) {
@@ -176,6 +201,9 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 				.$$(By.tagName("li"));
 	}
 
+	/**
+	 * Removes the picked values one by one: the first "x" is clicked until none is left.
+	 */
 	public SELF clear() {
 		if (false) {
 			return Clear.super.clear();
@@ -184,14 +212,13 @@ public class MultipleSelect<W extends AbstractWidget<ExpectationPattern, W>, SEL
 			ElementsCollection closeX = element()
 					.shouldBe(Condition.exist, widget().getExpectations().getTimeout())
 					.$$("i[aria-label=\"icon: close\"]");
-			for (int i = 0; i <= closeX.size(); i++) {
-				if (closeX.get(i).is(Condition.exist)) {
-					closeX.get(i).click();
-				}
+			for (int left = closeX.size(); left > 0; left--) {
+				closeX.first().click();
 			}
 			$("body").sendKeys(Keys.ESCAPE);
+			element().$$("div[data-test-field-multipleselect-current-item=\"true\"]")
+					.shouldHave(CollectionCondition.size(0), widget().getExpectations().getTimeout());
 		});
-		Selenide.sleep(1000) ;//TODO >> After adding skeleton at multivalue popup add popup wait
 		return (SELF) this;
 	}
 }
