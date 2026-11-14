@@ -8,6 +8,7 @@ import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
 import core.element.widget.action.Action;
+import core.element.widget.action.FileUploadDnd;
 import core.element.widget.action.PageRequests;
 import core.element.widget.list.rows.PlatformRows;
 import core.element.widget.list.rows.row.PlatformRow;
@@ -50,6 +51,11 @@ public abstract class ListWidget<SELF extends ListWidget<SELF, ROWS, ROW>, ROWS 
 
 	public Action<SELF> actions() {
 		return config().parts.actions.create(self());
+	}
+
+	/** The drag-and-drop zone of the multi-upload. */
+	public FileUploadDnd<SELF> fileUploadDnd() {
+		return new FileUploadDnd<>(self());
 	}
 
 	/** data-test attribute that holds the column title in the table header. */
