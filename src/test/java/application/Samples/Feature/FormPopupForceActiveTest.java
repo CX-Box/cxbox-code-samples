@@ -29,7 +29,7 @@ public class FormPopupForceActiveTest extends BaseTestForSamples {
 				.secondLevelView("FormPopup")
 				.form("Activate FormPopup")
 				.actions().click("Activate FormPopup");
-		var formPopup = PlatformApp.currentScreen().view().formPopupByName("InputBasicFormPopup");
+		var formPopup = PlatformApp.currentScreen().view().formPopupByName("inputbasicformpopup");
 		var input = formPopup.input("customField");
 		var initialValue = input.getValue();
 		var inputElement = input.element().$(input.valueTag()).getWrappedElement();
