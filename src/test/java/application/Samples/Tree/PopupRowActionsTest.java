@@ -85,7 +85,7 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		var form = tree.rows().row(0).inlineForm();
 		String value = unique("Popup form");
 		form.input(field).setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		int index = savedRowIndex(tree, value);
 		DocShots.stop();
 		assertThat(index).as("the saved row is shown").isNotNegative();
@@ -126,14 +126,14 @@ public class PopupRowActionsTest extends BaseTestForSamples {
 		String original = form.input(field).getValue();
 		String value = unique("Popup form edited");
 		form.input(field).setValue(value);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		int index = rowIndex(tree, value);
 		DocShots.stop();
 		assertThat(index).as("the edited row is shown").isNotNegative();
 		// the sample data is restored
 		form = tree.rows().row(index).clickPencil();
 		form.input(field).setValue(original);
-		form.actions().action("Save").click();
+		form.actions().click("Save");
 		assertThat(rowIndex(tree, original)).as("the original value is restored").isNotNegative();
 	}
 

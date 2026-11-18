@@ -1,5 +1,6 @@
 package core.element.widget.form;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import core.common.Identifier;
 import core.element.widget.PlatformWidget;
@@ -15,6 +16,7 @@ import core.element.widget.field.type.input.Input;
 import core.element.widget.field.type.money.Money;
 import core.element.widget.field.type.multifield.Multifield;
 import core.element.widget.field.type.multipleSelect.MultipleSelect;
+import core.element.widget.field.type.multivalue.Multivalue;
 import core.element.widget.field.type.multivalueHover.MultivalueHover;
 import core.element.widget.field.type.number.Number;
 import core.element.widget.field.type.pickList.PickList;
@@ -26,6 +28,7 @@ import core.element.widget.type.TypeWidget;
 import lombok.extern.slf4j.Slf4j;
 
 import static core.element.PlatformApp.config;
+import static core.util.i18n.CoreMessageSource.message;
 
 @Slf4j
 public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormWidget> {
@@ -89,6 +92,10 @@ public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormW
 		return new MultipleSelect<>(this, title);
 	}
 
+	public Multivalue<PlatformInlineFormWidget> multivalue(String title) {
+		return new Multivalue<>(this, title);
+	}
+
 	public MultivalueHover<PlatformInlineFormWidget, ?> multivalueHover(String title) {
 		return new MultivalueHover<>(this, title);
 	}
@@ -118,6 +125,27 @@ public class PlatformInlineFormWidget extends PlatformWidget<PlatformInlineFormW
 	@Override
 	public TypeWidget getType() {
 		return PlatformTypeWidgets.FORM;
+	}
+
+	/**
+	 * The form of a list row has neither a name nor a title: the scenario lines name it by its place
+	 */
+	@Override
+	public String label() {
+		var label = message("report.widget.inlineForm");
+		return label.substring(0, 1).toUpperCase() + label.substring(1);
+	}
+
+	/**
+	 * The form is on the page while its row is shown: the row closes after Save
+	 */
+	@Override
+	public boolean isOnPage() {
+		try {
+			return element().is(Condition.visible);
+		} catch (RuntimeException e) {
+			return false;
+		}
 	}
 
 	public RowInlineForm<?, ?, ?, ?> row() {
