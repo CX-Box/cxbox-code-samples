@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
-import { Skeleton, Spin } from 'antd'
+import { Skeleton } from 'antd'
 import { useAppDispatch, useAppSelector } from '@store'
 import { usePopupVisibility } from '@hooks/popup'
-import { useWidgetLoading } from '@hooks/useWidgetLoading'
 import { actions } from '@actions'
 import WidgetTitle from '@components/WidgetTitle/WidgetTitle'
 import { selectBc, selectWidget } from '@selectors/selectors'
@@ -37,7 +36,6 @@ function ConfirmWithForm({ widgetName, onConfirm, onCancel }: ConfirmWithFormPro
         useAppSelector(state => state.session.pendingRequests?.filter(item => item.type === 'force-active')?.length ?? 0) > 0
 
     const { popupData, preInvoke, visibility: showed } = usePopupVisibility(widgetName, bcName, 'mass')
-    const { showSpinner, showSkeleton } = useWidgetLoading(bcName, !!(bc?.loading || forceUpdateRowMetaPending))
 
     const dispatch = useAppDispatch()
 
@@ -67,22 +65,20 @@ function ConfirmWithForm({ widgetName, onConfirm, onCancel }: ConfirmWithFormPro
     return showed ? (
         <div className={styles.root}>
             <WidgetTitle className={styles.title} level={2} widgetName={widgetName} text={preInvoke?.message ?? widget?.title} />
-            {showSkeleton ? (
+            {bc?.loading || forceUpdateRowMetaPending ? (
                 <div data-test-loading={true}>
                     <Skeleton loading paragraph={{ rows: 5 }} />
                 </div>
             ) : (
-                <Spin spinning={showSpinner}>
-                    <div className={styles.formPopupModal}>
-                        <Form meta={widget} />
-                        <div className={styles.actions}>
-                            <Button onClick={onConfirm ? () => onConfirm(onSave) : onSave}>{preInvoke?.yesText ?? t('Save')}</Button>
-                            <Button onClick={onClose} type="formOperation">
-                                {preInvoke?.noText ?? t('Cancel')}
-                            </Button>
-                        </div>
+                <div className={styles.formPopupModal}>
+                    <Form meta={widget} />
+                    <div className={styles.actions}>
+                        <Button onClick={onConfirm ? () => onConfirm(onSave) : onSave}>{preInvoke?.yesText ?? t('Save')}</Button>
+                        <Button onClick={onClose} type="formOperation">
+                            {preInvoke?.noText ?? t('Cancel')}
+                        </Button>
                     </div>
-                </Spin>
+                </div>
             )}
         </div>
     ) : null
