@@ -6,6 +6,14 @@ on:
       - 'main'
   workflow_dispatch:
 
+# All runs deploy to the same server (/home/cxbox/code-samples). Two pushes to main close together started two
+# deploys at once: the second one removed the containers and the folder of the first one during its
+# `docker compose up --wait`, and both 'start' steps hung until the 10 min timeout.
+# Only one run at a time; a newer push waits for the running one and replaces the older pending one.
+concurrency:
+  group: build-main-and-deploy
+  cancel-in-progress: false
+
 jobs:
   build-main-and-deploy:
     env:
