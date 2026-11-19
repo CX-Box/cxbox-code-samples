@@ -56,25 +56,32 @@ public class MyEntity32762TestDataLoadService {
 					.setParentTreeId(root5.getId());
 			repositoryParent.save(child);
 		}
+		// the child tree of root 3
+		MyEntity3277 root3Node = createBaseEntity77("Node of Root 3 (with children)", root3);
+		repositoryChild.save(root3Node);
+		for (int i = 1; i <= 2; i++) {
+			repositoryChild.save(createBaseEntity77("Child " + i + " of Node of Root 3", root3).setParentTreeId(root3Node.getId()));
+		}
+		// the child tree of root 5
 		// root 1: without Child
 
-		MyEntity3277 root77_1 = createBaseEntity77("Root 1 without children");
+		MyEntity3277 root77_1 = createBaseEntity77("Root 1 without children", root5);
 		repositoryChild.save(root77_1);
 		//root 2:without Child
-		MyEntity3277 root77_2 = createBaseEntity77("Root 2 (without children)");
+		MyEntity3277 root77_2 = createBaseEntity77("Root 2 (without children)", root5);
 		repositoryChild.save(root77_2);
 		//root 3:without Child
-		MyEntity3277 root77_3 = createBaseEntity77("Root 3 (without children)");
+		MyEntity3277 root77_3 = createBaseEntity77("Root 3 (without children)", root5);
 		repositoryChild.save(root77_3);
 		//root 4:without Child
-		MyEntity3277 root77_4 = createBaseEntity77("Root 4 (without children)");
+		MyEntity3277 root77_4 = createBaseEntity77("Root 4 (without children)", root5);
 		repositoryChild.save(root77_4);
 		//root 5
-		MyEntity3277 root77_5 = createBaseEntity77("Root 5 (with children)");
+		MyEntity3277 root77_5 = createBaseEntity77("Root 5 (with children)", root5);
 		repositoryChild.save(root77_5);
 		//----Create 3 child for root5----
 		for (int i = 1; i <= 3; i++) {
-			MyEntity3277 child = createBaseEntity77("Child " + i + " of Root 5").setParentTreeId(root5.getId());
+			MyEntity3277 child = createBaseEntity77("Child " + i + " of Root 5", root5).setParentTreeId(root77_5.getId());
 			repositoryChild.save(child);
 		}
 	}
@@ -84,8 +91,8 @@ public class MyEntity32762TestDataLoadService {
 
 	}
 
-	private MyEntity3277 createBaseEntity77(String customFieldValue) {
-		return new MyEntity3277().setCustomField(customFieldValue).setCustomFieldMoney(12345.67);
+	private MyEntity3277 createBaseEntity77(String customFieldValue, MyEntity3276 parent) {
+		return new MyEntity3277().setCustomField(customFieldValue).setCustomFieldMoney(12345.67).setCustomFieldEntity(parent);
 
 	}
 
