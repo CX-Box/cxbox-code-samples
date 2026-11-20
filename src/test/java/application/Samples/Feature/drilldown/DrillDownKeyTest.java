@@ -1,6 +1,7 @@
 package application.Samples.Feature.drilldown;
 
 import application.config.BaseTestForSamples;
+import core.config.selenide.BrowserDevTools;
 import core.element.PlatformApp;
 import core.util.DocShots;
 import io.qameta.allure.Description;
@@ -57,6 +58,28 @@ public class DrillDownKeyTest extends BaseTestForSamples {
 				.form("Form: drill-down from meta");
 		form.input("Custom Field")
 				.drilldown(url -> assertThat(url).contains("/screen/myexample3627/view/myexample3627meta/myexample3627/"));
+	}
+
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A chart bar without a link opens nothing, the next drill-down works")
+	@Description("The meta gives a drill-down to one bar only: a click on the other bar keeps the view without an error in the browser console, then the bar with the link opens its view")
+	void chartBarWithoutLink() {
+		var view = PlatformApp.screen(SCREEN).secondLevelView("Chart");
+		var chart = view.column2D("Chart: a bar without drill-down");
+		BrowserDevTools.clearConsoleLog();
+		chart.bars()
+				.filter(bar -> "Without drill-down".equals(bar.xValueField().getValue()))
+				.findFirst().orElseThrow()
+				.click();
+		view.checkUrl(url -> assertThat(url).contains("/screen/myexample3627/view/myexample3627chart"));
+		// before the fix the drill-down went on with an empty link and failed on it
+		assertThat(BrowserDevTools.consoleLog()).noneMatch(message -> message.contains("TypeError"));
+		chart.bars()
+				.filter(bar -> "With drill-down".equals(bar.xValueField().getValue()))
+				.findFirst().orElseThrow()
+				.drilldown(url -> assertThat(url).contains("/screen/myexample3627/view/myexample3627list"));
 	}
 
 }

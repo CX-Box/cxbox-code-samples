@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public enum CxboxMyExample3627Controller implements EnumBcIdentifier {
 
 
-	myexample3627(MyExample3627Service.class);
+	myexample3627(MyExample3627Service.class),
+	myexample3627chart(MyExample3627ChartService.class);
 
 
 	public static final EnumBcIdentifier.Holder<CxboxMyExample3627Controller> Holder = new Holder<>(

@@ -45,6 +45,17 @@ public abstract class ChartRow<W extends ChartWidget<W>, SELF extends ChartRow<W
 		});
 	}
 
+	/**
+	 * Clicks the element of the record on the chart, as the user does, without waiting for a drill-down: for a record
+	 * without a link, or a click that selects the record. {@link #drilldown} waits for the opened view.
+	 */
+	public SELF click() {
+		return Allure.step(message("chart.click", record.values()), step -> {
+			widget.clickRecord(record.id());
+			return self();
+		});
+	}
+
 	/** Moves the mouse over the element of the record: the chart shows the tooltip of the record. */
 	public SELF hover() {
 		return Allure.step(message("chart.hover", record.values()), step -> {
