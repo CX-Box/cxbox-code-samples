@@ -82,4 +82,20 @@ public class DrillDownKeyTest extends BaseTestForSamples {
 				.drilldown(url -> assertThat(url).contains("/screen/myexample3627/view/myexample3627list"));
 	}
 
+	@Test
+	@Severity(CRITICAL)
+	@Tag("Positive")
+	@DisplayName("A chart opened after a chart of the same business component drills down by its own widget")
+	@Description("The previous tab shows the same records in a chart without drill-down: on the next tab the bar opens its view")
+	void chartAfterTabWithAnotherChart() {
+		var screen = PlatformApp.screen(SCREEN);
+		screen.secondLevelView("Chart without drill-down").column2D("Chart: no drill-down on the X field");
+		// the tab switch keeps the chart and gives it the widget of the new tab
+		screen.secondLevelView("Chart").column2D("Chart: a bar without drill-down")
+				.bars()
+				.filter(bar -> "With drill-down".equals(bar.xValueField().getValue()))
+				.findFirst().orElseThrow()
+				.drilldown(url -> assertThat(url).contains("/screen/myexample3627/view/myexample3627list"));
+	}
+
 }
