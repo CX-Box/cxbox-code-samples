@@ -7,7 +7,6 @@ import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Node refresh of the Tree widget after custom actions (sample widgets/tree/actions/create/basic, screen "Tree widget action basic"):
  * a custom action refreshes only the node of the record, a deleting action removes the row;
- * PostAction.refreshBc: the current behaviour (the tree is not collapsed) and the disabled check of the next release.
+ * PostAction.refreshBc reloads the whole tree and collapses it.
  * Analogue of the custom action checks of the List widget.
  */
 @DisplayName("Tree. Node refresh after custom actions")
@@ -112,31 +111,6 @@ public class TreeNodeRefreshTest extends BaseTestForSamples {
 	}
 
 	@Test
-	@Severity(CRITICAL)
-	@Tag("Positive")
-	@DisplayName("PostAction.refreshBc: current behaviour, the tree is not collapsed")
-	@Description("PostAction.refreshBc is not supported for the Tree widget in this release: the action succeeds without an error, "
-			+ "the record is updated in its row, the root page is reloaded, the expanded node stays expanded with its child rows.")
-	void refreshBcKeepsTreeExpanded() {
-		var tree = open();
-		int index = expandableRow(tree);
-		PlatformTreeRowInline root = tree.rows().row(index).expandRow();
-		tree.waitLoaded();
-		String key = root.rowKey();
-		long children = root.rows().streamCurrentPage().count();
-		assertThat(children).isPositive();
-
-		tree.rows().clickRow(index).burgerAction("custom Save With Refresh").click();
-		tree.waitLoaded();
-
-		root = rowByKey(tree, key);
-		assertThat(root.element().getText()).contains(CUSTOM_SAVE_VALUE);
-		root.shouldBeExpanded();
-		assertThat(root.rows().streamCurrentPage().count()).isEqualTo(children);
-	}
-
-	@Test
-	@Disabled("PostAction.refreshBc for the Tree widget is planned for the next release: the tree must be collapsed after it (specification, section 8)")
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("PostAction.refreshBc collapses the tree")

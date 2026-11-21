@@ -15,8 +15,11 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -181,6 +184,16 @@ public class BrowserDevTools {
 	}
 
 	/**
+	 * The next answer whose address contains the part reaches the page this much later; the answers to the other requests are
+	 * not held. Two requests of the same data then end in the reverse order, as on a busy server.
+	 */
+	public static void delayNextAnswer(@NonNull String urlPart, @NonNull Duration delay) {
+		if (WebDriverRunner.getWebDriver() instanceof ChromiumDriver chromium) {
+			DirectConnection.to(chromium).delayNextAnswer(urlPart, delay);
+		}
+	}
+
+	/**
 	 * F5 of the current tab by the browser itself, no script on the page. Returns when the old page is gone and the new one has
 	 * started to load; does not wait for the load to end, so it works while {@link #throttleDownload(long)} is on.
 	 */
@@ -231,6 +244,13 @@ public class BrowserDevTools {
 
 		private static DirectConnection current;
 
+		/** Lets the held answers go: the listener of the socket must not wait for anything */
+		private static final ScheduledExecutorService ANSWER_TIMER = Executors.newSingleThreadScheduledExecutor(task -> {
+			var thread = new Thread(task, "devtools-answer-timer");
+			thread.setDaemon(true);
+			return thread;
+		});
+
 		private final String url;
 
 		private final WebSocket socket;
@@ -242,6 +262,9 @@ public class BrowserDevTools {
 		private final AtomicInteger lastId = new AtomicInteger();
 
 		private volatile boolean closed;
+
+		/** The delay of the next paused answer; null once that answer is held */
+		private final AtomicReference<Duration> nextAnswerDelay = new AtomicReference<>();
 
 		private DirectConnection(String url) {
 			this.url = url;
@@ -266,8 +289,43 @@ public class BrowserDevTools {
 			int id = lastId.incrementAndGet();
 			var answer = new CompletableFuture<Void>();
 			answers.put(id, answer);
-			socket.sendText(objectMapper.writeValueAsString(Map.of("id", id, "method", command, "params", params)), true).join();
+			write(id, command, params);
 			answer.get(ANSWER_TIMEOUT.toSeconds(), TimeUnit.SECONDS);
+		}
+
+		/** A command whose answer nobody waits for */
+		private void post(String command, Map<String, Object> params) {
+			write(lastId.incrementAndGet(), command, params);
+		}
+
+		/** The socket refuses a message while the previous one is being sent, so the test and the timer write one at a time */
+		@SneakyThrows
+		private synchronized void write(int id, String command, Map<String, Object> params) {
+			socket.sendText(objectMapper.writeValueAsString(Map.of("id", id, "method", command, "params", params)), true).join();
+		}
+
+		/** The browser pauses the answers to the matching requests (the Fetch domain) and reports each of them here */
+		void delayNextAnswer(String urlPart, Duration delay) {
+			nextAnswerDelay.set(delay);
+			send("Fetch.enable", Map.of("patterns", List.of(Map.of("urlPattern", "*" + urlPart + "*", "requestStage", "Response"))));
+		}
+
+		/**
+		 * The first paused answer goes on after the delay, and the pausing stops; the others go on at once. If the page has dropped
+		 * the request meanwhile, the browser rejects the command, and nothing is left to do.
+		 */
+		private void continueAnswer(String requestId) {
+			var delay = nextAnswerDelay.getAndSet(null);
+			Map<String, Object> request = Map.of("requestId", requestId);
+			if (delay == null) {
+				ANSWER_TIMER.execute(() -> post("Fetch.continueResponse", request));
+			} else {
+				ANSWER_TIMER.schedule(() -> {
+					post("Fetch.continueResponse", request);
+					// not Fetch.disable: an answer paused at that moment then failed; an empty list pauses nothing
+					post("Fetch.enable", Map.of("patterns", List.of()));
+				}, delay.toMillis(), TimeUnit.MILLISECONDS);
+			}
 		}
 
 		@Override
@@ -277,6 +335,9 @@ public class BrowserDevTools {
 			if (last) {
 				var json = objectMapper.readTree(message.toString());
 				message.setLength(0);
+				if ("Fetch.requestPaused".equals(json.path("method").asText())) {
+					continueAnswer(json.path("params").path("requestId").asText());
+				}
 				var answer = answers.remove(json.path("id").asInt());
 				if (answer != null && json.has("error")) {
 					answer.completeExceptionally(new IllegalStateException(json.path("error").toString()));

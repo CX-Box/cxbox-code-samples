@@ -1,6 +1,7 @@
 package application.Samples.Tree;
 
 import application.config.BaseTestForSamples;
+import core.config.selenide.BrowserDevTools;
 import core.element.PlatformApp;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
 import core.util.DocShots;
@@ -11,6 +12,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
+import java.time.Duration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -143,6 +145,28 @@ public class TreeLazyLoadTest extends BaseTestForSamples {
 		tree.waitLoaded();
 		assertThat(tree.rows().streamCurrentPage().noneMatch(r -> r.isExpanded())).isTrue();
 		DocShots.png(tree.element(), ARTICLE, "sorting.png", 1600, 1000);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Two quick sorts: the tree shows the rows of the last one")
+	@Description("The answer to the first sort comes after the answer to the second one and adds nothing to the tree")
+	void lateAnswerOfEarlierSort() {
+		var view = PlatformApp.screen("Widget property export Excel filtration").secondLevelView("Tree");
+		// TODO CXBOX-1394: a tree opened by a tab after a view of the same bc stays empty until the page is reloaded
+		Selenide.refresh();
+		// six roots, a page of five: the first pages of the two sorts differ by one row
+		var tree = view.treeByName("myexample3138tree").waitLoaded();
+		var number = "Custom Field Number";
+		var late = Duration.ofSeconds(5);
+		BrowserDevTools.delayNextAnswer("data/myexample3138/", late);
+		// descending: its answer comes late
+		tree.headers().sort(sb -> sb.sort(number));
+		// ascending
+		tree.headers().sort(sb -> sb.sort(number));
+		// the late answer has come
+		Selenide.sleep(late.plusSeconds(1).toMillis());
+		assertThat(tree.rows().streamCurrentPage().map(row -> row.number(number).getValue().intValue())).containsExactly(0, 0, 2, 2, 3);
 	}
 
 	@Test
