@@ -1,161 +1,166 @@
 {
   "name": "myexample4300listdrilldown",
-  "title": "List (with drilldown filter to self)",
+  "title": "Matching records",
   "type": "List",
   "bc": "myExample4300DrillDown",
   "fields": [
     {
-      "title": "Custom Field Multivalue Hover",
-      "key": "customFieldMultivalueHover",
-      "assocValueKey": "id",
-      "popupBcName": "myEntity4300MultivalueHover",
-      "type": "multivalueHover",
-      "displayedKey": "customFieldMultivalueHoverDisplayKey",
-      "drillDown": "true"
+      "title": "Input",
+      "key": "customField",
+      "type": "input"
     },
     {
-      "title": "Custom Field Hint",
-      "key": "customFieldHint",
-      "type": "hint",
-      "showLength": 100,
-      "drillDown": "true"
-    },
-    {
-      "title": "Custom Field Multivalue",
-      "key": "customFieldMultivalue",
-      "type": "multivalue",
-      "displayedKey": "customFieldMultivalueDisplayKey",
-      "popupBcName": "myEntity4300Multivalue",
-      "assocValueKey": "id",
-      "drillDown": "true"
-    },
-    {
-      "title": "Custom Field Multiple Select",
-      "key": "customFieldMultipleSelect",
-      "type": "multipleSelect",
-      "drillDown": "true"
-    },
-    {
-      "title": "Custom Field Multifield",
-      "key": "customFieldRadioMultiField",
+      "key": "customFieldMultifield",
+      "title": "Text / hint / file upload",
       "type": "multifield",
       "style": "list",
       "fields": [
         {
-          "title": "Custom Field Radio",
-          "key": "customFieldRadio",
-          "type": "radio",
-          "drilldown": "true"
+          "title": "Text",
+          "key": "customFieldText",
+          "type": "text"
         },
         {
-          "title": "Custom Field Money",
-          "key": "customFieldMoney",
-          "digits": 2,
-          "type": "money",
-          "drilldown": "true"
+          "title": "Hint",
+          "key": "customFieldHint",
+          "type": "hint",
+          "showLength": 100
+        },
+        {
+          "title": "File upload",
+          "key": "customFieldFileUpload",
+          "type": "fileUpload",
+          "fileIdKey": "customFieldFileUploadId"
         }
-      ],
-      "drillDown": "true"
+      ]
     },
     {
-      "title": "Custom Field Inline",
+      "title": "Checkbox",
+      "key": "customFieldCheckbox",
+      "type": "checkbox"
+    },
+    {
+      "title": "Dictionary",
+      "key": "customField4300Dictionary",
+      "type": "dictionary"
+    },
+    {
+      "title": "Multivalue hover",
+      "key": "customFieldMultivalueHover",
+      "assocValueKey": "id",
+      "popupBcName": "myEntity4300MultivalueHover",
+      "type": "multivalueHover",
+      "displayedKey": "customFieldMultivalueHoverDisplayKey"
+    },
+    {
+      "title": "Hint",
+      "key": "customFieldHint",
+      "type": "hint",
+      "showLength": 100
+    },
+    {
+      "title": "Multivalue",
+      "key": "customFieldMultivalue",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueDisplayKey",
+      "popupBcName": "myEntity4300Multivalue",
+      "assocValueKey": "id"
+    },
+    {
+      "title": "Multiple select",
+      "key": "customFieldMultipleSelect",
+      "type": "multipleSelect"
+    },
+    {
+      "title": "Inline pick list",
       "key": "customFieldInlinePickList",
       "type": "inline-pickList",
       "popupBcName": "myEntity4300InlinePickList",
       "pickMap": {
-        "customFieldInlinePickList": "value"
-      },
-      "drillDown": "true"
+        "customFieldInlinePickList": "value",
+        "customFieldInlinePickListId": "id"
+      }
     },
     {
-      "title": "Custom Field Pick List",
+      "title": "Pick list",
       "key": "customFieldPickList",
       "type": "pickList",
       "popupBcName": "myEntity4300PickList",
       "pickMap": {
-        "customFieldPickList": "value"
-      },
-      "drillDown": "true"
+        "customFieldPickList": "value",
+        "customFieldPickListId": "id"
+      }
     },
     {
-      "title": "Custom Field Radio",
+      "title": "Radio",
       "key": "customFieldRadio",
-      "type": "radio",
-      "drillDown": "true"
+      "type": "radio"
     },
     {
-      "title": "Custom Field Money",
+      "title": "Money",
       "key": "customFieldMoney",
       "digits": 2,
-      "type": "money",
-      "drillDown": "true"
+      "type": "money"
     },
     {
-      "title": "Custom Field Percent",
+      "title": "Percent",
       "key": "customFieldPercent",
-      "type": "percent",
-      "drillDown": "true"
+      "type": "percent"
     },
     {
-      "title": "Custom Field Number",
+      "title": "Number",
       "key": "customFieldNumber",
-      "type": "number",
-      "drillDown": "true"
+      "type": "number"
     },
     {
-      "title": "Custom Field File Upload",
+      "title": "File upload",
       "key": "customFieldFileUpload",
       "type": "fileUpload",
-      "fileIdKey": "customFieldFileUploadId",
-      "drillDown": "true"
+      "fileIdKey": "customFieldFileUploadId"
     },
     {
-      "title": "Custom Field Dictionary",
+      "title": "Enum",
       "key": "customFieldDictionary",
-      "type": "dictionary",
-      "drillDown": "true"
+      "type": "dictionary"
     },
     {
-      "title": "Custom Field Date Time With Seconds",
+      "title": "Date time with seconds",
       "key": "customFieldDateTimeWithSeconds",
-      "type": "dateTimeWithSeconds",
-      "drillDown": "true"
+      "type": "dateTimeWithSeconds"
     },
     {
-      "title": "Custom Field Date",
+      "title": "Date",
       "key": "customFieldDate",
-      "type": "date",
-      "drillDown": "true"
+      "type": "date"
     },
     {
-      "title": "Custom Field Checkbox",
-      "key": "customFieldCheckbox",
-      "type": "checkbox",
-      "drillDown": "true"
-    },
-    {
-      "title": "Custom Field Date Time",
+      "title": "Date time",
       "key": "customFieldDateTime",
-      "type": "dateTime",
-      "drillDown": "true"
+      "type": "dateTime"
     },
     {
-      "title": "Custom Field Text",
+      "title": "Text",
       "key": "customFieldText",
-      "type": "text",
-      "drillDown": "true"
+      "type": "text"
     },
     {
-      "title": "Custom Field Hidden",
+      "title": "Suggestion pick list",
       "key": "customFieldHidden",
-      "type": "hidden",
-      "drillDown": "true"
+      "type": "suggestionPickList",
+      "popupBcName": "myEntity4300InlinePickList",
+      "pickMap": {
+        "customFieldHidden": "value"
+      }
     },
     {
-      "title": "Custom Field Input",
-      "key": "customField",
-      "type": "input",
-      "drillDown": "true"
+      "key": "customFieldPickListId",
+      "title": "Pick ID",
+      "type": "hidden"
+    },
+    {
+      "key": "customFieldInlinePickListId",
+      "title": "Inline ID",
+      "type": "hidden"
     }
   ],
   "options": {
@@ -164,6 +169,13 @@
     },
     "edit": {
       "style": "none"
+    }
+  },
+  "showCondition": {
+    "bcName": "myExample4300PostAction",
+    "params": {
+      "fieldKey": "expandedColumns",
+      "value": true
     }
   }
 }

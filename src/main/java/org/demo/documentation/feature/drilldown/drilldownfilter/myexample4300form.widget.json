@@ -1,11 +1,161 @@
 {
   "name": "myexample4300form",
-  "title": "choose filter",
+  "title": "Filter conditions",
   "type": "Form",
   "bc": "myExample4300PostAction",
   "fields": [
     {
-      "label": "Custom Field Multivalue",
+      "label": "Input",
+      "key": "customField",
+      "type": "input"
+    },
+    {
+      "label": "Text",
+      "key": "customFieldText",
+      "type": "text",
+      "editMinRows": 1,
+      "editMaxRows": 3
+    },
+    {
+      "label": "Hint search",
+      "key": "customFieldHint",
+      "type": "input"
+    },
+    {
+      "label": "File upload",
+      "key": "customFieldFileUpload",
+      "type": "fileUpload",
+      "fileIdKey": "customFieldFileUploadId"
+    },
+    {
+      "key": "dictionaryValue",
+      "label": "Dictionary",
+      "type": "dictionary"
+    },
+    {
+      "label": "Dictionary · multiple",
+      "key": "dictionaryValues",
+      "type": "multipleSelect"
+    },
+    {
+      "label": "Enum",
+      "key": "customFieldDictionary",
+      "type": "dictionary"
+    },
+    {
+      "label": "Enum · multiple",
+      "key": "dictionaryEnumValues",
+      "type": "multipleSelect"
+    },
+    {
+      "label": "Radio",
+      "key": "customFieldRadio",
+      "type": "radio"
+    },
+    {
+      "label": "Radio · multiple",
+      "key": "radioValues",
+      "type": "multipleSelect"
+    },
+    {
+      "label": "Multiple select",
+      "key": "customFieldMultipleSelect",
+      "type": "multipleSelect"
+    },
+    {
+      "key": "checkboxFilter",
+      "label": "Checkbox · All / Yes / No",
+      "type": "dictionary"
+    },
+    {
+      "label": "Number / from",
+      "key": "customFieldNumber",
+      "type": "number",
+      "nullable": true
+    },
+    {
+      "key": "customFieldNumberTo",
+      "label": "Number to",
+      "type": "number",
+      "nullable": true
+    },
+    {
+      "label": "Money / from",
+      "key": "customFieldMoney",
+      "digits": 2,
+      "type": "money",
+      "nullable": true
+    },
+    {
+      "key": "customFieldMoneyTo",
+      "label": "Money to",
+      "type": "money",
+      "nullable": true
+    },
+    {
+      "label": "Percent / from",
+      "key": "customFieldPercent",
+      "type": "percent",
+      "nullable": true
+    },
+    {
+      "key": "customFieldPercentTo",
+      "label": "Percent to",
+      "type": "percent",
+      "nullable": true
+    },
+    {
+      "label": "Date / from",
+      "key": "customFieldDate",
+      "type": "date"
+    },
+    {
+      "key": "customFieldDateTo",
+      "label": "Date to",
+      "type": "date"
+    },
+    {
+      "label": "Date time / from",
+      "key": "customFieldDateTime",
+      "type": "dateTime"
+    },
+    {
+      "key": "customFieldDateTimeTo",
+      "label": "Date time to",
+      "type": "dateTime"
+    },
+    {
+      "label": "With seconds / from",
+      "key": "customFieldDateTimeWithSeconds",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "key": "customFieldDateTimeWithSecondsTo",
+      "label": "With seconds to",
+      "type": "dateTimeWithSeconds"
+    },
+    {
+      "label": "Pick list",
+      "key": "customFieldPickList",
+      "type": "pickList",
+      "popupBcName": "myEntity4300PickListPostAction",
+      "pickMap": {
+        "customFieldPickList": "value",
+        "customFieldPickListId": "id"
+      }
+    },
+    {
+      "label": "Inline pick list",
+      "key": "customFieldInlinePickList",
+      "type": "inline-pickList",
+      "popupBcName": "myEntity4300InlinePickListPostAction",
+      "pickMap": {
+        "customFieldInlinePickList": "value",
+        "customFieldInlinePickListId": "id"
+      }
+    },
+    {
+      "label": "Multivalue",
       "key": "customFieldMultivalue",
       "type": "multivalue",
       "displayedKey": "customFieldMultivalueDisplayKey",
@@ -13,116 +163,45 @@
       "assocValueKey": "id"
     },
     {
-      "label": "Custom Field Multiple Select",
-      "key": "customFieldMultipleSelect",
-      "type": "multipleSelect",
-      "drillDown": "true"
+      "label": "Multivalue hover selection",
+      "key": "customFieldMultivalueHover",
+      "type": "multivalue",
+      "displayedKey": "customFieldMultivalueHoverDisplayKey",
+      "popupBcName": "myEntity4300MultivalueHoverPostAction",
+      "assocValueKey": "id"
     },
     {
-      "label": "Custom Field Inline",
-      "key": "customFieldInlinePickList",
-      "type": "inline-pickList",
+      "label": "Suggestion",
+      "key": "customFieldHidden",
+      "type": "suggestionPickList",
       "popupBcName": "myEntity4300InlinePickListPostAction",
       "pickMap": {
-        "customFieldInlinePickList": "value"
-      },
-      "drillDown": "true"
+        "customFieldHidden": "value"
+      }
     },
     {
-      "label": "Custom Field Pick List",
-      "key": "customFieldPickList",
-      "type": "pickList",
-      "popupBcName": "myEntity4300PickListPostAction",
-      "pickMap": {
-        "customFieldPickList": "value"
-      },
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Radio",
-      "key": "customFieldRadio",
-      "type": "radio",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Money",
-      "key": "customFieldMoney",
-      "digits": 2,
-      "type": "money",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Percent",
-      "key": "customFieldPercent",
-      "type": "percent",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Number",
-      "key": "customFieldNumber",
-      "type": "number",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field File Upload",
-      "key": "customFieldFileUpload",
-      "type": "fileUpload",
-      "fileIdKey": "customFieldFileUploadId",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Dictionary",
-      "key": "customFieldDictionary",
-      "type": "dictionary",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Date Time With Seconds",
-      "key": "customFieldDateTimeWithSeconds",
-      "type": "dateTimeWithSeconds",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Date",
-      "key": "customFieldDate",
-      "type": "date",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Checkbox",
-      "key": "customFieldCheckbox",
-      "type": "checkbox",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Date Time",
-      "key": "customFieldDateTime",
-      "type": "dateTime",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Text",
-      "key": "customFieldText",
-      "type": "text",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Hidden",
-      "key": "customFieldHidden",
-      "type": "hidden",
-      "drillDown": "true"
-    },
-    {
-      "label": "Custom Field Input",
-      "key": "customField",
+      "key": "customFieldMultifield",
+      "label": "Multifield search",
       "type": "input"
+    },
+    {
+      "key": "rangeFilters",
+      "label": "Use ranges · from / to",
+      "type": "checkbox"
+    },
+    {
+      "key": "expandedColumns",
+      "type": "hidden",
+      "label": "Column layout"
     }
   ],
   "options": {
-    "actionGroup": {
+    "actionGroups": {
       "include": [
         "filter",
-        "clear filter"
+        "clear filter",
+        "expand columns",
+        "compact columns"
       ]
     },
     "layout": {
@@ -130,32 +209,40 @@
         {
           "cols": [
             {
-              "fieldKey": "customFieldMultivalue",
-              "span": 12
+              "fieldKey": "customField",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldText",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldHint",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldFileUpload",
+              "span": 6
             }
           ]
         },
         {
           "cols": [
             {
-              "fieldKey": "customFieldMultipleSelect",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "fieldKey": "dictionaryValue",
+              "span": 6
+            },
             {
-              "fieldKey": "customFieldInlinePickList",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "fieldKey": "dictionaryValues",
+              "span": 6
+            },
             {
-              "fieldKey": "customFieldPickList",
-              "span": 12
+              "fieldKey": "customFieldDictionary",
+              "span": 6
+            },
+            {
+              "fieldKey": "dictionaryEnumValues",
+              "span": 6
             }
           ]
         },
@@ -163,23 +250,19 @@
           "cols": [
             {
               "fieldKey": "customFieldRadio",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "span": 6
+            },
             {
-              "fieldKey": "customFieldMoney",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "fieldKey": "radioValues",
+              "span": 6
+            },
             {
-              "fieldKey": "customFieldPercent",
-              "span": 12
+              "fieldKey": "customFieldMultipleSelect",
+              "span": 6
+            },
+            {
+              "fieldKey": "checkboxFilter",
+              "span": 6
             }
           ]
         },
@@ -187,31 +270,31 @@
           "cols": [
             {
               "fieldKey": "customFieldNumber",
-              "span": 12
+              "span": 8
+            },
+            {
+              "fieldKey": "customFieldMoney",
+              "span": 8
+            },
+            {
+              "fieldKey": "customFieldPercent",
+              "span": 8
             }
           ]
         },
         {
           "cols": [
             {
-              "fieldKey": "customFieldFileUpload",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "fieldKey": "customFieldNumberTo",
+              "span": 8
+            },
             {
-              "fieldKey": "customFieldDictionary",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "fieldKey": "customFieldMoneyTo",
+              "span": 8
+            },
             {
-              "fieldKey": "customFieldDateTimeWithSeconds",
-              "span": 12
+              "fieldKey": "customFieldPercentTo",
+              "span": 8
             }
           ]
         },
@@ -219,39 +302,67 @@
           "cols": [
             {
               "fieldKey": "customFieldDate",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
-            {
-              "fieldKey": "customFieldCheckbox",
-              "span": 12
-            }
-          ]
-        },
-        {
-          "cols": [
+              "span": 8
+            },
             {
               "fieldKey": "customFieldDateTime",
-              "span": 12
+              "span": 8
+            },
+            {
+              "fieldKey": "customFieldDateTimeWithSeconds",
+              "span": 8
             }
           ]
         },
         {
           "cols": [
             {
-              "fieldKey": "customFieldText",
-              "span": 12
+              "fieldKey": "customFieldDateTo",
+              "span": 8
+            },
+            {
+              "fieldKey": "customFieldDateTimeTo",
+              "span": 8
+            },
+            {
+              "fieldKey": "customFieldDateTimeWithSecondsTo",
+              "span": 8
             }
           ]
         },
         {
           "cols": [
             {
-              "fieldKey": "customField",
-              "span": 12
+              "fieldKey": "customFieldPickList",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldInlinePickList",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldMultivalue",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldMultivalueHover",
+              "span": 6
+            }
+          ]
+        },
+        {
+          "cols": [
+            {
+              "fieldKey": "customFieldHidden",
+              "span": 6
+            },
+            {
+              "fieldKey": "customFieldMultifield",
+              "span": 6
+            },
+            {
+              "fieldKey": "rangeFilters",
+              "span": 6
             }
           ]
         }
@@ -259,4 +370,3 @@
     }
   }
 }
-

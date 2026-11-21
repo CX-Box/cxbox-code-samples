@@ -1,5 +1,8 @@
 package org.demo.documentation.feature.drilldown.drilldownfilter;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,13 +12,11 @@ import org.cxbox.core.util.filter.SearchParameter;
 import org.cxbox.core.util.filter.provider.impl.*;
 import org.cxbox.core.util.filter.provider.impl.EnumValueProvider.BaseEnum;
 import org.cxbox.model.core.entity.BaseEntity;
+import org.demo.documentation.feature.drilldown.drilldownfilter.dictionary.CustomField4300Dictionary;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300DictionaryEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300MultipleSelectEnum;
 import org.demo.documentation.feature.drilldown.drilldownfilter.enums.CustomField4300RadioEnum;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -24,6 +25,15 @@ public class MyExample4300WithDrilldownDTO extends DataResponseDTO {
 
 	@SearchParameter(name = "customField")
 	private String customField;
+	@SearchParameter(name = "customFieldText")
+	private String customFieldMultifield;
+	private String choicesSummary;
+	private String numbersSummary;
+	private String datesSummary;
+	private String linksSummary;
+
+	@SearchParameter(name = "customField4300Dictionary", provider = DictionaryValueProvider.class)
+	private CustomField4300Dictionary customField4300Dictionary;
 
 	@SearchParameter(name = "customFieldHint")
 	private String customFieldHint;
@@ -77,7 +87,7 @@ public class MyExample4300WithDrilldownDTO extends DataResponseDTO {
 	@SearchParameter(name = "customFieldDictionary", provider = EnumValueProvider.class)
 	private CustomField4300DictionaryEnum customFieldDictionary;
 
-	@SearchParameter(name = "customFieldDateTimeWithSeconds", provider = DateValueProvider.class)
+	@SearchParameter(name = "customFieldDateTimeWithSeconds", provider = DateTimeValueProvider.class)
 	private LocalDateTime customFieldDateTimeWithSeconds;
 
 	@SearchParameter(name = "customFieldDate", provider = DateValueProvider.class)
@@ -98,6 +108,8 @@ public class MyExample4300WithDrilldownDTO extends DataResponseDTO {
 	public MyExample4300WithDrilldownDTO(MyEntityWithDrilldown4300 entity) {
 		this.id = entity.getId().toString();
 		this.customField = entity.getCustomField();
+		this.customFieldMultifield = entity.getCustomFieldText();
+		this.customField4300Dictionary = entity.getCustomField4300Dictionary();
 		this.customFieldHint = entity.getCustomFieldHint();
 		this.customFieldMultipleSelect = entity.getCustomFieldMultipleSelect().stream()
 				.collect(MultivalueField.toMultivalueField(Enum::name, CustomField4300MultipleSelectEnum::getValue));
