@@ -107,7 +107,7 @@ public class TreeActionsTest extends BaseTestForSamples {
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("Edit inline")
-	@Description("A click on the row switches it to the edit mode; the changed value is saved from the row menu and kept.")
+	@Description("A click on the row switches it to the edit mode; the changed value is saved from the row menu and kept, the row keeps its place.")
 	void editInline() {
 		var tree = PlatformApp
 				.screen("Tree widget action basic")
@@ -121,13 +121,14 @@ public class TreeActionsTest extends BaseTestForSamples {
 		row.input(FIELD).setValue(value);
 		row.burgerAction("Save").click();
 		assertRowShown(tree, value);
+		assertThat(tree.rows().row(1).input(FIELD).getValue()).as("the saved row keeps its place").isEqualTo(value);
 	}
 
 	@Test
 	@Severity(CRITICAL)
 	@Tag("Positive")
 	@DisplayName("Edit inline-form")
-	@Description("The pencil of the row opens the row form inside the tree; the changed value is saved and shown in the row.")
+	@Description("The pencil of the row opens the row form inside the tree; the changed value is saved and shown in the row, the row keeps its place.")
 	void editInlineForm() {
 		var screen = PlatformApp.screen("Tree widget action basic");
 		screen.secondLevelView("Edit");
@@ -140,6 +141,8 @@ public class TreeActionsTest extends BaseTestForSamples {
 		form.input(FIELD).setValue(value);
 		form.actions().action("Save").click();
 		assertRowShown(tree, value);
+		// the column of this tree is titled by the field key
+		assertThat(tree.rows().row(1).input("customField").getValue()).as("the saved row keeps its place").isEqualTo(value);
 	}
 
 	@Test
