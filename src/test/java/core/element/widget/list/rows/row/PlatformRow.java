@@ -1,6 +1,9 @@
 package core.element.widget.list.rows.row;
 
 import static core.util.i18n.CoreMessageSource.message;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.HoverOptions;
+import com.codeborne.selenide.SelenideElement;
 import core.element.widget.action.BurgerAction;
 import core.element.widget.field.type.checkbox.ListCheckBox;
 import core.element.widget.field.type.date.ListDate;
@@ -29,6 +32,8 @@ import core.element.widget.field.type.time.ListTime;
 import core.element.widget.list.ListWidget;
 import core.element.widget.list.Row;
 import core.element.widget.list.rows.PlatformRows;
+import io.qameta.allure.Allure;
+import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +45,8 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 	protected static final String ROW_ID_ATTRIBUTE = "data-test-widget-list-row-id";
 
 	protected static final String DATA_ROW_KEY = "data-row-key";
+
+	private static final String BURGER_BUTTON = "button[data-test-widget-list-row-action=\"true\"]";
 
 	private final ROWS parent;
 
@@ -67,6 +74,33 @@ public abstract class PlatformRow<SELF extends PlatformRow<SELF, ROWS, WIDGET>, 
 	public ROWS burgerActionClick(String label) {
 		burgerAction(label).click();
 		return parent;
+	}
+
+	/** Opens the menu of the row and leaves it open; its items come when the meta of the row is loaded */
+	public SELF openBurger() {
+		Allure.step(message("row.openBurger"), () -> {
+			element().shouldBe(Condition.visible, widget().getExpectations().getTimeout()).hover();
+			// the mouse stays on the row: a notice of the application can cover the button and stays open while hovered
+			burgerButton().shouldBe(Condition.visible, widget().getExpectations().getTimeout()).click();
+			burgerButton().shouldHave(Condition.cssClass("ant-dropdown-open"), widget().getExpectations().getTimeout());
+		});
+		return self();
+	}
+
+	/** Moves the mouse in the row and passes to the check whether the button of the row menu is visible */
+	public SELF checkBurgerVisible(Consumer<Boolean> checkVisible) {
+		checkVisible.accept(Allure.step(message("row.burgerVisible"), () -> {
+			// a move inside the row, not only an entry into it: the mouse can already be in the row
+			element().hover(HoverOptions.withOffset(-10, 0)).hover(HoverOptions.withOffset(10, 0));
+			return burgerButton().is(Condition.visible, widget().getExpectations().getTimeout());
+		}));
+		return self();
+	}
+
+	/** The button of the row, or the one button of the list shown on the hover of a row */
+	private SelenideElement burgerButton() {
+		var inRow = element().$(BURGER_BUTTON);
+		return inRow.exists() ? inRow : widget().element().$(BURGER_BUTTON);
 	}
 
 
