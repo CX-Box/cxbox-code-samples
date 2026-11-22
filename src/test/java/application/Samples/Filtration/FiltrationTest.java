@@ -17,7 +17,6 @@ import core.element.widget.chart.Pie1DWidget;
 import core.element.widget.field.type.multivalue.Multivalue;
 import core.element.widget.form.PlatformFormWidget;
 import core.element.widget.list.ListWidget;
-import core.element.widget.list.filter.header.modal.FilterGroupSettingsPopup;
 import core.element.widget.list.realization.inline.gh.PlatformGHWidgetInline;
 import core.element.widget.list.realization.inline.list.PlatformListWidgetInline;
 import core.element.widget.list.realization.inline.tree.PlatformTreeWidgetInline;
@@ -426,8 +425,7 @@ public class FiltrationTest extends BaseTestForSamples {
 		list.fullTextSearch("Soviet");
 		list.headers().filter(fb -> fb.input("customField", "data"));
 		assertThat(values(list, "Address")).containsExactly("Moscow, Dmitrov, st. Soviet, 14");
-		list.settings().select("Save filters");
-		var save = new FilterGroupSettingsPopup();
+		var save = list.settings().saveFilters();
 		save.setName(group);
 		save.clickButtonCreate();
 		list.headers().clearFilters();
@@ -440,8 +438,7 @@ public class FiltrationTest extends BaseTestForSamples {
 		assertThat(values(list, "Address")).containsExactly("Moscow, Dmitrov, st. Soviet, 14");
 		DocShots.stop();
 		list.headers().clearFilters();
-		list.settings().select("Save filters");
-		var saved = new FilterGroupSettingsPopup();
+		var saved = list.settings().saveFilters();
 		saved.clearAllFilterSettings();
 		saved.close();
 	}
@@ -679,15 +676,13 @@ public class FiltrationTest extends BaseTestForSamples {
 		String group = SAVED_GROUP + "personal";
 		removeIfSaved(list, group);
 		list.headers().filterGroup(MIDDLE);
-		list.settings().select("Save filters");
-		var save = new FilterGroupSettingsPopup();
+		var save = list.settings().saveFilters();
 		// the groups of BC_FILTER_GROUPS are not listed
 		assertThat(save.groups()).doesNotContain(HIGH, MIDDLE);
 		save.setName(group);
 		save.clickButtonCreate();
 		assertThat(list.headers().filterGroups(false)).contains(HIGH, MIDDLE, group);
-		list.settings().select("Save filters");
-		var saved = new FilterGroupSettingsPopup();
+		var saved = list.settings().saveFilters();
 		assertThat(saved.groups()).contains(group).doesNotContain(HIGH, MIDDLE);
 		saved.remove(group);
 		saved.close();
@@ -697,8 +692,7 @@ public class FiltrationTest extends BaseTestForSamples {
 
 	/** The group saved by an interrupted run of the test: the names of the groups are unique. */
 	private static void removeIfSaved(ListWidget<?, ?, ?> widget, String group) {
-		widget.settings().select("Save filters");
-		var popup = new FilterGroupSettingsPopup();
+		var popup = widget.settings().saveFilters();
 		if (popup.groups().contains(group)) {
 			popup.remove(group);
 		}
@@ -710,15 +704,13 @@ public class FiltrationTest extends BaseTestForSamples {
 		var widget = widgetOf.get();
 		removeIfSaved(widget, group);
 		widget.headers().filter(fb -> fb.input("Custom Field New", "new 2"));
-		widget.settings().select("Save filters");
-		var save = new FilterGroupSettingsPopup();
+		var save = widget.settings().saveFilters();
 		save.setName(group);
 		save.clickButtonCreate();
 		widget.headers().clearFilters();
 		assertThat(widget.headers().filterGroups(false)).contains(group);
 		DocShots.gif(ARTICLE, gif, PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
-		widget.settings().select("Save filters");
-		var saved = new FilterGroupSettingsPopup();
+		var saved = widget.settings().saveFilters();
 		assertThat(saved.groups()).contains(group);
 		saved.remove(group);
 		assertThat(saved.groups()).doesNotContain(group);
@@ -749,15 +741,13 @@ public class FiltrationTest extends BaseTestForSamples {
 	private static void personalFilterGroup(ListWidget<?, ?, ?> widget, String gif, String group) {
 		DocShots.gif(ARTICLE, gif, PAGE_WIDTH, PAGE_HEIGHT, DocShots.Frame.WITHOUT_SIDEBAR);
 		widget.headers().filter(fb -> fb.input("Custom Field New", "new 2"));
-		widget.settings().select("Save filters");
-		var save = new FilterGroupSettingsPopup();
+		var save = widget.settings().saveFilters();
 		save.setName(group);
 		save.clickButtonCreate();
 		widget.headers().clearFilters();
 		widget.headers().filterGroup(group);
 		DocShots.stop();
-		widget.settings().select("Save filters");
-		var saved = new FilterGroupSettingsPopup();
+		var saved = widget.settings().saveFilters();
 		saved.clearAllFilterSettings();
 		saved.close();
 	}
