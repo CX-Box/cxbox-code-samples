@@ -20,9 +20,10 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 	private final ROW row;
 	private SelenideElement burger;
 
-	private static final String BUTTON = "button[data-test-widget-list-row-action=\"true\"]";
-
 	private static final String OPEN_MENU = "div.ant-dropdown:not(.ant-dropdown-hidden)";
+
+	/** The button of the open menu: antd marks it while the menu is open */
+	private static final String OPEN_MENU_BUTTON = ".ant-dropdown-open";
 
 	public BurgerAction(ROW row, WIDGET widget, String label) {
 		this.row = row;
@@ -42,7 +43,7 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 	public boolean exists() {
 		return Allure.step(message("row.menuItem", label), () -> {
 			var found = openMenu().texts().contains(label);
-			menuButton().click();
+			widget.element().$(OPEN_MENU_BUTTON).click();
 			$(OPEN_MENU).shouldNot(Condition.exist, widget.getExpectations().getTimeout());
 			return found;
 		});
@@ -59,9 +60,7 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 
 	/** The items of the open menu of the row: by the test attribute, the menu can be an ant-dropdown-menu or an ant-menu */
 	private ElementsCollection openMenu() {
-		row.element().shouldBe(Condition.visible, widget.getExpectations().getTimeout()).hover();
-		// the mouse stays on the row: a notice of the application can cover the button and stays open while hovered
-		menuButton().shouldBe(Condition.visible, widget.getExpectations().getTimeout()).click();
+		row.openBurger();
 		var menu = openMenuElement().shouldBe(Condition.visible, widget.getExpectations().getTimeout());
 		// the menu loads the meta of the row first: its items come after the skeleton
 		menu.$("[data-test-loading]").shouldNot(Condition.exist, widget.getExpectations().getTimeout());
@@ -72,12 +71,6 @@ public class BurgerAction<ROW extends PlatformRow<ROW, ROWS, WIDGET>, ROWS exten
 	private SelenideElement openMenuElement() {
 		var inList = widget.element().$(OPEN_MENU);
 		return inList.exists() ? inList : $(OPEN_MENU);
-	}
-
-	/** The button of the row, or the one button of the list shown on the hover of a row */
-	private SelenideElement menuButton() {
-		var inRow = row.element().$(BUTTON);
-		return inRow.exists() ? inRow : widget.element().$(BUTTON);
 	}
 
 	public ROW click() {
