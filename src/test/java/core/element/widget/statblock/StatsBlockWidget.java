@@ -78,6 +78,7 @@ public class StatsBlockWidget extends PlatformWidget<StatsBlockWidget> {
 				blockValues.get(1).text(),
 				icon.exists() ? icon.getAttribute("aria-label") : null,
 				tag.exists() ? tag.text() : null,
-				e);
+				e,
+				this);
 	}
 }

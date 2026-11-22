@@ -12,6 +12,8 @@ import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.Platfo
 import org.demo.documentation.widgets.statsblock.drilldown.drilldown.data.enums.CustomFieldEnum;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.demo.documentation.widgets.statsblock.drilldown.drilldown.MyExample4210Dao.*;
 
 @Service
@@ -33,13 +35,15 @@ public class MyExample4210Meta extends AnySourceFieldMetaBuilder<MyExample4210DT
 		);
 	}
 
-	private CustomFieldEnum getStatusFilterValues(@NonNull String id) {
+	private List<CustomFieldEnum> getStatusFilterValues(@NonNull String id) {
 		if (ROW_ID_0.equals(id)) {
-			return CustomFieldEnum.NEW;
+			return List.of(CustomFieldEnum.NEW);
 		} else if (ROW_ID_1.equals(id)) {
-			return CustomFieldEnum.IN_PROGRESS;
+			return List.of(CustomFieldEnum.IN_PROGRESS);
 		} else if (ROW_ID_2.equals(id)) {
-			return CustomFieldEnum.CLOSE;
+			return List.of(CustomFieldEnum.CLOSE);
+		} else if (ROW_ID_3.equals(id)) {
+			return List.of(CustomFieldEnum.NEW, CustomFieldEnum.IN_PROGRESS);
 		}
 		throw new IllegalStateException("Unexpected value: " + id);
 	}

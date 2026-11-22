@@ -27,6 +27,8 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
 
 	public static final String ROW_ID_2 = "2";
 
+	public static final String ROW_ID_3 = "3";
+
 	private final MyEntity4208Repository repository;
 
 	@Override
@@ -91,6 +93,15 @@ public class MyExample4210Dao extends AbstractAnySourceBaseDAO<MyExample4210DTO>
 				.setColor("#5F90EA");
 		newRow3.setId(ROW_ID_2);
 		result.add(newRow3);
+
+		MyExample4210DTO newRow4 = new MyExample4210DTO()
+				.setTitle("Open")
+				.setValue(repository.count(repository.statusIn(List.of(CustomFieldEnum.NEW, CustomFieldEnum.IN_PROGRESS))))
+				.setIcon("folder-open")
+				.setDescription("Count rows status = new or in_progress in table")
+				.setColor("#5F90EA");
+		newRow4.setId(ROW_ID_3);
+		result.add(newRow4);
 		return result;
 	}
 
