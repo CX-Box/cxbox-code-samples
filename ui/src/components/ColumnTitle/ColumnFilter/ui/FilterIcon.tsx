@@ -3,11 +3,12 @@ import styles from '../ColumnFilter.less'
 import cn from 'classnames'
 import { ReactComponent as FilterIconSvg } from '../../filter-solid.svg'
 
-export type FilterIconProps = React.HTMLAttributes<HTMLDivElement> & {
+export interface ColumnFilterProps {
+    className?: string
     active: boolean
 }
 
-export const FilterIcon: React.FC<FilterIconProps> = ({ className, active, ...rest }) => {
+export const FilterIcon: React.FC<ColumnFilterProps> = ({ className, active, ...rest }) => {
     return (
         <div
             className={cn(className, styles.icon, {

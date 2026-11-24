@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useState, useCallback, useRef } from 'react'
-import { useEditor } from '@tiptap/react'
+import { Editor, useEditor } from '@tiptap/react'
 import Underline from '@tiptap/extension-underline'
 import { CustomStrike } from '@components/RichText/wysiwyg/extensions/CustomStrike'
 import Image from '@tiptap/extension-image'
@@ -18,7 +18,7 @@ import { CodeBlock } from '@tiptap/extension-code-block'
 import { Blockquote } from '@tiptap/extension-blockquote'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
-import { ListItemIndentFix } from '@components/RichText/wysiwyg/extensions/ListItemIndentFix'
+import { ListItem } from '@tiptap/extension-list-item'
 import { Heading } from '@tiptap/extension-heading'
 import { Paragraph } from '@tiptap/extension-paragraph'
 import { Dropcursor } from '@tiptap/extension-dropcursor'
@@ -43,7 +43,7 @@ const getExtensions = (getPlaceholder: () => string) => [
     Blockquote,
     BulletList,
     OrderedList,
-    ListItemIndentFix,
+    ListItem,
     Heading,
     Paragraph,
     Dropcursor,
@@ -82,8 +82,7 @@ const getExtensions = (getPlaceholder: () => string) => [
 
 interface UseRichTextEditorProps {
     value: string
-    onUserChange?: () => void
-    autoFocus?: boolean
+    onChange: (markdown: string) => void
     readOnly?: boolean
     disabled?: boolean
     placeholder?: string
@@ -91,10 +90,11 @@ interface UseRichTextEditorProps {
     onFocus?: () => void
 }
 
+const DEBOUNCE_MS = 120
+
 export const useRichTextEditor = ({
     value,
-    onUserChange,
-    autoFocus = false,
+    onChange,
     readOnly = false,
     disabled = false,
     placeholder,
@@ -105,22 +105,21 @@ export const useRichTextEditor = ({
     const placeholderRef = useRef(placeholder)
     const extensions = useMemo(() => getExtensions(() => placeholderRef.current ?? ''), [])
 
-    // the value the document was made from: only another value replaces the document
-    const shownValueRef = useRef(value)
-    const onUserChangeRef = useRef(onUserChange)
+    const lastEmittedRef = useRef(value)
+    const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const onChangeRef = useRef(onChange)
 
     const isEditable = readOnly ? false : !disabled
 
     useEffect(() => {
-        onUserChangeRef.current = onUserChange
-    }, [onUserChange])
+        onChangeRef.current = onChange
+    }, [onChange])
 
     const editor = useEditor({
         extensions,
         content: value,
         contentType: 'markdown',
         editable: isEditable,
-        autofocus: autoFocus ? 'end' : false,
         onBlur,
         onFocus
     })
@@ -146,33 +145,57 @@ export const useRichTextEditor = ({
             return
         }
 
-        // No markdown is built here: on every key it is slow for a long text. It is built once, when the user leaves the field.
-        const handler = ({ transaction }: { transaction?: { docChanged: boolean } }) => {
+        const handler = ({ editor: instance, transaction }: { editor: Editor; transaction?: { docChanged: boolean } }) => {
             if (transaction?.docChanged === false) {
                 return
             }
 
-            onUserChangeRef.current?.()
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current)
+            }
+
+            debounceTimerRef.current = setTimeout(() => {
+                const md = instance.getMarkdown()
+                if (md !== lastEmittedRef.current) {
+                    lastEmittedRef.current = md
+                    onChangeRef.current(md)
+                }
+            }, DEBOUNCE_MS)
         }
 
         editor.on('update', handler)
 
         return () => {
             editor.off('update', handler)
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current)
+                debounceTimerRef.current = null
+            }
         }
     }, [editor])
 
     useEffect(() => {
-        if (!editor || value === shownValueRef.current) {
+        if (!editor) {
             return
         }
 
-        shownValueRef.current = value
-
-        // the text of this editor came back as the value: the document already shows it, the cursor and the undo history stay
-        if (value !== editor.getMarkdown()) {
-            editor.commands.setContent(value, { contentType: 'markdown', emitUpdate: false })
+        if (value === lastEmittedRef.current) {
+            return
         }
+
+        const currentMd = editor.getMarkdown()
+        if (value === currentMd) {
+            lastEmittedRef.current = value
+            return
+        }
+
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current)
+            debounceTimerRef.current = null
+        }
+
+        editor.commands.setContent(value, { contentType: 'markdown', emitUpdate: false })
+        lastEmittedRef.current = value
     }, [value, editor])
 
     return { editor }

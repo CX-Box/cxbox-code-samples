@@ -226,25 +226,21 @@ function ColumnFilter({ widgetName, widgetMeta: widgetFieldMeta, rowMeta, classN
         (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
             e.preventDefault()
 
-            if (!widget?.bcName) {
-                return
-            }
-
             if (isPickList) {
                 clearAssociatedFilter()
             }
 
             if (rawFilter) {
-                dispatch(actions.bcRemoveFilter({ bcName: widget.bcName, filter: rawFilter }))
+                dispatch(actions.bcRemoveFilter({ bcName: widget?.bcName as string, filter: rawFilter }))
             }
             const hasAppliedFilter = rawFilter || associatedFilter
-            const needApplyListFilter = hasAppliedFilter && !widget.options?.hierarchyFull && !hasBcTree
+            const needApplyListFilter = hasAppliedFilter && !widget?.options?.hierarchyFull && !hasBcTree
             const needApplyTreeFilter = hasAppliedFilter && hasBcTree
 
             if (needApplyListFilter) {
-                dispatch(actions.bcForceUpdate({ bcName: widget.bcName }))
+                dispatch(actions.bcForceUpdate({ bcName: widget?.bcName as string }))
             } else if (needApplyTreeFilter) {
-                dispatch(treeActions.applyFilter({ bcName: widget.bcName }))
+                dispatch(treeActions.applyFilter({ bcName: widget?.bcName as string }))
             }
 
             setVisible(false)
