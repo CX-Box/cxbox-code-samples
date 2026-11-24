@@ -8,6 +8,7 @@ import core.config.PlatformConfig;
 import core.element.widget.modal.SignInAgainPopup;
 import core.element.widget.modal.ErrorPopup;
 import core.element.widget.modal.ErrorPopupException;
+import core.element.widget.field.type.fileUpload.FileUploadPopups;
 import core.expectation.CxBoxExpectations;
 import core.page.UserMenu;
 import core.element.screen.PlatformScreen;
@@ -85,6 +86,14 @@ public class PlatformApp {
 			ErrorPopupException.expect(action, new CxBoxExpectations().getTimeout());
 			return errorPopup();
 		});
+	}
+
+	/**
+	 * The windows of file progress at the top right: the Upload progress window of each field or action that uploads and
+	 * the Download progress window of the app
+	 */
+	public static FileUploadPopups fileUploadPopups() {
+		return new FileUploadPopups();
 	}
 
 	public static UserMenu userMenu() {
