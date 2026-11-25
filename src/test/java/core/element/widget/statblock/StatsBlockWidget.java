@@ -71,10 +71,13 @@ public class StatsBlockWidget extends PlatformWidget<StatsBlockWidget> {
 		log.info("Found {} stats block values", blockValues.size());
 		// the icon is optional: a block without it has no icon element
 		SelenideElement icon = e.$("i[class*='StatsBlock__itemIcon']");
+		// the tag is optional: it stands after the value only with options.stats.tagFieldKey
+		SelenideElement tag = e.$("div[class*='StatsBlock__itemValueLine'] > span");
 		return new StatsBlock(
-				blockValues.get(0).text(),
+				e.$("div[class*='StatsBlock__itemValueLine'] > div").text(),
 				blockValues.get(1).text(),
 				icon.exists() ? icon.getAttribute("aria-label") : null,
+				tag.exists() ? tag.text() : null,
 				e);
 	}
 }
