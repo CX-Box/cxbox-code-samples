@@ -229,6 +229,20 @@ public abstract class ChartWidget<SELF extends ChartWidget<SELF>> extends Platfo
 	}
 
 	/**
+	 * The height of the drawing area in CSS pixels: the canvas of the chart. With {@code maxRows} it is the number of rows
+	 * of a standard form, a row is 88 px.
+	 */
+	public int chartHeight() {
+		return element().$("canvas").getSize().getHeight();
+	}
+
+	/** Passes {@link #chartHeight()} to the check. */
+	public SELF checkChartHeight(Consumer<Integer> checkChartHeight) {
+		checkChartHeight.accept(chartHeight());
+		return widget();
+	}
+
+	/**
 	 * Whether the chart mode can be chosen. It cannot when there are more records than the page limit of the business
 	 * component: the widget shows only the table and a warning icon.
 	 */
