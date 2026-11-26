@@ -19,7 +19,9 @@ services:
       - cxbox-code-samples-node-1
 
   cxbox-code-samples-node-1:
-    image: 'cxbox/cxbox-code-samples:latest'
+    # CODE_SAMPLES_TAG is the commit sha, set by .github/workflows/build_main.yml. A unique tag is pulled instead of
+    # the moving `latest`: the server once kept starting an old image under `latest` after a successful deploy.
+    image: 'cxbox/cxbox-code-samples:${CODE_SAMPLES_TAG:-latest}'
     environment:
       FRONTEND_AUTH_SERVER_URL: 'https://code-samples.cxbox.org/auth'
       BACKEND_AUTH_SERVER_URL: 'https://code-samples.cxbox.org/auth'
