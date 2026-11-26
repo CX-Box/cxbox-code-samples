@@ -56,7 +56,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cxbox-code-samples:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/cxbox-code-samples:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/cxbox-code-samples:${{ github.sha }}
       - name: prepare - stop all containers from previous deploy
         if: matrix.java == '17'
         uses: appleboy/ssh-action@v0.1.10
@@ -97,7 +99,8 @@ jobs:
           script: |
             sudo chmod -R 777 /home/cxbox/code-samples || true
             cd /home/cxbox/code-samples
-            sudo docker compose -f docker-compose-prod.yml up -d --wait -t 60
+            sudo CODE_SAMPLES_TAG=${{ github.sha }} docker compose -f docker-compose-prod.yml up -d --wait -t 60
+            sudo docker image inspect cxbox/cxbox-code-samples:${{ github.sha }} --format 'deployed image {{.Id}} created {{.Created}}'
             docker ps
 
   # --- Telegram notifications (secrets TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) ---
