@@ -20,19 +20,31 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class FileUploadPopup<W extends AbstractWidget<ExpectationPattern, W>, F extends AbstractFieldImpl<ExpectationPattern, W, File, F>> {
 
-	private final SelenideElement popup = $("div[class=\"ant-notification ant-notification-topRight\"]");
+	private final SelenideElement popup;
 	private final ExpectationPattern cxBoxExpectations;
 	private final F parent;
 
+	/**
+	 * The Upload progress window of the field. The windows of all fields and the Download progress window are in one
+	 * container, so the window is found by the key of the field and the name of its widget.
+	 */
 	public FileUploadPopup(ExpectationPattern cxBoxExpectations, F parent) {
+		this(cxBoxExpectations, parent, $(FileUploadPopups.WINDOW + ":has([data-test-notification-for-field='true']"
+				+ "[data-test-field-key='" + parent.element().getAttribute("data-test-field-key") + "']"
+				+ "[data-test-widget-name='" + parent.widget().element().getAttribute("data-test-widget-name") + "'])"));
+	}
+
+	/** A window of {@link FileUploadPopups}; {@code parent} is null when the window has no field, as the Download progress */
+	FileUploadPopup(ExpectationPattern cxBoxExpectations, F parent, SelenideElement popup) {
 		this.cxBoxExpectations = cxBoxExpectations;
 		this.parent = parent;
+		this.popup = popup;
 	}
 
 	public FileUploadPopup<W, F> checkTitle(Consumer<String> title) {
 		return Allure.step(message("popup.header"), step -> {
 			title.accept(popup
-					.$("div[class=\"ant-notification-notice-message\"]")
+					.$(FileUploadPopups.TITLE)
 					.shouldBe(Condition.visible, cxBoxExpectations.getTimeout())
 					.getText());
 			return this;

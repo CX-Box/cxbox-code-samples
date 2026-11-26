@@ -53,6 +53,20 @@ public class Constants {
 	}
 
 	/**
+	 * Constants of the windows of file progress
+	 */
+	public static class FileUploadPopup {
+		/**
+		 * Title of the window of an upload
+		 */
+		public static final String UPLOAD_TITLE = "Upload progress";
+		/**
+		 * Title of the window of a download
+		 */
+		public static final String DOWNLOAD_TITLE = "Download progress";
+	}
+
+	/**
 	 * Confirmation Window Constants
 	 */
 	public static class ConfirmPopup {
