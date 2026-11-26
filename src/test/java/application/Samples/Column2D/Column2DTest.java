@@ -26,6 +26,8 @@ public class Column2DTest extends BaseTestForSamples {
 
 	static final String ARTICLE = "widget/type/column2d";
 
+	private static final String RELEASE = "new/v3.0.2";
+
 	private static final int WIDTH = 1600;
 
 	private static final int HEIGHT = 900;
@@ -127,6 +129,35 @@ public class Column2DTest extends BaseTestForSamples {
 		Column2DWidget chart = PlatformApp.screen("Column2D widget axes").view().column2D("Sales per client");
 		chart.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
 		DocShots.png(chart.element(), ARTICLE, "axes.png", WIDTH, HEIGHT);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Mode: BT, TB, LR, RL")
+	@Description("mode sets the direction in which the bars grow; the category and value fields keep their meaning")
+	void mode() {
+		var view = PlatformApp.screen("Column2D widget mode").view();
+		for (String mode : new String[]{"BT", "TB", "LR", "RL"}) {
+			Column2DWidget chart = view.column2D("Mode " + mode);
+			assertThat(chart.bars().map(row -> row.xValueField().getValue())).contains("Info Trust");
+			DocShots.png(chart.element(), ARTICLE, "mode_" + mode.toLowerCase() + ".png", WIDTH, HEIGHT);
+		}
+		DocShots.png(view.column2D("Mode LR").element(), RELEASE, "CXBOX-1466-mode.png", WIDTH, HEIGHT);
+	}
+
+	@Test
+	@Tag("Positive")
+	@DisplayName("Label position: inside and outside the bars")
+	@Description("valuePosition shows the value of each bar inside the bar or outside its end; without it there are no labels")
+	void labelPosition() {
+		var screen = PlatformApp.screen("Column2D widget label position");
+		Column2DWidget inner = screen.secondLevelView("Inner").column2DByName("myexample4278inner");
+		inner.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
+		DocShots.png(inner.element(), ARTICLE, "labelinner.png", WIDTH, HEIGHT);
+		Column2DWidget outer = screen.secondLevelView("Outer").column2DByName("myexample4278outer");
+		outer.checkMode(mode -> assertThat(mode).isEqualTo(Mode.CHART));
+		DocShots.png(outer.element(), ARTICLE, "labelouter.png", WIDTH, HEIGHT);
+		DocShots.png(outer.element(), RELEASE, "CXBOX-1466-labelposition.png", WIDTH, HEIGHT);
 	}
 
 	@Test
