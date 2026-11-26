@@ -33,13 +33,16 @@ public class PlatformScreen extends AbstractScreen {
 			$x("//aside[@data-test='LEFT_SIDER']//ul[@data-test='MAIN_MENU']//li[@data-test='MAIN_MENU_ITEM']"
 					+ "[translate(normalize-space(" + config().selectors.menuItemName + "), '" + UPPER_CASE + "', '" + LOWER_CASE + "')="
 					+ xpathLiteral(name.strip().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT)) + "]")
-					.shouldBe(Condition.enabled)
+					.shouldBe(Condition.enabled, MENU_ITEM_WAIT)
 					// the menu can be long: the item is scrolled to the middle first, otherwise the sticky footer of the sidebar intercepts the click
 					.scrollIntoView("{block: \"center\"}").click();
 			checkPageLoaded();
 		});
 
 	}
+
+	/** How long the menu item of a screen is waited for: longer than the default wait, a missing item still fails, only later */
+	private static final Duration MENU_ITEM_WAIT = Duration.ofSeconds(30);
 
 	private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 

@@ -111,7 +111,15 @@ jobs:
       # Builds frontend using Maven UI profile.
       # -U forces update of snapshot dependencies.
       - name: Build backend + UI
-        run: mvn clean install -U -PUI
+        run: |
+          # Maven Central answers HTTP 429 to a busy runner: only that is retried, a real build failure fails at once
+          set -o pipefail
+          for attempt in 1 2 3; do
+            mvn clean install -U -PUI 2>&1 | tee /tmp/mvn-build.log && exit 0
+            grep -qE "Too Many Requests|status code: 429" /tmp/mvn-build.log || exit 1
+            echo "::warning::Maven Central rate limit (attempt $attempt of 3), retry in 60 s"; sleep 60
+          done
+          exit 1
 
 
 
@@ -634,7 +642,15 @@ jobs:
       # =========================
 
       - name: Build backend + UI
-        run: mvn clean install -U -PUI
+        run: |
+          # Maven Central answers HTTP 429 to a busy runner: only that is retried, a real build failure fails at once
+          set -o pipefail
+          for attempt in 1 2 3; do
+            mvn clean install -U -PUI 2>&1 | tee /tmp/mvn-build.log && exit 0
+            grep -qE "Too Many Requests|status code: 429" /tmp/mvn-build.log || exit 1
+            echo "::warning::Maven Central rate limit (attempt $attempt of 3), retry in 60 s"; sleep 60
+          done
+          exit 1
 
 
 
