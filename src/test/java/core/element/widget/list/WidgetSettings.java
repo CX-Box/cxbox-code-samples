@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.DownloadOptions;
 import com.codeborne.selenide.SelenideElement;
 import core.element.widget.AbstractWidget;
+import core.element.widget.list.filter.header.modal.FilterGroupSettingsPopup;
 import core.expectation.ExpectationPattern;
 import io.qameta.allure.Allure;
 import java.io.File;
@@ -75,6 +76,22 @@ public class WidgetSettings<W extends AbstractWidget<ExpectationPattern, W>> {
 			container.$("i[aria-label=\"icon: setting\"]").click(ClickOptions.usingJavaScript());
 		}
 		return widget;
+	}
+
+	/** Opens the window of the columns, the item "Change" of the menu */
+	public ColumnSettingsPopup<W> changeColumns() {
+		Allure.step(message("columns.open"), step -> {
+			select("Change");
+		});
+		return new ColumnSettingsPopup<>(widget, expectations);
+	}
+
+	/** Opens the window that saves the filters as a group, the item "Save filters" of the menu */
+	public FilterGroupSettingsPopup saveFilters() {
+		Allure.step(message("filters.open"), step -> {
+			select("Save filters");
+		});
+		return new FilterGroupSettingsPopup();
 	}
 
 	private SelenideElement menu() {

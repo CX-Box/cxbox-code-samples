@@ -321,6 +321,7 @@ function TreeTable<T extends CustomDataItem>({
             />
 
             <ColumnOrderSettingModal
+                widgetName={widgetName}
                 visible={transfer.visibility}
                 onCancel={transfer.toggleVisibility}
                 dataSource={allFields}
