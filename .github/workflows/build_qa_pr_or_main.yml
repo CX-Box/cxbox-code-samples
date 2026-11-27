@@ -116,7 +116,7 @@ jobs:
           set -o pipefail
           for attempt in 1 2 3; do
             mvn clean install -U -PUI 2>&1 | tee /tmp/mvn-build.log && exit 0
-            grep -qE "Too Many Requests|status code: 429" /tmp/mvn-build.log || exit 1
+            grep -qE "Too Many Requests|status 429|Status: 429|status code: 429" /tmp/mvn-build.log || exit 1
             echo "::warning::Maven Central rate limit (attempt $attempt of 3), retry in 60 s"; sleep 60
           done
           exit 1
@@ -647,7 +647,7 @@ jobs:
           set -o pipefail
           for attempt in 1 2 3; do
             mvn clean install -U -PUI 2>&1 | tee /tmp/mvn-build.log && exit 0
-            grep -qE "Too Many Requests|status code: 429" /tmp/mvn-build.log || exit 1
+            grep -qE "Too Many Requests|status 429|Status: 429|status code: 429" /tmp/mvn-build.log || exit 1
             echo "::warning::Maven Central rate limit (attempt $attempt of 3), retry in 60 s"; sleep 60
           done
           exit 1
