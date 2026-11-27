@@ -402,6 +402,19 @@ jobs:
           # Removes Docker networks created for current compose project.
 
 
+      # The result of the autotests of THIS job, sent when the job ends (the Java 17 and the Java 21 jobs send their own).
+      # Not a result of the whole workflow: a report job that fails because a test job was cancelled is not an autotest failure.
+      # A cancelled run (a newer push replaces it) sends nothing. main: success and failure. Other branches: failure only.
+      # The step is a part of the job, the secrets are passed as inputs (no secrets for runs from forks: only a warning).
+      - name: Telegram notify
+        if: always() && job.status != 'cancelled' && steps.run_tests.outcome != 'cancelled' && (github.ref == 'refs/heads/main' || steps.run_tests.outcome != 'success')
+        uses: ./.github/actions/telegram-notify
+        with:
+          status: ${{ steps.run_tests.outcome == 'success' && 'success' || 'failure' }}
+          title: QA tests Java ${{ matrix.java }}
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_CHAT_ID }}
+
   # =========================
   # PUBLISH SUMMARY
   # =========================
@@ -803,6 +816,19 @@ jobs:
           docker network prune -f \
             --filter "label=com.docker.compose.project=$COMPOSE_PROJECT_NAME"
 
+      # The result of the autotests of THIS job, sent when the job ends (the Java 17 and the Java 21 jobs send their own).
+      # Not a result of the whole workflow: a report job that fails because a test job was cancelled is not an autotest failure.
+      # A cancelled run (a newer push replaces it) sends nothing. main: success and failure. Other branches: failure only.
+      # The step is a part of the job, the secrets are passed as inputs (no secrets for runs from forks: only a warning).
+      - name: Telegram notify
+        if: always() && job.status != 'cancelled' && steps.run_tests.outcome != 'cancelled' && (github.ref == 'refs/heads/main' || steps.run_tests.outcome != 'success')
+        uses: ./.github/actions/telegram-notify
+        with:
+          status: ${{ steps.run_tests.outcome == 'success' && 'success' || 'failure' }}
+          title: QA main tests Java ${{ matrix.java }}
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_CHAT_ID }}
+
   publish-main-report:
 
     name: Publish Main Allure Report
@@ -858,13 +884,3 @@ jobs:
         run: |
           echo "tests: ${{ needs.build-qa-main-and-check-autotests.result }}"
           [ "${{ needs.build-qa-main-and-check-autotests.result }}" = "success" ]
-
-  # --- Telegram notifications (secrets TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) ---
-  # main: message when the workflow finishes (success / failure; a cancelled run sends nothing). Other branches: message only if something failed.
-  notify-result:
-    needs: [build-qa-pr-and-check-autotests, publish-summary, build-qa-main-and-check-autotests, publish-main-report]
-    if: always() && (contains(needs.*.result, 'failure') || (github.ref == 'refs/heads/main' && !contains(needs.*.result, 'cancelled')))
-    uses: ./.github/workflows/telegram-notify.yml
-    secrets: inherit
-    with:
-      status: ${{ contains(needs.*.result, 'failure') && 'failure' || contains(needs.*.result, 'success') && 'success' || 'skipped' }}
